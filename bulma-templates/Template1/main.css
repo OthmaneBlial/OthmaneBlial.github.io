@@ -1,0 +1,275 @@
+@import url('https://fonts.googleapis.com/css?family=Amaranth');
+
+body {
+   font-family: 'Amaranth';
+}
+
+#overlay {
+	background-image: url('images/header.jpg');
+	background-repeat: no-repeat;
+	background-size: cover;
+}
+
+
+#header {
+	margin: 0 auto;
+	padding-top: 100px;
+}
+
+#header h1 {
+	max-width: 640px;
+	font-weight: 900;
+	font-size: 47px;
+	color: #ffffff;
+}
+
+#header h2 {
+	font-weight: 400;
+	margin-bottom: 20px;
+	color: #ffffff;
+}
+
+#header ul li {
+	color: #ffffff;
+}
+
+@media only screen and (max-width: 768px) {
+    /* For mobile phones: */
+    #header {
+    	margin: 20px 40px;
+    }
+
+    #header figure {
+    	display: none;
+    }
+}
+
+#services {
+	margin: 0 auto;
+	padding-top: 100px;
+	padding-bottom: 100px;
+}
+
+#services .service {
+	position: relative;
+	border: 1px solid black;
+	padding: 15px;
+	margin: 0 30px;
+}
+
+#services .service a {
+	position: absolute;
+	top: -30px;
+	left: 30%;
+	right: 30%;
+}
+
+#services .service a {
+	padding: 20px;
+	padding-bottom: 30px;
+	padding-top: 30px;
+	margin-bottom: 10px;
+	background-color: #32bd8e;
+}
+
+#services .service a:hover {
+	background-color: #32bd8f;
+}
+
+
+#services .service h4 {
+	margin-top: 30px;
+}
+
+#services h2 {
+	color: #32bd8f;
+}
+
+
+#services .columns .column {
+	padding-top: 50px;
+}
+
+#projects {
+	margin: 0 auto;
+	padding-top: 100px;
+	padding-bottom: 100px;
+	background-color: #32bd8e;
+	color: #ffffff;
+}
+
+#projects h1 {
+	color: #ffffff;
+}
+
+#projects h2 {
+	color: #ffffff;
+}
+
+#projects .project {
+	background-color: #ffffff;
+	margin: 10px 30px;
+}
+
+#projects .project .text {
+	padding: 20px;
+}
+
+#projects .project .text h4 {
+	color: #000000;
+}
+
+#projects .project .text p {
+	color: #000000;
+	font-size: 13px;
+}
+
+#projects .project figure  {
+  position: relative;
+}
+
+#projects .project figure .img {
+  display: block;
+  height: auto;
+}
+
+#projects .project figure .sub {
+  position: absolute;
+  bottom: 100%;
+  left: 0;
+  right: 0;
+  background-color: #008CBA;
+  overflow: hidden;
+  height:0;
+  transition: .5s ease;
+  opacity: 0.9;
+}
+
+#projects .project figure:hover .sub {
+  bottom: 0;
+  height: 100%;
+}
+
+#projects .project figure .sub-icon {
+  color: white;
+  position: absolute;
+  overflow: hidden;
+  font-size: 25px;
+  padding: 10px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+}
+
+#pricing {
+	margin: 0 auto;
+	padding-top: 100px;
+	padding-bottom: 100px;
+	margin-left: 90px;
+	margin-right: 90px;
+}
+
+#pricing h2 {
+	color: #32bd8f;
+}
+
+
+
+#pricing .column {
+	margin: 0;
+}
+
+#pricing .price .price-header {
+	background-color: #32bd8e;
+	padding: 20px;
+	border: 2px solid #ffffff;
+}
+
+#pricing .price .price-header h1 {
+	color: #ffffff;
+}
+
+#pricing .price .price-body {
+	padding: 20px;
+	margin-top: 10px;
+	border: 1px solid #32bd8e;
+}
+
+#pricing .price .price-body hr {
+	width: 40%;
+	margin-right: 30%;
+	margin-left: 30%;
+}
+
+#pricing .price .price-body a {
+	margin-top: 30px;
+	background: #32bd8e;
+	color: #ffffff;
+}
+
+#ourteam {
+	margin: 0 auto;
+	padding-top: 100px;
+	padding-bottom: 100px;
+	background-color: #32bd8e;
+	color: #ffffff;
+	padding-left: 90px;
+	padding-right: 90px;
+}
+
+#ourteam h1 {
+	color: #ffffff;
+}
+
+#ourteam h2 {
+	color: #ffffff;
+}
+
+#ourteam .team {
+	border: 4px solid #ffffff;
+	padding: 20px;
+}
+
+#ourteam .team figure {
+	margin: 5px auto;
+}
+
+#ourteam .team figure img{
+	border-radius: 30%;
+}
+
+#ourteam .team h1 {
+	font-weight: 700;
+}
+
+
+#contactus {
+	margin: 0 auto;
+	padding-top: 100px;
+	padding-bottom: 100px;
+	padding-left: 90px;
+	padding-right: 90px;
+}
+
+footer {
+	margin: 0 auto;
+	padding-top: 20px;
+	background-color: #000000;
+	color: #ffffff;
+	padding-bottom: 20px;
+	padding-left: 90px;
+	padding-right: 90px;
+}
+
+footer .is-9 {
+	text-align: left;
+}
+
+footer .is-3 {
+	text-align: right;
+}
+
+footer span i {
+	padding: 10px;
+}

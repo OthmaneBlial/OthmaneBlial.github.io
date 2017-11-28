@@ -1,0 +1,54 @@
+@import url('https://fonts.googleapis.com/css?family=Amaranth');
+
+body {
+   font-family: 'Amaranth';
+   background-image: url(background.jpeg);
+   background-size: cover;
+   background-repeat: no-repeat;
+}
+
+.signup {
+	background-color: #ffffff;
+	padding: 30px;
+	margin-left: 15%;
+	margin-right: 20%;
+	margin-top: 25%;
+	margin-bottom: 30%;
+	height: auto;
+	border-radius: 5%;
+	font-size: 20px;
+	min-width: 300px;
+	max-width: 500px;
+	border: 9px dashed #000;
+}
+
+.signup h1 {
+	color: #000000;
+	font-size: 30px;
+	font-weight: 900;
+	margin-bottom: 30px;
+}
+
+
+
+footer {
+	margin: 0 auto;
+	padding-top: 20px;
+	background-color: #000000;
+	color: #ffffff;
+	padding-bottom: 20px;
+	padding-left: 90px;
+	padding-right: 90px;
+}
+
+footer .is-9 {
+	text-align: left;
+}
+
+footer .is-3 {
+	text-align: right;
+}
+
+footer span i {
+	padding: 10px;
+}
