@@ -1937,7 +1937,7 @@ eval("\n\nObject.defineProperty(exports, \"__esModule\", {\n\tvalue: true\n});\n
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-eval("\n\nObject.defineProperty(exports, \"__esModule\", {\n  value: true\n});\nvar URL = exports.URL = 'http://localhost:8080/api';//# sourceURL=[module]\n//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiMjY5LmpzIiwic291cmNlcyI6WyJ3ZWJwYWNrOi8vL3NyYy9hY3Rpb25zL2NvbmZpZy5qcz84NWQ2Il0sInNvdXJjZXNDb250ZW50IjpbImV4cG9ydCBjb25zdCBVUkwgPSAnaHR0cDovL2xvY2FsaG9zdDo4MDgwL2FwaSc7XHJcblxyXG5cblxuXG4vLyBXRUJQQUNLIEZPT1RFUiAvL1xuLy8gc3JjL2FjdGlvbnMvY29uZmlnLmpzIl0sIm1hcHBpbmdzIjoiOzs7OztBQUFBIiwic291cmNlUm9vdCI6IiJ9\n//# sourceURL=webpack-internal:///269\n");
+eval("\n\nObject.defineProperty(exports, \"__esModule\", {\n  value: true\n});\nvar URL = exports.URL = 'https://othmaneblial.github.io/shopping-cart-using-react-redux/api';//# sourceURL=[module]\n//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiMjY5LmpzIiwic291cmNlcyI6WyJ3ZWJwYWNrOi8vL3NyYy9hY3Rpb25zL2NvbmZpZy5qcz84NWQ2Il0sInNvdXJjZXNDb250ZW50IjpbImV4cG9ydCBjb25zdCBVUkwgPSAnaHR0cHM6Ly9vdGhtYW5lYmxpYWwuZ2l0aHViLmlvL3Nob3BwaW5nLWNhcnQtdXNpbmctcmVhY3QtcmVkdXgvYXBpJztcclxuXHJcblxuXG5cbi8vIFdFQlBBQ0sgRk9PVEVSIC8vXG4vLyBzcmMvYWN0aW9ucy9jb25maWcuanMiXSwibWFwcGluZ3MiOiI7Ozs7O0FBQUEiLCJzb3VyY2VSb290IjoiIn0=\n//# sourceURL=webpack-internal:///269\n");
 
 /***/ }),
 /* 270 */
