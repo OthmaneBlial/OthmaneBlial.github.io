@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -23,65 +24,175 @@
         body {
             background: linear-gradient(180deg, #ffffff 0%, #f8fafc 40%, #eff6ff 100%);
             font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            overflow-x: hidden;
         }
+
         .scroll-smooth {
             scroll-behavior: smooth;
         }
+
+        /* FIXED: Better code block handling for mobile */
         .code-block {
             background: #f1f5f9;
             border: 1px solid #e2e8f0;
             border-radius: 1.25rem;
-            padding: 1.5rem;
+            padding: 1rem;
             font-family: 'JetBrains Mono', 'Fira Code', 'SFMono-Regular', Menlo, Monaco, Consolas, monospace;
-            font-size: 0.9rem;
-            line-height: 1.6;
+            font-size: 0.75rem;
+            line-height: 1.5;
             color: #0f172a;
             overflow-x: auto;
+            white-space: pre;
+            -webkit-overflow-scrolling: touch;
         }
-        .syntax-keyword { color: #2563eb; font-weight: 600; }
-        .syntax-string { color: #059669; }
-        .syntax-type { color: #7c3aed; }
-        .syntax-function { color: #0ea5e9; }
-        .syntax-comment { color: #94a3b8; font-style: italic; }
-        .syntax-number { color: #d97706; }
+
+        @media (min-width: 640px) {
+            .code-block {
+                padding: 1.5rem;
+                font-size: 0.9rem;
+            }
+        }
+
+        /* Mobile-specific code wrapper */
+        .code-wrapper {
+            position: relative;
+            overflow: hidden;
+            border-radius: 1.25rem;
+        }
+
+        .code-wrapper::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 3rem;
+            background: linear-gradient(transparent, #f1f5f9);
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        @media (min-width: 640px) {
+            .code-wrapper::after {
+                display: none;
+            }
+        }
+
+        .syntax-keyword {
+            color: #2563eb;
+            font-weight: 600;
+        }
+
+        .syntax-string {
+            color: #059669;
+        }
+
+        .syntax-type {
+            color: #7c3aed;
+        }
+
+        .syntax-function {
+            color: #0ea5e9;
+        }
+
+        .syntax-comment {
+            color: #94a3b8;
+            font-style: italic;
+        }
+
+        .syntax-number {
+            color: #d97706;
+        }
+
+        /* FIXED: Better tab handling for mobile */
+        .tab-container {
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+        }
+
+        .tab-container::-webkit-scrollbar {
+            display: none;
+        }
+
+        .tab-wrapper {
+            display: flex;
+            gap: 0.5rem;
+            padding: 0.5rem;
+            min-width: max-content;
+        }
+
         .tab-btn {
             border-radius: 9999px;
             border: 1px solid #dbeafe;
-            padding: 0.75rem 1.5rem;
+            padding: 0.5rem 1rem;
             font-weight: 600;
             color: #475569;
             transition: all 0.2s ease;
+            font-size: 0.75rem;
+            white-space: nowrap;
+            flex-shrink: 0;
         }
+
+        @media (min-width: 640px) {
+            .tab-btn {
+                padding: 0.6rem 1.25rem;
+                font-size: 0.85rem;
+            }
+        }
+
         .tab-btn:hover {
             border-color: #3b82f6;
             color: #1d4ed8;
             box-shadow: 0 10px 25px rgba(59, 130, 246, 0.15);
         }
+
         .tab-active {
             background: linear-gradient(120deg, #3b82f6, #60a5fa);
             color: #fff;
             border-color: transparent;
         }
+
         .card-shadow {
             box-shadow: 0 15px 35px rgba(15, 23, 42, 0.08);
         }
+
         .response.hidden {
             display: none;
         }
+
+        /* Mobile-specific fixes */
+        @media (max-width: 640px) {
+            .mobile-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .mobile-text-sm {
+                font-size: 0.875rem;
+            }
+            
+            .mobile-text-xs {
+                font-size: 0.75rem;
+            }
+        }
     </style>
 </head>
+
 <body class="text-slate-800 scroll-smooth">
     <nav class="fixed top-0 inset-x-0 z-50 bg-white/90 border-b border-slate-200 backdrop-blur">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex items-center justify-between h-16">
-                <a href="#overview" class="flex items-center gap-2">
-                    <div class="h-10 w-10 rounded-2xl bg-blue-600 text-white flex items-center justify-center font-black tracking-tight">R</div>
-                    <div>
-                        <p class="text-xs uppercase tracking-widest text-slate-500">RAGify</p>
-                        <p class="font-semibold text-slate-900">RAG Platform</p>
+                <a href="#overview" class="flex items-center gap-2 min-w-0">
+                    <div
+                        class="h-9 w-9 sm:h-10 sm:w-10 rounded-2xl bg-blue-600 text-white flex items-center justify-center font-black tracking-tight text-sm sm:text-base">
+                        R</div>
+                    <div class="leading-tight">
+                        <p class="text-[10px] sm:text-xs uppercase tracking-widest text-slate-500">RAGify</p>
+                        <p class="font-semibold text-slate-900 text-sm sm:text-base">RAG Platform</p>
                     </div>
                 </a>
-                <div class="hidden md:flex items-center gap-8 text-sm font-medium text-slate-600">
+                <div class="hidden md:flex items-center gap-6 text-sm font-medium text-slate-600">
                     <a href="#overview" class="hover:text-blue-600">Overview</a>
                     <a href="#features" class="hover:text-blue-600">Features</a>
                     <a href="#architecture" class="hover:text-blue-600">Architecture</a>
@@ -90,90 +201,137 @@
                     <a href="#frontend" class="hover:text-blue-600">Frontend</a>
                     <a href="#screenshots" class="hover:text-blue-600">Screenshots</a>
                 </div>
+                <!-- Mobile menu button -->
+                <button id="mobile-menu-button"
+                    class="md:hidden inline-flex items-center justify-center rounded-full p-2 border border-slate-200 text-slate-600 hover:text-blue-600 hover:border-blue-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 bg-white/80"
+                    aria-label="Open navigation" aria-expanded="false" aria-controls="mobile-menu">
+                    <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                        stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M4 6h16M4 12h16M4 18h16" />
+                    </svg>
+                </button>
+            </div>
+            <!-- Mobile menu -->
+            <div id="mobile-menu" class="md:hidden hidden border-t border-slate-200 bg-white/95">
+                <div class="py-2 space-y-1 text-sm font-medium text-slate-700">
+                    <a href="#overview" class="block px-2 py-2 hover:text-blue-600">Overview</a>
+                    <a href="#features" class="block px-2 py-2 hover:text-blue-600">Features</a>
+                    <a href="#architecture" class="block px-2 py-2 hover:text-blue-600">Architecture</a>
+                    <a href="#api" class="block px-2 py-2 hover:text-blue-600">API</a>
+                    <a href="#models" class="block px-2 py-2 hover:text-blue-600">Data Models</a>
+                    <a href="#frontend" class="block px-2 py-2 hover:text-blue-600">Frontend</a>
+                    <a href="#screenshots" class="block px-2 py-2 hover:text-blue-600">Screenshots</a>
+                </div>
             </div>
         </div>
     </nav>
 
-    <main class="pt-24">
+    <main class="pt-20 sm:pt-24">
         <!-- Hero / Overview -->
-        <section id="overview" class="py-20 px-4 sm:px-6 lg:px-8">
-            <div class="max-w-7xl mx-auto grid lg:grid-cols-2 gap-16 items-center">
+        <section id="overview" class="py-12 sm:py-16 px-4 sm:px-6 lg:px-8">
+            <div class="max-w-7xl mx-auto grid gap-8 lg:grid-cols-2 lg:gap-16 items-start">
                 <div>
-                    <p class="text-sm font-semibold tracking-widest text-blue-600 uppercase">Production-grade RAG stack</p>
-                    <h1 class="mt-6 text-4xl sm:text-5xl lg:text-6xl font-black text-slate-900 leading-tight">
+                    <p class="text-xs sm:text-sm font-semibold tracking-widest text-blue-600 uppercase">Production-grade
+                        RAG stack</p>
+                    <h1 class="mt-4 sm:mt-6 text-2xl sm:text-3xl lg:text-5xl font-black text-slate-900 leading-tight">
                         RAGify: Retrieval-Augmented Generation Engine
                     </h1>
-                    <p class="mt-6 text-lg text-slate-600 leading-relaxed">
-                        Deliver grounded AI answers with full citations. RAGify couples a FastAPI backend, modular retrieval pipeline,
-                        and modern frontend to ingest documents, orchestrate hybrid search, and stream responses from 100+ models via OpenRouter.
+                    <p class="mt-4 sm:mt-6 text-sm sm:text-base text-slate-600 leading-relaxed">
+                        Deliver grounded AI answers with full citations. RAGify couples a FastAPI backend, modular
+                        retrieval pipeline,
+                        and modern frontend to ingest documents, orchestrate hybrid search, and stream responses from
+                        100+ models via OpenRouter.
                     </p>
-                    <div class="mt-10 flex flex-wrap gap-4">
-                        <a href="https://ragify-sqhu4om4aq-uc.a.run.app/" target="_blank" rel="noopener" class="inline-flex items-center justify-center rounded-full bg-blue-600 px-8 py-3 text-white font-semibold shadow-lg shadow-blue-600/30">
+                    <div class="mt-6 sm:mt-8 flex flex-col sm:flex-row sm:flex-wrap gap-3 sm:gap-4 w-full">
+                        <a href="https://ragify-sqhu4om4aq-uc.a.run.app/" target="_blank" rel="noopener"
+                            class="w-full sm:w-auto inline-flex items-center justify-center rounded-full bg-blue-600 px-6 py-2.5 text-white text-sm font-semibold shadow-lg shadow-blue-600/30">
                             Open Live Demo
                         </a>
-                        <a href="https://ragify-sqhu4om4aq-uc.a.run.app/docs" target="_blank" rel="noopener" class="inline-flex items-center justify-center rounded-full border border-blue-200 px-8 py-3 font-semibold text-blue-700 bg-blue-50/60 hover:border-blue-600 hover:text-blue-600">
+                        <a href="https://ragify-sqhu4om4aq-uc.a.run.app/docs" target="_blank" rel="noopener"
+                            class="w-full sm:w-auto inline-flex items-center justify-center rounded-full border border-blue-200 px-6 py-2.5 text-sm font-semibold text-blue-700 bg-blue-50/60 hover:border-blue-600 hover:text-blue-600">
                             Open API Docs
                         </a>
-                        <a href="#screenshots" class="inline-flex items-center justify-center rounded-full border border-slate-300 px-8 py-3 font-semibold text-slate-700 hover:border-blue-600 hover:text-blue-600">
+                        <a href="#screenshots"
+                            class="w-full sm:w-auto inline-flex items-center justify-center rounded-full border border-slate-300 px-6 py-2.5 text-sm font-semibold text-slate-700 hover:border-blue-600 hover:text-blue-600">
                             View Screenshots
                         </a>
-                        <a href="#api" class="inline-flex items-center justify-center rounded-full border border-slate-300 px-8 py-3 font-semibold text-slate-700 hover:border-blue-600 hover:text-blue-600">
+                        <a href="#api"
+                            class="w-full sm:w-auto inline-flex items-center justify-center rounded-full border border-slate-300 px-6 py-2.5 text-sm font-semibold text-slate-700 hover:border-blue-600 hover:text-blue-600">
                             Review API Spec
                         </a>
                     </div>
-                    <div class="mt-8 rounded-3xl border border-blue-100 bg-gradient-to-r from-blue-50 via-white to-blue-100/60 p-6 sm:p-8 shadow-2xl flex flex-col lg:flex-row gap-8">
+                    <div
+                        class="mt-6 sm:mt-8 rounded-2xl border border-blue-100 bg-gradient-to-r from-blue-50 via-white to-blue-100/60 p-4 sm:p-6 shadow-xl flex flex-col lg:flex-row gap-4 lg:gap-6">
                         <div class="flex-1">
-                            <p class="text-xs uppercase tracking-widest text-blue-600 font-semibold">Show some love</p>
-                            <h3 class="mt-2 text-3xl font-bold text-slate-900">Boost the project with a GitHub ⭐️</h3>
-                            <p class="mt-3 text-base text-slate-600 leading-relaxed">Stars help more engineers discover RAGify. You’ll be redirected to GitHub to confirm the star (GitHub rules!), but the button below keeps you inside the flow.</p>
+                            <p class="text-[10px] sm:text-xs uppercase tracking-widest text-blue-600 font-semibold">Show
+                                some love</p>
+                            <h3 class="mt-2 text-xl sm:text-2xl font-bold text-slate-900">Boost the project with a
+                                GitHub ⭐️</h3>
+                            <p class="mt-3 text-sm text-slate-600 leading-relaxed">
+                                Stars help more engineers discover RAGify. You'll be redirected to GitHub to confirm the
+                                star, but the button below keeps you inside the flow.
+                            </p>
                             <div class="mt-4 flex flex-wrap items-center gap-3">
-                                <button onclick="openGithubStar()" class="inline-flex items-center gap-2 rounded-full bg-blue-600 px-6 py-3 text-white text-sm font-semibold shadow-lg shadow-blue-600/40 hover:bg-blue-700">
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
-                                        <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.54-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81H7.03a1 1 0 00.95-.69l1.07-3.292z" />
+                                <button onclick="openGithubStar()"
+                                    class="inline-flex items-center gap-2 rounded-full bg-blue-600 px-5 py-2.5 text-white text-sm font-semibold shadow-lg shadow-blue-600/40 hover:bg-blue-700">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4"
+                                        fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
+                                        <path
+                                            d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.54-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81H7.03a1 1 0 00.95-.69l1.07-3.292z" />
                                     </svg>
                                     Star on GitHub
                                 </button>
-                                <a href="https://github.com/OthmaneBlial/RAGify" target="_blank" rel="noopener" class="inline-flex items-center gap-2 rounded-full border border-slate-300 px-5 py-3 text-sm font-semibold text-slate-700 hover:border-blue-600 hover:text-blue-600">
+                                <a href="https://github.com/OthmaneBlial/RAGify" target="_blank" rel="noopener"
+                                    class="inline-flex items-center gap-2 rounded-full border border-slate-300 px-5 py-2.5 text-sm font-semibold text-slate-700 hover:border-blue-600 hover:text-blue-600">
                                     View Repository
                                 </a>
                             </div>
                         </div>
-                        <div class="w-full lg:w-64 bg-white/90 border border-slate-200 rounded-2xl p-6 text-center shadow-lg">
-                            <p class="text-xs uppercase tracking-wide text-slate-500 font-semibold">Current stars</p>
-                            <p id="star-count" class="mt-3 text-4xl font-black text-slate-900">—</p>
-                            <p class="text-xs text-slate-500">Synced live from GitHub</p>
-                            <button onclick="openGithubStar()" class="mt-4 inline-flex items-center justify-center w-full rounded-xl bg-slate-900 text-white text-sm font-semibold py-2.5 hover:bg-slate-800">
+                        <div
+                            class="w-full lg:w-64 bg-white/90 border border-slate-200 rounded-2xl p-4 sm:p-5 text-center shadow-lg">
+                            <p class="text-[11px] uppercase tracking-wide text-slate-500 font-semibold">
+                                Current stars</p>
+                            <p id="star-count" class="mt-3 text-2xl sm:text-3xl font-black text-slate-900">—</p>
+                            <p class="text-[11px] text-slate-500">Synced live from GitHub</p>
+                            <button onclick="openGithubStar()"
+                                class="mt-4 inline-flex items-center justify-center w-full rounded-xl bg-slate-900 text-white text-xs font-semibold py-2.5 hover:bg-slate-800">
                                 Add your star
                             </button>
-                            <p class="mt-2 text-[11px] text-slate-500">GitHub opens in a new tab to verify the action.</p>
+                            <p class="mt-2 text-[10px] text-slate-500">GitHub opens in a new tab to verify the action.
+                            </p>
                         </div>
                     </div>
-                    <div class="mt-12 grid gap-6 sm:grid-cols-2">
-                        <div class="rounded-2xl bg-white p-6 border border-slate-200 card-shadow">
+                    <div class="mt-8 sm:mt-10 grid gap-4 sm:gap-6 sm:grid-cols-2">
+                        <div class="rounded-2xl bg-white p-4 sm:p-6 border border-slate-200 card-shadow">
                             <p class="text-sm font-semibold text-slate-500">Runtime Highlights</p>
-                            <ul class="mt-4 space-y-2 text-xs text-slate-600 leading-relaxed">
+                            <ul class="mt-4 space-y-2 text-xs sm:text-sm text-slate-600 leading-relaxed">
                                 <li>• Async FastAPI with streaming chat</li>
                                 <li>• Hybrid semantic + keyword retrieval</li>
                                 <li>• Inline citations & relevance scores</li>
                                 <li>• Single-container deployment</li>
                             </ul>
                         </div>
-                        <div class="rounded-2xl border border-slate-200 bg-slate-900 text-lime-100 p-6 font-mono text-xs leading-relaxed card-shadow">
+                        <div
+                            class="rounded-2xl border border-slate-200 bg-slate-900 text-lime-100 p-4 sm:p-6 font-mono text-[0.65rem] sm:text-xs leading-relaxed card-shadow">
                             <p class="text-slate-400 mb-2">$ setup.sh</p>
-                            <p class="text-[0.72rem]">git clone github.com/OthmaneBlial/RAGify.git</p>
+                            <p>git clone github.com/OthmaneBlial/RAGify.git</p>
                             <p>cd RAGify && ./startup.sh</p>
                             <p class="text-slate-400 mt-4"># Backend → http://localhost:8000</p>
                             <p class="text-slate-400"># Frontend → http://localhost:4173</p>
                         </div>
                     </div>
                 </div>
-                <div class="space-y-6">
-                    <div class="code-block card-shadow">
-                        <div class="flex items-center justify-between text-sm text-slate-500 mb-4">
-                            <span># rag_pipeline.py</span>
-                            <span>Streaming RAG Response</span>
-                        </div>
-<pre><code><span class="syntax-keyword">async def</span> <span class="syntax-function">generate_answer</span>(query: <span class="syntax-type">str</span>, app_id: <span class="syntax-type">UUID</span>):
+                <div class="space-y-4 lg:space-y-6">
+                    <!-- FIXED: Better code block with wrapper -->
+                    <div class="code-wrapper">
+                        <div class="code-block card-shadow bg-white/80">
+                            <div
+                                class="flex flex-col sm:flex-row sm:items-center sm:justify-between text-[11px] text-slate-500 mb-3">
+                                <span># rag_pipeline.py</span>
+                                <span>Streaming RAG Response</span>
+                            </div>
+                            <pre><code><span class="syntax-keyword">async def</span> <span class="syntax-function">generate_answer</span>(query: <span class="syntax-type">str</span>, app_id: <span class="syntax-type">UUID</span>):
     kb = <span class="syntax-keyword">await</span> knowledge_service.load(app_id)
     docs = retriever.hybrid(
         query=query,
@@ -188,14 +346,19 @@
             {"role": "system", "content": context}
         ],
     )</code></pre>
+                        </div>
                     </div>
-                    <div class="rounded-2xl bg-white border border-blue-100 p-6 card-shadow">
+                    <div class="rounded-2xl bg-white border border-blue-100 p-4 sm:p-6 card-shadow">
                         <p class="text-sm font-semibold text-blue-600">Project Snapshot</p>
                         <ul class="mt-4 space-y-3 text-sm text-slate-600 leading-relaxed">
-                            <li><span class="font-semibold text-slate-900">Open source:</span> MIT-licensed repository for teams exploring Retrieval-Augmented Generation patterns.</li>
-                            <li><span class="font-semibold text-slate-900">Backend:</span> FastAPI + SQLAlchemy modules for knowledge bases, documents, chat, and model configs.</li>
-                            <li><span class="font-semibold text-slate-900">Frontend:</span> Tailwind-powered demo UI showcasing chat, ingestion, and admin workflows.</li>
-                            <li><span class="font-semibold text-slate-900">Deploy anywhere:</span> Dockerized stack with single-container startup scripts for quick pilots.</li>
+                            <li><span class="font-semibold text-slate-900">Open source:</span> MIT-licensed repository
+                                for teams exploring Retrieval-Augmented Generation patterns.</li>
+                            <li><span class="font-semibold text-slate-900">Backend:</span> FastAPI + SQLAlchemy modules
+                                for knowledge bases, documents, chat, and model configs.</li>
+                            <li><span class="font-semibold text-slate-900">Frontend:</span> Tailwind-powered demo UI
+                                showcasing chat, ingestion, and admin workflows.</li>
+                            <li><span class="font-semibold text-slate-900">Deploy anywhere:</span> Dockerized stack with
+                                single-container startup scripts for quick pilots.</li>
                         </ul>
                     </div>
                 </div>
@@ -203,103 +366,174 @@
         </section>
 
         <!-- Features -->
-        <section id="features" class="py-20 px-4 sm:px-6 lg:px-8 bg-white">
+        <section id="features" class="py-12 sm:py-16 px-4 sm:px-6 lg:px-8 bg-white">
             <div class="max-w-7xl mx-auto">
                 <div class="text-center max-w-3xl mx-auto">
-                    <p class="text-sm font-semibold tracking-widest text-blue-600 uppercase">Key Technical Features</p>
-                    <h2 class="mt-4 text-4xl font-black text-slate-900">Modern infrastructure tuned for Retrieval-Augmented Generation</h2>
-                    <p class="mt-4 text-lg text-slate-600 leading-relaxed">Every layer—from ingestion to inference—ships with measured defaults, predictable latency, and observability hooks for real deployments.</p>
-                    <p class="mt-4 text-sm text-slate-500">Preview it live at <a href="https://ragify-sqhu4om4aq-uc.a.run.app/" target="_blank" rel="noopener" class="text-blue-600 font-semibold hover:underline">ragify-sqhu4om4aq-uc.a.run.app</a>.</p>
+                    <p class="text-xs sm:text-sm font-semibold tracking-widest text-blue-600 uppercase">Key Technical
+                        Features</p>
+                    <h2 class="mt-4 text-2xl sm:text-3xl font-black text-slate-900">Modern infrastructure tuned for
+                        Retrieval-Augmented Generation</h2>
+                    <p class="mt-4 text-sm sm:text-base text-slate-600 leading-relaxed">
+                        Every layer—from ingestion to inference—ships with measured defaults, predictable latency, and
+                        observability hooks for real deployments.
+                    </p>
+                    <p class="mt-4 text-xs sm:text-sm text-slate-500">
+                        Preview it live at
+                        <a href="https://ragify-sqhu4om4aq-uc.a.run.app/" target="_blank" rel="noopener"
+                            class="text-blue-600 font-semibold hover:underline">
+                            ragify-sqhu4om4aq-uc.a.run.app
+                        </a>.
+                    </p>
                 </div>
-                <div class="mt-16 grid gap-8 md:grid-cols-2 xl:grid-cols-3">
-                    <article class="h-full rounded-2xl border border-slate-200 bg-slate-50 p-8 card-shadow">
+                <div class="mt-8 sm:mt-12 grid gap-4 sm:gap-6 md:grid-cols-2 xl:grid-cols-3">
+                    <article class="h-full rounded-2xl border border-slate-200 bg-slate-50 p-4 sm:p-6 card-shadow">
                         <p class="text-sm font-semibold text-blue-600">FastAPI Backend</p>
-                        <h3 class="mt-3 text-2xl font-semibold text-slate-900">Async streaming with typed contracts</h3>
-                        <p class="mt-4 text-slate-600 leading-relaxed">Async endpoints, dependency overrides for testing, and automatic OpenAPI docs. Background tasks keep ingestion responsive while chats keep streaming.</p>
+                        <h3 class="mt-3 text-lg sm:text-xl font-semibold text-slate-900">Async streaming with typed
+                            contracts</h3>
+                        <p class="mt-4 text-sm text-slate-600 leading-relaxed">
+                            Async endpoints, dependency overrides for testing, and automatic OpenAPI docs. Background
+                            tasks keep ingestion responsive while chats keep streaming.
+                        </p>
                     </article>
-                    <article class="h-full rounded-2xl border border-slate-200 bg-slate-50 p-8 card-shadow">
+                    <article class="h-full rounded-2xl border border-slate-200 bg-slate-50 p-4 sm:p-6 card-shadow">
                         <p class="text-sm font-semibold text-blue-600">Hybrid Database</p>
-                        <h3 class="mt-3 text-2xl font-semibold text-slate-900">SQLite/PostgreSQL with vectors</h3>
-                        <p class="mt-4 text-slate-600 leading-relaxed">Switch between SQLite for local demos and PostgreSQL + pgvector in production. SQLAlchemy models keep migrations and connection pooling in sync.</p>
+                        <h3 class="mt-3 text-lg sm:text-xl font-semibold text-slate-900">SQLite/PostgreSQL with vectors
+                        </h3>
+                        <p class="mt-4 text-sm text-slate-600 leading-relaxed">
+                            Switch between SQLite for local demos and PostgreSQL + pgvector in production. SQLAlchemy
+                            models keep migrations and connection pooling in sync.
+                        </p>
                     </article>
-                    <article class="h-full rounded-2xl border border-slate-200 bg-slate-50 p-8 card-shadow">
+                    <article class="h-full rounded-2xl border border-slate-200 bg-slate-50 p-4 sm:p-6 card-shadow">
                         <p class="text-sm font-semibold text-blue-600">Multi-model Router</p>
-                        <h3 class="mt-3 text-2xl font-semibold text-slate-900">100+ models via OpenRouter</h3>
-                        <p class="mt-4 text-slate-600 leading-relaxed">Smart routing between GPT-4o, Claude, Llama, and more with per-application temperature, max_tokens, and safety configurations baked into ModelConfig.</p>
+                        <h3 class="mt-3 text-lg sm:text-xl font-semibold text-slate-900">100+ models via OpenRouter
+                        </h3>
+                        <p class="mt-4 text-sm text-slate-600 leading-relaxed">
+                            Smart routing between GPT-4o, Claude, Llama, and more with per-application temperature,
+                            max_tokens, and safety configurations baked into ModelConfig.
+                        </p>
                     </article>
-                    <article class="h-full rounded-2xl border border-slate-200 bg-slate-50 p-8 card-shadow">
+                    <article class="h-full rounded-2xl border border-slate-200 bg-slate-50 p-4 sm:p-6 card-shadow">
                         <p class="text-sm font-semibold text-blue-600">Advanced Retrieval</p>
-                        <h3 class="mt-3 text-2xl font-semibold text-slate-900">Semantic + keyword fusion</h3>
-                        <p class="mt-4 text-slate-600 leading-relaxed">BM25 for key phrases, transformer embeddings for semantic recall, and rerankers to ensure context blocks stay tightly scoped.</p>
+                        <h3 class="mt-3 text-lg sm:text-xl font-semibold text-slate-900">Semantic + keyword fusion</h3>
+                        <p class="mt-4 text-sm text-slate-600 leading-relaxed">
+                            BM25 for key phrases, transformer embeddings for semantic recall, and rerankers to ensure
+                            context blocks stay tightly scoped.
+                        </p>
                     </article>
-                    <article class="h-full rounded-2xl border border-slate-200 bg-slate-50 p-8 card-shadow">
+                    <article class="h-full rounded-2xl border border-slate-200 bg-slate-50 p-4 sm:p-6 card-shadow">
                         <p class="text-sm font-semibold text-blue-600">Production-ready</p>
-                        <h3 class="mt-3 text-2xl font-semibold text-slate-900">Single-container deployment</h3>
-                        <p class="mt-4 text-slate-600 leading-relaxed">Docker Compose spins up backend, worker, and vector store. Health probes, metrics endpoints, and structured logging fit straight into your cluster.</p>
+                        <h3 class="mt-3 text-lg sm:text-xl font-semibold text-slate-900">Single-container deployment
+                        </h3>
+                        <p class="mt-4 text-sm text-slate-600 leading-relaxed">
+                            Docker Compose spins up backend, worker, and vector store. Health probes, metrics endpoints,
+                            and structured logging fit straight into your cluster.
+                        </p>
                     </article>
-                    <article class="h-full rounded-2xl border border-slate-200 bg-slate-50 p-8 card-shadow">
+                    <article class="h-full rounded-2xl border border-slate-200 bg-slate-50 p-4 sm:p-6 card-shadow">
                         <p class="text-sm font-semibold text-blue-600">Grounded Responses</p>
-                        <h3 class="mt-3 text-2xl font-semibold text-slate-900">Inline citations, scores, guardrails</h3>
-                        <p class="mt-4 text-slate-600 leading-relaxed">Chat responses embed citation markers with document metadata and expose retrieval confidence for UI trust indicators.</p>
+                        <h3 class="mt-3 text-lg sm:text-xl font-semibold text-slate-900">Inline citations, scores,
+                            guardrails</h3>
+                        <p class="mt-4 text-sm text-slate-600 leading-relaxed">
+                            Chat responses embed citation markers with document metadata and expose retrieval confidence
+                            for UI trust indicators.
+                        </p>
                     </article>
                 </div>
             </div>
         </section>
 
         <!-- Architecture -->
-        <section id="architecture" class="py-20 px-4 sm:px-6 lg:px-8 bg-slate-100">
-            <div class="max-w-7xl mx-auto grid lg:grid-cols-2 gap-16 items-center">
+        <section id="architecture" class="py-12 sm:py-16 px-4 sm:px-6 lg:px-8 bg-slate-100">
+            <div class="max-w-7xl mx-auto grid gap-8 lg:grid-cols-2 lg:gap-16 items-start">
                 <div>
-                    <p class="text-sm font-semibold tracking-widest text-blue-600 uppercase">Architecture Deep Dive</p>
-                    <h2 class="mt-4 text-4xl font-black text-slate-900">Layered system design</h2>
-                    <p class="mt-4 text-slate-600 leading-relaxed">Each module is isolated so you can replace retrievers, swap vector stores, or plug in a new LLM without rewriting core flows.</p>
-                    <div class="mt-10 space-y-6">
+                    <p class="text-xs sm:text-sm font-semibold tracking-widest text-blue-600 uppercase">Architecture
+                        Deep Dive</p>
+                    <h2 class="mt-4 text-2xl sm:text-3xl font-black text-slate-900">Layered system design</h2>
+                    <p class="mt-4 text-sm text-slate-600 leading-relaxed">
+                        Each module is isolated so you can replace retrievers, swap vector stores, or plug in a new LLM
+                        without rewriting core flows.
+                    </p>
+                    <div class="mt-6 sm:mt-8 space-y-4 sm:space-y-6">
                         <div class="flex items-start gap-4">
-                            <div class="h-12 w-12 rounded-full bg-white border border-blue-100 flex items-center justify-center font-bold text-blue-600">1</div>
+                            <div
+                                class="h-10 w-10 rounded-full bg-white border border-blue-100 flex items-center justify-center font-bold text-blue-600 text-sm">
+                                1</div>
                             <div>
-                                <h3 class="text-xl font-semibold text-slate-900">Frontend UI</h3>
-                                <p class="text-slate-600 leading-relaxed">Vue-inspired component layout with chat viewport, file dropzone, and admin controls powered by vanilla JavaScript.</p>
+                                <h3 class="text-lg font-semibold text-slate-900">Frontend UI</h3>
+                                <p class="text-sm text-slate-600 leading-relaxed">
+                                    Vue-inspired component layout with chat viewport, file dropzone, and admin controls
+                                    powered by vanilla JavaScript.
+                                </p>
                             </div>
                         </div>
                         <div class="flex items-start gap-4">
-                            <div class="h-12 w-12 rounded-full bg-white border border-blue-100 flex items-center justify-center font-bold text-blue-600">2</div>
+                            <div
+                                class="h-10 w-10 rounded-full bg-white border border-blue-100 flex items-center justify-center font-bold text-blue-600 text-sm">
+                                2</div>
                             <div>
-                                <h3 class="text-xl font-semibold text-slate-900">FastAPI Layer</h3>
-                                <p class="text-slate-600 leading-relaxed">Versioned REST endpoints with automatic validation, rate limiting hooks, and streaming Server-Sent Events for chat.</p>
+                                <h3 class="text-lg font-semibold text-slate-900">FastAPI Layer</h3>
+                                <p class="text-sm text-slate-600 leading-relaxed">
+                                    Versioned REST endpoints with automatic validation, rate limiting hooks, and
+                                    streaming Server-Sent Events for chat.
+                                </p>
                             </div>
                         </div>
                         <div class="flex items-start gap-4">
-                            <div class="h-12 w-12 rounded-full bg-white border border-blue-100 flex items-center justify-center font-bold text-blue-600">3</div>
+                            <div
+                                class="h-10 w-10 rounded-full bg-white border border-blue-100 flex items-center justify-center font-bold text-blue-600 text-sm">
+                                3</div>
                             <div>
-                                <h3 class="text-xl font-semibold text-slate-900">Application & Knowledge Modules</h3>
-                                <p class="text-slate-600 leading-relaxed">Dedicated services for applications, knowledge bases, and document processing keep domain logic isolated.</p>
+                                <h3 class="text-lg font-semibold text-slate-900">Application & Knowledge
+                                    Modules</h3>
+                                <p class="text-sm text-slate-600 leading-relaxed">
+                                    Dedicated services for applications, knowledge bases, and document processing keep
+                                    domain logic isolated.
+                                </p>
                             </div>
                         </div>
                         <div class="flex items-start gap-4">
-                            <div class="h-12 w-12 rounded-full bg-white border border-blue-100 flex items-center justify-center font-bold text-blue-600">4</div>
+                            <div
+                                class="h-10 w-10 rounded-full bg-white border border-blue-100 flex items-center justify-center font-bold text-blue-600 text-sm">
+                                4</div>
                             <div>
-                                <h3 class="text-xl font-semibold text-slate-900">RAG Engine</h3>
-                                <p class="text-slate-600 leading-relaxed">Retriever, reranker, prompt composer, and generation router coordinate to build grounded answers with confidence scores.</p>
+                                <h3 class="text-lg font-semibold text-slate-900">RAG Engine</h3>
+                                <p class="text-sm text-slate-600 leading-relaxed">
+                                    Retriever, reranker, prompt composer, and generation router coordinate to build
+                                    grounded answers with confidence scores.
+                                </p>
                             </div>
                         </div>
                         <div class="flex items-start gap-4">
-                            <div class="h-12 w-12 rounded-full bg-white border border-blue-100 flex items-center justify-center font-bold text-blue-600">5</div>
+                            <div
+                                class="h-10 w-10 rounded-full bg-white border border-blue-100 flex items-center justify-center font-bold text-blue-600 text-sm">
+                                5</div>
                             <div>
-                                <h3 class="text-xl font-semibold text-slate-900">Data Layer</h3>
-                                <p class="text-slate-600 leading-relaxed">SQLAlchemy models, Alembic migrations, and vector indexes (pgvector, LanceDB, Chroma) accessible through a single repository pattern.</p>
+                                <h3 class="text-lg font-semibold text-slate-900">Data Layer</h3>
+                                <p class="text-sm text-slate-600 leading-relaxed">
+                                    SQLAlchemy models, Alembic migrations, and vector indexes (pgvector, LanceDB,
+                                    Chroma) accessible through a single repository pattern.
+                                </p>
                             </div>
                         </div>
                         <div class="flex items-start gap-4">
-                            <div class="h-12 w-12 rounded-full bg-white border border-blue-100 flex items-center justify-center font-bold text-blue-600">6</div>
+                            <div
+                                class="h-10 w-10 rounded-full bg-white border border-blue-100 flex items-center justify-center font-bold text-blue-600 text-sm">
+                                6</div>
                             <div>
-                                <h3 class="text-xl font-semibold text-slate-900">External Integrations</h3>
-                                <p class="text-slate-600 leading-relaxed">OpenRouter for LLM access, Redis for caching, object storage for binary blobs, and observability hooks for tracing.</p>
+                                <h3 class="text-lg font-semibold text-slate-900">External Integrations</h3>
+                                <p class="text-sm text-slate-600 leading-relaxed">
+                                    OpenRouter for LLM access, Redis for caching, object storage for binary blobs, and
+                                    observability hooks for tracing.
+                                </p>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="code-block card-shadow bg-white">
-<pre><code>backend/
+                <!-- FIXED: Better code block with wrapper -->
+                <div class="code-wrapper">
+                    <div class="code-block card-shadow bg-white">
+                        <pre><code>backend/
 ├── api/
 │   └── routes (applications, knowledge, chat, documents)
 ├── core/
@@ -323,179 +557,268 @@ frontend/
 ├── components/
 ├── api-client/
 └── pages/</code></pre>
+                    </div>
                 </div>
             </div>
         </section>
 
         <!-- API Showcase -->
-        <section id="api" class="py-20 px-4 sm:px-6 lg:px-8">
+        <section id="api" class="py-12 sm:py-16 px-4 sm:px-6 lg:px-8">
             <div class="max-w-7xl mx-auto">
                 <div class="text-center max-w-3xl mx-auto">
-                    <p class="text-sm font-semibold tracking-widest text-blue-600 uppercase">API Endpoints Showcase</p>
-                    <h2 class="mt-4 text-4xl font-black text-slate-900">Versioned endpoints with predictable payloads</h2>
-                    <p class="mt-4 text-lg text-slate-600 leading-relaxed">Switch between knowledge base management, document ingestion, application settings, and chat streaming using the tabbed explorer below.</p>
-                    <p class="mt-4 text-sm text-slate-500">Need the full schema? Jump straight to the <a href="https://ragify-sqhu4om4aq-uc.a.run.app/docs" target="_blank" rel="noopener" class="text-blue-600 font-semibold hover:underline">FastAPI docs</a>.</p>
+                    <p class="text-xs sm:text-sm font-semibold tracking-widest text-blue-600 uppercase">API Endpoints
+                        Showcase</p>
+                    <h2 class="mt-4 text-2xl sm:text-3xl font-black text-slate-900">Versioned endpoints with predictable
+                        payloads</h2>
+                    <p class="mt-4 text-sm text-base text-slate-600 leading-relaxed">
+                        Switch between knowledge base management, document ingestion, application settings, and chat
+                        streaming using the tabbed explorer below.
+                    </p>
+                    <p class="mt-4 text-xs sm:text-sm text-slate-500">
+                        Need the full schema? Jump straight to the
+                        <a href="https://ragify-sqhu4om4aq-uc.a.run.app/docs" target="_blank" rel="noopener"
+                            class="text-blue-600 font-semibold hover:underline">
+                            FastAPI docs
+                        </a>.
+                    </p>
                 </div>
-                <div class="mt-12 flex flex-wrap justify-center gap-4">
-                    <button class="tab-btn tab-active" data-tab="knowledge" onclick="showTab('knowledge', this)">Knowledge Bases</button>
-                    <button class="tab-btn" data-tab="documents" onclick="showTab('documents', this)">Documents</button>
-                    <button class="tab-btn" data-tab="applications" onclick="showTab('applications', this)">Applications</button>
-                    <button class="tab-btn" data-tab="chat" onclick="showTab('chat', this)">Chat</button>
+                <!-- FIXED: Better tab container for mobile -->
+                <div class="mt-6 sm:mt-8 tab-container">
+                    <div class="tab-wrapper">
+                        <button class="tab-btn tab-active" data-tab="knowledge"
+                            onclick="showTab('knowledge', this)">Knowledge Bases</button>
+                        <button class="tab-btn" data-tab="documents" onclick="showTab('documents', this)">Documents</button>
+                        <button class="tab-btn" data-tab="applications"
+                            onclick="showTab('applications', this)">Applications</button>
+                        <button class="tab-btn" data-tab="chat" onclick="showTab('chat', this)">Chat</button>
+                    </div>
                 </div>
-                <div class="mt-12 space-y-12">
+                <div class="mt-8 sm:mt-10 space-y-8 sm:space-y-12">
                     <div id="knowledge-tab" class="tab-content">
-                        <div class="grid md:grid-cols-2 gap-8">
-                            <article class="border border-slate-200 rounded-2xl p-8 bg-white card-shadow">
-                                <h3 class="text-xl font-semibold text-slate-900">POST /api/v1/knowledge-bases/</h3>
-                                <p class="mt-3 text-slate-600 leading-relaxed">Create a new knowledge base, attach metadata, and configure ingestion policies.</p>
-                                <div class="code-block mt-6">
-<pre><code><span class="syntax-keyword">curl</span> -X POST "http://localhost:8000/api/v1/knowledge-bases/" \
+                        <div class="grid gap-4 sm:gap-6 md:grid-cols-2">
+                            <article class="border border-slate-200 rounded-2xl p-4 sm:p-6 bg-white card-shadow">
+                                <h3 class="text-lg font-semibold text-slate-900">POST
+                                    /api/v1/knowledge-bases/</h3>
+                                <p class="mt-3 text-sm text-slate-600 leading-relaxed">
+                                    Create a new knowledge base, attach metadata, and configure ingestion policies.
+                                </p>
+                                <!-- FIXED: Better code block with wrapper -->
+                                <div class="code-wrapper mt-4 sm:mt-6">
+                                    <div class="code-block">
+                                        <pre><code><span class="syntax-keyword">curl</span> -X POST "http://localhost:8000/api/v1/knowledge-bases/" \
   -H "Content-Type: application/json" \
   -d '{
         "name": "Product Docs",
         "description": "Customer facing answers",
         "vector_config": {"dimension": 1536}
       }'</code></pre>
+                                    </div>
                                 </div>
-                                <button class="mt-4 text-blue-600 text-sm font-semibold" onclick="toggleCode(this)">Show Response</button>
-                                <div class="response hidden code-block mt-4">
-<pre><code>{
+                                <button class="mt-4 text-blue-600 text-sm font-semibold"
+                                    onclick="toggleCode(this)">Show Response</button>
+                                <div class="response hidden code-wrapper mt-4">
+                                    <div class="code-block">
+                                        <pre><code>{
   "id": "kb_42",
   "name": "Product Docs",
   "document_count": 128,
   "status": "ready"
 }</code></pre>
+                                    </div>
                                 </div>
                             </article>
-                            <article class="border border-slate-200 rounded-2xl p-8 bg-white card-shadow">
-                                <h3 class="text-xl font-semibold text-slate-900">GET /api/v1/knowledge-bases/{id}</h3>
-                                <p class="mt-3 text-slate-600 leading-relaxed">Fetch configuration, retention settings, and document statistics.</p>
-                                <div class="code-block mt-6">
-<pre><code><span class="syntax-keyword">curl</span> -X GET "http://localhost:8000/api/v1/knowledge-bases/kb_42"</code></pre>
+                            <article class="border border-slate-200 rounded-2xl p-4 sm:p-6 bg-white card-shadow">
+                                <h3 class="text-lg font-semibold text-slate-900">GET
+                                    /api/v1/knowledge-bases/{id}</h3>
+                                <p class="mt-3 text-sm text-slate-600 leading-relaxed">
+                                    Fetch configuration, retention settings, and document statistics.
+                                </p>
+                                <!-- FIXED: Better code block with wrapper -->
+                                <div class="code-wrapper mt-4 sm:mt-6">
+                                    <div class="code-block">
+                                        <pre><code><span class="syntax-keyword">curl</span> -X GET "http://localhost:8000/api/v1/knowledge-bases/kb_42"</code></pre>
+                                    </div>
                                 </div>
-                                <button class="mt-4 text-blue-600 text-sm font-semibold" onclick="toggleCode(this)">Show Response</button>
-                                <div class="response hidden code-block mt-4">
-<pre><code>{
+                                <button class="mt-4 text-blue-600 text-sm font-semibold"
+                                    onclick="toggleCode(this)">Show Response</button>
+                                <div class="response hidden code-wrapper mt-4">
+                                    <div class="code-block">
+                                        <pre><code>{
   "id": "kb_42",
   "documents": 128,
   "last_ingested_at": "2024-01-15T11:05:00Z",
   "owner": "support@ragify.ai"
 }</code></pre>
+                                    </div>
                                 </div>
                             </article>
                         </div>
                     </div>
 
                     <div id="documents-tab" class="tab-content hidden">
-                        <div class="grid md:grid-cols-2 gap-8">
-                            <article class="border border-slate-200 rounded-2xl p-8 bg-white card-shadow">
-                                <h3 class="text-xl font-semibold text-slate-900">POST /api/v1/documents/upload</h3>
-                                <p class="mt-3 text-slate-600 leading-relaxed">Upload PDFs, HTML, or Markdown. Processing pipeline extracts chunks, embeddings, and metadata.</p>
-                                <div class="code-block mt-6">
-<pre><code><span class="syntax-keyword">curl</span> -X POST "http://localhost:8000/api/v1/documents/upload" \
+                        <div class="grid gap-4 sm:gap-6 md:grid-cols-2">
+                            <article class="border border-slate-200 rounded-2xl p-4 sm:p-6 bg-white card-shadow">
+                                <h3 class="text-lg font-semibold text-slate-900">POST
+                                    /api/v1/documents/upload</h3>
+                                <p class="mt-3 text-sm text-slate-600 leading-relaxed">
+                                    Upload PDFs, HTML, or Markdown. Processing pipeline extracts chunks, embeddings, and
+                                    metadata.
+                                </p>
+                                <!-- FIXED: Better code block with wrapper -->
+                                <div class="code-wrapper mt-4 sm:mt-6">
+                                    <div class="code-block">
+                                        <pre><code><span class="syntax-keyword">curl</span> -X POST "http://localhost:8000/api/v1/documents/upload" \
   -F "file=@playbook.pdf" \
   -F "knowledge_base_id=kb_42"</code></pre>
+                                    </div>
                                 </div>
-                                <button class="mt-4 text-blue-600 text-sm font-semibold" onclick="toggleCode(this)">Show Response</button>
-                                <div class="response hidden code-block mt-4">
-<pre><code>{
+                                <button class="mt-4 text-blue-600 text-sm font-semibold"
+                                    onclick="toggleCode(this)">Show Response</button>
+                                <div class="response hidden code-wrapper mt-4">
+                                    <div class="code-block">
+                                        <pre><code>{
   "document_id": "doc_101",
   "chunks": 64,
   "status": "processed"
 }</code></pre>
+                                    </div>
                                 </div>
                             </article>
-                            <article class="border border-slate-200 rounded-2xl p-8 bg-white card-shadow">
-                                <h3 class="text-xl font-semibold text-slate-900">POST /api/v1/documents/search</h3>
-                                <p class="mt-3 text-slate-600 leading-relaxed">Hybrid search mixes semantic embeddings and keyword scoring for grounded recall.</p>
-                                <div class="code-block mt-6">
-<pre><code>{
+                            <article class="border border-slate-200 rounded-2xl p-4 sm:p-6 bg-white card-shadow">
+                                <h3 class="text-lg font-semibold text-slate-900">POST
+                                    /api/v1/documents/search</h3>
+                                <p class="mt-3 text-sm text-slate-600 leading-relaxed">
+                                    Hybrid search mixes semantic embeddings and keyword scoring for grounded recall.
+                                </p>
+                                <!-- FIXED: Better code block with wrapper -->
+                                <div class="code-wrapper mt-4 sm:mt-6">
+                                    <div class="code-block">
+                                        <pre><code>{
   "knowledge_base_id": "kb_42",
   "query": "reset MFA",
   "top_k": 5
 }</code></pre>
+                                    </div>
                                 </div>
-                                <button class="mt-4 text-blue-600 text-sm font-semibold" onclick="toggleCode(this)">Show Response</button>
-                                <div class="response hidden code-block mt-4">
-<pre><code>[
+                                <button class="mt-4 text-blue-600 text-sm font-semibold"
+                                    onclick="toggleCode(this)">Show Response</button>
+                                <div class="response hidden code-wrapper mt-4">
+                                    <div class="code-block">
+                                        <pre><code>[
   {
     "chunk": "Visit /settings/security to reset MFA...",
     "score": 0.92,
     "source": "playbook.pdf#12"
   }
 ]</code></pre>
+                                    </div>
                                 </div>
                             </article>
                         </div>
                     </div>
 
                     <div id="applications-tab" class="tab-content hidden">
-                        <div class="grid md:grid-cols-2 gap-8">
-                            <article class="border border-slate-200 rounded-2xl p-8 bg-white card-shadow">
-                                <h3 class="text-xl font-semibold text-slate-900">POST /api/v1/applications/</h3>
-                                <p class="mt-3 text-slate-600 leading-relaxed">Configure assistants, choose knowledge bases, and link to model presets.</p>
-                                <div class="code-block mt-6">
-<pre><code>{
+                        <div class="grid gap-4 sm:gap-6 md:grid-cols-2">
+                            <article class="border border-slate-200 rounded-2xl p-4 sm:p-6 bg-white card-shadow">
+                                <h3 class="text-lg font-semibold text-slate-900">POST /api/v1/applications/
+                                </h3>
+                                <p class="mt-3 text-sm text-slate-600 leading-relaxed">
+                                    Configure assistants, choose knowledge bases, and link to model presets.
+                                </p>
+                                <!-- FIXED: Better code block with wrapper -->
+                                <div class="code-wrapper mt-4 sm:mt-6">
+                                    <div class="code-block">
+                                        <pre><code>{
   "name": "Support Copilot",
   "knowledge_base_ids": ["kb_42"],
   "model_config_id": "model_claude",
   "temperature": 0.2
 }</code></pre>
+                                    </div>
                                 </div>
-                                <button class="mt-4 text-blue-600 text-sm font-semibold" onclick="toggleCode(this)">Show Response</button>
-                                <div class="response hidden code-block mt-4">
-<pre><code>{"application_id": "app_9001", "status": "active"}</code></pre>
+                                <button class="mt-4 text-blue-600 text-sm font-semibold"
+                                    onclick="toggleCode(this)">Show Response</button>
+                                <div class="response hidden code-wrapper mt-4">
+                                    <div class="code-block">
+                                        <pre><code>{"application_id": "app_9001", "status": "active"}</code></pre>
+                                    </div>
                                 </div>
                             </article>
-                            <article class="border border-slate-200 rounded-2xl p-8 bg-white card-shadow">
-                                <h3 class="text-xl font-semibold text-slate-900">PATCH /api/v1/applications/{id}</h3>
-                                <p class="mt-3 text-slate-600 leading-relaxed">Update guardrails, prompt presets, or rollout toggles without redeploying.</p>
-                                <div class="code-block mt-6">
-<pre><code>{
+                            <article class="border border-slate-200 rounded-2xl p-4 sm:p-6 bg-white card-shadow">
+                                <h3 class="text-lg font-semibold text-slate-900">PATCH
+                                    /api/v1/applications/{id}</h3>
+                                <p class="mt-3 text-sm text-slate-600 leading-relaxed">
+                                    Update guardrails, prompt presets, or rollout toggles without redeploying.
+                                </p>
+                                <!-- FIXED: Better code block with wrapper -->
+                                <div class="code-wrapper mt-4 sm:mt-6">
+                                    <div class="code-block">
+                                        <pre><code>{
   "experience": {
     "typing_indicator": true,
     "show_citations": true
   }
 }</code></pre>
+                                    </div>
                                 </div>
-                                <button class="mt-4 text-blue-600 text-sm font-semibold" onclick="toggleCode(this)">Show Response</button>
-                                <div class="response hidden code-block mt-4">
-<pre><code>{"application_id": "app_9001", "updated_fields": ["experience"]}</code></pre>
+                                <button class="mt-4 text-blue-600 text-sm font-semibold"
+                                    onclick="toggleCode(this)">Show Response</button>
+                                <div class="response hidden code-wrapper mt-4">
+                                    <div class="code-block">
+                                        <pre><code>{"application_id": "app_9001", "updated_fields": ["experience"]}</code></pre>
+                                    </div>
                                 </div>
                             </article>
                         </div>
                     </div>
 
                     <div id="chat-tab" class="tab-content hidden">
-                        <div class="grid md:grid-cols-2 gap-8">
-                            <article class="border border-slate-200 rounded-2xl p-8 bg-white card-shadow">
-                                <h3 class="text-xl font-semibold text-slate-900">POST /api/v1/chat/message</h3>
-                                <p class="mt-3 text-slate-600 leading-relaxed">Initiate a streaming chat session powered by the full RAG pipeline.</p>
-                                <div class="code-block mt-6">
-<pre><code><span class="syntax-keyword">curl</span> -N -X POST "http://localhost:8000/api/v1/chat/message" \
+                        <div class="grid gap-4 sm:gap-6 md:grid-cols-2">
+                            <article class="border border-slate-200 rounded-2xl p-4 sm:p-6 bg-white card-shadow">
+                                <h3 class="text-lg font-semibold text-slate-900">POST /api/v1/chat/message
+                                </h3>
+                                <p class="mt-3 text-sm text-slate-600 leading-relaxed">
+                                    Initiate a streaming chat session powered by the full RAG pipeline.
+                                </p>
+                                <!-- FIXED: Better code block with wrapper -->
+                                <div class="code-wrapper mt-4 sm:mt-6">
+                                    <div class="code-block">
+                                        <pre><code><span class="syntax-keyword">curl</span> -N -X POST "http://localhost:8000/api/v1/chat/message" \
   -H "Content-Type: application/json" \
   -d '{
         "application_id": "app_9001",
         "message": "How do I rotate API keys?",
         "stream": true
       }'</code></pre>
+                                    </div>
                                 </div>
-                                <button class="mt-4 text-blue-600 text-sm font-semibold" onclick="toggleCode(this)">Show Response</button>
-                                <div class="response hidden code-block mt-4">
-<pre><code>data: {"chunk": "To rotate keys..."}
+                                <button class="mt-4 text-blue-600 text-sm font-semibold"
+                                    onclick="toggleCode(this)">Show Response</button>
+                                <div class="response hidden code-wrapper mt-4">
+                                    <div class="code-block">
+                                        <pre><code>data: {"chunk": "To rotate keys..."}
 data: {"chunk": " visit the admin portal"}
 data: {"chunk": " and confirm the rotation."}</code></pre>
+                                    </div>
                                 </div>
                             </article>
-                            <article class="border border-slate-200 rounded-2xl p-8 bg-white card-shadow">
-                                <h3 class="text-xl font-semibold text-slate-900">GET /api/v1/chat/history/{app_id}</h3>
-                                <p class="mt-3 text-slate-600 leading-relaxed">Retrieve conversation history with citations and model details for auditing.</p>
-                                <div class="code-block mt-6">
-<pre><code><span class="syntax-keyword">curl</span> -X GET "http://localhost:8000/api/v1/chat/history/app_9001?limit=50"</code></pre>
+                            <article class="border border-slate-200 rounded-2xl p-4 sm:p-6 bg-white card-shadow">
+                                <h3 class="text-lg font-semibold text-slate-900">GET
+                                    /api/v1/chat/history/{app_id}</h3>
+                                <p class="mt-3 text-sm text-slate-600 leading-relaxed">
+                                    Retrieve conversation history with citations and model details for auditing.
+                                </p>
+                                <!-- FIXED: Better code block with wrapper -->
+                                <div class="code-wrapper mt-4 sm:mt-6">
+                                    <div class="code-block">
+                                        <pre><code><span class="syntax-keyword">curl</span> -X GET "http://localhost:8000/api/v1/chat/history/app_9001?limit=50"</code></pre>
+                                    </div>
                                 </div>
-                                <button class="mt-4 text-blue-600 text-sm font-semibold" onclick="toggleCode(this)">Show Response</button>
-                                <div class="response hidden code-block mt-4">
-<pre><code>{
+                                <button class="mt-4 text-blue-600 text-sm font-semibold"
+                                    onclick="toggleCode(this)">Show Response</button>
+                                <div class="response hidden code-wrapper mt-4">
+                                    <div class="code-block">
+                                        <pre><code>{
   "messages": [
     {
       "user_message": "Where are invoices stored?",
@@ -505,6 +828,7 @@ data: {"chunk": " and confirm the rotation."}</code></pre>
     }
   ]
 }</code></pre>
+                                    </div>
                                 </div>
                             </article>
                         </div>
@@ -514,82 +838,117 @@ data: {"chunk": " and confirm the rotation."}</code></pre>
         </section>
 
         <!-- Data Models -->
-        <section id="models" class="py-20 px-4 sm:px-6 lg:px-8 bg-white">
+        <section id="models" class="py-12 sm:py-16 px-4 sm:px-6 lg:px-8 bg-white">
             <div class="max-w-7xl mx-auto">
                 <div class="text-center max-w-3xl mx-auto">
-                    <p class="text-sm font-semibold tracking-widest text-blue-600 uppercase">Pydantic Schemas</p>
-                    <h2 class="mt-4 text-4xl font-black text-slate-900">Typed contracts shared across services</h2>
-                    <p class="mt-4 text-lg text-slate-600 leading-relaxed">Every API surface returns the same Pydantic models that power the frontend, ensuring zero drift between backend logic and UI expectations.</p>
+                    <p class="text-xs sm:text-sm font-semibold tracking-widest text-blue-600 uppercase">Pydantic Schemas
+                    </p>
+                    <h2 class="mt-4 text-2xl sm:text-3xl font-black text-slate-900">Typed contracts shared across
+                        services</h2>
+                    <p class="mt-4 text-sm text-base text-slate-600 leading-relaxed">
+                        Every API surface returns the same Pydantic models that power the frontend, ensuring zero drift
+                        between backend logic and UI expectations.
+                    </p>
                 </div>
-                <div class="mt-16 grid gap-8 md:grid-cols-2 xl:grid-cols-3">
-                    <article class="h-full rounded-2xl border border-slate-200 bg-slate-50 p-8 card-shadow">
-                        <h3 class="text-xl font-semibold text-slate-900">Application</h3>
-                        <p class="mt-2 text-slate-600 text-sm leading-relaxed">Links assistants to knowledge bases, default prompts, and model presets.</p>
-                        <div class="code-block mt-4">
-<pre><code><span class="syntax-keyword">class</span> <span class="syntax-type">Application</span>(BaseModel):
+                <div class="mt-8 sm:mt-12 grid gap-4 sm:gap-6 md:grid-cols-2 xl:grid-cols-3">
+                    <article class="h-full rounded-2xl border border-slate-200 bg-slate-50 p-4 sm:p-6 card-shadow">
+                        <h3 class="text-lg font-semibold text-slate-900">Application</h3>
+                        <p class="mt-2 text-sm text-slate-600 leading-relaxed">
+                            Links assistants to knowledge bases, default prompts, and model presets.
+                        </p>
+                        <!-- FIXED: Better code block with wrapper -->
+                        <div class="code-wrapper mt-4">
+                            <div class="code-block">
+                                <pre><code><span class="syntax-keyword">class</span> <span class="syntax-type">Application</span>(BaseModel):
     id: UUID
     name: <span class="syntax-type">str</span>
     knowledge_base_ids: <span class="syntax-type">List</span>[UUID]
     model_config_id: UUID
     settings: Dict[str, Any]</code></pre>
+                            </div>
                         </div>
                     </article>
-                    <article class="h-full rounded-2xl border border-slate-200 bg-slate-50 p-8 card-shadow">
-                        <h3 class="text-xl font-semibold text-slate-900">KnowledgeBase</h3>
-                        <p class="mt-2 text-slate-600 text-sm leading-relaxed">Organizes documents with lifecycle metadata and ingestion stats.</p>
-                        <div class="code-block mt-4">
-<pre><code><span class="syntax-keyword">class</span> <span class="syntax-type">KnowledgeBase</span>(BaseModel):
+                    <article class="h-full rounded-2xl border border-slate-200 bg-slate-50 p-4 sm:p-6 card-shadow">
+                        <h3 class="text-lg font-semibold text-slate-900">KnowledgeBase</h3>
+                        <p class="mt-2 text-sm text-slate-600 leading-relaxed">
+                            Organizes documents with lifecycle metadata and ingestion stats.
+                        </p>
+                        <!-- FIXED: Better code block with wrapper -->
+                        <div class="code-wrapper mt-4">
+                            <div class="code-block">
+                                <pre><code><span class="syntax-keyword">class</span> <span class="syntax-type">KnowledgeBase</span>(BaseModel):
     id: UUID
     name: <span class="syntax-type">str</span>
     description: <span class="syntax-type">Optional</span>[<span class="syntax-type">str</span>]
     document_count: <span class="syntax-type">int</span>
     status: Literal['ready', 'indexing']</code></pre>
+                            </div>
                         </div>
                     </article>
-                    <article class="h-full rounded-2xl border border-slate-200 bg-slate-50 p-8 card-shadow">
-                        <h3 class="text-xl font-semibold text-slate-900">Document</h3>
-                        <p class="mt-2 text-slate-600 text-sm leading-relaxed">Captures ingestion source, chunking metadata, and processing logs.</p>
-                        <div class="code-block mt-4">
-<pre><code><span class="syntax-keyword">class</span> <span class="syntax-type">Document</span>(BaseModel):
+                    <article class="h-full rounded-2xl border border-slate-200 bg-slate-50 p-4 sm:p-6 card-shadow">
+                        <h3 class="text-lg font-semibold text-slate-900">Document</h3>
+                        <p class="mt-2 text-sm text-slate-600 leading-relaxed">
+                            Captures ingestion source, chunking metadata, and processing logs.
+                        </p>
+                        <!-- FIXED: Better code block with wrapper -->
+                        <div class="code-wrapper mt-4">
+                            <div class="code-block">
+                                <pre><code><span class="syntax-keyword">class</span> <span class="syntax-type">Document</span>(BaseModel):
     id: UUID
     filename: <span class="syntax-type">str</span>
     knowledge_base_id: UUID
     chunk_count: <span class="syntax-type">int</span>
     metadata: Dict[str, Any]</code></pre>
+                            </div>
                         </div>
                     </article>
-                    <article class="h-full rounded-2xl border border-slate-200 bg-slate-50 p-8 card-shadow">
-                        <h3 class="text-xl font-semibold text-slate-900">ChatMessage</h3>
-                        <p class="mt-2 text-slate-600 text-sm leading-relaxed">Stores user/bot pairs, citations, and latency for analytics.</p>
-                        <div class="code-block mt-4">
-<pre><code><span class="syntax-keyword">class</span> <span class="syntax-type">ChatMessage</span>(BaseModel):
+                    <article class="h-full rounded-2xl border border-slate-200 bg-slate-50 p-4 sm:p-6 card-shadow">
+                        <h3 class="text-lg font-semibold text-slate-900">ChatMessage</h3>
+                        <p class="mt-2 text-sm text-slate-600 leading-relaxed">
+                            Stores user/bot pairs, citations, and latency for analytics.
+                        </p>
+                        <!-- FIXED: Better code block with wrapper -->
+                        <div class="code-wrapper mt-4">
+                            <div class="code-block">
+                                <pre><code><span class="syntax-keyword">class</span> <span class="syntax-type">ChatMessage</span>(BaseModel):
     role: Literal['user', 'assistant']
     content: <span class="syntax-type">str</span>
     citations: <span class="syntax-type">List</span>[Citation]
     created_at: datetime</code></pre>
+                            </div>
                         </div>
                     </article>
-                    <article class="h-full rounded-2xl border border-slate-200 bg-slate-50 p-8 card-shadow">
-                        <h3 class="text-xl font-semibold text-slate-900">ModelConfig</h3>
-                        <p class="mt-2 text-slate-600 text-sm leading-relaxed">Defines provider, temperature, safety, and token budgets.</p>
-                        <div class="code-block mt-4">
-<pre><code><span class="syntax-keyword">class</span> <span class="syntax-type">ModelConfig</span>(BaseModel):
+                    <article class="h-full rounded-2xl border border-slate-200 bg-slate-50 p-4 sm:p-6 card-shadow">
+                        <h3 class="text-lg font-semibold text-slate-900">ModelConfig</h3>
+                        <p class="mt-2 text-sm text-slate-600 leading-relaxed">
+                            Defines provider, temperature, safety, and token budgets.
+                        </p>
+                        <!-- FIXED: Better code block with wrapper -->
+                        <div class="code-wrapper mt-4">
+                            <div class="code-block">
+                                <pre><code><span class="syntax-keyword">class</span> <span class="syntax-type">ModelConfig</span>(BaseModel):
     id: UUID
     provider: Literal['openrouter']
     model: <span class="syntax-type">str</span>
     temperature: <span class="syntax-type">float</span>
     max_tokens: <span class="syntax-type">int</span></code></pre>
+                            </div>
                         </div>
                     </article>
-                    <article class="h-full rounded-2xl border border-slate-200 bg-slate-50 p-8 card-shadow">
-                        <h3 class="text-xl font-semibold text-slate-900">SearchResult</h3>
-                        <p class="mt-2 text-slate-600 text-sm leading-relaxed">Returns chunk text, citation handles, and relevance confidence.</p>
-                        <div class="code-block mt-4">
-<pre><code><span class="syntax-keyword">class</span> <span class="syntax-type">SearchResult</span>(BaseModel):
+                    <article class="h-full rounded-2xl border border-slate-200 bg-slate-50 p-4 sm:p-6 card-shadow">
+                        <h3 class="text-lg font-semibold text-slate-900">SearchResult</h3>
+                        <p class="mt-2 text-sm text-slate-600 leading-relaxed">
+                            Returns chunk text, citation handles, and relevance confidence.
+                        </p>
+                        <!-- FIXED: Better code block with wrapper -->
+                        <div class="code-wrapper mt-4">
+                            <div class="code-block">
+                                <pre><code><span class="syntax-keyword">class</span> <span class="syntax-type">SearchResult</span>(BaseModel):
     chunk: <span class="syntax-type">str</span>
     source: <span class="syntax-type">str</span>
     confidence: <span class="syntax-type">float</span>
     metadata: Dict[str, Any]</code></pre>
+                            </div>
                         </div>
                     </article>
                 </div>
@@ -597,77 +956,120 @@ data: {"chunk": " and confirm the rotation."}</code></pre>
         </section>
 
         <!-- Frontend Components -->
-        <section id="frontend" class="py-20 px-4 sm:px-6 lg:px-8 bg-slate-100">
-            <div class="max-w-7xl mx-auto grid lg:grid-cols-2 gap-16 items-center">
+        <section id="frontend" class="py-12 sm:py-16 px-4 sm:px-6 lg:px-8 bg-slate-100">
+            <div class="max-w-7xl mx-auto grid gap-8 lg:grid-cols-2 lg:gap-16 items-start">
                 <div>
-                    <p class="text-sm font-semibold tracking-widest text-blue-600 uppercase">Frontend Components</p>
-                    <h2 class="mt-4 text-4xl font-black text-slate-900">Modern UI toolkit</h2>
-                    <p class="mt-4 text-slate-600 leading-relaxed">Tailwind CSS, vanilla JavaScript, and reusable components keep the demo snappy without heavy frameworks.</p>
-                    <ul class="mt-8 space-y-4 text-slate-600 leading-relaxed">
-                        <li><span class="font-semibold text-slate-900">Vanilla JS interactivity:</span> Manages tabs, collapsible code blocks, and streaming indicators without extra dependencies.</li>
-                        <li><span class="font-semibold text-slate-900">Tailwind CSS:</span> Utility-first styling delivers responsive layouts with consistent spacing tokens (py-20, gap-8, p-8).</li>
-                        <li><span class="font-semibold text-slate-900">Component architecture:</span> Chat panel, file uploader, and settings drawer share typography and state helpers.</li>
-                        <li><span class="font-semibold text-slate-900">Real-time integrations:</span> Fetch API hooks into SSE endpoints for chunked rendering and latency indicators.</li>
+                    <p class="text-xs sm:text-sm font-semibold tracking-widest text-blue-600 uppercase">Frontend
+                        Components</p>
+                    <h2 class="mt-4 text-2xl sm:text-3xl font-black text-slate-900">Modern UI toolkit</h2>
+                    <p class="mt-4 text-sm text-slate-600 leading-relaxed">
+                        Tailwind CSS, vanilla JavaScript, and reusable components keep the demo snappy without heavy
+                        frameworks.
+                    </p>
+                    <ul class="mt-6 space-y-3 text-sm text-slate-600 leading-relaxed">
+                        <li>
+                            <span class="font-semibold text-slate-900">Vanilla JS interactivity:</span>
+                            Manages tabs, collapsible code blocks, and streaming indicators without extra dependencies.
+                        </li>
+                        <li>
+                            <span class="font-semibold text-slate-900">Tailwind CSS:</span>
+                            Utility-first styling delivers responsive layouts with consistent spacing tokens (py-20,
+                            gap-8, p-8).
+                        </li>
+                        <li>
+                            <span class="font-semibold text-slate-900">Component architecture:</span>
+                            Chat panel, file uploader, and settings drawer share typography and state helpers.
+                        </li>
+                        <li>
+                            <span class="font-semibold text-slate-900">Real-time integrations:</span>
+                            Fetch API hooks into SSE endpoints for chunked rendering and latency indicators.
+                        </li>
                     </ul>
                     <div class="mt-6">
-                        <a href="https://ragify-sqhu4om4aq-uc.a.run.app/" target="_blank" rel="noopener" class="inline-flex items-center gap-2 rounded-full bg-blue-600 px-6 py-2.5 text-white text-sm font-semibold shadow-lg shadow-blue-600/30">
+                        <a href="https://ragify-sqhu4om4aq-uc.a.run.app/" target="_blank" rel="noopener"
+                            class="inline-flex items-center gap-2 rounded-full bg-blue-600 px-6 py-2.5 text-white text-sm font-semibold shadow-lg shadow-blue-600/30">
                             Explore the Live Frontend
                         </a>
                     </div>
                 </div>
-                <div class="grid gap-6">
-                    <article class="rounded-2xl border border-slate-200 bg-white p-8 card-shadow">
+                <div class="grid gap-4 sm:gap-6">
+                    <article class="rounded-2xl border border-slate-200 bg-white p-4 sm:p-6 card-shadow">
                         <p class="text-sm font-semibold text-blue-600">Chat Interface</p>
-                        <p class="mt-3 text-slate-600 leading-relaxed">Typing indicators, markdown rendering, and inline citation chips keep conversations transparent and responsive.</p>
+                        <p class="mt-3 text-sm text-slate-600 leading-relaxed">
+                            Typing indicators, markdown rendering, and inline citation chips keep conversations
+                            transparent and responsive.
+                        </p>
                     </article>
-                    <article class="rounded-2xl border border-slate-200 bg-white p-8 card-shadow">
+                    <article class="rounded-2xl border border-slate-200 bg-white p-4 sm:p-6 card-shadow">
                         <p class="text-sm font-semibold text-blue-600">File Upload Pipeline</p>
-                        <p class="mt-3 text-slate-600 leading-relaxed">Drag-and-drop uploads show multi-stage progress: upload → parsing → embedding → ready.</p>
+                        <p class="mt-3 text-sm text-slate-600 leading-relaxed">
+                            Drag-and-drop uploads show multi-stage progress: upload → parsing → embedding → ready.
+                        </p>
                     </article>
-                    <article class="rounded-2xl border border-slate-200 bg-white p-8 card-shadow">
+                    <article class="rounded-2xl border border-slate-200 bg-white p-4 sm:p-6 card-shadow">
                         <p class="text-sm font-semibold text-blue-600">Settings & API Keys</p>
-                        <p class="mt-3 text-slate-600 leading-relaxed">Secure input components for OpenRouter keys, per-application overrides, and guardrail toggles.</p>
+                        <p class="mt-3 text-sm text-slate-600 leading-relaxed">
+                            Secure input components for OpenRouter keys, per-application overrides, and guardrail
+                            toggles.
+                        </p>
                     </article>
                 </div>
             </div>
         </section>
 
         <!-- Screenshots -->
-        <section id="screenshots" class="py-20 px-4 sm:px-6 lg:px-8">
+        <section id="screenshots" class="py-12 sm:py-16 px-4 sm:px-6 lg:px-8">
             <div class="max-w-7xl mx-auto">
                 <div class="text-center max-w-3xl mx-auto">
-                    <p class="text-sm font-semibold tracking-widest text-blue-600 uppercase">Screenshots Gallery</p>
-                    <h2 class="mt-4 text-4xl font-black text-slate-900">UI walkthrough</h2>
-                    <p class="mt-4 text-lg text-slate-600 leading-relaxed">See the polished light-mode interface across the primary workflows.</p>
-                    <p class="mt-3 text-sm text-slate-500">Prefer to click around? <a href="https://ragify-sqhu4om4aq-uc.a.run.app/" target="_blank" rel="noopener" class="text-blue-600 font-semibold hover:underline">Launch the hosted demo</a>.</p>
+                    <p class="text-xs sm:text-sm font-semibold tracking-widest text-blue-600 uppercase">Screenshots
+                        Gallery</p>
+                    <h2 class="mt-4 text-2xl sm:text-3xl font-black text-slate-900">UI walkthrough</h2>
+                    <p class="mt-4 text-sm text-base text-slate-600 leading-relaxed">
+                        See the polished light-mode interface across the primary workflows.
+                    </p>
+                    <p class="mt-3 text-xs sm:text-sm text-slate-500">
+                        Prefer to click around?
+                        <a href="https://ragify-sqhu4om4aq-uc.a.run.app/" target="_blank" rel="noopener"
+                            class="text-blue-600 font-semibold hover:underline">
+                            Launch the hosted demo
+                        </a>.
+                    </p>
                 </div>
-                <div class="mt-16 grid gap-8 md:grid-cols-2">
+                <div class="mt-8 sm:mt-12 grid gap-4 sm:gap-6 md:grid-cols-2">
                     <figure class="rounded-2xl border border-slate-200 bg-white card-shadow overflow-hidden">
-                        <img src="images/main-interface.png" alt="Main interface" class="w-full h-72 object-cover">
-                        <figcaption class="p-6">
+                        <img src="images/main-interface.png" alt="Main interface"
+                            class="w-full h-48 sm:h-64 object-cover">
+                        <figcaption class="p-4 sm:p-6">
                             <p class="text-sm font-semibold text-blue-600">Main Interface</p>
-                            <p class="text-slate-600">Dashboard overview with chat, ingestion, and latency metrics.</p>
+                            <p class="text-sm text-slate-600">Dashboard overview with chat, ingestion, and
+                                latency metrics.</p>
                         </figcaption>
                     </figure>
                     <figure class="rounded-2xl border border-slate-200 bg-white card-shadow overflow-hidden">
-                        <img src="images/chat-interface.png" alt="Chat interface" class="w-full h-72 object-cover">
-                        <figcaption class="p-6">
+                        <img src="images/chat-interface.png" alt="Chat interface"
+                            class="w-full h-48 sm:h-64 object-cover">
+                        <figcaption class="p-4 sm:p-6">
                             <p class="text-sm font-semibold text-blue-600">Chat Interface</p>
-                            <p class="text-slate-600">Streaming responses with inline citations and chunk source pills.</p>
+                            <p class="text-sm text-slate-600">Streaming responses with inline citations and
+                                chunk source pills.</p>
                         </figcaption>
                     </figure>
                     <figure class="rounded-2xl border border-slate-200 bg-white card-shadow overflow-hidden">
-                        <img src="images/knowledge-base.png" alt="Knowledge base management" class="w-full h-72 object-cover">
-                        <figcaption class="p-6">
+                        <img src="images/knowledge-base.png" alt="Knowledge base management"
+                            class="w-full h-48 sm:h-64 object-cover">
+                        <figcaption class="p-4 sm:p-6">
                             <p class="text-sm font-semibold text-blue-600">Knowledge Base Management</p>
-                            <p class="text-slate-600">Organize collections, track ingestion states, and monitor document health.</p>
+                            <p class="text-sm text-slate-600">Organize collections, track ingestion states,
+                                and monitor document health.</p>
                         </figcaption>
                     </figure>
                     <figure class="rounded-2xl border border-slate-200 bg-white card-shadow overflow-hidden">
-                        <img src="images/settings-config.png" alt="Settings and API configuration" class="w-full h-72 object-cover">
-                        <figcaption class="p-6">
+                        <img src="images/settings-config.png" alt="Settings and API configuration"
+                            class="w-full h-48 sm:h-64 object-cover">
+                        <figcaption class="p-4 sm:p-6">
                             <p class="text-sm font-semibold text-blue-600">Settings & API Configuration</p>
-                            <p class="text-slate-600">Manage OpenRouter keys, environment targets, and rollout toggles.</p>
+                            <p class="text-sm text-slate-600">Manage OpenRouter keys, environment targets,
+                                and rollout toggles.</p>
                         </figcaption>
                     </figure>
                 </div>
@@ -675,10 +1077,16 @@ data: {"chunk": " and confirm the rotation."}</code></pre>
         </section>
     </main>
 
-    <footer class="py-12 bg-white border-t border-slate-200">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between text-sm text-slate-500">
+    <footer class="py-8 sm:py-10 bg-white border-t border-slate-200">
+        <div
+            class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col gap-2 sm:gap-4 sm:flex-row sm:items-center sm:justify-between text-xs sm:text-sm text-slate-500">
             <p>© <span id="year"></span> RAGify · Retrieval-Augmented Generation Platform</p>
-            <p><a href="https://ragify-sqhu4om4aq-uc.a.run.app/" target="_blank" rel="noopener" class="text-blue-600 font-semibold hover:underline">Live Demo</a></p>
+            <p>
+                <a href="https://ragify-sqhu4om4aq-uc.a.run.app/" target="_blank" rel="noopener"
+                    class="text-blue-600 font-semibold hover:underline">
+                    Live Demo
+                </a>
+            </p>
             <p>FastAPI · Tailwind · OpenRouter · pgvector</p>
         </div>
     </footer>
@@ -726,13 +1134,37 @@ data: {"chunk": " and confirm the rotation."}</code></pre>
         }
 
         document.addEventListener('DOMContentLoaded', () => {
+            // Tabs
             showTab('knowledge', document.querySelector('[data-tab="knowledge"]'));
+
+            // Year in footer
             const yearEl = document.getElementById('year');
             if (yearEl) {
                 yearEl.textContent = new Date().getFullYear();
             }
+
+            // GitHub stars
             hydrateStarCount();
+
+            // Mobile menu
+            const mobileBtn = document.getElementById('mobile-menu-button');
+            const mobileMenu = document.getElementById('mobile-menu');
+            if (mobileBtn && mobileMenu) {
+                mobileBtn.addEventListener('click', () => {
+                    const isOpen = !mobileMenu.classList.contains('hidden');
+                    mobileMenu.classList.toggle('hidden');
+                    mobileBtn.setAttribute('aria-expanded', String(!isOpen));
+                });
+
+                mobileMenu.querySelectorAll('a').forEach(link => {
+                    link.addEventListener('click', () => {
+                        mobileMenu.classList.add('hidden');
+                        mobileBtn.setAttribute('aria-expanded', 'false');
+                    });
+                });
+            }
         });
     </script>
 </body>
+
 </html>
