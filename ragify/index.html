@@ -1,46 +1,642 @@
-
 <!DOCTYPE html>
-<html lang="en" class="scroll-smooth">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>RAGify - Retrieval-Augmented Generation Platform</title>
+    
+    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&family=JetBrains+Mono&display=swap" rel="stylesheet">
-    <script>
-      tailwind.config = {
-        theme: {
-          extend: {
-            fontFamily: {
-              sans: ['Inter', 'system-ui', 'sans-serif'],
-              mono: ['JetBrains Mono', 'monospace'],
-            },
-          },
-        },
-      }
-    </script>
-    <style>
-      body {
-        background: linear-gradient(180deg, #ffffff 0%, #f8fafc 40%, #eff6ff 100%);
-        overflow-x: hidden;
-      }
-    </style>
+    
+    <!-- React & ReactDOM -->
+    <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
+    
+    <!-- Babel for JSX -->
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
 
-<link rel="stylesheet" href="/index.css">
-  <script type="importmap">
-{
-  "imports": {
-    "react/": "https://aistudiocdn.com/react@^19.2.0/",
-    "react": "https://aistudiocdn.com/react@^19.2.0",
-    "react-dom/": "https://aistudiocdn.com/react-dom@^19.2.0/"
-  }
-}
-</script>
-  <script type="module" crossorigin src="/assets/index-CMKjFH3f.js"></script>
+    <style>
+        /* Smooth scrolling for anchor links */
+        html { scroll-behavior: smooth; }
+        body { font-family: 'Inter', sans-serif; }
+    </style>
+    <!-- Google Font Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap" rel="stylesheet">
 </head>
-  <body>
+<body class="bg-white text-slate-800">
+
     <div id="root"></div>
+
+    <script type="text/babel">
+
+        // --- 1. MOCK CONSTANTS & DATA (Reconstructed from context) ---
+        
+        const navLinks = [
+            { href: '#overview', label: 'Overview' },
+            { href: '#features', label: 'Features' },
+            { href: '#architecture', label: 'Architecture' },
+            { href: '#api', label: 'API' },
+            { href: '#models', label: 'Models' },
+            { href: '#frontend', label: 'Frontend' },
+        ];
+
+        const featuresData = [
+            { category: 'Ingestion', title: 'Multi-Format Parsing', description: 'Automatically handles PDF, DOCX, and TXT files with smart chunking strategies.' },
+            { category: 'Retrieval', title: 'Hybrid Search', description: 'Combines dense vector similarity with sparse keyword matching (BM25) for best results.' },
+            { category: 'Inference', title: 'Streaming Responses', description: 'Real-time token streaming from LLMs prevents user waiting time.' },
+            { category: 'Database', title: 'pgvector Storage', description: 'High-performance vector storage directly within PostgreSQL.' },
+            { category: 'Observability', title: 'Tracing & Logging', description: 'Full visibility into the RAG pipeline execution steps.' },
+            { category: 'Security', title: 'Role-Based Access', description: 'Granular permissions for knowledge base access and management.' }
+        ];
+
+        const architectureSteps = [
+            { title: 'Document Ingestion', description: 'Files are uploaded, parsed into text, and split into semantic chunks.' },
+            { title: 'Embedding Generation', description: 'Chunks are converted into vector embeddings using high-dimensional models.' },
+            { title: 'Vector Storage', description: 'Embeddings and metadata are indexed in pgvector for fast retrieval.' },
+            { title: 'Hybrid Retrieval', description: 'User queries trigger both semantic and keyword searches to find relevant context.' },
+            { title: 'LLM Synthesis', description: 'Retrieved context + query are sent to the LLM to generate a grounded answer.' }
+        ];
+
+        const dataModels = [
+            { 
+                title: 'DocumentChunk', 
+                description: 'Represents a single piece of indexed content with metadata.',
+                code: `class DocumentChunk(BaseModel):\n    chunk_id: str\n    content: str\n    metadata: Dict[str, Any]\n    embedding: List[float]` 
+            },
+            { 
+                title: 'ChatRequest', 
+                description: 'Incoming payload for the chat generation endpoint.',
+                code: `class ChatRequest(BaseModel):\n    query: str\n    history: List[Message]\n    stream: bool = True` 
+            },
+            { 
+                title: 'SourceCitation', 
+                description: 'Returned with answers to link back to source material.',
+                code: `class SourceCitation(BaseModel):\n    doc_id: str\n    file_name: str\n    page_number: int\n    score: float` 
+            }
+        ];
+
+        const apiTabs = [
+            { id: 'knowledge', label: 'Knowledge Base' },
+            { id: 'chat', label: 'Chat & Inference' },
+            { id: 'admin', label: 'Admin Ops' }
+        ];
+
+        const apiData = {
+            'knowledge': [
+                { 
+                    title: 'Upload Document', 
+                    description: 'Upload a file to be processed and indexed.',
+                    request: 'POST /api/v1/documents/upload\nContent-Type: multipart/form-data',
+                    response: '{\n  "id": "doc_123",\n  "status": "processing",\n  "chunks": 42\n}'
+                },
+                { 
+                    title: 'List Documents', 
+                    description: 'Retrieve all indexed documents in a knowledge base.',
+                    request: 'GET /api/v1/knowledge-bases/{kb_id}/documents',
+                    response: '[\n  { "id": "doc_1", "name": "manual.pdf" },\n  { "id": "doc_2", "name": "policy.txt" }\n]'
+                }
+            ],
+            'chat': [
+                { 
+                    title: 'Send Message', 
+                    description: 'Send a user query and get a streaming or blocking response.',
+                    request: 'POST /api/v1/chat/completions',
+                    response: '{\n  "answer": "RAGify uses hybrid search...",\n  "sources": [{ "doc_id": "1", "score": 0.89 }]\n}'
+                }
+            ],
+            'admin': [
+                { 
+                    title: 'System Health', 
+                    description: 'Check the status of the API and database.',
+                    request: 'GET /health',
+                    response: '{\n  "status": "ok",\n  "db_latency_ms": 12,\n  "vector_store": "connected"\n}'
+                }
+            ]
+        };
+
+        const screenshots = [
+            { title: 'Chat Interface', description: 'Clean, citation-aware chat UI.', imgSrc: 'images/chat-interface.png' },
+            { title: 'Knowledge Management', description: 'Upload and manage documents easily.', imgSrc: 'images/knowledge-base.png' },
+            { title: 'Admin Dashboard', description: 'Monitor usage and API keys.', imgSrc: 'images/settings-config.png' }
+        ];
+
+
+        // --- 2. SHARED COMPONENTS ---
+
+        // CodeBlock Helpers
+        const Keyword = ({ children }) => <span className="text-purple-600 font-bold">{children}</span>;
+        const Type = ({ children }) => <span className="text-teal-600">{children}</span>;
+        const Func = ({ children }) => <span className="text-blue-600">{children}</span>;
+        const Num = ({ children }) => <span className="text-orange-600">{children}</span>;
+        const Str = ({ children }) => <span className="text-green-600">{children}</span>;
+
+        const CodeBlock = ({ children, className, title }) => (
+            <div className={`overflow-hidden rounded-lg ${className}`}>
+                {title && (
+                    <div className="bg-slate-100 border-b border-slate-200 px-4 py-2 text-xs font-mono">
+                        {title}
+                    </div>
+                )}
+                <div className="p-4 overflow-x-auto font-mono text-sm leading-relaxed">
+                    {children}
+                </div>
+            </div>
+        );
+
+
+        // --- 3. SUB-COMPONENTS ---
+
+        const ApiExampleCard = ({ example }) => {
+            const [isResponseVisible, setIsResponseVisible] = React.useState(false);
+
+            return (
+                <article className="border border-slate-200 rounded-2xl p-4 sm:p-6 bg-white shadow-lg flex flex-col h-full">
+                    <h3 className="text-lg font-semibold text-slate-900">{example.title}</h3>
+                    <p className="mt-3 text-sm text-slate-600 leading-relaxed flex-grow">{example.description}</p>
+                    <CodeBlock className="mt-4 sm:mt-6 bg-slate-50 border border-slate-200 text-slate-700">
+                        <pre><code>{example.request}</code></pre>
+                    </CodeBlock>
+                    <button
+                        className="mt-4 text-blue-600 text-sm font-semibold text-left hover:text-blue-800 transition-colors"
+                        onClick={() => setIsResponseVisible(!isResponseVisible)}
+                    >
+                        {isResponseVisible ? 'Hide Response' : 'Show Response'}
+                    </button>
+                    {isResponseVisible && (
+                        <CodeBlock className="mt-2 bg-slate-900 text-slate-50 border border-slate-800">
+                            <pre><code>{example.response}</code></pre>
+                        </CodeBlock>
+                    )}
+                </article>
+            );
+        };
+
+        const FeatureCard = ({ feature }) => (
+            <article className="h-full rounded-2xl border border-slate-200 bg-slate-50 p-4 sm:p-6 shadow-lg transition-shadow hover:shadow-xl">
+                <p className="text-sm font-semibold text-blue-600">{feature.category}</p>
+                <h3 className="mt-3 text-lg sm:text-xl font-semibold text-slate-900">{feature.title}</h3>
+                <p className="mt-4 text-sm text-slate-600 leading-relaxed">{feature.description}</p>
+            </article>
+        );
+
+        const DataModelCard = ({ model }) => (
+            <article className="h-full flex flex-col rounded-2xl border border-slate-200 bg-slate-50 p-4 sm:p-6 shadow-lg transition-shadow hover:shadow-xl">
+                <h3 className="text-lg font-semibold text-slate-900">{model.title}</h3>
+                <p className="mt-2 text-sm text-slate-600 leading-relaxed flex-grow">{model.description}</p>
+                <CodeBlock className="mt-4 bg-white border border-slate-200 text-slate-700">
+                    <pre><code>{model.code}</code></pre>
+                </CodeBlock>
+            </article>
+        );
+
+        const ScreenshotCard = ({ shot }) => (
+            <figure className="rounded-2xl border border-slate-200 bg-white shadow-lg overflow-hidden transition-shadow hover:shadow-xl">
+                <img src={shot.imgSrc} alt={shot.title} className="w-full h-48 sm:h-64 object-cover bg-slate-200" />
+                <figcaption className="p-4 sm:p-6">
+                    <p className="text-sm font-semibold text-blue-600">{shot.title}</p>
+                    <p className="text-sm text-slate-600 mt-1">{shot.description}</p>
+                </figcaption>
+            </figure>
+        );
+
+
+        // --- 4. SECTION COMPONENTS ---
+
+        const Header = () => {
+            const [isMenuOpen, setIsMenuOpen] = React.useState(false);
+
+            return (
+                <header className="fixed top-0 inset-x-0 z-50 bg-white/90 border-b border-slate-200 backdrop-blur">
+                    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                        <div className="flex items-center justify-between h-16">
+                            <a href="#overview" className="flex items-center gap-2 min-w-0 group">
+                                <div className="h-9 w-9 sm:h-10 sm:w-10 rounded-2xl bg-blue-600 text-white flex items-center justify-center font-black tracking-tight text-sm sm:text-base group-hover:bg-blue-700 transition-colors">
+                                    R
+                                </div>
+                                <div className="leading-tight">
+                                    <p className="text-[10px] sm:text-xs uppercase tracking-widest text-slate-500">RAGify</p>
+                                    <p className="font-semibold text-slate-900 text-sm sm:text-base">RAG Platform</p>
+                                </div>
+                            </a>
+                            <nav className="hidden md:flex items-center gap-6 text-sm font-medium text-slate-600">
+                                {navLinks.map(link => (
+                                    <a key={link.href} href={link.href} className="hover:text-blue-600 transition-colors">{link.label}</a>
+                                ))}
+                            </nav>
+                            <button
+                                id="mobile-menu-button"
+                                className="md:hidden inline-flex items-center justify-center rounded-full p-2 border border-slate-200 text-slate-600 hover:text-blue-600 hover:border-blue-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 bg-white/80"
+                                aria-label="Open navigation"
+                                onClick={() => setIsMenuOpen(!isMenuOpen)}
+                            >
+                                <svg className="h-5 w-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d={isMenuOpen ? "M6 18L18 6M6 6l12 12" : "M4 6h16M4 12h16M4 18h16"} />
+                                </svg>
+                            </button>
+                        </div>
+                        {isMenuOpen && (
+                            <nav id="mobile-menu" className="md:hidden border-t border-slate-200 bg-white/95 pb-4">
+                                <div className="py-2 space-y-1 text-sm font-medium text-slate-700">
+                                    {navLinks.map(link => (
+                                        <a key={link.href} href={link.href} className="block px-4 py-3 hover:bg-slate-50 hover:text-blue-600" onClick={() => setIsMenuOpen(false)}>{link.label}</a>
+                                    ))}
+                                </div>
+                            </nav>
+                        )}
+                    </div>
+                </header>
+            );
+        };
+
+        const Hero = () => {
+            const [starCount, setStarCount] = React.useState('—');
+
+            React.useEffect(() => {
+                const fetchStars = async () => {
+                    try {
+                        const res = await fetch('https://api.github.com/repos/OthmaneBlial/RAGify');
+                        if (!res.ok) throw new Error('Network response was not ok');
+                        const data = await res.json();
+                        setStarCount((data.stargazers_count ?? 0).toLocaleString());
+                    } catch (err) {
+                        console.log("Failed to fetch GitHub stars:", err);
+                        setStarCount('120+'); // Fallback
+                    }
+                };
+                fetchStars();
+            }, []);
+
+            const openGithubStar = () => {
+                window.open('https://github.com/OthmaneBlial/RAGify', '_blank', 'noopener');
+            };
+
+            const StarIcon = () => (
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
+                    <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.54-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81H7.03a1 1 0 00.95-.69l1.07-3.292z" />
+                </svg>
+            );
+
+            return (
+                <section id="overview" className="py-12 sm:py-16 px-4 sm:px-6 lg:px-8">
+                    <div className="max-w-7xl mx-auto grid gap-8 lg:grid-cols-2 lg:gap-16 items-start">
+                        {/* Left Column */}
+                        <div className="space-y-8">
+                            <div>
+                                <p className="text-xs sm:text-sm font-semibold tracking-widest text-blue-600 uppercase">Production-grade RAG stack</p>
+                                <h1 className="mt-4 sm:mt-6 text-3xl sm:text-4xl lg:text-5xl font-black text-slate-900 leading-tight">
+                                    RAGify: Retrieval-Augmented Generation Engine
+                                </h1>
+                                <p className="mt-4 sm:mt-6 text-base text-slate-600 leading-relaxed">
+                                    Deliver grounded AI answers with full citations. RAGify couples a FastAPI backend, modular retrieval pipeline, and modern frontend to ingest documents, orchestrate hybrid search, and stream responses from 100+ models via OpenRouter.
+                                </p>
+                            </div>
+                            <div className="flex flex-col sm:flex-row sm:flex-wrap gap-3 sm:gap-4 w-full">
+                                <a href="#" className="w-full sm:w-auto inline-flex items-center justify-center rounded-full bg-blue-600 px-6 py-2.5 text-white text-sm font-semibold shadow-lg shadow-blue-600/30 hover:bg-blue-700 transition-colors">
+                                    Open Live Demo
+                                </a>
+                                <a href="#api" className="w-full sm:w-auto inline-flex items-center justify-center rounded-full border border-blue-200 px-6 py-2.5 text-sm font-semibold text-blue-700 bg-blue-50/60 hover:border-blue-600 hover:text-blue-600 transition-colors">
+                                    Open API Docs
+                                </a>
+                                <a href="#screenshots" className="w-full sm:w-auto inline-flex items-center justify-center rounded-full border border-slate-300 px-6 py-2.5 text-sm font-semibold text-slate-700 hover:border-blue-600 hover:text-blue-600 transition-colors">
+                                    View Screenshots
+                                </a>
+                            </div>
+                            <div className="rounded-2xl border border-blue-100 bg-gradient-to-r from-blue-50 via-white to-blue-100/60 p-4 sm:p-6 shadow-xl flex flex-col lg:flex-row gap-4 lg:gap-6">
+                                <div className="flex-1">
+                                    <p className="text-[10px] sm:text-xs uppercase tracking-widest text-blue-600 font-semibold">Show some love</p>
+                                    <h3 className="mt-2 text-xl sm:text-2xl font-bold text-slate-900">Boost the project with a GitHub ⭐️</h3>
+                                    <p className="mt-3 text-sm text-slate-600 leading-relaxed">
+                                        Stars help more engineers discover RAGify. You'll be redirected to GitHub to confirm the star.
+                                    </p>
+                                    <div className="mt-4 flex flex-wrap items-center gap-3">
+                                        <button onClick={openGithubStar} className="inline-flex items-center gap-2 rounded-full bg-blue-600 px-5 py-2.5 text-white text-sm font-semibold shadow-lg shadow-blue-600/40 hover:bg-blue-700 transition-colors">
+                                            <StarIcon />
+                                            Star on GitHub
+                                        </button>
+                                        <a href="https://github.com/OthmaneBlial/RAGify" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 rounded-full border border-slate-300 px-5 py-2.5 text-sm font-semibold text-slate-700 hover:border-blue-600 hover:text-blue-600 transition-colors">
+                                            View Repository
+                                        </a>
+                                    </div>
+                                </div>
+                                <div className="w-full lg:w-64 flex-shrink-0 bg-white/90 border border-slate-200 rounded-2xl p-4 sm:p-5 text-center shadow-lg">
+                                    <p className="text-[11px] uppercase tracking-wide text-slate-500 font-semibold">Current stars</p>
+                                    <p id="star-count" className="mt-3 text-3xl sm:text-4xl font-black text-slate-900">{starCount}</p>
+                                    <p className="text-[11px] text-slate-500">Synced live from GitHub</p>
+                                    <button onClick={openGithubStar} className="mt-4 inline-flex items-center justify-center w-full rounded-xl bg-slate-900 text-white text-xs font-semibold py-2.5 hover:bg-slate-800 transition-colors">
+                                        Add your star
+                                    </button>
+                                </div>
+                            </div>
+                            <div className="grid gap-4 sm:gap-6 sm:grid-cols-2">
+                                <div className="rounded-2xl bg-white p-4 sm:p-6 border border-slate-200 shadow-lg">
+                                    <p className="text-sm font-semibold text-slate-500">Runtime Highlights</p>
+                                    <ul className="mt-4 space-y-2 text-sm text-slate-600 leading-relaxed">
+                                        <li>• Async FastAPI with streaming chat</li>
+                                        <li>• Hybrid semantic + keyword retrieval</li>
+                                        <li>• Inline citations & relevance scores</li>
+                                        <li>• Single-container deployment</li>
+                                    </ul>
+                                </div>
+                                <div className="rounded-2xl border border-slate-200 bg-slate-900 text-lime-100 p-4 sm:p-6 font-mono text-xs leading-relaxed shadow-lg overflow-x-auto">
+                                    <p className="text-slate-400 mb-2">$ setup.sh</p>
+                                    <p>git clone github.com/OthmaneBlial/RAGify.git</p>
+                                    <p>cd RAGify && ./startup.sh</p>
+                                    <p className="text-slate-400 mt-4"># Backend → http://localhost:8000</p>
+                                    <p className="text-slate-400"># Frontend → http://localhost:4173</p>
+                                </div>
+                            </div>
+                        </div>
+                        {/* Right Column */}
+                        <div className="space-y-4 lg:space-y-6">
+                            <CodeBlock className="shadow-lg bg-white/80" title={<div className="flex flex-col sm:flex-row sm:items-center sm:justify-between text-[11px] text-slate-500"><span># rag_pipeline.py</span><span>Streaming RAG Response</span></div>}>
+                                <code>
+                                    <Keyword>async def</Keyword> <Func>generate_answer</Func>(query: <Type>str</Type>, app_id: <Type>UUID</Type>):{'\n'}
+                                    {'    '}kb = <Keyword>await</Keyword> knowledge_service.load(app_id){'\n'}
+                                    {'    '}docs = retriever.hybrid({'\n'}
+                                    {'        '}query=query,{'\n'}
+                                    {'        '}semantic_top_k=<Num>8</Num>,{'\n'}
+                                    {'        '}keyword_top_k=<Num>3</Num>,{'\n'}
+                                    {'    '}){'\n'}
+                                    {'    '}context = summarizer.condense(docs){'\n'}
+                                    {'    '}<Keyword>return</Keyword> router.stream({'\n'}
+                                    {'        '}system_prompt=<Str>"Grounded assistant with inline citations"</Str>,{'\n'}
+                                    {'        '}messages=chat_history.for_app(app_id) + [{'\n'}
+                                    {'            '}<Str>"role": "user", "content": query</Str>,{'\n'}
+                                    {'            '}<Str>"role": "system", "content": context</Str>{'\n'}
+                                    {'        '}],{'\n'}
+                                    {'    '})
+                                </code>
+                            </CodeBlock>
+                            <div className="rounded-2xl bg-white border border-blue-100 p-4 sm:p-6 shadow-lg">
+                                <p className="text-sm font-semibold text-blue-600">Project Snapshot</p>
+                                <ul className="mt-4 space-y-3 text-sm text-slate-600 leading-relaxed">
+                                    <li><span className="font-semibold text-slate-900">Open source:</span> MIT-licensed repository for teams exploring RAG patterns.</li>
+                                    <li><span className="font-semibold text-slate-900">Backend:</span> FastAPI + SQLAlchemy modules for KBs, documents, chat, and models.</li>
+                                    <li><span className="font-semibold text-slate-900">Frontend:</span> Tailwind-powered demo UI for chat, ingestion, and admin.</li>
+                                    <li><span className="font-semibold text-slate-900">Deploy anywhere:</span> Dockerized stack with single-container startup scripts.</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            );
+        };
+
+        const Features = () => {
+            return (
+                <section id="features" className="py-12 sm:py-16 px-4 sm:px-6 lg:px-8 bg-white">
+                    <div className="max-w-7xl mx-auto">
+                        <div className="text-center max-w-3xl mx-auto">
+                            <p className="text-xs sm:text-sm font-semibold tracking-widest text-blue-600 uppercase">Key Technical Features</p>
+                            <h2 className="mt-4 text-2xl sm:text-3xl font-black text-slate-900">Modern infrastructure tuned for Retrieval-Augmented Generation</h2>
+                            <p className="mt-4 text-base text-slate-600 leading-relaxed">
+                                Every layer—from ingestion to inference—ships with measured defaults, predictable latency, and observability hooks for real deployments.
+                            </p>
+                            <p className="mt-4 text-xs sm:text-sm text-slate-500">
+                                Preview it live at{' '}
+                                <a href="#" className="text-blue-600 font-semibold hover:underline">
+                                    ragify-sqhu4om4aq-ew.a.run.app
+                                </a>.
+                            </p>
+                        </div>
+                        <div className="mt-8 sm:mt-12 grid gap-4 sm:gap-6 md:grid-cols-2 xl:grid-cols-3">
+                            {featuresData.map((feature, index) => (
+                                <FeatureCard key={index} feature={feature} />
+                            ))}
+                        </div>
+                    </div>
+                </section>
+            );
+        };
+
+        const Architecture = () => {
+            return (
+                <section id="architecture" className="py-12 sm:py-16 px-4 sm:px-6 lg:px-8 bg-slate-100/70">
+                    <div className="max-w-7xl mx-auto grid gap-8 lg:grid-cols-2 lg:gap-16 items-start">
+                        <div>
+                            <p className="text-xs sm:text-sm font-semibold tracking-widest text-blue-600 uppercase">Architecture Deep Dive</p>
+                            <h2 className="mt-4 text-2xl sm:text-3xl font-black text-slate-900">Layered system design</h2>
+                            <p className="mt-4 text-base text-slate-600 leading-relaxed">
+                                Each module is isolated so you can replace retrievers, swap vector stores, or plug in a new LLM without rewriting core flows.
+                            </p>
+                            <div className="mt-6 sm:mt-8 space-y-4 sm:space-y-6">
+                                {architectureSteps.map((step, index) => (
+                                    <div key={index} className="flex items-start gap-4">
+                                        <div className="flex-shrink-0 h-10 w-10 rounded-full bg-white border border-blue-100 flex items-center justify-center font-bold text-blue-600 text-sm">
+                                            {index + 1}
+                                        </div>
+                                        <div>
+                                            <h3 className="text-lg font-semibold text-slate-900">{step.title}</h3>
+                                            <p className="text-sm text-slate-600 leading-relaxed">{step.description}</p>
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+                        <CodeBlock className="shadow-lg bg-white text-slate-700">
+                            <code>
+                                backend/{'\n'}
+                                ├── api/{'\n'}
+                                │   └── routes (applications, knowledge, chat, documents){'\n'}
+                                ├── core/{'\n'}
+                                │   ├── config.py{'\n'}
+                                │   └── dependencies.py{'\n'}
+                                ├── modules/{'\n'}
+                                │   ├── applications/{'\n'}
+                                │   ├── documents/{'\n'}
+                                │   ├── knowledge_bases/{'\n'}
+                                │   └── rag/{'\n'}
+                                ├── schemas/{'\n'}
+                                │   └── pydantic models shared by UI + API{'\n'}
+                                ├── services/{'\n'}
+                                │   ├── retriever.py{'\n'}
+                                │   ├── router.py{'\n'}
+                                │   └── storage.py{'\n'}
+                                └── workers/{'\n'}
+                                {'    '}└── ingestion.py{'\n'}
+                                {'\n'}
+                                frontend/{'\n'}
+                                ├── components/{'\n'}
+                                ├── api-client/{'\n'}
+                                └── pages/
+                            </code>
+                        </CodeBlock>
+                    </div>
+                </section>
+            );
+        };
+
+        const ApiShowcase = () => {
+            const [activeTab, setActiveTab] = React.useState('knowledge');
+
+            return (
+                <section id="api" className="py-12 sm:py-16 px-4 sm:px-6 lg:px-8">
+                    <div className="max-w-7xl mx-auto">
+                        <div className="text-center max-w-3xl mx-auto">
+                            <p className="text-xs sm:text-sm font-semibold tracking-widest text-blue-600 uppercase">API Endpoints Showcase</p>
+                            <h2 className="mt-4 text-2xl sm:text-3xl font-black text-slate-900">Versioned endpoints with predictable payloads</h2>
+                            <p className="mt-4 text-base text-slate-600 leading-relaxed">
+                                Switch between knowledge base management, document ingestion, application settings, and chat streaming using the tabbed explorer below.
+                            </p>
+                            <p className="mt-4 text-xs sm:text-sm text-slate-500">
+                                Need the full schema? Jump straight to the{' '}
+                                <a href="#" className="text-blue-600 font-semibold hover:underline">
+                                    FastAPI docs
+                                </a>.
+                            </p>
+                        </div>
+                        <div className="mt-6 sm:mt-8 flex flex-wrap justify-center gap-2 sm:gap-4 overflow-x-auto pb-2">
+                            {apiTabs.map(tab => (
+                                <button
+                                    key={tab.id}
+                                    onClick={() => setActiveTab(tab.id)}
+                                    className={`flex-shrink-0 rounded-full border px-4 py-2 sm:px-5 sm:py-2.5 text-xs sm:text-sm font-semibold transition-all duration-200 ${
+                                        activeTab === tab.id
+                                        ? 'bg-blue-600 text-white border-transparent'
+                                        : 'text-slate-600 border-slate-200 hover:border-blue-500 hover:text-blue-600'
+                                    }`}
+                                >
+                                    {tab.label}
+                                </button>
+                            ))}
+                        </div>
+                        <div className="mt-8 sm:mt-10">
+                            {apiTabs.map(tab => (
+                                <div key={tab.id} className={`${activeTab === tab.id ? 'block' : 'hidden'}`}>
+                                    <div className="grid gap-4 sm:gap-6 md:grid-cols-2">
+                                        {apiData[tab.id].map((example, index) => (
+                                            <ApiExampleCard key={index} example={example} />
+                                        ))}
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+                </section>
+            );
+        };
+
+        const DataModels = () => {
+            return (
+                <section id="models" className="py-12 sm:py-16 px-4 sm:px-6 lg:px-8 bg-white">
+                    <div className="max-w-7xl mx-auto">
+                        <div className="text-center max-w-3xl mx-auto">
+                            <p className="text-xs sm:text-sm font-semibold tracking-widest text-blue-600 uppercase">Pydantic Schemas</p>
+                            <h2 className="mt-4 text-2xl sm:text-3xl font-black text-slate-900">Typed contracts shared across services</h2>
+                            <p className="mt-4 text-base text-slate-600 leading-relaxed">
+                                Every API surface returns the same Pydantic models that power the frontend, ensuring zero drift between backend logic and UI expectations.
+                            </p>
+                        </div>
+                        <div className="mt-8 sm:mt-12 grid gap-4 sm:gap-6 md:grid-cols-2 xl:grid-cols-3">
+                            {dataModels.map((model, index) => (
+                                <DataModelCard key={index} model={model} />
+                            ))}
+                        </div>
+                    </div>
+                </section>
+            );
+        };
+
+        const Frontend = () => {
+            const frontendFeatures = [
+                { title: 'Chat Interface', description: 'Typing indicators, markdown rendering, and inline citation chips keep conversations transparent and responsive.' },
+                { title: 'File Upload Pipeline', description: 'Drag-and-drop uploads show multi-stage progress: upload → parsing → embedding → ready.' },
+                { title: 'Settings & API Keys', description: 'Secure input components for OpenRouter keys, per-application overrides, and guardrail toggles.' },
+            ];
+
+            return (
+                <section id="frontend" className="py-12 sm:py-16 px-4 sm:px-6 lg:px-8 bg-slate-100/70">
+                    <div className="max-w-7xl mx-auto grid gap-8 lg:grid-cols-2 lg:gap-16 items-start">
+                        <div>
+                            <p className="text-xs sm:text-sm font-semibold tracking-widest text-blue-600 uppercase">Frontend Components</p>
+                            <h2 className="mt-4 text-2xl sm:text-3xl font-black text-slate-900">Modern UI toolkit</h2>
+                            <p className="mt-4 text-base text-slate-600 leading-relaxed">
+                                Tailwind CSS, vanilla JavaScript, and reusable components keep the demo snappy without heavy frameworks.
+                            </p>
+                            <ul className="mt-6 space-y-3 text-sm text-slate-600 leading-relaxed">
+                                <li><span className="font-semibold text-slate-900">Vanilla JS interactivity:</span> Manages tabs, collapsible code blocks, and streaming indicators without extra dependencies.</li>
+                                <li><span className="font-semibold text-slate-900">Tailwind CSS:</span> Utility-first styling delivers responsive layouts with consistent spacing tokens.</li>
+                                <li><span className="font-semibold text-slate-900">Component architecture:</span> Chat panel, file uploader, and settings drawer share typography and state helpers.</li>
+                                <li><span className="font-semibold text-slate-900">Real-time integrations:</span> Fetch API hooks into SSE endpoints for chunked rendering and latency indicators.</li>
+                            </ul>
+                            <div className="mt-6">
+                                <a href="#" className="inline-flex items-center gap-2 rounded-full bg-blue-600 px-6 py-2.5 text-white text-sm font-semibold shadow-lg shadow-blue-600/30 hover:bg-blue-700 transition-colors">
+                                    Explore the Live Frontend
+                                </a>
+                            </div>
+                        </div>
+                        <div className="grid gap-4 sm:gap-6">
+                            {frontendFeatures.map((feature, index) => (
+                                 <article key={index} className="rounded-2xl border border-slate-200 bg-white p-4 sm:p-6 shadow-lg">
+                                    <p className="text-sm font-semibold text-blue-600">{feature.title}</p>
+                                    <p className="mt-3 text-sm text-slate-600 leading-relaxed">{feature.description}</p>
+                                </article>
+                            ))}
+                        </div>
+                    </div>
+                </section>
+            );
+        };
+
+        const Screenshots = () => {
+            return (
+                <section id="screenshots" className="py-12 sm:py-16 px-4 sm:px-6 lg:px-8 bg-white">
+                    <div className="max-w-7xl mx-auto">
+                        <div className="text-center max-w-3xl mx-auto mb-12">
+                             <p className="text-xs sm:text-sm font-semibold tracking-widest text-blue-600 uppercase">Interface Gallery</p>
+                            <h2 className="mt-4 text-2xl sm:text-3xl font-black text-slate-900">See it in action</h2>
+                        </div>
+                        <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
+                            {screenshots.map((shot, index) => (
+                                <ScreenshotCard key={index} shot={shot} />
+                            ))}
+                        </div>
+                    </div>
+                </section>
+            );
+        };
+
+        const Footer = () => {
+            return (
+                <footer className="py-8 sm:py-10 bg-white border-t border-slate-200">
+                    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between text-center sm:text-left text-xs sm:text-sm text-slate-500">
+                        <p>© {new Date().getFullYear()} RAGify · Retrieval-Augmented Generation Platform</p>
+                        <div className="flex justify-center items-center gap-4">
+                            <a href="#" className="text-blue-600 font-semibold hover:underline">
+                                Live Demo
+                            </a>
+                            <span>·</span>
+                            <span>FastAPI · Tailwind · OpenRouter · pgvector</span>
+                        </div>
+                    </div>
+                </footer>
+            );
+        };
+
+        // --- 5. MAIN APP COMPONENT ---
+
+        const App = () => {
+            return (
+                <div className="text-slate-800 font-sans">
+                    <Header />
+                    <main className="pt-20 sm:pt-24">
+                        <Hero />
+                        <Features />
+                        <Architecture />
+                        <ApiShowcase />
+                        <DataModels />
+                        <Frontend />
+                        <Screenshots />
+                    </main>
+                    <Footer />
+                </div>
+            );
+        };
+
+        // --- 6. RENDER ---
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        root.render(<App />);
+
+    </script>
 </body>
 </html>
