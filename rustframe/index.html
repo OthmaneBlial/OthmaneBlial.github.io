@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>RustFrame</title>
+    <meta
+        name="description"
+        content="RustFrame is a stripped-down desktop application framework in Rust for frontend-first apps with embedded assets, direct native IPC, and optional SQLite."
+    >
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body class="page-home">
+    <div class="site-grid" aria-hidden="true"></div>
+    <div class="site-glow site-glow-a" aria-hidden="true"></div>
+    <div class="site-glow site-glow-b" aria-hidden="true"></div>
+
+    <header class="topbar">
+        <a class="brand" href="index.html">
+            <span class="brand-mark">RF</span>
+            <span class="brand-copy">
+                <strong>RustFrame</strong>
+                <span>Repo-driven desktop site</span>
+            </span>
+        </a>
+
+        <nav class="topnav" aria-label="Primary">
+            <a href="#overview">Overview</a>
+            <a href="#workflow">Workflow</a>
+            <a href="#examples">Examples</a>
+            <a href="#docs">Docs</a>
+            <a class="topnav-cta" href="docs.html">Open Docs</a>
+        </nav>
+    </header>
+
+    <main>
+        <section class="hero frame reveal" id="overview">
+            <div class="hero-copy">
+                <p class="eyebrow">Rust / Tao / Wry</p>
+                <h1>Frontend-first desktop apps without the usual framework pileup.</h1>
+                <p class="lede">
+                    RustFrame keeps the app folder plain, injects the bridge from the runtime,
+                    drives the app from typed <code>rustframe.json</code>, and only turns on SQLite,
+                    filesystem, or shell access when the manifest and trust model explicitly allow it.
+                </p>
+
+                <div class="hero-actions">
+                    <a class="button button-primary" href="#workflow">See the workflow</a>
+                    <a class="button button-ghost" href="docs.html?doc=getting-started">Read getting started</a>
+                </div>
+
+                <div class="signal-strip">
+                    <article>
+                        <span>Runtime</span>
+                        <strong>`tao` + `wry` + multi-window shell</strong>
+                    </article>
+                    <article>
+                        <span>Transport</span>
+                        <strong>Runtime-injected native bridge</strong>
+                    </article>
+                    <article>
+                        <span>Storage</span>
+                        <strong>SQLite + versioned SQL migrations</strong>
+                    </article>
+                    <article>
+                        <span>Support Matrix</span>
+                        <strong>Linux, Windows, macOS host-native packaging</strong>
+                    </article>
+                </div>
+            </div>
+
+            <aside class="hero-stack">
+                <article class="command-card">
+                    <div class="card-head">
+                        <p class="eyebrow">CLI Surface</p>
+                        <span class="status-pill">workspace</span>
+                    </div>
+                    <h2>Five commands define most of the workflow.</h2>
+                    <div class="command-list">
+                        <button class="command-chip is-active" type="button" data-command-tab="new">New</button>
+                        <button class="command-chip" type="button" data-command-tab="dev">Dev</button>
+                        <button class="command-chip" type="button" data-command-tab="export">Export</button>
+                        <button class="command-chip" type="button" data-command-tab="platform-check">Check</button>
+                        <button class="command-chip" type="button" data-command-tab="package">Package</button>
+                    </div>
+                    <div class="command-panel" data-command-panel="new">
+                        <pre><code>cargo run -p rustframe-cli -- new hello-rustframe</code></pre>
+                        <button class="mini-button" type="button" data-copy="cargo run -p rustframe-cli -- new hello-rustframe">Copy</button>
+                    </div>
+                    <div class="command-panel is-hidden" data-command-panel="dev">
+                        <pre><code>cargo run -p rustframe-cli -- dev hello-rustframe</code></pre>
+                        <button class="mini-button" type="button" data-copy="cargo run -p rustframe-cli -- dev hello-rustframe">Copy</button>
+                    </div>
+                    <div class="command-panel is-hidden" data-command-panel="export">
+                        <pre><code>cargo run -p rustframe-cli -- export hello-rustframe</code></pre>
+                        <button class="mini-button" type="button" data-copy="cargo run -p rustframe-cli -- export hello-rustframe">Copy</button>
+                    </div>
+                    <div class="command-panel is-hidden" data-command-panel="platform-check">
+                        <pre><code>cargo run -p rustframe-cli -- platform-check hello-rustframe</code></pre>
+                        <button class="mini-button" type="button" data-copy="cargo run -p rustframe-cli -- platform-check hello-rustframe">Copy</button>
+                    </div>
+                    <div class="command-panel is-hidden" data-command-panel="package">
+                        <pre><code>cargo run -p rustframe-cli -- package hello-rustframe</code></pre>
+                        <button class="mini-button" type="button" data-copy="cargo run -p rustframe-cli -- package hello-rustframe">Copy</button>
+                    </div>
+                </article>
+
+                <article class="feature-stack">
+                    <figure class="shot-card shot-card-large">
+                        <img src="assets/screenshots/orbit-desk.png" alt="Orbit Desk screenshot">
+                        <figcaption>
+                            <strong>Orbit Desk</strong>
+                            <span>Frontend-only planning surface backed by browser storage.</span>
+                        </figcaption>
+                    </figure>
+                    <figure class="shot-card shot-card-small">
+                        <img src="assets/screenshots/prism-gallery.png" alt="Prism Gallery screenshot">
+                        <figcaption>
+                            <strong>Prism Gallery</strong>
+                            <span>Seeded SQLite example with a dense media grid.</span>
+                        </figcaption>
+                    </figure>
+                </article>
+            </aside>
+        </section>
+
+        <section class="frame section-grid reveal">
+            <div class="section-heading">
+                <p class="eyebrow">Workspace</p>
+                <h2>What actually lives in this repo</h2>
+            </div>
+
+            <div class="tile-grid">
+                <article class="info-tile">
+                    <span class="tile-kicker">Runtime crate</span>
+                    <h3>`crates/rustframe`</h3>
+                    <p>Owns the desktop shell, injected bridge, multi-window IPC dispatch, SQLite migrations, filesystem scope, trust model, and hardened shell execution.</p>
+                </article>
+                <article class="info-tile">
+                    <span class="tile-kicker">CLI crate</span>
+                    <h3>`crates/rustframe-cli`</h3>
+                    <p>Scaffolds apps, parses typed <code>rustframe.json</code>, generates or ejects runners, validates targets, and packages host-native bundles.</p>
+                </article>
+                <article class="info-tile">
+                    <span class="tile-kicker">Capability demo</span>
+                    <h3>`examples/capability-demo`</h3>
+                    <p>Shows window controls, scoped file reads, and hardened process execution without a localhost bridge or preload server.</p>
+                </article>
+                <article class="info-tile">
+                    <span class="tile-kicker">App catalog</span>
+                    <h3>`apps/*`</h3>
+                    <p>Ships multiple frontend-first desktop examples ranging from note-taking and task planning to CRM, inventory, and editorial workflows.</p>
+                </article>
+            </div>
+        </section>
+
+        <section class="frame workflow reveal" id="workflow">
+            <div class="section-heading">
+                <p class="eyebrow">Workflow</p>
+                <h2>Keep the app folder plain. Let the runner stay hidden.</h2>
+            </div>
+
+            <div class="workflow-grid">
+                <article class="workflow-step">
+                    <span class="step-index">01</span>
+                    <h3>Generate an app folder</h3>
+                    <p>RustFrame writes <code>index.html</code>, <code>styles.css</code>, <code>app.js</code>, <code>rustframe.json</code>, and an optional <code>data/</code> directory into <code>apps/&lt;name&gt;/</code> while the runtime injects the native bridge.</p>
+                </article>
+                <article class="workflow-step">
+                    <span class="step-index">02</span>
+                    <h3>Declare config and boundaries in the manifest</h3>
+                    <p>Typed window settings, trust model, capability roots, shell rules, and packaging metadata all live in <code>rustframe.json</code> instead of loose string metadata.</p>
+                </article>
+                <article class="workflow-step">
+                    <span class="step-index">03</span>
+                    <h3>Run through a generated or ejected runner</h3>
+                    <p><code>dev</code>, <code>export</code>, <code>platform-check</code>, and <code>package</code> use the hidden runner by default, while <code>eject</code> gives advanced apps an owned native entrypoint.</p>
+                </article>
+                <article class="workflow-step">
+                    <span class="step-index">04</span>
+                    <h3>Verify and ship on the native host</h3>
+                    <p><code>platform-check</code> validates host toolchain expectations, <code>package</code> builds native bundles, and end-to-end smoke coverage keeps the new/exported runtime path honest.</p>
+                </article>
+            </div>
+        </section>
+
+        <section class="frame runtime reveal">
+            <div class="section-heading">
+                <p class="eyebrow">Runtime Contract</p>
+                <h2>Small native surface, explicit security and packaging boundaries</h2>
+            </div>
+
+            <div class="capability-grid">
+                <article class="capability-card">
+                    <span class="capability-label">Window</span>
+                    <h3>Primary and secondary windows share one runtime</h3>
+                    <p>The runtime can open route-scoped secondary windows while keeping one native event loop and one bridge contract.</p>
+                </article>
+                <article class="capability-card">
+                    <span class="capability-label">Security</span>
+                    <h3>Pick a trust model up front</h3>
+                    <p><code>local-first</code> and <code>networked</code> modes expose different bridge surfaces, so native power stays aligned with the frontend trust boundary.</p>
+                </article>
+                <article class="capability-card">
+                    <span class="capability-label">Database</span>
+                    <h3>Schema, seeds, and SQL migrations ship together</h3>
+                    <p>When <code>data/schema.json</code> exists, RustFrame provisions SQLite, runs versioned <code>data/migrations/*.sql</code>, and keeps additive schema reconciliation in place.</p>
+                </article>
+                <article class="capability-card">
+                    <span class="capability-label">Filesystem</span>
+                    <h3>Read access is manifest-scoped</h3>
+                    <p><code>fs.readText(...)</code> only succeeds inside explicitly allowed roots and rejects parent escapes or outside paths.</p>
+                </article>
+                <article class="capability-card">
+                    <span class="capability-label">Shell</span>
+                    <h3>Execution is allowlisted and hardened</h3>
+                    <p><code>shell.exec(...)</code> only runs declared commands, with explicit arg rules, cwd and env policy, timeouts, and output caps.</p>
+                </article>
+                <article class="capability-card">
+                    <span class="capability-label">Distribution</span>
+                    <h3>Validate targets before packaging</h3>
+                    <p><code>platform-check</code> surfaces native host constraints early, and <code>package</code> produces Linux, Windows, or macOS host-native bundles.</p>
+                </article>
+            </div>
+        </section>
+
+        <section class="frame gallery reveal" id="examples">
+            <div class="section-heading">
+                <p class="eyebrow">Example Apps</p>
+                <h2>Desktop surfaces already living in the repository</h2>
+            </div>
+
+            <div class="gallery-grid">
+                <article class="gallery-card gallery-card-wide">
+                    <img src="assets/screenshots/atlas-crm.png" alt="Atlas CRM screenshot">
+                    <div class="gallery-copy">
+                        <span class="gallery-kicker">Seeded SQLite example</span>
+                        <h3>Atlas CRM</h3>
+                        <p>Pipeline lanes, deal capture, and native title sync backed by a `deals` table.</p>
+                        <code>apps/atlas-crm</code>
+                    </div>
+                </article>
+                <article class="gallery-card">
+                    <img src="assets/screenshots/daybreak-notes.png" alt="Daybreak Notes screenshot">
+                    <div class="gallery-copy">
+                        <span class="gallery-kicker">CRUD surface</span>
+                        <h3>Daybreak Notes</h3>
+                        <p>A calm local notes library backed by `notes`.</p>
+                    </div>
+                </article>
+                <article class="gallery-card">
+                    <img src="assets/screenshots/hello-rustframe.png" alt="Hello RustFrame screenshot">
+                    <div class="gallery-copy">
+                        <span class="gallery-kicker">Starter app</span>
+                        <h3>Hello Rustframe</h3>
+                        <p>The template path for title sync, embedded seeds, and the smallest useful app.</p>
+                    </div>
+                </article>
+                <article class="gallery-card">
+                    <img src="assets/screenshots/orbit-desk.png" alt="Orbit Desk screenshot">
+                    <div class="gallery-copy">
+                        <span class="gallery-kicker">Frontend-only app</span>
+                        <h3>Orbit Desk</h3>
+                        <p>Task planning, notes, and a focus timer backed by browser storage instead of SQLite.</p>
+                    </div>
+                </article>
+                <article class="gallery-card">
+                    <img src="assets/screenshots/prism-gallery.png" alt="Prism Gallery screenshot">
+                    <div class="gallery-copy">
+                        <span class="gallery-kicker">Media-forward example</span>
+                        <h3>Prism Gallery</h3>
+                        <p>A bright asset library showing how far the visual layer can move without changing the runtime contract.</p>
+                    </div>
+                </article>
+                <article class="gallery-card">
+                    <img src="assets/screenshots/quill-studio.png" alt="Quill Studio screenshot">
+                    <div class="gallery-copy">
+                        <span class="gallery-kicker">Editorial board</span>
+                        <h3>Quill Studio</h3>
+                        <p>Story lanes, deadlines, and multi-channel workflow backed by a `stories` table.</p>
+                    </div>
+                </article>
+            </div>
+        </section>
+
+        <section class="frame docs-strip reveal" id="docs">
+            <div class="section-heading">
+                <p class="eyebrow">Docs</p>
+                <h2>Move from the landing page into the actual contract</h2>
+            </div>
+
+            <div class="docs-grid">
+                <a class="doc-card" href="docs.html?doc=readme">
+                    <span>Docs index</span>
+                    <strong>Start with the repo map</strong>
+                    <p>Use the docs index to move through the workspace, runtime model, app contract, and example set.</p>
+                </a>
+                <a class="doc-card" href="docs.html?doc=getting-started">
+                    <span>Guide</span>
+                    <strong>Getting started</strong>
+                    <p>Run the demo, scaffold an app, validate the support matrix, export a raw binary, and package a host-native bundle.</p>
+                </a>
+                <a class="doc-card" href="docs.html?doc=runtime-and-capabilities">
+                    <span>Runtime</span>
+                    <strong>Capabilities</strong>
+                    <p>See how the injected bridge, trust model, multi-window runtime, SQLite migrations, filesystem roots, and shell hardening fit together.</p>
+                </a>
+                <a class="doc-card" href="docs.html?doc=frontend-app-rules">
+                    <span>Contract</span>
+                    <strong>Frontend app rules</strong>
+                    <p>Everything app folders must do to declare config, dev, export, validate, and package without surprises.</p>
+                </a>
+            </div>
+        </section>
+    </main>
+
+    <footer class="site-footer">
+        <p>RustFrame ships Linux, Windows, and macOS host-native workflows. Cross-host validation still needs the matching native toolchain, and Linux still carries the heaviest GTK, WebKitGTK, and X11 constraints.</p>
+    </footer>
+
+    <script src="app.js"></script>
+</body>
+</html>
