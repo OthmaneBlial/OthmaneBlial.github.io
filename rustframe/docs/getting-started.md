@@ -15,6 +15,12 @@ RustFrame is a Rust workspace with two main moving parts:
   Windows uses the MSVC Rust toolchain
   macOS uses Xcode command line tools
 
+Check the host before you build anything:
+
+```bash
+cargo run -p rustframe-cli -- doctor
+```
+
 ## Run The Capability Demo
 
 ```bash
@@ -27,6 +33,16 @@ To point the runtime at a frontend dev server instead of embedded assets:
 RUSTFRAME_DEV_URL=http://127.0.0.1:5173 cargo run -p capability-demo
 ```
 
+## Run The Flagship App
+
+If you want to inspect the strongest current workflow instead of starting from a blank template, run:
+
+```bash
+cargo run -p rustframe-cli -- dev research-desk
+```
+
+`research-desk` indexes the bundled sample workspace into SQLite, reads the real source documents through the filesystem bridge, and opens reader windows for focused review passes.
+
 ## Create A Frontend-First App
 
 Generate a new app into `apps/<name>`:
@@ -36,6 +52,7 @@ cargo run -p rustframe-cli -- new hello-rustframe
 ```
 
 RustFrame writes a plain frontend folder. The generated app does not contain a visible `Cargo.toml`, `src/`, or runner files.
+The starter is now a small workflow queue, not a generic notes demo.
 
 Edit these files directly:
 
@@ -51,6 +68,17 @@ Edit these files directly:
 Use `rustframe.json` as the primary typed config for window settings, dev URLs, capabilities, and packaging. `<title>` plus `rustframe:*` meta tags still work as fallback.
 
 The native bridge is injected by the runtime, so frontend-only apps do not need to ship a `bridge.js` file.
+
+If you want to keep the RustFrame runtime path but develop with a mainstream frontend toolchain, start from:
+
+- `examples/frontend-starters/vite-vanilla`
+- `examples/frontend-starters/react-vite`
+- `examples/frontend-starters/vue-vite`
+- `examples/frontend-starters/svelte-vite`
+
+For the current ecosystem map of starters and workflow references, check:
+
+- `examples/community-templates/catalog.json`
 
 ## Run An App In Development
 
@@ -123,6 +151,8 @@ Supported path tokens:
 - `${SOURCE_ASSET_DIR}` resolves to the embedded asset folder.
 - `${EXE_DIR}` resolves to the runtime executable directory.
 
+During `export` and `package`, RustFrame copies declared relative filesystem roots beside the executable or bundle. `apps/research-desk` uses this to ship `workspace/` and `tools/` with the app while keeping the same manifest contract in development and release.
+
 Host-native packaging also reads from `rustframe.json`:
 
 ```json
@@ -133,7 +163,7 @@ Host-native packaging also reads from `rustframe.json`:
     "linux": {
       "icon": "assets/icon.svg",
       "categories": ["Utility"],
-      "keywords": ["desktop", "rustframe"]
+      "keywords": ["workflow", "local-first", "rustframe"]
     },
     "windows": {
       "icon": "assets/icon.ico"
@@ -161,6 +191,26 @@ data/migrations/002-rename-title.sql
 ```
 
 Migration files are applied in schema-version order before RustFrame runs its additive schema reconciliation.
+
+## Inspect The Resolved App Contract
+
+Use `inspect` to see the resolved paths, trust model, packaged filesystem roots, shell limits, schema diagnostics, seeds, and migrations for an app:
+
+```bash
+cargo run -p rustframe-cli -- inspect hello-rustframe
+```
+
+This is the fastest way to verify what the hidden runner will actually expose before you package the app.
+
+## Reset Local Dev Data
+
+When you want to rebuild the local SQLite file from schema, migrations, and immutable seeds:
+
+```bash
+cargo run -p rustframe-cli -- reset-data hello-rustframe
+```
+
+On the next `dev` run, RustFrame recreates the app data directory and re-applies the embedded database assets.
 
 ## Export A Release Build
 
@@ -190,6 +240,39 @@ apps/<name>/dist/
 ```
 
 Use `export` when you want the raw executable only.
+If the manifest declares relative filesystem roots, those directories are copied into `dist/` beside the executable.
+
+## Package And Verify
+
+From the workspace root:
+
+```bash
+cargo run -p rustframe-cli -- package hello-rustframe
+```
+
+From inside the app directory:
+
+```bash
+cd apps/hello-rustframe
+cargo run -p rustframe-cli -- package
+```
+
+Validate the emitted metadata, scripts, and bundle layout:
+
+```bash
+cargo run -p rustframe-cli -- package hello-rustframe --verify
+```
+
+RustFrame writes:
+
+```text
+apps/<name>/dist/linux/<app-id>-<version>-linux-<arch>/
+apps/<name>/dist/linux/<app-id>-<version>-linux-<arch>.tar.gz
+apps/<name>/dist/windows/<app-id>-<version>-windows-<arch>/
+apps/<name>/dist/windows/<app-id>-<version>-windows-<arch>.zip
+apps/<name>/dist/macos/<app-id>-<version>-macos-<arch>/
+apps/<name>/dist/macos/<app-id>-<version>-macos-<arch>.tar.gz
+```
 
 ## Validate Platform Support
 
@@ -212,31 +295,6 @@ You can narrow the check to a custom Rust target when needed:
 cargo run -p rustframe-cli -- platform-check hello-rustframe --target x86_64-pc-windows-msvc
 ```
 
-## Package A Host-Native Bundle
-
-From the workspace root:
-
-```bash
-cargo run -p rustframe-cli -- package hello-rustframe
-```
-
-From inside the app directory:
-
-```bash
-cd apps/hello-rustframe
-cargo run -p rustframe-cli -- package
-```
-
-RustFrame writes:
-
-```text
-apps/<name>/dist/linux/<app-id>-<version>-linux-<arch>/
-apps/<name>/dist/linux/<app-id>-<version>-linux-<arch>.tar.gz
-apps/<name>/dist/windows/<app-id>-<version>-windows-<arch>/
-apps/<name>/dist/windows/<app-id>-<version>-windows-<arch>.zip
-apps/<name>/dist/macos/<app-id>-<version>-macos-<arch>/
-apps/<name>/dist/macos/<app-id>-<version>-macos-<arch>.tar.gz
-```
 
 The host-native package contains:
 
@@ -244,6 +302,8 @@ The host-native package contains:
 - Windows: a portable app directory, PowerShell install scripts, shortcuts, and a `.zip`
 - macOS: an `.app` bundle, shell install scripts, and a `.tar.gz`
 - `rustframe-package.json` with release metadata
+
+Relative filesystem roots declared in `rustframe.json` are also copied into each host-native bundle. `research-desk` uses this for its bundled archive and indexing script.
 
 ## Eject To A Native Runner
 

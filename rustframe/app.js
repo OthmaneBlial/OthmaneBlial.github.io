@@ -14,10 +14,75 @@ const DOCS = {
         source: "docs/getting-started.md",
         path: "docs/getting-started.md",
     },
+    "choosing-rustframe": {
+        title: "Choosing RustFrame",
+        source: "docs/choosing-rustframe.md",
+        path: "docs/choosing-rustframe.md",
+    },
+    "architecture-overview": {
+        title: "Architecture overview",
+        source: "docs/architecture-overview.md",
+        path: "docs/architecture-overview.md",
+    },
     "runtime-and-capabilities": {
         title: "Runtime and capabilities",
         source: "docs/runtime-and-capabilities.md",
         path: "docs/runtime-and-capabilities.md",
+    },
+    "build-in-20-minutes": {
+        title: "Build in 20 minutes",
+        source: "docs/build-in-20-minutes.md",
+        path: "docs/build-in-20-minutes.md",
+    },
+    cookbook: {
+        title: "Cookbook",
+        source: "docs/cookbook.md",
+        path: "docs/cookbook.md",
+    },
+    "threat-model": {
+        title: "Threat model",
+        source: "docs/threat-model.md",
+        path: "docs/threat-model.md",
+    },
+    "migrations-and-versioning": {
+        title: "Migrations and versioning",
+        source: "docs/migrations-and-versioning.md",
+        path: "docs/migrations-and-versioning.md",
+    },
+    "platform-support": {
+        title: "Platform support",
+        source: "docs/platform-support.md",
+        path: "docs/platform-support.md",
+    },
+    "signing-and-notarization": {
+        title: "Signing and notarization",
+        source: "docs/signing-and-notarization.md",
+        path: "docs/signing-and-notarization.md",
+    },
+    "update-strategy": {
+        title: "Update strategy",
+        source: "docs/update-strategy.md",
+        path: "docs/update-strategy.md",
+    },
+    "release-checklist": {
+        title: "Release checklist",
+        source: "docs/release-checklist.md",
+        path: "docs/release-checklist.md",
+    },
+    "community-templates": {
+        title: "Community templates",
+        source: "docs/community-templates.md",
+        path: "docs/community-templates.md",
+    },
+    "remote-sync-patterns": {
+        title: "Remote sync patterns",
+        source: "docs/remote-sync-patterns.md",
+        path: "docs/remote-sync-patterns.md",
+    },
+    "capability-extension-patterns": {
+        title: "Capability extension patterns",
+        source: "docs/capability-extension-patterns.md",
+        path: "docs/capability-extension-patterns.md",
     },
     "frontend-app-rules": {
         title: "Frontend app rules",
@@ -35,6 +100,7 @@ setupCommandTabs();
 setupCopyButtons();
 setupRevealObserver();
 setupDocsPage();
+setupShowcasePage();
 
 function setupCommandTabs() {
     if (!HOME_COMMAND_TABS.length) {
@@ -143,6 +209,73 @@ async function loadDoc(docId, docsContent, titleNode, sourceNode) {
         docsContent.innerHTML = `<p>Unable to load the selected doc.</p><pre>${escapeHtml(String(error))}</pre>`;
         enhanceDocsCodeBlocks(docsContent);
     }
+}
+
+function setupShowcasePage() {
+    const grid = document.getElementById("showcase-grid");
+    if (!grid) {
+        return;
+    }
+
+    loadShowcase(grid);
+}
+
+async function loadShowcase(grid) {
+    try {
+        const response = await fetch("showcase.json");
+        if (!response.ok) {
+            throw new Error(`Failed to load showcase.json`);
+        }
+
+        const payload = await response.json();
+        const items = Array.isArray(payload.templates) ? payload.templates : [];
+        if (!items.length) {
+            grid.innerHTML = `<article class="showcase-empty">No showcase entries have been published yet.</article>`;
+            return;
+        }
+
+        grid.innerHTML = items.map(renderShowcaseCard).join("");
+    } catch (error) {
+        grid.innerHTML = `<article class="showcase-empty">Unable to load the showcase.<pre>${escapeHtml(String(error))}</pre></article>`;
+    }
+}
+
+function renderShowcaseCard(item) {
+    const title = escapeHtml(item.title || "Untitled");
+    const category = escapeHtml(item.category || "reference");
+    const source = escapeHtml(item.source || "");
+    const summary = escapeHtml(item.summary || "");
+    const href = escapeHtml(item.href || "#");
+    const bestFor = Array.isArray(item.bestFor) ? item.bestFor : [];
+    const capabilities = Array.isArray(item.capabilities) ? item.capabilities : [];
+    const visual = item.screenshot
+        ? `<div class="showcase-visual"><img src="${escapeHtml(item.screenshot)}" alt="${title} screenshot"></div>`
+        : `<div class="showcase-visual showcase-placeholder"><span>${category}</span></div>`;
+    const bestForHtml = bestFor.length
+        ? `<p class="showcase-meta"><strong>Best for</strong> ${escapeHtml(bestFor.join(", "))}</p>`
+        : "";
+    const capabilityTags = capabilities.length
+        ? `<div class="showcase-tags">${capabilities
+              .map((value) => `<span class="showcase-tag">${escapeHtml(value)}</span>`)
+              .join("")}</div>`
+        : "";
+
+    return `
+        <article class="showcase-card">
+            ${visual}
+            <div class="showcase-copy">
+                <span class="gallery-kicker">${category}</span>
+                <h3>${title}</h3>
+                <p>${summary}</p>
+                <p class="showcase-meta"><strong>Source</strong> <code>${source}</code></p>
+                ${bestForHtml}
+                ${capabilityTags}
+                <div class="showcase-actions">
+                    <a class="button button-ghost" href="${href}" target="_blank" rel="noreferrer">Open source</a>
+                </div>
+            </div>
+        </article>
+    `;
 }
 
 function enhanceDocsCodeBlocks(container) {
