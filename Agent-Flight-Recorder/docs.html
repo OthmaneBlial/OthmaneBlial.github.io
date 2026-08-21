@@ -1,0 +1,419 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      name="description"
+      content="Agent Flight Recorder field manual: safe demo, evidence model, provider capture, privacy, bundles, API, and operations."
+    />
+    <meta name="theme-color" content="#0a0b0b" />
+    <title>Field Manual — Agent Flight Recorder</title>
+    <link rel="canonical" href="https://othmaneblial.github.io/Agent-Flight-Recorder/docs.html" />
+    <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="styles.css" />
+    <script src="app.js" defer></script>
+  </head>
+  <body class="docs-body">
+    <a class="skip-link" href="#docs-content">Skip to documentation</a>
+    <header class="site-header docs-header" data-site-header>
+      <a class="brand" href="index.html" aria-label="Agent Flight Recorder home">
+        <span class="brand-mark" aria-hidden="true">AFR</span>
+        <span class="brand-wordmark">Agent Flight Recorder</span>
+      </a>
+      <button
+        class="menu-toggle"
+        type="button"
+        aria-label="Toggle navigation menu"
+        aria-expanded="false"
+        aria-controls="primary-nav"
+        data-menu-toggle
+      >
+        <span class="menu-toggle-label">Menu</span>
+        <span class="menu-toggle-lines" aria-hidden="true"></span>
+      </button>
+      <nav class="primary-nav" id="primary-nav" aria-label="Primary" data-menu>
+        <a href="index.html">Product</a>
+        <a href="docs.html" aria-current="page">Docs</a>
+        <a href="https://github.com/OthmaneBlial/Agent-Flight-Recorder">GitHub <span aria-hidden="true">&#8599;</span></a>
+      </nav>
+    </header>
+
+    <main id="docs-content" class="docs-layout">
+      <aside class="docs-sidebar" aria-label="Documentation navigation">
+        <div class="docs-sidebar-head">
+          <span>FIELD MANUAL</span>
+          <strong>AFR / 0.2</strong>
+        </div>
+        <label class="docs-search-label" for="docs-search">Search the manual</label>
+        <div class="docs-search-wrap">
+          <span aria-hidden="true">/</span>
+          <input id="docs-search" type="search" placeholder="Filter sections…" autocomplete="off" data-doc-search />
+        </div>
+        <p class="docs-search-status" aria-live="polite" data-doc-search-status>10 sections</p>
+        <nav class="docs-toc" aria-label="On this page">
+          <a href="#overview"><span>01</span>Overview</a>
+          <a href="#first-run"><span>02</span>Safe first run</a>
+          <a href="#privacy"><span>03</span>Privacy boundary</a>
+          <a href="#evidence-model"><span>04</span>Evidence model</a>
+          <a href="#providers"><span>05</span>Providers</a>
+          <a href="#hooks"><span>06</span>Hook configuration</a>
+          <a href="#bundles"><span>07</span>Portable bundles</a>
+          <a href="#operations"><span>08</span>Operations</a>
+          <a href="#api"><span>09</span>Loopback API</a>
+          <a href="#limits"><span>10</span>Limits</a>
+        </nav>
+        <a class="sidebar-github" href="https://github.com/OthmaneBlial/Agent-Flight-Recorder">View repository <span aria-hidden="true">&#8599;</span></a>
+      </aside>
+
+      <article class="docs-article">
+        <header class="docs-hero">
+          <p class="signal-line"><span></span> Operational reference / schema v7</p>
+          <h1>Field manual</h1>
+          <p>
+            Start with synthetic evidence. Move into private capture deliberately. Keep every
+            conclusion bounded by what the provider actually exposed.
+          </p>
+          <section class="docs-version-strip" aria-label="Documentation metadata">
+            <span>VERSION <strong>0.2.0</strong></span>
+            <span>RUNTIME <strong>Node 24.18.1+</strong></span>
+            <span>LICENSE <strong>MIT</strong></span>
+          </section>
+        </header>
+
+        <div class="docs-empty" hidden data-doc-empty>
+          <span aria-hidden="true">NO MATCH</span>
+          <h2>No manual sections matched that search.</h2>
+          <p>Try a provider name, “privacy,” “bundle,” “demo,” or “API.”</p>
+        </div>
+
+        <section class="doc-section" id="overview" data-doc-section data-search="overview architecture local recorder timeline evidence replay">
+          <div class="doc-section-number">01</div>
+          <div class="doc-section-content">
+            <p class="eyebrow">Overview</p>
+            <h2>A local evidence pipeline, not a chat exporter.</h2>
+            <p>
+              Agent Flight Recorder turns locally exposed coding-agent traces into a canonical,
+              append-only timeline. Native records keep their provenance; calls and outcomes are
+              correlated into logical attempts; snapshot boundaries produce code evolution; gaps
+              remain visible when proof is unavailable.
+            </p>
+            <div class="architecture-flow" role="img" aria-label="Native sources flow through adapters into events, gaps, snapshots, encrypted SQLite, and the replay console">
+              <div><strong>Native logs</strong><span>Hooks / JSON envelope</span></div>
+              <i aria-hidden="true">&#8594;</i>
+              <div><strong>Adapters</strong><span>Canonical events</span></div>
+              <i aria-hidden="true">&#8594;</i>
+              <div><strong>SQLite WAL</strong><span>Encrypted evidence</span></div>
+              <i aria-hidden="true">&#8594;</i>
+              <div><strong>Replay</strong><span>Loopback HTTP + SSE</span></div>
+            </div>
+            <div class="doc-callout">
+              <strong>Core rule</strong>
+              <p>Unavailable evidence is null, unknown, or a first-class gap—not an inferred narrative.</p>
+            </div>
+          </div>
+        </section>
+
+        <section class="doc-section" id="first-run" data-doc-section data-search="first run install quick start demo reset sandbox npm port">
+          <div class="doc-section-number">02</div>
+          <div class="doc-section-content">
+            <p class="eyebrow">Safe first run</p>
+            <h2>Begin inside the synthetic sandbox.</h2>
+            <p>
+              The deterministic demo creates two compatible-agent flights in
+              <code>.flight-recorder-demo</code>. It performs no native-source scan, accepts no live
+              hook ingestion, forces masking, and requires no provider account or API key.
+            </p>
+            <div class="doc-command">
+              <div class="command-head">
+                <span>INSTALL + DEMO</span>
+                <button class="copy-button" type="button" data-copy-target="docs-demo"><span data-copy-label>Copy</span></button>
+              </div>
+              <pre id="docs-demo"><code>npm ci
+npm run demo -- --reset</code></pre>
+            </div>
+            <p>Open <code>http://127.0.0.1:4174</code>. If that port is occupied:</p>
+            <div class="doc-command">
+              <div class="command-head">
+                <span>ALTERNATE PORT</span>
+                <button class="copy-button" type="button" data-copy-target="docs-demo-port"><span data-copy-label>Copy</span></button>
+              </div>
+              <pre id="docs-demo-port"><code>npm run demo -- --reset --port=4180</code></pre>
+            </div>
+            <h3>Development modes</h3>
+            <table class="docs-table">
+              <thead><tr><th>Command</th><th>Boundary</th><th>Use it for</th></tr></thead>
+              <tbody>
+                <tr><th scope="row"><code>npm run dev</code></th><td>Sandbox locked</td><td>UI work, demos, screenshots</td></tr>
+                <tr><th scope="row"><code>npm run dev:private</code></th><td>Native local evidence</td><td>Intentional private development only</td></tr>
+                <tr><th scope="row"><code>npm start</code></th><td>Production local store</td><td>Built loopback recorder</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <section class="doc-section" id="privacy" data-doc-section data-search="privacy security encryption redaction masking strict loopback telemetry keychain database publish sandbox">
+          <div class="doc-section-number">03</div>
+          <div class="doc-section-content">
+            <p class="eyebrow">Privacy boundary</p>
+            <h2>Local-only is a runtime boundary, not permission to publish evidence.</h2>
+            <ul class="doc-ledger">
+              <li><strong>Network</strong><span>Loopback bind; untrusted Host and mutating cross-origin requests are rejected.</span></li>
+              <li><strong>Outbound</strong><span>No telemetry, analytics, cloud database, or remote exporter.</span></li>
+              <li><strong>Ingestion</strong><span>Credential masking is the default; strict mode also omits raw native records.</span></li>
+              <li><strong>Storage</strong><span>Normalized payloads, raw envelopes, and snapshot blobs use AES-256-GCM.</span></li>
+              <li><strong>Keys</strong><span>macOS Keychain, explicit <code>AFR_STORE_KEY</code>, or a private adjacent key file.</span></li>
+            </ul>
+            <div class="doc-callout doc-callout-warning">
+              <strong>Do not publish a recorder store or bundle.</strong>
+              <p>
+                It can still contain prompts, source, command text, paths, and identifiable metadata.
+                Indexed timestamps, kinds, summaries, commands, paths, and correlations remain plaintext.
+              </p>
+            </div>
+            <p>Run the repository privacy gate before every public commit:</p>
+            <div class="doc-command">
+              <div class="command-head">
+                <span>PUBLICATION CHECK</span>
+                <button class="copy-button" type="button" data-copy-target="docs-privacy"><span data-copy-label>Copy</span></button>
+              </div>
+              <pre id="docs-privacy"><code>npm run privacy:check</code></pre>
+            </div>
+          </div>
+        </section>
+
+        <section class="doc-section" id="evidence-model" data-doc-section data-search="evidence model events attempts retries permissions gaps snapshots exact inferred assurance">
+          <div class="doc-section-number">04</div>
+          <div class="doc-section-content">
+            <p class="eyebrow">Evidence model</p>
+            <h2>Events stay native. Operational meaning is correlated alongside them.</h2>
+            <p>
+              Every canonical event has a stable ID, session, sequence, timestamp, kind, actor,
+              status, summary, optional command or path, correlation IDs, normalized payload, and
+              optional raw evidence.
+            </p>
+            <section class="kind-cloud" aria-label="Canonical event kinds">
+              <span>prompt</span><span>reasoning</span><span>response</span><span>tool</span>
+              <span>terminal</span><span>file</span><span>test</span><span>permission</span>
+              <span>token</span><span>retry</span><span>gap</span><span>context</span>
+              <span>lifecycle</span><span>error</span><span>artifact</span>
+            </section>
+            <h3>Assurance labels</h3>
+            <dl class="assurance-list">
+              <div><dt>Exact</dt><dd>Captured synchronously around a provider hook.</dd></div>
+              <div><dt>Best-effort</dt><dd>Observed from an append-only source where timing cannot prove a true pre-state.</dd></div>
+              <div><dt>Explicit</dt><dd>A provider reported the permission decision directly.</dd></div>
+              <div><dt>Executed / inferred</dt><dd>A correlated tool completed after a request; execution is proven, manual approval is not.</dd></div>
+              <div><dt>Unknown / unresolved</dt><dd>No trustworthy result arrived inside the bounded window.</dd></div>
+            </dl>
+            <p>
+              Retries are derived only when an identical invocation follows an observed failed or
+              blocked attempt in the same turn or within five minutes. Repeated success is not
+              mislabeled as retry behavior.
+            </p>
+          </div>
+        </section>
+
+        <section class="doc-section" id="providers" data-doc-section data-search="providers codex opencode claude cursor compatible hooks json sqlite wal source">
+          <div class="doc-section-number">05</div>
+          <div class="doc-section-content">
+            <p class="eyebrow">Providers</p>
+            <h2>Five capture surfaces, one operational vocabulary.</h2>
+            <div class="provider-docs-grid">
+              <article><span class="provider-dot codex"></span><h3>Codex</h3><p>Incremental bounded reads of native session JSONL, including tools, commands, patches, usage, collaboration, and historical gaps.</p></article>
+              <article><span class="provider-dot opencode"></span><h3>OpenCode</h3><p>Read-only import from the native SQLite database and WAL with session, message, part, file, token, and cost evidence.</p></article>
+              <article><span class="provider-dot claude"></span><h3>Claude Code</h3><p>All 31 documented official hook events. Hidden reasoning and complete general token/cost usage are not exposed.</p></article>
+              <article><span class="provider-dot cursor"></span><h3>Cursor</h3><p>All 21 documented native hook events. No universal token/cost event or native manual permission-result event.</p></article>
+              <article><span class="provider-dot compat"></span><h3>Compatible</h3><p><code>afr.event.v1</code> over stdin or loopback HTTP. Unknown fields survive normalization.</p></article>
+            </div>
+            <h3>Compatible envelope</h3>
+            <div class="doc-command">
+              <div class="command-head">
+                <span>HTTP EVENT</span>
+                <button class="copy-button" type="button" data-copy-target="docs-envelope"><span data-copy-label>Copy</span></button>
+              </div>
+              <pre id="docs-envelope"><code>curl --fail --silent \
+  -H 'content-type: application/json' \
+  --data '{
+    "schema":"afr.event.v1",
+    "sessionId":"example-01",
+    "event":"tool.before",
+    "timestamp":"2026-08-21T09:00:00.000Z",
+    "cwd":"/workspace/app",
+    "toolName":"shell",
+    "command":"npm test",
+    "callId":"call-7"
+  }' \
+  http://127.0.0.1:4174/api/hooks/compatible/tool.before</code></pre>
+            </div>
+          </div>
+        </section>
+
+        <section class="doc-section" id="hooks" data-doc-section data-search="hooks claude cursor install config uninstall rollback dry run apply">
+          <div class="doc-section-number">06</div>
+          <div class="doc-section-content">
+            <p class="eyebrow">Hook configuration</p>
+            <h2>Preview first. Apply only when the merge is understood.</h2>
+            <p>
+              The managed installer structurally merges existing JSON, deduplicates recorder
+              handlers, and creates a timestamped backup. Without <code>--apply</code>, every install,
+              uninstall, rollback, and retention command is a dry run.
+            </p>
+            <div class="doc-command">
+              <div class="command-head">
+                <span>CLAUDE / PREVIEW THEN APPLY</span>
+                <button class="copy-button" type="button" data-copy-target="docs-hooks"><span data-copy-label>Copy</span></button>
+              </div>
+              <pre id="docs-hooks"><code>node build/server/cli.js install-hooks \
+  --provider=claude \
+  --scope=user \
+  --data-dir="$PWD/.flight-recorder"
+
+# Apply only after reviewing the preview:
+node build/server/cli.js install-hooks \
+  --provider=claude \
+  --scope=user \
+  --data-dir="$PWD/.flight-recorder" \
+  --apply</code></pre>
+            </div>
+            <p>
+              Recorder hooks fail open: a recorder timeout does not block the coding agent. Hooks
+              run with the local user’s permissions, so generated commands must be reviewed.
+            </p>
+          </div>
+        </section>
+
+        <section class="doc-section" id="bundles" data-doc-section data-search="bundle export import archive encryption passphrase scrypt aes gzip afr portable">
+          <div class="doc-section-number">07</div>
+          <div class="doc-section-content">
+            <p class="eyebrow">Portable bundles</p>
+            <h2>Carry one flight as an authenticated encrypted archive.</h2>
+            <p>
+              Bundles contain one detailed session, ordered canonical events, snapshot provenance,
+              and referenced content blobs. The default format uses gzip, scrypt key derivation,
+              AES-256-GCM, a per-bundle salt, and an archive digest.
+            </p>
+            <div class="doc-command">
+              <div class="command-head">
+                <span>EXPORT + IMPORT</span>
+                <button class="copy-button" type="button" data-copy-target="docs-bundle"><span data-copy-label>Copy</span></button>
+              </div>
+              <pre id="docs-bundle"><code>export AFR_BUNDLE_PASSPHRASE='use-a-long-local-passphrase'
+node build/server/cli.js export \
+  --session='codex:SESSION_ID' \
+  --out=./flight.afr
+
+node build/server/cli.js import \
+  --in=./flight.afr \
+  --data-dir=./restored-recorder</code></pre>
+            </div>
+            <div class="doc-callout doc-callout-warning">
+              <strong>A bundle is sensitive evidence.</strong>
+              <p>Do not commit it. Keep the passphrase outside shared shell scripts and committed environment files.</p>
+            </div>
+          </div>
+        </section>
+
+        <section class="doc-section" id="operations" data-doc-section data-search="operations verify test build lint doctor scan retention prune health chromium">
+          <div class="doc-section-number">08</div>
+          <div class="doc-section-content">
+            <p class="eyebrow">Operations</p>
+            <h2>Build, inspect health, and prune deliberately.</h2>
+            <div class="doc-command">
+              <div class="command-head">
+                <span>VALIDATION GATES</span>
+                <button class="copy-button" type="button" data-copy-target="docs-verify"><span data-copy-label>Copy</span></button>
+              </div>
+              <pre id="docs-verify"><code>npm run verify
+npm run test:e2e
+npm audit --audit-level=moderate</code></pre>
+            </div>
+            <p>
+              <code>npm run verify</code> runs formatting, lint, strict TypeScript, 43 unit and
+              integration tests, the publication privacy check, and the production build. The
+              browser suite covers two Chromium journeys across desktop and phone layouts.
+            </p>
+            <h3>Health and capture</h3>
+            <div class="doc-command">
+              <div class="command-head">
+                <span>DOCTOR + BOUNDED SCAN</span>
+                <button class="copy-button" type="button" data-copy-target="docs-doctor"><span data-copy-label>Copy</span></button>
+              </div>
+              <pre id="docs-doctor"><code>npm run doctor
+npm run scan -- --limit=12</code></pre>
+            </div>
+            <h3>Retention is dry-run-first</h3>
+            <div class="doc-command">
+              <div class="command-head">
+                <span>PREVIEW THEN APPLY</span>
+                <button class="copy-button" type="button" data-copy-target="docs-prune"><span data-copy-label>Copy</span></button>
+              </div>
+              <pre id="docs-prune"><code>node build/server/cli.js prune \
+  --raw-older-than=30 \
+  --snapshots-older-than=90
+
+# Apply only after checking the preview:
+node build/server/cli.js prune \
+  --raw-older-than=30 \
+  --snapshots-older-than=90 \
+  --apply</code></pre>
+            </div>
+          </div>
+        </section>
+
+        <section class="doc-section" id="api" data-doc-section data-search="api http sse endpoints health overview sessions events compare scan hooks stream">
+          <div class="doc-section-number">09</div>
+          <div class="doc-section-content">
+            <p class="eyebrow">Loopback API</p>
+            <h2>Query replay evidence without exposing a remote service.</h2>
+            <div class="endpoint-list">
+              <div><span>GET</span><code>/api/health</code><p>Readiness, policy, source, snapshot, gap, call, permission, and heartbeat health.</p></div>
+              <div><span>GET</span><code>/api/overview</code><p>Counts, storage policy, schema version, and source summary.</p></div>
+              <div><span>GET</span><code>/api/sessions</code><p>Lightweight recorded-flight list projections.</p></div>
+              <div><span>GET</span><code>/api/sessions/:id/events</code><p>Ordered, paged timeline projections.</p></div>
+              <div><span>GET</span><code>/api/events/:id/evolution</code><p>Snapshot assurance, boundaries, and bounded unified diff.</p></div>
+              <div><span>GET</span><code>/api/compare?left=:id&amp;right=:id</code><p>Canonical metrics, kinds, failures, gaps, and files.</p></div>
+              <div><span>POST</span><code>/api/scan</code><p>Manual native scan; rejected inside the public demo sandbox.</p></div>
+              <div><span>SSE</span><code>/api/stream</code><p>Live local update notifications.</p></div>
+            </div>
+            <p>
+              Responses include request IDs. Unexpected internal failures are logged locally while
+              clients receive a bounded error without implementation details.
+            </p>
+          </div>
+        </section>
+
+        <section class="doc-section" id="limits" data-doc-section data-search="limits limitations unknown reasoning sqlcipher metadata local multi tenant ambiguity troubleshooting">
+          <div class="doc-section-number">10</div>
+          <div class="doc-section-content">
+            <p class="eyebrow">Limits</p>
+            <h2>Evidence completeness is provider-bound.</h2>
+            <ul class="limits-list docs-limits">
+              <li>Provider-private reasoning, non-emitted callbacks, and unavailable permission decisions cannot be reconstructed.</li>
+              <li>Claude Code and Cursor callback delivery must be validated on an opted-in installation of those products.</li>
+              <li>Evidence columns are encrypted, but indexed metadata remains plaintext; full-page SQLCipher is not provided.</li>
+              <li>Parallel identical actions without call IDs can remain temporally ambiguous.</li>
+              <li>This is a single-user loopback tool. Remote access and multi-user authentication are outside the threat model.</li>
+            </ul>
+            <p>
+              For port conflicts, store-key errors, reconnecting consoles, browser installation, and
+              locked databases, see the full
+              <a href="https://github.com/OthmaneBlial/Agent-Flight-Recorder/blob/main/docs/TROUBLESHOOTING.md">troubleshooting guide</a>.
+            </p>
+          </div>
+        </section>
+
+        <footer class="docs-footer">
+          <p>Evidence over narrative.</p>
+          <div>
+            <a href="index.html">Product</a>
+            <a href="https://github.com/OthmaneBlial/Agent-Flight-Recorder/blob/main/SECURITY.md">Security</a>
+            <a href="https://github.com/OthmaneBlial/Agent-Flight-Recorder">Source</a>
+          </div>
+        </footer>
+      </article>
+    </main>
+
+    <div class="toast" role="status" aria-live="polite" aria-atomic="true" data-toast></div>
+  </body>
+</html>

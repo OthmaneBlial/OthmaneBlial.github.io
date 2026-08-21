@@ -1,0 +1,379 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      name="description"
+      content="Agent Flight Recorder turns local AI coding-agent traces into an auditable replay of tools, edits, tests, retries, permissions, and code evolution."
+    />
+    <meta name="theme-color" content="#0a0b0b" />
+    <meta property="og:title" content="Agent Flight Recorder" />
+    <meta
+      property="og:description"
+      content="Replay what happened. Preserve what you can prove. Keep the evidence local."
+    />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://othmaneblial.github.io/Agent-Flight-Recorder/" />
+    <meta property="og:image" content="https://othmaneblial.github.io/Agent-Flight-Recorder/assets/replay-console.png" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <title>Agent Flight Recorder — Local evidence for AI coding agents</title>
+    <link rel="canonical" href="https://othmaneblial.github.io/Agent-Flight-Recorder/" />
+    <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="styles.css" />
+    <script src="app.js" defer></script>
+  </head>
+  <body>
+    <a class="skip-link" href="#main-content">Skip to content</a>
+
+    <header class="site-header" data-site-header>
+      <a class="brand" href="index.html" aria-label="Agent Flight Recorder home">
+        <span class="brand-mark" aria-hidden="true">AFR</span>
+        <span class="brand-wordmark">Agent Flight Recorder</span>
+      </a>
+      <button
+        class="menu-toggle"
+        type="button"
+        aria-label="Toggle navigation menu"
+        aria-expanded="false"
+        aria-controls="primary-nav"
+        data-menu-toggle
+      >
+        <span class="menu-toggle-label">Menu</span>
+        <span class="menu-toggle-lines" aria-hidden="true"></span>
+      </button>
+      <nav class="primary-nav" id="primary-nav" aria-label="Primary" data-menu>
+        <a href="#workflow">Workflow</a>
+        <a href="#proof">Proof</a>
+        <a href="#privacy">Privacy</a>
+        <a href="docs.html">Docs</a>
+        <a
+          class="nav-github"
+          href="https://github.com/OthmaneBlial/Agent-Flight-Recorder"
+          rel="noreferrer"
+        >GitHub <span aria-hidden="true">&#8599;</span></a>
+      </nav>
+    </header>
+
+    <main id="main-content">
+      <section class="hero" aria-labelledby="hero-title">
+        <div class="hero-grid" aria-hidden="true"></div>
+        <div class="hero-copy reveal">
+          <p class="signal-line"><span></span> Local evidence / controlled replay / no cloud</p>
+          <h1 id="hero-title">Replay what happened.<br /><em>Preserve what you can prove.</em></h1>
+          <p class="hero-lede">
+            A local black box for AI coding agents. Inspect prompts, tool calls, file edits,
+            tests, retries, permissions, resource usage, failures, and code evolution as one
+            evidence-backed timeline.
+          </p>
+          <div class="hero-actions">
+            <a class="button button-primary" href="#quick-start">Run the safe demo</a>
+            <a class="button button-quiet" href="docs.html">Read the field manual</a>
+          </div>
+        </div>
+
+        <section class="hero-flight-card reveal" aria-label="Example recorded flight summary">
+          <div class="flight-card-head">
+            <span>FLIGHT / DEMO-CHECKOUT-REPAIRED</span>
+            <span class="status-pulse">COMPLETE</span>
+          </div>
+          <div class="flight-route" aria-hidden="true">
+            <span class="route-node route-node-start">PROMPT</span>
+            <span class="route-track">
+              <i class="route-tick t1"></i><i class="route-tick t2"></i
+              ><i class="route-tick t3"></i><i class="route-tick t4"></i>
+            </span>
+            <span class="route-node route-node-end">PROOF</span>
+          </div>
+          <dl class="flight-stats">
+            <div><dt>Source</dt><dd>Compatible agent</dd></div>
+            <div><dt>Evidence</dt><dd>17 events</dd></div>
+            <div><dt>Evolution</dt><dd>Exact diff</dd></div>
+            <div><dt>Policy</dt><dd>Masking on</dd></div>
+          </dl>
+          <div class="flight-log" aria-hidden="true">
+            <span><b>01</b> prompt submitted</span>
+            <span><b>05</b> test failed / timeout</span>
+            <span><b>08</b> source snapshot sealed</span>
+            <span><b>09</b> retry correlated</span>
+            <span><b>11</b> test passed</span>
+          </div>
+          <div class="flight-stamp" aria-hidden="true">AFR / V0.2</div>
+        </section>
+
+        <div class="hero-proof reveal">
+          <figure class="product-frame">
+            <div class="frame-bar">
+              <span class="frame-title">SYNTHETIC DEMO / SANDBOX LOCKED</span>
+              <span class="frame-state"><i></i> LOCAL</span>
+            </div>
+            <img
+              src="assets/replay-console.png"
+              width="1440"
+              height="960"
+              alt="Agent Flight Recorder replay console showing a synthetic flight timeline and event inspector"
+            />
+          </figure>
+          <p class="proof-caption">
+            <span>01</span> Real product UI captured from the deterministic, privacy-safe demo.
+          </p>
+        </div>
+      </section>
+
+      <section class="proof-rail" aria-label="Verified project facts">
+        <div><strong>5</strong><span>evidence surfaces</span></div>
+        <div><strong>43</strong><span>unit + integration tests</span></div>
+        <div><strong>3</strong><span>Chromium journeys</span></div>
+        <div><strong>0</strong><span>telemetry endpoints</span></div>
+        <div><strong>V7</strong><span>SQLite schema</span></div>
+      </section>
+
+      <section class="premise section-shell" aria-labelledby="premise-title">
+        <div class="section-index" aria-hidden="true">01 / THE PREMISE</div>
+        <div class="premise-copy reveal">
+          <p class="eyebrow">Chat history is not an audit trail</p>
+          <h2 id="premise-title">When an agent says “done,” the interesting questions begin.</h2>
+        </div>
+        <div class="question-stack reveal">
+          <p><span>Q/01</span> What exactly ran?</p>
+          <p><span>Q/02</span> Which attempt failed?</p>
+          <p><span>Q/03</span> Was permission explicit or inferred?</p>
+          <p><span>Q/04</span> What changed on disk?</p>
+          <p><span>Q/05</span> Which evidence is missing?</p>
+        </div>
+        <p class="premise-note reveal">
+          Agent Flight Recorder normalizes provider evidence into an append-only timeline while
+          retaining raw provenance and uncertainty. Unsupported signals stay null, unknown, or
+          become explicit capture gaps—never an invented story.
+        </p>
+      </section>
+
+      <section class="workflow section-shell" id="workflow" aria-labelledby="workflow-title">
+        <div class="section-index" aria-hidden="true">02 / THE RECORDING PATH</div>
+        <div class="section-heading reveal">
+          <p class="eyebrow">One operational record</p>
+          <h2 id="workflow-title">From native trace to replayable proof.</h2>
+        </div>
+        <ol class="workflow-list">
+          <li class="reveal">
+            <span class="step-number">01</span>
+            <div>
+              <h3>Capture</h3>
+              <p>
+                Read Codex and OpenCode stores incrementally, receive Claude Code and Cursor
+                hooks, or accept the versioned <code>afr.event.v1</code> envelope.
+              </p>
+            </div>
+            <span class="step-code" aria-hidden="true">NATIVE / HOOK / JSON</span>
+          </li>
+          <li class="reveal">
+            <span class="step-number">02</span>
+            <div>
+              <h3>Correlate</h3>
+              <p>
+                Link calls, outcomes, retries, permission flows, tests, and file boundaries
+                without collapsing distinct provider events or fabricating identity.
+              </p>
+            </div>
+            <span class="step-code" aria-hidden="true">ATTEMPT / LINEAGE / GAP</span>
+          </li>
+          <li class="reveal">
+            <span class="step-number">03</span>
+            <div>
+              <h3>Replay</h3>
+              <p>
+                Navigate a virtualized timeline, inspect exact or best-effort code evolution,
+                compare flights, and export authenticated encrypted archives.
+              </p>
+            </div>
+            <span class="step-code" aria-hidden="true">TIMELINE / DIFF / BUNDLE</span>
+          </li>
+        </ol>
+      </section>
+
+      <section class="evidence section-shell" aria-labelledby="evidence-title">
+        <div class="section-index" aria-hidden="true">03 / EVIDENCE SURFACES</div>
+        <div class="section-heading reveal">
+          <p class="eyebrow">Different providers, honest boundaries</p>
+          <h2 id="evidence-title">Normalize the operation. Keep the provenance.</h2>
+        </div>
+        <div class="evidence-table-wrap reveal">
+          <table class="evidence-table">
+            <thead>
+              <tr><th>Provider</th><th>Capture surface</th><th>What is retained</th></tr>
+            </thead>
+            <tbody>
+              <tr>
+                <th scope="row"><span class="provider-dot codex"></span>Codex</th>
+                <td>Native session JSONL</td>
+                <td>Tools, commands, patches, usage, collaboration, gaps</td>
+              </tr>
+              <tr>
+                <th scope="row"><span class="provider-dot opencode"></span>OpenCode</th>
+                <td>Native SQLite + WAL</td>
+                <td>Messages, parts, tools, files, tokens, cost</td>
+              </tr>
+              <tr>
+                <th scope="row"><span class="provider-dot claude"></span>Claude Code</th>
+                <td>Official command hooks</td>
+                <td>31 documented events; exact file boundaries when available</td>
+              </tr>
+              <tr>
+                <th scope="row"><span class="provider-dot cursor"></span>Cursor</th>
+                <td>Official native hooks</td>
+                <td>21 documented events; shell and file evidence</td>
+              </tr>
+              <tr>
+                <th scope="row"><span class="provider-dot compat"></span>Compatible</th>
+                <td><code>afr.event.v1</code></td>
+                <td>Permissive envelope with unknown fields preserved</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="proof-section section-shell" id="proof" aria-labelledby="proof-title">
+        <div class="section-index" aria-hidden="true">04 / INSIDE A FLIGHT</div>
+        <div class="proof-intro reveal">
+          <div class="section-heading">
+            <p class="eyebrow">The deterministic checkout repair</p>
+            <h2 id="proof-title">Follow failure to fix without touching private data.</h2>
+          </div>
+          <p>
+            The bundled scenario records two comparable synthetic flights: one timeout, then a
+            repaired run with a failed test, permission request, exact edit, correlated retry,
+            passing test, resource meter, and final response.
+          </p>
+        </div>
+
+        <div class="proof-switcher reveal" data-proof-switcher>
+          <div class="proof-tabs" role="tablist" aria-label="Product proof views">
+            <button type="button" role="tab" aria-selected="true" aria-controls="proof-panel" data-proof-tab="replay">
+              <span>01</span> Replay console
+            </button>
+            <button type="button" role="tab" aria-selected="false" aria-controls="proof-panel" data-proof-tab="diff" tabindex="-1">
+              <span>02</span> Exact evolution
+            </button>
+            <button type="button" role="tab" aria-selected="false" aria-controls="proof-panel" data-proof-tab="mobile" tabindex="-1">
+              <span>03</span> Phone layout
+            </button>
+          </div>
+          <div class="proof-panel" id="proof-panel" role="tabpanel" aria-live="polite">
+            <button class="image-expand" type="button" data-expand-image aria-label="Open replay console image at full size">
+              <img
+                src="assets/replay-console.png"
+                width="1440"
+                height="960"
+                alt="Replay console with flight list, filtered event timeline, and detailed event inspector"
+                data-proof-image
+              />
+            </button>
+            <div class="proof-panel-meta">
+              <p class="proof-panel-kicker" data-proof-kicker>Replay / evidence timeline</p>
+              <p data-proof-caption>
+                Step through normalized events, filter operational signals, inspect raw provenance,
+                and compare the current flight with an earlier attempt.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="privacy section-shell" id="privacy" aria-labelledby="privacy-title">
+        <div class="privacy-copy reveal">
+          <p class="eyebrow">Local by construction</p>
+          <h2 id="privacy-title">Your recorder is not a hosted dashboard.</h2>
+          <p>
+            The service hard-binds to loopback, rejects untrusted Host and Origin values, emits no
+            telemetry, masks common credentials by default, and encrypts evidence-bearing columns
+            with AES-256-GCM.
+          </p>
+          <a class="text-link" href="docs.html#privacy">Read the trust boundary <span aria-hidden="true">&#8594;</span></a>
+        </div>
+        <ul class="privacy-ledger reveal">
+          <li><span>NETWORK</span><strong>Loopback only</strong><small>127.0.0.1 / localhost / ::1</small></li>
+          <li><span>TELEMETRY</span><strong>None</strong><small>No analytics or cloud exporter</small></li>
+          <li><span>NEW EVIDENCE</span><strong>Mask by default</strong><small>Strict and explicit off modes available</small></li>
+          <li><span>AT REST</span><strong>AES-256-GCM</strong><small>Payloads, raw envelopes, snapshot blobs</small></li>
+          <li><span>PUBLIC DEMO</span><strong>Sandbox locked</strong><small>No native scan or live hook ingestion</small></li>
+        </ul>
+        <div class="privacy-warning reveal" role="note">
+          <span aria-hidden="true">!</span>
+          <p>
+            <strong>Encryption is not publication permission.</strong> Recorder databases and bundles can contain source code,
+            prompts, paths, and metadata. Never commit or share them without deliberate review.
+          </p>
+        </div>
+      </section>
+
+      <section class="quick-start section-shell" id="quick-start" aria-labelledby="quick-title">
+        <div class="section-index" aria-hidden="true">05 / SAFE FIRST FLIGHT</div>
+        <div class="quick-grid">
+          <div class="section-heading reveal">
+            <p class="eyebrow">Two commands, synthetic evidence</p>
+            <h2 id="quick-title">Open the complete product without scanning your machine.</h2>
+            <p>
+              The demo resets only its isolated store, seeds two deterministic flights, disables
+              native discovery, and contains no personal data or account requirement.
+            </p>
+          </div>
+          <div class="command-window reveal">
+            <div class="command-head">
+              <span>TERMINAL / QUICK START</span>
+              <button class="copy-button" type="button" data-copy-target="quick-command">
+                <span data-copy-label>Copy</span>
+              </button>
+            </div>
+            <pre id="quick-command"><code>npm ci
+npm run demo -- --reset</code></pre>
+            <p class="command-note">Then open <code>http://127.0.0.1:4174</code></p>
+          </div>
+        </div>
+        <div class="next-actions reveal">
+          <a href="docs.html#first-run"><span>01</span><strong>First run guide</strong><i aria-hidden="true">&#8599;</i></a>
+          <a href="docs.html#evidence-model"><span>02</span><strong>Evidence model</strong><i aria-hidden="true">&#8599;</i></a>
+          <a href="docs.html#operations"><span>03</span><strong>Operations</strong><i aria-hidden="true">&#8599;</i></a>
+          <a href="https://github.com/OthmaneBlial/Agent-Flight-Recorder"><span>04</span><strong>View source</strong><i aria-hidden="true">&#8599;</i></a>
+        </div>
+      </section>
+
+      <section class="limits section-shell" aria-labelledby="limits-title">
+        <div class="section-index" aria-hidden="true">06 / HONEST LIMITS</div>
+        <div class="limits-grid">
+          <div class="section-heading reveal">
+            <p class="eyebrow">Unknown means unknown</p>
+            <h2 id="limits-title">The recorder does not reconstruct what providers never emitted.</h2>
+          </div>
+          <ul class="limits-list reveal">
+            <li>Provider-private reasoning and non-emitted callbacks remain unavailable.</li>
+            <li>Indexed metadata remains plaintext; this is column encryption, not SQLCipher.</li>
+            <li>Parallel identical actions without call IDs can remain temporally ambiguous.</li>
+            <li>The threat model is a single-user local tool, not a remote multi-tenant service.</li>
+          </ul>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="footer-brand">
+        <span class="brand-mark" aria-hidden="true">AFR</span>
+        <p><strong>Agent Flight Recorder</strong><br />Local evidence for AI coding agents.</p>
+      </div>
+      <nav aria-label="Footer">
+        <a href="docs.html">Documentation</a>
+        <a href="https://github.com/OthmaneBlial/Agent-Flight-Recorder/blob/main/SECURITY.md">Security</a>
+        <a href="https://github.com/OthmaneBlial/Agent-Flight-Recorder/blob/main/CONTRIBUTING.md">Contributing</a>
+        <a href="https://github.com/OthmaneBlial/Agent-Flight-Recorder/blob/main/LICENSE">MIT License</a>
+      </nav>
+      <p class="footer-meta">NO TELEMETRY / LOOPBACK ONLY / EVIDENCE OVER NARRATIVE</p>
+    </footer>
+
+    <dialog class="image-dialog" data-image-dialog aria-label="Expanded product screenshot">
+      <button type="button" class="dialog-close" data-dialog-close aria-label="Close expanded image">Close</button>
+      <img src="assets/replay-console.png" alt="" data-dialog-image />
+    </dialog>
+
+    <div class="toast" role="status" aria-live="polite" aria-atomic="true" data-toast></div>
+  </body>
+</html>

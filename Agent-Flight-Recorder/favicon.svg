@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Agent Flight Recorder">
+  <rect width="64" height="64" rx="8" fill="#0a0c0c"/>
+  <rect x="7" y="12" width="50" height="40" fill="none" stroke="#f6b73c" stroke-width="2"/>
+  <path d="M18 42 25 23h4l7 19h-5l-1.4-4.2h-6.1L22 42Zm6.8-8.3h3.5l-1.7-5.5Z" fill="#ece9df"/>
+  <path d="M39 23h12v4h-7v4h6v4h-6v7h-5Z" fill="#70d7df"/>
+</svg>
