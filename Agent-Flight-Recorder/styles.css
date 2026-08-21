@@ -294,7 +294,7 @@ img {
   position: absolute;
   z-index: -1;
   top: 0;
-  right: -18vw;
+  right: calc((var(--page) - 100vw) / 2);
   bottom: 0;
   left: 48%;
   opacity: 0.34;
