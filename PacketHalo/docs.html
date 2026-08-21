@@ -1,0 +1,717 @@
+<!doctype html>
+<html lang="en" data-page="docs">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#050807" />
+    <meta
+      name="description"
+      content="Install, operate, secure, extend and understand the PacketHalo local-first network observatory."
+    />
+    <link
+      rel="canonical"
+      href="https://othmaneblial.github.io/PacketHalo/docs.html"
+    />
+    <link rel="icon" href="./assets/halo.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="./styles.css" />
+    <title>Field Guide — PacketHalo Documentation</title>
+  </head>
+  <body class="docs-body">
+    <a class="skip-link" href="#documentation">Skip to documentation</a>
+    <div class="page-grain" aria-hidden="true"></div>
+
+    <header class="site-header" data-header>
+      <a class="brand" href="./" aria-label="PacketHalo home">
+        <img src="./assets/halo.svg" alt="" width="28" height="28" />
+        <span>Packet<span>Halo</span></span>
+      </a>
+      <button
+        class="menu-toggle"
+        type="button"
+        aria-expanded="false"
+        aria-controls="site-nav"
+        data-menu-toggle
+      >
+        <span>Menu</span><i aria-hidden="true"></i>
+      </button>
+      <nav
+        id="site-nav"
+        class="site-nav"
+        aria-label="Primary navigation"
+        data-site-nav
+      >
+        <a href="./#experience">Experience</a>
+        <a href="./#privacy">Privacy</a>
+        <a href="./#architecture">Architecture</a>
+        <a href="./docs.html" aria-current="page">Documentation</a>
+      </nav>
+      <a
+        class="header-source"
+        href="https://github.com/OthmaneBlial/PacketHalo"
+        rel="noreferrer"
+      >
+        <span>View source</span>
+        <svg aria-hidden="true" viewBox="0 0 20 20">
+          <path d="M5 15 15 5M7 5h8v8" />
+        </svg>
+      </a>
+    </header>
+
+    <main id="documentation" class="docs-shell">
+      <aside class="docs-sidebar" aria-label="Documentation sections">
+        <div class="docs-sidebar-intro">
+          <a class="back-link" href="./">← Observatory</a>
+          <span>PACKETHALO / FIELD GUIDE</span>
+          <h1>Read the signal.</h1>
+        </div>
+        <label class="docs-search">
+          <span>Search this guide</span>
+          <div>
+            <svg aria-hidden="true" viewBox="0 0 20 20">
+              <circle cx="8" cy="8" r="5" />
+              <path d="m12 12 4 4" /></svg
+            ><input
+              type="search"
+              placeholder="Try privacy, Docker…"
+              data-doc-search
+            />
+          </div>
+        </label>
+        <p class="search-status" aria-live="polite" data-search-status>
+          10 sections
+        </p>
+        <nav class="docs-toc" aria-label="On this page">
+          <a href="#quick-start"><small>01</small>Quick start</a>
+          <a href="#experience"><small>02</small>Controls</a>
+          <a href="#architecture"><small>03</small>Architecture</a>
+          <a href="#privacy"><small>04</small>Privacy</a>
+          <a href="#simulator"><small>05</small>Simulator</a>
+          <a href="#capture"><small>06</small>Capture</a>
+          <a href="#configuration"><small>07</small>Configuration</a>
+          <a href="#production"><small>08</small>Production</a>
+          <a href="#performance"><small>09</small>Performance</a>
+          <a href="#troubleshooting"><small>10</small>Troubleshooting</a>
+        </nav>
+        <div class="sidebar-meta">
+          <span>Node 22.5+</span><span>pnpm 10.15</span><span>MIT</span>
+        </div>
+      </aside>
+
+      <div class="docs-content">
+        <header class="docs-hero">
+          <p class="eyebrow"><span></span> Documentation / v0.1</p>
+          <h2>Field guide to<br /><em>living network light.</em></h2>
+          <p>
+            The shortest path from first launch to a secure local
+            installation—plus the boundaries that keep PacketHalo honest.
+          </p>
+          <div class="docs-hero-links">
+            <a href="#quick-start">Start in five minutes</a>
+            <a href="./reference/architecture.md">Raw architecture notes ↗</a>
+          </div>
+        </header>
+
+        <article
+          id="quick-start"
+          class="doc-section"
+          data-title="Quick start install prerequisites Node pnpm development Docker"
+        >
+          <header>
+            <span>01</span>
+            <div>
+              <p>First light</p>
+              <h2>Quick start</h2>
+            </div>
+          </header>
+          <p class="doc-lead">
+            PacketHalo launches with a deterministic synthetic scene. You do not
+            need an account, token, packet-capture permission or external
+            service.
+          </p>
+          <div class="requirement-row">
+            <div>
+              <small>Runtime</small><strong>Node.js 22.5+</strong
+              ><span>22.23.2 pinned</span>
+            </div>
+            <div>
+              <small>Packages</small><strong>pnpm 10.15+</strong
+              ><span>Lockfile included</span>
+            </div>
+            <div>
+              <small>Optional</small><strong>Rust 1.95</strong
+              ><span>Linux agent only</span>
+            </div>
+          </div>
+          <div class="code-block">
+            <div class="code-label">
+              <span>Terminal</span
+              ><button type="button" data-copy="docs-dev">Copy</button>
+            </div>
+            <pre
+              id="docs-dev"
+              tabindex="0"
+            ><code>git clone https://github.com/OthmaneBlial/PacketHalo.git
+cd PacketHalo
+pnpm install
+pnpm dev</code></pre>
+          </div>
+          <p>
+            Open <code>http://127.0.0.1:5173</code>. The phone controller is on
+            <code>5174</code>, and server health is available at
+            <code>8787/health</code>. Movie Night starts automatically.
+          </p>
+          <aside class="doc-note">
+            <strong>Port already occupied?</strong
+            ><span
+              >Set <code>PACKETHALO_WEB_PORT</code>,
+              <code>PACKETHALO_CONTROL_PORT</code> and
+              <code>PACKETHALO_PORT</code> before starting.</span
+            >
+          </aside>
+        </article>
+
+        <article
+          id="experience"
+          class="doc-section"
+          data-title="Controls modes keyboard recording replay filter phone controller"
+        >
+          <header>
+            <span>02</span>
+            <div>
+              <p>Observe and shape</p>
+              <h2>Controls</h2>
+            </div>
+          </header>
+          <p class="doc-lead">
+            The primary journey stays inside one instrument: choose a scene,
+            move through visual grammars, pause the field, then record or focus
+            when something matters.
+          </p>
+          <div class="shortcut-grid">
+            <div><kbd>Space</kbd><span>Pause or resume observation</span></div>
+            <div><kbd>M</kbd><span>Move to the next visual mode</span></div>
+            <div><kbd>C</kbd><span>Hide or reveal instruments</span></div>
+            <div><kbd>F</kbd><span>Enter or leave fullscreen</span></div>
+          </div>
+          <h3>Five visual grammars</h3>
+          <p>
+            <strong>Halo</strong> is the default sculpture.
+            <strong>Globe</strong> foregrounds geography.
+            <strong>Constellation</strong> clusters services.
+            <strong>Ambient</strong> removes most interface text.
+            <strong>Forensic</strong> adds ports, ASNs, protocols and confidence
+            without becoming a table-first dashboard.
+          </p>
+          <h3>Record and replay</h3>
+          <p>
+            Recordings contain only validated <code>FlowEvent</code> values and
+            are capped at 10,000 events. Browser imports are capped at 10 MB.
+            Pause, scrub, jump to the next event, replay at several speeds, or
+            export the JSON recording locally.
+          </p>
+        </article>
+
+        <article
+          id="architecture"
+          class="doc-section"
+          data-title="Architecture monorepo FlowEvent WebSocket SQLite Canvas data flow packages"
+        >
+          <header>
+            <span>03</span>
+            <div>
+              <p>System map</p>
+              <h2>Architecture</h2>
+            </div>
+          </header>
+          <p class="doc-lead">
+            Observation, truth, transport and presentation are separate so every
+            trust boundary can be inspected and tested independently.
+          </p>
+          <div class="docs-flow" aria-label="PacketHalo architecture flow">
+            <div>
+              <small>01 / SOURCE</small><strong>Simulator or provider</strong
+              ><span>Synthetic scene, Linux /proc, recording</span>
+            </div>
+            <i aria-hidden="true">→</i>
+            <div>
+              <small>02 / CONTRACT</small><strong>FlowEvent validator</strong
+              ><span>Exact-shape metadata only</span>
+            </div>
+            <i aria-hidden="true">→</i>
+            <div>
+              <small>03 / LOCAL CORE</small><strong>SQLite + WebSocket</strong
+              ><span>Retention and live broadcast</span>
+            </div>
+            <i aria-hidden="true">→</i>
+            <div>
+              <small>04 / LIGHT</small><strong>Canvas renderer</strong
+              ><span>Five visual grammars</span>
+            </div>
+          </div>
+          <h3>Monorepo boundaries</h3>
+          <div class="path-list">
+            <div>
+              <code>packages/protocol</code
+              ><span>Shared, payload-incapable truth</span>
+            </div>
+            <div>
+              <code>packages/simulator-core</code
+              ><span>Seeded scenarios and recordings</span>
+            </div>
+            <div>
+              <code>packages/renderer</code
+              ><span>Canvas modes and frame metrics</span>
+            </div>
+            <div>
+              <code>apps/server</code
+              ><span>Authenticated transport and retention</span>
+            </div>
+            <div>
+              <code>apps/web</code
+              ><span>Observatory and browser simulator</span>
+            </div>
+            <div>
+              <code>agent/rust-agent</code
+              ><span>Optional Linux socket metadata</span>
+            </div>
+          </div>
+          <p>
+            <a class="text-link" href="./reference/architecture.md"
+              >Open the complete architecture reference <span>↗</span></a
+            >
+          </p>
+        </article>
+
+        <article
+          id="privacy"
+          class="doc-section"
+          data-title="Privacy security metadata payload content retention delete local telemetry tokens"
+        >
+          <header>
+            <span>04</span>
+            <div>
+              <p>Non-negotiable</p>
+              <h2>Privacy contract</h2>
+            </div>
+          </header>
+          <p class="doc-lead">
+            PacketHalo observes relationships, not conversations.
+          </p>
+          <div class="privacy-columns">
+            <section>
+              <h3>May be processed</h3>
+              <ul>
+                <li>Endpoints and ports</li>
+                <li>Transport and inferred protocol</li>
+                <li>Byte or packet counts when available</li>
+                <li>Process name when the OS exposes it</li>
+                <li>Country, ASN and organization</li>
+                <li>Timestamp, source and confidence</li>
+              </ul>
+            </section>
+            <section>
+              <h3>Never inspected or stored</h3>
+              <ul>
+                <li>Packet payloads</li>
+                <li>Requests or response bodies</li>
+                <li>Passwords, cookies or tokens</li>
+                <li>Webpage or message contents</li>
+                <li>Email and chat bodies</li>
+                <li>Uploaded or downloaded files</li>
+              </ul>
+            </section>
+          </div>
+          <h3>Where data lives</h3>
+          <p>
+            Browser preferences and aliases remain in local storage. Accepted
+            history lives in local SQLite and is pruned after one hour by
+            default. The database is not encrypted and is intended for a trusted
+            single-user host.
+          </p>
+          <div class="code-block">
+            <div class="code-label">
+              <span>Delete local SQLite history after stopping the server</span
+              ><button type="button" data-copy="docs-reset">Copy</button>
+            </div>
+            <pre
+              id="docs-reset"
+              tabindex="0"
+            ><code>pnpm reset:local</code></pre>
+          </div>
+          <p>
+            <a class="text-link" href="./reference/security-model.md"
+              >Read the complete security model <span>↗</span></a
+            >
+          </p>
+        </article>
+
+        <article
+          id="simulator"
+          class="doc-section"
+          data-title="Simulator deterministic scenes seed recording Movie Night developer beacon demo"
+        >
+          <header>
+            <span>05</span>
+            <div>
+              <p>Permission-free</p>
+              <h2>Simulator</h2>
+            </div>
+          </header>
+          <p class="doc-lead">
+            Twenty-four deterministic scenes make the full product useful before
+            real capture is enabled—and make bugs, demos and screenshots
+            repeatable.
+          </p>
+          <p>
+            Scenes include Movie Night, Netflix Premiere, calls, gaming,
+            downloads, developer workflows, IoT, public Wi-Fi and a deliberately
+            low-confidence regular beacon. Seeds reproduce metadata and timing;
+            event IDs include the engine epoch so process restarts do not
+            collide with persisted rows.
+          </p>
+          <div class="code-block">
+            <div class="code-label">
+              <span>Headless local simulator</span
+              ><button type="button" data-copy="docs-sim">Copy</button>
+            </div>
+            <pre
+              id="docs-sim"
+              tabindex="0"
+            ><code>PACKETHALO_SCENARIO=developer-laptop \
+PACKETHALO_SEED=demo-7 \
+pnpm --filter @packethalo/simulator dev</code></pre>
+          </div>
+          <aside class="doc-note">
+            <strong>Remote delivery is explicit.</strong
+            ><span
+              >The headless client accepts loopback HTTP by default. Non-local
+              endpoints require HTTPS and
+              <code>PACKETHALO_ALLOW_REMOTE=1</code>.</span
+            >
+          </aside>
+        </article>
+
+        <article
+          id="capture"
+          class="doc-section"
+          data-title="Capture Linux proc tcp udp PCAP router provider process metadata"
+        >
+          <header>
+            <span>06</span>
+            <div>
+              <p>Real host metadata</p>
+              <h2>Capture providers</h2>
+            </div>
+          </header>
+          <p class="doc-lead">
+            The available real provider reads Linux operating-system socket
+            tables. It does not open a packet-capture device.
+          </p>
+          <div
+            class="provider-table"
+            role="table"
+            aria-label="Capture provider status"
+          >
+            <div role="row">
+              <span role="cell">Built-in simulator</span
+              ><b role="cell" class="available">Available</b
+              ><em role="cell">Browser + headless</em>
+            </div>
+            <div role="row">
+              <span role="cell">Linux host metadata</span
+              ><b role="cell" class="available">Available</b
+              ><em role="cell">External Rust agent</em>
+            </div>
+            <div role="row">
+              <span role="cell">Recorded session</span
+              ><b role="cell" class="available">Available</b
+              ><em role="cell">Browser import</em>
+            </div>
+            <div role="row">
+              <span role="cell">PCAP metadata</span><b role="cell">Planned</b
+              ><em role="cell">Not implemented</em>
+            </div>
+            <div role="row">
+              <span role="cell">Router adapter</span><b role="cell">Planned</b
+              ><em role="cell">Not implemented</em>
+            </div>
+          </div>
+          <div class="code-block">
+            <div class="code-label">
+              <span>Linux agent</span
+              ><button type="button" data-copy="docs-rust">Copy</button>
+            </div>
+            <pre
+              id="docs-rust"
+              tabindex="0"
+            ><code>cargo run --release --manifest-path agent/rust-agent/Cargo.toml</code></pre>
+          </div>
+          <p>
+            Linux socket tables do not expose reliable per-flow byte counters,
+            geography or ASN data. Those values remain zero or
+            <code>Unknown</code> rather than being invented.
+          </p>
+        </article>
+
+        <article
+          id="configuration"
+          class="doc-section"
+          data-title="Configuration environment variables ports host token database retention WebSocket"
+        >
+          <header>
+            <span>07</span>
+            <div>
+              <p>Explicit defaults</p>
+              <h2>Configuration</h2>
+            </div>
+          </header>
+          <p class="doc-lead">
+            The normal first run requires no environment file.
+          </p>
+          <div
+            class="config-table"
+            role="table"
+            aria-label="Environment variables"
+          >
+            <div class="table-head" role="row">
+              <span role="columnheader">Variable</span
+              ><span role="columnheader">Default</span
+              ><span role="columnheader">Purpose</span>
+            </div>
+            <div role="row">
+              <code role="cell">PACKETHALO_HOST</code
+              ><span role="cell">127.0.0.1</span
+              ><span role="cell">Server bind host</span>
+            </div>
+            <div role="row">
+              <code role="cell">PACKETHALO_PORT</code
+              ><span role="cell">8787</span
+              ><span role="cell">HTTP and WebSocket port</span>
+            </div>
+            <div role="row">
+              <code role="cell">PACKETHALO_CONTROL_TOKEN</code
+              ><span role="cell">unset</span
+              ><span role="cell">Required for LAN mode</span>
+            </div>
+            <div role="row">
+              <code role="cell">PACKETHALO_DATABASE</code
+              ><span role="cell">packethalo.db</span
+              ><span role="cell">Local SQLite path</span>
+            </div>
+            <div role="row">
+              <code role="cell">PACKETHALO_RETENTION_MINUTES</code
+              ><span role="cell">60</span
+              ><span role="cell">1 minute to 7 days</span>
+            </div>
+            <div role="row">
+              <code role="cell">VITE_PACKET_HALO_SERVER</code
+              ><span role="cell">localhost stream</span
+              ><span role="cell">Display WebSocket URL</span>
+            </div>
+          </div>
+          <aside class="doc-warning">
+            <strong>LAN is not public hosting.</strong
+            ><span
+              >A non-loopback bind requires a 32–256 character token. The
+              built-in server does not terminate TLS and is not an
+              Internet-facing identity system.</span
+            >
+          </aside>
+        </article>
+
+        <article
+          id="production"
+          class="doc-section"
+          data-title="Production build Docker compose server preview deploy health readiness container"
+        >
+          <header>
+            <span>08</span>
+            <div>
+              <p>Run beyond dev</p>
+              <h2>Production</h2>
+            </div>
+          </header>
+          <h3>Production from source</h3>
+          <div class="code-block">
+            <div class="code-label">
+              <span>Build all UIs, packages and services</span
+              ><button type="button" data-copy="docs-prod">Copy</button>
+            </div>
+            <pre id="docs-prod" tabindex="0"><code>pnpm build
+pnpm build:services
+pnpm start:server</code></pre>
+          </div>
+          <p>
+            Start <code>pnpm start:simulator</code> in another terminal. Serve
+            the built UIs with <code>pnpm preview:web</code> and
+            <code>pnpm preview:control</code>.
+          </p>
+          <h3>Docker Compose</h3>
+          <div class="code-block">
+            <div class="code-label">
+              <span>Complete local topology</span
+              ><button type="button" data-copy="docs-docker">Copy</button>
+            </div>
+            <pre
+              id="docs-docker"
+              tabindex="0"
+            ><code>docker compose up --build</code></pre>
+          </div>
+          <p>
+            Open <code>http://127.0.0.1:8080</code>; controller is on
+            <code>8081</code>. The server uses a named data volume, health
+            checks, a read-only filesystem and a non-root process.
+            <code>docker compose down</code> preserves history;
+            <code>docker compose down -v</code> intentionally deletes it.
+          </p>
+          <h3>Health and readiness</h3>
+          <div class="endpoint-grid">
+            <div>
+              <code>GET /health</code
+              ><span>Uptime, connections and ingestion counters</span>
+            </div>
+            <div>
+              <code>GET /ready</code
+              ><span>SQLite schema access and stored-event count</span>
+            </div>
+            <div>
+              <code>GET /api/providers</code
+              ><span>Honest provider availability</span>
+            </div>
+          </div>
+        </article>
+
+        <article
+          id="performance"
+          class="doc-section"
+          data-title="Performance tests validation verify benchmark FPS browser Playwright Rust CI"
+        >
+          <header>
+            <span>09</span>
+            <div>
+              <p>Evidence</p>
+              <h2>Performance and verification</h2>
+            </div>
+          </header>
+          <p class="doc-lead">
+            PacketHalo publishes the measurement method instead of presenting a
+            single best-frame claim.
+          </p>
+          <div class="measurement-grid">
+            <div>
+              <strong>60 / 60</strong><span>average / minimum FPS</span>
+            </div>
+            <div>
+              <strong>1.34 ms</strong><span>synchronous frame work</span>
+            </div>
+            <div><strong>19.9%</strong><span>browser + renderer CPU</span></div>
+            <div><strong>2,000</strong><span>retained active flows</span></div>
+          </div>
+          <p>
+            Measured in foreground Chrome 151 at 1920×1080 on an Apple M2
+            MacBook Air. Browser, viewport, hardware, flow count and compositor
+            accounting are recorded in the
+            <a href="./reference/performance.md">full performance reference</a>.
+          </p>
+          <div class="code-block">
+            <div class="code-label">
+              <span>Release gates</span
+              ><button type="button" data-copy="docs-verify">Copy</button>
+            </div>
+            <pre id="docs-verify" tabindex="0"><code>pnpm verify
+pnpm test:e2e
+pnpm bench
+pnpm audit --audit-level=moderate</code></pre>
+          </div>
+          <p>
+            CI checks formatting, linting, types, TypeScript and Rust tests,
+            privacy, docs, builds, benchmark execution, browser journeys and
+            live Docker startup.
+          </p>
+        </article>
+
+        <article
+          id="troubleshooting"
+          class="doc-section"
+          data-title="Troubleshooting offline no flows port SQLite Docker controller browser support limitations"
+        >
+          <header>
+            <span>10</span>
+            <div>
+              <p>When the light goes quiet</p>
+              <h2>Troubleshooting</h2>
+            </div>
+          </header>
+          <div class="trouble-list">
+            <details>
+              <summary>The screen is alive but no real flows appear</summary>
+              <p>
+                The browser simulator intentionally remains active. Check
+                <code>/health</code>, then start the Linux agent on a Linux
+                host. macOS and Windows providers are not implemented.
+              </p>
+            </details>
+            <details>
+              <summary>The phone controller is offline</summary>
+              <p>
+                Development binds to loopback. A different device needs
+                authenticated appliance/LAN mode, the Pi address and a strong
+                token.
+              </p>
+            </details>
+            <details>
+              <summary>LAN mode refuses to start</summary>
+              <p>
+                This is a safety gate. A non-loopback host requires
+                <code>PACKETHALO_CONTROL_TOKEN</code>. Do not reuse the
+                Docker-only container escape hatch for LAN exposure.
+              </p>
+            </details>
+            <details>
+              <summary>Docker has no live flows</summary>
+              <p>
+                Run <code>docker compose ps</code>, inspect server and simulator
+                logs, then confirm <code>/ready</code> returns 200 and accepted
+                events increase in <code>/health</code>.
+              </p>
+            </details>
+            <details>
+              <summary>Rendering is slow</summary>
+              <p>
+                Choose Ambient mode, lower particles and afterglow, enable
+                reduced motion, close DevTools and test at 1080p.
+              </p>
+            </details>
+          </div>
+          <div class="reference-links">
+            <a href="./reference/troubleshooting.md"
+              ><span>Troubleshooting reference</span><b>MD ↗</b></a
+            >
+            <a href="./reference/compatibility.md"
+              ><span>Compatibility matrix</span><b>MD ↗</b></a
+            >
+            <a href="./reference/roadmap.md"
+              ><span>Honest roadmap</span><b>MD ↗</b></a
+            >
+            <a href="./reference/CONTRIBUTING.md"
+              ><span>Contributing guide</span><b>MD ↗</b></a
+            >
+          </div>
+        </article>
+
+        <div class="no-results" hidden data-no-results>
+          <img src="./assets/halo.svg" alt="" width="42" height="42" />
+          <h2>No matching signal.</h2>
+          <p>Try “privacy”, “Docker”, “simulator” or “capture”.</p>
+        </div>
+
+        <footer class="docs-footer">
+          <p>Packet contents are never inspected.</p>
+          <a href="./">Return to the observatory →</a>
+        </footer>
+      </div>
+    </main>
+
+    <script src="./app.js" defer></script>
+  </body>
+</html>
