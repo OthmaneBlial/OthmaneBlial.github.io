@@ -209,8 +209,9 @@ const filterDocumentation = () => {
       `${section.dataset.docTitle ?? ""} ${section.textContent ?? ""}`,
     );
     const matches = tokens.every((token) => haystack.includes(token));
-    section.hidden = Boolean(query) && !matches;
-    if (!section.hidden) visibleCount += 1;
+    const isIntroduction = section.id === "introduction";
+    section.hidden = Boolean(query) && !matches && !isIntroduction;
+    if (!query || matches) visibleCount += 1;
   }
 
   for (const link of docLinks) {
