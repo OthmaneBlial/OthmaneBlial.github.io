@@ -1,0 +1,370 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      name="description"
+      content="RepoRewind field notes: local setup, archive analysis, search, temporal comparison, film export, architecture, privacy, and troubleshooting."
+    />
+    <meta name="theme-color" content="#fffaf0" />
+    <title>Field notes — RepoRewind</title>
+    <link rel="icon" href="./favicon.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="./styles.css" />
+    <script src="./app.js" defer></script>
+  </head>
+  <body class="docs-body">
+    <a class="skip-link" href="#docs-content">Skip to documentation</a>
+
+    <header class="site-header" data-header>
+      <a class="wordmark" href="./index.html" aria-label="RepoRewind home">
+        <span class="wordmark-city" aria-hidden="true"><i></i><i></i><i></i></span>
+        <span><strong>Repo</strong>Rewind</span>
+      </a>
+      <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-navigation" data-nav-toggle>
+        <span>Menu</span>
+        <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M3 6h14M3 10h14M3 14h14" /></svg>
+      </button>
+      <nav class="site-nav" id="site-navigation" aria-label="Primary navigation" data-nav>
+        <a href="./index.html#tour">Tour</a>
+        <a href="./index.html#workflow">Workflow</a>
+        <a href="./docs.html" aria-current="page">Field notes</a>
+        <a class="nav-source" href="https://github.com/OthmaneBlial/RepoRewind">View source</a>
+      </nav>
+    </header>
+
+    <main id="docs-content">
+      <section class="docs-hero">
+        <div class="reveal">
+          <p class="eyebrow">RepoRewind / Documentation</p>
+          <h1>Field notes.</h1>
+        </div>
+        <div class="docs-hero-copy reveal" data-delay="1">
+          <p class="eyebrow">From local Git evidence to an explorable archive</p>
+          <p>
+            Set up the project, analyze a repository safely, learn the city grammar, and understand the privacy and
+            architecture boundaries behind every frame.
+          </p>
+        </div>
+      </section>
+
+      <div class="docs-layout">
+        <aside class="docs-toc" aria-label="Documentation sections">
+          <p>Field index</p>
+          <nav>
+            <a href="#getting-started" data-doc-link>Getting started</a>
+            <a href="#analyze" data-doc-link>Analyze a repository</a>
+            <a href="#explore" data-doc-link>Explore the city</a>
+            <a href="#film" data-doc-link>Export a film</a>
+            <a href="#architecture" data-doc-link>Architecture</a>
+            <a href="#privacy" data-doc-link>Privacy &amp; security</a>
+            <a href="#troubleshooting" data-doc-link>Troubleshooting</a>
+            <a href="#development" data-doc-link>Development</a>
+          </nav>
+        </aside>
+
+        <article class="docs-content">
+          <section class="doc-section" id="getting-started">
+            <p class="eyebrow">01 / Getting started</p>
+            <h2>Open the fictional archive.</h2>
+            <p>
+              RepoRewind requires Node.js 24 (recommended) or Node.js 22.13+, npm 10+, and Git. The first launch uses a
+              deterministic fictional ten-year history, so the complete interface is available before you analyze a real
+              repository.
+            </p>
+            <div class="doc-code">
+              <pre><code id="docs-install">git clone https://github.com/OthmaneBlial/RepoRewind.git
+cd RepoRewind
+npm ci
+npm run dev</code></pre>
+              <button class="copy-button" type="button" data-copy="#docs-install">
+                <span data-copy-label>Copy</span>
+                <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M7 6V3h10v10h-3M3 7h10v10H3z" /></svg>
+              </button>
+            </div>
+            <p>
+              Open the URL printed by Vite, normally <code>http://127.0.0.1:5173</code>. Select
+              <strong>Import</strong> when you are ready to open a locally generated archive. Open the repository
+              switcher and choose <strong>Open demo</strong> to reset; reloading also clears a memory-only import.
+            </p>
+            <p class="doc-note">
+              No environment variables, database, account, service credential, or network API is required.
+            </p>
+          </section>
+
+          <section class="doc-section" id="analyze">
+            <p class="eyebrow">02 / Analyze</p>
+            <h2>Turn Git into a portable archive.</h2>
+            <p>
+              Run the analyzer from a RepoRewind checkout and point it at any local Git working tree. It emits commit
+              structure and numeric diffs—not source file contents.
+            </p>
+            <div class="doc-code">
+              <pre><code id="docs-analyze">npm run analyze -- /path/to/repository \
+  --output ./reporewind-history.json</code></pre>
+              <button class="copy-button" type="button" data-copy="#docs-analyze">
+                <span data-copy-label>Copy</span>
+                <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M7 6V3h10v10h-3M3 7h10v10H3z" /></svg>
+              </button>
+            </div>
+            <p>
+              Import the resulting JSON file from the app. Contributor email addresses are omitted unless
+              <code>--include-emails</code> is explicitly supplied. The chosen branch follows first-parent history, so
+              each city frame represents a state that actually existed on that line of development.
+            </p>
+
+            <h3>Useful analyzer options</h3>
+            <div class="doc-code">
+              <pre><code id="docs-options"># Explore another branch or remote ref
+npm run analyze -- /path/to/repository --branch release/3.x
+
+# Bound an exceptionally large history
+npm run analyze -- /path/to/repository --max-commits 5000
+
+# Pipe clean JSON to another tool
+npm run --silent analyze -- /path/to/repository --stdout \
+  &gt; reporewind-history.json
+
+# Explicitly replace an existing archive
+npm run analyze -- /path/to/repository \
+  --output ./reporewind-history.json --force</code></pre>
+              <button class="copy-button" type="button" data-copy="#docs-options">
+                <span data-copy-label>Copy</span>
+                <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M7 6V3h10v10h-3M3 7h10v10H3z" /></svg>
+              </button>
+            </div>
+            <p>Run <code>npm run analyze -- --help</code> for the complete interface.</p>
+          </section>
+
+          <section class="doc-section" id="explore">
+            <p class="eyebrow">03 / Explore</p>
+            <h2>Read the city grammar.</h2>
+            <table class="mapping-table">
+              <thead>
+                <tr>
+                  <th>Git evidence</th>
+                  <th>Visual form</th>
+                  <th>What it means</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>File</td>
+                  <td>Building</td>
+                  <td>Height follows its current line count.</td>
+                </tr>
+                <tr>
+                  <td>Top-level folder</td>
+                  <td>District</td>
+                  <td>A stable neighborhood separated by avenues.</td>
+                </tr>
+                <tr>
+                  <td>Contributor</td>
+                  <td>Traveler</td>
+                  <td>A colored marker at the latest work site.</td>
+                </tr>
+                <tr>
+                  <td>Tag or release</td>
+                  <td>Ring</td>
+                  <td>A landmark in the city and timeline.</td>
+                </tr>
+                <tr>
+                  <td>Rename or refactor</td>
+                  <td>Rebuilding</td>
+                  <td>A neighborhood reshaping event.</td>
+                </tr>
+                <tr>
+                  <td>Deleted file</td>
+                  <td>Ruin</td>
+                  <td>A permanent, selectable trace.</td>
+                </tr>
+              </tbody>
+            </table>
+
+            <h3>Search any trace</h3>
+            <p>
+              Press <kbd>⌘K</kbd>, <kbd>Ctrl K</kbd>, or <kbd>/</kbd> to search files, commit messages and hashes,
+              contributors, releases, or reachable branch tips. Narrow a query with <code>file:</code>,
+              <code>commit:</code>, <code>author:</code>, <code>release:</code>, and <code>branch:</code>. Results move
+              the timeline and open the relevant building when possible.
+            </p>
+
+            <h3>Compare two eras</h3>
+            <p>
+              Choose <strong>Pin this era</strong>, travel elsewhere, and open the temporal diff. RepoRewind follows
+              rename chains, reports line and building deltas, ranks consequential sites, and recolors the city: mint
+              for construction, amber for rebuilding, blue for renames, and red for demolition.
+            </p>
+          </section>
+
+          <section class="doc-section" id="film">
+            <p class="eyebrow">04 / Film export</p>
+            <h2>Render a deterministic time-lapse.</h2>
+            <p>
+              Choose <strong>Export film</strong> for a fixed-timeline 1080p or 4K MP4/WebM film with dates, commit
+              titles, statistics, merge and release cards, and a cinematic grade. Visual frame selection, timestamps,
+              event pacing, and keyframe scheduling are deterministic. Hardware encoders may produce different final
+              bytes.
+            </p>
+            <ul>
+              <li>MP4 appears only when the exact browser and hardware pass the H.264 WebCodecs probe.</li>
+              <li>WebM remains available as the compatibility path when supported by MediaRecorder.</li>
+              <li>Exports are cancelable and render entirely in the current browser tab.</li>
+              <li>Keep the tab visible during export and use 1080p if 4K exceeds available memory.</li>
+            </ul>
+          </section>
+
+          <section class="doc-section" id="architecture">
+            <p class="eyebrow">05 / Architecture</p>
+            <h2>A local analyzer. A static browser.</h2>
+            <div class="architecture-flow" aria-label="RepoRewind data flow">
+              <div><span>01</span><strong>Local Git</strong></div>
+              <div><span>02</span><strong>Streaming CLI</strong></div>
+              <div><span>03</span><strong>Schema v1 JSON</strong></div>
+              <div><span>04</span><strong>Worker indexes</strong></div>
+              <div><span>05</span><strong>City + film</strong></div>
+            </div>
+            <p>
+              The CLI invokes Git without a shell using fixed argument arrays and NUL-delimited output. The browser
+              validates the archive, builds roughly 64 replay checkpoints plus activity indexes in a worker, and
+              reconstructs frames through a bounded cache. Stable coordinates derive from the complete path set,
+              preventing scrubbing from rearranging districts.
+            </p>
+            <p>
+              The WebGL city is lazy-loaded so import, validation, and search remain useful even if the renderer cannot
+              initialize. Repeated buildings, ruins, travelers, and event signals use instanced geometry. Reduced-motion
+              preferences suppress nonessential motion.
+            </p>
+            <a href="https://github.com/OthmaneBlial/RepoRewind/blob/main/docs/architecture.md"
+              >Read the complete architecture guide</a
+            >
+          </section>
+
+          <section class="doc-section" id="privacy">
+            <p class="eyebrow">06 / Privacy &amp; security</p>
+            <h2>No hosted data plane.</h2>
+            <p>
+              RepoRewind has no backend, accounts, analytics, telemetry, cookies, or remote ingestion. The browser keeps
+              imports and indexes in memory. Reload or close the tab to delete that browser copy. The analyzer writes
+              one JSON file to the path selected by the operator.
+            </p>
+            <p>
+              Archives can still expose names, file paths, commit messages, and sanitized remotes. Review a generated
+              archive before sharing it. Runtime validation caps files at 256 MB, 250,000 commits, and 2,000,000 change
+              entries, and checks bounded strings, valid dates, relationships, known statuses, and rename invariants.
+            </p>
+            <p class="doc-note">
+              Contributor IDs are archive-local sequential identifiers, not hashes or reusable derivatives of email
+              addresses.
+            </p>
+            <a href="https://github.com/OthmaneBlial/RepoRewind/blob/main/docs/privacy.md"
+              >Read the full privacy inventory</a
+            >
+          </section>
+
+          <section class="doc-section" id="troubleshooting">
+            <p class="eyebrow">07 / Troubleshooting</p>
+            <h2>Common recovery paths.</h2>
+            <h3>The development server does not start</h3>
+            <div class="doc-code">
+              <pre><code id="docs-diagnose">node --version
+npm --version
+npm ci
+npm run dev</code></pre>
+              <button class="copy-button" type="button" data-copy="#docs-diagnose">
+                <span data-copy-label>Copy</span>
+                <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M7 6V3h10v10h-3M3 7h10v10H3z" /></svg>
+              </button>
+            </div>
+            <p>Vite binds to localhost and prints another URL when its preferred port is occupied.</p>
+
+            <h3>The analyzer cannot read a repository</h3>
+            <p>
+              Confirm the path is a Git working tree and the selected ref exists. Repositories with no commits cannot
+              produce a city. RepoRewind reports Git's failure without retrying a different ref or reading working-tree
+              contents.
+            </p>
+
+            <h3>The city is replaced by a WebGL message</h3>
+            <p>
+              Enable hardware acceleration, update the browser or GPU driver, and retry in a current desktop browser.
+              Search, archive validation, and CLI generation do not require WebGL.
+            </p>
+
+            <h3>Run the complete diagnostic gate</h3>
+            <div class="doc-code">
+              <pre><code id="docs-verify">npm run verify</code></pre>
+              <button class="copy-button" type="button" data-copy="#docs-verify">
+                <span data-copy-label>Copy</span>
+                <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M7 6V3h10v10h-3M3 7h10v10H3z" /></svg>
+              </button>
+            </div>
+          </section>
+
+          <section class="doc-section" id="development">
+            <p class="eyebrow">08 / Development</p>
+            <h2>One complete quality gate.</h2>
+            <p>
+              The project provides formatting, strict React and accessibility linting, documentation and runtime-license
+              checks, unit and integration tests, TypeScript validation, browser and CLI builds, and a high-severity
+              dependency audit.
+            </p>
+            <table class="mapping-table">
+              <thead>
+                <tr>
+                  <th>Command</th>
+                  <th>Purpose</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><code>npm run test</code></td>
+                  <td>Core, Git, CLI, import/export, and frontend interaction tests.</td>
+                </tr>
+                <tr>
+                  <td><code>npm run lint</code></td>
+                  <td>Strict React, accessibility, import, and test lint rules.</td>
+                </tr>
+                <tr>
+                  <td><code>npm run build</code></td>
+                  <td>Static browser application and distributable CLI.</td>
+                </tr>
+                <tr>
+                  <td><code>npm run check</code></td>
+                  <td>Formatting, lint, docs, notices, tests, types, and builds.</td>
+                </tr>
+                <tr>
+                  <td><code>npm run verify</code></td>
+                  <td>The full check plus a high-severity dependency audit.</td>
+                </tr>
+              </tbody>
+            </table>
+            <a href="https://github.com/OthmaneBlial/RepoRewind/blob/main/CONTRIBUTING.md"
+              >Read the contribution guide</a
+            >
+          </section>
+        </article>
+
+        <aside class="on-this-page" aria-label="Current guide summary">
+          <p>At a glance</p>
+          <a href="#getting-started">Demo first</a>
+          <a href="#analyze">No source contents</a>
+          <a href="#film">MP4 + WebM</a>
+          <a href="#privacy">Memory only</a>
+        </aside>
+      </div>
+    </main>
+
+    <footer class="site-footer">
+      <a class="wordmark footer-mark" href="./index.html"
+        ><span class="wordmark-city" aria-hidden="true"><i></i><i></i><i></i></span
+        ><span><strong>Repo</strong>Rewind</span></a
+      >
+      <p>Local-first software archaeology. No telemetry.</p>
+      <nav aria-label="Footer navigation">
+        <a href="./index.html">Showcase</a><a href="https://github.com/OthmaneBlial/RepoRewind">Source</a
+        ><a href="https://github.com/OthmaneBlial/RepoRewind/blob/main/LICENSE">MIT License</a>
+      </nav>
+    </footer>
+  </body>
+</html>
