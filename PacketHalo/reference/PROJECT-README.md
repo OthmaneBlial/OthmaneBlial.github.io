@@ -12,6 +12,8 @@
     <a href="CONTRIBUTING.md">Contribute</a>
   </p>
   <p>
+    <a href="https://github.com/OthmaneBlial/PacketHalo/actions/workflows/ci.yml"><img alt="CI status" src="https://github.com/OthmaneBlial/PacketHalo/actions/workflows/ci.yml/badge.svg?branch=main" /></a>
+    <a href="https://github.com/OthmaneBlial/PacketHalo/releases/latest"><img alt="Latest release" src="https://img.shields.io/github/v/release/OthmaneBlial/PacketHalo?style=flat-square&amp;color=81ead1" /></a>
     <img alt="MIT license" src="https://img.shields.io/badge/license-MIT-e8d7ad?style=flat-square" />
     <img alt="metadata only" src="https://img.shields.io/badge/privacy-metadata%20only-81ead1?style=flat-square" />
     <img alt="local first" src="https://img.shields.io/badge/cloud-none-81ead1?style=flat-square" />
