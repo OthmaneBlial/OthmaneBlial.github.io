@@ -1,0 +1,464 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#080a07" />
+    <meta
+      name="description"
+      content="WebXRay field guide: setup, concepts, privacy boundaries, exports, configuration, and troubleshooting."
+    />
+    <title>Field Guide — WebXRay</title>
+    <link rel="icon" href="assets/webxray-mark.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="styles.css" />
+    <script src="app.js" defer></script>
+  </head>
+  <body class="docs-body">
+    <a class="skip-link" href="#docs-main">Skip to documentation</a>
+    <div class="page-progress" aria-hidden="true"><span></span></div>
+    <header class="site-header docs-header" data-header>
+      <a class="brand" href="index.html" aria-label="WebXRay home">
+        <img src="assets/webxray-mark.svg" alt="" width="30" height="30" />
+        <span>WEB<strong>XRAY</strong></span>
+      </a>
+      <span class="docs-title">FIELD GUIDE / 0.1</span>
+      <a class="nav-source" href="https://github.com/OthmaneBlial/WebXRay">View source <span>↗</span></a>
+    </header>
+
+    <div class="docs-shell">
+      <aside class="docs-sidebar" aria-label="Documentation navigation">
+        <div class="docs-search-wrap">
+          <label for="docs-search">Search the field guide</label>
+          <div>
+            <span aria-hidden="true">⌕</span
+            ><input id="docs-search" type="search" placeholder="Filter sections…" data-docs-search />
+          </div>
+          <p class="search-result" data-search-result aria-live="polite"></p>
+        </div>
+        <nav>
+          <a href="#start" class="active"><span>01</span> Quick start</a>
+          <a href="#concepts"><span>02</span> Core concepts</a>
+          <a href="#workflow"><span>03</span> Workflow</a>
+          <a href="#privacy"><span>04</span> Privacy model</a>
+          <a href="#architecture"><span>05</span> Architecture</a>
+          <a href="#exports"><span>06</span> Exports</a>
+          <a href="#configuration"><span>07</span> Configuration</a>
+          <a href="#shortcuts"><span>08</span> Keyboard</a>
+          <a href="#troubleshooting"><span>09</span> Troubleshooting</a>
+          <a href="#limitations"><span>10</span> Limitations</a>
+        </nav>
+        <div class="docs-side-note"><span class="live-dot"></span> Observation stays local by default</div>
+      </aside>
+
+      <main id="docs-main" class="docs-content">
+        <h1 class="sr-only" data-filter-title hidden>WebXRay field guide</h1>
+        <section class="docs-hero docs-section" id="start" data-docs-section>
+          <p class="section-index">WEBXRAY DOCUMENTATION</p>
+          <h1>Field guide to the<br /><em>invisible web.</em></h1>
+          <p class="docs-lead">
+            Install the local observatory, understand its causal model, and preserve evidence without turning the tool
+            into another browsing-history service.
+          </p>
+          <div class="docs-facts">
+            <span>Node.js 22+</span><span>Local-first</span><span>MIT</span><span>Pre-1.0</span>
+          </div>
+          <div class="command-block docs-command">
+            <div class="command-meta"><span>QUICK START</span><span>01</span></div>
+            <pre><code>npm ci
+npm run dev</code></pre>
+            <button class="copy-button" type="button" data-copy="npm ci&#10;npm run dev">
+              <span>Copy commands</span><i aria-hidden="true">□</i>
+            </button>
+          </div>
+          <p class="docs-callout">
+            <strong>Open:</strong> <code>http://127.0.0.1:4178</code>. The built-in 8-second demo needs no URL, account,
+            API key, or network access.
+          </p>
+        </section>
+
+        <section class="docs-section" id="concepts" data-docs-section>
+          <p class="docs-number">02 / CORE CONCEPTS</p>
+          <h2>One observation. Four projections.</h2>
+          <p>
+            WebXRay converts sanitized browser events into a single derived model. Its canvas does not maintain four
+            separate data sets; each lens asks a different question of the same preserved observation.
+          </p>
+          <div class="docs-card-grid">
+            <article>
+              <span>01</span>
+              <h3>Organism</h3>
+              <p>
+                Groups the owned site core, non-recognition supply chain, and outer recognition frontier into
+                deterministic semantic orbits.
+              </p>
+            </article>
+            <article>
+              <span>02</span>
+              <h3>Cascade</h3>
+              <p>Places services on the load timeline so you can see when each dependency first became active.</p>
+            </article>
+            <article>
+              <span>03</span>
+              <h3>Lineage</h3>
+              <p>
+                Reconstructs inviter relationships from redirects and sanitized initiators: who caused whom to appear.
+              </p>
+            </article>
+            <article>
+              <span>04</span>
+              <h3>Recognition</h3>
+              <p>
+                Surfaces evidence that a service may recognize a visit across time or context. This is evidence, not a
+                legal determination.
+              </p>
+            </article>
+          </div>
+          <figure class="docs-figure">
+            <img
+              src="assets/webxray-lineage.png"
+              alt="WebXRay lineage lens showing the inviter hierarchy"
+              width="1440"
+              height="960"
+            />
+            <figcaption>
+              Lineage projects each service by causal depth while preserving the same sanitized observation model.
+            </figcaption>
+          </figure>
+        </section>
+
+        <section class="docs-section" id="workflow" data-docs-section>
+          <p class="docs-number">03 / WORKFLOW</p>
+          <h2>From target to evidence.</h2>
+          <ol class="docs-steps">
+            <li>
+              <span>01</span>
+              <div>
+                <h3>Start a clean observation</h3>
+                <p>
+                  Paste an HTTP or HTTPS address. URL credentials and oversized inputs are rejected before a browser
+                  launches.
+                </p>
+              </div>
+            </li>
+            <li>
+              <span>02</span>
+              <div>
+                <h3>Interrogate the load</h3>
+                <p>
+                  Watch services assemble live, switch lenses, select signals, pause, scrub, and replay at 0.5×, 1×, 2×,
+                  or 4×.
+                </p>
+              </div>
+            </li>
+            <li>
+              <span>03</span>
+              <div>
+                <h3>Compare consent—optionally</h3>
+                <p>
+                  Consent aftershock runs in a separate clean context and clicks only an unambiguous “accept all”
+                  control.
+                </p>
+              </div>
+            </li>
+            <li>
+              <span>04</span>
+              <div>
+                <h3>Export intentionally</h3>
+                <p>Create sanitized JSON, a portable HTML report, or a purpose-built 1280×720 WebM forensic film.</p>
+              </div>
+            </li>
+          </ol>
+          <div class="notice">
+            <strong>Target traffic is real.</strong> A live scan sends normal browser requests to the entered target and
+            the services that target loads. The deterministic demo sends no target request.
+          </div>
+        </section>
+
+        <section class="docs-section" id="privacy" data-docs-section>
+          <p class="docs-number">04 / PRIVACY MODEL</p>
+          <h2>Useful evidence. Deliberate absence.</h2>
+          <p>
+            Processing happens on your machine with no account, telemetry endpoint, hosted database, or cloud retention.
+            WebXRay records only the metadata needed to reconstruct a page load.
+          </p>
+          <div class="boundary-table" role="table" aria-label="Privacy data boundary">
+            <div class="boundary-head" role="row">
+              <span role="columnheader">Observed metadata</span><span role="columnheader">Never retained</span>
+            </div>
+            <div role="row">
+              <span role="cell">Sanitized URL structure and timing</span
+              ><span role="cell">Query values, credentials, fragments</span>
+            </div>
+            <div role="row">
+              <span role="cell">Resource types and transfer size</span
+              ><span role="cell">Request and response bodies</span>
+            </div>
+            <div role="row">
+              <span role="cell">Cookie names and attributes</span><span role="cell">Cookie values</span>
+            </div>
+            <div role="row">
+              <span role="cell">Worker and WebSocket lifecycle</span
+              ><span role="cell">Page content and frame payloads</span>
+            </div>
+            <div role="row">
+              <span role="cell">Security headers and causality</span
+              ><span role="cell">Normal profile or browsing history</span>
+            </div>
+          </div>
+          <h3>Retention and deletion</h3>
+          <p>
+            Server sessions live only in memory, are bounded in count, and expire after the configured window. The
+            latest completed baseline may be stored as sanitized browser <code>localStorage</code> metadata under 4 MB.
+            Use <strong>Forget</strong> on the first-run screen to remove it. Exported files remain under your control.
+          </p>
+          <h3>Cookie change detection</h3>
+          <p>
+            Values are discarded immediately. A random, scan-local HMAC may establish that a cookie changed without
+            revealing its value. The key and derived identity do not survive the scan or enter exports.
+          </p>
+        </section>
+
+        <section class="docs-section" id="architecture" data-docs-section>
+          <p class="docs-number">05 / ARCHITECTURE</p>
+          <h2>A narrow local control plane.</h2>
+          <div class="architecture-flow" aria-label="WebXRay architecture flow">
+            <div><span>01</span><strong>React instrument</strong><small>Start, cancel, replay, inspect</small></div>
+            <i>→</i>
+            <div><span>02</span><strong>Express control plane</strong><small>Bounded local sessions</small></div>
+            <i>→</i>
+            <div><span>03</span><strong>Clean Chromium</strong><small>Isolated observation context</small></div>
+            <i>→</i>
+            <div><span>04</span><strong>Sanitized events</strong><small>SSE into the derived model</small></div>
+          </div>
+          <p>
+            <code>src/runtime/useObservation.ts</code> owns the scan lifecycle and replay clock. Deterministic functions
+            in <code>src/domain/</code> derive services, causal edges, cookies, recognition, and security findings. The
+            scanner sanitizes data before events enter retained memory.
+          </p>
+          <div class="notice">
+            <strong>Remote access boundary:</strong> binding outside loopback requires
+            <code>WEBXRAY_ALLOW_REMOTE=1</code>, but that acknowledgment does not add authentication. Put TLS,
+            authentication, and network controls at a trusted reverse proxy.
+          </div>
+        </section>
+
+        <section class="docs-section" id="exports" data-docs-section>
+          <p class="docs-number">06 / EXPORTS</p>
+          <h2>Three evidence formats.</h2>
+          <div class="export-list">
+            <article>
+              <span>.JSON</span>
+              <div>
+                <h3>Sanitized observation</h3>
+                <p>The portable raw evidence model for further analysis.</p>
+              </div>
+            </article>
+            <article>
+              <span>.HTML</span>
+              <div>
+                <h3>Living report</h3>
+                <p>A standalone report designed to remain usable offline.</p>
+              </div>
+            </article>
+            <article>
+              <span>.WEBM</span>
+              <div>
+                <h3>Forensic film</h3>
+                <p>A self-playing 1280×720 canvas recording generated locally.</p>
+              </div>
+            </article>
+          </div>
+          <p>WebXRay cannot delete a file after you download it. Manage created exports with the operating system.</p>
+        </section>
+
+        <section class="docs-section" id="configuration" data-docs-section>
+          <p class="docs-number">07 / CONFIGURATION</p>
+          <h2>Safe defaults, explicit escape hatches.</h2>
+          <div class="table-scroll" tabindex="0" aria-label="Scrollable configuration table">
+            <table>
+              <thead>
+                <tr>
+                  <th>Variable</th>
+                  <th>Default</th>
+                  <th>Purpose</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><code>WEBXRAY_HOST</code></td>
+                  <td>127.0.0.1</td>
+                  <td>Listening address</td>
+                </tr>
+                <tr>
+                  <td><code>WEBXRAY_PORT</code></td>
+                  <td>4178</td>
+                  <td>Local HTTP port</td>
+                </tr>
+                <tr>
+                  <td><code>WEBXRAY_ALLOW_REMOTE</code></td>
+                  <td>0</td>
+                  <td>Required before non-loopback binding</td>
+                </tr>
+                <tr>
+                  <td><code>WEBXRAY_BROWSER_PATH</code></td>
+                  <td>auto</td>
+                  <td>Explicit Chromium-compatible binary</td>
+                </tr>
+                <tr>
+                  <td><code>WEBXRAY_MAX_CONCURRENT_SCANS</code></td>
+                  <td>2</td>
+                  <td>Simultaneous clean browsers</td>
+                </tr>
+                <tr>
+                  <td><code>WEBXRAY_MAX_SESSIONS</code></td>
+                  <td>24</td>
+                  <td>Maximum retained in-memory sessions</td>
+                </tr>
+                <tr>
+                  <td><code>WEBXRAY_MAX_EVENTS</code></td>
+                  <td>20000</td>
+                  <td>Per-observation metadata limit</td>
+                </tr>
+                <tr>
+                  <td><code>WEBXRAY_SESSION_RETENTION_MS</code></td>
+                  <td>1800000</td>
+                  <td>Finished-session retention</td>
+                </tr>
+                <tr>
+                  <td><code>WEBXRAY_SCAN_TIMEOUT_MS</code></td>
+                  <td>60000</td>
+                  <td>Whole-observation deadline</td>
+                </tr>
+                <tr>
+                  <td><code>WEBXRAY_LOG_LEVEL</code></td>
+                  <td>info</td>
+                  <td>quiet, info, or debug logs</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <p>All variables are optional. Production logs intentionally omit target URLs and captured data.</p>
+        </section>
+
+        <section class="docs-section" id="shortcuts" data-docs-section>
+          <p class="docs-number">08 / KEYBOARD</p>
+          <h2>The instrument stays navigable.</h2>
+          <dl class="shortcut-list">
+            <div>
+              <dt><kbd>Space</kbd></dt>
+              <dd>Play or pause replay</dd>
+            </div>
+            <div>
+              <dt><kbd>1</kbd>—<kbd>4</kbd></dt>
+              <dd>Switch visualization lens</dd>
+            </div>
+            <div>
+              <dt><kbd>←</kbd> <kbd>→</kbd></dt>
+              <dd>Step through services on the canvas</dd>
+            </div>
+            <div>
+              <dt><kbd>Esc</kbd></dt>
+              <dd>Close the inspector or export menu</dd>
+            </div>
+          </dl>
+        </section>
+
+        <section class="docs-section" id="troubleshooting" data-docs-section>
+          <p class="docs-number">09 / TROUBLESHOOTING</p>
+          <h2>Common field conditions.</h2>
+          <details>
+            <summary>Chromium is not ready</summary>
+            <div>
+              <p>Check <code>http://127.0.0.1:4178/api/ready</code>. Install the managed browser if necessary:</p>
+              <div class="inline-command">
+                <code>npx playwright install chromium</code
+                ><button type="button" data-copy="npx playwright install chromium">Copy</button>
+              </div>
+            </div>
+          </details>
+          <details>
+            <summary>Port 4178 is already in use</summary>
+            <div>
+              <p>Choose another local port without changing the safe host default:</p>
+              <div class="inline-command">
+                <code>WEBXRAY_PORT=4180 npm run dev</code
+                ><button type="button" data-copy="WEBXRAY_PORT=4180 npm run dev">Copy</button>
+              </div>
+            </div>
+          </details>
+          <details>
+            <summary>A scan fails or stops early</summary>
+            <div>
+              <p>
+                Confirm the URL is HTTP or HTTPS with no embedded credentials. Run the deterministic demo to separate
+                interface problems from target-network or automation policy problems.
+              </p>
+            </div>
+          </details>
+          <details>
+            <summary>Production differs from development</summary>
+            <div>
+              <p>Rebuild both artifacts, then inspect health, readiness, and the browser console.</p>
+              <div class="inline-command">
+                <code>npm run build &amp;&amp; npm start</code
+                ><button type="button" data-copy="npm run build && npm start">Copy</button>
+              </div>
+            </div>
+          </details>
+        </section>
+
+        <section class="docs-section" id="security" data-docs-section>
+          <p class="docs-number">SECURITY NOTE</p>
+          <h2>A local tool with real browser power.</h2>
+          <p>
+            The API can launch a browser toward public, local, and private-network targets. That capability is
+            intentional and is why the control plane must not be exposed to untrusted users. Mutating routes reject
+            cross-site browser control, starts are rate-limited, and concurrency, events, duration, listeners, and
+            retained sessions are bounded.
+          </p>
+          <a class="text-link" href="https://github.com/OthmaneBlial/WebXRay/security"
+            >Report a vulnerability privately <span>↗</span></a
+          >
+        </section>
+
+        <section class="docs-section" id="limitations" data-docs-section>
+          <p class="docs-number">10 / HONEST LIMITATIONS</p>
+          <h2>What the evidence cannot promise.</h2>
+          <ul class="limitations-list">
+            <li>Observations cover a finite load window, not an indefinitely open browsing session.</li>
+            <li>
+              Very short script-created cookies can change between browser-jar samples; response attempts are still
+              captured immediately.
+            </li>
+            <li>
+              Recognition uses a curated catalog plus conservative heuristics. It is inspection evidence, not a legal
+              determination.
+            </li>
+            <li>
+              HTTP bodies and WebSocket payloads are excluded, so WebXRay explains relationships rather than application
+              semantics.
+            </li>
+            <li>
+              Bot protection, client certificates, unsupported browser features, or site policy can prevent a clean
+              automated load.
+            </li>
+            <li>A target may behave differently for the WebXRay user agent or a fresh browser profile.</li>
+          </ul>
+          <div class="docs-end">
+            <img src="assets/webxray-mark.svg" alt="" width="56" height="56" />
+            <h2>Ready to observe?</h2>
+            <a class="button button-primary" href="https://github.com/OthmaneBlial/WebXRay"
+              >Open the repository <span>↗</span></a
+            >
+          </div>
+        </section>
+
+        <div class="docs-empty" data-docs-empty hidden>
+          <span>00</span>
+          <h2>No matching signal.</h2>
+          <p>Try another term or clear the field-guide filter.</p>
+        </div>
+      </main>
+    </div>
+  </body>
+</html>

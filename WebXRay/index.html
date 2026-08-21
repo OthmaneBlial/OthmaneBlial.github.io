@@ -1,0 +1,307 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#080a07" />
+    <meta
+      name="description"
+      content="WebXRay turns a website load into a living, replayable map of requests, dependencies, trackers, storage, workers, and persistent connections—locally."
+    />
+    <title>WebXRay — See the supply chain behind a page load</title>
+    <link rel="icon" href="assets/webxray-mark.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="styles.css" />
+    <script src="app.js" defer></script>
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
+    <div class="page-progress" aria-hidden="true"><span></span></div>
+
+    <header class="site-header" data-header>
+      <a class="brand" href="index.html" aria-label="WebXRay home">
+        <img src="assets/webxray-mark.svg" alt="" width="30" height="30" />
+        <span>WEB<strong>XRAY</strong></span>
+      </a>
+      <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav">
+        <span></span><span></span><span></span><span class="sr-only">Open navigation</span>
+      </button>
+      <nav id="site-nav" class="site-nav" aria-label="Primary navigation">
+        <a href="#instrument">The instrument</a>
+        <a href="#privacy">Privacy boundary</a>
+        <a href="docs.html">Documentation</a>
+        <a class="nav-source" href="https://github.com/OthmaneBlial/WebXRay">View source <span>↗</span></a>
+      </nav>
+    </header>
+
+    <main id="main">
+      <section class="hero" aria-labelledby="hero-title">
+        <canvas class="orbit-field" data-orbit-field aria-hidden="true"></canvas>
+        <div class="hero-grid" aria-hidden="true"></div>
+        <div class="hero-copy">
+          <p class="kicker reveal"><span class="live-dot"></span> Local browser observatory / zero telemetry</p>
+          <h1 id="hero-title" class="reveal delay-1">
+            The web page<br />
+            <span>behind</span> the web page.
+          </h1>
+          <p class="hero-intro reveal delay-2">
+            Turn one load into a living causal map. Watch first-party code invite CDNs, tag managers wake analytics,
+            cookies change, and trackers settle into orbit.
+          </p>
+          <div class="hero-actions reveal delay-3">
+            <a class="button button-primary" href="#launch">Run it locally <span>↓</span></a>
+            <a class="button button-quiet" href="docs.html">Read the field guide</a>
+          </div>
+          <dl class="hero-proof reveal delay-4" aria-label="Product boundaries">
+            <div>
+              <dt>00</dt>
+              <dd>accounts</dd>
+            </div>
+            <div>
+              <dt>00</dt>
+              <dd>cloud uploads</dd>
+            </div>
+            <div>
+              <dt>04</dt>
+              <dd>causal lenses</dd>
+            </div>
+          </dl>
+        </div>
+
+        <div class="hero-observation reveal delay-2" aria-label="A real WebXRay observation">
+          <div class="observation-caption">
+            <span>LIVE SPECIMEN / DENSE LOAD</span>
+            <span class="observation-status">Preserved locally</span>
+          </div>
+          <div class="observation-frame">
+            <img
+              src="assets/webxray-organism.png"
+              alt="WebXRay mapping a dense page load into site-core, supply-chain, and recognition-frontier orbits"
+              width="1920"
+              height="1080"
+            />
+            <div class="scan-line" aria-hidden="true"></div>
+          </div>
+          <div class="observation-index" aria-hidden="true">
+            <span>01</span>
+            <span>CAUSE / RELATION / MEMORY</span>
+          </div>
+        </div>
+
+        <a class="scroll-cue" href="#manifesto"><span>Scroll to inspect</span><i></i></a>
+      </section>
+
+      <section id="manifesto" class="manifesto section-shell">
+        <p class="section-index reveal">01 — THE PROBLEM</p>
+        <div class="manifesto-layout">
+          <h2 class="reveal">A network table shows entries.<br /><em>WebXRay shows the system.</em></h2>
+          <div class="manifesto-copy reveal delay-1">
+            <p>
+              A modern site is a supply chain. First-party scripts invite services, services invite other services, and
+              recognition can continue long after the visible page has appeared.
+            </p>
+            <p>
+              WebXRay reconstructs that chain from a clean Chromium context and makes every signal inspectable,
+              replayable, and exportable.
+            </p>
+          </div>
+        </div>
+        <div class="signal-strip reveal" aria-label="Signals WebXRay observes">
+          <span>Requests</span><span>Redirects</span><span>Cookies</span><span>Workers</span><span>WebSockets</span
+          ><span>Security headers</span><span>Recognition</span>
+        </div>
+      </section>
+
+      <section id="instrument" class="instrument-section">
+        <div class="section-shell">
+          <div class="section-heading reveal">
+            <p class="section-index">02 — THE INSTRUMENT</p>
+            <h2>Four ways to interrogate<br />one preserved observation.</h2>
+          </div>
+
+          <div class="specimen reveal" data-specimen>
+            <div class="specimen-toolbar" role="tablist" aria-label="Observation views">
+              <button type="button" role="tab" aria-selected="true" data-scene="organism">
+                <span>01</span> Organism
+              </button>
+              <button type="button" role="tab" aria-selected="false" data-scene="focus">
+                <span>02</span> Causal focus
+              </button>
+              <button type="button" role="tab" aria-selected="false" data-scene="lineage">
+                <span>03</span> Lineage
+              </button>
+            </div>
+            <div class="specimen-stage">
+              <img
+                data-scene-image
+                src="assets/webxray-organism.png"
+                alt="Organism lens grouping a dense observation into semantic orbits"
+                width="1920"
+                height="1080"
+              />
+              <span class="corner corner-a" aria-hidden="true"></span>
+              <span class="corner corner-b" aria-hidden="true"></span>
+            </div>
+            <div class="specimen-notes" aria-live="polite">
+              <p data-scene-index>01 / WHO IS HERE?</p>
+              <h3 data-scene-title>See the whole dependency ecology.</h3>
+              <p data-scene-copy>
+                Site core, non-recognition supply chain, and recognition frontier settle into deterministic orbits.
+                Hundreds of requests collapse into weighted relationships.
+              </p>
+            </div>
+          </div>
+
+          <div class="lens-grid">
+            <article class="lens-card reveal">
+              <span>01</span>
+              <h3>Organism</h3>
+              <p>What belongs to the site, and what orbits outside it?</p>
+            </article>
+            <article class="lens-card reveal delay-1">
+              <span>02</span>
+              <h3>Cascade</h3>
+              <p>When did each service wake up during the load?</p>
+            </article>
+            <article class="lens-card reveal delay-2">
+              <span>03</span>
+              <h3>Lineage</h3>
+              <p>Who invited whom through redirects and sanitized initiators?</p>
+            </article>
+            <article class="lens-card lens-card-hot reveal delay-3">
+              <span>04</span>
+              <h3>Recognition</h3>
+              <p>Which relationships can recognize a visit across time or context?</p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="causality section-shell" aria-labelledby="causality-title">
+        <div class="causal-copy reveal">
+          <p class="section-index">03 — CAUSAL FOCUS</p>
+          <h2 id="causality-title">Touch one signal.<br /><em>Reveal its route.</em></h2>
+          <p>
+            Select or hover a service and unrelated noise recedes. The complete causal neighborhood—inviter, service,
+            descendants, storage, and recognition evidence—comes forward.
+          </p>
+          <ul class="evidence-list">
+            <li><span></span>Plain-language service purpose</li>
+            <li><span></span>Transfer and runtime behavior</li>
+            <li><span></span>Cookie lifecycle transitions</li>
+            <li><span></span>Security boundaries and ancestry</li>
+          </ul>
+        </div>
+        <figure class="causal-image reveal delay-1">
+          <img
+            src="assets/webxray-causal-focus.png"
+            alt="A selected signal in WebXRay with unrelated nodes suppressed and its causal route highlighted"
+            width="1920"
+            height="1080"
+          />
+          <figcaption><span>FIG. 02</span> One selected service, isolated with its complete route.</figcaption>
+        </figure>
+      </section>
+
+      <section id="privacy" class="privacy-section">
+        <div class="privacy-halo" aria-hidden="true"></div>
+        <div class="section-shell privacy-layout">
+          <div class="privacy-number reveal" aria-hidden="true">0</div>
+          <div class="privacy-copy reveal delay-1">
+            <p class="section-index">04 — PRIVACY BOUNDARY</p>
+            <h2>What leaves your machine.</h2>
+            <p class="privacy-lead">No telemetry. No account. No hosted backend. No cloud persistence.</p>
+            <p>
+              WebXRay binds to <code>127.0.0.1</code> by default and launches an isolated browser context. Its evidence
+              model deliberately excludes bodies, page contents, credentials, fragments, query values, cookie values,
+              and WebSocket payloads.
+            </p>
+            <a class="text-link" href="docs.html#privacy">Inspect the complete privacy model <span>→</span></a>
+          </div>
+          <div class="privacy-ledger reveal delay-2">
+            <p>DELIBERATELY EXCLUDED</p>
+            <ul>
+              <li><span>01</span> Request / response bodies</li>
+              <li><span>02</span> Page text and form data</li>
+              <li><span>03</span> Cookie values</li>
+              <li><span>04</span> URL credentials and fragments</li>
+              <li><span>05</span> WebSocket frame contents</li>
+              <li><span>06</span> Everyday browser history</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <section class="workflow section-shell">
+        <div class="section-heading reveal">
+          <p class="section-index">05 — FIELD WORK</p>
+          <h2>Observe. Interrogate. Preserve.</h2>
+        </div>
+        <ol class="workflow-list">
+          <li class="reveal">
+            <span>01</span>
+            <h3>Paste a target</h3>
+            <p>Start with an HTTP or HTTPS address in a fresh, isolated Chromium context.</p>
+          </li>
+          <li class="reveal delay-1">
+            <span>02</span>
+            <h3>Watch it assemble</h3>
+            <p>Switch lenses, inspect services, replay the load, and optionally compare consent aftershock.</p>
+          </li>
+          <li class="reveal delay-2">
+            <span>03</span>
+            <h3>Export the evidence</h3>
+            <p>Save sanitized JSON, a standalone HTML report, or a self-playing WebM forensic film.</p>
+          </li>
+        </ol>
+      </section>
+
+      <section id="launch" class="launch-section">
+        <div class="section-shell launch-layout">
+          <div class="launch-copy reveal">
+            <p class="section-index">06 — START OBSERVING</p>
+            <h2>Two commands.<br />One clean browser.</h2>
+            <p>Requires Node.js 22+, npm, and Chrome or Chromium.</p>
+          </div>
+          <div class="command-stack reveal delay-1">
+            <div class="command-block">
+              <div class="command-meta"><span>TERMINAL / LOCAL SETUP</span><span>01</span></div>
+              <pre><code>npm ci
+npm run dev</code></pre>
+              <button class="copy-button" type="button" data-copy="npm ci&#10;npm run dev">
+                <span>Copy commands</span><i aria-hidden="true">□</i>
+              </button>
+            </div>
+            <p>Open <code>http://127.0.0.1:4178</code>, then run a target or choose the deterministic 8-second demo.</p>
+          </div>
+        </div>
+        <div class="launch-marquee" aria-hidden="true">
+          <span>SEE THE INVITERS · SEE THE OUTSIDERS · SEE WHAT PERSISTS · </span>
+          <span>SEE THE INVITERS · SEE THE OUTSIDERS · SEE WHAT PERSISTS · </span>
+        </div>
+      </section>
+
+      <section class="final-cta section-shell">
+        <div class="final-mark reveal"><img src="assets/webxray-mark.svg" alt="" width="64" height="64" /></div>
+        <p class="section-index reveal">WEBXRAY / LOCAL-FIRST WEB OBSERVATORY</p>
+        <h2 class="reveal delay-1">Make the invisible<br /><em>answerable.</em></h2>
+        <div class="final-actions reveal delay-2">
+          <a class="button button-primary" href="https://github.com/OthmaneBlial/WebXRay"
+            >Explore on GitHub <span>↗</span></a
+          >
+          <a class="button button-quiet" href="docs.html">Open documentation</a>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <a class="brand" href="index.html"
+        ><img src="assets/webxray-mark.svg" alt="" width="26" height="26" />WEB<strong>XRAY</strong></a
+      >
+      <p>Local observation without surveillance.</p>
+      <div>
+        <a href="docs.html#security">Security</a><a href="docs.html#privacy">Privacy</a
+        ><a href="https://github.com/OthmaneBlial/WebXRay/blob/main/LICENSE">MIT</a>
+      </div>
+    </footer>
+  </body>
+</html>
