@@ -4,6 +4,7 @@
   <p><strong>See where your home is speaking.</strong></p>
   <p>A local-first observatory that turns connection metadata into living light without inspecting packet contents.</p>
   <p>
+    <a href="https://othmaneblial.github.io/PacketHalo/"><strong>Live project site</strong></a> ·
     <a href="#five-minute-start">Quick start</a> ·
     <a href="docs/simulator.md">Simulator</a> ·
     <a href="docs/privacy.md">Privacy</a> ·
@@ -16,6 +17,7 @@
     <img alt="local first" src="https://img.shields.io/badge/cloud-none-81ead1?style=flat-square" />
     <img alt="automated checks" src="https://img.shields.io/badge/checks-TypeScript%20%7C%20Rust%20%7C%20browser%20%7C%20Docker-71877f?style=flat-square" />
   </p>
+  <p><a href="https://othmaneblial.github.io/PacketHalo/"><strong>Explore the interactive showcase and field guide →</strong></a></p>
 </div>
 
 ![PacketHalo Halo mode showing a Movie Night simulation](docs/assets/hero.png)
