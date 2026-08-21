@@ -1,0 +1,1227 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      name="description"
+      content="Runtime Atlas documentation: quick start, SDK instrumentation, OTLP/HTTP JSON, architecture, privacy, configuration, and deployment."
+    />
+    <meta name="theme-color" content="#070908" />
+    <title>Documentation — Runtime Atlas</title>
+    <link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="styles.css" />
+    <script src="app.js" defer></script>
+  </head>
+  <body class="docs-body">
+    <a class="skip-link" href="#docs-content">Skip to documentation</a>
+
+    <header class="site-header docs-header" data-site-header>
+      <div class="shell header-inner">
+        <a class="wordmark" href="./" aria-label="Runtime Atlas home">
+          <span class="wordmark-sigil" aria-hidden="true"
+            ><i></i><i></i><i></i
+          ></span>
+          <span><strong>RUNTIME</strong><em>ATLAS</em></span>
+        </a>
+        <span class="docs-divider" aria-hidden="true"></span>
+        <span class="docs-label">DOCUMENTATION <small>v0.1.0</small></span>
+        <nav class="site-nav docs-topnav" aria-label="Documentation navigation">
+          <a href="./">Overview</a>
+          <a href="#quick-start">Quick start</a>
+          <a href="#sdk">SDK</a>
+        </nav>
+        <a
+          class="header-source"
+          href="https://github.com/OthmaneBlial/Runtime-Atlas"
+          target="_blank"
+          rel="noreferrer"
+          aria-label="View Runtime Atlas source on GitHub"
+        >
+          <svg aria-hidden="true" viewBox="0 0 24 24">
+            <path
+              d="M12 .8a11.4 11.4 0 0 0-3.6 22.2c.6.1.8-.2.8-.6v-2.2c-3.3.7-4-1.4-4-1.4-.5-1.4-1.3-1.8-1.3-1.8-1.1-.7.1-.7.1-.7 1.2.1 1.8 1.2 1.8 1.2 1 1.8 2.8 1.3 3.5 1 .1-.8.4-1.3.7-1.6-2.6-.3-5.4-1.3-5.4-5.7 0-1.3.5-2.3 1.2-3.1-.1-.3-.5-1.5.1-3.1 0 0 1-.3 3.2 1.2a11 11 0 0 1 5.8 0C17.1 4.8 18.1 5 18.1 5c.6 1.6.2 2.8.1 3.1.8.8 1.2 1.8 1.2 3.1 0 4.4-2.8 5.4-5.4 5.7.4.4.8 1.1.8 2.1v3.4c0 .4.2.7.8.6A11.4 11.4 0 0 0 12 .8Z"
+            />
+          </svg>
+          <span>GitHub</span>
+          <span aria-hidden="true">↗</span>
+        </a>
+      </div>
+    </header>
+
+    <main class="docs-layout shell" id="docs-content">
+      <aside class="docs-sidebar" aria-label="Documentation sections">
+        <div class="docs-search">
+          <label for="docs-search-input">Find in docs</label>
+          <div>
+            <svg aria-hidden="true" viewBox="0 0 24 24">
+              <circle cx="11" cy="11" r="7"></circle>
+              <path d="m20 20-4-4"></path>
+            </svg>
+            <input
+              id="docs-search-input"
+              type="search"
+              placeholder="Filter sections…"
+              autocomplete="off"
+              data-docs-search
+            />
+            <kbd>/</kbd>
+          </div>
+        </div>
+
+        <nav class="docs-sidenav" aria-label="On this page" data-docs-nav>
+          <p>GET STARTED</p>
+          <a href="#introduction" data-doc-link>Introduction</a>
+          <a href="#quick-start" data-doc-link>Quick start</a>
+          <a href="#demo" data-doc-link>Local demo</a>
+          <p>CONNECT</p>
+          <a href="#sdk" data-doc-link>Node.js SDK</a>
+          <a href="#opentelemetry" data-doc-link>OpenTelemetry</a>
+          <a href="#source-analysis" data-doc-link>Source analysis</a>
+          <p>OPERATE</p>
+          <a href="#architecture" data-doc-link>Architecture</a>
+          <a href="#http-surface" data-doc-link>HTTP surface</a>
+          <a href="#configuration" data-doc-link>Configuration</a>
+          <a href="#privacy" data-doc-link>Privacy &amp; security</a>
+          <a href="#deployment" data-doc-link>Deployment</a>
+          <a href="#validation" data-doc-link>Validation</a>
+          <a href="#troubleshooting" data-doc-link>Troubleshooting</a>
+          <a href="#limits" data-doc-link>Limits &amp; support</a>
+        </nav>
+
+        <div class="docs-sidebar-note">
+          <span>LOCAL-FIRST</span>
+          <p>No hosted Runtime Atlas service is required.</p>
+        </div>
+      </aside>
+
+      <article class="docs-article">
+        <div
+          class="docs-search-summary"
+          role="status"
+          aria-live="polite"
+          data-docs-summary
+        ></div>
+
+        <section
+          class="doc-section doc-hero"
+          id="introduction"
+          data-doc-section
+          data-doc-title="Introduction"
+        >
+          <p class="eyebrow">RUNTIME ATLAS / DOCUMENTATION</p>
+          <h1>
+            Make a real request path<br /><span>read like architecture.</span>
+          </h1>
+          <p class="doc-lede">
+            Runtime Atlas combines TypeScript declarations with bounded runtime
+            traces. It shows a source-backed topology immediately, then animates
+            and replays the causal path of recent Node.js requests.
+          </p>
+          <div class="doc-badges" aria-label="Project characteristics">
+            <span>MIT</span><span>Node.js 24</span><span>TypeScript</span
+            ><span>Local-first</span>
+          </div>
+          <div class="doc-callout callout-info">
+            <span class="callout-icon" aria-hidden="true">i</span>
+            <div>
+              <strong>What it is — and is not</strong>
+              <p>
+                Runtime Atlas is a developer observability tool. It is not a
+                durable tracing database, metrics/logs platform, cross-replica
+                store, or public multi-tenant service.
+              </p>
+            </div>
+          </div>
+        </section>
+
+        <section
+          class="doc-section"
+          id="quick-start"
+          data-doc-section
+          data-doc-title="Quick start installation Node npm dev"
+        >
+          <div class="doc-kicker">01 / GET STARTED</div>
+          <h2>Quick start</h2>
+          <p>
+            Install the runtime pinned in <code>.nvmrc</code>, install the
+            locked dependency graph, and start the collector plus Vite UI
+            together.
+          </p>
+          <div class="doc-requirements">
+            <div>
+              <small>NODE.JS</small><strong>24.15.0</strong
+              ><span>pinned development runtime</span>
+            </div>
+            <div>
+              <small>PACKAGE MANAGER</small><strong>npm 11</strong
+              ><span>lockfile-backed install</span>
+            </div>
+            <div>
+              <small>SUPPORTED DEV OS</small><strong>macOS / Linux</strong
+              ><span>Ubuntu verified in CI</span>
+            </div>
+          </div>
+          <div class="code-shell doc-code">
+            <div class="code-head">
+              <span>terminal</span
+              ><button
+                type="button"
+                class="copy-button"
+                data-copy-target="docs-quick-start"
+              >
+                COPY
+              </button>
+            </div>
+            <pre><code id="docs-quick-start">nvm install
+nvm use
+npm ci
+npm run dev</code></pre>
+          </div>
+          <p>
+            Open the loopback URL printed by Vite — normally
+            <code>http://127.0.0.1:5173</code>, or the next available port. The
+            API and collector run at <code>127.0.0.1:4319</code>.
+          </p>
+          <div class="doc-next">
+            <span>NEXT</span>
+            <a href="#demo"
+              >Create your first local trace
+              <span aria-hidden="true">↓</span></a
+            >
+          </div>
+        </section>
+
+        <section
+          class="doc-section"
+          id="demo"
+          data-doc-section
+          data-doc-title="Local demo checkout search payment failure replay inspector"
+        >
+          <div class="doc-kicker">02 / EXPLORE</div>
+          <h2>Local demo</h2>
+          <p>
+            The demo topology appears before traffic arrives. Run one of three
+            deterministic scenarios from the workspace, then select trace
+            history, scrub replay, inspect a node, export, or clear the retained
+            evidence.
+          </p>
+          <div class="scenario-grid">
+            <div>
+              <span class="scenario-method success">POST</span
+              ><code>/checkout</code>
+              <p>
+                Successful order path across session, cart, pricing,
+                dependencies, and fulfillment.
+              </p>
+            </div>
+            <div>
+              <span class="scenario-method neutral">GET</span
+              ><code>/search</code>
+              <p>
+                Smaller read path through rate limiting, catalog data, and
+                cache.
+              </p>
+            </div>
+            <div>
+              <span class="scenario-method danger">FAIL</span
+              ><code>/payment</code>
+              <p>
+                Deterministic payment dependency outage with an observable error
+                path.
+              </p>
+            </div>
+          </div>
+          <figure class="doc-image">
+            <button
+              type="button"
+              class="media-open"
+              data-image="assets/runtime-atlas-checkout.png"
+              data-caption="A completed checkout request across the demo topology."
+              aria-label="Enlarge the checkout request screenshot"
+            >
+              <img
+                src="assets/runtime-atlas-checkout.png"
+                width="1600"
+                height="1000"
+                loading="lazy"
+                alt="A completed checkout request across the Runtime Atlas demo topology"
+              />
+              <span class="media-hint" aria-hidden="true">EXPAND ↗</span>
+            </button>
+            <figcaption>
+              The downstream operations are simulated local delays; they do not
+              call Stripe, PostgreSQL, Redis, Kafka, or TaxJar.
+            </figcaption>
+          </figure>
+        </section>
+
+        <section
+          class="doc-section"
+          id="sdk"
+          data-doc-section
+          data-doc-title="Node SDK instrumentation createAtlas middleware route database service AsyncLocalStorage"
+        >
+          <div class="doc-kicker">03 / CONNECT</div>
+          <h2>Instrument with the Node.js SDK</h2>
+          <p>
+            The workspace package <code>@runtime-atlas/sdk</code> emits trace
+            and span lifecycle events while keeping observed application
+            requests independent from collector availability. It is currently a
+            local workspace artifact, not a claimed public registry release.
+          </p>
+          <h3>Build and link the workspace package</h3>
+          <div class="code-shell doc-code">
+            <div class="code-head">
+              <span>terminal</span
+              ><button
+                type="button"
+                class="copy-button"
+                data-copy-target="sdk-build"
+              >
+                COPY
+              </button>
+            </div>
+            <pre><code id="sdk-build">npm run build:sdk</code></pre>
+          </div>
+          <h3>Wrap application work</h3>
+          <div class="code-shell doc-code">
+            <div class="code-head">
+              <span>instrumented-orders.ts</span
+              ><button
+                type="button"
+                class="copy-button"
+                data-copy-target="sdk-code"
+              >
+                COPY
+              </button>
+            </div>
+            <pre><code id="sdk-code">import { createAtlas } from "@runtime-atlas/sdk";
+
+const atlas = createAtlas({
+  serviceName: "orders-api",
+  collectorUrl: "http://127.0.0.1:4319",
+  maxQueueSize: 2_000,
+  requestTimeoutMs: 3_000,
+  onError: (error) =&gt;
+    applicationLogger.warn({ error }, "atlas collector unavailable"),
+});
+
+const ordersDb = atlas.database(
+  { id: "db.orders", label: "Orders DB", meta: { engine: "PostgreSQL" } },
+  async () =&gt; saveOrder(),
+);
+
+const createOrder = atlas.route(
+  { id: "route.orders", label: "POST /orders" },
+  async () =&gt; ordersDb(),
+);</code></pre>
+          </div>
+          <h3>Use request middleware safely</h3>
+          <p>
+            Connect/Express applications can use
+            <code>atlas.httpMiddleware()</code>. Normalize user-specific path
+            segments before telemetry leaves the process; the SDK removes query
+            strings and URL fragments but cannot know which remaining segments
+            identify a user.
+          </p>
+          <div class="code-shell doc-code">
+            <div class="code-head">
+              <span>app.ts</span
+              ><button
+                type="button"
+                class="copy-button"
+                data-copy-target="middleware-code"
+              >
+                COPY
+              </button>
+            </div>
+            <pre><code id="middleware-code">app.use(
+  atlas.httpMiddleware({
+    path: (request) =&gt;
+      (request.originalUrl ?? request.url ?? "/").replace(
+        /\/\d+(?=\/|$)/g,
+        "/:id",
+      ),
+    ignore: (request) =&gt; request.url === "/health",
+  }),
+);</code></pre>
+          </div>
+          <p class="doc-downloads">
+            <a href="assets/examples/instrumented-orders.ts" download
+              >Download the complete TypeScript example
+              <span aria-hidden="true">↓</span></a
+            >
+            <a
+              href="https://github.com/OthmaneBlial/Runtime-Atlas/tree/main/packages/sdk"
+              >Browse SDK source <span aria-hidden="true">↗</span></a
+            >
+          </p>
+        </section>
+
+        <section
+          class="doc-section"
+          id="opentelemetry"
+          data-doc-section
+          data-doc-title="OpenTelemetry OTLP HTTP JSON gzip collector traces partialSuccess"
+        >
+          <div class="doc-kicker">04 / CONNECT</div>
+          <h2>Connect OpenTelemetry</h2>
+          <p>
+            Configure an OTLP/HTTP exporter to send JSON to the exact traces
+            endpoint. Uncompressed and gzip-compressed OTLP JSON are supported.
+            Binary protobuf and gRPC are intentionally not accepted.
+          </p>
+          <div class="endpoint-display">
+            <span>POST</span><code>http://127.0.0.1:4319/v1/traces</code>
+            <button
+              type="button"
+              class="copy-button"
+              data-copy-text="http://127.0.0.1:4319/v1/traces"
+            >
+              COPY
+            </button>
+          </div>
+          <h3>Test the bundled payload</h3>
+          <div class="code-shell doc-code">
+            <div class="code-head">
+              <span>terminal</span
+              ><button
+                type="button"
+                class="copy-button"
+                data-copy-target="otlp-curl"
+              >
+                COPY
+              </button>
+            </div>
+            <pre><code id="otlp-curl">curl --request POST http://127.0.0.1:4319/v1/traces \
+  --header 'content-type: application/json' \
+  --data-binary @examples/otlp-trace.json</code></pre>
+          </div>
+          <h3>Span reconciliation order</h3>
+          <ol class="reconciliation-list">
+            <li>
+              <span>01</span>
+              <div>
+                <strong>Explicit node ID</strong
+                ><code>runtime.atlas.node_id</code>
+              </div>
+            </li>
+            <li>
+              <span>02</span>
+              <div>
+                <strong>Code provenance</strong
+                ><code
+                  >code.function.name · code.file.path · code.line.number</code
+                >
+              </div>
+            </li>
+            <li>
+              <span>03</span>
+              <div>
+                <strong>HTTP evidence</strong
+                ><code>http.request.method · http.route</code>
+              </div>
+            </li>
+            <li>
+              <span>04</span>
+              <div>
+                <strong>Bounded inference</strong
+                ><code>database · messaging · service · code allowlist</code>
+              </div>
+            </li>
+          </ol>
+          <div class="doc-callout callout-warn">
+            <span class="callout-icon" aria-hidden="true">!</span>
+            <div>
+              <strong>Partial success is explicit</strong>
+              <p>
+                Malformed or incomplete individual spans are counted in OTLP
+                <code>partialSuccess</code>. Malformed envelopes and capacity
+                violations return protobuf-JSON
+                <code>google.rpc.Status</code> errors.
+              </p>
+            </div>
+          </div>
+          <p class="doc-downloads">
+            <a href="assets/examples/otlp-trace.json" download
+              >Download the standards-shaped OTLP payload
+              <span aria-hidden="true">↓</span></a
+            >
+          </p>
+        </section>
+
+        <section
+          class="doc-section"
+          id="source-analysis"
+          data-doc-section
+          data-doc-title="Source analysis TypeScript ts-morph glob literal atlas route middleware service database cache external queue"
+        >
+          <div class="doc-kicker">05 / CONNECT</div>
+          <h2>Point the analyzer at TypeScript</h2>
+          <p>
+            Configure one or more comma-separated source globs. The analyzer
+            uses
+            <code>ts-morph</code> without executing the target application.
+          </p>
+          <div class="code-shell doc-code">
+            <div class="code-head">
+              <span>terminal</span
+              ><button
+                type="button"
+                class="copy-button"
+                data-copy-target="source-glob"
+              >
+                COPY
+              </button>
+            </div>
+            <pre><code id="source-glob">ATLAS_SOURCE_GLOB='../orders-api/src/**/*.ts' \
+ATLAS_PROJECT_NAME='orders-api' \
+ATLAS_ENVIRONMENT='development' \
+npm start</code></pre>
+          </div>
+          <div
+            class="recognized-grid"
+            aria-label="Recognized declaration calls"
+          >
+            <code>atlas.route</code><code>atlas.middleware</code
+            ><code>atlas.service</code> <code>atlas.database</code
+            ><code>atlas.cache</code><code>atlas.external</code
+            ><code>atlas.queue</code>
+          </div>
+          <p>
+            Calls may live inside application factories. IDs, labels, metadata,
+            and source locations must remain literal enough to prove. Dynamic
+            descriptors or wrappers that hide these call shapes may appear only
+            as visibly runtime-only nodes.
+          </p>
+        </section>
+
+        <section
+          class="doc-section"
+          id="architecture"
+          data-doc-section
+          data-doc-title="Architecture static topology runtime AsyncLocalStorage Express SSE React reconciliation"
+        >
+          <div class="doc-kicker">06 / OPERATE</div>
+          <h2>Architecture</h2>
+          <p>
+            The Express application owns analysis, validation, ingestion,
+            retained trace state, SSE, and the production UI. The process
+            boundary owns configuration, structured logs, sockets, and graceful
+            shutdown.
+          </p>
+          <div
+            class="architecture-map"
+            role="img"
+            aria-label="Runtime Atlas data flow from TypeScript, SDK, and OpenTelemetry through analysis and bounded runtime into the React atlas"
+          >
+            <div class="architecture-inputs">
+              <span>TypeScript source</span><span>Runtime Atlas SDK</span
+              ><span>OpenTelemetry</span>
+            </div>
+            <div class="architecture-lines" aria-hidden="true">
+              <i></i><i></i><i></i>
+            </div>
+            <div class="architecture-core">
+              <small>EXPRESS APPLICATION</small
+              ><strong>Static analyzer + bounded runtime</strong
+              ><span>topology API · ingest · OTLP · SSE · source windows</span>
+            </div>
+            <div
+              class="architecture-lines architecture-lines-out"
+              aria-hidden="true"
+            >
+              <i></i>
+            </div>
+            <div class="architecture-output">
+              <small>REACT WORKSPACE</small
+              ><strong>Live map · history · replay · inspector</strong>
+            </div>
+          </div>
+          <h3>Ordered runtime model</h3>
+          <div class="event-sequence" aria-label="Trace event lifecycle">
+            <span>trace:start</span><i></i><span>span:start</span><i></i
+            ><span>span:finish / error</span><i></i><span>trace:finish</span>
+          </div>
+          <p>
+            Each event receives an increasing collector sequence. The UI uses
+            that sequence rather than service clocks to follow the newest
+            evidence and compute replay state.
+          </p>
+          <p class="doc-downloads">
+            <a
+              href="https://github.com/OthmaneBlial/Runtime-Atlas/blob/main/docs/architecture.md"
+              >Read the source architecture note
+              <span aria-hidden="true">↗</span></a
+            >
+          </p>
+        </section>
+
+        <section
+          class="doc-section"
+          id="http-surface"
+          data-doc-section
+          data-doc-title="HTTP API endpoints health ready topology source traces export clear stream ingest demo"
+        >
+          <div class="doc-kicker">07 / OPERATE</div>
+          <h2>HTTP surface</h2>
+          <p>
+            Every response receives a request ID and restrictive browser
+            security headers.
+          </p>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Method</th>
+                  <th>Endpoint</th>
+                  <th>Purpose</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><span class="method method-get">GET</span></td>
+                  <td><code>/health</code></td>
+                  <td>Lightweight process liveness</td>
+                </tr>
+                <tr>
+                  <td><span class="method method-get">GET</span></td>
+                  <td><code>/ready</code></td>
+                  <td>Topology, production UI, and runtime readiness</td>
+                </tr>
+                <tr>
+                  <td><span class="method method-get">GET</span></td>
+                  <td><code>/api/topology</code></td>
+                  <td>AST-derived topology and enabled capabilities</td>
+                </tr>
+                <tr>
+                  <td><span class="method method-get">GET</span></td>
+                  <td><code>/api/source</code></td>
+                  <td>Analyzer-approved source context window</td>
+                </tr>
+                <tr>
+                  <td><span class="method method-get">GET</span></td>
+                  <td><code>/api/traces</code></td>
+                  <td>Recent bounded in-memory history</td>
+                </tr>
+                <tr>
+                  <td><span class="method method-get">GET</span></td>
+                  <td><code>/api/traces/export</code></td>
+                  <td>Download retained traces as JSON</td>
+                </tr>
+                <tr>
+                  <td><span class="method method-delete">DELETE</span></td>
+                  <td><code>/api/traces</code></td>
+                  <td>Clear history when enabled</td>
+                </tr>
+                <tr>
+                  <td><span class="method method-get">GET</span></td>
+                  <td><code>/api/stream</code></td>
+                  <td>SSE runtime events and heartbeats</td>
+                </tr>
+                <tr>
+                  <td><span class="method method-post">POST</span></td>
+                  <td><code>/api/ingest</code></td>
+                  <td>First-party SDK batches</td>
+                </tr>
+                <tr>
+                  <td><span class="method method-post">POST</span></td>
+                  <td><code>/v1/traces</code></td>
+                  <td>OTLP/HTTP JSON traces</td>
+                </tr>
+                <tr>
+                  <td><span class="method method-post">POST</span></td>
+                  <td><code>/api/demo/checkout</code></td>
+                  <td>Deterministic success trace</td>
+                </tr>
+                <tr>
+                  <td><span class="method method-get">GET</span></td>
+                  <td><code>/api/demo/search</code></td>
+                  <td>Shared-infrastructure trace</td>
+                </tr>
+                <tr>
+                  <td><span class="method method-post">POST</span></td>
+                  <td><code>/api/demo/failure</code></td>
+                  <td>Deterministic dependency failure</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <section
+          class="doc-section"
+          id="configuration"
+          data-doc-section
+          data-doc-title="Configuration environment variables HOST PORT limits token source clear proxy logging"
+        >
+          <div class="doc-kicker">08 / OPERATE</div>
+          <h2>Configuration</h2>
+          <p>
+            The server reads environment variables directly and does not
+            auto-load <code>.env</code>
+            files. Invalid configuration fails before the listener starts.
+          </p>
+          <div class="table-wrap configuration-table">
+            <table>
+              <thead>
+                <tr>
+                  <th>Variable</th>
+                  <th>Default</th>
+                  <th>Purpose</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><code>HOST</code></td>
+                  <td><code>127.0.0.1</code></td>
+                  <td>
+                    Listener; use non-loopback only in a controlled network
+                  </td>
+                </tr>
+                <tr>
+                  <td><code>PORT</code></td>
+                  <td><code>4319</code></td>
+                  <td>API, collector, SSE, and production UI</td>
+                </tr>
+                <tr>
+                  <td><code>ATLAS_SOURCE_GLOB</code></td>
+                  <td>demo source</td>
+                  <td>Comma-separated TypeScript source globs</td>
+                </tr>
+                <tr>
+                  <td><code>ATLAS_PROJECT_NAME</code></td>
+                  <td>demo / project</td>
+                  <td>Displayed project name</td>
+                </tr>
+                <tr>
+                  <td><code>ATLAS_ENVIRONMENT</code></td>
+                  <td><code>local</code></td>
+                  <td>Displayed environment label</td>
+                </tr>
+                <tr>
+                  <td><code>ATLAS_INGEST_TOKEN</code></td>
+                  <td>unset</td>
+                  <td>Optional bearer token, minimum 16 characters</td>
+                </tr>
+                <tr>
+                  <td><code>ATLAS_EXPOSE_SOURCE</code></td>
+                  <td>loopback only</td>
+                  <td>Enable analyzer-approved source context</td>
+                </tr>
+                <tr>
+                  <td><code>ATLAS_ALLOW_CLEAR</code></td>
+                  <td>local demo only</td>
+                  <td>Enable trace deletion API and control</td>
+                </tr>
+                <tr>
+                  <td><code>ATLAS_TRUST_PROXY</code></td>
+                  <td><code>false</code></td>
+                  <td>Trust one reverse-proxy hop</td>
+                </tr>
+                <tr>
+                  <td><code>ATLAS_LOG_LEVEL</code></td>
+                  <td><code>info</code></td>
+                  <td>debug, info, warn, error, or silent</td>
+                </tr>
+                <tr>
+                  <td><code>ATLAS_OTLP_BODY_LIMIT</code></td>
+                  <td><code>8mb</code></td>
+                  <td>Decompressed OTLP JSON limit</td>
+                </tr>
+                <tr>
+                  <td><code>ATLAS_OTLP_MAX_SPANS</code></td>
+                  <td><code>1000</code></td>
+                  <td>Maximum span groups per OTLP request</td>
+                </tr>
+                <tr>
+                  <td><code>ATLAS_OTLP_MAX_CONCURRENT_REQUESTS</code></td>
+                  <td><code>16</code></td>
+                  <td>OTLP conversion concurrency</td>
+                </tr>
+                <tr>
+                  <td><code>ATLAS_INGEST_RATE_LIMIT</code></td>
+                  <td><code>600</code></td>
+                  <td>Ingest requests per client per minute</td>
+                </tr>
+                <tr>
+                  <td><code>ATLAS_MAX_TRACES</code></td>
+                  <td><code>60</code></td>
+                  <td>In-memory trace retention</td>
+                </tr>
+                <tr>
+                  <td><code>ATLAS_MAX_BUFFERED_EVENTS</code></td>
+                  <td><code>800</code></td>
+                  <td>SSE replay buffer</td>
+                </tr>
+                <tr>
+                  <td><code>ATLAS_MAX_EVENTS_PER_TRACE</code></td>
+                  <td><code>5000</code></td>
+                  <td>Per-trace event retention</td>
+                </tr>
+                <tr>
+                  <td><code>ATLAS_MAX_RETAINED_EVENTS</code></td>
+                  <td><code>50000</code></td>
+                  <td>Aggregate retained events</td>
+                </tr>
+                <tr>
+                  <td><code>ATLAS_MAX_STREAM_CLIENTS</code></td>
+                  <td><code>100</code></td>
+                  <td>Concurrent SSE clients per process</td>
+                </tr>
+                <tr>
+                  <td><code>ATLAS_SHUTDOWN_TIMEOUT_MS</code></td>
+                  <td><code>10000</code></td>
+                  <td>Graceful shutdown deadline</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <section
+          class="doc-section"
+          id="privacy"
+          data-doc-section
+          data-doc-title="Privacy security local first memory retention source inspection token TLS authentication"
+        >
+          <div class="doc-kicker">09 / OPERATE</div>
+          <h2>Privacy and security boundaries</h2>
+          <p>
+            Trace evidence stays in process memory. Restarting the server clears
+            it; authorized users may also clear it through the UI when that
+            capability is enabled.
+          </p>
+          <div class="data-boundaries">
+            <article>
+              <span class="boundary-yes">RETAINED, WITH BOUNDS</span>
+              <ul>
+                <li>
+                  Trace and span IDs, parents, timestamps, durations, status
+                </li>
+                <li>Bounded method and normalized path</li>
+                <li>Configured node IDs and service names</li>
+                <li>
+                  Allowlisted operation, code, route, database, and messaging
+                  evidence
+                </li>
+                <li>Bounded error messages</li>
+              </ul>
+            </article>
+            <article>
+              <span class="boundary-no">NOT RETAINED</span>
+              <ul>
+                <li><code>url.full</code>, query strings, or URL fragments</li>
+                <li>Database statements</li>
+                <li>Request or response bodies</li>
+                <li>Credentials</li>
+                <li>Arbitrary OpenTelemetry attributes</li>
+              </ul>
+            </article>
+          </div>
+          <h3>Source inspection</h3>
+          <p>
+            <code>/api/source</code> returns a small context window only when
+            the exact file and line belong to an analyzed node. It defaults on
+            for loopback and off for non-loopback bindings.
+          </p>
+          <h3>Shared network rule</h3>
+          <div class="doc-callout callout-danger">
+            <span class="callout-icon" aria-hidden="true">!</span>
+            <div>
+              <strong
+                >Do not expose Runtime Atlas directly to the public
+                internet.</strong
+              >
+              <p>
+                Terminate TLS and require user authentication at a trusted
+                reverse proxy. Configure a long ingest token and keep source
+                inspection and trace clearing disabled unless every viewer is
+                authorized.
+              </p>
+            </div>
+          </div>
+          <p class="doc-downloads">
+            <a
+              href="https://github.com/OthmaneBlial/Runtime-Atlas/blob/main/docs/privacy.md"
+              >Privacy model <span aria-hidden="true">↗</span></a
+            >
+            <a
+              href="https://github.com/OthmaneBlial/Runtime-Atlas/blob/main/SECURITY.md"
+              >Security policy <span aria-hidden="true">↗</span></a
+            >
+          </p>
+        </section>
+
+        <section
+          class="doc-section"
+          id="deployment"
+          data-doc-section
+          data-doc-title="Deployment production build Docker Compose reverse proxy health ready shutdown rollback"
+        >
+          <div class="doc-kicker">10 / OPERATE</div>
+          <h2>Production and container deployment</h2>
+          <h3>Compiled Node.js process</h3>
+          <div class="code-shell doc-code">
+            <div class="code-head">
+              <span>terminal</span
+              ><button
+                type="button"
+                class="copy-button"
+                data-copy-target="prod-command"
+              >
+                COPY
+              </button>
+            </div>
+            <pre><code id="prod-command">nvm use
+npm ci
+npm run build
+NODE_ENV=production npm start</code></pre>
+          </div>
+          <p>
+            Open <code>http://127.0.0.1:4319</code>.
+            <code>GET /health</code> proves liveness;
+            <code>GET /ready</code> also analyzes the configured source and
+            verifies the built UI.
+          </p>
+          <h3>Hardened local container</h3>
+          <div class="code-shell doc-code">
+            <div class="code-head">
+              <span>terminal</span
+              ><button
+                type="button"
+                class="copy-button"
+                data-copy-target="docker-command"
+              >
+                COPY
+              </button>
+            </div>
+            <pre><code id="docker-command">docker compose up --build</code></pre>
+          </div>
+          <p>
+            The image runs as the unprivileged <code>node</code> user. Compose
+            binds the exposed port to loopback, uses a read-only filesystem, and
+            enables demo-only source and clear controls.
+          </p>
+          <h3>Shared network checklist</h3>
+          <ul class="check-list">
+            <li>
+              Terminate TLS and require user authentication at a reverse proxy.
+            </li>
+            <li>
+              Generate an <code>ATLAS_INGEST_TOKEN</code> of at least 16
+              characters.
+            </li>
+            <li>
+              Keep source inspection and trace clearing disabled unless
+              explicitly needed.
+            </li>
+            <li>
+              Trust a proxy hop only when the deployment actually uses that
+              trusted topology.
+            </li>
+            <li>
+              Tune body, span, concurrency, rate, event, trace, and SSE limits
+              for available memory.
+            </li>
+            <li>
+              Use one process per instance; in-memory trace state is not
+              coordinated across replicas.
+            </li>
+          </ul>
+          <p>
+            On <code>SIGINT</code> or <code>SIGTERM</code>, the server closes
+            SSE clients, stops accepting new connections, waits for active
+            sockets, then enforces the configured shutdown deadline. Rollback
+            requires no persistent schema migration.
+          </p>
+        </section>
+
+        <section
+          class="doc-section"
+          id="validation"
+          data-doc-section
+          data-doc-title="Validation tests check Playwright axe lint TypeScript build Docker smoke security audit"
+        >
+          <div class="doc-kicker">11 / OPERATE</div>
+          <h2>Validation</h2>
+          <p>The repository exposes one complete local gate:</p>
+          <div class="code-shell doc-code">
+            <div class="code-head">
+              <span>terminal</span
+              ><button
+                type="button"
+                class="copy-button"
+                data-copy-target="check-command"
+              >
+                COPY
+              </button>
+            </div>
+            <pre><code id="check-command">npm run check</code></pre>
+          </div>
+          <div class="validation-grid">
+            <div>
+              <strong>STATIC</strong><span>Prettier · oxlint · TypeScript</span>
+            </div>
+            <div>
+              <strong>BEHAVIOR</strong
+              ><span>Unit · component · integration</span>
+            </div>
+            <div>
+              <strong>BROWSER</strong
+              ><span>Chrome desktop · Pixel 7 · axe</span>
+            </div>
+            <div>
+              <strong>BUILD</strong><span>SDK · server · React UI</span>
+            </div>
+            <div>
+              <strong>POLICY</strong
+              ><span
+                >Repository files · credential signatures · docs links</span
+              >
+            </div>
+            <div>
+              <strong>RUNTIME</strong
+              ><span
+                >Compiled startup · success + failure smoke · asset
+                budgets</span
+              >
+            </div>
+          </div>
+          <p>
+            Browser tests fail on unexpected console errors, page exceptions,
+            failed requests, HTTP errors, accessibility violations, or mobile
+            horizontal overflow. The production smoke enforces 100 KiB
+            JavaScript and 20 KiB CSS gzip entry-asset budgets.
+          </p>
+          <div class="code-shell doc-code">
+            <div class="code-head">
+              <span>focused commands</span
+              ><button
+                type="button"
+                class="copy-button"
+                data-copy-target="focused-checks"
+              >
+                COPY
+              </button>
+            </div>
+            <pre><code id="focused-checks">npm test
+npm run test:e2e
+npm run typecheck
+npm run lint
+npm run build
+npm run smoke
+npm audit --omit=dev --audit-level=high
+docker build --tag runtime-atlas:local .</code></pre>
+          </div>
+        </section>
+
+        <section
+          class="doc-section"
+          id="troubleshooting"
+          data-doc-section
+          data-doc-title="Troubleshooting connection 503 static nodes 401 415 partial success port Chrome trace missing"
+        >
+          <div class="doc-kicker">12 / SUPPORT</div>
+          <h2>Troubleshooting</h2>
+          <div class="troubleshooting-list">
+            <details>
+              <summary>The UI shows a connection error</summary>
+              <p>
+                In development, Vite and the API must both run. Start them with
+                <code>npm run dev</code>, check
+                <code>http://127.0.0.1:4319/health</code>, then use Retry
+                connection.
+              </p>
+            </details>
+            <details>
+              <summary>Readiness returns 503</summary>
+              <p>
+                Check the structured <code>readiness.failed</code> log. Common
+                causes are an empty or excessive source glob, duplicate node
+                IDs, or a missing <code>dist/index.html</code>. Run
+                <code>npm run build</code> before <code>npm start</code>.
+              </p>
+            </details>
+            <details>
+              <summary>Static nodes are missing</summary>
+              <p>
+                Keep the declaration shape literal:
+                <code>atlas.service({ id: "…", label: "…" }, handler)</code>.
+                Dynamic descriptors and calls hidden behind wrappers cannot be
+                proven statically.
+              </p>
+            </details>
+            <details>
+              <summary>The collector returns 401</summary>
+              <p>
+                The server has <code>ATLAS_INGEST_TOKEN</code> configured. Send
+                the exact value as <code>Authorization: Bearer …</code>. Never
+                put it in source, URLs, or logs.
+              </p>
+            </details>
+            <details>
+              <summary>The OTLP collector returns 415</summary>
+              <p>
+                Use OTLP/HTTP JSON at <code>/v1/traces</code> with
+                <code>Content-Type: application/json</code>. Binary protobuf and
+                gRPC are not supported; gzip content encoding is.
+              </p>
+            </details>
+            <details>
+              <summary>The OTLP response reports partialSuccess</summary>
+              <p>
+                The envelope was valid, but one or more resource/span groups
+                were malformed, incomplete, or over a configured bound. Use the
+                rejected count to inspect exporter configuration without logging
+                sensitive payloads.
+              </p>
+            </details>
+            <details>
+              <summary>A trace does not appear</summary>
+              <p>
+                Confirm first-party ingest returned 202 or OTLP returned 200.
+                Check retention limits and service clocks. If the browser
+                disconnected, reconnect so the bounded server event buffer can
+                replay.
+              </p>
+            </details>
+            <details>
+              <summary>Port 4319 is already in use</summary>
+              <p>
+                Use another server port such as
+                <code>PORT=4320 npm run dev:server</code>, then update the Vite
+                proxy target, or stop the conflicting process.
+              </p>
+            </details>
+            <details>
+              <summary>Playwright cannot launch Chrome</summary>
+              <p>
+                Install or update Google Chrome, confirm it launches, and rerun
+                <code>npm run test:e2e</code>. The tests use the installed
+                Chrome channel rather than a downloaded browser binary.
+              </p>
+            </details>
+          </div>
+        </section>
+
+        <section
+          class="doc-section"
+          id="limits"
+          data-doc-section
+          data-doc-title="Limitations support compatibility release roadmap license"
+        >
+          <div class="doc-kicker">13 / BOUNDARIES</div>
+          <h2>Compatibility, limits, and support</h2>
+          <div class="limits-grid">
+            <article>
+              <span>RUNTIME</span>
+              <p>
+                Node.js <code>^22.22.2</code>, <code>^24.15.0</code>, or
+                <code>≥26</code>. Node 24.15.0 is pinned for development and CI.
+              </p>
+            </article>
+            <article>
+              <span>BROWSER</span>
+              <p>
+                Evergreen browsers with ES modules, SVG
+                <code>foreignObject</code>, SSE, and <code>color-mix()</code>.
+                Chrome is automated; Firefox and Safari remain release checks.
+              </p>
+            </article>
+            <article>
+              <span>STATE</span>
+              <p>
+                Telemetry is in memory, per process, and deliberately not
+                durable or replicated.
+              </p>
+            </article>
+            <article>
+              <span>STATIC PROOF</span>
+              <p>
+                The analyzer favors provable TypeScript call shapes over
+                speculative inference.
+              </p>
+            </article>
+          </div>
+          <p>
+            Use GitHub Issues for reproducible bugs and focused feature
+            requests. Security reports belong in the repository’s private
+            vulnerability process, not a public issue.
+          </p>
+          <div class="doc-end-links">
+            <a href="https://github.com/OthmaneBlial/Runtime-Atlas/issues"
+              >Open issues <span aria-hidden="true">↗</span></a
+            >
+            <a
+              href="https://github.com/OthmaneBlial/Runtime-Atlas/blob/main/CONTRIBUTING.md"
+              >Contributing guide <span aria-hidden="true">↗</span></a
+            >
+            <a
+              href="https://github.com/OthmaneBlial/Runtime-Atlas/blob/main/LICENSE"
+              >MIT License <span aria-hidden="true">↗</span></a
+            >
+          </div>
+        </section>
+
+        <div class="docs-empty" hidden data-docs-empty>
+          <span aria-hidden="true">⌁</span>
+          <strong>No matching section</strong>
+          <p>
+            Try a broader term such as “OTLP”, “privacy”, “Docker”, or “SDK”.
+          </p>
+          <button type="button" data-clear-docs-search>Clear search</button>
+        </div>
+      </article>
+    </main>
+
+    <footer class="site-footer docs-footer">
+      <div class="shell footer-grid">
+        <a
+          class="wordmark wordmark-small"
+          href="./"
+          aria-label="Runtime Atlas home"
+        >
+          <span class="wordmark-sigil" aria-hidden="true"
+            ><i></i><i></i><i></i
+          ></span>
+          <span><strong>RUNTIME</strong><em>ATLAS</em></span>
+        </a>
+        <p>Documentation for Runtime Atlas v0.1.0.</p>
+        <nav aria-label="Footer navigation">
+          <a href="./">Product overview</a>
+          <a href="https://github.com/OthmaneBlial/Runtime-Atlas">Source</a>
+          <a href="https://github.com/OthmaneBlial/Runtime-Atlas/issues"
+            >Issues</a
+          >
+        </nav>
+        <small>MIT · © 2026 Othmane BLIAL</small>
+      </div>
+    </footer>
+
+    <dialog
+      class="image-viewer"
+      id="image-viewer"
+      aria-labelledby="viewer-caption"
+    >
+      <button
+        type="button"
+        class="viewer-close"
+        data-dialog-close
+        aria-label="Close image viewer"
+      >
+        ×
+      </button>
+      <img src="assets/runtime-atlas-checkout.png" alt="" data-viewer-image />
+      <p id="viewer-caption" data-viewer-caption></p>
+    </dialog>
+    <div
+      class="copy-toast"
+      role="status"
+      aria-live="polite"
+      aria-atomic="true"
+      data-copy-status
+    ></div>
+  </body>
+</html>

@@ -1,0 +1,605 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      name="description"
+      content="Runtime Atlas turns TypeScript declarations and recent trace evidence into a live, source-backed application map."
+    />
+    <meta name="theme-color" content="#070908" />
+    <meta property="og:type" content="website" />
+    <meta
+      property="og:title"
+      content="Runtime Atlas — See the request. Understand the system."
+    />
+    <meta
+      property="og:description"
+      content="A local-first, source-backed map for understanding real Node.js request paths."
+    />
+    <meta property="og:image" content="assets/runtime-atlas-checkout.png" />
+    <title>Runtime Atlas — Source-backed application tracing</title>
+    <link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="styles.css" />
+    <script src="app.js" defer></script>
+  </head>
+  <body>
+    <a class="skip-link" href="#main-content">Skip to content</a>
+
+    <header class="site-header" data-site-header>
+      <div class="shell header-inner">
+        <a class="wordmark" href="./" aria-label="Runtime Atlas home">
+          <span class="wordmark-sigil" aria-hidden="true"
+            ><i></i><i></i><i></i
+          ></span>
+          <span><strong>RUNTIME</strong><em>ATLAS</em></span>
+        </a>
+
+        <nav class="site-nav" aria-label="Primary navigation">
+          <a href="#how-it-works">How it works</a>
+          <a href="#evidence">Product tour</a>
+          <a href="docs.html">Docs</a>
+        </nav>
+
+        <a
+          class="header-source"
+          href="https://github.com/OthmaneBlial/Runtime-Atlas"
+          target="_blank"
+          rel="noreferrer"
+          aria-label="View Runtime Atlas source on GitHub"
+        >
+          <svg aria-hidden="true" viewBox="0 0 24 24">
+            <path
+              d="M12 .8a11.4 11.4 0 0 0-3.6 22.2c.6.1.8-.2.8-.6v-2.2c-3.3.7-4-1.4-4-1.4-.5-1.4-1.3-1.8-1.3-1.8-1.1-.7.1-.7.1-.7 1.2.1 1.8 1.2 1.8 1.2 1 1.8 2.8 1.3 3.5 1 .1-.8.4-1.3.7-1.6-2.6-.3-5.4-1.3-5.4-5.7 0-1.3.5-2.3 1.2-3.1-.1-.3-.5-1.5.1-3.1 0 0 1-.3 3.2 1.2a11 11 0 0 1 5.8 0C17.1 4.8 18.1 5 18.1 5c.6 1.6.2 2.8.1 3.1.8.8 1.2 1.8 1.2 3.1 0 4.4-2.8 5.4-5.4 5.7.4.4.8 1.1.8 2.1v3.4c0 .4.2.7.8.6A11.4 11.4 0 0 0 12 .8Z"
+            />
+          </svg>
+          <span>Source</span>
+          <span aria-hidden="true">↗</span>
+        </a>
+      </div>
+    </header>
+
+    <main id="main-content">
+      <section class="hero shell">
+        <div class="hero-grid">
+          <div class="hero-copy" data-reveal>
+            <p class="eyebrow">
+              <span aria-hidden="true">⌁</span> LIVING ARCHITECTURE FOR NODE.JS
+            </p>
+            <h1>
+              See the request.<br />
+              <span>Understand the system.</span>
+            </h1>
+            <p class="hero-lede">
+              Runtime Atlas joins TypeScript declarations with recent trace
+              evidence to show the path a request actually took — then links
+              every proven node back to source.
+            </p>
+
+            <div class="hero-actions">
+              <a class="button button-primary" href="#quick-start">
+                <span>Run it locally</span>
+                <span aria-hidden="true">→</span>
+              </a>
+              <a class="button button-quiet" href="docs.html"
+                >Explore the docs</a
+              >
+            </div>
+
+            <ul class="hero-facts" aria-label="Project boundaries">
+              <li><span class="status-dot"></span>No account</li>
+              <li><span class="status-dot"></span>No hosted backend</li>
+              <li><span class="status-dot"></span>In-memory by default</li>
+            </ul>
+          </div>
+
+          <aside
+            class="signal-panel"
+            aria-label="Runtime Atlas proof points"
+            data-reveal
+          >
+            <div class="signal-head">
+              <span>ATLAS / STATUS</span>
+              <span class="signal-live"><i></i> ANALYZER READY</span>
+            </div>
+            <div class="signal-statement">
+              <span>STATIC</span>
+              <b>+</b>
+              <span>RUNTIME</span>
+              <b>=</b>
+              <strong>PROOF</strong>
+            </div>
+            <dl class="signal-metrics">
+              <div>
+                <dt>DEMO TOPOLOGY</dt>
+                <dd>14 <small>nodes</small></dd>
+              </div>
+              <div>
+                <dt>LOCAL SCENARIOS</dt>
+                <dd>03 <small>paths</small></dd>
+              </div>
+              <div>
+                <dt>INGEST PATHS</dt>
+                <dd>02 <small>SDK / OTLP</small></dd>
+              </div>
+              <div>
+                <dt>HOSTED SERVICES</dt>
+                <dd>00 <small>required</small></dd>
+              </div>
+            </dl>
+            <div class="event-strip" aria-hidden="true">
+              <span style="--x: 7%"></span><span style="--x: 17%"></span>
+              <span style="--x: 28%"></span><span style="--x: 44%"></span>
+              <span style="--x: 61%"></span><span style="--x: 78%"></span>
+              <span style="--x: 93%"></span>
+            </div>
+            <p>trace:start · span:start · span:finish · trace:finish</p>
+          </aside>
+        </div>
+
+        <figure class="hero-product" data-reveal>
+          <button
+            class="media-open"
+            type="button"
+            data-image="assets/runtime-atlas-checkout.png"
+            data-caption="A completed checkout request across the source-backed application map."
+            aria-label="Enlarge the Runtime Atlas checkout screenshot"
+          >
+            <img
+              src="assets/runtime-atlas-checkout.png"
+              width="1600"
+              height="1000"
+              alt="Runtime Atlas showing a completed checkout request across a source-backed application map"
+            />
+            <span class="media-hint" aria-hidden="true">EXPAND ↗</span>
+          </button>
+          <figcaption>
+            <span><i></i> REAL BROWSER CAPTURE</span>
+            <span>POST /checkout · source + runtime evidence</span>
+          </figcaption>
+        </figure>
+      </section>
+
+      <section class="proof-band" aria-label="Key capabilities">
+        <div class="shell proof-grid">
+          <div>
+            <span>01</span><strong>AST-derived topology</strong
+            ><small>ts-morph, no source execution</small>
+          </div>
+          <div>
+            <span>02</span><strong>Causal request paths</strong
+            ><small>AsyncLocalStorage context</small>
+          </div>
+          <div>
+            <span>03</span><strong>Source inspection</strong
+            ><small>Analyzer-approved locations only</small>
+          </div>
+          <div>
+            <span>04</span><strong>Bounded evidence</strong
+            ><small>Memory, bodies, rates, queues</small>
+          </div>
+        </div>
+      </section>
+
+      <section class="section shell" id="how-it-works">
+        <div class="section-intro" data-reveal>
+          <p class="eyebrow">THE OPERATING MODEL</p>
+          <h2>One map. Two kinds of evidence.</h2>
+          <p>
+            Static analysis explains what the application declares. Runtime
+            events prove what one recent request did. Runtime Atlas keeps the
+            distinction visible.
+          </p>
+        </div>
+
+        <ol class="workflow" data-reveal>
+          <li>
+            <span class="workflow-index">01 / ANALYZE</span>
+            <div class="workflow-mark mark-source" aria-hidden="true">{ }</div>
+            <h3>Read declarations</h3>
+            <p>
+              Discover literal routes, middleware, services, databases, caches,
+              queues, and external calls.
+            </p>
+            <code>atlas.service({ id, label }, handler)</code>
+          </li>
+          <li>
+            <span class="workflow-index">02 / OBSERVE</span>
+            <div class="workflow-mark mark-live" aria-hidden="true">⌁</div>
+            <h3>Capture causal work</h3>
+            <p>
+              Use the first-party SDK or existing OTLP/HTTP JSON exporters
+              without blocking requests.
+            </p>
+            <code>trace → parent span → child span</code>
+          </li>
+          <li>
+            <span class="workflow-index">03 / RECONCILE</span>
+            <div class="workflow-mark mark-link" aria-hidden="true">⌘</div>
+            <h3>Join proof to code</h3>
+            <p>
+              Resolve explicit node IDs, code provenance, HTTP routes, then
+              bounded runtime-only evidence.
+            </p>
+            <code>static node ⇄ measured span</code>
+          </li>
+          <li>
+            <span class="workflow-index">04 / INSPECT</span>
+            <div class="workflow-mark mark-inspect" aria-hidden="true">↗</div>
+            <h3>Replay the path</h3>
+            <p>
+              Select history, scrub ordered events, inspect source context,
+              export, or clear retained traces.
+            </p>
+            <code>26 / 26 events · 483 ms</code>
+          </li>
+        </ol>
+      </section>
+
+      <section class="section product-tour" id="evidence">
+        <div class="shell">
+          <div class="section-intro section-intro-wide" data-reveal>
+            <div>
+              <p class="eyebrow">PRODUCT EVIDENCE</p>
+              <h2>Move from architecture to explanation.</h2>
+            </div>
+            <p>
+              The built-in local demo models checkout, search, and a dependency
+              failure with simulated downstream delays. It demonstrates the
+              workflow without pretending to call real third-party systems.
+            </p>
+          </div>
+
+          <div class="tour-grid">
+            <article class="tour-card tour-card-wide" data-reveal>
+              <div class="tour-copy">
+                <span class="tour-number">01</span>
+                <p class="eyebrow">SOURCE-DERIVED MAP</p>
+                <h3>See the topology before traffic arrives.</h3>
+                <p>
+                  Literal TypeScript declarations become an explorable graph
+                  immediately. The map stays honest about what was proven
+                  statically and what appeared only at runtime.
+                </p>
+              </div>
+              <button
+                class="media-open tour-media"
+                type="button"
+                data-image="assets/runtime-atlas-overview.png"
+                data-caption="The source-derived demo topology before a request is captured."
+                aria-label="Enlarge the source-derived topology screenshot"
+              >
+                <img
+                  src="assets/runtime-atlas-overview.png"
+                  width="1600"
+                  height="1000"
+                  loading="lazy"
+                  alt="Runtime Atlas source-derived topology before a request is captured"
+                />
+                <span class="media-hint" aria-hidden="true">VIEW 01 ↗</span>
+              </button>
+            </article>
+
+            <article class="tour-card tour-card-split" data-reveal>
+              <div class="tour-copy">
+                <span class="tour-number">02</span>
+                <p class="eyebrow">SOURCE INSPECTOR</p>
+                <h3>Land on the declaration behind the node.</h3>
+                <p>
+                  Inspect an analyzer-approved source window alongside last
+                  latency, mean latency, call count, runtime state, and safe
+                  metadata.
+                </p>
+              </div>
+              <button
+                class="media-open tour-media"
+                type="button"
+                data-image="assets/runtime-atlas-inspector.png"
+                data-caption="The Orders DB declaration and its measured runtime evidence."
+                aria-label="Enlarge the source inspector screenshot"
+              >
+                <img
+                  src="assets/runtime-atlas-inspector.png"
+                  width="1600"
+                  height="1000"
+                  loading="lazy"
+                  alt="Runtime Atlas source inspector showing the Orders DB declaration and measured evidence"
+                />
+                <span class="media-hint" aria-hidden="true">VIEW 02 ↗</span>
+              </button>
+            </article>
+
+            <article class="tour-card tour-card-mobile" data-reveal>
+              <div class="tour-copy">
+                <span class="tour-number">03</span>
+                <p class="eyebrow">NARROW VIEWPORT</p>
+                <h3>The live map stays usable.</h3>
+                <p>
+                  Scenario controls, topology, focus states, and navigation
+                  remain available on a Pixel 7-sized viewport verified in
+                  Chrome.
+                </p>
+              </div>
+              <button
+                class="media-open phone-frame"
+                type="button"
+                data-image="assets/runtime-atlas-mobile.png"
+                data-caption="Runtime Atlas in a 390 × 844 Chrome mobile viewport."
+                aria-label="Enlarge the Runtime Atlas mobile screenshot"
+              >
+                <img
+                  src="assets/runtime-atlas-mobile.png"
+                  width="390"
+                  height="844"
+                  loading="lazy"
+                  alt="Runtime Atlas responsive live map in a mobile Chrome viewport"
+                />
+                <span class="media-hint" aria-hidden="true">VIEW 03 ↗</span>
+              </button>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="section shell ingestion-section" id="ingestion">
+        <div class="section-intro section-intro-wide" data-reveal>
+          <div>
+            <p class="eyebrow">BRING YOUR OWN TRACE EVIDENCE</p>
+            <h2>Instrument directly or connect OpenTelemetry.</h2>
+          </div>
+          <p>
+            Both paths feed the same bounded in-memory runtime. Binary protobuf
+            and gRPC are intentionally outside the supported collector surface.
+          </p>
+        </div>
+
+        <div class="ingestion-grid">
+          <article class="ingestion-card" data-reveal>
+            <header>
+              <span class="ingestion-badge">A</span>
+              <div>
+                <p>FIRST-PARTY</p>
+                <h3>Node.js SDK</h3>
+              </div>
+              <span class="availability">WORKSPACE</span>
+            </header>
+            <p>
+              Framework-neutral wrappers and Connect/Express middleware preserve
+              parent-child context through concurrent promises. Transport
+              queues, retries, and timeouts are bounded.
+            </p>
+            <div class="code-shell">
+              <div class="code-head">
+                <span>instrumented-orders.ts</span
+                ><button
+                  type="button"
+                  class="copy-button"
+                  data-copy-target="sdk-example"
+                >
+                  COPY
+                </button>
+              </div>
+              <pre><code id="sdk-example">const ordersDb = atlas.database(
+  { id: "db.orders", label: "Orders DB" },
+  async () =&gt; saveOrder(),
+);
+
+const createOrder = atlas.route(
+  { id: "route.orders", label: "POST /orders" },
+  async () =&gt; ordersDb(),
+);</code></pre>
+            </div>
+            <a
+              class="text-link"
+              href="assets/examples/instrumented-orders.ts"
+              download
+              >Download the complete example
+              <span aria-hidden="true">↓</span></a
+            >
+          </article>
+
+          <article class="ingestion-card" data-reveal>
+            <header>
+              <span class="ingestion-badge">B</span>
+              <div>
+                <p>STANDARDS PATH</p>
+                <h3>OTLP/HTTP JSON</h3>
+              </div>
+              <span class="availability">JSON + GZIP</span>
+            </header>
+            <p>
+              Send complete OpenTelemetry spans to the exact traces endpoint.
+              Runtime Atlas retains only a small allowlist of routing, service,
+              code, database, and messaging evidence.
+            </p>
+            <div class="code-shell">
+              <div class="code-head">
+                <span>collector endpoint</span
+                ><button
+                  type="button"
+                  class="copy-button"
+                  data-copy-target="otlp-example"
+                >
+                  COPY
+                </button>
+              </div>
+              <pre><code id="otlp-example">curl --request POST \
+  http://127.0.0.1:4319/v1/traces \
+  --header 'content-type: application/json' \
+  --data-binary @examples/otlp-trace.json</code></pre>
+            </div>
+            <a class="text-link" href="assets/examples/otlp-trace.json" download
+              >Download the sample payload <span aria-hidden="true">↓</span></a
+            >
+          </article>
+        </div>
+      </section>
+
+      <section class="privacy-section">
+        <div class="shell privacy-grid">
+          <div class="privacy-copy" data-reveal>
+            <p class="eyebrow">LOCAL-FIRST BY CONSTRUCTION</p>
+            <h2>Operational evidence without a hosted telemetry service.</h2>
+            <p>
+              Runtime Atlas binds to loopback by default, keeps traces in
+              process memory, and ships without accounts, analytics, cookies,
+              advertising, or a persistent telemetry database.
+            </p>
+            <a class="button button-quiet" href="docs.html#privacy"
+              >Read the privacy model</a
+            >
+          </div>
+          <div class="boundary-list" data-reveal>
+            <div>
+              <span>NOT RETAINED</span>
+              <p>
+                Request bodies, database statements, query strings, URL
+                fragments, credentials, arbitrary OTLP attributes.
+              </p>
+            </div>
+            <div>
+              <span>BOUNDED</span>
+              <p>
+                Trace history, event buffers, events per trace, aggregate
+                events, request bodies, SDK queues, and viewer count.
+              </p>
+            </div>
+            <div>
+              <span>EXPLICIT</span>
+              <p>
+                Source inspection and trace clearing can be disabled; bearer
+                authentication protects shared ingest.
+              </p>
+            </div>
+            <div>
+              <span>HONEST LIMIT</span>
+              <p>
+                This is not a durable tracing database, metrics platform, or
+                public multi-tenant service.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section shell quick-start" id="quick-start">
+        <div class="quick-start-copy" data-reveal>
+          <p class="eyebrow">FIRST RUN</p>
+          <h2>Wake the map in four commands.</h2>
+          <p>
+            Use Node.js 24.15.0 and npm 11, then open the loopback URL printed
+            by Vite. Launch
+            <strong>POST /checkout</strong>, <strong>GET /search</strong>, or
+            <strong>FAIL /payment</strong> from the workspace.
+          </p>
+          <div class="quick-links">
+            <a href="docs.html#quick-start"
+              >Full quick start <span aria-hidden="true">→</span></a
+            >
+            <a href="docs.html#deployment"
+              >Production and Docker <span aria-hidden="true">→</span></a
+            >
+          </div>
+        </div>
+        <div class="terminal" data-reveal>
+          <div class="terminal-bar">
+            <span><i></i><i></i><i></i></span>
+            <small>runtime-atlas / local</small>
+            <button
+              type="button"
+              class="copy-button"
+              data-copy-target="quick-command"
+            >
+              COPY
+            </button>
+          </div>
+          <pre><code id="quick-command"><span class="prompt">$</span> nvm install
+<span class="prompt">$</span> nvm use
+<span class="prompt">$</span> npm ci
+<span class="prompt">$</span> npm run dev</code></pre>
+          <div class="terminal-status">
+            <i></i><span>API 127.0.0.1:4319</span
+            ><span>UI 127.0.0.1:5173*</span>
+          </div>
+        </div>
+      </section>
+
+      <section class="final-cta">
+        <div class="shell final-cta-inner" data-reveal>
+          <div>
+            <p class="eyebrow">RUNTIME ATLAS / MIT</p>
+            <h2>
+              Trace what happened.<br /><span
+                >Keep the proof close to code.</span
+              >
+            </h2>
+          </div>
+          <div class="final-actions">
+            <a
+              class="button button-primary"
+              href="https://github.com/OthmaneBlial/Runtime-Atlas"
+              target="_blank"
+              rel="noreferrer"
+              >View the source <span aria-hidden="true">↗</span></a
+            >
+            <a class="button button-quiet" href="docs.html"
+              >Read documentation</a
+            >
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="shell footer-grid">
+        <a
+          class="wordmark wordmark-small"
+          href="./"
+          aria-label="Runtime Atlas home"
+        >
+          <span class="wordmark-sigil" aria-hidden="true"
+            ><i></i><i></i><i></i
+          ></span>
+          <span><strong>RUNTIME</strong><em>ATLAS</em></span>
+        </a>
+        <p>Local-first, source-backed application tracing for Node.js.</p>
+        <nav aria-label="Footer navigation">
+          <a href="docs.html">Documentation</a>
+          <a href="https://github.com/OthmaneBlial/Runtime-Atlas/issues"
+            >Issues</a
+          >
+          <a
+            href="https://github.com/OthmaneBlial/Runtime-Atlas/blob/main/LICENSE"
+            >MIT License</a
+          >
+        </nav>
+        <small>© 2026 Othmane BLIAL</small>
+      </div>
+    </footer>
+
+    <dialog
+      class="image-viewer"
+      id="image-viewer"
+      aria-labelledby="viewer-caption"
+    >
+      <button
+        type="button"
+        class="viewer-close"
+        data-dialog-close
+        aria-label="Close image viewer"
+      >
+        ×
+      </button>
+      <img src="assets/runtime-atlas-checkout.png" alt="" data-viewer-image />
+      <p id="viewer-caption" data-viewer-caption></p>
+    </dialog>
+
+    <div
+      class="copy-toast"
+      role="status"
+      aria-live="polite"
+      aria-atomic="true"
+      data-copy-status
+    ></div>
+  </body>
+</html>
