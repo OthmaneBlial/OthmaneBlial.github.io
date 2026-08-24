@@ -1,7 +1,7 @@
 {
   "report_version": "1",
   "generator_version": "0.1.1",
-  "source": "examples/international_scripts.yaml",
+  "source": "examples/visual_assets_showcase.yaml",
   "passed": true,
   "checks": [
     {
@@ -103,14 +103,14 @@
     {
       "id": "image_alt_text",
       "label": "Non-empty image alternative text",
-      "status": "skipped",
-      "detail": "source contains no images"
+      "status": "passed",
+      "detail": "every source image has non-empty alt text and source = DOCX = PDF projection"
     },
     {
       "id": "document_language",
       "label": "Document language metadata",
-      "status": "passed",
-      "detail": "source language = DOCX dc:language = PDF projection = PDF catalog /Lang"
+      "status": "skipped",
+      "detail": "source does not declare metadata.language"
     },
     {
       "id": "docx_package",
@@ -132,32 +132,45 @@
     }
   ],
   "expected": {
-    "normalized_text": "International scripts\nLatin\nCrème brûlée — naïve façade, Español, Français, Deutsch.\nArabic and RTL source order\nمرحباً بالعالم — تقرير عربي 2026\nHebrew and mixed direction\nשלום עולם — RusDox 2026\nCJK fallback\n日本語の文書、简体中文文档、한국어 문서.\nEmoji fallback boundary\nStatus ✅ warning ⚠ rocket 🚀 heart ❤️ family 👨‍👩‍👧‍👦.\nMixed-script line\nRelease إصدار リリース version 2.0 — 速度, سرعة, speed.",
+    "normalized_text": "Visual Assets Showcase\nImages, logos, signatures, and SVG charts rendered by RusDox\nContext\nThis example exercises the new visual block support with both raster and SVG assets.\nBenchmark Chart\nSVG chart assets now render cleanly in both DOCX and PDF outputs.\nSign-Off\nSignatures and approval marks can be embedded directly as SVG assets.",
     "block_order": [
       "paragraph",
       "paragraph",
+      "visual",
       "paragraph",
       "paragraph",
+      "visual",
       "paragraph",
       "paragraph",
+      "visual",
       "paragraph",
       "paragraph",
-      "paragraph",
-      "paragraph",
-      "paragraph",
-      "paragraph",
-      "paragraph"
+      "visual"
     ],
     "headings": [
-      "Latin",
-      "Arabic and RTL source order",
-      "Hebrew and mixed direction",
-      "CJK fallback",
-      "Emoji fallback boundary",
-      "Mixed-script line"
+      "Context",
+      "Benchmark Chart",
+      "Sign-Off"
     ],
     "tables": [],
-    "images": [],
+    "images": [
+      {
+        "kind": "logo",
+        "alt_text": "RusDox logo"
+      },
+      {
+        "kind": "image",
+        "alt_text": "RusDox template gallery montage"
+      },
+      {
+        "kind": "chart",
+        "alt_text": "RusDox 1000-page benchmark chart"
+      },
+      {
+        "kind": "signature",
+        "alt_text": "Automated approval signature"
+      }
+    ],
     "page_breaks": [],
     "section_breaks": [],
     "hyperlinks": [],
@@ -166,10 +179,10 @@
     "footnotes": [],
     "table_layout": [],
     "metadata": {
-      "title": "International script boundary fixture",
-      "author": "RusDox maintainers",
+      "title": "RusDox Document",
+      "author": "RusDox",
       "subject": null,
-      "language": "mul",
+      "language": null,
       "keywords": [],
       "custom_properties": {}
     },
@@ -190,32 +203,45 @@
     "page_numbering": null
   },
   "docx": {
-    "normalized_text": "International scripts\nLatin\nCrème brûlée — naïve façade, Español, Français, Deutsch.\nArabic and RTL source order\nمرحباً بالعالم — تقرير عربي 2026\nHebrew and mixed direction\nשלום עולם — RusDox 2026\nCJK fallback\n日本語の文書、简体中文文档、한국어 문서.\nEmoji fallback boundary\nStatus ✅ warning ⚠ rocket 🚀 heart ❤️ family 👨‍👩‍👧‍👦.\nMixed-script line\nRelease إصدار リリース version 2.0 — 速度, سرعة, speed.",
+    "normalized_text": "Visual Assets Showcase\nImages, logos, signatures, and SVG charts rendered by RusDox\nContext\nThis example exercises the new visual block support with both raster and SVG assets.\nBenchmark Chart\nSVG chart assets now render cleanly in both DOCX and PDF outputs.\nSign-Off\nSignatures and approval marks can be embedded directly as SVG assets.",
     "block_order": [
       "paragraph",
       "paragraph",
+      "visual",
       "paragraph",
       "paragraph",
+      "visual",
       "paragraph",
       "paragraph",
+      "visual",
       "paragraph",
       "paragraph",
-      "paragraph",
-      "paragraph",
-      "paragraph",
-      "paragraph",
-      "paragraph"
+      "visual"
     ],
     "headings": [
-      "Latin",
-      "Arabic and RTL source order",
-      "Hebrew and mixed direction",
-      "CJK fallback",
-      "Emoji fallback boundary",
-      "Mixed-script line"
+      "Context",
+      "Benchmark Chart",
+      "Sign-Off"
     ],
     "tables": [],
-    "images": [],
+    "images": [
+      {
+        "kind": "logo",
+        "alt_text": "RusDox logo"
+      },
+      {
+        "kind": "image",
+        "alt_text": "RusDox template gallery montage"
+      },
+      {
+        "kind": "chart",
+        "alt_text": "RusDox 1000-page benchmark chart"
+      },
+      {
+        "kind": "signature",
+        "alt_text": "Automated approval signature"
+      }
+    ],
     "page_breaks": [],
     "section_breaks": [],
     "hyperlinks": [],
@@ -224,10 +250,10 @@
     "footnotes": [],
     "table_layout": [],
     "metadata": {
-      "title": "International script boundary fixture",
-      "author": "RusDox maintainers",
+      "title": "RusDox Document",
+      "author": "RusDox",
       "subject": null,
-      "language": "mul",
+      "language": null,
       "keywords": [],
       "custom_properties": {}
     },
@@ -249,32 +275,45 @@
   },
   "pdf": {
     "projection": {
-      "normalized_text": "International scripts\nLatin\nCrème brûlée — naïve façade, Español, Français, Deutsch.\nArabic and RTL source order\nمرحباً بالعالم — تقرير عربي 2026\nHebrew and mixed direction\nשלום עולם — RusDox 2026\nCJK fallback\n日本語の文書、简体中文文档、한국어 문서.\nEmoji fallback boundary\nStatus ✅ warning ⚠ rocket 🚀 heart ❤️ family 👨‍👩‍👧‍👦.\nMixed-script line\nRelease إصدار リリース version 2.0 — 速度, سرعة, speed.",
+      "normalized_text": "Visual Assets Showcase\nImages, logos, signatures, and SVG charts rendered by RusDox\nContext\nThis example exercises the new visual block support with both raster and SVG assets.\nBenchmark Chart\nSVG chart assets now render cleanly in both DOCX and PDF outputs.\nSign-Off\nSignatures and approval marks can be embedded directly as SVG assets.",
       "block_order": [
         "paragraph",
         "paragraph",
+        "visual",
         "paragraph",
         "paragraph",
+        "visual",
         "paragraph",
         "paragraph",
+        "visual",
         "paragraph",
         "paragraph",
-        "paragraph",
-        "paragraph",
-        "paragraph",
-        "paragraph",
-        "paragraph"
+        "visual"
       ],
       "headings": [
-        "Latin",
-        "Arabic and RTL source order",
-        "Hebrew and mixed direction",
-        "CJK fallback",
-        "Emoji fallback boundary",
-        "Mixed-script line"
+        "Context",
+        "Benchmark Chart",
+        "Sign-Off"
       ],
       "tables": [],
-      "images": [],
+      "images": [
+        {
+          "kind": "logo",
+          "alt_text": "RusDox logo"
+        },
+        {
+          "kind": "image",
+          "alt_text": "RusDox template gallery montage"
+        },
+        {
+          "kind": "chart",
+          "alt_text": "RusDox 1000-page benchmark chart"
+        },
+        {
+          "kind": "signature",
+          "alt_text": "Automated approval signature"
+        }
+      ],
       "page_breaks": [],
       "section_breaks": [],
       "hyperlinks": [],
@@ -283,10 +322,10 @@
       "footnotes": [],
       "table_layout": [],
       "metadata": {
-        "title": "International script boundary fixture",
-        "author": "RusDox maintainers",
+        "title": "RusDox Document",
+        "author": "RusDox",
         "subject": null,
-        "language": "mul",
+        "language": null,
         "keywords": [],
         "custom_properties": {}
       },
@@ -306,40 +345,24 @@
       "footer": null,
       "page_numbering": null
     },
-    "page_count": 1,
-    "draw_operations": 13,
-    "text_lines": 13,
-    "image_operations": 0,
-    "document_language": "mul",
+    "page_count": 2,
+    "draw_operations": 12,
+    "text_lines": 8,
+    "image_operations": 4,
+    "document_language": null,
     "fonts": [
       {
         "family": "Arial",
         "post_script_name": "Arial-BoldMT",
         "embedding_permission": "editable",
-        "glyph_count": 34,
+        "glyph_count": 26,
         "missing_characters": []
       },
       {
         "family": "Arial",
         "post_script_name": "ArialMT",
         "embedding_permission": "editable",
-        "glyph_count": 72,
-        "missing_characters": [
-          "⚠",
-          "✅",
-          "️",
-          "👦",
-          "👧",
-          "👨",
-          "👩",
-          "🚀"
-        ]
-      },
-      {
-        "family": "Arial Unicode MS",
-        "post_script_name": "ArialUnicodeMS",
-        "embedding_permission": "editable",
-        "glyph_count": 22,
+        "glyph_count": 37,
         "missing_characters": []
       }
     ],
@@ -353,7 +376,15 @@
     "pages": [
       {
         "page": 1,
-        "current": "reports/international-scripts-pages/page-001.png",
+        "current": "reports/visual-assets-showcase-pages/page-001.png",
+        "baseline": null,
+        "different_pixel_ratio": null,
+        "passed": true,
+        "detail": "snapshot generated; no visual baseline supplied"
+      },
+      {
+        "page": 2,
+        "current": "reports/visual-assets-showcase-pages/page-002.png",
         "baseline": null,
         "different_pixel_ratio": null,
         "passed": true,
@@ -363,14 +394,14 @@
   },
   "artifacts": [
     {
-      "path": "generated/international-scripts.docx",
-      "bytes": 4243,
-      "sha256": "d7c083cb8e8b6b5c53ac8c3d416fec00888e58be3a577d6ffa8ec6bbd18363a6"
+      "path": "generated/visual-assets-showcase.docx",
+      "bytes": 632993,
+      "sha256": "7c940d692de9b32497a48ae0c6b21f1da62b14bd64eee091f61df07d1de09550"
     },
     {
-      "path": "rendered/international-scripts.pdf",
-      "bytes": 24817311,
-      "sha256": "f0c6434ac46d5b7919fd1c7e11a9ad4c048c3ebee42bb3e727699a2e6c17e53a"
+      "path": "rendered/visual-assets-showcase.pdf",
+      "bytes": 1657855,
+      "sha256": "2b132ffcc155e18edbbe029c254e8fcdf154c41d1cfa67305a0a8a374ae37e08"
     }
   ]
 }
