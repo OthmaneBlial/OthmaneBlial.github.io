@@ -21,11 +21,31 @@
          <lastmod>2026-08-25</lastmod>
     </url>
     <url>
+         <loc>https://othmaneblial.github.io/pyffmpegcore/batches/</loc>
+         <lastmod>2026-08-25</lastmod>
+    </url>
+    <url>
+         <loc>https://othmaneblial.github.io/pyffmpegcore/community/</loc>
+         <lastmod>2026-08-25</lastmod>
+    </url>
+    <url>
          <loc>https://othmaneblial.github.io/pyffmpegcore/comparison/</loc>
          <lastmod>2026-08-25</lastmod>
     </url>
     <url>
+         <loc>https://othmaneblial.github.io/pyffmpegcore/container/</loc>
+         <lastmod>2026-08-25</lastmod>
+    </url>
+    <url>
+         <loc>https://othmaneblial.github.io/pyffmpegcore/evidence/</loc>
+         <lastmod>2026-08-25</lastmod>
+    </url>
+    <url>
          <loc>https://othmaneblial.github.io/pyffmpegcore/exit-codes/</loc>
+         <lastmod>2026-08-25</lastmod>
+    </url>
+    <url>
+         <loc>https://othmaneblial.github.io/pyffmpegcore/github-action/</loc>
          <lastmod>2026-08-25</lastmod>
     </url>
     <url>
@@ -34,6 +54,14 @@
     </url>
     <url>
          <loc>https://othmaneblial.github.io/pyffmpegcore/migration/</loc>
+         <lastmod>2026-08-25</lastmod>
+    </url>
+    <url>
+         <loc>https://othmaneblial.github.io/pyffmpegcore/performance/</loc>
+         <lastmod>2026-08-25</lastmod>
+    </url>
+    <url>
+         <loc>https://othmaneblial.github.io/pyffmpegcore/pipelines/</loc>
          <lastmod>2026-08-25</lastmod>
     </url>
     <url>
@@ -53,6 +81,10 @@
          <lastmod>2026-08-25</lastmod>
     </url>
     <url>
+         <loc>https://othmaneblial.github.io/pyffmpegcore/receipts/</loc>
+         <lastmod>2026-08-25</lastmod>
+    </url>
+    <url>
          <loc>https://othmaneblial.github.io/pyffmpegcore/schemas/</loc>
          <lastmod>2026-08-25</lastmod>
     </url>
@@ -62,6 +94,22 @@
     </url>
     <url>
          <loc>https://othmaneblial.github.io/pyffmpegcore/troubleshooting/</loc>
+         <lastmod>2026-08-25</lastmod>
+    </url>
+    <url>
+         <loc>https://othmaneblial.github.io/pyffmpegcore/notes/capability-preflight/</loc>
+         <lastmod>2026-08-25</lastmod>
+    </url>
+    <url>
+         <loc>https://othmaneblial.github.io/pyffmpegcore/notes/deterministic-plans/</loc>
+         <lastmod>2026-08-25</lastmod>
+    </url>
+    <url>
+         <loc>https://othmaneblial.github.io/pyffmpegcore/notes/exact-size-compression/</loc>
+         <lastmod>2026-08-25</lastmod>
+    </url>
+    <url>
+         <loc>https://othmaneblial.github.io/pyffmpegcore/notes/privacy-safe-receipts/</loc>
          <lastmod>2026-08-25</lastmod>
     </url>
     <url>
