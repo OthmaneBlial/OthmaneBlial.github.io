@@ -16,7 +16,7 @@
         <link rel="prev" href="../cli/">
       
       
-        <link rel="next" href="../../exit-codes/">
+        <link rel="next" href="../../api-stability/">
       
       
         
@@ -332,6 +332,87 @@
   
   
   
+    <li class="md-nav__item">
+      <a href="../../profiles/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Workflow profiles
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../preflight/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Capability preflight
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../plans/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Dry runs and plans
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
     
     
     
@@ -346,10 +427,10 @@
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7" >
         
           
-          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="">
+          <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="">
             
   
   
@@ -367,8 +448,8 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_4">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7">
             <span class="md-nav__icon md-icon"></span>
             
   
@@ -631,10 +712,10 @@
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" checked>
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8" checked>
         
           
-          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="">
+          <label class="md-nav__link" for="__nav_8" id="__nav_8_label" tabindex="">
             
   
   
@@ -652,8 +733,8 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="true">
-          <label class="md-nav__title" for="__nav_5">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_8_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_8">
             <span class="md-nav__icon md-icon"></span>
             
   
@@ -758,6 +839,161 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#capabilityunavailableerror" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        CapabilityUnavailableError
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#capabilityinventory" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        CapabilityInventory
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="CapabilityInventory">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#missingself-requirements-tuplestr-tuplestr" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        missing(self, requirements: 'tuple[str, ...]') -&gt; 'tuple[str, ...]'
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#supportsself-requirement-str-bool" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        supports(self, requirement: 'str') -&gt; 'bool'
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#to_dictself-dictstr-any" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        to_dict(self) -&gt; 'dict[str, Any]'
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#capturepolicy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        CapturePolicy
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#compressoptions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        CompressOptions
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#convertoptions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ConvertOptions
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#environmentunavailableerror" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        EnvironmentUnavailableError
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#executionplan" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ExecutionPlan
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="ExecutionPlan">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#to_dictself-dictstr-any_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        to_dict(self) -&gt; 'dict[str, Any]'
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#executionpolicy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ExecutionPolicy
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#executionstep" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ExecutionStep
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#ffmpegrunner" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -796,6 +1032,17 @@
     <span class="md-ellipsis">
       
         convert(self, input_file: 'str', output_file: 'str', progress_callback=None, audio_only: 'bool' = False, hwaccel=None, **kwargs) -&gt; 'subprocess.CompletedProcess'
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#execute_planself-plan-executionplan-cancellation-threadingevent-none-none-jobresult" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        execute_plan(self, plan: 'ExecutionPlan', *, cancellation: 'threading.Event | None' = None) -&gt; 'JobResult'
       
     </span>
   </a>
@@ -900,7 +1147,7 @@
   <a href="#get_bitrateself-input_file-str-int-none" class="md-nav__link">
     <span class="md-ellipsis">
       
-        get_bitrate(self, input_file: str) -&gt; int | None
+        get_bitrate(self, input_file: 'str') -&gt; 'int | None'
       
     </span>
   </a>
@@ -911,7 +1158,7 @@
   <a href="#get_durationself-input_file-str-float" class="md-nav__link">
     <span class="md-ellipsis">
       
-        get_duration(self, input_file: str) -&gt; float
+        get_duration(self, input_file: 'str') -&gt; 'float'
       
     </span>
   </a>
@@ -922,7 +1169,7 @@
   <a href="#get_resolutionself-input_file-str-tuple-none" class="md-nav__link">
     <span class="md-ellipsis">
       
-        get_resolution(self, input_file: str) -&gt; tuple | None
+        get_resolution(self, input_file: 'str') -&gt; 'tuple | None'
       
     </span>
   </a>
@@ -933,7 +1180,7 @@
   <a href="#get_versionself-str_1" class="md-nav__link">
     <span class="md-ellipsis">
       
-        get_version(self) -&gt; str
+        get_version(self) -&gt; 'str'
       
     </span>
   </a>
@@ -941,10 +1188,32 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#probeself-input_file-str-dictstr-typingany" class="md-nav__link">
+  <a href="#probeself-input_file-str-raw-bool-false-dictstr-any" class="md-nav__link">
     <span class="md-ellipsis">
       
-        probe(self, input_file: str) -&gt; dict[str, typing.Any]
+        probe(self, input_file: 'str', *, raw: 'bool' = False) -&gt; 'dict[str, Any]'
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#probe_mediaself-input_file-str-mediainfo" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        probe_media(self, input_file: 'str') -&gt; 'MediaInfo'
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#probe_rawself-input_file-str-dictstr-any" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        probe_raw(self, input_file: 'str') -&gt; 'dict[str, Any]'
       
     </span>
   </a>
@@ -953,6 +1222,295 @@
         
       </ul>
     </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#jobcancellederror" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        JobCancelledError
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#jobexecutionerror" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        JobExecutionError
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#jobresult" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        JobResult
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="JobResult">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#to_dictself-dictstr-any_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        to_dict(self) -&gt; 'dict[str, Any]'
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#jobstatus" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        JobStatus
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#jobtimeouterror" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        JobTimeoutError
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#mediainfo" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        MediaInfo
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="MediaInfo">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#to_dictself-dictstr-any_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        to_dict(self) -&gt; 'dict[str, Any]'
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#overwritepolicy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        OverwritePolicy
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#profile" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Profile
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Profile">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#to_dictself-dictstr-any_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        to_dict(self) -&gt; 'dict[str, Any]'
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#profileregistry" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ProfileRegistry
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="ProfileRegistry">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#getself-name-str-profile" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        get(self, name: 'str') -&gt; 'Profile'
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#listself-tupleprofile" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        list(self) -&gt; 'tuple[Profile, ...]'
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#load_fileself-path-str-path-profile" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        load_file(self, path: 'str | Path') -&gt; 'Profile'
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#preflightcheck" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        PreflightCheck
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#preflightengine" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        PreflightEngine
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="PreflightEngine">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#checkself-plan-executionplan-preflightreport" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        check(self, plan: 'ExecutionPlan') -&gt; 'PreflightReport'
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#preflightreport" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        PreflightReport
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="PreflightReport">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#renderself-str" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        render(self) -&gt; 'str'
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#to_dictself-dictstr-any_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        to_dict(self) -&gt; 'dict[str, Any]'
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#progresscallback" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ProgressCallback
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#progressevent" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ProgressEvent
+      
+    </span>
+  </a>
   
 </li>
       
@@ -996,13 +1554,206 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#progresscallback" class="md-nav__link">
+  <a href="#pyffmpegcoreerror" class="md-nav__link">
     <span class="md-ellipsis">
       
-        ProgressCallback
+        PyFFmpegCoreError
       
     </span>
   </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#resizeoptions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ResizeOptions
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#streaminfo" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        StreamInfo
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#temporaryfilepolicy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        TemporaryFilePolicy
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#validationerror" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ValidationError
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#workflowplanner" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        WorkflowPlanner
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="WorkflowPlanner">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#compressself-input_file-str-output_file-str-options-compressoptions-none-none-force-bool-false-timeout_seconds-float-none-none-executionplan" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        compress(self, input_file: 'str', output_file: 'str', options: 'CompressOptions | None' = None, *, force: 'bool' = False, timeout_seconds: 'float | None' = None) -&gt; 'ExecutionPlan'
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#concatself-input_files-liststr-output_file-str-mode-str-copy-video_codec-str-libx264-audio_codec-str-aac-force-bool-false-timeout_seconds-float-none-none-executionplan" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        concat(self, input_files: 'list[str]', output_file: 'str', *, mode: 'str' = 'copy', video_codec: 'str' = 'libx264', audio_codec: 'str' = 'aac', force: 'bool' = False, timeout_seconds: 'float | None' = None) -&gt; 'ExecutionPlan'
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#convertself-input_file-str-output_file-str-options-convertoptions-none-none-force-bool-false-timeout_seconds-float-none-none-executionplan" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        convert(self, input_file: 'str', output_file: 'str', options: 'ConvertOptions | None' = None, *, force: 'bool' = False, timeout_seconds: 'float | None' = None) -&gt; 'ExecutionPlan'
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#extract_audioself-input_file-str-output_file-str-audio_codec-str-none-none-audio_bitrate-str-192k-sample_rate-int-none-none-channels-int-none-none-threads-int-none-none-force-bool-false-timeout_seconds-float-none-none-executionplan" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        extract_audio(self, input_file: 'str', output_file: 'str', *, audio_codec: 'str | None' = None, audio_bitrate: 'str' = '192k', sample_rate: 'int | None' = None, channels: 'int | None' = None, threads: 'int | None' = None, force: 'bool' = False, timeout_seconds: 'float | None' = None) -&gt; 'ExecutionPlan'
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#imagesself-action-str-input_dir-str-output_dir-str-output_format-str-jpg-quality-int-85-resize-tupleint-int-none-none-max_width-int-1920-max_height-int-1080-force-bool-false-timeout_seconds-float-none-none-executionplan" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        images(self, action: 'str', input_dir: 'str', output_dir: 'str', *, output_format: 'str' = 'jpg', quality: 'int' = 85, resize: 'tuple[int, int] | None' = None, max_width: 'int' = 1920, max_height: 'int' = 1080, force: 'bool' = False, timeout_seconds: 'float | None' = None) -&gt; 'ExecutionPlan'
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mix_audioself-action-str-input_files-liststr-output_file-str-volumes-listfloat-none-none-crossfade_duration-float-20-background_volume-float-03-force-bool-false-timeout_seconds-float-none-none-executionplan" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        mix_audio(self, action: 'str', input_files: 'list[str]', output_file: 'str', *, volumes: 'list[float] | None' = None, crossfade_duration: 'float' = 2.0, background_volume: 'float' = 0.3, force: 'bool' = False, timeout_seconds: 'float | None' = None) -&gt; 'ExecutionPlan'
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#normalize_audioself-input_file-str-output_file-str-method-str-loudnorm-target_i-float-160-target_tp-float-15-target_lra-float-110-force-bool-false-timeout_seconds-float-none-none-executionplan" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        normalize_audio(self, input_file: 'str', output_file: 'str', *, method: 'str' = 'loudnorm', target_i: 'float' = -16.0, target_tp: 'float' = -1.5, target_lra: 'float' = 11.0, force: 'bool' = False, timeout_seconds: 'float | None' = None) -&gt; 'ExecutionPlan'
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#resizeself-input_file-str-output_file-str-options-resizeoptions-force-bool-false-timeout_seconds-float-none-none-executionplan" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        resize(self, input_file: 'str', output_file: 'str', options: 'ResizeOptions', *, force: 'bool' = False, timeout_seconds: 'float | None' = None) -&gt; 'ExecutionPlan'
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#speedself-kind-str-input_file-str-output_file-str-factor-float-preserve_pitch-bool-true-force-bool-false-timeout_seconds-float-none-none-executionplan" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        speed(self, kind: 'str', input_file: 'str', output_file: 'str', *, factor: 'float', preserve_pitch: 'bool' = True, force: 'bool' = False, timeout_seconds: 'float | None' = None) -&gt; 'ExecutionPlan'
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#subtitlesself-action-str-video_file-str-output_file-str-subtitle_file-str-none-none-language-str-eng-stream_index-int-0-font_size-int-24-font_color-str-hffffff-force-bool-false-timeout_seconds-float-none-none-executionplan" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        subtitles(self, action: 'str', video_file: 'str', output_file: 'str', *, subtitle_file: 'str | None' = None, language: 'str' = 'eng', stream_index: 'int' = 0, font_size: 'int' = 24, font_color: 'str' = '&amp;HFFFFFF', force: 'bool' = False, timeout_seconds: 'float | None' = None) -&gt; 'ExecutionPlan'
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#thumbnailself-input_file-str-output_file-str-timestamp-str-000001-width-int-320-height-int-none-none-quality-int-2-force-bool-false-timeout_seconds-float-none-none-executionplan" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        thumbnail(self, input_file: 'str', output_file: 'str', *, timestamp: 'str' = '00:00:01', width: 'int' = 320, height: 'int | None' = None, quality: 'int' = 2, force: 'bool' = False, timeout_seconds: 'float | None' = None) -&gt; 'ExecutionPlan'
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#waveformself-input_file-str-output_file-str-width-int-800-height-int-200-colors-str-white-force-bool-false-timeout_seconds-float-none-none-executionplan" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        waveform(self, input_file: 'str', output_file: 'str', *, width: 'int' = 800, height: 'int' = 200, colors: 'str' = 'white', force: 'bool' = False, timeout_seconds: 'float | None' = None) -&gt; 'ExecutionPlan'
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -1010,6 +1761,34 @@
   
 </nav>
       
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../api-stability/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    API stability
+  
+
+    
+  </span>
+  
+  
+
+      </a>
     </li>
   
 
@@ -1098,10 +1877,10 @@
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_9" >
         
           
-          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="">
+          <label class="md-nav__link" for="__nav_9" id="__nav_9_label" tabindex="">
             
   
   
@@ -1119,8 +1898,8 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_6">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_9_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_9">
             <span class="md-nav__icon md-icon"></span>
             
   
@@ -1269,10 +2048,10 @@
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_10" >
         
           
-          <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="">
+          <label class="md-nav__link" for="__nav_10" id="__nav_10_label" tabindex="">
             
   
   
@@ -1290,8 +2069,8 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_7">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_10_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_10">
             <span class="md-nav__icon md-icon"></span>
             
   
@@ -1447,6 +2226,161 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#capabilityunavailableerror" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        CapabilityUnavailableError
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#capabilityinventory" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        CapabilityInventory
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="CapabilityInventory">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#missingself-requirements-tuplestr-tuplestr" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        missing(self, requirements: 'tuple[str, ...]') -&gt; 'tuple[str, ...]'
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#supportsself-requirement-str-bool" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        supports(self, requirement: 'str') -&gt; 'bool'
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#to_dictself-dictstr-any" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        to_dict(self) -&gt; 'dict[str, Any]'
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#capturepolicy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        CapturePolicy
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#compressoptions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        CompressOptions
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#convertoptions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ConvertOptions
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#environmentunavailableerror" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        EnvironmentUnavailableError
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#executionplan" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ExecutionPlan
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="ExecutionPlan">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#to_dictself-dictstr-any_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        to_dict(self) -&gt; 'dict[str, Any]'
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#executionpolicy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ExecutionPolicy
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#executionstep" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ExecutionStep
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#ffmpegrunner" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -1485,6 +2419,17 @@
     <span class="md-ellipsis">
       
         convert(self, input_file: 'str', output_file: 'str', progress_callback=None, audio_only: 'bool' = False, hwaccel=None, **kwargs) -&gt; 'subprocess.CompletedProcess'
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#execute_planself-plan-executionplan-cancellation-threadingevent-none-none-jobresult" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        execute_plan(self, plan: 'ExecutionPlan', *, cancellation: 'threading.Event | None' = None) -&gt; 'JobResult'
       
     </span>
   </a>
@@ -1589,7 +2534,7 @@
   <a href="#get_bitrateself-input_file-str-int-none" class="md-nav__link">
     <span class="md-ellipsis">
       
-        get_bitrate(self, input_file: str) -&gt; int | None
+        get_bitrate(self, input_file: 'str') -&gt; 'int | None'
       
     </span>
   </a>
@@ -1600,7 +2545,7 @@
   <a href="#get_durationself-input_file-str-float" class="md-nav__link">
     <span class="md-ellipsis">
       
-        get_duration(self, input_file: str) -&gt; float
+        get_duration(self, input_file: 'str') -&gt; 'float'
       
     </span>
   </a>
@@ -1611,7 +2556,7 @@
   <a href="#get_resolutionself-input_file-str-tuple-none" class="md-nav__link">
     <span class="md-ellipsis">
       
-        get_resolution(self, input_file: str) -&gt; tuple | None
+        get_resolution(self, input_file: 'str') -&gt; 'tuple | None'
       
     </span>
   </a>
@@ -1622,7 +2567,7 @@
   <a href="#get_versionself-str_1" class="md-nav__link">
     <span class="md-ellipsis">
       
-        get_version(self) -&gt; str
+        get_version(self) -&gt; 'str'
       
     </span>
   </a>
@@ -1630,10 +2575,32 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#probeself-input_file-str-dictstr-typingany" class="md-nav__link">
+  <a href="#probeself-input_file-str-raw-bool-false-dictstr-any" class="md-nav__link">
     <span class="md-ellipsis">
       
-        probe(self, input_file: str) -&gt; dict[str, typing.Any]
+        probe(self, input_file: 'str', *, raw: 'bool' = False) -&gt; 'dict[str, Any]'
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#probe_mediaself-input_file-str-mediainfo" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        probe_media(self, input_file: 'str') -&gt; 'MediaInfo'
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#probe_rawself-input_file-str-dictstr-any" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        probe_raw(self, input_file: 'str') -&gt; 'dict[str, Any]'
       
     </span>
   </a>
@@ -1642,6 +2609,295 @@
         
       </ul>
     </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#jobcancellederror" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        JobCancelledError
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#jobexecutionerror" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        JobExecutionError
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#jobresult" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        JobResult
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="JobResult">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#to_dictself-dictstr-any_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        to_dict(self) -&gt; 'dict[str, Any]'
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#jobstatus" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        JobStatus
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#jobtimeouterror" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        JobTimeoutError
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#mediainfo" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        MediaInfo
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="MediaInfo">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#to_dictself-dictstr-any_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        to_dict(self) -&gt; 'dict[str, Any]'
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#overwritepolicy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        OverwritePolicy
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#profile" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Profile
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Profile">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#to_dictself-dictstr-any_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        to_dict(self) -&gt; 'dict[str, Any]'
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#profileregistry" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ProfileRegistry
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="ProfileRegistry">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#getself-name-str-profile" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        get(self, name: 'str') -&gt; 'Profile'
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#listself-tupleprofile" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        list(self) -&gt; 'tuple[Profile, ...]'
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#load_fileself-path-str-path-profile" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        load_file(self, path: 'str | Path') -&gt; 'Profile'
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#preflightcheck" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        PreflightCheck
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#preflightengine" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        PreflightEngine
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="PreflightEngine">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#checkself-plan-executionplan-preflightreport" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        check(self, plan: 'ExecutionPlan') -&gt; 'PreflightReport'
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#preflightreport" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        PreflightReport
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="PreflightReport">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#renderself-str" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        render(self) -&gt; 'str'
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#to_dictself-dictstr-any_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        to_dict(self) -&gt; 'dict[str, Any]'
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#progresscallback" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ProgressCallback
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#progressevent" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ProgressEvent
+      
+    </span>
+  </a>
   
 </li>
       
@@ -1685,13 +2941,206 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#progresscallback" class="md-nav__link">
+  <a href="#pyffmpegcoreerror" class="md-nav__link">
     <span class="md-ellipsis">
       
-        ProgressCallback
+        PyFFmpegCoreError
       
     </span>
   </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#resizeoptions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ResizeOptions
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#streaminfo" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        StreamInfo
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#temporaryfilepolicy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        TemporaryFilePolicy
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#validationerror" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ValidationError
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#workflowplanner" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        WorkflowPlanner
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="WorkflowPlanner">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#compressself-input_file-str-output_file-str-options-compressoptions-none-none-force-bool-false-timeout_seconds-float-none-none-executionplan" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        compress(self, input_file: 'str', output_file: 'str', options: 'CompressOptions | None' = None, *, force: 'bool' = False, timeout_seconds: 'float | None' = None) -&gt; 'ExecutionPlan'
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#concatself-input_files-liststr-output_file-str-mode-str-copy-video_codec-str-libx264-audio_codec-str-aac-force-bool-false-timeout_seconds-float-none-none-executionplan" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        concat(self, input_files: 'list[str]', output_file: 'str', *, mode: 'str' = 'copy', video_codec: 'str' = 'libx264', audio_codec: 'str' = 'aac', force: 'bool' = False, timeout_seconds: 'float | None' = None) -&gt; 'ExecutionPlan'
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#convertself-input_file-str-output_file-str-options-convertoptions-none-none-force-bool-false-timeout_seconds-float-none-none-executionplan" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        convert(self, input_file: 'str', output_file: 'str', options: 'ConvertOptions | None' = None, *, force: 'bool' = False, timeout_seconds: 'float | None' = None) -&gt; 'ExecutionPlan'
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#extract_audioself-input_file-str-output_file-str-audio_codec-str-none-none-audio_bitrate-str-192k-sample_rate-int-none-none-channels-int-none-none-threads-int-none-none-force-bool-false-timeout_seconds-float-none-none-executionplan" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        extract_audio(self, input_file: 'str', output_file: 'str', *, audio_codec: 'str | None' = None, audio_bitrate: 'str' = '192k', sample_rate: 'int | None' = None, channels: 'int | None' = None, threads: 'int | None' = None, force: 'bool' = False, timeout_seconds: 'float | None' = None) -&gt; 'ExecutionPlan'
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#imagesself-action-str-input_dir-str-output_dir-str-output_format-str-jpg-quality-int-85-resize-tupleint-int-none-none-max_width-int-1920-max_height-int-1080-force-bool-false-timeout_seconds-float-none-none-executionplan" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        images(self, action: 'str', input_dir: 'str', output_dir: 'str', *, output_format: 'str' = 'jpg', quality: 'int' = 85, resize: 'tuple[int, int] | None' = None, max_width: 'int' = 1920, max_height: 'int' = 1080, force: 'bool' = False, timeout_seconds: 'float | None' = None) -&gt; 'ExecutionPlan'
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mix_audioself-action-str-input_files-liststr-output_file-str-volumes-listfloat-none-none-crossfade_duration-float-20-background_volume-float-03-force-bool-false-timeout_seconds-float-none-none-executionplan" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        mix_audio(self, action: 'str', input_files: 'list[str]', output_file: 'str', *, volumes: 'list[float] | None' = None, crossfade_duration: 'float' = 2.0, background_volume: 'float' = 0.3, force: 'bool' = False, timeout_seconds: 'float | None' = None) -&gt; 'ExecutionPlan'
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#normalize_audioself-input_file-str-output_file-str-method-str-loudnorm-target_i-float-160-target_tp-float-15-target_lra-float-110-force-bool-false-timeout_seconds-float-none-none-executionplan" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        normalize_audio(self, input_file: 'str', output_file: 'str', *, method: 'str' = 'loudnorm', target_i: 'float' = -16.0, target_tp: 'float' = -1.5, target_lra: 'float' = 11.0, force: 'bool' = False, timeout_seconds: 'float | None' = None) -&gt; 'ExecutionPlan'
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#resizeself-input_file-str-output_file-str-options-resizeoptions-force-bool-false-timeout_seconds-float-none-none-executionplan" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        resize(self, input_file: 'str', output_file: 'str', options: 'ResizeOptions', *, force: 'bool' = False, timeout_seconds: 'float | None' = None) -&gt; 'ExecutionPlan'
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#speedself-kind-str-input_file-str-output_file-str-factor-float-preserve_pitch-bool-true-force-bool-false-timeout_seconds-float-none-none-executionplan" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        speed(self, kind: 'str', input_file: 'str', output_file: 'str', *, factor: 'float', preserve_pitch: 'bool' = True, force: 'bool' = False, timeout_seconds: 'float | None' = None) -&gt; 'ExecutionPlan'
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#subtitlesself-action-str-video_file-str-output_file-str-subtitle_file-str-none-none-language-str-eng-stream_index-int-0-font_size-int-24-font_color-str-hffffff-force-bool-false-timeout_seconds-float-none-none-executionplan" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        subtitles(self, action: 'str', video_file: 'str', output_file: 'str', *, subtitle_file: 'str | None' = None, language: 'str' = 'eng', stream_index: 'int' = 0, font_size: 'int' = 24, font_color: 'str' = '&amp;HFFFFFF', force: 'bool' = False, timeout_seconds: 'float | None' = None) -&gt; 'ExecutionPlan'
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#thumbnailself-input_file-str-output_file-str-timestamp-str-000001-width-int-320-height-int-none-none-quality-int-2-force-bool-false-timeout_seconds-float-none-none-executionplan" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        thumbnail(self, input_file: 'str', output_file: 'str', *, timestamp: 'str' = '00:00:01', width: 'int' = 320, height: 'int | None' = None, quality: 'int' = 2, force: 'bool' = False, timeout_seconds: 'float | None' = None) -&gt; 'ExecutionPlan'
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#waveformself-input_file-str-output_file-str-width-int-800-height-int-200-colors-str-white-force-bool-false-timeout_seconds-float-none-none-executionplan" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        waveform(self, input_file: 'str', output_file: 'str', *, width: 'int' = 800, height: 'int' = 200, colors: 'str' = 'white', force: 'bool' = False, timeout_seconds: 'float | None' = None) -&gt; 'ExecutionPlan'
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -1718,6 +3167,32 @@
 <!-- Generated by scripts/generate_docs.py. Do not edit by hand. -->
 <h1 id="python-api-reference">Python API reference<a class="headerlink" href="#python-api-reference" title="Permanent link">&para;</a></h1>
 <p>The Python API is synchronous and currently marked beta. Prefer explicit keyword arguments and inspect nonzero results.</p>
+<h2 id="capabilityunavailableerror"><code>CapabilityUnavailableError</code><a class="headerlink" href="#capabilityunavailableerror" title="Permanent link">&para;</a></h2>
+<p>The installed FFmpeg build cannot satisfy the requested workflow.</p>
+<h2 id="capabilityinventory"><code>CapabilityInventory</code><a class="headerlink" href="#capabilityinventory" title="Permanent link">&para;</a></h2>
+<p>Versioned inventory of an installed FFmpeg executable.</p>
+<h3 id="missingself-requirements-tuplestr-tuplestr"><code>missing(self, requirements: 'tuple[str, ...]') -&gt; 'tuple[str, ...]'</code><a class="headerlink" href="#missingself-requirements-tuplestr-tuplestr" title="Permanent link">&para;</a></h3>
+<p>No public docstring is available.</p>
+<h3 id="supportsself-requirement-str-bool"><code>supports(self, requirement: 'str') -&gt; 'bool'</code><a class="headerlink" href="#supportsself-requirement-str-bool" title="Permanent link">&para;</a></h3>
+<p>Check a normalized <code>kind:name</code> requirement.</p>
+<h3 id="to_dictself-dictstr-any"><code>to_dict(self) -&gt; 'dict[str, Any]'</code><a class="headerlink" href="#to_dictself-dictstr-any" title="Permanent link">&para;</a></h3>
+<p>No public docstring is available.</p>
+<h2 id="capturepolicy"><code>CapturePolicy</code><a class="headerlink" href="#capturepolicy" title="Permanent link">&para;</a></h2>
+<p>Python 3.10-compatible string enumeration.</p>
+<h2 id="compressoptions"><code>CompressOptions</code><a class="headerlink" href="#compressoptions" title="Permanent link">&para;</a></h2>
+<p>CompressOptions(target_size_bytes: 'int | None' = None, crf: 'int' = 23, two_pass: 'bool' = True, video_codec: 'str' = 'libx264', audio_codec: 'str' = 'aac', video_bitrate: 'str | None' = None, audio_bitrate: 'str' = '128k', preset: 'str' = 'medium', pixel_format: 'str' = 'yuv420p', threads: 'int | None' = None, container_overhead_percent: 'float' = 1.0, minimum_video_bitrate: 'int' = 102400)</p>
+<h2 id="convertoptions"><code>ConvertOptions</code><a class="headerlink" href="#convertoptions" title="Permanent link">&para;</a></h2>
+<p>ConvertOptions(video_codec: 'str | None' = None, audio_codec: 'str | None' = None, video_bitrate: 'str | None' = None, audio_bitrate: 'str | None' = None, pixel_format: 'str' = 'yuv420p', threads: 'int | None' = None, audio_only: 'bool' = False, hardware_acceleration: 'str | None' = None)</p>
+<h2 id="environmentunavailableerror"><code>EnvironmentUnavailableError</code><a class="headerlink" href="#environmentunavailableerror" title="Permanent link">&para;</a></h2>
+<p>A required executable or host resource is unavailable.</p>
+<h2 id="executionplan"><code>ExecutionPlan</code><a class="headerlink" href="#executionplan" title="Permanent link">&para;</a></h2>
+<p>Deterministic, non-shell execution plan for one media workflow.</p>
+<h3 id="to_dictself-dictstr-any_1"><code>to_dict(self) -&gt; 'dict[str, Any]'</code><a class="headerlink" href="#to_dictself-dictstr-any_1" title="Permanent link">&para;</a></h3>
+<p>No public docstring is available.</p>
+<h2 id="executionpolicy"><code>ExecutionPolicy</code><a class="headerlink" href="#executionpolicy" title="Permanent link">&para;</a></h2>
+<p>Explicit process, overwrite, capture, and cleanup behavior.</p>
+<h2 id="executionstep"><code>ExecutionStep</code><a class="headerlink" href="#executionstep" title="Permanent link">&para;</a></h2>
+<p>One named argument-vector step inside a multi-pass plan.</p>
 <h2 id="ffmpegrunner"><code>FFmpegRunner</code><a class="headerlink" href="#ffmpegrunner" title="Permanent link">&para;</a></h2>
 <p>Execute FFmpeg commands and expose helper methods for common workflows.</p>
 <h3 id="adjust_speedself-input_file-str-output_file-str-speed_factor-float-10-audio_pitch-bool-true-subprocesscompletedprocess"><code>adjust_speed(self, input_file: 'str', output_file: 'str', speed_factor: 'float' = 1.0, audio_pitch: 'bool' = True) -&gt; 'subprocess.CompletedProcess'</code><a class="headerlink" href="#adjust_speedself-input_file-str-output_file-str-speed_factor-float-10-audio_pitch-bool-true-subprocesscompletedprocess" title="Permanent link">&para;</a></h3>
@@ -1726,6 +3201,8 @@
 <p>Compress a video file.</p>
 <h3 id="convertself-input_file-str-output_file-str-progress_callbacknone-audio_only-bool-false-hwaccelnone-kwargs-subprocesscompletedprocess"><code>convert(self, input_file: 'str', output_file: 'str', progress_callback=None, audio_only: 'bool' = False, hwaccel=None, **kwargs) -&gt; 'subprocess.CompletedProcess'</code><a class="headerlink" href="#convertself-input_file-str-output_file-str-progress_callbacknone-audio_only-bool-false-hwaccelnone-kwargs-subprocesscompletedprocess" title="Permanent link">&para;</a></h3>
 <p>Convert a video or audio file to another format.</p>
+<h3 id="execute_planself-plan-executionplan-cancellation-threadingevent-none-none-jobresult"><code>execute_plan(self, plan: 'ExecutionPlan', *, cancellation: 'threading.Event | None' = None) -&gt; 'JobResult'</code><a class="headerlink" href="#execute_planself-plan-executionplan-cancellation-threadingevent-none-none-jobresult" title="Permanent link">&para;</a></h3>
+<p>Execute a typed plan and return a stable structured result.</p>
 <h3 id="extract_audioself-input_file-str-output_file-str-progress_callbacknone-kwargs-subprocesscompletedprocess"><code>extract_audio(self, input_file: 'str', output_file: 'str', progress_callback=None, **kwargs) -&gt; 'subprocess.CompletedProcess'</code><a class="headerlink" href="#extract_audioself-input_file-str-output_file-str-progress_callbacknone-kwargs-subprocesscompletedprocess" title="Permanent link">&para;</a></h3>
 <p>Extract audio from a media file.</p>
 <h3 id="extract_thumbnailself-input_file-str-output_file-str-timestamp-str-000001-width-int-320-height-int-none-quality-int-2-subprocesscompletedprocess"><code>extract_thumbnail(self, input_file: 'str', output_file: 'str', timestamp: 'str' = '00:00:01', width: 'int' = 320, height: 'int' = None, quality: 'int' = 2) -&gt; 'subprocess.CompletedProcess'</code><a class="headerlink" href="#extract_thumbnailself-input_file-str-output_file-str-timestamp-str-000001-width-int-320-height-int-none-quality-int-2-subprocesscompletedprocess" title="Permanent link">&para;</a></h3>
@@ -1742,34 +3219,84 @@
 <p>Run FFmpeg and print lightweight progress updates.</p>
 <h2 id="ffproberunner"><code>FFprobeRunner</code><a class="headerlink" href="#ffproberunner" title="Permanent link">&para;</a></h2>
 <p>A runner for extracting metadata from media files using FFprobe.</p>
-<h3 id="get_bitrateself-input_file-str-int-none"><code>get_bitrate(self, input_file: str) -&gt; int | None</code><a class="headerlink" href="#get_bitrateself-input_file-str-int-none" title="Permanent link">&para;</a></h3>
+<h3 id="get_bitrateself-input_file-str-int-none"><code>get_bitrate(self, input_file: 'str') -&gt; 'int | None'</code><a class="headerlink" href="#get_bitrateself-input_file-str-int-none" title="Permanent link">&para;</a></h3>
 <p>Get the bitrate of a media file.</p>
 <p>Args:
     input_file: Path to the media file</p>
 <p>Returns:
     Bitrate in bits per second</p>
-<h3 id="get_durationself-input_file-str-float"><code>get_duration(self, input_file: str) -&gt; float</code><a class="headerlink" href="#get_durationself-input_file-str-float" title="Permanent link">&para;</a></h3>
+<h3 id="get_durationself-input_file-str-float"><code>get_duration(self, input_file: 'str') -&gt; 'float'</code><a class="headerlink" href="#get_durationself-input_file-str-float" title="Permanent link">&para;</a></h3>
 <p>Get the duration of a media file in seconds.</p>
 <p>Args:
     input_file: Path to the media file</p>
 <p>Returns:
     Duration in seconds</p>
-<h3 id="get_resolutionself-input_file-str-tuple-none"><code>get_resolution(self, input_file: str) -&gt; tuple | None</code><a class="headerlink" href="#get_resolutionself-input_file-str-tuple-none" title="Permanent link">&para;</a></h3>
+<h3 id="get_resolutionself-input_file-str-tuple-none"><code>get_resolution(self, input_file: 'str') -&gt; 'tuple | None'</code><a class="headerlink" href="#get_resolutionself-input_file-str-tuple-none" title="Permanent link">&para;</a></h3>
 <p>Get the resolution of a video file.</p>
 <p>Args:
     input_file: Path to the video file</p>
 <p>Returns:
     Tuple of (width, height) or None if not a video</p>
-<h3 id="get_versionself-str_1"><code>get_version(self) -&gt; str</code><a class="headerlink" href="#get_versionself-str_1" title="Permanent link">&para;</a></h3>
+<h3 id="get_versionself-str_1"><code>get_version(self) -&gt; 'str'</code><a class="headerlink" href="#get_versionself-str_1" title="Permanent link">&para;</a></h3>
 <p>Get the FFprobe version.</p>
 <p>Returns:
     Version string</p>
-<h3 id="probeself-input_file-str-dictstr-typingany"><code>probe(self, input_file: str) -&gt; dict[str, typing.Any]</code><a class="headerlink" href="#probeself-input_file-str-dictstr-typingany" title="Permanent link">&para;</a></h3>
+<h3 id="probeself-input_file-str-raw-bool-false-dictstr-any"><code>probe(self, input_file: 'str', *, raw: 'bool' = False) -&gt; 'dict[str, Any]'</code><a class="headerlink" href="#probeself-input_file-str-raw-bool-false-dictstr-any" title="Permanent link">&para;</a></h3>
 <p>Extract simplified metadata from a media file.</p>
 <p>Args:
     input_file: Path to the media file</p>
 <p>Returns:
     Simplified metadata dictionary derived from FFprobe JSON</p>
+<h3 id="probe_mediaself-input_file-str-mediainfo"><code>probe_media(self, input_file: 'str') -&gt; 'MediaInfo'</code><a class="headerlink" href="#probe_mediaself-input_file-str-mediainfo" title="Permanent link">&para;</a></h3>
+<p>Return typed metadata while retaining decision-relevant stream details.</p>
+<h3 id="probe_rawself-input_file-str-dictstr-any"><code>probe_raw(self, input_file: 'str') -&gt; 'dict[str, Any]'</code><a class="headerlink" href="#probe_rawself-input_file-str-dictstr-any" title="Permanent link">&para;</a></h3>
+<p>Return the complete FFprobe JSON document without dropping fields.</p>
+<h2 id="jobcancellederror"><code>JobCancelledError</code><a class="headerlink" href="#jobcancellederror" title="Permanent link">&para;</a></h2>
+<p>A caller explicitly cancelled a running job.</p>
+<h2 id="jobexecutionerror"><code>JobExecutionError</code><a class="headerlink" href="#jobexecutionerror" title="Permanent link">&para;</a></h2>
+<p>FFmpeg or FFprobe started but the media job failed.</p>
+<h2 id="jobresult"><code>JobResult</code><a class="headerlink" href="#jobresult" title="Permanent link">&para;</a></h2>
+<p>Stable execution result with diagnostics and output evidence.</p>
+<h3 id="to_dictself-dictstr-any_2"><code>to_dict(self) -&gt; 'dict[str, Any]'</code><a class="headerlink" href="#to_dictself-dictstr-any_2" title="Permanent link">&para;</a></h3>
+<p>No public docstring is available.</p>
+<h2 id="jobstatus"><code>JobStatus</code><a class="headerlink" href="#jobstatus" title="Permanent link">&para;</a></h2>
+<p>Python 3.10-compatible string enumeration.</p>
+<h2 id="jobtimeouterror"><code>JobTimeoutError</code><a class="headerlink" href="#jobtimeouterror" title="Permanent link">&para;</a></h2>
+<p>A job exceeded its explicit timeout.</p>
+<h2 id="mediainfo"><code>MediaInfo</code><a class="headerlink" href="#mediainfo" title="Permanent link">&para;</a></h2>
+<p>Typed container, stream, and chapter information from FFprobe.</p>
+<h3 id="to_dictself-dictstr-any_3"><code>to_dict(self) -&gt; 'dict[str, Any]'</code><a class="headerlink" href="#to_dictself-dictstr-any_3" title="Permanent link">&para;</a></h3>
+<p>No public docstring is available.</p>
+<h2 id="overwritepolicy"><code>OverwritePolicy</code><a class="headerlink" href="#overwritepolicy" title="Permanent link">&para;</a></h2>
+<p>Python 3.10-compatible string enumeration.</p>
+<h2 id="profile"><code>Profile</code><a class="headerlink" href="#profile" title="Permanent link">&para;</a></h2>
+<p>A named, versioned set of choices for one supported workflow.</p>
+<h3 id="to_dictself-dictstr-any_4"><code>to_dict(self) -&gt; 'dict[str, Any]'</code><a class="headerlink" href="#to_dictself-dictstr-any_4" title="Permanent link">&para;</a></h3>
+<p>No public docstring is available.</p>
+<h2 id="profileregistry"><code>ProfileRegistry</code><a class="headerlink" href="#profileregistry" title="Permanent link">&para;</a></h2>
+<p>Resolve built-in profiles and strictly validate local profile files.</p>
+<h3 id="getself-name-str-profile"><code>get(self, name: 'str') -&gt; 'Profile'</code><a class="headerlink" href="#getself-name-str-profile" title="Permanent link">&para;</a></h3>
+<p>No public docstring is available.</p>
+<h3 id="listself-tupleprofile"><code>list(self) -&gt; 'tuple[Profile, ...]'</code><a class="headerlink" href="#listself-tupleprofile" title="Permanent link">&para;</a></h3>
+<p>No public docstring is available.</p>
+<h3 id="load_fileself-path-str-path-profile"><code>load_file(self, path: 'str | Path') -&gt; 'Profile'</code><a class="headerlink" href="#load_fileself-path-str-path-profile" title="Permanent link">&para;</a></h3>
+<p>Load one strict versioned profile from JSON or TOML.</p>
+<h2 id="preflightcheck"><code>PreflightCheck</code><a class="headerlink" href="#preflightcheck" title="Permanent link">&para;</a></h2>
+<p>One deterministic preflight fact.</p>
+<h2 id="preflightengine"><code>PreflightEngine</code><a class="headerlink" href="#preflightengine" title="Permanent link">&para;</a></h2>
+<p>Check a plan without creating directories, outputs, or temporary files.</p>
+<h3 id="checkself-plan-executionplan-preflightreport"><code>check(self, plan: 'ExecutionPlan') -&gt; 'PreflightReport'</code><a class="headerlink" href="#checkself-plan-executionplan-preflightreport" title="Permanent link">&para;</a></h3>
+<p>No public docstring is available.</p>
+<h2 id="preflightreport"><code>PreflightReport</code><a class="headerlink" href="#preflightreport" title="Permanent link">&para;</a></h2>
+<p>Versioned preflight result shared by human and JSON presenters.</p>
+<h3 id="renderself-str"><code>render(self) -&gt; 'str'</code><a class="headerlink" href="#renderself-str" title="Permanent link">&para;</a></h3>
+<p>No public docstring is available.</p>
+<h3 id="to_dictself-dictstr-any_5"><code>to_dict(self) -&gt; 'dict[str, Any]'</code><a class="headerlink" href="#to_dictself-dictstr-any_5" title="Permanent link">&para;</a></h3>
+<p>No public docstring is available.</p>
+<h2 id="progresscallback"><code>ProgressCallback</code><a class="headerlink" href="#progresscallback" title="Permanent link">&para;</a></h2>
+<p>A helper class for creating progress callbacks with context.</p>
+<h2 id="progressevent"><code>ProgressEvent</code><a class="headerlink" href="#progressevent" title="Permanent link">&para;</a></h2>
+<p>Versioned progress fact suitable for callbacks or JSON Lines output.</p>
 <h2 id="progresstracker"><code>ProgressTracker</code><a class="headerlink" href="#progresstracker" title="Permanent link">&para;</a></h2>
 <p>Tracks FFmpeg progress by parsing progress output.</p>
 <h3 id="runself-cmd-list-subprocesscompletedprocess"><code>run(self, cmd: list) -&gt; subprocess.CompletedProcess</code><a class="headerlink" href="#runself-cmd-list-subprocesscompletedprocess" title="Permanent link">&para;</a></h3>
@@ -1782,8 +3309,42 @@
 <p>A simple progress callback that prints progress to console.</p>
 <p>Args:
     progress: Progress dictionary</p>
-<h2 id="progresscallback"><code>ProgressCallback</code><a class="headerlink" href="#progresscallback" title="Permanent link">&para;</a></h2>
-<p>A helper class for creating progress callbacks with context.</p>
+<h2 id="pyffmpegcoreerror"><code>PyFFmpegCoreError</code><a class="headerlink" href="#pyffmpegcoreerror" title="Permanent link">&para;</a></h2>
+<p>Base error carrying a stable machine-readable category.</p>
+<h2 id="resizeoptions"><code>ResizeOptions</code><a class="headerlink" href="#resizeoptions" title="Permanent link">&para;</a></h2>
+<p>ResizeOptions(width: 'int', height: 'int', video_codec: 'str | None' = None, audio_codec: 'str | None' = None, pixel_format: 'str' = 'yuv420p', threads: 'int | None' = None)</p>
+<h2 id="streaminfo"><code>StreamInfo</code><a class="headerlink" href="#streaminfo" title="Permanent link">&para;</a></h2>
+<p>Typed stream facts while preserving metadata needed for safe decisions.</p>
+<h2 id="temporaryfilepolicy"><code>TemporaryFilePolicy</code><a class="headerlink" href="#temporaryfilepolicy" title="Permanent link">&para;</a></h2>
+<p>Python 3.10-compatible string enumeration.</p>
+<h2 id="validationerror"><code>ValidationError</code><a class="headerlink" href="#validationerror" title="Permanent link">&para;</a></h2>
+<p>User input or policy is invalid before execution starts.</p>
+<h2 id="workflowplanner"><code>WorkflowPlanner</code><a class="headerlink" href="#workflowplanner" title="Permanent link">&para;</a></h2>
+<p>Build deterministic plans used by CLI, Python, examples, and pipelines.</p>
+<h3 id="compressself-input_file-str-output_file-str-options-compressoptions-none-none-force-bool-false-timeout_seconds-float-none-none-executionplan"><code>compress(self, input_file: 'str', output_file: 'str', options: 'CompressOptions | None' = None, *, force: 'bool' = False, timeout_seconds: 'float | None' = None) -&gt; 'ExecutionPlan'</code><a class="headerlink" href="#compressself-input_file-str-output_file-str-options-compressoptions-none-none-force-bool-false-timeout_seconds-float-none-none-executionplan" title="Permanent link">&para;</a></h3>
+<p>No public docstring is available.</p>
+<h3 id="concatself-input_files-liststr-output_file-str-mode-str-copy-video_codec-str-libx264-audio_codec-str-aac-force-bool-false-timeout_seconds-float-none-none-executionplan"><code>concat(self, input_files: 'list[str]', output_file: 'str', *, mode: 'str' = 'copy', video_codec: 'str' = 'libx264', audio_codec: 'str' = 'aac', force: 'bool' = False, timeout_seconds: 'float | None' = None) -&gt; 'ExecutionPlan'</code><a class="headerlink" href="#concatself-input_files-liststr-output_file-str-mode-str-copy-video_codec-str-libx264-audio_codec-str-aac-force-bool-false-timeout_seconds-float-none-none-executionplan" title="Permanent link">&para;</a></h3>
+<p>No public docstring is available.</p>
+<h3 id="convertself-input_file-str-output_file-str-options-convertoptions-none-none-force-bool-false-timeout_seconds-float-none-none-executionplan"><code>convert(self, input_file: 'str', output_file: 'str', options: 'ConvertOptions | None' = None, *, force: 'bool' = False, timeout_seconds: 'float | None' = None) -&gt; 'ExecutionPlan'</code><a class="headerlink" href="#convertself-input_file-str-output_file-str-options-convertoptions-none-none-force-bool-false-timeout_seconds-float-none-none-executionplan" title="Permanent link">&para;</a></h3>
+<p>No public docstring is available.</p>
+<h3 id="extract_audioself-input_file-str-output_file-str-audio_codec-str-none-none-audio_bitrate-str-192k-sample_rate-int-none-none-channels-int-none-none-threads-int-none-none-force-bool-false-timeout_seconds-float-none-none-executionplan"><code>extract_audio(self, input_file: 'str', output_file: 'str', *, audio_codec: 'str | None' = None, audio_bitrate: 'str' = '192k', sample_rate: 'int | None' = None, channels: 'int | None' = None, threads: 'int | None' = None, force: 'bool' = False, timeout_seconds: 'float | None' = None) -&gt; 'ExecutionPlan'</code><a class="headerlink" href="#extract_audioself-input_file-str-output_file-str-audio_codec-str-none-none-audio_bitrate-str-192k-sample_rate-int-none-none-channels-int-none-none-threads-int-none-none-force-bool-false-timeout_seconds-float-none-none-executionplan" title="Permanent link">&para;</a></h3>
+<p>No public docstring is available.</p>
+<h3 id="imagesself-action-str-input_dir-str-output_dir-str-output_format-str-jpg-quality-int-85-resize-tupleint-int-none-none-max_width-int-1920-max_height-int-1080-force-bool-false-timeout_seconds-float-none-none-executionplan"><code>images(self, action: 'str', input_dir: 'str', output_dir: 'str', *, output_format: 'str' = 'jpg', quality: 'int' = 85, resize: 'tuple[int, int] | None' = None, max_width: 'int' = 1920, max_height: 'int' = 1080, force: 'bool' = False, timeout_seconds: 'float | None' = None) -&gt; 'ExecutionPlan'</code><a class="headerlink" href="#imagesself-action-str-input_dir-str-output_dir-str-output_format-str-jpg-quality-int-85-resize-tupleint-int-none-none-max_width-int-1920-max_height-int-1080-force-bool-false-timeout_seconds-float-none-none-executionplan" title="Permanent link">&para;</a></h3>
+<p>No public docstring is available.</p>
+<h3 id="mix_audioself-action-str-input_files-liststr-output_file-str-volumes-listfloat-none-none-crossfade_duration-float-20-background_volume-float-03-force-bool-false-timeout_seconds-float-none-none-executionplan"><code>mix_audio(self, action: 'str', input_files: 'list[str]', output_file: 'str', *, volumes: 'list[float] | None' = None, crossfade_duration: 'float' = 2.0, background_volume: 'float' = 0.3, force: 'bool' = False, timeout_seconds: 'float | None' = None) -&gt; 'ExecutionPlan'</code><a class="headerlink" href="#mix_audioself-action-str-input_files-liststr-output_file-str-volumes-listfloat-none-none-crossfade_duration-float-20-background_volume-float-03-force-bool-false-timeout_seconds-float-none-none-executionplan" title="Permanent link">&para;</a></h3>
+<p>No public docstring is available.</p>
+<h3 id="normalize_audioself-input_file-str-output_file-str-method-str-loudnorm-target_i-float-160-target_tp-float-15-target_lra-float-110-force-bool-false-timeout_seconds-float-none-none-executionplan"><code>normalize_audio(self, input_file: 'str', output_file: 'str', *, method: 'str' = 'loudnorm', target_i: 'float' = -16.0, target_tp: 'float' = -1.5, target_lra: 'float' = 11.0, force: 'bool' = False, timeout_seconds: 'float | None' = None) -&gt; 'ExecutionPlan'</code><a class="headerlink" href="#normalize_audioself-input_file-str-output_file-str-method-str-loudnorm-target_i-float-160-target_tp-float-15-target_lra-float-110-force-bool-false-timeout_seconds-float-none-none-executionplan" title="Permanent link">&para;</a></h3>
+<p>No public docstring is available.</p>
+<h3 id="resizeself-input_file-str-output_file-str-options-resizeoptions-force-bool-false-timeout_seconds-float-none-none-executionplan"><code>resize(self, input_file: 'str', output_file: 'str', options: 'ResizeOptions', *, force: 'bool' = False, timeout_seconds: 'float | None' = None) -&gt; 'ExecutionPlan'</code><a class="headerlink" href="#resizeself-input_file-str-output_file-str-options-resizeoptions-force-bool-false-timeout_seconds-float-none-none-executionplan" title="Permanent link">&para;</a></h3>
+<p>No public docstring is available.</p>
+<h3 id="speedself-kind-str-input_file-str-output_file-str-factor-float-preserve_pitch-bool-true-force-bool-false-timeout_seconds-float-none-none-executionplan"><code>speed(self, kind: 'str', input_file: 'str', output_file: 'str', *, factor: 'float', preserve_pitch: 'bool' = True, force: 'bool' = False, timeout_seconds: 'float | None' = None) -&gt; 'ExecutionPlan'</code><a class="headerlink" href="#speedself-kind-str-input_file-str-output_file-str-factor-float-preserve_pitch-bool-true-force-bool-false-timeout_seconds-float-none-none-executionplan" title="Permanent link">&para;</a></h3>
+<p>No public docstring is available.</p>
+<h3 id="subtitlesself-action-str-video_file-str-output_file-str-subtitle_file-str-none-none-language-str-eng-stream_index-int-0-font_size-int-24-font_color-str-hffffff-force-bool-false-timeout_seconds-float-none-none-executionplan"><code>subtitles(self, action: 'str', video_file: 'str', output_file: 'str', *, subtitle_file: 'str | None' = None, language: 'str' = 'eng', stream_index: 'int' = 0, font_size: 'int' = 24, font_color: 'str' = '&amp;HFFFFFF', force: 'bool' = False, timeout_seconds: 'float | None' = None) -&gt; 'ExecutionPlan'</code><a class="headerlink" href="#subtitlesself-action-str-video_file-str-output_file-str-subtitle_file-str-none-none-language-str-eng-stream_index-int-0-font_size-int-24-font_color-str-hffffff-force-bool-false-timeout_seconds-float-none-none-executionplan" title="Permanent link">&para;</a></h3>
+<p>No public docstring is available.</p>
+<h3 id="thumbnailself-input_file-str-output_file-str-timestamp-str-000001-width-int-320-height-int-none-none-quality-int-2-force-bool-false-timeout_seconds-float-none-none-executionplan"><code>thumbnail(self, input_file: 'str', output_file: 'str', *, timestamp: 'str' = '00:00:01', width: 'int' = 320, height: 'int | None' = None, quality: 'int' = 2, force: 'bool' = False, timeout_seconds: 'float | None' = None) -&gt; 'ExecutionPlan'</code><a class="headerlink" href="#thumbnailself-input_file-str-output_file-str-timestamp-str-000001-width-int-320-height-int-none-none-quality-int-2-force-bool-false-timeout_seconds-float-none-none-executionplan" title="Permanent link">&para;</a></h3>
+<p>No public docstring is available.</p>
+<h3 id="waveformself-input_file-str-output_file-str-width-int-800-height-int-200-colors-str-white-force-bool-false-timeout_seconds-float-none-none-executionplan"><code>waveform(self, input_file: 'str', output_file: 'str', *, width: 'int' = 800, height: 'int' = 200, colors: 'str' = 'white', force: 'bool' = False, timeout_seconds: 'float | None' = None) -&gt; 'ExecutionPlan'</code><a class="headerlink" href="#waveformself-input_file-str-output_file-str-width-int-800-height-int-200-colors-str-white-force-bool-false-timeout_seconds-float-none-none-executionplan" title="Permanent link">&para;</a></h3>
+<p>No public docstring is available.</p>
 
 
 
