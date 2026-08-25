@@ -841,6 +841,8 @@
       
         
       
+        
+      
     
     
     
@@ -938,6 +940,34 @@
     
   
     Exact-size upload
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../recipes/preserve-streams/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Preserve every stream
   
 
     
@@ -3497,9 +3527,9 @@
 <div class="highlight"><pre><span></span><code><a id="__codelineno-22-1" name="__codelineno-22-1" href="#__codelineno-22-1"></a>usage: pyffmpegcore convert [-h] [--verbose | --quiet] [--force] [--dry-run | --explain]
 <a id="__codelineno-22-2" name="__codelineno-22-2" href="#__codelineno-22-2"></a>       [--plan-json] [--result-json] [--timeout SECONDS] [--temp-files {clean,keep-on-error,keep}]
 <a id="__codelineno-22-3" name="__codelineno-22-3" href="#__codelineno-22-3"></a>       [--receipt FILE] [--hash-content] [--ffmpeg-path FFMPEG_PATH] [--ffprobe-path FFPROBE_PATH]
-<a id="__codelineno-22-4" name="__codelineno-22-4" href="#__codelineno-22-4"></a>       --input INPUT --output OUTPUT [--audio-only] [--video-codec VIDEO_CODEC] [--audio-codec
-<a id="__codelineno-22-5" name="__codelineno-22-5" href="#__codelineno-22-5"></a>       AUDIO_CODEC] [--video-bitrate VIDEO_BITRATE] [--audio-bitrate AUDIO_BITRATE] [--pix-fmt
-<a id="__codelineno-22-6" name="__codelineno-22-6" href="#__codelineno-22-6"></a>       PIX_FMT] [--threads THREADS] [--hwaccel HWACCEL]
+<a id="__codelineno-22-4" name="__codelineno-22-4" href="#__codelineno-22-4"></a>       --input INPUT --output OUTPUT [--audio-only] [--preserve-all-streams] [--video-codec
+<a id="__codelineno-22-5" name="__codelineno-22-5" href="#__codelineno-22-5"></a>       VIDEO_CODEC] [--audio-codec AUDIO_CODEC] [--video-bitrate VIDEO_BITRATE] [--audio-bitrate
+<a id="__codelineno-22-6" name="__codelineno-22-6" href="#__codelineno-22-6"></a>       AUDIO_BITRATE] [--pix-fmt PIX_FMT] [--threads THREADS] [--hwaccel HWACCEL]
 <a id="__codelineno-22-7" name="__codelineno-22-7" href="#__codelineno-22-7"></a>
 <a id="__codelineno-22-8" name="__codelineno-22-8" href="#__codelineno-22-8"></a>Convert a media file into a new format.
 <a id="__codelineno-22-9" name="__codelineno-22-9" href="#__codelineno-22-9"></a>
@@ -3525,18 +3555,21 @@
 <a id="__codelineno-22-29" name="__codelineno-22-29" href="#__codelineno-22-29"></a>  --input INPUT         Path to the input media file.
 <a id="__codelineno-22-30" name="__codelineno-22-30" href="#__codelineno-22-30"></a>  --output OUTPUT       Path to the converted output file.
 <a id="__codelineno-22-31" name="__codelineno-22-31" href="#__codelineno-22-31"></a>  --audio-only          Drop video and keep only the audio stream.
-<a id="__codelineno-22-32" name="__codelineno-22-32" href="#__codelineno-22-32"></a>  --video-codec VIDEO_CODEC
-<a id="__codelineno-22-33" name="__codelineno-22-33" href="#__codelineno-22-33"></a>                        Video codec to use, for example libx264.
-<a id="__codelineno-22-34" name="__codelineno-22-34" href="#__codelineno-22-34"></a>  --audio-codec AUDIO_CODEC
-<a id="__codelineno-22-35" name="__codelineno-22-35" href="#__codelineno-22-35"></a>                        Audio codec to use, for example aac.
-<a id="__codelineno-22-36" name="__codelineno-22-36" href="#__codelineno-22-36"></a>  --video-bitrate VIDEO_BITRATE
-<a id="__codelineno-22-37" name="__codelineno-22-37" href="#__codelineno-22-37"></a>                        Video bitrate, for example 2500k.
-<a id="__codelineno-22-38" name="__codelineno-22-38" href="#__codelineno-22-38"></a>  --audio-bitrate AUDIO_BITRATE
-<a id="__codelineno-22-39" name="__codelineno-22-39" href="#__codelineno-22-39"></a>                        Audio bitrate, for example 192k.
-<a id="__codelineno-22-40" name="__codelineno-22-40" href="#__codelineno-22-40"></a>  --pix-fmt PIX_FMT     Pixel format for video output, for example yuv420p.
-<a id="__codelineno-22-41" name="__codelineno-22-41" href="#__codelineno-22-41"></a>  --threads THREADS     Number of FFmpeg worker threads to use.
-<a id="__codelineno-22-42" name="__codelineno-22-42" href="#__codelineno-22-42"></a>  --hwaccel HWACCEL     Optional FFmpeg hardware-acceleration method; failures do not silently fall
-<a id="__codelineno-22-43" name="__codelineno-22-43" href="#__codelineno-22-43"></a>  back.
+<a id="__codelineno-22-32" name="__codelineno-22-32" href="#__codelineno-22-32"></a>  --preserve-all-streams
+<a id="__codelineno-22-33" name="__codelineno-22-33" href="#__codelineno-22-33"></a>                        Map and stream-copy every input track, attachment, and data stream without
+<a id="__codelineno-22-34" name="__codelineno-22-34" href="#__codelineno-22-34"></a>                        re-encoding; the output container must support them.
+<a id="__codelineno-22-35" name="__codelineno-22-35" href="#__codelineno-22-35"></a>  --video-codec VIDEO_CODEC
+<a id="__codelineno-22-36" name="__codelineno-22-36" href="#__codelineno-22-36"></a>                        Video codec to use, for example libx264.
+<a id="__codelineno-22-37" name="__codelineno-22-37" href="#__codelineno-22-37"></a>  --audio-codec AUDIO_CODEC
+<a id="__codelineno-22-38" name="__codelineno-22-38" href="#__codelineno-22-38"></a>                        Audio codec to use, for example aac.
+<a id="__codelineno-22-39" name="__codelineno-22-39" href="#__codelineno-22-39"></a>  --video-bitrate VIDEO_BITRATE
+<a id="__codelineno-22-40" name="__codelineno-22-40" href="#__codelineno-22-40"></a>                        Video bitrate, for example 2500k.
+<a id="__codelineno-22-41" name="__codelineno-22-41" href="#__codelineno-22-41"></a>  --audio-bitrate AUDIO_BITRATE
+<a id="__codelineno-22-42" name="__codelineno-22-42" href="#__codelineno-22-42"></a>                        Audio bitrate, for example 192k.
+<a id="__codelineno-22-43" name="__codelineno-22-43" href="#__codelineno-22-43"></a>  --pix-fmt PIX_FMT     Pixel format for video output, for example yuv420p.
+<a id="__codelineno-22-44" name="__codelineno-22-44" href="#__codelineno-22-44"></a>  --threads THREADS     Number of FFmpeg worker threads to use.
+<a id="__codelineno-22-45" name="__codelineno-22-45" href="#__codelineno-22-45"></a>  --hwaccel HWACCEL     Optional FFmpeg hardware-acceleration method; failures do not silently fall
+<a id="__codelineno-22-46" name="__codelineno-22-46" href="#__codelineno-22-46"></a>  back.
 </code></pre></div>
 <h2 id="pyffmpegcore-compress"><code>pyffmpegcore compress</code><a class="headerlink" href="#pyffmpegcore-compress" title="Permanent link">&para;</a></h2>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-23-1" name="__codelineno-23-1" href="#__codelineno-23-1"></a>usage: pyffmpegcore compress [-h] [--verbose | --quiet] [--force] [--dry-run | --explain]

@@ -841,6 +841,8 @@
       
         
       
+        
+      
     
     
     
@@ -938,6 +940,34 @@
     
   
     Exact-size upload
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../recipes/preserve-streams/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Preserve every stream
   
 
     
@@ -1473,6 +1503,39 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#a-second-audio-track-or-subtitle-disappeared" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        A second audio track or subtitle disappeared
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-output-is-mp4-but-a-browser-still-refuses-it" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The output is MP4 but a browser still refuses it
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#a-python-or-background-ffmpeg-process-appears-to-hang" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        A Python or background FFmpeg process appears to hang
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#output-already-exists" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -1846,6 +1909,39 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#a-second-audio-track-or-subtitle-disappeared" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        A second audio track or subtitle disappeared
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#the-output-is-mp4-but-a-browser-still-refuses-it" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The output is MP4 but a browser still refuses it
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#a-python-or-background-ffmpeg-process-appears-to-hang" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        A Python or background FFmpeg process appears to hang
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#output-already-exists" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -1910,11 +2006,41 @@
 </code></pre></div>
 <h2 id="an-encoder-or-filter-is-absent">An encoder or filter is absent<a class="headerlink" href="#an-encoder-or-filter-is-absent" title="Permanent link">&para;</a></h2>
 <p>FFmpeg builds differ. Inspect <code>doctor --json</code> and the workflow's error. Install an FFmpeg build that contains the required capability or choose a documented fallback. PyFFmpegCore does not silently download a codec build.</p>
+<h2 id="a-second-audio-track-or-subtitle-disappeared">A second audio track or subtitle disappeared<a class="headerlink" href="#a-second-audio-track-or-subtitle-disappeared" title="Permanent link">&para;</a></h2>
+<p>The normal <code>convert</code> workflow deliberately selects the first video and first
+audio streams. FFmpeg users repeatedly encounter this implicit-selection trap
+with <a href="https://superuser.com/questions/1513289/track-2-and-sub-titles-lost-in-ffmpeg-conversion">secondary tracks and subtitles</a>
+and <a href="https://superuser.com/questions/1808132/how-to-copy-the-video-covert-all-audio-streams-to-ac3-and-only-keep-the-subtit">multilingual subtitle sets</a>.</p>
+<p>Probe before and after. If the goal is a lossless remux and the destination
+container supports every source codec, use:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>pyffmpegcore<span class="w"> </span>convert<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="w">  </span>--input<span class="w"> </span>source.mkv<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="w">  </span>--output<span class="w"> </span>preserved.mkv<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="w">  </span>--preserve-all-streams<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a><span class="w">  </span>--explain
+</code></pre></div>
+<p>Then execute the same command without <code>--explain</code>. See the <a href="../recipes/preserve-streams/">complete stream
+preservation contract</a>. PyFFmpegCore fails rather
+than silently dropping a stream that the output container cannot represent.</p>
+<h2 id="the-output-is-mp4-but-a-browser-still-refuses-it">The output is MP4 but a browser still refuses it<a class="headerlink" href="#the-output-is-mp4-but-a-browser-still-refuses-it" title="Permanent link">&para;</a></h2>
+<p>An <code>.mp4</code> suffix alone does not prove browser compatibility. Use the
+<a href="../recipes/web-video/"><code>web/mp4-compatible</code> recipe</a>, probe the output, and also
+verify the server's media <code>Content-Type</code> and byte-range behavior. Browser
+reports commonly involve the <a href="https://stackoverflow.com/questions/32829514/which-pixel-format-for-web-mp4-video">pixel format</a>
+or <a href="https://superuser.com/questions/606653/ffmpeg-converting-media-type-aswell-as-relocating-moov-atom">progressive-download index placement</a>.</p>
+<h2 id="a-python-or-background-ffmpeg-process-appears-to-hang">A Python or background FFmpeg process appears to hang<a class="headerlink" href="#a-python-or-background-ffmpeg-process-appears-to-hang" title="Permanent link">&para;</a></h2>
+<p>Unconsumed FFmpeg output pipes and interactive stdin are recurring causes in
+<a href="https://stackoverflow.com/questions/40964071/piping-to-ffmpeg-with-python-subprocess-freezes">Python subprocesses</a>
+and <a href="https://stackoverflow.com/questions/16523746/ffmpeg-hangs-when-run-in-background/16527559">background jobs</a>.
+Managed PyFFmpegCore jobs continuously drain stdout/stderr, disable interactive
+stdin, decode diagnostics as UTF-8 with replacement, and support a bounded
+<code>--timeout</code>. Include a synthetic reproduction if a managed command still
+stalls.</p>
 <h2 id="output-already-exists">Output already exists<a class="headerlink" href="#output-already-exists" title="Permanent link">&para;</a></h2>
 <p>The refusal is intentional. Choose a new output path or explicitly add <code>--force</code> after checking the target.</p>
 <h2 id="a-path-contains-spaces-or-apostrophes">A path contains spaces or apostrophes<a class="headerlink" href="#a-path-contains-spaces-or-apostrophes" title="Permanent link">&para;</a></h2>
 <p>Quote it in your shell. PyFFmpegCore passes paths as process arguments rather than shell strings:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>pyffmpegcore<span class="w"> </span>probe<span class="w"> </span>--input<span class="w"> </span><span class="s2">"media/O'Brien clip.mp4"</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>pyffmpegcore<span class="w"> </span>probe<span class="w"> </span>--input<span class="w"> </span><span class="s2">"media/O'Brien clip.mp4"</span>
 </code></pre></div>
 <h2 id="ffmpeg-succeeds-but-pyffmpegcore-fails">FFmpeg succeeds but PyFFmpegCore fails<a class="headerlink" href="#ffmpeg-succeeds-but-pyffmpegcore-fails" title="Permanent link">&para;</a></h2>
 <p>Open a bug report with the exact PyFFmpegCore command, exit code, sanitized <code>doctor --json</code>, the raw FFmpeg command that succeeds, and a generated or redistribution-safe reproduction. See the <a href="https://github.com/OthmaneBlial/pyffmpegcore/blob/main/SUPPORT.md">support guide</a>.</p>

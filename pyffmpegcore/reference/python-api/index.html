@@ -841,6 +841,8 @@
       
         
       
+        
+      
     
     
     
@@ -938,6 +940,34 @@
     
   
     Exact-size upload
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../recipes/preserve-streams/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Preserve every stream
   
 
     
@@ -1627,10 +1657,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#convertself-input_file-str-output_file-str-video_codec-str-none-none-audio_codec-str-none-none-video_bitrate-str-none-none-audio_bitrate-str-none-none-pixel_format-str-yuv420p-threads-int-none-none-audio_only-bool-false-hardware_acceleration-str-none-none-force-bool-false-progress_callback-callableprogressevent-none-none-none-jobresult" class="md-nav__link">
+  <a href="#convertself-input_file-str-output_file-str-video_codec-str-none-none-audio_codec-str-none-none-video_bitrate-str-none-none-audio_bitrate-str-none-none-pixel_format-str-yuv420p-threads-int-none-none-audio_only-bool-false-hardware_acceleration-str-none-none-preserve_all_streams-bool-false-force-bool-false-progress_callback-callableprogressevent-none-none-none-jobresult" class="md-nav__link">
     <span class="md-ellipsis">
       
-        convert(self, input_file: 'str', output_file: 'str', *, video_codec: 'str | None' = None, audio_codec: 'str | None' = None, video_bitrate: 'str | None' = None, audio_bitrate: 'str | None' = None, pixel_format: 'str' = 'yuv420p', threads: 'int | None' = None, audio_only: 'bool' = False, hardware_acceleration: 'str | None' = None, force: 'bool' = False, progress_callback: 'Callable[[ProgressEvent], None] | None' = None) -&gt; 'JobResult'
+        convert(self, input_file: 'str', output_file: 'str', *, video_codec: 'str | None' = None, audio_codec: 'str | None' = None, video_bitrate: 'str | None' = None, audio_bitrate: 'str | None' = None, pixel_format: 'str' = 'yuv420p', threads: 'int | None' = None, audio_only: 'bool' = False, hardware_acceleration: 'str | None' = None, preserve_all_streams: 'bool' = False, force: 'bool' = False, progress_callback: 'Callable[[ProgressEvent], None] | None' = None) -&gt; 'JobResult'
       
     </span>
   </a>
@@ -3766,10 +3796,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#convertself-input_file-str-output_file-str-video_codec-str-none-none-audio_codec-str-none-none-video_bitrate-str-none-none-audio_bitrate-str-none-none-pixel_format-str-yuv420p-threads-int-none-none-audio_only-bool-false-hardware_acceleration-str-none-none-force-bool-false-progress_callback-callableprogressevent-none-none-none-jobresult" class="md-nav__link">
+  <a href="#convertself-input_file-str-output_file-str-video_codec-str-none-none-audio_codec-str-none-none-video_bitrate-str-none-none-audio_bitrate-str-none-none-pixel_format-str-yuv420p-threads-int-none-none-audio_only-bool-false-hardware_acceleration-str-none-none-preserve_all_streams-bool-false-force-bool-false-progress_callback-callableprogressevent-none-none-none-jobresult" class="md-nav__link">
     <span class="md-ellipsis">
       
-        convert(self, input_file: 'str', output_file: 'str', *, video_codec: 'str | None' = None, audio_codec: 'str | None' = None, video_bitrate: 'str | None' = None, audio_bitrate: 'str | None' = None, pixel_format: 'str' = 'yuv420p', threads: 'int | None' = None, audio_only: 'bool' = False, hardware_acceleration: 'str | None' = None, force: 'bool' = False, progress_callback: 'Callable[[ProgressEvent], None] | None' = None) -&gt; 'JobResult'
+        convert(self, input_file: 'str', output_file: 'str', *, video_codec: 'str | None' = None, audio_codec: 'str | None' = None, video_bitrate: 'str | None' = None, audio_bitrate: 'str | None' = None, pixel_format: 'str' = 'yuv420p', threads: 'int | None' = None, audio_only: 'bool' = False, hardware_acceleration: 'str | None' = None, preserve_all_streams: 'bool' = False, force: 'bool' = False, progress_callback: 'Callable[[ProgressEvent], None] | None' = None) -&gt; 'JobResult'
       
     </span>
   </a>
@@ -5112,7 +5142,7 @@
 <h2 id="compressoptions"><code>CompressOptions</code><a class="headerlink" href="#compressoptions" title="Permanent link">&para;</a></h2>
 <p>CompressOptions(target_size_bytes: 'int | None' = None, crf: 'int' = 23, two_pass: 'bool' = True, video_codec: 'str' = 'libx264', audio_codec: 'str' = 'aac', video_bitrate: 'str | None' = None, audio_bitrate: 'str' = '128k', preset: 'str' = 'medium', pixel_format: 'str' = 'yuv420p', threads: 'int | None' = None, container_overhead_percent: 'float' = 5.0, minimum_video_bitrate: 'int' = 102400)</p>
 <h2 id="convertoptions"><code>ConvertOptions</code><a class="headerlink" href="#convertoptions" title="Permanent link">&para;</a></h2>
-<p>ConvertOptions(video_codec: 'str | None' = None, audio_codec: 'str | None' = None, video_bitrate: 'str | None' = None, audio_bitrate: 'str | None' = None, pixel_format: 'str' = 'yuv420p', threads: 'int | None' = None, audio_only: 'bool' = False, hardware_acceleration: 'str | None' = None)</p>
+<p>ConvertOptions(video_codec: 'str | None' = None, audio_codec: 'str | None' = None, video_bitrate: 'str | None' = None, audio_bitrate: 'str | None' = None, pixel_format: 'str' = 'yuv420p', threads: 'int | None' = None, audio_only: 'bool' = False, hardware_acceleration: 'str | None' = None, preserve_all_streams: 'bool' = False)</p>
 <h2 id="environmentunavailableerror"><code>EnvironmentUnavailableError</code><a class="headerlink" href="#environmentunavailableerror" title="Permanent link">&para;</a></h2>
 <p>A required executable or host resource is unavailable.</p>
 <h2 id="executionplan"><code>ExecutionPlan</code><a class="headerlink" href="#executionplan" title="Permanent link">&para;</a></h2>
@@ -5129,7 +5159,7 @@
 <p>Plan, preflight, and execute typed video speed adjustment.</p>
 <h3 id="compressself-input_file-str-output_file-str-target_size_kb-int-none-none-crf-int-23-two_pass-bool-true-video_codec-str-libx264-audio_codec-str-aac-video_bitrate-str-none-none-audio_bitrate-str-128k-preset-str-medium-pixel_format-str-yuv420p-threads-int-none-none-container_overhead_percent-float-50-minimum_video_bitrate-int-102400-force-bool-false-progress_callback-callableprogressevent-none-none-none-jobresult"><code>compress(self, input_file: 'str', output_file: 'str', *, target_size_kb: 'int | None' = None, crf: 'int' = 23, two_pass: 'bool' = True, video_codec: 'str' = 'libx264', audio_codec: 'str' = 'aac', video_bitrate: 'str | None' = None, audio_bitrate: 'str' = '128k', preset: 'str' = 'medium', pixel_format: 'str' = 'yuv420p', threads: 'int | None' = None, container_overhead_percent: 'float' = 5.0, minimum_video_bitrate: 'int' = 102400, force: 'bool' = False, progress_callback: 'Callable[[ProgressEvent], None] | None' = None) -&gt; 'JobResult'</code><a class="headerlink" href="#compressself-input_file-str-output_file-str-target_size_kb-int-none-none-crf-int-23-two_pass-bool-true-video_codec-str-libx264-audio_codec-str-aac-video_bitrate-str-none-none-audio_bitrate-str-128k-preset-str-medium-pixel_format-str-yuv420p-threads-int-none-none-container_overhead_percent-float-50-minimum_video_bitrate-int-102400-force-bool-false-progress_callback-callableprogressevent-none-none-none-jobresult" title="Permanent link">&para;</a></h3>
 <p>Plan, preflight, and execute typed single- or two-pass compression.</p>
-<h3 id="convertself-input_file-str-output_file-str-video_codec-str-none-none-audio_codec-str-none-none-video_bitrate-str-none-none-audio_bitrate-str-none-none-pixel_format-str-yuv420p-threads-int-none-none-audio_only-bool-false-hardware_acceleration-str-none-none-force-bool-false-progress_callback-callableprogressevent-none-none-none-jobresult"><code>convert(self, input_file: 'str', output_file: 'str', *, video_codec: 'str | None' = None, audio_codec: 'str | None' = None, video_bitrate: 'str | None' = None, audio_bitrate: 'str | None' = None, pixel_format: 'str' = 'yuv420p', threads: 'int | None' = None, audio_only: 'bool' = False, hardware_acceleration: 'str | None' = None, force: 'bool' = False, progress_callback: 'Callable[[ProgressEvent], None] | None' = None) -&gt; 'JobResult'</code><a class="headerlink" href="#convertself-input_file-str-output_file-str-video_codec-str-none-none-audio_codec-str-none-none-video_bitrate-str-none-none-audio_bitrate-str-none-none-pixel_format-str-yuv420p-threads-int-none-none-audio_only-bool-false-hardware_acceleration-str-none-none-force-bool-false-progress_callback-callableprogressevent-none-none-none-jobresult" title="Permanent link">&para;</a></h3>
+<h3 id="convertself-input_file-str-output_file-str-video_codec-str-none-none-audio_codec-str-none-none-video_bitrate-str-none-none-audio_bitrate-str-none-none-pixel_format-str-yuv420p-threads-int-none-none-audio_only-bool-false-hardware_acceleration-str-none-none-preserve_all_streams-bool-false-force-bool-false-progress_callback-callableprogressevent-none-none-none-jobresult"><code>convert(self, input_file: 'str', output_file: 'str', *, video_codec: 'str | None' = None, audio_codec: 'str | None' = None, video_bitrate: 'str | None' = None, audio_bitrate: 'str | None' = None, pixel_format: 'str' = 'yuv420p', threads: 'int | None' = None, audio_only: 'bool' = False, hardware_acceleration: 'str | None' = None, preserve_all_streams: 'bool' = False, force: 'bool' = False, progress_callback: 'Callable[[ProgressEvent], None] | None' = None) -&gt; 'JobResult'</code><a class="headerlink" href="#convertself-input_file-str-output_file-str-video_codec-str-none-none-audio_codec-str-none-none-video_bitrate-str-none-none-audio_bitrate-str-none-none-pixel_format-str-yuv420p-threads-int-none-none-audio_only-bool-false-hardware_acceleration-str-none-none-preserve_all_streams-bool-false-force-bool-false-progress_callback-callableprogressevent-none-none-none-jobresult" title="Permanent link">&para;</a></h3>
 <p>Plan, preflight, and execute a typed conversion.</p>
 <h3 id="execute_planself-plan-executionplan-cancellation-threadingevent-none-none-progress_callback-callableprogressevent-none-none-none-jobresult"><code>execute_plan(self, plan: 'ExecutionPlan', *, cancellation: 'threading.Event | None' = None, progress_callback: 'Callable[[ProgressEvent], None] | None' = None) -&gt; 'JobResult'</code><a class="headerlink" href="#execute_planself-plan-executionplan-cancellation-threadingevent-none-none-progress_callback-callableprogressevent-none-none-none-jobresult" title="Permanent link">&para;</a></h3>
 <p>Execute a typed plan and return a stable structured result.</p>

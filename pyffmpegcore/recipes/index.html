@@ -843,6 +843,8 @@
       
         
       
+        
+      
     
     
     
@@ -940,6 +942,34 @@
     
   
     Exact-size upload
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="preserve-streams/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Preserve every stream
   
 
     
@@ -1693,6 +1723,25 @@
     
   
   
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#built-from-repeated-user-problems" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Built from repeated user problems
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
 </nav>
                   </div>
                 </div>
@@ -1716,13 +1765,23 @@
 <ul>
 <li><a href="web-video/">Web-compatible video</a></li>
 <li><a href="exact-size/">Fit an upload under a target size</a></li>
+<li><a href="preserve-streams/">Preserve every audio, subtitle, attachment, and data stream</a></li>
 <li><a href="audio-extraction/">Extract audio</a></li>
 <li><a href="podcast/">Normalize podcast speech</a></li>
 <li><a href="subtitles/">Add, extract, or burn subtitles</a></li>
 <li><a href="thumbnails/">Create thumbnails</a></li>
 <li><a href="image-batches/">Convert image batches</a></li>
 </ul>
-<p>Use <code>probe</code> before and after. If the input has multiple audio tracks, chapters, attachments, rotation, HDR metadata, or cover art, verify what the current workflow preserves before deleting the source.</p>
+<h2 id="built-from-repeated-user-problems">Built from repeated user problems<a class="headerlink" href="#built-from-repeated-user-problems" title="Permanent link">&para;</a></h2>
+<p>These are not invented demo categories. Independent FFmpeg users repeatedly
+ask why <a href="https://stackoverflow.com/questions/24693751/html5-video-ffmpeg-encoded-mp4-not-playing-in-any-browser-plays-in-vlc-though">MP4 works locally but not in browsers</a>,
+how to <a href="https://stackoverflow.com/questions/29082422/ffmpeg-video-compression-specific-file-size/61146975">fit a complete video under a size limit</a>,
+and why <a href="https://superuser.com/questions/1513289/track-2-and-sub-titles-lost-in-ffmpeg-conversion">secondary tracks disappear</a>.
+Each linked PyFFmpegCore recipe turns one of those clusters into an inspectable
+plan, a deterministic media test, and explicit verification steps.</p>
+<p>Use <code>probe</code> before and after. If the input has multiple audio tracks, chapters,
+attachments, rotation, HDR metadata, or cover art, verify what the workflow
+preserves before deleting the source.</p>
 
 
 

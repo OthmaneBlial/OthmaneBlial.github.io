@@ -943,6 +943,8 @@
       
         
       
+        
+      
     
     
     
@@ -1040,6 +1042,34 @@
     
   
     Exact-size upload
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../recipes/preserve-streams/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Preserve every stream
   
 
     
@@ -1884,18 +1914,18 @@
 <p>Install FFmpeg using the package source you already trust for your operating system. PyFFmpegCore deliberately does not download or bundle it.</p>
 <h2 id="bash-or-zsh">Bash or zsh<a class="headerlink" href="#bash-or-zsh" title="Permanent link">&para;</a></h2>
 <p>Until PyPI publication is verified, install the exact validated revision:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>pipx<span class="w"> </span>install<span class="w"> </span>git+https://github.com/OthmaneBlial/pyffmpegcore.git@2c1405a5a3f96b5fa30e713e51bfa61b5aa84834
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>pipx<span class="w"> </span>install<span class="w"> </span>git+https://github.com/OthmaneBlial/pyffmpegcore.git@04d1e7051295bbcc4fa137c1214bbf340bf5c4c0
 <a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>pyffmpegcore<span class="w"> </span>--version
 <a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>pyffmpegcore<span class="w"> </span>doctor
 <a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>pyffmpegcore<span class="w"> </span>smoke-test
 </code></pre></div>
 <p>A repository checkout also provides <code>./install.sh</code>.</p>
 <p><code>uv</code> users can install the same source revision as an isolated tool:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>uv<span class="w"> </span>tool<span class="w"> </span>install<span class="w"> </span><span class="s2">"pyffmpegcore @ git+https://github.com/OthmaneBlial/pyffmpegcore.git@2c1405a5a3f96b5fa30e713e51bfa61b5aa84834"</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>uv<span class="w"> </span>tool<span class="w"> </span>install<span class="w"> </span><span class="s2">"pyffmpegcore @ git+https://github.com/OthmaneBlial/pyffmpegcore.git@04d1e7051295bbcc4fa137c1214bbf340bf5c4c0"</span>
 <a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>pyffmpegcore<span class="w"> </span>smoke-test
 </code></pre></div>
 <h2 id="powershell">PowerShell<a class="headerlink" href="#powershell" title="Permanent link">&para;</a></h2>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="n">pipx</span> <span class="n">install</span> <span class="n">git</span><span class="p">+</span><span class="n">https</span><span class="p">://</span><span class="n">github</span><span class="p">.</span><span class="n">com</span><span class="p">/</span><span class="n">OthmaneBlial</span><span class="p">/</span><span class="n">pyffmpegcore</span><span class="p">.</span><span class="n">git</span><span class="nv">@2c1405a5a3f96b5fa30e713e51bfa61b5aa84834</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="n">pipx</span> <span class="n">install</span> <span class="n">git</span><span class="p">+</span><span class="n">https</span><span class="p">://</span><span class="n">github</span><span class="p">.</span><span class="n">com</span><span class="p">/</span><span class="n">OthmaneBlial</span><span class="p">/</span><span class="n">pyffmpegcore</span><span class="p">.</span><span class="n">git</span><span class="nv">@04d1e7051295bbcc4fa137c1214bbf340bf5c4c0</span>
 <a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="n">pyffmpegcore</span> <span class="p">-</span><span class="n">-version</span>
 <a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="n">pyffmpegcore</span> <span class="n">doctor</span>
 <a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="n">pyffmpegcore</span> <span class="n">smoke-test</span>
@@ -1903,7 +1933,7 @@
 <p>From a checkout, use <code>./install.ps1</code>; do not run the POSIX shell installer on Windows.</p>
 <h2 id="python-project-dependency">Python project dependency<a class="headerlink" href="#python-project-dependency" title="Permanent link">&para;</a></h2>
 <p>For evaluation before the first public package release:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>python<span class="w"> </span>-m<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span><span class="s2">"git+https://github.com/OthmaneBlial/pyffmpegcore.git@2c1405a5a3f96b5fa30e713e51bfa61b5aa84834"</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>python<span class="w"> </span>-m<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span><span class="s2">"git+https://github.com/OthmaneBlial/pyffmpegcore.git@04d1e7051295bbcc4fa137c1214bbf340bf5c4c0"</span>
 </code></pre></div>
 <p>The full commit SHA is deliberate: it makes the evaluation build reproducible.
 Switch to a released version constraint only after the PyPI endpoint is healthy.</p>

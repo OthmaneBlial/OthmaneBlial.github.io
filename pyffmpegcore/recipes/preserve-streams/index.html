@@ -10,31 +10,31 @@
       
       
       
-        <link rel="canonical" href="https://othmaneblial.github.io/pyffmpegcore/container/">
+        <link rel="canonical" href="https://othmaneblial.github.io/pyffmpegcore/recipes/preserve-streams/">
       
       
-        <link rel="prev" href="../pipelines/">
+        <link rel="prev" href="../exact-size/">
       
       
-        <link rel="next" href="../github-action/">
+        <link rel="next" href="../audio-extraction/">
       
       
         
       
       
-      <link rel="icon" href="../assets/mark.svg">
+      <link rel="icon" href="../../assets/mark.svg">
       <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
     
     
       
-        <title>Container image - PyFFmpegCore</title>
+        <title>Preserve every stream - PyFFmpegCore</title>
       
     
     
-      <link rel="stylesheet" href="../assets/stylesheets/main.ec1eaa64.min.css">
+      <link rel="stylesheet" href="../../assets/stylesheets/main.ec1eaa64.min.css">
       
         
-        <link rel="stylesheet" href="../assets/stylesheets/palette.ab4e12ef.min.css">
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
       
       
 
@@ -53,9 +53,9 @@
       
     
     
-      <link rel="stylesheet" href="../stylesheets/extra.css">
+      <link rel="stylesheet" href="../../stylesheets/extra.css">
     
-    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
       
 
@@ -80,7 +80,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#container-image-and-supply-chain-policy" class="md-skip">
+        <a href="#preserve-every-media-stream" class="md-skip">
           Skip to content
         </a>
       
@@ -96,9 +96,9 @@
 
 <header class="md-header md-header--shadow" data-md-component="header">
   <nav class="md-header__inner md-grid" aria-label="Header">
-    <a href=".." title="PyFFmpegCore" class="md-header__button md-logo" aria-label="PyFFmpegCore" data-md-component="logo">
+    <a href="../.." title="PyFFmpegCore" class="md-header__button md-logo" aria-label="PyFFmpegCore" data-md-component="logo">
       
-  <img src="../assets/mark.svg" alt="logo">
+  <img src="../../assets/mark.svg" alt="logo">
 
     </a>
     <label class="md-header__button md-icon" for="__drawer">
@@ -115,7 +115,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Container image
+              Preserve every stream
             
           </span>
         </div>
@@ -233,9 +233,9 @@
 
 <nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
-    <a href=".." title="PyFFmpegCore" class="md-nav__button md-logo" aria-label="PyFFmpegCore" data-md-component="logo">
+    <a href="../.." title="PyFFmpegCore" class="md-nav__button md-logo" aria-label="PyFFmpegCore" data-md-component="logo">
       
-  <img src="../assets/mark.svg" alt="logo">
+  <img src="../../assets/mark.svg" alt="logo">
 
     </a>
     PyFFmpegCore
@@ -262,7 +262,7 @@
   
   
     <li class="md-nav__item">
-      <a href=".." class="md-nav__link">
+      <a href="../.." class="md-nav__link">
         
   
   
@@ -289,7 +289,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../quickstart/" class="md-nav__link">
+      <a href="../../quickstart/" class="md-nav__link">
         
   
   
@@ -316,7 +316,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../installation/" class="md-nav__link">
+      <a href="../../installation/" class="md-nav__link">
         
   
   
@@ -343,7 +343,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../profiles/" class="md-nav__link">
+      <a href="../../profiles/" class="md-nav__link">
         
   
   
@@ -370,7 +370,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../preflight/" class="md-nav__link">
+      <a href="../../preflight/" class="md-nav__link">
         
   
   
@@ -397,7 +397,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../plans/" class="md-nav__link">
+      <a href="../../plans/" class="md-nav__link">
         
   
   
@@ -424,7 +424,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../receipts/" class="md-nav__link">
+      <a href="../../receipts/" class="md-nav__link">
         
   
   
@@ -451,7 +451,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../batches/" class="md-nav__link">
+      <a href="../../batches/" class="md-nav__link">
         
   
   
@@ -478,7 +478,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../pipelines/" class="md-nav__link">
+      <a href="../../pipelines/" class="md-nav__link">
         
   
   
@@ -502,37 +502,10 @@
       
   
   
-    
   
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-        
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Container image
-  
-
-    
-  </span>
-  
-  
-
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="./" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="../../container/" class="md-nav__link">
         
   
   
@@ -548,70 +521,6 @@
   
 
       </a>
-      
-        
-
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#build-inputs" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Build inputs
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#publication-gate" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Publication gate
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#licensing-and-codecs" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Licensing and codecs
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#verification" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Verification
-      
-    </span>
-  </a>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
     </li>
   
 
@@ -623,7 +532,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../github-action/" class="md-nav__link">
+      <a href="../../github-action/" class="md-nav__link">
         
   
   
@@ -650,7 +559,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../performance/" class="md-nav__link">
+      <a href="../../performance/" class="md-nav__link">
         
   
   
@@ -677,7 +586,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../evidence/" class="md-nav__link">
+      <a href="../../evidence/" class="md-nav__link">
         
   
   
@@ -704,7 +613,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../community/" class="md-nav__link">
+      <a href="../../community/" class="md-nav__link">
         
   
   
@@ -793,7 +702,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../notes/capability-preflight/" class="md-nav__link">
+      <a href="../../notes/capability-preflight/" class="md-nav__link">
         
   
   
@@ -821,7 +730,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../notes/exact-size-compression/" class="md-nav__link">
+      <a href="../../notes/exact-size-compression/" class="md-nav__link">
         
   
   
@@ -849,7 +758,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../notes/deterministic-plans/" class="md-nav__link">
+      <a href="../../notes/deterministic-plans/" class="md-nav__link">
         
   
   
@@ -877,7 +786,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../notes/privacy-safe-receipts/" class="md-nav__link">
+      <a href="../../notes/privacy-safe-receipts/" class="md-nav__link">
         
   
   
@@ -909,6 +818,8 @@
       
   
   
+    
+  
   
   
     
@@ -943,15 +854,15 @@
       
     
     
-    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_16" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_16" checked>
         
           
           <div class="md-nav__link md-nav__container">
-            <a href="../recipes/" class="md-nav__link ">
+            <a href="../" class="md-nav__link ">
               
   
   
@@ -975,7 +886,7 @@
             
           </div>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_16_label" aria-expanded="false">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_16_label" aria-expanded="true">
           <label class="md-nav__title" for="__nav_16">
             <span class="md-nav__icon md-icon"></span>
             
@@ -995,7 +906,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../recipes/web-video/" class="md-nav__link">
+      <a href="../web-video/" class="md-nav__link">
         
   
   
@@ -1023,7 +934,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../recipes/exact-size/" class="md-nav__link">
+      <a href="../exact-size/" class="md-nav__link">
         
   
   
@@ -1048,10 +959,37 @@
                 
   
   
+    
   
   
-    <li class="md-nav__item">
-      <a href="../recipes/preserve-streams/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Preserve every stream
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         
   
   
@@ -1067,6 +1005,59 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#inspect-explain-then-copy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Inspect, explain, then copy
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#input-and-output-contract" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Input and output contract
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#verify" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Verify
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -1079,7 +1070,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../recipes/audio-extraction/" class="md-nav__link">
+      <a href="../audio-extraction/" class="md-nav__link">
         
   
   
@@ -1107,7 +1098,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../recipes/podcast/" class="md-nav__link">
+      <a href="../podcast/" class="md-nav__link">
         
   
   
@@ -1135,7 +1126,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../recipes/subtitles/" class="md-nav__link">
+      <a href="../subtitles/" class="md-nav__link">
         
   
   
@@ -1163,7 +1154,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../recipes/thumbnails/" class="md-nav__link">
+      <a href="../thumbnails/" class="md-nav__link">
         
   
   
@@ -1191,7 +1182,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../recipes/image-batches/" class="md-nav__link">
+      <a href="../image-batches/" class="md-nav__link">
         
   
   
@@ -1290,7 +1281,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../reference/cli/" class="md-nav__link">
+      <a href="../../reference/cli/" class="md-nav__link">
         
   
   
@@ -1318,7 +1309,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../reference/python-api/" class="md-nav__link">
+      <a href="../../reference/python-api/" class="md-nav__link">
         
   
   
@@ -1346,7 +1337,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../api-stability/" class="md-nav__link">
+      <a href="../../api-stability/" class="md-nav__link">
         
   
   
@@ -1374,7 +1365,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../exit-codes/" class="md-nav__link">
+      <a href="../../exit-codes/" class="md-nav__link">
         
   
   
@@ -1402,7 +1393,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../schemas/" class="md-nav__link">
+      <a href="../../schemas/" class="md-nav__link">
         
   
   
@@ -1499,7 +1490,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../troubleshooting/" class="md-nav__link">
+      <a href="../../troubleshooting/" class="md-nav__link">
         
   
   
@@ -1527,7 +1518,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../COMPATIBILITY/" class="md-nav__link">
+      <a href="../../COMPATIBILITY/" class="md-nav__link">
         
   
   
@@ -1555,7 +1546,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../SECURITY_MODEL/" class="md-nav__link">
+      <a href="../../SECURITY_MODEL/" class="md-nav__link">
         
   
   
@@ -1583,7 +1574,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../RELEASING/" class="md-nav__link">
+      <a href="../../RELEASING/" class="md-nav__link">
         
   
   
@@ -1680,7 +1671,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../comparison/" class="md-nav__link">
+      <a href="../../comparison/" class="md-nav__link">
         
   
   
@@ -1708,7 +1699,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../test-methodology/" class="md-nav__link">
+      <a href="../../test-methodology/" class="md-nav__link">
         
   
   
@@ -1736,7 +1727,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../migration/" class="md-nav__link">
+      <a href="../../migration/" class="md-nav__link">
         
   
   
@@ -1819,10 +1810,10 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#build-inputs" class="md-nav__link">
+  <a href="#inspect-explain-then-copy" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Build inputs
+        Inspect, explain, then copy
       
     </span>
   </a>
@@ -1830,10 +1821,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#publication-gate" class="md-nav__link">
+  <a href="#input-and-output-contract" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Publication gate
+        Input and output contract
       
     </span>
   </a>
@@ -1841,21 +1832,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#licensing-and-codecs" class="md-nav__link">
+  <a href="#verify" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Licensing and codecs
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#verification" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Verification
+        Verify
       
     </span>
   </a>
@@ -1882,78 +1862,56 @@
   
 
 
-<h1 id="container-image-and-supply-chain-policy">Container image and supply-chain policy<a class="headerlink" href="#container-image-and-supply-chain-policy" title="Permanent link">&para;</a></h1>
-<p>The supported container packages the Python CLI with a documented Debian FFmpeg
-build. It runs as UID/GID <code>10001</code>, uses no shell entrypoint, and supports
-<code>linux/amd64</code> and <code>linux/arm64</code>.</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>docker<span class="w"> </span>run<span class="w"> </span>--rm<span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="w">  </span>ghcr.io/othmaneblial/pyffmpegcore@sha256:c51cffe123e254650337e8973db4ab01587dbaa8ad08df77fee3c1ca3c08e5ca<span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="w">  </span>doctor
-<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>docker<span class="w"> </span>run<span class="w"> </span>--rm<span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="w">  </span>--volume<span class="w"> </span><span class="s2">"</span><span class="nv">$PWD</span><span class="s2">:/workspace"</span><span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="w">  </span>--workdir<span class="w"> </span>/workspace<span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a><span class="w">  </span>ghcr.io/othmaneblial/pyffmpegcore@sha256:c51cffe123e254650337e8973db4ab01587dbaa8ad08df77fee3c1ca3c08e5ca<span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a><span class="w">  </span>pipeline<span class="w"> </span>run<span class="w"> </span>pipeline.json<span class="w"> </span>--receipt-dir<span class="w"> </span>receipts
+<h1 id="preserve-every-media-stream">Preserve every media stream<a class="headerlink" href="#preserve-every-media-stream" title="Permanent link">&para;</a></h1>
+<p>Use this when remuxing a rich media file and losing a second audio track,
+subtitle, attachment, or data stream would be a failure.</p>
+<p>FFmpeg's default stream selection normally chooses one stream of each supported
+type. That behavior repeatedly surprises users working with multilingual and
+captioned files: see the independent reports about <a href="https://superuser.com/questions/1513289/track-2-and-sub-titles-lost-in-ffmpeg-conversion">lost secondary tracks and
+subtitles</a>,
+<a href="https://superuser.com/questions/1406666/how-to-get-all-subtitle-streams-recorded-in-ffmpeg/1625114">keeping every subtitle stream</a>,
+and <a href="https://superuser.com/questions/811939/ffmpeg-convert-and-keep-audio-track">retaining multiple audio tracks</a>.</p>
+<h2 id="inspect-explain-then-copy">Inspect, explain, then copy<a class="headerlink" href="#inspect-explain-then-copy" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>pyffmpegcore<span class="w"> </span>probe<span class="w"> </span>--input<span class="w"> </span>source.mkv<span class="w"> </span>--json
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>pyffmpegcore<span class="w"> </span>convert<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="w">  </span>--input<span class="w"> </span>source.mkv<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="w">  </span>--output<span class="w"> </span>preserved.mkv<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="w">  </span>--preserve-all-streams<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a><span class="w">  </span>--explain
+<a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>
+<a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a>pyffmpegcore<span class="w"> </span>convert<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a><span class="w">  </span>--input<span class="w"> </span>source.mkv<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a><span class="w">  </span>--output<span class="w"> </span>preserved.mkv<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a><span class="w">  </span>--preserve-all-streams<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a><span class="w">  </span>--receipt<span class="w"> </span>preserved.receipt.json
+<a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a>
+<a id="__codelineno-0-15" name="__codelineno-0-15" href="#__codelineno-0-15"></a>pyffmpegcore<span class="w"> </span>probe<span class="w"> </span>--input<span class="w"> </span>preserved.mkv<span class="w"> </span>--json
 </code></pre></div>
-<p>Do not use a mutable tag for repeatable automation. The digest above is the
-public <code>linux/amd64</code> and <code>linux/arm64</code> index built from revision <code>96654e3</code> after
-the runtime and vulnerability gates passed. The repository Action uses the same
-digest by default.</p>
-<h2 id="build-inputs">Build inputs<a class="headerlink" href="#build-inputs" title="Permanent link">&para;</a></h2>
+<p>The plan explicitly maps input <code>0</code> and uses stream copy for every mapped
+stream. Video and audio samples are not decoded or re-encoded. Compatible
+format metadata and chapters are copied too, and an existing output is still
+refused unless <code>--force</code> is explicit.</p>
+<h2 id="input-and-output-contract">Input and output contract<a class="headerlink" href="#input-and-output-contract" title="Permanent link">&para;</a></h2>
 <ul>
-<li>base: <code>python:3.12.14-slim-bookworm@sha256:0f5b26b9518d002b6173fd61daad821fa340635ebfec5bba471013f9ca114579</code></li>
-<li>FFmpeg Debian package: <code>7:5.1.9-0+deb12u1</code></li>
-<li>Python package: the exact checked-out repository revision recorded by OCI
-  labels and provenance</li>
-<li>runtime user: numeric UID/GID <code>10001</code></li>
+<li>Choose an output container that supports every input codec. Keeping the same
+  container is the safest default; Matroska is usually a practical container
+  for mixed stream types.</li>
+<li><code>--preserve-all-streams</code> intentionally rejects <code>--audio-only</code>, codec,
+  bitrate, thread, and hardware-acceleration options. Use the normal conversion
+  path when re-encoding is the goal.</li>
+<li>Attachments and data streams are mapped as well as video, audio, and
+  subtitles. Inspect the plan before writing.</li>
+<li>A container incompatibility is reported as a failed job; PyFFmpegCore does
+  not silently drop the unsupported stream.</li>
 </ul>
-<p>The base digest is immutable. Debian dependency resolution can still change
-when a security update is published, so the pushed image digest, SBOM, and
-provenance—not a local rebuild—are the release identity.</p>
-<p>The final runtime removes the checked-out source tree and Python packaging
-tools (<code>pip</code>, <code>setuptools</code>, and <code>wheel</code>) after installing PyFFmpegCore. Those
-tools are build inputs, not runtime features. CI proves their absence before
-publishing an image.</p>
-<h2 id="publication-gate">Publication gate<a class="headerlink" href="#publication-gate" title="Permanent link">&para;</a></h2>
-<p>The container workflow:</p>
-<ol>
-<li>builds an amd64 candidate;</li>
-<li>proves the non-root user, <code>doctor</code>, and synthetic smoke test;</li>
-<li>blocks on HIGH or CRITICAL Trivy findings for which an upstream fix exists;</li>
-<li>publishes an amd64/arm64 OCI image only after those gates;</li>
-<li>attaches BuildKit SBOM and maximum provenance;</li>
-<li>creates a GitHub artifact attestation for the pushed digest.</li>
-</ol>
-<p>A weekly scheduled run rebuilds and scans without publishing. Dependency or
-base updates require a reviewed pull request and a new immutable digest.
-Container maintenance is owned by the repository maintainer.</p>
-<p>The complete SARIF intentionally also reports Debian/CPython advisories whose
-<code>Fixed Version</code> is empty. Those findings cannot be patched inside this image
-without replacing the supported upstream package source. They are explicitly
-triaged as accepted upstream risk in GitHub code scanning, not silently
-discarded. When Trivy starts reporting a fixed version, the separate blocking
-scan fails until the base or package is upgraded and a new digest is published.</p>
-<h2 id="licensing-and-codecs">Licensing and codecs<a class="headerlink" href="#licensing-and-codecs" title="Permanent link">&para;</a></h2>
-<p>PyFFmpegCore source is MIT. The container also redistributes Debian's FFmpeg
-package and its transitive libraries under their own licenses, including
-GPL/LGPL components. Debian copyright files remain installed under
-<code>/usr/share/doc</code>, and the generated SBOM inventories the installed packages.
-Codec patent rules vary by jurisdiction; image users remain responsible for
-their media and deployment context.</p>
-<p>The review baseline is the Debian Bookworm FFmpeg package source and copyright
-metadata. A future custom FFmpeg build requires a fresh license, codec,
-security-update, and maintenance review before it can replace this image.</p>
-<h2 id="verification">Verification<a class="headerlink" href="#verification" title="Permanent link">&para;</a></h2>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>docker<span class="w"> </span>build<span class="w"> </span>--file<span class="w"> </span>Containerfile<span class="w"> </span>--tag<span class="w"> </span>pyffmpegcore:local<span class="w"> </span>.
-<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>docker<span class="w"> </span>run<span class="w"> </span>--rm<span class="w"> </span>pyffmpegcore:local<span class="w"> </span>smoke-test<span class="w"> </span>--json
-<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>
-<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>gh<span class="w"> </span>attestation<span class="w"> </span>verify<span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a><span class="w">  </span>oci://ghcr.io/othmaneblial/pyffmpegcore@sha256:c51cffe123e254650337e8973db4ab01587dbaa8ad08df77fee3c1ca3c08e5ca<span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a><span class="w">  </span>--repo<span class="w"> </span>OthmaneBlial/pyffmpegcore
-</code></pre></div>
-<p>The workflow's <code>container-evidence-*</code> artifact contains the doctor report,
-smoke report, FFmpeg version, a complete SARIF vulnerability report, and the
-filtered HIGH/CRITICAL JSON publication gate for every build.</p>
+<h2 id="verify">Verify<a class="headerlink" href="#verify" title="Permanent link">&para;</a></h2>
+<p>Compare the before/after probes. The maintained real-media test asserts one
+video stream, two differently tagged audio streams, one subtitle stream,
+Unicode container metadata, and two chapters after the copy. The exact wheel
+also runs this recipe on Linux, macOS, and Windows during release validation.</p>
+<p>If you need to re-encode while making custom per-stream choices, use reviewed
+raw FFmpeg for now and include the complete stream map in any recipe proposal.</p>
 
 
 
@@ -1991,7 +1949,7 @@ filtered HIGH/CRITICAL JSON publication gate for every build.</p>
       <nav class="md-footer__inner md-grid" aria-label="Footer" >
         
           
-          <a href="../pipelines/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Declarative pipelines">
+          <a href="../exact-size/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Exact-size upload">
             <div class="md-footer__button md-icon">
               
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
@@ -2001,20 +1959,20 @@ filtered HIGH/CRITICAL JSON publication gate for every build.</p>
                 Previous
               </span>
               <div class="md-ellipsis">
-                Declarative pipelines
+                Exact-size upload
               </div>
             </div>
           </a>
         
         
           
-          <a href="../github-action/" class="md-footer__link md-footer__link--next" aria-label="Next: GitHub Action">
+          <a href="../audio-extraction/" class="md-footer__link md-footer__link--next" aria-label="Next: Audio extraction">
             <div class="md-footer__title">
               <span class="md-footer__direction">
                 Next
               </span>
               <div class="md-ellipsis">
-                GitHub Action
+                Audio extraction
               </div>
             </div>
             <div class="md-footer__button md-icon">
@@ -2068,12 +2026,12 @@ filtered HIGH/CRITICAL JSON publication gate for every build.</p>
     
       
       
-      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["navigation.instant", "navigation.indexes", "navigation.footer", "navigation.sections", "navigation.top", "toc.follow", "search.highlight", "search.suggest", "content.code.copy", "content.tabs.link"], "search": "../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.instant", "navigation.indexes", "navigation.footer", "navigation.sections", "navigation.top", "toc.follow", "search.highlight", "search.suggest", "content.code.copy", "content.tabs.link"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
     
     
-      <script src="../assets/javascripts/bundle.d7400e89.min.js"></script>
+      <script src="../../assets/javascripts/bundle.d7400e89.min.js"></script>
       
-        <script src="../javascripts/site.js"></script>
+        <script src="../../javascripts/site.js"></script>
       
     
   </body>

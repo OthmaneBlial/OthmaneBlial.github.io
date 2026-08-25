@@ -843,6 +843,8 @@
       
         
       
+        
+      
     
     
     
@@ -1020,6 +1022,34 @@
     
   
     Exact-size upload
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../preserve-streams/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Preserve every stream
   
 
     
@@ -1833,11 +1863,16 @@
 
 
 <h1 id="web-compatible-video">Web-compatible video<a class="headerlink" href="#web-compatible-video" title="Permanent link">&para;</a></h1>
-<p>Use this when an H.264/AAC MP4 is more portable than a source WebM or editor export.</p>
+<p>Use this when an H.264/AAC MP4 is more portable than a source WebM or editor
+export. This recipe responds to recurring reports where an MP4 <a href="https://stackoverflow.com/questions/24693751/html5-video-ffmpeg-encoded-mp4-not-playing-in-any-browser-plays-in-vlc-though">plays in VLC
+but not in browsers</a>,
+needs a <a href="https://stackoverflow.com/questions/32829514/which-pixel-format-for-web-mp4-video">widely compatible pixel format</a>,
+or cannot start progressively because the <a href="https://superuser.com/questions/851316/swapping-index-of-an-mp4-file-with-ffmpeg">MP4 index is at the end</a>.</p>
 <h2 id="cli">CLI<a class="headerlink" href="#cli" title="Permanent link">&para;</a></h2>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>pyffmpegcore<span class="w"> </span>probe<span class="w"> </span>--input<span class="w"> </span>input.webm
-<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>pyffmpegcore<span class="w"> </span>convert<span class="w"> </span>--input<span class="w"> </span>input.webm<span class="w"> </span>--output<span class="w"> </span>output.mp4<span class="w"> </span>--video-codec<span class="w"> </span>libx264<span class="w"> </span>--audio-codec<span class="w"> </span>aac
-<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>pyffmpegcore<span class="w"> </span>probe<span class="w"> </span>--input<span class="w"> </span>output.mp4<span class="w"> </span>--json
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>pyffmpegcore<span class="w"> </span>profile<span class="w"> </span>run<span class="w"> </span>web/mp4-compatible<span class="w"> </span>--input<span class="w"> </span>input.webm<span class="w"> </span>--output<span class="w"> </span>output.mp4<span class="w"> </span>--explain
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>pyffmpegcore<span class="w"> </span>profile<span class="w"> </span>run<span class="w"> </span>web/mp4-compatible<span class="w"> </span>--input<span class="w"> </span>input.webm<span class="w"> </span>--output<span class="w"> </span>output.mp4<span class="w"> </span>--receipt<span class="w"> </span>web.receipt.json
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>pyffmpegcore<span class="w"> </span>probe<span class="w"> </span>--input<span class="w"> </span>output.mp4<span class="w"> </span>--json
 </code></pre></div>
 <p>PowerShell uses the same arguments. Quote Windows paths containing spaces.</p>
 <h2 id="python">Python<a class="headerlink" href="#python" title="Permanent link">&para;</a></h2>
@@ -1853,7 +1888,15 @@
 <a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a>    <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">stderr</span><span class="p">)</span>
 </code></pre></div>
 <h2 id="verify">Verify<a class="headerlink" href="#verify" title="Permanent link">&para;</a></h2>
-<p>The output should probe as an MP4-family container with H.264 video and AAC audio when the source has audio. The command re-encodes; it is not lossless. Existing outputs require explicit CLI <code>--force</code>.</p>
+<p>The output should probe as an MP4-family container with H.264 video, AAC audio
+when the source has audio, YUV 4:2:0 pixels, and the <code>moov</code> atom before media
+data for progressive download. The command re-encodes and selects the first
+video/audio streams; it is not lossless. Use the <a href="../preserve-streams/">preserve every stream
+recipe</a> instead when remuxing a rich file without track
+loss. Existing outputs require explicit CLI <code>--force</code>.</p>
+<p>Media compatibility does not replace web-server correctness. Serve the file
+with the appropriate <code>Content-Type</code> and byte-range support for the target
+browser.</p>
 <p>See the <a href="../../evidence/#reproducible-recipe-evidence">dated before/after proof and redacted receipt</a>.</p>
 
 
