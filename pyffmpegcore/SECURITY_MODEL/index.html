@@ -1948,6 +1948,13 @@
 <p>Untrusted data can enter through file and directory paths, media bytes, container metadata, subtitle text, filter arguments, URLs, environment-selected binaries, and output locations. FFmpeg/FFprobe and the operating system remain separate trusted components with their own security updates.</p>
 <h2 id="command-construction">Command Construction<a class="headerlink" href="#command-construction" title="Permanent link">&para;</a></h2>
 <p>Runtime process launches use argument arrays with <code>shell=False</code> behavior. User-controlled values are never interpolated into a shell command. This prevents normal shell metacharacters in paths from becoming shell syntax.</p>
+<p>Managed FFmpeg processes receive <code>-nostdin</code> and a null standard-input handle.
+They cannot enter FFmpeg's interactive command mode or suspend while checking a
+CI/background console. Plans expose <code>-nostdin</code> so this behavior is reviewable
+before execution.</p>
+<p>FFmpeg stdout and stderr are decoded explicitly as UTF-8 with replacement for
+malformed bytes. Locale-specific decoding cannot terminate a pipe-drain thread
+and leave the child process blocked on Unicode media metadata.</p>
 <p>FFmpeg filter graphs and concat manifests have their own grammars. Values embedded in those grammars require context-specific escaping; shell avoidance alone is not sufficient. New features must prefer separate FFmpeg arguments, constrain values to typed choices or numbers, and test spaces, apostrophes, Unicode, colons, and Windows-style paths where applicable.</p>
 <h2 id="files-temporary-data-and-overwrites">Files, Temporary Data, and Overwrites<a class="headerlink" href="#files-temporary-data-and-overwrites" title="Permanent link">&para;</a></h2>
 <p>Commands reject an existing output unless the user passes <code>--force</code>. Temporary work should use private, randomly named directories and be removed after completion. Release and CI scripts must not place credentials or personal media into artifacts. Symlink and time-of-check/time-of-use attacks are not fully prevented when processing in an attacker-controlled directory; use a trusted working directory for hostile inputs.</p>
@@ -1962,6 +1969,7 @@
 <h2 id="security-invariants">Security Invariants<a class="headerlink" href="#security-invariants" title="Permanent link">&para;</a></h2>
 <ul>
 <li>No runtime <code>shell=True</code>, <code>os.system</code>, or shell-string process launch.</li>
+<li>No interactive standard input for managed FFmpeg jobs.</li>
 <li>No silent overwrite.</li>
 <li>Stable exit categories distinguish usage, environment, validation, processing, and partial success.</li>
 <li>Generated fixtures and release artifacts contain no unknown third-party media.</li>
