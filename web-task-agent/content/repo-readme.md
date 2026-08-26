@@ -1,22 +1,32 @@
 # Web Task Agent
 
+> ## Research should end with evidence — not “trust me.”
+>
+> Turn a messy web question into a local decision package another person can inspect, challenge, resume, and share.
+
 [![CI](https://github.com/OthmaneBlial/web-task-agent/actions/workflows/ci.yml/badge.svg)](https://github.com/OthmaneBlial/web-task-agent/actions/workflows/ci.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 [![243 executable workflows](https://img.shields.io/badge/workflows-243%20executable-0f766e)](examples/workflows/CATALOG.md)
 [![Local-first](https://img.shields.io/badge/privacy-local--first-164e63)](PRIVACY.md)
 [![Project site](https://img.shields.io/badge/site-live-0f766e)](https://othmaneblial.github.io/web-task-agent/)
 
-> **Turn a messy web question into an evidence-backed decision you can challenge, resume, and share — without losing the source trail.**
+Most research tools stop after finding pages. Web Task Agent keeps the decision trail: the source snapshots, evidence clusters, contradictions, recovery state, and the smallest next validation. It runs locally and leaves a handoff that survives the browser closing or a run being interrupted.
 
-Research agents can browse. Web Task Agent is built for the harder part: leaving behind a decision package another person can inspect, dispute, and continue.
+```text
+Your question
+  └─ “What should we validate before building this?”
 
-It is a local-first research runner with durable jobs, source snapshots, evidence clusters, contradictions, recovery, queue workers, and a handoff a teammate can actually use. It is not a hosted scraper, an access-control bypass tool, or a generic browser-agent framework.
+Local decision package
+  ├─ handoff/workflow-brief.md     Start here: recommendation + next validation
+  ├─ report.md                     Findings, uncertainty, and contradictions
+  ├─ evidence/sources.json         Source trail, role, and collection date
+  ├─ package-manifest.json         Explicit, versioned file contract
+  └─ runtime/                      Durable state for inspection and recovery
+```
 
-![Web Task Agent local product proof](docs/assets/product-proof.jpg)
+Not a hosted scraper. Not an access-control bypass. Not another generic browser-agent wrapper.
 
-The capture comes from the versioned local documentation site. Everything it promises is inspectable in this repository before you connect a browser or model.
-
-**Live documentation:** [othmaneblial.github.io/web-task-agent](https://othmaneblial.github.io/web-task-agent/)
+**See the full product story:** [live documentation](https://othmaneblial.github.io/web-task-agent/) · [eight inspectable receipts](RESEARCH_RECEIPTS.md) · [latest release](https://github.com/OthmaneBlial/web-task-agent/releases/latest)
 
 ## Get a real package in two minutes — no key, browser, or network
 
