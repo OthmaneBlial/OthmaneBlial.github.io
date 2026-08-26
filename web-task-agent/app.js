@@ -56,6 +56,13 @@ const DOC_PAGES = [
     path: "content/privacy.md"
   },
   {
+    slug: "trust-model",
+    section: "Operations",
+    title: "Trust Model",
+    summary: "What a receipt verifies, what the web and model can still get wrong, and the operator checklist.",
+    path: "content/trust-model.md"
+  },
+  {
     slug: "project-charter",
     section: "Reference",
     title: "Project Charter",
@@ -82,6 +89,13 @@ const DOC_PAGES = [
     title: "Examples",
     summary: "Concrete operator scenarios built from the current repo commands and workflows.",
     path: "content/examples.md"
+  },
+  {
+    slug: "case-studies",
+    section: "Use Cases",
+    title: "Case Studies",
+    summary: "Three deterministic studies showing decision change, competitor mapping, and launch-risk review.",
+    path: "content/case-studies.md"
   },
   {
     slug: "project-layout",

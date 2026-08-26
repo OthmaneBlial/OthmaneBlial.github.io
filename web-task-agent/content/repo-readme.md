@@ -24,12 +24,14 @@ Local decision package
   ├─ report.md                     Findings, uncertainty, and contradictions
   ├─ evidence/sources.json         Source trail, role, and collection date
   ├─ package-manifest.json         Explicit, versioned file contract
+  ├─ receipt.json                  Claim-to-evidence decision contract
+  ├─ integrity-manifest.json       Offline SHA-256 file verification
   └─ runtime/                      Durable state for inspection and recovery
 ```
 
 This is local research infrastructure, not a hosted scraper, access-control bypass, or generic browser-agent wrapper.
 
-**See the full product story:** [live documentation](https://othmaneblial.github.io/web-task-agent/) · [eight inspectable receipts](RESEARCH_RECEIPTS.md) · [latest release](https://github.com/OthmaneBlial/web-task-agent/releases/latest)
+**See the full product story:** [live documentation](https://othmaneblial.github.io/web-task-agent/) · [trust model](docs/content/trust-model.md) · [case studies](docs/content/case-studies.md) · [activation measures](docs/activation.md) · [eight inspectable receipts](RESEARCH_RECEIPTS.md) · [latest release](https://github.com/OthmaneBlial/web-task-agent/releases/latest)
 
 The GitHub Packages mirror is available as `@othmaneblial/web-task-agent`. GitHub's npm registry requires a classic personal access token with `read:packages` even for public packages. Authenticate without committing that token, then install the mirror:
 
@@ -59,10 +61,36 @@ You get a complete, source-linked handoff:
 - `report.md` — findings, uncertainty, and the next validation.
 - `evidence/sources.json` — the source trail with role and collection date.
 - `package-manifest.json` — an explicit, versioned file contract.
+- `receipt.json` — a versioned claim-to-evidence contract with source snapshots and explicit limitations.
+- `integrity-manifest.json` — SHA-256 hashes that can be checked offline.
+
+Verify the package without network access:
+
+```bash
+web-task-agent receipt verify reports/demos/browser-agent-landscape
+```
+
+The verifier checks the receipt structure, evidence references, source snapshots, and exported file hashes. It cannot prove that a source is true, complete, authorized, or fresh.
+
+For a versioned install, use the tarball and checksum attached to a GitHub release. This is the canonical public distribution path; it does not require a registry token:
+
+```bash
+VERSION=0.5.0
+curl -fsSLO "https://github.com/OthmaneBlial/web-task-agent/releases/download/v${VERSION}/web-task-agent-${VERSION}.tgz"
+curl -fsSLO "https://github.com/OthmaneBlial/web-task-agent/releases/download/v${VERSION}/SHA256SUMS"
+grep "web-task-agent-${VERSION}.tgz" SHA256SUMS | sha256sum -c -
+npm install --global "./web-task-agent-${VERSION}.tgz"
+```
+
+The tag, package version, tarball name, and checksum are generated together by the release workflow. `npm run first-success` rehearses this clean-install path locally before a tag is published.
 
 Try the other deterministic demos with `web-task-agent demo list`. Every export includes a standalone `receipt.html` you can open locally or attach to a handoff. They are fixtures, clearly marked as such; they never pretend to be fresh research.
 
 Read all eight versioned [research receipts](RESEARCH_RECEIPTS.md) directly in the repository: launch readiness, competitor mapping, GitHub feedback, technical writing, app-review opportunities, workflow quality, and local-first risk review.
+
+The receipt contract also ships with an inspectable [evaluation scorecard](evaluation/scorecard.md) and four [adversarial policy fixtures](evaluation/adversarial/). They are regression evidence for package integrity and trust boundaries, not claims that the model or the web is always right.
+
+Provider-neutral results can be brought into the same contract with the [interop fixture](examples/interop/README.md). The adapter preserves source metadata, excerpts, limitations, and the next validation; it never imports cookies, browser sessions, or hosted-provider instructions.
 
 ## Why teams keep the package instead of just the answer
 
@@ -98,7 +126,13 @@ web-task-agent workflow list --search ecommerce
 web-task-agent workflow list --category "Pricing and Packaging"
 ```
 
-There are three focused core workflows plus 240 executable catalog workflows. Browse them in [examples/workflows/CATALOG.md](examples/workflows/CATALOG.md).
+There are four focused core workflows plus 240 executable catalog workflows. Start with the three [golden paths](examples/golden-paths/) before browsing the full [workflow catalog](examples/workflows/CATALOG.md).
+
+The three golden paths are deliberately opinionated:
+
+- [Decision Change Review](examples/golden-paths/decision-change-review/) — explain what changed between two decision receipts.
+- [Competitor Map](examples/golden-paths/competitor-map/) — choose where not to compete with evidence attached.
+- [Launch Risk Review](examples/golden-paths/launch-risk-review/) — test a public promise before announcing it.
 
 ## Why this instead of a crawler or generic browser agent?
 
