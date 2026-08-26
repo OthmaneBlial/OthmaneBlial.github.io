@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="SwiftAgent is a local, workspace-scoped control room for Claude Code tasks." />
+    <meta name="theme-color" content="#0d1918" />
+    <title>SwiftAgent — Local Claude Code control room</title>
+    <link rel="stylesheet" href="styles.css" />
+    <script src="app.js" defer></script>
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
+    <header class="topbar">
+      <a class="brand" href="./" aria-label="SwiftAgent home"><span class="brand-mark">↯</span> SwiftAgent</a>
+      <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="nav">Menu</button>
+      <nav id="nav" aria-label="Main navigation">
+        <a href="#workflow">Workflow</a><a href="#safety">Safety</a><a href="docs.html">Docs</a>
+        <a class="nav-github" href="https://github.com/OthmaneBlial/swiftagent">View source <span aria-hidden="true">↗</span></a>
+      </nav>
+    </header>
+    <main id="main">
+      <section class="hero shell">
+        <div class="hero-copy">
+          <p class="eyebrow"><span></span> LOCAL AGENT CONTROL ROOM</p>
+          <h1>Claude Code,<br /><em>with a flight deck.</em></h1>
+          <p class="lede">SwiftAgent turns an opaque CLI run into a local, reviewable workspace: live tool activity, durable task history, resumable sessions, and an honest safety status.</p>
+          <div class="hero-actions"><a class="button button-primary" href="#run">Run it locally <span aria-hidden="true">↓</span></a><a class="text-link" href="https://github.com/OthmaneBlial/swiftagent">Read the repository <span aria-hidden="true">↗</span></a></div>
+          <dl class="proof-strip" aria-label="SwiftAgent capabilities"><div><dt>01</dt><dd>Local-first</dd></div><div><dt>02</dt><dd>Workspace-scoped</dd></div><div><dt>03</dt><dd>Session-resumable</dd></div></dl>
+        </div>
+        <div class="terminal" aria-label="Example SwiftAgent event stream">
+          <div class="terminal-bar"><span></span><span></span><span></span><code>swiftagent / task stream</code></div>
+          <div class="terminal-body">
+            <p><b class="token token-prompt">›</b> Create <code>hello.md</code> with a two-line note</p>
+            <p class="event"><i></i><span>task:started</span> <code>8a3f…e1</code></p>
+            <p class="event"><i></i><span>task:progress</span> Spawning Claude in workspace</p>
+            <p class="event"><i></i><span>tool:use</span> Write <code>hello.md</code></p>
+            <p class="event"><i></i><span>task:complete</span> <strong>completed</strong></p>
+            <p class="cursor-line"><b class="token token-prompt">›</b><span class="cursor"></span></p>
+          </div>
+          <p class="terminal-note">A task is a visible record, not a black box.</p>
+        </div>
+      </section>
+      <section class="manifesto shell"><p class="section-number">01 / THE POINT</p><div><h2>Delegate work without losing the thread.</h2><p>SwiftAgent is for developers who like Claude Code but want a clearer operating surface around it. The app preserves what happened, shows the work in motion, and lets the next instruction continue the same conversation.</p></div></section>
+      <section id="workflow" class="workflow"><div class="shell"><div class="section-heading"><p class="section-number">02 / WORKFLOW</p><h2>One focused loop.</h2></div><ol class="flow-grid"><li><span>01</span><h3>Choose a workspace</h3><p>Keep file tools inside a dedicated project root.</p></li><li><span>02</span><h3>Describe the job</h3><p>Start a bounded task through the browser or WebSocket API.</p></li><li><span>03</span><h3>Watch the work</h3><p>See Claude responses, tool use, progress, and final state live.</p></li><li><span>04</span><h3>Continue with context</h3><p>Use the saved Claude session ID for the next useful instruction.</p></li></ol></div></section>
+      <section id="safety" class="safety shell"><div class="safety-callout"><p class="section-number">03 / SAFETY BY DEFAULT</p><h2>Strict means<br /><em>fail closed.</em></h2></div><div class="safety-copy"><p>In <code>strict</code> mode, SwiftAgent will not launch a task unless Linux <code>bwrap</code> is installed and usable. It does not silently switch to an unsandboxed process.</p><p><code>fallback</code> is a deliberate choice for a trusted local machine. It is visible in the UI and documented as unisolated—not dressed up as a sandbox.</p><a class="text-link" href="docs.html#safety-notes">Read the safety notes <span aria-hidden="true">→</span></a></div></section>
+      <section id="run" class="run shell"><div class="run-intro"><p class="section-number">04 / FIRST RUN</p><h2>Useful in a few minutes.</h2><p>Bring an authenticated Claude Code CLI, then run the local app. No hosted account or project upload is required by SwiftAgent.</p></div><div class="command-card"><div class="command-head"><span>terminal</span><button class="copy-button" type="button" data-copy-target="quickstart">Copy</button></div><pre id="quickstart"><code>git clone https://github.com/OthmaneBlial/swiftagent.git
+cd swiftagent
+make setup
+make onboard
+make dev</code></pre><p>Then open <code>http://127.0.0.1:5173</code> and verify the engine status before sensitive work.</p></div></section>
+      <section class="architecture shell"><p class="section-number">05 / SMALL BY DESIGN</p><div class="arch-grid"><div><span>Browser</span><strong>React + Vite</strong><p>Local task, files, history, and settings views.</p></div><div><span>Control plane</span><strong>FastAPI</strong><p>REST, WebSocket events, readiness, and diagnostics.</p></div><div><span>Memory</span><strong>SQLite</strong><p>Local settings, task history, messages, and results.</p></div><div><span>Execution</span><strong>Claude CLI</strong><p>Stream-json output, guarded workspace, optional strict isolation.</p></div></div></section>
+    </main>
+    <footer class="footer shell"><p><span class="brand-mark">↯</span> SwiftAgent</p><p>Local control for Claude Code.</p><div><a href="docs.html">Docs</a><a href="https://github.com/OthmaneBlial/swiftagent">GitHub</a><a href="https://github.com/OthmaneBlial/swiftagent/security/policy">Security</a></div></footer>
+  </body>
+</html>
