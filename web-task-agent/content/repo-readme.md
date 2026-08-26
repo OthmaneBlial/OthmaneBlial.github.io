@@ -39,7 +39,7 @@ You get a complete, source-linked handoff:
 
 Try the other deterministic demos with `web-task-agent demo list`. They are fixtures, clearly marked as such; they never pretend to be fresh research.
 
-Read all three versioned [research receipts](RESEARCH_RECEIPTS.md) directly in the repository: browser-agent positioning, workflow quality, and a local-first risk review.
+Read all eight versioned [research receipts](RESEARCH_RECEIPTS.md) directly in the repository: launch readiness, competitor mapping, GitHub feedback, technical writing, app-review opportunities, workflow quality, and local-first risk review.
 
 ## Why teams keep the package instead of just the answer
 

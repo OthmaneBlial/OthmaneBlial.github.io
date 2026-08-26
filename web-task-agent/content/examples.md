@@ -8,6 +8,16 @@ npm run start -- demo export local-first-risk-review
 
 This writes a source-linked, clearly labelled fixture package to `reports/demos/`. It is the fastest way to learn the report, evidence, and handoff contract without pretending a static example is fresh research.
 
+The deterministic gallery also covers public launch readiness, competitor mapping, GitHub feedback, technical article claims, and app-review opportunities:
+
+```bash
+npm run start -- demo list
+npm run start -- demo export product-launch-readiness
+npm run start -- demo export github-issue-opportunity
+```
+
+Every demo is a checked-in fixture. It proves the package shape and its source-reading path; it does not claim that a fresh live run produced current findings.
+
 ## Example 2: Research A New Android App Idea
 
 Goal:
