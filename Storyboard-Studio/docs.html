@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Storyboard Studio installation, export, privacy, and API documentation.">
+    <title>Documentation — Storyboard Studio</title>
+    <link rel="icon" href="favicon.svg" type="image/svg+xml">
+    <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Fraunces:opsz,wght@9..144,600;9..144,700&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css"><script src="app.js" defer></script>
+  </head>
+  <body>
+    <a class="skip-link" href="#docs-main">Skip to documentation</a>
+    <header class="nav"><a class="brand" href="index.html"><span class="mark" aria-hidden="true"><i></i><i></i><i></i></span>Storyboard <em>Studio</em></a><nav aria-label="Main navigation"><a href="index.html">Overview</a><a href="https://github.com/OthmaneBlial/Storyboard-Studio">Source <span aria-hidden="true">↗</span></a></nav></header>
+    <main class="docs" id="docs-main"><aside><p class="eyebrow">DOCUMENTATION</p><a href="#install">Install</a><a href="#gemini">Optional Gemini</a><a href="#export">CLI export</a><a href="#api">Local API</a><a href="#privacy">Privacy</a><a href="https://github.com/OthmaneBlial/Storyboard-Studio/blob/main/CONTRIBUTING.md">Contributing ↗</a></aside><article><p class="eyebrow">GET STARTED</p><h1>Run a focused deck studio on your own machine.</h1><p class="lead">Storyboard Studio is a FastAPI application with a dependency-free browser UI and a native PowerPoint renderer.</p>
+      <section id="install"><h2>Install and run</h2><pre><code>git clone https://github.com/OthmaneBlial/Storyboard-Studio.git
+cd Storyboard-Studio
+make setup
+make run</code><button class="copy-button" data-copy="git clone https://github.com/OthmaneBlial/Storyboard-Studio.git\ncd Storyboard-Studio\nmake setup\nmake run">Copy</button></pre><p>Open <code>http://127.0.0.1:8000</code>. Python 3.10 or newer is required.</p></section>
+      <section id="gemini"><h2>Optional Gemini outlining</h2><p>The app works without an API key. To ask Gemini for a richer first draft, export your own key before starting the server:</p><pre><code>export GEMINI_API_KEY="your-key"
+make run</code><button class="copy-button" data-copy="export GEMINI_API_KEY=\"your-key\"\nmake run">Copy</button></pre><p>Gemini failures return an editable local outline. Your key is read only from the process environment and must never be committed.</p></section>
+      <section id="export"><h2>Command-line export</h2><pre><code>python3 generate_pptx.py \
+  --input examples/product-brief.json \
+  --output output/my-deck.pptx</code><button class="copy-button" data-copy="python3 generate_pptx.py --input examples/product-brief.json --output output/my-deck.pptx">Copy</button></pre><p>The included JSON example is runnable and produces a title slide plus three editable content slides.</p></section>
+      <section id="api"><h2>Local API</h2><p>Interactive OpenAPI documentation is available at <code>/docs</code> while the local server runs.</p><ul><li><code>GET /api/health</code> — readiness and whether Gemini is configured.</li><li><code>POST /api/content</code> — a validated outline from a brief.</li><li><code>POST /api/presentations</code> — a PPTX from an outline.</li></ul></section>
+      <section id="privacy"><h2>Privacy and retention</h2><p>Storyboard Studio does not create accounts, profiles, analytics events, or a presentation database. A generated export is kept only in the local <code>output/</code> folder for download, then removed after 24 hours. Turning on Gemini sends the brief to that provider; use it only for material you are allowed to share.</p></section>
+      <p class="docs-end">For full configuration, security reporting, and contribution guidance, read the <a href="https://github.com/OthmaneBlial/Storyboard-Studio#readme">repository README</a>.</p></article></main>
+    <footer><div><a class="brand" href="index.html"><span class="mark" aria-hidden="true"><i></i><i></i><i></i></span>Storyboard <em>Studio</em></a><p>Local-first, editable presentation decks.</p></div><nav aria-label="Footer navigation"><a href="index.html">Overview</a><a href="https://github.com/OthmaneBlial/Storyboard-Studio/releases">Releases</a></nav></footer>
+  </body>
+</html>
