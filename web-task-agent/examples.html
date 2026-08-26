@@ -1,0 +1,239 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Web Task Agent Examples</title>
+  <meta
+    name="description"
+    content="Concrete workflow examples for Web Task Agent: Android opportunity research, technical article research, queued long jobs, and general research runs."
+  />
+  <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body data-page="examples">
+  <div class="site-shell">
+    <header class="topbar">
+      <a class="brand" href="index.html">
+        <span class="brand-mark">W</span>
+        <span>
+          <strong>Web Task Agent</strong>
+          <small>Examples</small>
+        </span>
+      </a>
+      <nav class="topnav">
+        <a href="index.html">Home</a>
+        <a href="docs.html">Docs</a>
+        <a href="docs.html#page=repo-readme">Repo README</a>
+      </nav>
+    </header>
+
+    <main>
+      <section class="section reveal">
+        <div class="section-heading">
+          <p class="eyebrow">Concrete Runs</p>
+          <h1 class="page-title">Examples grounded in the actual CLI, workflow templates, and package shape.</h1>
+          <p class="section-intro">
+            These are not invented marketing scenarios. They come from the repo’s real commands,
+            workflow defaults, and output packaging.
+          </p>
+        </div>
+      </section>
+
+      <section class="example-stack">
+        <article class="example-card reveal">
+          <div class="example-head">
+            <div>
+              <p class="eyebrow">Workflow 1</p>
+              <h2>Research a potentially viral Android app opportunity</h2>
+            </div>
+            <span class="pill">android-opportunity</span>
+          </div>
+          <p>
+            Use this when you want the system to scan competitor pages, product communities, app
+            reviews, and user pain points to produce an evidence-backed concept shortlist.
+          </p>
+          <pre><code class="language-bash">npm run start -- workflow run android-opportunity \
+  --topic "ai study planner" \
+  --preset deep</code></pre>
+          <div class="example-grid">
+            <div>
+              <h3>What the run should give you</h3>
+              <ul class="check-list">
+                <li>Repeated user pains and feature gaps</li>
+                <li>Competitor blind spots and monetization clues</li>
+                <li>A shortlist of app concepts and launch hooks</li>
+                <li>A report package you can review locally</li>
+              </ul>
+            </div>
+            <div>
+              <h3>Why the template helps</h3>
+              <p>
+                The template sets larger research budgets than a casual run and shapes the instruction
+                around app opportunity discovery instead of a generic summary task.
+              </p>
+            </div>
+          </div>
+        </article>
+
+        <article class="example-card reveal">
+          <div class="example-head">
+            <div>
+              <p class="eyebrow">Workflow 2</p>
+              <h2>Build a technical article brief from current web discussion</h2>
+            </div>
+            <span class="pill">article-research</span>
+          </div>
+          <p>
+            Use this when you want to write about a technical topic that is actively discussed on the
+            web and you need both consensus and disagreement captured before drafting.
+          </p>
+          <pre><code class="language-bash">npm run start -- workflow run article-research \
+  --topic "browser automation with Lightpanda and CDP"</code></pre>
+          <div class="example-grid">
+            <div>
+              <h3>What the run should give you</h3>
+              <ul class="check-list">
+                <li>Evidence-backed key findings</li>
+                <li>Contradictions or disagreements to handle carefully</li>
+                <li>Article angles and a practical outline</li>
+                <li>A claim checklist before drafting the final piece</li>
+              </ul>
+            </div>
+            <div>
+              <h3>Why the template helps</h3>
+              <p>
+                The workflow brief and handoff files make it much easier to move from research into
+                article production without rereading every raw source.
+              </p>
+            </div>
+          </div>
+        </article>
+
+        <article class="example-card reveal">
+          <div class="example-head">
+            <div>
+              <p class="eyebrow">Queued Run</p>
+              <h2>Queue a long research job and process it with a local worker</h2>
+            </div>
+            <span class="pill">queue + worker</span>
+          </div>
+          <p>
+            Use this when you want the job to sit in durable queue storage first, then let a worker
+            claim it, heartbeat it, and recover it later if the run is interrupted.
+          </p>
+          <pre><code class="language-bash">npm run start -- workflow enqueue android-opportunity \
+  --topic "budgeting app for couples"
+npm run start -- worker run --once
+npm run start -- queue list</code></pre>
+          <div class="example-grid">
+            <div>
+              <h3>Operational advantages</h3>
+              <ul class="check-list">
+                <li>Delayed execution and durable queue rows</li>
+                <li>Pause, resume, cancel, retry, and rerun controls</li>
+                <li>Lease recovery for stale or interrupted executions</li>
+                <li>Job and queue inspection through the dashboard or CLI</li>
+              </ul>
+            </div>
+            <div>
+              <h3>Where to inspect it</h3>
+              <pre><code class="language-bash">npm run start -- server run --port 4317</code></pre>
+              <p>Then open the local dashboard to inspect queue state, recoverable runs, and live logs.</p>
+            </div>
+          </div>
+        </article>
+
+        <article class="example-card reveal">
+          <div class="example-head">
+            <div>
+              <p class="eyebrow">General Agent Run</p>
+              <h2>Run a one-off research instruction outside the shipped templates</h2>
+            </div>
+            <span class="pill">agent run</span>
+          </div>
+          <p>
+            Use this when the task does not fit the built-in templates but you still want the staged
+            pipeline, persisted evidence, and report generation.
+          </p>
+          <pre><code class="language-bash">npm run start -- agent run \
+  "Research cheerful launch ideas for our product and write one evidence-backed post"</code></pre>
+          <div class="example-grid">
+            <div>
+              <h3>Best for</h3>
+              <ul class="check-list">
+                <li>Custom product or market questions</li>
+                <li>Exploratory research before deciding on a workflow</li>
+                <li>Shorter evidence-backed writeups</li>
+              </ul>
+            </div>
+            <div>
+              <h3>Still included</h3>
+              <ul class="check-list">
+                <li>Planning and research queries</li>
+                <li>Persisted sources, documents, and evidence</li>
+                <li>Summary, drafts, and report artifacts</li>
+              </ul>
+            </div>
+          </div>
+        </article>
+      </section>
+
+      <section class="section reveal">
+        <div class="section-heading">
+          <p class="eyebrow">Reference Package</p>
+          <h2>The site also ships a copied workflow package example.</h2>
+        </div>
+        <div class="dual-panel">
+          <article class="panel">
+            <div class="panel-kicker">Package README Example</div>
+            <pre><code class="language-markdown"># Technical Article Research Package
+
+Workflow: Technical Article Research
+Topic: AI summary automation
+Preset: standard
+Status: waiting_review
+
+## Operator Flow
+
+- Read the workflow brief first for the short decision-ready version.
+- Open the final report when you need evidence detail and source references.
+- Use the raw research snapshots only when you need to audit or extend the run.</code></pre>
+          </article>
+          <article class="panel">
+            <div class="panel-kicker">Manifest Example</div>
+            <pre><code class="language-json">{
+  "workflowId": "article-research",
+  "topic": "AI summary automation",
+  "preset": "standard",
+  "status": "waiting_review",
+  "files": {
+    "researchSummary": "handoff/research-summary.md",
+    "workflowBrief": "handoff/workflow-brief.md",
+    "runtimeManifest": "runtime/pipeline-manifest.json",
+    "promptTraces": "runtime/llm-prompt-traces.json"
+  }
+}</code></pre>
+          </article>
+        </div>
+      </section>
+
+      <section class="section cta-section reveal">
+        <div>
+          <p class="eyebrow">Next</p>
+          <h2>Open the docs for full setup, storage, queue, API, and roadmap details.</h2>
+        </div>
+        <div class="cta-actions">
+          <a class="button button-accent" href="docs.html">Documentation</a>
+          <a class="button" href="docs.html#page=queue-worker-controls">Queue & Controls</a>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <p>Examples are based on the current CLI and workflow templates in this repository.</p>
+    </footer>
+  </div>
+  <script src="app.js"></script>
+</body>
+</html>

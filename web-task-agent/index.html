@@ -1,0 +1,324 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Web Task Agent</title>
+  <meta
+    name="description"
+    content="Local-first, evidence-backed web research with durable jobs, source policy, resumable runs, and decision-ready packages."
+  />
+  <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body data-page="home">
+  <div class="site-shell">
+    <header class="topbar">
+      <a class="brand" href="index.html">
+        <span class="brand-mark">W</span>
+        <span>
+          <strong>Web Task Agent</strong>
+          <small>Local-first deep research</small>
+        </span>
+      </a>
+      <nav class="topnav">
+        <a href="docs.html">Docs</a>
+        <a href="examples.html">Examples</a>
+        <a href="docs.html#page=repo-readme">Repo README</a>
+      </nav>
+    </header>
+
+    <main>
+      <section class="hero reveal">
+        <div class="hero-copy">
+          <p class="eyebrow">LOCAL-FIRST RESEARCH RECEIPTS</p>
+          <h1>Turn a messy web question into a decision package you can inspect.</h1>
+          <p class="hero-text">
+            Web Task Agent keeps the chain from a recommendation back to its sources: durable jobs,
+            snapshots, evidence clusters, contradictions, resumability, and a handoff package a
+            teammate can challenge instead of a loose pile of notes.
+          </p>
+          <div class="hero-actions">
+            <a class="button button-accent" href="examples.html">Inspect a package</a>
+            <a class="button" href="docs.html">Read the docs</a>
+          </div>
+          <div class="hero-notes">
+            <span>Source-linked evidence</span>
+            <span>Contradictions visible</span>
+            <span>Stage-level resume</span>
+            <span>Local by default</span>
+          </div>
+        </div>
+        <aside class="hero-panel reveal">
+          <div class="panel">
+            <div class="panel-kicker">Quick Start</div>
+            <pre><code class="language-bash">npm ci
+npm run start -- demo export browser-agent-landscape
+open reports/demos/browser-agent-landscape/ \
+  handoff/workflow-brief.md
+
+# then preview live work before you run it
+npm run start -- workflow preview \
+  cybersecurity-voice-of-customer \
+  --topic "security review workflows"</code></pre>
+            <p class="panel-note">
+              Outputs land in `reports/`, resumable state lands in `.cache/`, and durable metadata
+              lands in `.data/web-task-agent.sqlite`.
+            </p>
+          </div>
+        </aside>
+      </section>
+
+      <section class="product-proof reveal" aria-labelledby="product-proof-title">
+        <div class="product-proof-copy">
+          <p class="eyebrow">PRODUCT PROOF</p>
+          <h2 id="product-proof-title">See the real local interface before you configure a browser or model.</h2>
+          <p>
+            This capture comes from the versioned local documentation site. It shows the exact product
+            promise, deterministic demo path, and workflow count that a new visitor sees first.
+          </p>
+          <a class="text-link" href="assets/product-proof.jpg">Open the full product capture →</a>
+        </div>
+        <a class="product-proof-image" href="assets/product-proof.jpg" aria-label="Open the full product capture">
+          <img src="assets/product-proof.jpg" alt="Web Task Agent documentation homepage with a decision-package promise and quick-start panel" />
+        </a>
+      </section>
+
+      <section class="metrics reveal">
+        <article class="metric-card">
+          <strong>243</strong>
+          <span>Executable workflows</span>
+          <small>Three core workflows plus 240 catalog entries, all with a stable output contract.</small>
+        </article>
+        <article class="metric-card">
+          <strong>5</strong>
+          <span>Review-gated decision packs</span>
+          <small>Plan idea validation, launches, churn, articles, or integrations before work begins.</small>
+        </article>
+        <article class="metric-card">
+          <strong>3</strong>
+          <span>Deterministic demos</span>
+          <small>Inspect real package shapes without an API key, browser, or live source request.</small>
+        </article>
+        <article class="metric-card">
+          <strong>1</strong>
+          <span>Auditable local state</span>
+          <small>SQLite stores jobs, sources, documents, extractions, graph links, and artifacts.</small>
+        </article>
+      </section>
+
+      <section class="section reveal">
+        <div class="section-heading">
+          <p class="eyebrow">What It Actually Does</p>
+          <h2>Research, storage, recovery, and operator control in one local tool.</h2>
+        </div>
+        <div class="feature-grid">
+          <article class="feature-card">
+            <h3>Long-running research jobs</h3>
+            <p>Plan a job, search multiple queries, fetch result pages in batches, extract evidence, synthesize findings, and write a report.</p>
+          </article>
+          <article class="feature-card">
+            <h3>Durable evidence layer</h3>
+            <p>Store sources, documents, snapshots, extractions, evidence clusters, contradictions, and graph links in SQLite for reuse across runs.</p>
+          </article>
+          <article class="feature-card">
+            <h3>Recovery instead of restart</h3>
+            <p>Leases, heartbeats, cache checkpoints, queue recovery, and stage-level resume keep work moving after interruptions.</p>
+          </article>
+          <article class="feature-card">
+            <h3>Workflow packages, not raw scraps</h3>
+            <p>Topic-based folders include reports, briefs, plan files, raw research snapshots, pipeline manifests, and prompt traces.</p>
+          </article>
+          <article class="feature-card">
+            <h3>Queue, worker, and job controls</h3>
+            <p>Queue long jobs, run a local worker, pause or cancel in flight, resume later, rerun from stored configuration, and inspect live logs.</p>
+          </article>
+          <article class="feature-card">
+            <h3>Local dashboard and API</h3>
+            <p>Serve a management UI plus JSON endpoints for jobs, queue state, recoverable runs, detail views, controls, and SSE event streams.</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="section section-band reveal">
+        <div class="section-heading">
+          <p class="eyebrow">Execution Model</p>
+          <h2>Each run follows a durable research pipeline.</h2>
+        </div>
+        <div class="pipeline">
+          <article class="pipeline-step">
+            <span>1</span>
+            <h3>Plan</h3>
+            <p>Generate a bounded job plan and research query set.</p>
+          </article>
+          <article class="pipeline-step">
+            <span>2</span>
+            <h3>Search</h3>
+            <p>Use a search adapter to gather result candidates per query.</p>
+          </article>
+          <article class="pipeline-step">
+            <span>3</span>
+            <h3>Fetch</h3>
+            <p>Open result pages in batches and checkpoint between fetch slices.</p>
+          </article>
+          <article class="pipeline-step">
+            <span>4</span>
+            <h3>Extract</h3>
+            <p>Persist readable pages, structured evidence, and raw snapshots.</p>
+          </article>
+          <article class="pipeline-step">
+            <span>5</span>
+            <h3>Synthesize</h3>
+            <p>Build summaries from persisted evidence, clusters, and contradictions.</p>
+          </article>
+          <article class="pipeline-step">
+            <span>6</span>
+            <h3>Package</h3>
+            <p>Write the report, drafts, workflow brief, and runtime manifests.</p>
+          </article>
+        </div>
+        <div class="dual-panel">
+          <article class="panel">
+            <div class="panel-kicker">Persistence</div>
+            <ul class="check-list">
+              <li>Jobs, steps, leases, controls, queue state</li>
+              <li>Sources, canonical URLs, documents, extractions</li>
+              <li>Evidence clusters, contradictions, graph links</li>
+              <li>Artifact metadata for reports and handoff files</li>
+            </ul>
+          </article>
+          <article class="panel">
+            <div class="panel-kicker">Recovery</div>
+            <ul class="check-list">
+              <li>Stale lease recovery for long jobs</li>
+              <li>Stage-aware resume for search, fetch, and extract</li>
+              <li>Pause, cancel, resume, rerun, retry controls</li>
+              <li>Failure-mode coverage for interrupted checkpoints</li>
+            </ul>
+          </article>
+        </div>
+      </section>
+
+      <section class="section reveal">
+        <div class="section-heading">
+          <p class="eyebrow">Real Workflows</p>
+          <h2>Start with a decision, then pick the smallest useful workflow.</h2>
+        </div>
+        <div class="workflow-grid">
+          <article class="workflow-card">
+            <div class="workflow-label">No-key proof</div>
+            <h3>Inspect a research receipt</h3>
+            <p>See the brief, report, evidence and manifest contract before you configure an LLM or browser.</p>
+            <pre><code class="language-bash">npm run start -- demo export \
+  workflow-quality-audit</code></pre>
+            <a class="text-link" href="examples.html">Open package examples</a>
+          </article>
+          <article class="workflow-card">
+            <div class="workflow-label">Catalog discovery</div>
+            <h3>Choose from 240 focused cases</h3>
+            <p>Find a distinct voice-of-customer, pricing, competitor, retention, or market-entry workflow by decision and domain.</p>
+            <pre><code class="language-bash">npm run start -- workflow list \
+  --category "Pricing and Packaging"</code></pre>
+            <a class="text-link" href="docs.html#page=workflows">Browse workflow docs</a>
+          </article>
+          <article class="workflow-card">
+            <div class="workflow-label">Human review first</div>
+            <h3>Plan a decision pack</h3>
+            <p>Generate a 2–4 step plan without silently opening sites or spending model calls in a chain.</p>
+            <pre><code class="language-bash">npm run start -- pack plan validate-an-idea \
+  --topic "offline document signing"</code></pre>
+            <a class="text-link" href="docs.html#page=examples">See more scenarios</a>
+          </article>
+        </div>
+      </section>
+
+      <section class="section reveal">
+        <div class="section-heading">
+          <p class="eyebrow">Package Shape</p>
+          <h2>A workflow run produces an operator-facing package, not just one markdown file.</h2>
+        </div>
+        <div class="artifact-layout">
+          <pre><code class="language-text">report.md
+handoff/
+  README.md
+  package-manifest.json
+  research-summary.md
+  workflow-brief.md
+drafts/
+  post-draft.md
+  comments-draft.md
+plan/
+  plan.json
+raw/
+  research/
+runtime/
+  llm-prompt-traces.json
+  pipeline-manifest.json</code></pre>
+          <div class="artifact-notes">
+            <article class="mini-note">
+              <h3>Handoff</h3>
+              <p>The brief and README give the short operator view first, before the full report.</p>
+            </article>
+            <article class="mini-note">
+              <h3>Raw snapshots</h3>
+              <p>Raw research JSON and persisted evidence let you audit or extend a run later.</p>
+            </article>
+            <article class="mini-note">
+              <h3>Runtime traces</h3>
+              <p>Prompt/version traces and pipeline manifests make local debugging much easier.</p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="section reveal">
+        <div class="section-heading">
+          <p class="eyebrow">Operator Surface</p>
+          <h2>Work from the terminal or the local dashboard.</h2>
+        </div>
+        <div class="dual-panel">
+          <article class="panel">
+            <div class="panel-kicker">CLI</div>
+            <pre><code class="language-bash">npm run start -- workflow enqueue android-opportunity \
+  --topic "budgeting app for couples"
+npm run start -- worker run --once
+npm run start -- queue list
+npm run start -- job logs &lt;job-id&gt; --limit 100</code></pre>
+          </article>
+          <article class="panel">
+            <div class="panel-kicker">Management API</div>
+            <pre><code class="language-text">GET  /
+GET  /api/health
+GET  /api/jobs
+GET  /api/jobs/:id
+GET  /api/jobs/:id/events
+GET  /api/jobs/:id/events/stream
+POST /api/jobs/:id/control
+GET  /api/queue
+POST /api/queue/:id/control
+GET  /api/recoverable</code></pre>
+          </article>
+        </div>
+      </section>
+
+      <section class="section cta-section reveal">
+        <div>
+          <p class="eyebrow">Documentation</p>
+          <h2>Inspect the output contract, then choose a workflow or contribute one.</h2>
+        </div>
+        <div class="cta-actions">
+          <a class="button button-accent" href="docs.html">Documentation</a>
+          <a class="button" href="examples.html">Examples</a>
+          <a class="button" href="docs.html#page=project-charter">Charter</a>
+          <a class="button" href="docs.html#page=repo-roadmap">Roadmap</a>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <p>Built from the repository itself: CLI commands, workflow presets, package examples, roadmap, and code-backed capabilities.</p>
+    </footer>
+  </div>
+  <script src="app.js"></script>
+</body>
+</html>

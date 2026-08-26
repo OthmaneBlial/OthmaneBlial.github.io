@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Web Task Agent Docs</title>
+  <meta
+    name="description"
+    content="Documentation for Web Task Agent: setup, pipeline, workflows, queue worker, API, dashboard, artifacts, examples, and repo references."
+  />
+  <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body data-page="docs">
+  <div class="site-shell docs-shell">
+    <header class="topbar">
+      <a class="brand" href="index.html">
+        <span class="brand-mark">W</span>
+        <span>
+          <strong>Web Task Agent</strong>
+          <small>Documentation</small>
+        </span>
+      </a>
+      <nav class="topnav">
+        <a href="index.html">Home</a>
+        <a href="examples.html">Examples</a>
+        <a href="docs.html#page=repo-readme">Repo README</a>
+      </nav>
+    </header>
+
+    <main class="docs-layout">
+      <aside class="docs-sidebar">
+        <div class="docs-sidebar-head">
+          <p class="eyebrow">Docs</p>
+          <h1>Browse the system by capability.</h1>
+          <p class="sidebar-copy">
+            These pages are derived from the current repository state and include copied repo source
+            documents for offline use. The project charter is the source of truth for the living
+            vocabulary, architecture map, and maintenance rules.
+          </p>
+        </div>
+        <label class="search-field">
+          <span>Filter pages</span>
+          <input id="docs-search" type="search" placeholder="queue, workflow, API, artifacts..." />
+        </label>
+        <nav id="docs-nav" class="docs-nav" aria-label="Documentation pages"></nav>
+      </aside>
+
+      <section class="docs-main">
+        <div class="docs-meta">
+          <div>
+            <p class="eyebrow">Current Page</p>
+            <h2 id="docs-title">Loading…</h2>
+            <p id="docs-summary" class="docs-summary"></p>
+          </div>
+          <div class="docs-meta-links">
+            <a class="button" href="examples.html">Open Examples</a>
+            <a class="button" href="docs.html#page=project-charter">Project Charter</a>
+            <a class="button" href="docs.html#page=repo-roadmap">View Roadmap</a>
+          </div>
+        </div>
+        <article id="docs-article" class="docs-article panel">
+          <p>Loading documentation…</p>
+        </article>
+      </section>
+    </main>
+  </div>
+  <script src="app.js"></script>
+</body>
+</html>
