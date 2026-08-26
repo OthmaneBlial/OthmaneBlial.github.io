@@ -19,7 +19,7 @@ Cette roadmap sert aussi de contrat de livraison. Les statuts ci-dessous disting
 | Catalogue de cas d'usage | Livré | 243 workflows exécutables : 3 historiques et 240 scénarios générés, filtrables et documentés |
 | Packs, exports et comparaison | Livré | 5 packs à revue humaine, `workflow scaffold`/validation de décision-sources-fraîcheur-coût-risques, exports Markdown/JSON/CSV, redaction et diff de runs |
 | Confiance et confidentialité | Livré localement | Politique de sources, `robots.txt`, cadence et plafond par domaine, liste de revue humaine, redirections signalées, détection d'injection, contrat de confidentialité et sauvegarde/restauration SQLite |
-| Qualité et dérive | Livré localement | Build, 117 tests unitaires, 4 intégrations, génération, 305 liens Markdown, audit des secrets de publication et audit des dépendances de production dans la CI |
+| Qualité et dérive | Livré localement | Build, 118 tests unitaires, 4 intégrations, génération, 321 liens Markdown, audit des secrets de publication et audit des dépendances de production dans la CI |
 | Publication et distribution | Publié et vérifié | Dépôt public, description, huit Topics, Discussions, aperçu social, Pages, homepage et release GitHub [`v0.3.2`](https://github.com/OthmaneBlial/web-task-agent/releases/tag/v0.3.2) |
 
 Le mot « livré » ne veut pas dire que le projet a déjà gagné des étoiles : cela signifie que le comportement est présent dans `main`, couvert par les contrôles indiqués et, lorsque nécessaire, publié. Les signaux publics restent une conséquence à gagner, pas une promesse.
