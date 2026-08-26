@@ -13,7 +13,7 @@ Read the full [privacy and local-data contract](../../PRIVACY.md) before putting
 
 ## Live Research Boundaries
 
-Before opening a source, the runtime refuses malformed, credential-bearing, local, private-network, and configured blocked URLs. It checks public `robots.txt` rules when available, applies a per-domain delay, and caps browser requests per domain at 12 by default. A redirect that resolves to an unsafe target is quarantined before its content is extracted or persisted; cross-origin redirects are explicitly flagged. An unavailable robots file is visible in the source signals; it does not mean permission was granted.
+Before opening a source, the runtime refuses malformed, credential-bearing, local, private-network, and configured blocked URLs. It resolves the hostname first and fails closed if DNS returns a private/reserved address or cannot be resolved safely. It checks public `robots.txt` rules when available, applies a per-domain delay, and caps browser requests per domain at 12 by default. A redirect that resolves to an unsafe target is quarantined before its content is extracted or persisted; cross-origin redirects are explicitly flagged. An unavailable robots file is visible in the source signals; it does not mean permission was granted.
 
 ```env
 WEB_TASK_AGENT_ALLOWED_DOMAINS=docs.example.com,github.com
@@ -21,7 +21,7 @@ WEB_TASK_AGENT_BLOCKED_DOMAINS=example-bad-domain.test
 WEB_TASK_AGENT_DOMAIN_MIN_DELAY_MS=1200
 WEB_TASK_AGENT_DOMAIN_MAX_REQUESTS=12
 WEB_TASK_AGENT_REVIEW_DOMAINS=sensitive.example.com
-WEB_TASK_AGENT_USER_AGENT=web-task-agent/0.2 (+https://github.com/OthmaneBlial/web-task-agent)
+WEB_TASK_AGENT_USER_AGENT=web-task-agent (+https://github.com/OthmaneBlial/web-task-agent)
 ```
 
 Set the domain request cap to `0` only to deliberately disable it. Domains on `WEB_TASK_AGENT_REVIEW_DOMAINS` are not opened: they require an operator to review the source and deliberately remove the domain from that list before a new run. Source text is untrusted. Suspected page-level prompt injection is quarantined rather than allowed to override an operator instruction.

@@ -73,9 +73,12 @@ The point is not to automate a web page. The point is to make the decision defen
 
 ## Run live research
 
-Set a narrow, compatible API key in `.env`, then choose a workflow and a topic:
+Copy the safe template, set a narrow compatible API key only for live research, then choose a workflow and a topic:
 
 ```bash
+cp .env.example .env
+# Edit .env and set ANTHROPIC_API_KEY (or a compatible endpoint) locally.
+
 web-task-agent workflow list --category "Voice of Customer"
 
 web-task-agent workflow run cybersecurity-voice-of-customer \
@@ -158,7 +161,7 @@ Use `storage backup --output <path>` for a consistent local SQLite snapshot. `st
 - A local workflow can still send selected content to the LLM endpoint configured by the operator. Use the narrowest credentials possible.
 - Never commit API keys, cookies, private reports, runtime databases, or prompt traces.
 - Use `job export --dry-run --redact` before sharing. It previews the local package, recognizes common secret formats, and writes nothing or sends nothing unless you explicitly choose an output file.
-- Direct source acquisition checks configured domain boundaries, public `robots.txt` rules when available, paces repeated domains, caps requests per domain, and quarantines unsafe redirect targets or configured review domains; it never bypasses access controls.
+- Direct source acquisition checks configured domain boundaries, resolves hostnames and rejects private or reserved DNS answers, applies public `robots.txt` rules when available, paces repeated domains, caps requests per domain, and quarantines unsafe redirect targets or configured review domains; it never bypasses access controls.
 
 Read [PRIVACY.md](PRIVACY.md), [SECURITY.md](SECURITY.md), and [SUPPORT.md](SUPPORT.md) before running sensitive work or reporting a vulnerability.
 

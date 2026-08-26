@@ -14,7 +14,13 @@ For a source installation, use Node.js 22 or later. The `install.sh` helper can 
 
 ## 2. Configure Environment For Live Research
 
-Create or update your `.env` file with the variables used by the project:
+Start from the checked-in template, then set only the variables your live run needs:
+
+```bash
+cp .env.example .env
+```
+
+The template contains safe local defaults and no credentials. For example:
 
 ```env
 CDP_PORT=9222
@@ -130,6 +136,8 @@ web-task-agent server run --port 4317
 ```
 
 Then open the local management UI at `http://127.0.0.1:4317`.
+
+The command accepts only `127.0.0.1` or `::1` for `--host`; it deliberately refuses LAN and public interfaces because the dashboard can inspect and control local jobs.
 
 ## First Commands Worth Memorizing
 
