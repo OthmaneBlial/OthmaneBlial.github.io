@@ -75,7 +75,7 @@ The verifier checks the receipt structure, evidence references, source snapshots
 For a versioned install, use the tarball and checksum attached to a GitHub release. This is the canonical public distribution path; it does not require a registry token:
 
 ```bash
-VERSION=0.5.0
+VERSION=0.5.1
 curl -fsSLO "https://github.com/OthmaneBlial/web-task-agent/releases/download/v${VERSION}/web-task-agent-${VERSION}.tgz"
 curl -fsSLO "https://github.com/OthmaneBlial/web-task-agent/releases/download/v${VERSION}/SHA256SUMS"
 grep "web-task-agent-${VERSION}.tgz" SHA256SUMS | sha256sum -c -
