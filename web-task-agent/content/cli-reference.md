@@ -45,7 +45,7 @@ web-task-agent server run --port 4317
 
 ## What To Use First
 
-- `demo export` when you want to inspect the exact output contract with no key, browser, or network request.
+- `demo export` when you want to inspect the exact output contract with no key, browser, or network request. Each exported demo includes `receipt.html`, a standalone visual decision handoff with linked sources and explicit limits.
 - `browser status` when you want to confirm the local CDP backend without starting, restarting, or attaching to a browser.
 - `workflow list --category` or `--search` when you want to find one of the 240 catalog workflows.
 - `workflow preview` when you need to inspect one workflow's source strategy, queries, outputs, and budgets before doing work.

@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="color-scheme" content="light" />
+  <title>Browser Agent Landscape — Decision Receipt</title>
+  <style>
+    :root { --ink: #1b1714; --muted: #6d6259; --paper: #fffaf2; --ground: #efe6d8; --line: #e1d5c2; --accent: #0f766e; --accent-soft: #ddf1ec; --warn: #9a3412; --warn-soft: #fff0e6; }
+    * { box-sizing: border-box; }
+    body { margin: 0; min-width: 320px; color: var(--ink); background: radial-gradient(circle at 84% 0%, #d8eee8 0, transparent 25rem), var(--ground); font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; line-height: 1.55; }
+    main { width: min(1040px, calc(100% - 32px)); margin: 32px auto 56px; }
+    .receipt { overflow: hidden; border: 1px solid var(--line); border-radius: 28px; background: var(--paper); box-shadow: 0 28px 80px rgba(62, 42, 18, .14); }
+    header { padding: clamp(28px, 6vw, 72px); color: #f9f5ee; background: linear-gradient(130deg, #123c39, #0f766e); }
+    .eyebrow, .badge { display: inline-flex; align-items: center; width: fit-content; border-radius: 999px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; font-size: .72rem; }
+    .eyebrow { padding: 7px 10px; color: #cce8df; background: rgba(255,255,255,.11); }
+    h1 { max-width: 14ch; margin: 16px 0 12px; font-family: Georgia, "Times New Roman", serif; font-size: clamp(2.7rem, 8vw, 5.4rem); line-height: .93; letter-spacing: -.055em; }
+    header p { max-width: 72ch; margin: 0; color: #d7ebe4; font-size: 1.06rem; }
+    .meta { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 28px; color: #d7ebe4; font-size: .85rem; }
+    .meta span { padding: 5px 9px; border: 1px solid rgba(255,255,255,.16); border-radius: 999px; }
+    .content { padding: clamp(22px, 4vw, 52px); }
+    .decision { padding: 22px; border: 1px solid #b7dcd2; border-radius: 20px; background: var(--accent-soft); }
+    h2 { margin: 0 0 14px; font-family: Georgia, "Times New Roman", serif; font-size: 1.65rem; letter-spacing: -.025em; }
+    h3 { margin: 0 0 10px; font-size: .9rem; letter-spacing: .075em; text-transform: uppercase; }
+    p { margin: 0 0 12px; }
+    ul { margin: 0; padding-left: 1.25rem; }
+    li + li { margin-top: 8px; }
+    .grid { display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(260px, .85fr); gap: 18px; margin-top: 18px; }
+    .panel { padding: 22px; border: 1px solid var(--line); border-radius: 20px; background: #fffdf8; }
+    .risk { border-color: #f0c9b7; background: var(--warn-soft); }
+    .risk h2 { color: var(--warn); }
+    .sources { margin-top: 18px; padding: 22px; border: 1px solid var(--line); border-radius: 20px; background: #fffdf8; }
+    .source-list { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; margin: 0; padding: 0; list-style: none; }
+    .source-card { display: flex; flex-direction: column; gap: 8px; min-height: 150px; padding: 16px; border: 1px solid var(--line); border-radius: 16px; background: #fffaf2; }
+    .source-card a { color: var(--accent); font-weight: 800; text-decoration-thickness: 1px; text-underline-offset: 3px; }
+    .source-card span:last-child { margin-top: auto; color: var(--muted); font-size: .82rem; }
+    .source-role { color: var(--muted); font-size: .72rem; font-weight: 700; letter-spacing: .07em; text-transform: uppercase; }
+    footer { padding: 20px clamp(22px, 4vw, 52px); border-top: 1px solid var(--line); color: var(--muted); font-size: .86rem; }
+    @media (max-width: 720px) { main { width: min(100% - 20px, 1040px); margin-top: 10px; } .receipt { border-radius: 20px; } .grid, .source-list { grid-template-columns: 1fr; } h1 { max-width: none; } }
+    @media print { body { background: #fff; } main { width: 100%; margin: 0; } .receipt { border: 0; box-shadow: none; } }
+  </style>
+</head>
+<body>
+  <main>
+    <article class="receipt">
+      <header>
+        <span class="eyebrow">Local-first research receipt</span>
+        <h1>Browser Agent Landscape</h1>
+        <p>Compare the current public positioning of browser automation, web extraction, and durable agent execution tools.</p>
+        <div class="meta"><span>Deterministic fixture</span><span>No key, browser, or live request</span><span>3 linked sources</span></div>
+      </header>
+      <div class="content">
+        <section class="decision"><h2>Decision</h2><p>Position Web Task Agent around local, evidence-backed decision packages rather than generic browser control or crawling.</p></section>
+        <div class="grid">
+          <section class="panel"><h2>What the evidence supports</h2><ul><li>Browser Use publicly positions natural-language web automation across extraction, multi-step workflows, research, monitoring, testing, and scheduling.</li><li>Firecrawl distinguishes web-wide agent discovery from known-URL scraping and structured extraction.</li><li>LangChain&#39;s Deep Agents documentation presents durable execution and human-in-the-loop control as core building blocks for complex agent work.</li></ul></section>
+          <section class="panel risk"><h2>What could invalidate this</h2><ul><li>A competing product could expose an equally usable local evidence graph and resumable decision package.</li><li>Operators could value speed over auditability for the target use cases. Validate this with three real operator runs before making a broad market claim.</li></ul></section>
+        </div>
+        <section class="sources"><h2>Source trail</h2><ul class="source-list"><li class="source-card"><span class="source-role">browser-agent capability reference</span><a href="https://docs.browser-use.com/cloud/agent/quickstart" target="_blank" rel="noreferrer noopener">Browser Use introduction</a><span>Browser Use · accessed 2026-08-26</span></li><li class="source-card"><span class="source-role">web discovery and extraction reference</span><a href="https://docs.firecrawl.dev/developer-guides/usage-guides/choosing-the-data-extractor" target="_blank" rel="noreferrer noopener">Choosing the Data Extractor</a><span>Firecrawl · accessed 2026-08-26</span></li><li class="source-card"><span class="source-role">durable execution and review reference</span><a href="https://docs.langchain.com/oss/python/deepagents/overview" target="_blank" rel="noreferrer noopener">Deep Agents overview</a><span>LangChain · accessed 2026-08-26</span></li></ul></section>
+        <section class="panel" style="margin-top:18px"><h2>Smallest next validation</h2><p>Run the article-research workflow on a current agent topic, then ask an operator whether they can trace every recommendation to a source without opening the database.</p></section>
+      </div>
+      <footer>This receipt is a bundled, deterministic fixture. It demonstrates the decision-package contract; it is not a claim that fresh research produced these findings.</footer>
+    </article>
+  </main>
+</body>
+</html>

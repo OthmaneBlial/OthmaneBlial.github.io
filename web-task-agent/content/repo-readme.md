@@ -1,8 +1,8 @@
 # Web Task Agent
 
-> ## Research should end with evidence — not “trust me.”
+> ## Make a web-research decision your team can audit — before they have to trust it.
 >
-> Turn a messy web question into a local decision package another person can inspect, challenge, resume, and share.
+> Web Task Agent turns a messy question into a local decision package with the sources, contradictions, recovery state, and next validation still attached.
 
 [![CI](https://github.com/OthmaneBlial/web-task-agent/actions/workflows/ci.yml/badge.svg)](https://github.com/OthmaneBlial/web-task-agent/actions/workflows/ci.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
@@ -10,13 +10,16 @@
 [![Local-first](https://img.shields.io/badge/privacy-local--first-164e63)](PRIVACY.md)
 [![Project site](https://img.shields.io/badge/site-live-0f766e)](https://othmaneblial.github.io/web-task-agent/)
 
-Most research tools stop after finding pages. Web Task Agent keeps the decision trail: the source snapshots, evidence clusters, contradictions, recovery state, and the smallest next validation. It runs locally and leaves a handoff that survives the browser closing or a run being interrupted.
+Most research tools stop at an answer. Web Task Agent preserves the path to it: source snapshots, evidence clusters, contradictions, recovery state, and the smallest next validation. The result is a handoff that survives a browser closing, a challenged recommendation, or an interrupted run.
+
+**Proof before setup:** [open the featured deterministic decision receipt](https://othmaneblial.github.io/web-task-agent/receipt.html). It is a standalone fixture with no key, browser session, scripts, analytics, or live request.
 
 ```text
 Your question
   └─ “What should we validate before building this?”
 
 Local decision package
+  ├─ receipt.html                  Visual, portable decision handoff
   ├─ handoff/workflow-brief.md     Start here: recommendation + next validation
   ├─ report.md                     Findings, uncertainty, and contradictions
   ├─ evidence/sources.json         Source trail, role, and collection date
@@ -24,7 +27,7 @@ Local decision package
   └─ runtime/                      Durable state for inspection and recovery
 ```
 
-Not a hosted scraper. Not an access-control bypass. Not another generic browser-agent wrapper.
+This is local research infrastructure, not a hosted scraper, access-control bypass, or generic browser-agent wrapper.
 
 **See the full product story:** [live documentation](https://othmaneblial.github.io/web-task-agent/) · [eight inspectable receipts](RESEARCH_RECEIPTS.md) · [latest release](https://github.com/OthmaneBlial/web-task-agent/releases/latest)
 
@@ -46,17 +49,18 @@ curl -fsSL https://raw.githubusercontent.com/OthmaneBlial/web-task-agent/main/in
   | bash -s -- --skip-llm-setup
 
 web-task-agent demo export browser-agent-landscape
-open reports/demos/browser-agent-landscape/handoff/workflow-brief.md
+open reports/demos/browser-agent-landscape/receipt.html
 ```
 
 You get a complete, source-linked handoff:
 
+- `receipt.html` — a visual, standalone decision receipt with source cards, uncertainty, and the next validation.
 - `handoff/workflow-brief.md` — the decision-ready reading start.
 - `report.md` — findings, uncertainty, and the next validation.
 - `evidence/sources.json` — the source trail with role and collection date.
 - `package-manifest.json` — an explicit, versioned file contract.
 
-Try the other deterministic demos with `web-task-agent demo list`. They are fixtures, clearly marked as such; they never pretend to be fresh research.
+Try the other deterministic demos with `web-task-agent demo list`. Every export includes a standalone `receipt.html` you can open locally or attach to a handoff. They are fixtures, clearly marked as such; they never pretend to be fresh research.
 
 Read all eight versioned [research receipts](RESEARCH_RECEIPTS.md) directly in the repository: launch readiness, competitor mapping, GitHub feedback, technical writing, app-review opportunities, workflow quality, and local-first risk review.
 
@@ -169,6 +173,7 @@ Read [PRIVACY.md](PRIVACY.md), [SECURITY.md](SECURITY.md), and [SUPPORT.md](SUPP
 
 ```bash
 npm ci
+npm run typecheck
 npm test
 npm run generate:workflows
 npm run audit:secrets

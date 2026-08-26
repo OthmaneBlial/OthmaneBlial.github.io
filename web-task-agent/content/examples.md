@@ -6,6 +6,8 @@
 npm run start -- demo export local-first-risk-review
 ```
 
+Open `reports/demos/local-first-risk-review/receipt.html` for the visual handoff before reading the raw Markdown and JSON artifacts. The receipt is a deterministic local file with no scripts, analytics, or live requests.
+
 This writes a source-linked, clearly labelled fixture package to `reports/demos/`. It is the fastest way to learn the report, evidence, and handoff contract without pretending a static example is fresh research.
 
 The deterministic gallery also covers public launch readiness, competitor mapping, GitHub feedback, technical article claims, and app-review opportunities:
@@ -66,7 +68,7 @@ Commands:
 
 ```bash
 npm run start -- workflow enqueue android-opportunity \
-  --topic "family budgeting app"
+  --topic "expense tracking for local merchants"
 npm run start -- worker run --once
 ```
 

@@ -12,7 +12,7 @@ The repo currently includes automated tests for:
 - workflow output packaging
 - interrupted agent checkpoints
 
-At the time this site was generated, the standard suite has **117 unit tests and 4 integration tests** and covers many of the highest-risk local operator paths.
+At the time this site was generated, the standard suite has **124 unit tests and 4 integration tests** and covers many of the highest-risk local operator paths.
 
 ## Working Quality Bar
 
@@ -35,7 +35,7 @@ For a more detailed product-surface view of the tests, read the test suite map p
 
 ## Pre-Merge Checklist
 
-- run the relevant test subset or full build for the touched area
+- run the relevant test subset or full `npm run typecheck` / build for the touched area
 - confirm the docs and examples still match the command or output shape
 - confirm the artifact layout and runtime paths still look the same to an operator
 - run `storage gate` before treating the local platform as ready enough for the current phase

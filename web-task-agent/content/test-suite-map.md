@@ -34,7 +34,7 @@ This page maps the main product surfaces to the current automated coverage.
   - `src/tests/redaction.test.ts`
   - `src/tests/direct-source.test.ts`
 - Product activation and contribution surfaces:
-  - `src/tests/demo.test.ts`
+  - `src/tests/demo.test.ts` (including standalone receipt generation and HTML/link safety)
   - `src/tests/decision-packs.test.ts`
   - `src/tests/workflow-catalog.test.ts`
   - `src/tests/workflow-scaffold.test.ts`
@@ -48,7 +48,7 @@ This page maps the main product surfaces to the current automated coverage.
 
 ## CI Contract
 
-`npm test` builds the project, runs unit and integration tests, regenerates the workflow catalog, verifies that `site/` mirrors the canonical `docs/` tree, and checks local Markdown links. GitHub Actions then audits publishable files for secrets and production dependencies. The test fixtures do not depend on live Play Store/AppBrain content or an LLM API key.
+`npm test` runs strict TypeScript type checking, builds the project, runs unit and integration tests, regenerates the workflow catalog, verifies that `site/` mirrors the canonical `docs/` tree, and checks local Markdown links. GitHub Actions then audits publishable files for secrets and production dependencies. The test fixtures do not depend on live Play Store/AppBrain content or an LLM API key.
 
 ## Coverage Gaps To Watch
 

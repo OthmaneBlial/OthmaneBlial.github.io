@@ -22,6 +22,7 @@
         </span>
       </a>
       <nav class="topnav">
+        <a href="receipt.html">Live receipt</a>
         <a href="docs.html">Docs</a>
         <a href="examples.html">Examples</a>
         <a href="docs.html#page=repo-readme">Repo README</a>
@@ -39,7 +40,7 @@
             teammate can challenge instead of a loose pile of notes.
           </p>
           <div class="hero-actions">
-            <a class="button button-accent" href="examples.html">Inspect a package</a>
+            <a class="button button-accent" href="receipt.html">Open a decision receipt</a>
             <a class="button" href="docs.html">Read the docs</a>
           </div>
           <div class="hero-notes">
@@ -55,7 +56,7 @@
             <pre><code class="language-bash">npm ci
 npm run start -- demo export browser-agent-landscape
 open reports/demos/browser-agent-landscape/ \
-  handoff/workflow-brief.md
+  receipt.html
 
 # then preview live work before you run it
 npm run start -- workflow preview \
@@ -72,15 +73,15 @@ npm run start -- workflow preview \
       <section class="product-proof reveal" aria-labelledby="product-proof-title">
         <div class="product-proof-copy">
           <p class="eyebrow">PRODUCT PROOF</p>
-          <h2 id="product-proof-title">See the real local interface before you configure a browser or model.</h2>
+          <h2 id="product-proof-title">Open a decision receipt before you configure a browser or model.</h2>
           <p>
-            This capture comes from the versioned local documentation site. It shows the exact product
-            promise, deterministic demo path, and workflow count that a new visitor sees first.
+            It is a real, versioned fixture with a decision, explicit invalidation conditions, and source cards.
+            It needs no key, browser session, or live request to inspect.
           </p>
-          <a class="text-link" href="assets/product-proof.jpg">Open the full product capture →</a>
+          <a class="text-link" href="receipt.html">Open the live decision receipt →</a>
         </div>
-        <a class="product-proof-image" href="assets/product-proof.jpg" aria-label="Open the full product capture">
-          <img src="assets/product-proof.jpg" alt="Web Task Agent documentation homepage with a decision-package promise and quick-start panel" />
+        <a class="product-proof-image" href="receipt.html" aria-label="Open the live decision receipt">
+          <img src="assets/product-proof.jpg" alt="Preview of the Web Task Agent local research receipt and its decision-package workflow" />
         </a>
       </section>
 
@@ -208,10 +209,10 @@ npm run start -- workflow preview \
           <article class="workflow-card">
             <div class="workflow-label">No-key proof</div>
             <h3>Inspect a research receipt</h3>
-            <p>See the brief, report, evidence and manifest contract before you configure an LLM or browser.</p>
+            <p>Open the receipt first, then inspect the brief, report, evidence and manifest contract before you configure an LLM or browser.</p>
             <pre><code class="language-bash">npm run start -- demo export \
   workflow-quality-audit</code></pre>
-            <a class="text-link" href="examples.html">Open package examples</a>
+            <a class="text-link" href="receipt.html">Open the live receipt</a>
           </article>
           <article class="workflow-card">
             <div class="workflow-label">Catalog discovery</div>
@@ -280,7 +281,7 @@ runtime/
           <article class="panel">
             <div class="panel-kicker">CLI</div>
             <pre><code class="language-bash">npm run start -- workflow enqueue android-opportunity \
-  --topic "family budgeting app"
+  --topic "expense tracking for local merchants"
 npm run start -- worker run --once
 npm run start -- queue list
 npm run start -- job logs &lt;job-id&gt; --limit 100</code></pre>
