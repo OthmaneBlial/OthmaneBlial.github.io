@@ -6,6 +6,7 @@
     <meta name="description" content="SwiftAgent is a local, reviewable control room for Claude Code, Codex, OpenCode, ACP agents, and restricted command adapters." />
     <meta name="theme-color" content="#0d1918" />
     <title>SwiftAgent — one local control room for coding agents</title>
+    <link rel="icon" href="favicon.svg" type="image/svg+xml" />
     <link rel="stylesheet" href="styles.css" />
     <script src="app.js" defer></script>
   </head>
@@ -25,7 +26,7 @@
         <div class="hero-copy">
           <p class="eyebrow"><span></span> LOCAL AGENT CONTROL ROOM</p>
           <h1>Your workspace.<br /><em>Your choice of agent.</em></h1>
-          <p class="lede">Run Claude Code, Codex, OpenCode, ACP agents, or a restricted command adapter from one local interface—without pretending their capabilities are identical.</p>
+          <p class="lede">One local place to run, inspect, approve, resume, and compare Claude Code, Codex, OpenCode, ACP agents, or a restricted command adapter—without pretending their capabilities are identical.</p>
           <div class="agent-pills" aria-label="Supported agent integrations">
             <span>Claude Code</span><span>Codex</span><span>OpenCode</span><span>ACP v1</span><span>+ command</span>
           </div>
@@ -59,9 +60,19 @@
         <div><h2>Change the agent.<br />Keep the operating model.</h2><p>SwiftAgent normalizes the workflow around a run—not the agent’s personality. Each adapter keeps its native protocol, authentication, session ID, model, and safety posture. The interface adds one durable timeline, one receipt format, and a deliberate way to hand reviewed context to another agent.</p></div>
       </section>
 
+      <section class="integration-paths shell" aria-labelledby="integration-paths-title">
+        <div class="section-heading"><p class="section-number">02 / CHOOSE AN ENTRY POINT</p><h2 id="integration-paths-title">Agent-specific details.<br />Agent-neutral operating model.</h2></div>
+        <div class="integration-grid">
+          <a href="claude-code.html"><span>stream-json</span><h3>Claude Code</h3><p>Native session resume and tool evidence, with explicit unsupported controls.</p><b>Explore Claude Code →</b></a>
+          <a href="codex.html"><span>app-server v2</span><h3>Codex</h3><p>Approvals, questions, plans, usage, and separate native safety evidence.</p><b>Explore Codex →</b></a>
+          <a href="opencode.html"><span>ACP first</span><h3>OpenCode</h3><p>Negotiated structured features with a visibly reduced JSON fallback.</p><b>Explore OpenCode →</b></a>
+          <a href="acp.html"><span>Adapter API 1.0</span><h3>Any ACP agent</h3><p>A strict local manifest, public contract kit, and no automatic download.</p><b>Connect an ACP agent →</b></a>
+        </div>
+      </section>
+
       <section id="workflow" class="workflow">
         <div class="shell">
-          <div class="section-heading"><p class="section-number">02 / ONE FOCUSED LOOP</p><h2>Choose. Run. Review. Handoff.</h2></div>
+          <div class="section-heading"><p class="section-number">03 / ONE FOCUSED LOOP</p><h2>Choose. Run. Review. Handoff.</h2></div>
           <ol class="flow-grid">
             <li><span>01</span><h3>Detect locally</h3><p>See installed agents, versions, models, auth state, protocol, and readiness without making a model call.</p></li>
             <li><span>02</span><h3>Write once</h3><p>Your draft and workspace stay put while you compare ready agents and capability-aware controls.</p></li>
@@ -73,7 +84,7 @@
 
       <section class="receipt shell">
         <div class="receipt-copy">
-          <p class="section-number">03 / LOCAL RUN RECEIPT</p>
+          <p class="section-number">04 / LOCAL RUN RECEIPT</p>
           <h2>A shared record,<br /><em>not a flattened story.</em></h2>
           <p>Every run stores common evidence and expandable native details. SwiftAgent records test status only when explicit evidence exists; an assistant saying “done” is not a passing test.</p>
           <ul class="check-list"><li>Agent, adapter, protocol, model, and native session</li><li>Normalized timeline with native event identity</li><li>Git baseline, changed files, and bounded diff summary</li><li>Native safety and SwiftAgent isolation shown separately</li></ul>
@@ -88,7 +99,7 @@
 
       <section id="compatibility" class="compatibility">
         <div class="shell">
-          <div class="section-heading"><p class="section-number">04 / HONEST COMPATIBILITY</p><h2>Same room.<br />Different instruments.</h2></div>
+          <div class="section-heading"><p class="section-number">05 / HONEST COMPATIBILITY</p><h2>Same room.<br />Different instruments.</h2></div>
           <div class="matrix-wrap" role="region" aria-label="Agent capability comparison" tabindex="0">
             <table>
               <thead><tr><th>Adapter</th><th>New run</th><th>Resume</th><th>Approvals</th><th>Plans</th><th>Usage</th><th>Transport</th></tr></thead>
@@ -105,7 +116,7 @@
 
       <section id="demo" class="demo shell">
         <div class="demo-copy">
-          <p class="section-number">05 / REPRODUCIBLE DEMO</p>
+          <p class="section-number">06 / REPRODUCIBLE DEMO</p>
           <h2>One safe task.<br />Three isolated runs.</h2>
           <p>The Northstar fixture has no dependencies, credentials, or network calls. A reset command creates a clean nested Git repository for each agent, so edits and sessions never leak between comparisons.</p>
           <div class="command-card"><div class="command-head"><span>terminal</span><button class="copy-button" type="button" data-copy-target="demo-command">Copy</button></div><pre id="demo-command"><code>make demo-prepare
@@ -116,20 +127,24 @@ make demo-verify</code></pre></div>
       </section>
 
       <section id="safety" class="safety shell">
-        <div class="safety-callout"><p class="section-number">06 / SAFETY WITHOUT THEATER</p><h2>Two layers.<br /><em>Both visible.</em></h2></div>
+        <div class="safety-callout"><p class="section-number">07 / SAFETY WITHOUT THEATER</p><h2>Two layers.<br /><em>Both visible.</em></h2></div>
         <div class="safety-copy"><p>Native agent approvals and sandbox controls belong to the adapter. SwiftAgent’s own process isolation is a separate layer. The receipt never combines them into a vague “safe” badge.</p><p><code>strict</code> requires usable Linux <code>bwrap</code> and fails closed. <code>fallback</code> is an explicit trusted-machine choice with no OS isolation.</p><a class="text-link" href="docs.html#safety-notes">Read the safety notes <span aria-hidden="true">→</span></a></div>
       </section>
 
       <section id="run" class="run shell">
-        <div class="run-intro"><p class="section-number">07 / FIRST RUN</p><h2>Bring the agents you already use.</h2><p>Authentication remains owned by each local CLI. SwiftAgent stores its control-plane data locally and does not ask you to paste provider credentials.</p></div>
-        <div class="command-card"><div class="command-head"><span>terminal</span><button class="copy-button" type="button" data-copy-target="quickstart">Copy</button></div><pre id="quickstart"><code>git clone https://github.com/OthmaneBlial/swiftagent.git
-cd swiftagent
-make setup
-make onboard
-make dev</code></pre><p>Open <code>http://127.0.0.1:5173</code>, inspect <strong>Your agents</strong>, then choose a dedicated workspace.</p></div>
+        <div class="run-intro"><p class="section-number">08 / FIRST RUN</p><h2>Bring the agents you already use.</h2><p>Authentication remains owned by each local CLI. SwiftAgent stores its control-plane data locally and does not ask you to paste provider credentials.</p></div>
+        <div class="command-card"><div class="command-head"><span>terminal</span><button class="copy-button" type="button" data-copy-target="quickstart">Copy</button></div><pre id="quickstart"><code>gh release download v0.6.0 --repo OthmaneBlial/swiftagent \
+  --pattern 'swiftagent-v0.6.0.tar.gz' --pattern 'SHA256SUMS'
+shasum -a 256 -c SHA256SUMS --ignore-missing
+tar -xzf swiftagent-v0.6.0.tar.gz
+cd swiftagent-v0.6.0
+make install-release
+make start-release</code></pre><p>Verify the published GitHub attestation too, then open <code>http://127.0.0.1:8000</code>, inspect <strong>Your agents</strong>, and choose a dedicated workspace.</p></div>
       </section>
 
-      <section class="architecture shell"><p class="section-number">08 / SMALL BY DESIGN</p><div class="arch-grid"><div><span>Interface</span><strong>React + Vite</strong><p>Agent-aware composer, execution timeline, receipts, handoffs, files, and settings.</p></div><div><span>Control plane</span><strong>FastAPI</strong><p>REST, WebSocket events, lifecycle limits, readiness, and diagnostics.</p></div><div><span>Evidence</span><strong>SQLite + Git</strong><p>Local task history, normalized events, receipts, and workspace change evidence.</p></div><div><span>Execution</span><strong>Adapter registry</strong><p>Native protocols stay behind a versioned capability contract.</p></div></div></section>
+      <section class="feedback shell"><div><p class="section-number">09 / OPT-IN EVIDENCE</p><h2>Tell us where the workflow bends.</h2><p>SwiftAgent uses no silent telemetry. Useful growth evidence is a redacted compatibility report or a clear account of installation, detection, first-run, review, or handoff friction—not a star counter.</p></div><div class="feedback-actions"><a class="button button-primary" href="https://github.com/OthmaneBlial/swiftagent/issues/new?template=compatibility_report.yml">Share compatibility <span aria-hidden="true">↗</span></a><a class="text-link" href="https://github.com/OthmaneBlial/swiftagent/issues/new?template=workflow_friction.yml">Report workflow friction <span aria-hidden="true">→</span></a></div></section>
+
+      <section class="architecture shell"><p class="section-number">10 / SMALL BY DESIGN</p><div class="arch-grid"><div><span>Interface</span><strong>React + Vite</strong><p>Agent-aware composer, execution timeline, receipts, handoffs, files, and settings.</p></div><div><span>Control plane</span><strong>FastAPI</strong><p>REST, WebSocket events, lifecycle limits, readiness, and diagnostics.</p></div><div><span>Evidence</span><strong>SQLite + Git</strong><p>Local task history, normalized events, receipts, and workspace change evidence.</p></div><div><span>Execution</span><strong>Adapter registry</strong><p>Native protocols stay behind a versioned capability contract.</p></div></div></section>
     </main>
 
     <footer class="footer shell"><p><span class="brand-mark">↯</span> SwiftAgent</p><p>Local control for the coding agents you choose.</p><div><a href="docs.html">Docs</a><a href="https://github.com/OthmaneBlial/swiftagent">GitHub</a><a href="https://github.com/OthmaneBlial/swiftagent/security/policy">Security</a></div></footer>
