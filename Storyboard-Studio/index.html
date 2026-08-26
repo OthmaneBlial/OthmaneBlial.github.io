@@ -6,9 +6,6 @@
     <meta name="description" content="Storyboard Studio is a local-first tool for turning a short brief into a concise, editable PowerPoint presentation.">
     <title>Storyboard Studio — local-first PowerPoint decks</title>
     <link rel="icon" href="favicon.svg" type="image/svg+xml">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Fraunces:opsz,wght@9..144,600;9..144,700&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
     <script src="app.js" defer></script>
   </head>
@@ -41,7 +38,7 @@
 
       <section class="deck" id="deck" aria-labelledby="deck-title">
         <div class="section-header"><div><p class="eyebrow">A REAL EXPORT</p><h2 id="deck-title">Built as an editable PowerPoint.</h2></div><p>Every title, card, and footer remains a native element you can adapt in your presentation tool.</p></div>
-        <figure><img src="assets/storyboard-sample.png" alt="A Storyboard Studio title slide for Human Remote Onboarding, using a clean forest-green editorial layout."><figcaption>Generated from the included <a href="https://github.com/OthmaneBlial/Storyboard-Studio/blob/main/examples/product-brief.json">product-brief example</a>.</figcaption></figure>
+        <figure><img src="assets/storyboard-sample.png" alt="A Storyboard Studio title slide for Human Remote Onboarding, using a clean forest-green editorial layout. The title and subtitle are editable PowerPoint text."><figcaption>Generated from the included <a href="https://github.com/OthmaneBlial/Storyboard-Studio/blob/main/examples/product-brief.json">product-brief example</a>. <a href="https://github.com/OthmaneBlial/Storyboard-Studio/blob/main/docs/GALLERY.md">Browse the synthetic gallery ↗</a></figcaption></figure>
       </section>
 
       <section class="slide-lab" aria-labelledby="lab-title">
@@ -49,9 +46,9 @@
         <article class="sample-slide" id="sampleSlide" aria-live="polite"><span class="slide-kicker">STORYBOARD / <b id="sampleNumber">01</b></span><h3 id="sampleTitle">The first-week gap</h3><p id="sampleBody">New teammates need confidence and context before they can contribute meaningful work.</p><ul id="samplePoints"></ul><aside><b id="sampleAsideNumber">01</b><span>KEY FRAME</span><strong id="sampleAsideTitle">The first-week gap</strong></aside></article>
       </section>
 
-      <section class="workflow" id="how" aria-labelledby="workflow-title"><p class="eyebrow">THE SHORT PATH</p><h2 id="workflow-title">A useful deck in three decisions.</h2><ol><li><span>01</span><h3>Set the point of view</h3><p>Describe a topic and the audience or outcome that matters.</p></li><li><span>02</span><h3>Inspect the sequence</h3><p>Review the title slide and concise slide frames before exporting.</p></li><li><span>03</span><h3>Keep ownership</h3><p>Download a native `.pptx` and make the final language your own.</p></li></ol></section>
+      <section class="workflow" id="how" aria-labelledby="workflow-title"><p class="eyebrow">THE SHORT PATH</p><h2 id="workflow-title">A useful deck in three decisions.</h2><ol><li><span>01</span><h3>Set the point of view</h3><p>Describe a topic and the audience or outcome that matters.</p></li><li><span>02</span><h3>Inspect and edit</h3><p>Shape the sequence, blocks, sources, and wording before exporting.</p></li><li><span>03</span><h3>Keep ownership</h3><p>Download a native `.pptx` and make the final language your own.</p></li></ol></section>
 
-      <section class="start" aria-labelledby="start-title"><p class="eyebrow">RUN IT LOCALLY</p><div><h2 id="start-title">A first deck in minutes.</h2><p>Clone the source, create a virtual environment, and run the local studio. It has a deterministic fallback when Gemini is not configured.</p></div><div class="command"><code>git clone https://github.com/OthmaneBlial/Storyboard-Studio.git<br>cd Storyboard-Studio<br>make setup && make run</code><button class="copy-button" data-copy="git clone https://github.com/OthmaneBlial/Storyboard-Studio.git\ncd Storyboard-Studio\nmake setup && make run">Copy</button></div><p class="command-status" id="copyStatus" aria-live="polite"></p></section>
+      <section class="start" aria-labelledby="start-title"><p class="eyebrow">RUN IT LOCALLY</p><div><h2 id="start-title">A first deck in minutes.</h2><p>Clone the source, create a virtual environment, and run the local studio. It has a deterministic fallback when Gemini is not configured.</p><p><a href="https://github.com/OthmaneBlial/Storyboard-Studio/blob/main/docs/demo.md">Read the 60-second demo transcript ↗</a></p></div><div class="command"><code>git clone https://github.com/OthmaneBlial/Storyboard-Studio.git<br>cd Storyboard-Studio<br>make setup && make run</code><button class="copy-button" data-copy="git clone https://github.com/OthmaneBlial/Storyboard-Studio.git\ncd Storyboard-Studio\nmake setup && make run">Copy</button></div><p class="command-status" id="copyStatus" aria-live="polite"></p></section>
     </main>
 
     <footer><div><a class="brand" href="index.html"><span class="mark" aria-hidden="true"><i></i><i></i><i></i></span>Storyboard <em>Studio</em></a><p>Local-first, editable presentation decks.</p></div><nav aria-label="Footer navigation"><a href="docs.html">Documentation</a><a href="https://github.com/OthmaneBlial/Storyboard-Studio/releases">Releases</a><a href="https://github.com/OthmaneBlial/Storyboard-Studio/security/policy">Security</a></nav></footer>
