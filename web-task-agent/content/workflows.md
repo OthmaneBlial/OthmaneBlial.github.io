@@ -102,7 +102,7 @@ If you are unsure which preset to use, start with `standard`. Use `fast` when yo
 
 ```bash
 npm run start -- workflow enqueue android-opportunity \
-  --topic "budgeting app for couples"
+  --topic "family budgeting app"
 ```
 
 ## Workflow Package Structure

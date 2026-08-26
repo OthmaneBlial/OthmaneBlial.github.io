@@ -15,7 +15,7 @@ npm run start -- agent enqueue \
 
 ```bash
 npm run start -- workflow enqueue android-opportunity \
-  --topic "budgeting app for couples"
+  --topic "family budgeting app"
 ```
 
 ## Run A Local Worker

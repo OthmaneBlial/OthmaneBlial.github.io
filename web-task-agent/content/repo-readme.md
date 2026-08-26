@@ -4,6 +4,7 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 [![243 executable workflows](https://img.shields.io/badge/workflows-243%20executable-0f766e)](examples/workflows/CATALOG.md)
 [![Local-first](https://img.shields.io/badge/privacy-local--first-164e63)](PRIVACY.md)
+[![Project site](https://img.shields.io/badge/site-live-0f766e)](https://othmaneblial.github.io/web-task-agent/)
 
 > **Turn a messy web question into an evidence-backed decision you can challenge, resume, and share — without losing the source trail.**
 
@@ -14,6 +15,8 @@ It is a local-first research runner with durable jobs, source snapshots, evidenc
 ![Web Task Agent local product proof](docs/assets/product-proof.jpg)
 
 The capture comes from the versioned local documentation site. Everything it promises is inspectable in this repository before you connect a browser or model.
+
+**Live documentation:** [othmaneblial.github.io/web-task-agent](https://othmaneblial.github.io/web-task-agent/)
 
 ## Get a real package in two minutes — no key, browser, or network
 
