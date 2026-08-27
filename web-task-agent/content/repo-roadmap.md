@@ -18,7 +18,7 @@ La viralité ne se programme pas et aucune roadmap ne peut promettre des étoile
 - ✅ Huit receipts déterministes, trois golden paths, scorecard et fixtures adversariales.
 - ✅ Trust model, guides de contribution, templates d'issues, Discussions et site GitHub Pages.
 - ✅ Release `v0.5.1` avec tarball, checksum et provenance ; CI actuelle verte.
-- ✅ Vérification locale de cette roadmap : **163 tests unitaires, 4 intégrations, 0 échec**, artefacts générés synchronisés et 420 liens Markdown locaux validés.
+- ✅ Vérification locale de cette roadmap : **164 tests unitaires, 4 intégrations, 0 échec**, artefacts générés synchronisés et 420 liens Markdown locaux validés.
 
 ### Ce que les signaux publics disent vraiment
 
@@ -297,7 +297,7 @@ Publier protocole, petits dénominateurs, données anonymisées consenties et li
 - [ ] Convertir chaque faille en test de non-régression et advisory si nécessaire.
 - [x] Publier ce qui a été testé et ce qui ne l'a pas été.
 
-**Préparation livrée, adoption non simulée :** `EXTERNAL_VALIDATION.md` fixe trois tracks, le protocole reviewer, le consentement granulaire et une baseline externe à zéro ; le kit exécutable en matérialise maintenant le test avant recrutement. `SECURITY_REVIEW.md` publie le commit pinning, les six surfaces prioritaires, les commandes, les preuves mainteneur et les zones non auditées. La [demande publique de revue #10](https://github.com/OthmaneBlial/web-task-agent/issues/10) borne le résultat attendu et redirige toute faille vers une advisory privée. Aucun participant, audit reçu ni reviewer indépendant n'est compté avant une trace réelle.
+**Préparation livrée, adoption non simulée :** `EXTERNAL_VALIDATION.md` fixe trois tracks, le protocole reviewer, le consentement granulaire et une baseline externe à zéro ; le kit exécutable en matérialise maintenant le test avant recrutement. `SECURITY_REVIEW.md` publie le commit pinning, les six surfaces prioritaires, les preuves mainteneur et les zones non auditées. `npm run security:review` relie ces six surfaces à 18 ancres dans 12 fichiers, exécute les régressions ciblées, la conformité, l'audit secrets et l'audit production ; sa sortie rappelle qu'elle n'est pas une revue indépendante. La [demande publique #10](https://github.com/OthmaneBlial/web-task-agent/issues/10) et un formulaire d'attestation séparé redirigent toute faille vers une advisory privée et n'acceptent publiquement que périmètre, méthode, statut et limites. Aucun participant, audit reçu ni reviewer indépendant n'est compté avant une trace réelle.
 
 **Preuve d'acceptation :** au moins cinq receipts ont été vérifiés par des non-mainteneurs, trois utilisateurs ont produit un second receipt ou un diff, et une revue indépendante a laissé une trace publique exploitable.
 
