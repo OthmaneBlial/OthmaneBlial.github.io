@@ -18,7 +18,7 @@ La viralité ne se programme pas et aucune roadmap ne peut promettre des étoile
 - ✅ Huit receipts déterministes, trois golden paths, scorecard et fixtures adversariales.
 - ✅ Trust model, guides de contribution, templates d'issues, Discussions et site GitHub Pages.
 - ✅ Release `v0.5.1` avec tarball, checksum et provenance ; CI actuelle verte.
-- ✅ Vérification locale de cette roadmap : **164 tests unitaires, 4 intégrations, 0 échec**, artefacts générés synchronisés et 420 liens Markdown locaux validés.
+- ✅ Vérification locale de cette roadmap : **165 tests unitaires, 4 intégrations, 0 échec**, artefacts générés synchronisés et 420 liens Markdown locaux validés.
 
 ### Ce que les signaux publics disent vraiment
 
@@ -187,9 +187,9 @@ Le badge doit dire **integrity verified**, jamais **decision is true**. Un hash 
 - [x] Tester l'installation dans un répertoire neuf sur la matrice Node LTS officiellement supportée.
 - [x] Conserver le tarball GitHub, SHA-256 et attestation comme chemin de vérification indépendant.
 
-**Porte externe :** la réservation du nom, la configuration du trusted publisher et la première publication exigent l'autorisation du propriétaire npm. Une CI verte ne permet pas de déclarer ce point livré.
+**Porte externe :** npm impose que chaque package existe déjà avant de pouvoir lui attacher un trusted publisher. Le propriétaire doit donc effectuer une publication bootstrap publique des deux noms, configurer la relation de confiance, puis incrémenter vers des versions jamais publiées avant les premiers tags OIDC. Une CI verte ne permet pas de déclarer ce point livré.
 
-**État intermédiaire :** le noyau expose maintenant le binaire sans clé `decision-receipt`, les tarballs CLI/noyau sont installés puis exécutés en répertoires vierges sur Node 20/22/24, et `publish-npm.yml` demande uniquement OIDC avec provenance automatique. Le tarball principal prouve aussi le handshake MCP via `web-task-agent mcp serve`. Les noms sont libres au moment du contrôle, mais la session locale n'est pas authentifiée à npm : réservation, trusted publisher, première publication, provenance publique et `npx` depuis le registre restent donc ouverts.
+**État intermédiaire :** le noyau expose maintenant le binaire sans clé `decision-receipt`, les tarballs CLI/noyau sont installés puis exécutés en répertoires vierges sur Node 20/22/24, et `publish-npm.yml` demande uniquement OIDC avec provenance automatique. Le tarball principal prouve aussi le handshake MCP via `web-task-agent mcp serve`. `npm run publish:preflight` verrouille 27 invariants sans credentials — métadonnées, tags, runner, versions Node/npm, permission OIDC, absence de token long terme, couplage des versions et ordre npm → MCP — tandis que `--live` vérifie seulement la visibilité publique. Le contrôle live rapporte encore les deux versions absentes et la session locale n'est pas authentifiée : bootstrap propriétaire, trusted publishers, bump, provenance publique et `npx` restent ouverts.
 
 ### 2. GitHub Action dédiée
 
