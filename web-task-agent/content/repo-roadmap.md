@@ -18,7 +18,7 @@ La viralité ne se programme pas et aucune roadmap ne peut promettre des étoile
 - ✅ Huit receipts déterministes, trois golden paths, scorecard et fixtures adversariales.
 - ✅ Trust model, guides de contribution, templates d'issues, Discussions et site GitHub Pages.
 - ✅ Release `v0.5.1` avec tarball, checksum et provenance ; CI actuelle verte.
-- ✅ Vérification locale de cette roadmap : **165 tests unitaires, 4 intégrations, 0 échec**, artefacts générés synchronisés et 420 liens Markdown locaux validés.
+- ✅ Vérification locale de cette roadmap : **166 tests unitaires, 4 intégrations, 0 échec**, artefacts générés synchronisés et 420 liens Markdown locaux validés.
 
 ### Ce que les signaux publics disent vraiment
 
@@ -316,6 +316,8 @@ Publier protocole, petits dénominateurs, données anonymisées consenties et li
 5. **Evidence study** — résultats du test reviewer, y compris limites et échecs.
 
 Chaque publication doit pointer directement vers l'artefact essayable, pas seulement vers la homepage.
+
+**Surface d'activation livrée, portée externe non revendiquée :** le [défi de falsification en 60 secondes](https://othmaneblial.github.io/web-task-agent/challenge.html) transforme la fixture altérée en une entrée autonome. Il lance le vrai vérificateur local, mesure uniquement dans l'onglet, révèle `integrity_hash_mismatch` et `evidence/source.md`, puis propose un handoff explicite vers le vérificateur complet, l'Action et une issue de reproduction. Aucun résultat, identité ou score n'est envoyé, stocké ou compté comme adoption.
 
 ### Canaux pertinents, sans spam
 

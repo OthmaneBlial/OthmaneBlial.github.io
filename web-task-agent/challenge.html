@@ -1,0 +1,150 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="Can you catch one changed evidence file in 60 seconds? A local, telemetry-free Decision Receipt tamper challenge." />
+  <meta name="color-scheme" content="dark light" />
+  <meta property="og:title" content="The 60-second Decision Receipt tamper challenge" />
+  <meta property="og:description" content="One AI research receipt. One changed file. Catch the broken integrity boundary locally — no upload or account." />
+  <meta property="og:image" content="https://othmaneblial.github.io/web-task-agent/assets/social-preview.jpg" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://othmaneblial.github.io/web-task-agent/challenge.html" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <title>60-second tamper challenge — Web Task Agent</title>
+  <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="challenge.css" />
+  <script src="assets/decision-receipt-verifier.js" defer></script>
+  <script src="assets/web-verifier-fixtures.js" defer></script>
+  <script src="challenge.js" defer></script>
+</head>
+<body data-page="challenge">
+  <a class="challenge-skip" href="#challenge-workbench">Skip to challenge</a>
+  <div class="site-shell challenge-shell">
+    <header class="topbar challenge-topbar">
+      <a class="brand" href="index.html">
+        <span class="brand-mark" aria-hidden="true">W</span>
+        <span><strong>Web Task Agent</strong><small>Offline decision verification</small></span>
+      </a>
+      <nav class="topnav" aria-label="Primary navigation">
+        <a aria-current="page" href="challenge.html">60s challenge</a>
+        <a href="verify.html">Local verifier</a>
+        <a href="study.html">Reviewer study</a>
+        <a href="docs.html">Docs</a>
+        <a href="https://github.com/OthmaneBlial/web-task-agent">GitHub</a>
+      </nav>
+    </header>
+
+    <main id="challenge-workbench">
+      <section class="challenge-hero" aria-labelledby="challenge-title">
+        <div class="challenge-intro">
+          <p class="case-label">CASE DR-001 · SYNTHETIC FIXTURE</p>
+          <h1 id="challenge-title">One receipt.<br />One changed file.<br /><em>60 seconds.</em></h1>
+          <p class="challenge-lede">
+            An AI research handoff still looks plausible after one evidence file changed. Find the broken
+            boundary before a reviewer relies on it. The real verifier runs locally behind this page.
+          </p>
+          <div class="challenge-actions">
+            <button id="challenge-start" class="challenge-button challenge-button-primary" type="button">Start the clock</button>
+            <a class="challenge-button" href="verify.html?fixture=tampered">Skip to the full verifier</a>
+          </div>
+          <p class="privacy-line"><span aria-hidden="true"></span>No upload · no account · no telemetry · no score leaves this tab</p>
+        </div>
+
+        <aside class="case-meter" aria-label="Challenge status">
+          <div class="case-meter-top"><span>LOCAL TIMER</span><span id="timer-state">READY</span></div>
+          <output id="challenge-timer" aria-live="off">00:00.0</output>
+          <div class="meter-rule" aria-hidden="true"><span></span></div>
+          <dl>
+            <div><dt>Bundle</dt><dd>3 files</dd></div>
+            <div><dt>Declared</dt><dd>SHA-256</dd></div>
+            <div><dt>Upload</dt><dd>None</dd></div>
+          </dl>
+        </aside>
+      </section>
+
+      <section id="challenge-case" class="challenge-case" aria-labelledby="case-question" hidden>
+        <div class="case-file-stack" aria-label="Synthetic receipt evidence">
+          <article class="case-sheet case-sheet-receipt">
+            <header><span>receipt.json</span><span>01 / 03</span></header>
+            <p class="sheet-kicker">DECISION SUMMARY</p>
+            <blockquote>“Keep the decision only while the exported evidence remains inspectable.”</blockquote>
+            <div class="sheet-row"><span>claim status</span><strong>supported</strong></div>
+            <div class="sheet-row"><span>snapshot</span><strong>evidence/source.md</strong></div>
+            <div class="sheet-row"><span>signature</span><strong>optional · absent</strong></div>
+          </article>
+
+          <article class="case-sheet case-sheet-manifest">
+            <header><span>integrity-manifest.json</span><span>02 / 03</span></header>
+            <p class="sheet-kicker">DECLARED SNAPSHOT</p>
+            <code>185d6920d420…0158ad4</code>
+            <div class="hash-bars" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+            <div class="sheet-row"><span>bytes</span><strong>65</strong></div>
+            <div class="sheet-row"><span>algorithm</span><strong>sha256</strong></div>
+          </article>
+
+          <article class="case-sheet case-sheet-evidence">
+            <header><span>evidence/source.md</span><span>03 / 03</span></header>
+            <p class="sheet-kicker">CURRENT FILE</p>
+            <pre># Example source
+
+The evidence remains inspectable after export.
+Tampered after the manifest was created.</pre>
+            <div class="evidence-stamp">CURRENT BYTES · 106</div>
+          </article>
+        </div>
+
+        <div class="case-decision">
+          <p class="case-label">YOUR VERDICT</p>
+          <h2 id="case-question">Which boundary failed?</h2>
+          <p>Choose the most precise answer. The local verifier—not a hidden answer key—will reveal the exact failure.</p>
+          <div class="answer-grid" role="group" aria-labelledby="case-question">
+            <button type="button" data-answer="integrity_hash_mismatch"><span>A</span><strong>Evidence hash mismatch</strong><small>The current snapshot bytes no longer match the manifest.</small></button>
+            <button type="button" data-answer="stale_source"><span>B</span><strong>Source freshness</strong><small>The source date exceeded the reviewer’s threshold.</small></button>
+            <button type="button" data-answer="claim_contradicted"><span>C</span><strong>Claim contradiction</strong><small>Contrary evidence changed the semantic status.</small></button>
+            <button type="button" data-answer="signature_missing"><span>D</span><strong>Missing signature</strong><small>An optional operator signature was not present.</small></button>
+          </div>
+          <p id="challenge-announcer" class="challenge-announcer" role="status" aria-live="polite">Clock running. Inspect the three files and choose one answer.</p>
+        </div>
+      </section>
+
+      <section id="challenge-result" class="challenge-result" aria-labelledby="result-heading" hidden>
+        <div class="result-verdict">
+          <p id="result-kicker" class="case-label">ENGINE VERDICT</p>
+          <h2 id="result-heading">Evidence hash mismatch</h2>
+          <p id="result-summary"></p>
+        </div>
+        <div class="result-receipt" aria-label="Exact local verification result">
+          <span>LOCAL VERIFIER OUTPUT</span>
+          <code id="result-code">integrity_hash_mismatch</code>
+          <strong id="result-file">evidence/source.md</strong>
+          <p id="result-detail"></p>
+        </div>
+        <div class="result-actions">
+          <button id="copy-result" class="challenge-button challenge-button-primary" type="button">Copy my result</button>
+          <a class="challenge-button" href="verify.html?fixture=tampered">Inspect the full receipt</a>
+          <button id="challenge-reset" class="challenge-button challenge-button-quiet" type="button">Try again</button>
+        </div>
+        <p class="truth-boundary">Integrity proves which bytes changed. It does not prove that the source, claim, or decision is true.</p>
+      </section>
+
+      <section class="challenge-after" aria-labelledby="after-title">
+        <p class="case-label">FROM PUZZLE TO PRACTICE</p>
+        <h2 id="after-title">Put the same check in a pull request.</h2>
+        <p>The challenge uses the public Decision Receipt v1 fixture and the same browser verifier as the product. No result is collected; the next action stays yours.</p>
+        <div>
+          <a href="https://github.com/OthmaneBlial/decision-receipt-action">Use the GitHub Action</a>
+          <a href="https://github.com/OthmaneBlial/web-task-agent/issues/2">Reproduce a receipt</a>
+          <a href="docs.html#page=decision-receipt-spec">Read the protocol</a>
+        </div>
+      </section>
+    </main>
+
+    <footer class="challenge-footer">
+      <span>Decision Receipt v1 · synthetic fixture</span>
+      <span>Nothing is submitted, persisted, or scored remotely.</span>
+    </footer>
+  </div>
+</body>
+</html>

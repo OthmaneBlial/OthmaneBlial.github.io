@@ -447,7 +447,13 @@
     document.querySelectorAll("[data-fixture]").forEach((button) => button.addEventListener("click", () => loadFixture(button.dataset.fixture, button.dataset.slot || "primary")));
     byId("freshness-days").addEventListener("change", () => { if (state.primary) { renderMetrics(state.primary); renderSources(state.primary); } });
     byId("download-report").addEventListener("click", downloadReport);
-    announce("Ready. Choose a local receipt or load a safe fixture; nothing will be uploaded.");
+    const requestedFixture = new URLSearchParams(window.location.search).get("fixture");
+    if (["valid", "tampered", "changed"].includes(requestedFixture)) {
+      announce(`Loading the ${requestedFixture} fixture from this page bundle; nothing will be uploaded.`);
+      void loadFixture(requestedFixture, requestedFixture === "changed" ? "comparison" : "primary");
+    } else {
+      announce("Ready. Choose a local receipt or load a safe fixture; nothing will be uploaded.");
+    }
   }
 
   setup();

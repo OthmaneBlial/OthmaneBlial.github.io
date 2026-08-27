@@ -199,6 +199,48 @@ a {
   height: auto;
 }
 
+.challenge-callout {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  gap: clamp(20px, 4vw, 44px);
+  align-items: center;
+  margin-bottom: 24px;
+  padding: clamp(24px, 4vw, 42px);
+  overflow: hidden;
+  border: 1px solid rgba(215, 255, 79, 0.42);
+  border-radius: var(--radius-xl);
+  color: #f4eddd;
+  background:
+    linear-gradient(rgba(215, 255, 79, 0.035) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(215, 255, 79, 0.035) 1px, transparent 1px),
+    #10130f;
+  background-size: 30px 30px;
+  box-shadow: var(--shadow-lg);
+}
+
+.challenge-callout-stamp {
+  display: grid;
+  place-items: center;
+  width: 112px;
+  aspect-ratio: 1;
+  border: 1px solid #d7ff4f;
+  border-radius: 50%;
+  color: #10130f;
+  background: #d7ff4f;
+  transform: rotate(-5deg);
+  box-shadow: 9px 9px 0 rgba(255, 109, 45, 0.9);
+}
+
+.challenge-callout-stamp span { font: 700 3.2rem/0.8 var(--mono-font); letter-spacing: -0.09em; }
+.challenge-callout-stamp small { font: 800 0.62rem var(--mono-font); letter-spacing: 0.12em; }
+.challenge-callout-copy .eyebrow { color: #d7ff4f; background: rgba(215, 255, 79, 0.09); }
+.challenge-callout-copy h2 { max-width: 18ch; margin: 0; font-family: var(--display-font); font-size: clamp(2.15rem, 4vw, 4.2rem); line-height: 0.92; letter-spacing: -0.055em; }
+.challenge-callout-copy p:last-child { max-width: 68ch; margin: 15px 0 0; color: rgba(244, 237, 221, 0.68); line-height: 1.6; }
+.challenge-callout-action { display: grid; gap: 13px; justify-items: end; }
+.challenge-callout-action span { color: rgba(244, 237, 221, 0.52); font: 0.68rem/1.4 var(--mono-font); text-align: right; }
+.challenge-callout-action .button-accent { color: #10130f; background: #d7ff4f; box-shadow: none; }
+.challenge-callout-action .button-accent:hover { background: #ecff9c; }
+
 .hero-copy,
 .panel,
 .metric-card,
@@ -868,6 +910,7 @@ li code,
 @media (max-width: 1180px) {
   .hero,
   .product-proof,
+  .challenge-callout,
   .docs-layout,
   .artifact-layout,
   .workflow-grid,
@@ -905,6 +948,7 @@ li code,
   .hero-copy,
   .panel,
   .product-proof,
+  .challenge-callout,
   .section,
   .workflow-card,
   .feature-card,
@@ -914,6 +958,10 @@ li code,
   .metric-card {
     padding: 20px;
   }
+
+  .challenge-callout-stamp { width: 88px; }
+  .challenge-callout-action { justify-items: stretch; }
+  .challenge-callout-action span { text-align: left; }
 
   .copy-button {
     top: 10px;
