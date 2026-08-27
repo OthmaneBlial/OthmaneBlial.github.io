@@ -67,29 +67,27 @@
         <article class="docs-content">
           <section class="doc-section" id="getting-started">
             <p class="eyebrow">01 / Getting started</p>
-            <h2>Open the fictional archive.</h2>
+            <h2>Open your repository in one command.</h2>
             <p>
-              RepoRewind requires Node.js 24 (recommended) or Node.js 22.13+, npm 10+, and Git. The first launch uses a
-              deterministic fictional ten-year history, so the complete interface is available before you analyze a real
-              repository.
+              RepoRewind requires Node.js 24 (recommended) or Node.js 22.13+, npm 10+, and Git. Run it inside any local
+              Git repository; the checked-out branch is analyzed and opened in a loopback-only viewer automatically.
             </p>
             <div class="doc-code">
-              <pre><code id="docs-install">git clone https://github.com/OthmaneBlial/RepoRewind.git
-cd RepoRewind
-npm ci
-npm run dev</code></pre>
+              <pre><code id="docs-install">cd /path/to/your/repository
+npx reporewind .</code></pre>
               <button class="copy-button" type="button" data-copy="#docs-install">
                 <span data-copy-label>Copy</span>
                 <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M7 6V3h10v10h-3M3 7h10v10H3z" /></svg>
               </button>
             </div>
             <p>
-              Open the URL printed by Vite, normally <code>http://127.0.0.1:5173</code>. Select
-              <strong>Import</strong> when you are ready to open a locally generated archive. Open the repository
-              switcher and choose <strong>Open demo</strong> to reset; reloading also clears a memory-only import.
+              RepoRewind starts on a random <code>127.0.0.1</code> port behind an unpredictable session path. Use
+              <code>--no-open</code> to print the URL without launching a browser and press <kbd>Ctrl C</kbd> to stop
+              it. The live fictional demo remains available from the <strong>Live demo</strong> link.
             </p>
             <p class="doc-note">
-              No environment variables, database, account, service credential, or network API is required.
+              The first <code>npx</code> run contacts npm to download RepoRewind. Repository analysis and viewing
+              require no account, database, source upload, or application API.
             </p>
           </section>
 
@@ -97,11 +95,11 @@ npm run dev</code></pre>
             <p class="eyebrow">02 / Analyze</p>
             <h2>Turn Git into a portable archive.</h2>
             <p>
-              Run the analyzer from a RepoRewind checkout and point it at any local Git working tree. It emits commit
-              structure and numeric diffs—not source file contents.
+              Use the explicit analyzer when you want a JSON archive for the hosted viewer or another tool. It emits
+              commit structure and numeric diffs—not source file contents.
             </p>
             <div class="doc-code">
-              <pre><code id="docs-analyze">npm run analyze -- /path/to/repository \
+              <pre><code id="docs-analyze">npx reporewind analyze /path/to/repository \
   --output ./reporewind-history.json</code></pre>
               <button class="copy-button" type="button" data-copy="#docs-analyze">
                 <span data-copy-label>Copy</span>
@@ -117,24 +115,24 @@ npm run dev</code></pre>
             <h3>Useful analyzer options</h3>
             <div class="doc-code">
               <pre><code id="docs-options"># Explore another branch or remote ref
-npm run analyze -- /path/to/repository --branch release/3.x
+npx reporewind /path/to/repository --branch release/3.x
 
 # Bound an exceptionally large history
-npm run analyze -- /path/to/repository --max-commits 5000
+npx reporewind /path/to/repository --max-commits 5000
 
 # Pipe clean JSON to another tool
-npm run --silent analyze -- /path/to/repository --stdout \
+npx reporewind analyze /path/to/repository --stdout \
   &gt; reporewind-history.json
 
 # Explicitly replace an existing archive
-npm run analyze -- /path/to/repository \
+npx reporewind analyze /path/to/repository \
   --output ./reporewind-history.json --force</code></pre>
               <button class="copy-button" type="button" data-copy="#docs-options">
                 <span data-copy-label>Copy</span>
                 <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M7 6V3h10v10h-3M3 7h10v10H3z" /></svg>
               </button>
             </div>
-            <p>Run <code>npm run analyze -- --help</code> for the complete interface.</p>
+            <p>Run <code>npx reporewind --help</code> for the complete interface.</p>
           </section>
 
           <section class="doc-section" id="explore">

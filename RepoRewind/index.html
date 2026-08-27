@@ -129,12 +129,12 @@
             <span class="step-number">01</span>
             <h3>Analyze</h3>
             <p>The CLI reads metadata, paths, numeric diffs, refs, and tags—never source contents.</p>
-            <code>npm run analyze -- /path/to/repository</code>
+            <code>npx reporewind /path/to/repository</code>
           </li>
           <li class="reveal" data-delay="1">
             <span class="step-number">02</span>
-            <h3>Import</h3>
-            <p>A bounded schema validator checks the archive before a worker prepares its indexes.</p>
+            <h3>Validate</h3>
+            <p>The loopback session loads automatically; the same bounded validator protects manual archive imports.</p>
           </li>
           <li class="reveal" data-delay="2">
             <span class="step-number">03</span>
@@ -223,18 +223,16 @@
         <div class="quick-grid">
           <div class="quick-copy reveal">
             <p class="eyebrow">Node.js 24 recommended · npm 10+ · Git</p>
-            <h2 id="quick-title">A city in three commands.</h2>
+            <h2 id="quick-title">A city in one command.</h2>
             <p>
-              The fictional demo opens immediately. No environment variables, account, database, or API key required.
+              The first run downloads RepoRewind from npm. Your Git history and the local viewer stay on this machine.
             </p>
             <a class="button button-outline" href="./docs.html#getting-started">Continue to the guide</a>
           </div>
           <div class="terminal reveal" data-delay="1">
             <div class="terminal-bar"><span>Terminal</span><span>local / reporewind</span></div>
-            <pre><code id="quick-command">npm ci
-npm run dev
-
-# then open the URL printed by Vite</code></pre>
+            <pre><code id="quick-command">cd /path/to/your/repository
+npx reporewind .</code></pre>
             <button class="copy-button" type="button" data-copy="#quick-command">
               <span data-copy-label>Copy commands</span>
               <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M7 6V3h10v10h-3M3 7h10v10H3z" /></svg>
