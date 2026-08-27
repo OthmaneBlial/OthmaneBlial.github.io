@@ -209,6 +209,25 @@
             <button id="download-response" class="button button-accent" type="button">Download anonymous response JSON</button>
             <button id="restart-study" class="button" type="button">Discard and restart</button>
           </div>
+          <aside class="submission-handoff" aria-labelledby="submission-title">
+            <div>
+              <p class="eyebrow">OPTIONAL PUBLIC HANDOFF</p>
+              <h3 id="submission-title">Nothing leaves this page unless you move it.</h3>
+              <p>
+                First download and inspect the JSON. The public form becomes available only when you consented to an
+                anonymized row. Opening it links the contribution to your GitHub account; it never uploads the JSON for you.
+              </p>
+            </div>
+            <a
+              id="submit-study-result"
+              class="button public-handoff-button"
+              href="https://github.com/OthmaneBlial/web-task-agent/issues/new?template=reviewer_value_study.yml"
+              target="_blank"
+              rel="noopener"
+              aria-disabled="true"
+              tabindex="-1"
+            >Open the public result form</a>
+          </aside>
         </div>
       </section>
     </main>

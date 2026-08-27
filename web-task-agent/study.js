@@ -7,7 +7,7 @@
   const trialPanel = byId("trial-panel");
   const finishPanel = byId("finish-panel");
   const announcer = byId("study-announcer");
-  const state = { currentTrial: 0, trialStartedAt: null, timerHandle: null, trials: [] };
+  const state = { currentTrial: 0, trialStartedAt: null, timerHandle: null, trials: [], responseExported: false };
 
   function announce(message) {
     announcer.textContent = message;
@@ -162,6 +162,13 @@
     };
   }
 
+  function updatePublicHandoff() {
+    const enabled = state.responseExported && byId("consent-row").checked;
+    const link = byId("submit-study-result");
+    link.setAttribute("aria-disabled", String(!enabled));
+    link.tabIndex = enabled ? 0 : -1;
+  }
+
   function startStudy(event) {
     event.preventDefault();
     if (!event.currentTarget.reportValidity()) return;
@@ -239,7 +246,17 @@
     }
     const payload = responsePayload();
     downloadBlob(`${payload.participantId}-reviewer-study.json`, `${JSON.stringify(payload, null, 2)}\n`, "application/json");
-    announce("Anonymous response JSON downloaded. Nothing was submitted by this page.");
+    state.responseExported = true;
+    updatePublicHandoff();
+    announce(payload.consent.publishAnonymizedRow
+      ? "Anonymous response JSON downloaded. Nothing was submitted by this page; the optional public form is now available."
+      : "Anonymous response JSON downloaded. Nothing was submitted by this page, and public handoff remains disabled without anonymized-row consent.");
+  });
+  byId("submit-study-result").addEventListener("click", (event) => {
+    if (event.currentTarget.getAttribute("aria-disabled") === "true") {
+      event.preventDefault();
+      announce("Download the response with anonymized-row consent before opening the optional public form.");
+    }
   });
   byId("restart-study").addEventListener("click", () => window.location.reload());
 

@@ -157,6 +157,12 @@
 .summary-card span { display: block; color: var(--muted); font-size: .72rem; text-transform: uppercase; letter-spacing: .08em; }
 .summary-card strong { display: block; margin-top: 5px; font-family: var(--mono-font); overflow-wrap: anywhere; }
 .finish-actions { grid-column: 1 / -1; display: flex; flex-wrap: wrap; gap: 10px; }
+.submission-handoff { grid-column: 1 / -1; display: grid; grid-template-columns: minmax(0,1fr) auto; align-items: center; gap: 20px; padding: 20px; border: 1px solid rgba(15,118,110,.28); border-radius: 18px; background: var(--teal-soft); }
+.submission-handoff h3 { margin: 4px 0 6px; font: 700 clamp(1.35rem,2.4vw,2rem)/1.05 var(--display-font); }
+.submission-handoff p { margin: 0; max-width: 76ch; color: var(--muted); line-height: 1.55; }
+.submission-handoff .eyebrow { color: var(--teal-deep); }
+.public-handoff-button { white-space: nowrap; }
+.public-handoff-button[aria-disabled="true"] { opacity: .48; cursor: not-allowed; filter: grayscale(.35); }
 
 [hidden] { display: none !important; }
 
@@ -183,7 +189,10 @@
   .consent-fieldset,
   .setup-action,
   .export-summary,
-  .finish-actions { grid-column: auto; }
+  .finish-actions,
+  .submission-handoff { grid-column: auto; }
+  .submission-handoff { grid-template-columns: 1fr; }
+  .public-handoff-button { justify-self: stretch; white-space: normal; text-align: center; }
   .setup-action { align-items: stretch; flex-direction: column; }
   .order-fieldset { grid-template-columns: 1fr; }
   .trial-rail { grid-template-columns: 1fr auto; }

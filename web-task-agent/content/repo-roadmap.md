@@ -18,7 +18,7 @@ La viralité ne se programme pas et aucune roadmap ne peut promettre des étoile
 - ✅ Huit receipts déterministes, trois golden paths, scorecard et fixtures adversariales.
 - ✅ Trust model, guides de contribution, templates d'issues, Discussions et site GitHub Pages.
 - ✅ Release `v0.5.1` avec tarball, checksum et provenance ; CI actuelle verte.
-- ✅ Vérification locale de cette roadmap : **162 tests unitaires, 4 intégrations, 0 échec**, artefacts générés synchronisés et 420 liens Markdown locaux validés.
+- ✅ Vérification locale de cette roadmap : **163 tests unitaires, 4 intégrations, 0 échec**, artefacts générés synchronisés et 420 liens Markdown locaux validés.
 
 ### Ce que les signaux publics disent vraiment
 
@@ -189,7 +189,7 @@ Le badge doit dire **integrity verified**, jamais **decision is true**. Un hash 
 
 **Porte externe :** la réservation du nom, la configuration du trusted publisher et la première publication exigent l'autorisation du propriétaire npm. Une CI verte ne permet pas de déclarer ce point livré.
 
-**État intermédiaire :** le noyau expose maintenant le binaire sans clé `decision-receipt`, les tarballs CLI/noyau sont installés puis exécutés en répertoires vierges sur Node 20/22/24, et `publish-npm.yml` demande uniquement OIDC avec provenance automatique. Les noms sont libres au moment du contrôle, mais la session locale n'est pas authentifiée à npm : réservation, trusted publisher, première publication, provenance publique et `npx` depuis le registre restent donc ouverts.
+**État intermédiaire :** le noyau expose maintenant le binaire sans clé `decision-receipt`, les tarballs CLI/noyau sont installés puis exécutés en répertoires vierges sur Node 20/22/24, et `publish-npm.yml` demande uniquement OIDC avec provenance automatique. Le tarball principal prouve aussi le handshake MCP via `web-task-agent mcp serve`. Les noms sont libres au moment du contrôle, mais la session locale n'est pas authentifiée à npm : réservation, trusted publisher, première publication, provenance publique et `npx` depuis le registre restent donc ouverts.
 
 ### 2. GitHub Action dédiée
 
@@ -247,14 +247,15 @@ Créer un dépôt étroit `OthmaneBlial/decision-receipt-action`, car GitHub Mar
 
 - [x] Serveur STDIO local limité à `verify_receipt`, `compare_receipts`, `import_result` et `render_receipt`.
 - [x] Aucun outil de navigation, shell, cookie, authentification ou écriture externe.
+- [x] Préparer `server.json`, le `mcpName` npm et la commande packagée `mcp serve` selon le schéma officiel, avec validation locale et test de tarball propre.
 - [ ] Publier le package npm avant les métadonnées du registre MCP officiel.
 - [x] Ajouter une Skill/recette d'installation qui apprend aux agents à produire ou vérifier un receipt sans contourner le consentement utilisateur.
 
-**État intermédiaire :** le serveur négocie MCP `2025-11-25`, borne requêtes et réponses à 2 Mo, confine tous les chemins à `DECISION_RECEIPT_ROOT` et refuse les liens symboliques. Un test avec primitives réseau bloquées couvre les quatre outils ; un second test passe par le client TypeScript MCP officiel pour le handshake, la découverte et la vérification. La publication npm et les métadonnées du registre restent liées à la porte propriétaire de P3.
+**État intermédiaire :** le serveur négocie MCP `2025-11-25`, borne requêtes et réponses à 2 Mo, confine tous les chemins à `DECISION_RECEIPT_ROOT` et refuse les liens symboliques. Un test avec primitives réseau bloquées couvre les quatre outils et les deux entrées STDIO ; un second test passe par le client TypeScript MCP officiel pour le handshake, la découverte et la vérification, y compris depuis le tarball installé seul. `server.json` passe le schéma officiel `2025-12-11`, son nom `io.github.othmaneblial/decision-receipt` correspond au `mcpName` npm et le workflow futur attend la visibilité du package public avant de publier via GitHub OIDC. Le publisher `v1.8.1` est téléchargé et vérifié uniquement sur le runner GitHub : rien n'est installé sur le Mac. La publication npm et l'enregistrement MCP observables restent liés à la porte propriétaire de P3.
 
 **Preuve d'acceptation :** deux sorties authentiques de moteurs externes passent le corpus de conformité et conservent leurs limites. Un client MCP peut vérifier et comparer hors ligne ; aucune session fournisseur ni donnée privée n'entre dans le package.
 
-**Acceptation observée :** les receipts Browser Use et GPT Researcher passent le même validateur runtime, le JSON Schema indépendant et la vérification d'intégrité. Le client MCP officiel négocie et vérifie hors ligne. L'enregistrement au registre MCP reste bloqué, comme la publication npm dont il dépend ; ce canal de distribution n'est pas présenté comme livré.
+**Acceptation observée :** les receipts Browser Use et GPT Researcher passent le même validateur runtime, le JSON Schema indépendant et la vérification d'intégrité. Le client MCP officiel négocie et vérifie hors ligne par l'entrée directe et par la commande du paquet. Les métadonnées sont conformes mais l'enregistrement au registre MCP reste bloqué, comme la publication npm dont il dépend ; ce canal de distribution n'est pas présenté comme livré.
 
 ---
 
@@ -288,7 +289,7 @@ Publier protocole, petits dénominateurs, données anonymisées consenties et li
 - [x] Ouvrir un parcours web local-only avec chrono par trial, ZIPs bornés et export JSON anonyme, sans endpoint de soumission ni persistance.
 - [ ] Inclure au moins cinq reviewers externes consentants et publier les dénominateurs, abandons, limites et lignes autorisées.
 
-**Kit livré, résultat externe non inventé :** [`studies/reviewer-value/`](studies/reviewer-value/) contient deux rapports Markdown, deux receipts vérifiables et deux falsifications contrôlées. Le [Reviewer Evidence Lab](https://othmaneblial.github.io/web-task-agent/study.html) applique le même ordre `AB`/`BA`, lance le chrono au reveal, télécharge les ZIPs et exporte la réponse localement. Les falsifications échouent exactement sur `evidence/cache-policy.md` et `evidence/update-policy.md`. Le validateur refuse la dérive d'assignation et les champs d'identité/secret ; l'agrégateur exclut les fixtures et l'absence de consentement, sépare temps, justesse, confiance et abandons, et ne produit aucun test de significativité ni claim de supériorité. La seule réponse versionnée est synthétique : baseline réelle **0 participant**, donc la case externe reste ouverte.
+**Kit livré, résultat externe non inventé :** [`studies/reviewer-value/`](studies/reviewer-value/) contient deux rapports Markdown, deux receipts vérifiables et deux falsifications contrôlées. Le [Reviewer Evidence Lab](https://othmaneblial.github.io/web-task-agent/study.html) applique le même ordre `AB`/`BA`, lance le chrono au reveal, télécharge les ZIPs et exporte la réponse localement. Les falsifications échouent exactement sur `evidence/cache-policy.md` et `evidence/update-policy.md`. Le validateur refuse la dérive d'assignation et les champs d'identité/secret ; l'agrégateur exclut les fixtures et l'absence de consentement, sépare temps, justesse, confiance et abandons, et ne produit aucun test de significativité ni claim de supériorité. Après export et consentement explicite à une ligne anonymisée, un handoff manuel peut ouvrir le formulaire public dédié ; la page n'envoie ni n'attache rien, et avertit que l'issue révèle le compte GitHub du contributeur. La seule réponse versionnée est synthétique : baseline réelle **0 participant**, donc la case externe reste ouverte.
 
 ### Revue de sécurité indépendante
 

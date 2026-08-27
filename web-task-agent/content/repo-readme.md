@@ -73,6 +73,14 @@ web-task-agent receipt verify reports/demos/browser-agent-landscape
 
 The verifier checks the receipt structure, evidence references, source snapshots, and exported file hashes. It cannot prove that a source is true, complete, authorized, or fresh.
 
+The same bounded operations are available to local MCP hosts after installing a release tarball:
+
+```bash
+web-task-agent mcp serve
+```
+
+This STDIO command exposes only verify, compare, import, and render; it has no browser, HTTP, shell, cookie, or authentication capability. See [MCP.md](MCP.md) for host configuration and the explicit publication boundary. The metadata is prepared, but neither npm nor official MCP registry availability is claimed until both are observed publicly.
+
 For a versioned install, use the tarball and checksum attached to a GitHub release. This is the canonical public distribution path; it does not require a registry token:
 
 ```bash
