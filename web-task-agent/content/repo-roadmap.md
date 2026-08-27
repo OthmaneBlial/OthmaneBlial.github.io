@@ -191,32 +191,31 @@ Le badge doit dire **integrity verified**, jamais **decision is true**. Un hash 
 
 **État intermédiaire :** le noyau expose maintenant le binaire sans clé `decision-receipt`, les tarballs CLI/noyau sont installés puis exécutés en répertoires vierges sur Node 20/22/24, et `publish-npm.yml` demande uniquement OIDC avec provenance automatique. Le tarball principal prouve aussi le handshake MCP via `web-task-agent mcp serve`. `npm run publish:preflight` verrouille 28 invariants sans credentials — métadonnées, tags, runner, versions Node/npm/Action, permission OIDC, absence de token long terme, couplage des versions et ordre npm → MCP — tandis que `--live` vérifie seulement la visibilité publique. Le contrôle live rapporte encore les deux versions absentes et la session locale n'est pas authentifiée : bootstrap propriétaire, trusted publishers, bump, provenance publique et `npx` restent ouverts.
 
-### 2. GitHub Action dédiée
+### 2. Workflow GitHub Actions intégré
 
-Créer un dépôt étroit `OthmaneBlial/decision-receipt-action`, car GitHub Marketplace attend une Action clairement empaquetée autour d'un `action.yml` racine.
+Conserver le gate Decision Receipt dans `web-task-agent`. Aucun dépôt auxiliaire n'est requis : le workflow versionné utilise directement le noyau et les fixtures de ce projet.
 
-- [x] Entrées : glob de receipts, version de spec acceptée, seuil de fraîcheur et politique de claims insuffisants.
-- [x] Sorties : statut, compteurs, chemin du rapport, résumé Markdown et diff éventuel.
-- [x] Ajouter des annotations de fichiers et un Step Summary lisible ; le mode par défaut reste `contents: read` sans commentaire ni écriture.
-- [x] Rendre le commentaire de PR optionnel et documenter la permission explicite requise.
-- [x] Publier des tags majeurs immuables/maintenus, notes de release, checksums et tests contre des PRs de fixtures.
-- [x] Proposer une intégration de trois lignes :
+- [x] Garder `contents: read`, sans secret, commentaire ni permission d'écriture.
+- [x] Installer le lockfile revu et construire le vérificateur local sur Node 24.
+- [x] Vérifier une fixture valide à chaque push et pull request.
+- [x] Exiger que la fixture falsifiée échoue avec un code non nul.
+- [x] Documenter la commande CI réutilisable :
 
 ```yaml
-- uses: OthmaneBlial/decision-receipt-action@v1
-  with:
-    path: decisions/**/*.receipt.json
+- run: npm ci
+- run: npm run build
+- run: node dist/entrypoint.js receipt verify decisions/example
 ```
 
-**Preuve d'acceptation :** deux dépôts publics distincts montrent une PR verte et une PR rouge reproductibles. La PR rouge nomme le claim, la source ou le hash fautif. L'Action ne reçoit aucun secret et ne fait aucun appel réseau hors téléchargement normal de l'Action.
+**Preuve d'acceptation :** le même workflow exécute le chemin valide et prouve que le receipt falsifié est refusé. Il ne reçoit aucun secret et ne fait aucun appel réseau après le checkout et l'installation normale des dépendances.
 
-**État :** livré dans [`OthmaneBlial/decision-receipt-action`](https://github.com/OthmaneBlial/decision-receipt-action) et publié en `v1.0.0` avec tag immuable, tag majeur maintenu, release illustrée et checksums revérifiés. La [PR verte du dépôt principal](https://github.com/OthmaneBlial/web-task-agent/pull/9) et la [PR rouge du dépôt de démonstration](https://github.com/OthmaneBlial/decision-receipt-demo/pull/1) exécutent toutes deux `@v1` sans secret. La rouge expose trois annotations sur `evidence/source.md` : octets, SHA-256 du manifeste et hash du snapshot. Un test exécute le chemin par défaut avec les primitives réseau bloquées ; le commentaire reste un opt-in séparé.
+**État :** livré dans [`.github/workflows/decision-receipt.yml`](.github/workflows/decision-receipt.yml) et documenté dans [`GITHUB_WORKFLOW.md`](GITHUB_WORKFLOW.md). Le workflow construit le code du checkout, accepte la fixture minimale et refuse la fixture falsifiée. Toute cette intégration reste dans `web-task-agent`.
 
 ### 3. Faire de chaque intégration une surface de découverte
 
-- [x] Badge `Decision Receipt verified` lié au rapport ou à la documentation du protocole.
+- [x] Badge `Decision Receipt verified` lié au workflow ou à la documentation du protocole.
 - [x] Template de PR/RFC qui demande : décision, contradiction principale, invalidation et prochaine validation.
-- [x] Exemple complet dans un petit dépôt de démonstration, pas seulement dans le monorepo.
+- [x] Exemples valide et falsifié complets dans `examples/receipt-spec`.
 - [x] Release notes illustrées avec un receipt et son diff, jamais une liste abstraite de commits.
 
 ---
@@ -311,13 +310,13 @@ Publier protocole, petits dénominateurs, données anonymisées consenties et li
 
 1. **Protocol launch** — JSON Schema, conformance kit et receipt falsifié à détecter.
 2. **Verifier launch** — démo locale drag-and-drop, sans upload.
-3. **GitHub Action launch** — PR réelle avec diff de décision.
+3. **CI verification launch** — workflow réel avec receipts valide et falsifié.
 4. **Interop launch** — un run Browser Use/Stagehand/GPT Researcher transformé et vérifié.
 5. **Evidence study** — résultats du test reviewer, y compris limites et échecs.
 
 Chaque publication doit pointer directement vers l'artefact essayable, pas seulement vers la homepage.
 
-**Surface d'activation livrée, portée externe non revendiquée :** le [défi de falsification en 60 secondes](https://othmaneblial.github.io/web-task-agent/challenge.html) transforme la fixture altérée en une entrée autonome. Il lance le vrai vérificateur local, mesure uniquement dans l'onglet, révèle `integrity_hash_mismatch` et `evidence/source.md`, puis propose un handoff explicite vers le vérificateur complet, l'Action et une issue de reproduction. Aucun résultat, identité ou score n'est envoyé, stocké ou compté comme adoption.
+**Surface d'activation livrée, portée externe non revendiquée :** le [défi de falsification en 60 secondes](https://othmaneblial.github.io/web-task-agent/challenge.html) transforme la fixture altérée en une entrée autonome. Il lance le vrai vérificateur local, mesure uniquement dans l'onglet, révèle `integrity_hash_mismatch` et `evidence/source.md`, puis propose un handoff explicite vers le vérificateur complet, le workflow CI intégré et une issue de reproduction. Aucun résultat, identité ou score n'est envoyé, stocké ou compté comme adoption.
 
 ### Canaux pertinents, sans spam
 
@@ -338,7 +337,7 @@ Chaque publication doit pointer directement vers l'artefact essayable, pas seule
 
 **État :** les contrats existent comme issue forms testées et comme issues publiques : [adapter #11](https://github.com/OthmaneBlial/web-task-agent/issues/11), [policy case #3](https://github.com/OthmaneBlial/web-task-agent/issues/3) et [receipt review #2](https://github.com/OthmaneBlial/web-task-agent/issues/2). Le RFC définit les surfaces byte-level et la migration obligatoires ; la gouvernance nomme honnêtement un seul mainteneur ; la galerie exige licence, consentement et redaction, ne collecte rien et reste vide jusqu'à une vraie soumission. Les topics `decision-receipt`, `provenance`, `json-schema`, `github-actions`, `mcp` et `ai-safety` ne sont ajoutés qu'après livraison des surfaces correspondantes. Une issue ouverte n'est pas une contribution externe fusionnée.
 
-**Preuve d'acceptation :** deux PRs externes fusionnées, trois dépôts publics utilisant l'Action et au moins un cas communautaire devenu fixture, adapter ou décision de spec. Les posts manuels, partenariats et retours humains restent des tâches externes ; ils ne peuvent pas être simulés par le code.
+**Preuve d'acceptation :** deux PRs externes fusionnées, trois dépôts publics exécutant le vérificateur dans leur CI et au moins un cas communautaire devenu fixture, adapter ou décision de spec. Les posts manuels, partenariats et retours humains restent des tâches externes ; ils ne peuvent pas être simulés par le code.
 
 ---
 
@@ -347,7 +346,7 @@ Chaque publication doit pointer directement vers l'artefact essayable, pas seule
 Ne pas publier `v1.0` parce que la liste de features est longue. La publier seulement quand ces contrats sont vrais :
 
 - [x] Schéma v1 public, versionné, documenté et couvert par un corpus de conformité.
-- [x] CLI, SDK, web verifier et Action utilisent le même noyau.
+- [x] CLI, SDK, web verifier et workflow CI utilisent le même noyau.
 - [ ] Installation npm publique, provenance, tarball et checksum vérifiés depuis des environnements propres.
 - [x] Compatibilité N-1 testée et migration documentée.
 - [ ] Deux imports tiers authentiques et trois usages répétés externes.
@@ -371,7 +370,7 @@ Sans télémétrie cachée, utiliser uniquement des liens publics, retours conse
 | Activation | Installation propre ou vérification web terminée | 10 réussites externes documentées |
 | Valeur | Receipt vérifié par une autre personne | 5 receipts externes |
 | Rétention | Second receipt ou premier diff | 3 utilisateurs répétés |
-| Intégration | Action active dans un dépôt tiers | 3 dépôts publics |
+| Intégration | Vérification CI active dans un dépôt tiers | 3 dépôts publics |
 | Interop | Run tiers authentique conforme | 2 moteurs externes |
 | Communauté | PR externe fusionnée | 2 contributions utiles |
 | Portée | Visiteurs, clones, forks, étoiles, citations | Suivis après les signaux précédents, jamais seuls |
@@ -382,7 +381,7 @@ Sans télémétrie cachée, utiliser uniquement des liens publics, retours conse
 - Plus de workflows avant qu'un utilisateur externe ne demande un cas précis.
 - Un SaaS multi-tenant, une base de receipts hébergée ou de la télémétrie silencieuse.
 - Une marketplace ouverte de prompts/adapters sans conformance et revue de sécurité.
-- Une extension VS Code, app mobile ou dashboard d'équipe avant l'adoption de l'Action.
+- Une extension VS Code, app mobile ou dashboard d'équipe avant l'usage répété du vérificateur.
 - Des intégrations avec dix fournisseurs basées sur des fixtures inventées.
 - Des benchmarks « accuracy » qui comparent des modèles sans oracle publiable.
 - Des badges « verified truth », « unbiased » ou « hallucination-free ».
@@ -392,8 +391,8 @@ Sans télémétrie cachée, utiliser uniquement des liens publics, retours conse
 | Risque | Signal d'alerte | Décision |
 | --- | --- | --- |
 | Le receipt paraît trop lourd | Les utilisateurs préfèrent joindre un simple rapport | Proposer un profil minimal de 5–7 champs, sans affaiblir les labels de vérité. |
-| Le runner masque le protocole | Les visiteurs parlent uniquement de scraping/browser agent | Séparer encore plus SDK, Action et site du moteur de recherche de référence. |
-| L'Action ne crée pas de valeur répétée | Elle n'est installée que dans le dépôt de démo | Arrêter Marketplace et concentrer le produit sur web verifier + SDK. |
+| Le runner masque le protocole | Les visiteurs parlent uniquement de scraping/browser agent | Séparer encore plus SDK, workflow CI et site du moteur de recherche de référence. |
+| Le workflow CI ne crée pas de valeur répétée | Aucun dépôt tiers ne l'adapte après publication npm | Concentrer le produit sur web verifier + SDK. |
 | Les adapters perdent la provenance | Les imports remplissent les trous par inférence | Marquer `insufficient`, refuser l'import ou demander une attestation opérateur explicite. |
 | La promotion apporte des étoiles sans usage | Aucun receipt, diff ou contribution ne suit | Suspendre la promotion et corriger activation/message. |
 
@@ -402,7 +401,7 @@ Sans télémétrie cachée, utiliser uniquement des liens publics, retours conse
 1. P0 — cohérence du message et parcours public.
 2. P1 — schéma, noyau et conformance.
 3. P2 — vérificateur web local.
-4. P3 — npm public et GitHub Action.
+4. P3 — npm public et workflow GitHub Actions intégré.
 5. P4 — deux imports authentiques puis MCP local.
 6. P5 — utilisateurs externes, test reviewer et revue sécurité.
 7. P6 — lancements par artefact et boucle de contribution.
@@ -414,7 +413,6 @@ Ne pas inverser P1–P3 : envoyer du trafic vers un protocole non réutilisable 
 
 - [Browser Use](https://github.com/browser-use/browser-use), [Stagehand](https://github.com/browserbase/stagehand) et [GPT Researcher](https://github.com/assafelovic/gpt-researcher) : contrôle navigateur, packages, rapports, intégrations et quickstarts sont déjà des attentes de catégorie.
 - [npm Trusted Publishing](https://docs.npmjs.com/trusted-publishers/) : publication OIDC sans token longue durée et provenance automatique pour les packages publics éligibles.
-- [Publishing actions in GitHub Marketplace](https://docs.github.com/en/actions/how-tos/create-and-publish-actions/publish-in-github-marketplace) : contraintes de packaging et publication d'une Action publique.
 - [Official MCP Registry quickstart](https://modelcontextprotocol.io/registry/quickstart) : registre de métadonnées, package sous-jacent requis et statut preview.
 - [JSON Schema Draft 2020-12](https://json-schema.org/draft/2020-12) : base language-neutral du contrat de receipt.
 - [NIST AI RMF](https://airc.nist.gov/airmf-resources/airmf/5-sec-core/) et [OWASP LLM Prompt Injection](https://genai.owasp.org/llmrisk/llm01-prompt-injection/) : limites, provenance, gouvernance des risques et cas adversariaux.
