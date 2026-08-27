@@ -1,0 +1,53 @@
+{
+  "reportVersion": 1,
+  "repoRewindVersion": "0.2.0",
+  "schemaVersion": 1,
+  "preset": "public",
+  "refScope": "branch",
+  "historyCompleteness": "complete",
+  "archiveBytes": 70608,
+  "disclosure": {
+    "preset": "public",
+    "repositoryName": false,
+    "contributorNames": false,
+    "commitMessages": false,
+    "commitHashes": false,
+    "pathDisclosure": "hidden",
+    "refNames": false,
+    "dateDisclosure": "month",
+    "aggregates": true,
+    "attribution": true,
+    "includeEmails": false
+  },
+  "includedFields": [
+    "repository.genericLabel",
+    "contributors.pseudonym",
+    "commits.genericLabel",
+    "refs.genericLabel",
+    "dates:month",
+    "aggregates",
+    "product.attribution",
+    "product.link",
+    "story.chapterTitles",
+    "story.commitRanges"
+  ],
+  "omittedFields": [
+    "repository.name",
+    "repository.remote",
+    "contributors.name",
+    "contributors.email",
+    "commits.message",
+    "commits.hash",
+    "commits.parents",
+    "files.path",
+    "files.previousPath",
+    "commits.refs",
+    "branches.name",
+    "releases.tag"
+  ],
+  "warnings": [],
+  "story": {
+    "chapterCount": 6,
+    "customTitles": false
+  }
+}

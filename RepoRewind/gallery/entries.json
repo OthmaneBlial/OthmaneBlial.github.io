@@ -1,0 +1,132 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-08-27T17:03:00Z",
+  "generator": {
+    "name": "RepoRewind",
+    "version": "0.2.0",
+    "releaseState": "release candidate",
+    "commit": "766139d17de7672df4b11cc5c0a487756c90dfac"
+  },
+  "entries": [
+    {
+      "id": "reporewind-productization",
+      "title": "The release became a workflow",
+      "finding": "RepoRewind's v0.1.0 landmark arrived at commit 7 of 21. After that foundation, README.md became the most frequently touched path at 16 commits while average line churn fell from 1,607 per commit in the earlier 80% to 777 in the final 20%: evidence of a shift toward productization and consolidation.",
+      "interpretationLimit": "Churn counts added plus deleted lines and can be dominated by generated or reformatted files; it does not measure code quality or effort.",
+      "provenance": "Generated locally from the complete public main branch at the immutable source head; the source archive was deleted after review and is not published by the gallery.",
+      "repository": {
+        "name": "RepoRewind",
+        "url": "https://github.com/OthmaneBlial/RepoRewind",
+        "defaultBranch": "main",
+        "headSha": "766139d17de7672df4b11cc5c0a487756c90dfac",
+        "license": "MIT",
+        "permission": "Included from an owner-controlled public repository by the same authenticated repository owner."
+      },
+      "analysis": {
+        "range": "complete first-parent history",
+        "truncated": false,
+        "commits": 21,
+        "contributors": 1,
+        "releases": 1,
+        "firstCommitAt": "2026-08-21T10:46:51+02:00",
+        "lastCommitAt": "2026-08-27T18:58:26+02:00",
+        "exactCommand": "git clone https://github.com/OthmaneBlial/RepoRewind.git reporewind-cli && git -C reporewind-cli checkout --detach 766139d17de7672df4b11cc5c0a487756c90dfac && (cd reporewind-cli && npm ci && npm run build:cli && node dist-cli/index.js analyze /path/to/RepoRewind --branch main --max-commits 5000 --stdout > ../reporewind-history.json)"
+      },
+      "poster": {
+        "path": "assets/gallery/reporewind.png",
+        "alt": "Public-safe RepoRewind history poster showing 21 commits, 144 observed paths, one release, and deterministic story chapters.",
+        "width": 1200,
+        "height": 630,
+        "bytes": 562022,
+        "sha256": "7363d11dbda2c3300b997959b1bc0f925add8f1647e5645a39d2fad3d6b7ed4f"
+      },
+      "privacy": {
+        "preset": "public",
+        "summary": "Generic repository label; aggregate counts and month-level dates only; names, messages, hashes, paths, refs, remotes, tags, and emails omitted.",
+        "path": "assets/gallery/reporewind.privacy.json",
+        "bytes": 1169,
+        "sha256": "7a20b259dfa305c0c5d0a6b7488ddc8bd2c8243e8c9272a83e4e67805ba5fd64"
+      }
+    },
+    {
+      "id": "lightclaw-module-extraction",
+      "title": "The monolith became packages",
+      "finding": "LightClaw's root main.py accumulated 20 touches and 7,552 changed lines, then became dormant in the final quarter. At commits 41 and 42, delegation and command modules were explicitly extracted into packages; the former core/bot/delegation.py and core/bot/commands.py remain deleted at the endpoint while their package directories stand.",
+      "interpretationLimit": "A deleted path plus a similarly named package is strong structural evidence, but RepoRewind does not inspect source contents and therefore does not claim behavioral equivalence.",
+      "provenance": "Generated locally from the complete public main branch at the immutable source head; the source archive was deleted after review and is not published by the gallery.",
+      "repository": {
+        "name": "lightclaw",
+        "url": "https://github.com/OthmaneBlial/lightclaw",
+        "defaultBranch": "main",
+        "headSha": "bb150305bb6f8e01ec40bf4a37f9a2747244def5",
+        "license": "MIT",
+        "permission": "Included from an owner-controlled public repository by the same authenticated repository owner."
+      },
+      "analysis": {
+        "range": "complete first-parent history",
+        "truncated": false,
+        "commits": 79,
+        "contributors": 1,
+        "releases": 0,
+        "firstCommitAt": "2026-02-17T10:20:11+01:00",
+        "lastCommitAt": "2026-08-24T23:39:23+02:00",
+        "exactCommand": "git clone https://github.com/OthmaneBlial/RepoRewind.git reporewind-cli && git -C reporewind-cli checkout --detach 766139d17de7672df4b11cc5c0a487756c90dfac && (cd reporewind-cli && npm ci && npm run build:cli && node dist-cli/index.js analyze /path/to/lightclaw --branch main --max-commits 5000 --stdout > ../lightclaw-history.json)"
+      },
+      "poster": {
+        "path": "assets/gallery/lightclaw.png",
+        "alt": "Public-safe LightClaw history poster showing 79 commits, 227 observed paths, 16 deleted traces, and deterministic story chapters.",
+        "width": 1200,
+        "height": 630,
+        "bytes": 563084,
+        "sha256": "22740e88ee3bbd7a7ef516379fd70df85614469096b8a6aeac976b65bcb580ef"
+      },
+      "privacy": {
+        "preset": "public",
+        "summary": "Generic repository label; aggregate counts and month-level dates only; names, messages, hashes, paths, refs, remotes, tags, and emails omitted.",
+        "path": "assets/gallery/lightclaw.privacy.json",
+        "bytes": 1169,
+        "sha256": "64883c39df307ffd9649802f82519b07f55d2e45beb279e68e34c05e06900536"
+      }
+    },
+    {
+      "id": "pdf-editor-offline-rename",
+      "title": "A rename rebuilt the city",
+      "finding": "At commit 111, pdf-editor-offline recorded 32 renames and 54 changed files in the repository's strongest migration event. The later v2.1.0 → desktop-preview-3.0.0 range spans 562 recorded file changes and +26,699 net lines, making the project rename a visible midpoint rather than the end of its evolution.",
+      "interpretationLimit": "Rename evidence depends on Git's similarity detection, while net lines and file-change counts describe repository structure rather than product impact.",
+      "provenance": "Generated locally from the complete public main branch at the immutable source head; the source archive was deleted after review and is not published by the gallery.",
+      "repository": {
+        "name": "pdf-editor-offline",
+        "url": "https://github.com/OthmaneBlial/pdf-editor-offline",
+        "defaultBranch": "main",
+        "headSha": "f7e3c7250fda093a13af45ad0e855ca823c9fab9",
+        "license": "MIT",
+        "permission": "Included from an owner-controlled public repository by the same authenticated repository owner."
+      },
+      "analysis": {
+        "range": "complete first-parent history",
+        "truncated": false,
+        "commits": 183,
+        "contributors": 1,
+        "releases": 4,
+        "firstCommitAt": "2025-12-19T10:20:20+01:00",
+        "lastCommitAt": "2026-08-24T23:29:00+02:00",
+        "exactCommand": "git clone https://github.com/OthmaneBlial/RepoRewind.git reporewind-cli && git -C reporewind-cli checkout --detach 766139d17de7672df4b11cc5c0a487756c90dfac && (cd reporewind-cli && npm ci && npm run build:cli && node dist-cli/index.js analyze /path/to/pdf-editor-offline --branch main --max-commits 5000 --stdout > ../pdf-editor-offline-history.json)"
+      },
+      "poster": {
+        "path": "assets/gallery/pdf-editor-offline.png",
+        "alt": "Public-safe pdf-editor-offline history poster showing 183 commits, 475 observed paths, four releases, and a release-to-release chapter.",
+        "width": 1200,
+        "height": 630,
+        "bytes": 588039,
+        "sha256": "0d51476f25bcfaf6b502aebbb83b0873d935afad28bc5146eb55b2f301598229"
+      },
+      "privacy": {
+        "preset": "public",
+        "summary": "Generic repository label; aggregate counts and month-level dates only; names, messages, hashes, paths, refs, remotes, tags, and emails omitted.",
+        "path": "assets/gallery/pdf-editor-offline.privacy.json",
+        "bytes": 1170,
+        "sha256": "a0c514727c8bf8227d694d3ae104bc1d2d507fed242566b8ff108214a1a8db17"
+      }
+    }
+  ]
+}
