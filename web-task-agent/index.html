@@ -3,11 +3,17 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Web Task Agent</title>
+  <title>Web Task Agent — Verify AI research decisions offline</title>
   <meta
     name="description"
-    content="Local-first, evidence-backed web research with durable jobs, source policy, resumable runs, and decision-ready packages."
+    content="The verification layer for AI research: turn any agent run into a local Decision Receipt you can verify, challenge, and compare offline."
   />
+  <meta property="og:title" content="Web Task Agent — Verify the decision, not just the answer" />
+  <meta property="og:description" content="Inspect claims, contradictions, source changes, and integrity in a portable local Decision Receipt." />
+  <meta property="og:image" content="https://othmaneblial.github.io/web-task-agent/assets/social-preview.jpg" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://othmaneblial.github.io/web-task-agent/" />
+  <meta name="twitter:card" content="summary_large_image" />
   <link rel="icon" href="favicon.svg" type="image/svg+xml" />
   <link rel="stylesheet" href="styles.css" />
 </head>
@@ -18,11 +24,11 @@
         <span class="brand-mark">W</span>
         <span>
           <strong>Web Task Agent</strong>
-          <small>Local-first deep research</small>
+          <small>Offline decision verification</small>
         </span>
       </a>
       <nav class="topnav">
-        <a href="receipt.html">Live receipt</a>
+        <a href="verify.html">Local verifier</a>
         <a href="docs.html">Docs</a>
         <a href="examples.html">Examples</a>
         <a href="docs.html#page=repo-readme">Repo README</a>
@@ -32,40 +38,49 @@
     <main>
       <section class="hero reveal">
         <div class="hero-copy">
-          <p class="eyebrow">LOCAL-FIRST RESEARCH RECEIPTS</p>
-          <h1>Turn a messy web question into a decision package you can inspect.</h1>
+          <p class="eyebrow">THE VERIFICATION LAYER FOR AI RESEARCH</p>
+          <h1>Verify the decision, not just the answer.</h1>
           <p class="hero-text">
-            Web Task Agent keeps the chain from a recommendation back to its sources: durable jobs,
-            snapshots, evidence clusters, contradictions, resumability, and a handoff package a
-            teammate can challenge instead of a loose pile of notes.
+            Turn a run from any research agent into a local Decision Receipt with claims, excerpts,
+            contradictions, source changes, and integrity attached — so a reviewer can challenge it
+            without trusting the model or uploading the evidence.
           </p>
           <div class="hero-actions">
-            <a class="button button-accent" href="receipt.html">Open a decision receipt</a>
-            <a class="button" href="docs.html">Read the docs</a>
+            <a class="button button-accent" href="verify.html">Verify your receipt locally</a>
+            <a class="button" href="https://github.com/OthmaneBlial/web-task-agent#Get-a-real-package-in-two-minutes--no-key-browser-or-network">Get the CLI</a>
           </div>
           <div class="hero-notes">
-            <span>Source-linked evidence</span>
-            <span>Contradictions visible</span>
-            <span>Stage-level resume</span>
-            <span>Local by default</span>
+            <span>Integrity checked</span>
+            <span>Claims linked to excerpts</span>
+            <span>Contradictions explicit</span>
+            <span>Offline by default</span>
           </div>
         </div>
         <aside class="hero-panel reveal">
           <div class="panel">
-            <div class="panel-kicker">Quick Start</div>
-            <pre><code class="language-bash">npm ci
-npm run start -- demo export browser-agent-landscape
-open reports/demos/browser-agent-landscape/ \
-  receipt.html
+            <div class="panel-kicker">PUBLIC FIRST RUN · v0.5.1</div>
+            <pre><code class="language-bash">BASE=https://github.com/OthmaneBlial/web-task-agent
+ASSET=web-task-agent-0.5.1.tgz
+curl -fsSLO "$BASE/releases/download/v0.5.1/$ASSET"
+npm install -g "./$ASSET"
 
-# then preview live work before you run it
-npm run start -- workflow preview \
-  cybersecurity-voice-of-customer \
-  --topic "security review workflows"</code></pre>
+web-task-agent demo export browser-agent-landscape
+DIR=reports/demos/browser-agent-landscape
+web-task-agent receipt verify "$DIR"</code></pre>
             <p class="panel-note">
-              Outputs land in `reports/`, resumable state lands in `.cache/`, and durable metadata
-              lands in `.data/web-task-agent.sqlite`.
+              No clone, API key, browser session, account, or live request. Check the release
+              <a href="https://github.com/OthmaneBlial/web-task-agent/releases/tag/v0.5.1">SHA256SUMS and provenance</a>
+              before installing.
             </p>
+            <ol class="proof-sequence" aria-label="Decision receipt verification sequence">
+              <li><span>01 · Integrity</span><strong>Verified</strong><small>80 files match the manifest</small></li>
+              <li><span>02 · Evidence</span><strong>Contradiction visible</strong><small>2 claims need review</small></li>
+              <li><span>03 · Decision</span><strong>Changed</strong><small>3 sources changed</small></li>
+            </ol>
+            <details class="proof-transcript">
+              <summary>Read the animation transcript</summary>
+              <p>First integrity is verified, then contradictory evidence is surfaced, then the decision diff explains what changed.</p>
+            </details>
           </div>
         </aside>
       </section>
@@ -73,12 +88,12 @@ npm run start -- workflow preview \
       <section class="product-proof reveal" aria-labelledby="product-proof-title">
         <div class="product-proof-copy">
           <p class="eyebrow">PRODUCT PROOF</p>
-          <h2 id="product-proof-title">Open a decision receipt before you configure a browser or model.</h2>
+          <h2 id="product-proof-title">Inspect integrity before you configure a browser or model.</h2>
           <p>
             It is a real, versioned fixture with a decision, explicit invalidation conditions, and source cards.
             It needs no key, browser session, or live request to inspect.
           </p>
-          <a class="text-link" href="receipt.html">Open the live decision receipt →</a>
+          <a class="text-link" href="verify.html">Verify a receipt locally →</a>
         </div>
         <a class="product-proof-image" href="receipt.html" aria-label="Open the live decision receipt">
           <img src="assets/product-proof.jpg" alt="Preview of the Web Task Agent local research receipt and its decision-package workflow" />
@@ -87,24 +102,24 @@ npm run start -- workflow preview \
 
       <section class="metrics reveal">
         <article class="metric-card">
-          <strong>243</strong>
-          <span>Executable workflows</span>
-          <small>Three core workflows plus 240 catalog entries, all with a stable output contract.</small>
+          <strong>Verified</strong>
+          <span>Offline integrity</span>
+          <small>Structure, evidence references, snapshots, hashes, and optional signatures are checked locally.</small>
         </article>
         <article class="metric-card">
-          <strong>5</strong>
-          <span>Review-gated decision packs</span>
-          <small>Plan idea validation, launches, churn, articles, or integrations before work begins.</small>
+          <strong>Linked</strong>
+          <span>Claims to excerpts</span>
+          <small>Material claims retain their supporting or contrary source references instead of decorative citations.</small>
         </article>
         <article class="metric-card">
-          <strong>8</strong>
-          <span>Deterministic demos</span>
-          <small>Inspect launch, competitor, GitHub, technical, and app-research package shapes without credentials.</small>
+          <strong>Visible</strong>
+          <span>Contradictions and limits</span>
+          <small>Insufficient support, stale evidence, and invalidation conditions remain part of the handoff.</small>
         </article>
         <article class="metric-card">
-          <strong>1</strong>
-          <span>Auditable local state</span>
-          <small>SQLite stores jobs, sources, documents, extractions, graph links, and artifacts.</small>
+          <strong>Diffable</strong>
+          <span>Decision changes</span>
+          <small>Compare receipts and separate source, claim, policy, model, and conclusion changes.</small>
         </article>
       </section>
 

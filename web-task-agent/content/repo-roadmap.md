@@ -1,209 +1,410 @@
-# Roadmap — Web Task Agent
+# Roadmap d'adoption — Web Task Agent
 
-## La décision produit
+> Roadmap post-`v0.5.1`, actualisée le 27 août 2026. Les phases sont ordonnées par dépendance, pas par dates artificielles.
 
-Web Task Agent ne gagnera pas parce qu'il possède plus de workflows ou un navigateur plus autonome. Les catégories « browser agent » et « deep research avec citations » sont déjà très encombrées. Sa promesse mémorable doit être plus étroite :
+## Le diagnostic en une phrase
 
-> **Une décision web locale que quelqu'un d'autre peut vérifier, contredire, reprendre et comparer — sans devoir faire confiance au modèle.**
+Le produit est déjà techniquement sérieux ; ce qui lui manque n'est pas une nouvelle pile de fonctionnalités, mais une **porte d'entrée minuscule, interopérable et visible dans les outils que les développeurs utilisent déjà**.
 
-Le produit à rendre célèbre n'est donc pas un agent qui browse, mais le **Decision Receipt** : un paquet portable qui relie une recommandation à ses preuves, ses contradictions, ses limites, sa fraîcheur et sa prochaine validation humaine.
+La viralité ne se programme pas et aucune roadmap ne peut promettre des étoiles. En revanche, le projet peut créer une boucle crédible où chaque usage produit un artefact utile, partageable et vérifiable qui expose naturellement le dépôt à d'autres personnes.
 
-Les étoiles sont un signal tardif, pas le livrable. Elles arrivent lorsque ce reçu est assez utile pour être partagé, assez clair pour être essayé, et assez solide pour survivre à un collègue sceptique.
+## État réel au 27 août 2026
 
-## Audit au 26 août 2026
+### Ce qui est déjà livré
 
-### Ce qui est réellement solide
+- ✅ CLI TypeScript local-first avec état durable, file de jobs, reprise, Chrome/Lightpanda, politiques de sources, redaction et exports.
+- ✅ `Decision Receipt v1` avec claims, preuves, contradictions, limites, snapshots, fraîcheur et prochaine validation.
+- ✅ `receipt verify`, `receipt compare`, `receipt import` et signature Ed25519 optionnelle.
+- ✅ Huit receipts déterministes, trois golden paths, scorecard et fixtures adversariales.
+- ✅ Trust model, guides de contribution, templates d'issues, Discussions et site GitHub Pages.
+- ✅ Release `v0.5.1` avec tarball, checksum et provenance ; CI actuelle verte.
+- ✅ Vérification locale de cette roadmap : **156 tests unitaires, 4 intégrations, 0 échec**, artefacts générés synchronisés et 408 liens Markdown locaux validés.
 
-- Le cœur technique est crédible : CLI TypeScript, état SQLite durable, file/worker, reprise après incident, CDP avec Chrome ou Lightpanda, politiques de sources, redaction, exports et dashboard limité à la boucle locale.
-- La chaîne a de la substance : recherche → acquisition → extraction → regroupement des preuves → contradictions → synthèse → package de décision. Elle est déjà couverte par des tests de récupération, stockage, politique de sources, injection, emballage et erreurs de runtime.
-- La première preuve existe : huit démos déterministes, sans clé ni navigateur, génèrent un `receipt.html`, un brief, un rapport, des sources et un manifeste. Le README et le site ouvrent ce reçu avant la configuration.
-- Le dépôt est sain pour une contribution : MIT, `SECURITY.md`, confidentialité, code de conduite, support, CI Node 22, Dependabot, modèle de PR et deux formulaires d'issues structurés.
-- La distribution publique est amorcée : dépôt public, Pages disponible, release GitHub `v0.4.0` et miroir GitHub Packages. Les checks locaux de cette analyse ont validé 124 tests unitaires, 4 intégrations, la génération des exemples/receipts, la synchronisation de la documentation et les liens Markdown.
+### Ce que les signaux publics disent vraiment
 
-### Ce qui manque vraiment
+| Signal public | Baseline | Lecture honnête |
+| --- | ---: | --- |
+| Étoiles / forks / watchers | 0 / 0 / 0 | Le dépôt n'a pas encore de portée externe mesurable. |
+| Issues ouvertes | 6 | Elles ont toutes été amorcées par le mainteneur ; trois nouvelles issues ouvrent adapter, revue sécurité et validation externe sans compter comme adoption. |
+| Discussions | 5 | Elles ont toutes été amorcées par le mainteneur, sans réponse choisie. |
+| Téléchargements des deux assets `v0.5.1` | 1 chacun | Cela prouve la vérification de release, pas l'adoption. |
+| Package public npm | absent | Le chemin sans authentification reste le tarball GitHub. |
+| Interopérabilité authentique | 2 moteurs | Browser Use et GPT Researcher sont réels mais volontairement bornés ; ils prouvent l'import, pas la vérité ni une compatibilité générale. |
 
-| Écart | Pourquoi il bloque l'adoption | Décision de roadmap |
-| --- | --- | --- |
-| La promesse reste large | « 243 workflows » décrit la quantité, pas la raison de recommander le projet. Les visiteurs peuvent le classer comme un énième crawler/agent. | Mettre le Decision Receipt et le *decision diff* au centre ; le catalogue devient une preuve secondaire. |
-| Le reçu est visuel, pas encore vérifiable de bout en bout | Il présente des sources, mais n'expose pas encore une matrice claim→extrait→snapshot, les limites de fraîcheur, ni une vérification d'intégrité hors ligne. | Définir un protocole de receipt versionné, validable et content-addressed. |
-| La première exécution publique est encore trop coûteuse | Le chemin principal installe un script via `curl | bash`. Le miroir GitHub Packages nécessite un token `read:packages`; la release `v0.4.0` n'a pas d'asset téléchargeable. | Choisir et tester un unique chemin public sans authentification avant toute campagne. |
-| La preuve est surtout interne/déterministe | Les fixtures prouvent le contrat, mais pas encore qu'un tiers peut auditer un résultat live, un changement de sources ou une reprise. | Publier un corpus d'évaluation reproductible et trois golden paths, avec limites explicites. |
-| Les garde-fous restent peu visibles | Le projet a déjà DNS/redirect policy, robots, rate limits, quarantaine d'injection, redaction et stockage local, mais le visiteur ne peut pas facilement inspecter ces décisions. | Rendre les politiques, flux de données et refus visibles dans chaque receipt. |
-| La communauté n'a pas encore de boucle d'entrée | Le dépôt public part de 0 étoile, fork et issue lors de cet audit. Des policies sans premiers sujets, issues finies et cas partagés ne créent pas de conversation. | Créer une boucle de revue de receipts et de contributions étroites, puis distribuer des artefacts utiles. |
+Le goulot n'est donc plus la crédibilité technique. Il est situé entre **voir**, **essayer**, **intégrer**, **réutiliser** et **recommander**.
+
+### Les écarts qui comptent maintenant
+
+1. L'ancienne roadmap décrivait comme futures des fonctions déjà livrées en `v0.5.1`.
+2. `LAUNCH.md` parle encore de `v0.4.0`.
+3. Le site est visuellement fort, mais son bloc « Quick Start » commence par `npm ci` et `npm run start` : c'est un parcours contributeur depuis les sources, pas un essai public immédiat.
+4. Le receipt est agréable à lire, mais le visiteur ne peut pas déposer le sien pour le vérifier ou le comparer localement.
+5. Le contrat est enfermé dans le CLI : pas de JSON Schema autonome, pas de package SDK léger, pas de matrice de compatibilité.
+6. `package.json` pointe `main` vers le CLI, sans `exports` ni `types` publics ; réutiliser le vérificateur importe inutilement la surface complète du runner et du fournisseur LLM.
+7. Il n'existe ni GitHub Action, ni MCP local, ni intégration qui place le produit dans un workflow déjà fréquenté.
+8. Le projet a beaucoup de preuves générées par son mainteneur, mais aucune preuve d'utilité répétée par un tiers.
+
+---
+
+## La nouvelle décision produit
+
+### Catégorie à éviter
+
+Ne pas affronter Browser Use sur le contrôle du navigateur, Stagehand sur le SDK d'automatisation, ou GPT Researcher sur la génération de rapports. Ces catégories sont déjà occupées par des projets très visibles, distribués dans plusieurs langages et intégrés à de nombreux outils.
+
+### Catégorie à créer
+
+> **The verification layer for AI research. Turn any agent run into a Decision Receipt you can verify, diff, and review offline.**
+
+En français : **la couche de vérification des recherches produites par des agents**.
+
+L'agent de recherche actuel reste un producteur de référence. Le produit d'entrée devient le protocole `Decision Receipt` et ses outils de vérification. Browser Use, Stagehand, GPT Researcher ou un script interne peuvent produire les données ; Web Task Agent les transforme en preuve portable et contestable.
+
+### Premier public à servir
+
+Le beachhead n'est pas « toutes les équipes qui font de la recherche ». Ce sont :
+
+- les mainteneurs et développeurs qui utilisent un agent pour justifier une décision dans une PR, un RFC ou un ADR ;
+- les builders d'agents qui veulent rendre leurs résultats auditables sans reconstruire un système de provenance ;
+- les équipes local-first qui refusent d'envoyer leurs rapports vers un SaaS de vérification.
+
+### Moment signature
+
+Un reviewer ouvre une PR et voit :
+
+```text
+Decision Receipt: verified
+12 claims · 9 supported · 2 contradicted · 1 insufficient
+3 sources changed · 1 source stale · decision changed
+```
+
+Il peut ensuite ouvrir le diff ou le receipt, remonter de chaque claim à son extrait, et vérifier l'intégrité hors ligne.
+
+## La boucle de croissance à construire
+
+```mermaid
+flowchart LR
+    A[Agent ou recherche existante] --> B[Decision Receipt]
+    B --> C[Vérificateur local ou CI]
+    C --> D[PR, RFC ou handoff partagé]
+    D --> E[Critique précise d'une preuve]
+    E --> F[Fixture, adapter ou policy amélioré]
+    F --> B
+    D --> G[Nouveau dépôt découvre l'outil]
+```
+
+Cette boucle est défendable parce que chaque nouveau receipt peut améliorer le protocole, les fixtures et les adapters. Une simple galerie de prompts ou un catalogue de workflows n'a pas ce même effet cumulatif.
+
+---
+
+## P0 — Aligner immédiatement la promesse et la réalité
+
+**But :** qu'un visiteur comprenne en quinze secondes ce qui est unique, puis touche une preuve sans cloner le dépôt.
+
+- [x] Marquer clairement l'ancienne roadmap P0–P4 comme livrée par `v0.5.1` dans le changelog et les notes de release.
+- [x] Mettre `LAUNCH.md`, README, site, exemples et liens de release sur la même version et le même message.
+- [x] Remplacer le « Quick Start » du hero par un chemin public. Tant que npm n'est pas publié, utiliser le tarball signé/checksummé ; après P3, basculer sur une commande `npx`.
+- [x] Faire du CTA principal **Inspect a verified receipt** ; après P2, le remplacer par **Verify your receipt locally**. Conserver « Run live research » comme parcours secondaire.
+- [x] Ajouter une animation courte et accessible : import → vérification → claim contredit → diff. Fournir une image statique et un transcript, sans autoplay agressif.
+- [x] Montrer au-dessus de la ligne de flottaison les trois états qui différencient le produit : `verified`, `contradicted`, `changed`.
+- [x] Remplacer les métriques de volume en hero (`243 workflows`) par une preuve de résultat. Le catalogue reste dans la documentation.
+
+**Preuve d'acceptation :** cinq personnes qui ne connaissent pas le dépôt peuvent répondre, sans aide, à « qu'est-ce que c'est ? », « pourquoi pas un autre browser agent ? » et « où est la preuve ? ». Le premier écran propose une action qui ne demande ni clone, ni clé, ni compte.
+
+**État :** implémentation technique et QA desktop/mobile terminées ; les cinq tests de compréhension externes restent un gate humain suivi en P5.
+
+---
+
+## P1 — Sortir `Decision Receipt` du monolithe
+
+**Dépendance :** P0, car un protocole sans promesse nette devient seulement un nouveau format JSON.
+
+### 1. Publier un contrat réellement indépendant
+
+- [x] Ajouter `schema/decision-receipt.v1.schema.json` en JSON Schema Draft 2020-12.
+- [x] Documenter champs obligatoires, enums, limites, canonicalisation, hash, signature, chemins sûrs et comportement pour champs inconnus.
+- [x] Définir la compatibilité : patch rétrocompatible, minor additif, major avec migration explicite.
+- [x] Ajouter `schemaVersion`, `specVersion` et un identifiant de profil séparés de la version du CLI.
+- [x] Fournir des exemples minimaux, complets, contradictoires, incomplets, périmés, signés et falsifiés.
+
+### 2. Créer un noyau réutilisable
+
+Nom de package proposé : `@othmaneblial/decision-receipt`, à confirmer au moment de la publication.
+
+- [x] Extraire validation, vérification, comparaison, rendu et types dans un package sans navigateur, LLM, SQLite ou réseau.
+- [x] Publier `exports`, types TypeScript, ESM et CommonJS si la matrice de support le justifie.
+- [x] Garder le cœur déterministe : aucun accès réseau implicite, aucune télémétrie, aucun code fournisseur.
+- [x] Rendre le CLI principal consommateur de cette API au lieu de maintenir deux implémentations.
+- [x] Fixer un budget de poids et auditer l'arbre de dépendances du package public.
+
+### 3. Ouvrir un kit de conformité
+
+- [x] Créer un runner de conformance utilisable depuis TypeScript et en ligne de commande.
+- [x] Versionner des cas `valid`, `invalid`, `tampered`, `unsafe-path`, `unknown-version` et `signature-mismatch`.
+- [x] Tester les migrations N-1 → N et garantir qu'une version inconnue échoue explicitement.
+- [x] Publier une matrice : spec, CLI, SDK, Action, web verifier et adapters compatibles.
+
+**Preuve d'acceptation :** un projet TypeScript vierge installe uniquement le noyau, valide une fixture et rend un diff sans importer Anthropic, Chrome, la base de données ou le runner. Une seconde implémentation peut passer le corpus à partir du JSON Schema sans lire le code du CLI.
+
+**État :** livré et vérifié localement. Le test du tarball installe le noyau sans dépendance dans un projet TypeScript vierge, compile puis rend un diff ; le paquet reste sous le budget de 180 Ko décompressé. Le corpus passe via le runner exporté et, séparément, via Ajv sur le JSON Schema sans importer le noyau ni le CLI. La publication npm reste volontairement une porte externe de P3.
+
+---
+
+## P2 — Construire la démo qui mérite d'être partagée
+
+**Dépendance :** P1. Le navigateur doit exécuter le même contrat que le CLI.
+
+### Vérificateur web 100 % local
+
+- [x] Ajouter au site une zone de dépôt pour un dossier ou une archive de receipt.
+- [x] Lire les fichiers avec les API du navigateur ; aucun upload, backend, cookie, compte ou analytics nécessaire.
+- [x] Afficher l'état d'intégrité, la version du schéma, les claims soutenus/contradictoires/insuffisants, les sources périmées et les limites.
+- [x] Permettre la navigation claim → extrait → snapshot → hash.
+- [x] Comparer deux receipts et expliquer séparément les changements de sources, politique, modèle, synthèse et décision.
+- [x] Générer un `verification-report.json` local partageable, sans inclure les sources privées par défaut.
+- [x] Proposer trois fixtures sûres : valide, falsifiée, décision modifiée.
+- [x] Concevoir le résultat pour clavier, lecteur d'écran, mobile, contraste élevé et `prefers-reduced-motion`.
 
 ### Garde-fou de vérité
 
-Un hash prouve qu'un artefact n'a pas changé ; il ne prouve ni qu'une page est vraie, ni qu'elle est complète, fraîche ou autorisée. Une citation ne donne pas le droit de contourner un accès. Une sortie de modèle ne sera pas promise comme reproductible mot pour mot. Le produit doit plutôt rendre reproductibles les **entrées, politiques, captures, versions et contrôles**, puis exposer ce qui peut varier.
+Le badge doit dire **integrity verified**, jamais **decision is true**. Un hash prouve l'intégrité d'octets ; une signature prouve le contrôle d'une clé ; ni l'un ni l'autre ne prouve qu'une source est vraie, complète, autorisée ou fraîche.
+
+**Preuve d'acceptation :** avec le réseau bloqué après chargement, le site valide une archive correcte, identifie le fichier exact d'une archive falsifiée et compare deux décisions. Aucun contenu du receipt n'apparaît dans une requête réseau, un log distant ou un stockage persistant sans consentement.
+
+**État :** livré et vérifié dans Chrome sur desktop et mobile. Après arrêt complet du serveur local, les fixtures préchargées continuent de valider puis de nommer `evidence/source.md` comme fichier falsifié. Le diff sépare les cinq signaux attendus. Aucun appel réseau, stockage persistant ou erreur console n'est présent ; le DOM n'a ni identifiant dupliqué ni input sans label, et le viewport mobile ne déborde pas.
 
 ---
 
-## P0 — Faire du Decision Receipt le produit
+## P3 — Mettre le receipt dans le chemin naturel des développeurs
 
-**Objectif :** une personne doit comprendre, vérifier et partager une décision sans installer l'agent ni lire la base SQLite.
+**Dépendance :** P1 et P2.
 
-### 1. Publier le contrat `Decision Receipt v1`
+### 1. Distribution npm publique et sans token utilisateur
 
-- Définir un schéma JSON versionné pour : décision, claims, statut de support (`supported`, `contradicted`, `insufficient`), sources, extraits capturés, URL canonique, date de collecte, politique de fraîcheur, contradictions, limites, action suivante et redactions.
-- Ajouter une matrice **claim → preuves favorables/contraires → extrait → snapshot** dans les exports HTML et JSON. Une recommandation matérielle sans preuve directe doit être marquée `insufficient`, jamais remplie par une citation décorative.
-- Ajouter un manifeste d'intégrité : version du schéma, versions CLI/workflow/policy/prompt/modèle, empreinte de configuration expurgée, fichier/snapshot SHA-256 et graphe des artefacts.
-- Fournir `web-task-agent receipt verify <dir>` : vérification hors ligne des chemins, hashes, IDs de source, URL sûres et références claim→extrait. Afficher clairement ce que cette vérification ne prouve pas.
-- Étiqueter de façon impossible à rater les états **fixture déterministe**, **run live**, **run incomplet**, **données périmées** et **interprétation de modèle**.
+- [ ] Publier le noyau et le CLI sur le registre npm public depuis un tag protégé.
+- [ ] Utiliser npm Trusted Publishing/OIDC et la provenance automatique ; ne pas conserver de token npm longue durée en CI.
+- [ ] Faire fonctionner un premier succès du type `npx … verify fixture/` sans clé, navigateur ou configuration.
+- [x] Tester l'installation dans un répertoire neuf sur la matrice Node LTS officiellement supportée.
+- [x] Conserver le tarball GitHub, SHA-256 et attestation comme chemin de vérification indépendant.
 
-**Preuve d'acceptation :** une fixture de falsification modifie un rapport, un snapshot ou un extrait et `receipt verify` échoue sur l'élément précis ; CI refuse un claim matériel non sourcé, une URL dangereuse, une date de capture absente ou une référence vers un extrait inexistant.
+**Porte externe :** la réservation du nom, la configuration du trusted publisher et la première publication exigent l'autorisation du propriétaire npm. Une CI verte ne permet pas de déclarer ce point livré.
 
-### 2. Créer le cas d'usage signature : « qu'est-ce qui a changé dans cette décision ? »
+**État intermédiaire :** le noyau expose maintenant le binaire sans clé `decision-receipt`, les tarballs CLI/noyau sont installés puis exécutés en répertoires vierges sur Node 20/22/24, et `publish-npm.yml` demande uniquement OIDC avec provenance automatique. Les noms sont libres au moment du contrôle, mais la session locale n'est pas authentifiée à npm : réservation, trusted publisher, première publication, provenance publique et `npx` depuis le registre restent donc ouverts.
 
-Le premier héros ne doit pas être « fais une recherche ». Il doit répondre à une question qui justifie le receipt : **une veille de concurrent/segment a-t-elle réellement changé notre décision ?**
+### 2. GitHub Action dédiée
 
-- Construire un golden path `decision-change-review` sur un jeu public et stable : décision initiale, nouveaux signaux, sources disparues, contradictions résolues/non résolues, conclusion modifiée ou inchangée, et validation humaine restante.
-- Transformer l'existant `job compare` en receipt lisible : « changé parce que… », avec provenance, frais de collecte, et distinction entre changement de source, de politique, de modèle ou de synthèse.
-- Ajouter une page courte : quand utiliser ce projet plutôt qu'un navigateur agent, un crawler ou un chatbot ; ne revendiquer aucune supériorité d'exactitude sans évaluation.
+Créer un dépôt étroit `OthmaneBlial/decision-receipt-action`, car GitHub Marketplace attend une Action clairement empaquetée autour d'un `action.yml` racine.
 
-**Preuve d'acceptation :** un lecteur ouvre deux receipts puis leur diff et peut expliquer la décision finale, sa contradiction principale et la prochaine vérification en moins de cinq minutes.
+- [x] Entrées : glob de receipts, version de spec acceptée, seuil de fraîcheur et politique de claims insuffisants.
+- [x] Sorties : statut, compteurs, chemin du rapport, résumé Markdown et diff éventuel.
+- [x] Ajouter des annotations de fichiers et un Step Summary lisible ; le mode par défaut reste `contents: read` sans commentaire ni écriture.
+- [x] Rendre le commentaire de PR optionnel et documenter la permission explicite requise.
+- [x] Publier des tags majeurs immuables/maintenus, notes de release, checksums et tests contre des PRs de fixtures.
+- [x] Proposer une intégration de trois lignes :
 
-### 3. Réduire la vitrine à trois golden paths
+```yaml
+- uses: OthmaneBlial/decision-receipt-action@v1
+  with:
+    path: decisions/**/*.receipt.json
+```
 
-Conserver les 243 workflows, mais arrêter de les utiliser comme promesse principale. Mettre en avant trois décisions récurrentes :
+**Preuve d'acceptation :** deux dépôts publics distincts montrent une PR verte et une PR rouge reproductibles. La PR rouge nomme le claim, la source ou le hash fautif. L'Action ne reçoit aucun secret et ne fait aucun appel réseau hors téléchargement normal de l'Action.
 
-1. `decision-change-review` — vérifier si un signal public change une décision de marché/produit ;
-2. `competitor-map` — préparer un choix avec sources favorables et contraires ;
-3. `launch-risk-review` — révéler les hypothèses et validations restantes avant un lancement.
+**État :** livré dans [`OthmaneBlial/decision-receipt-action`](https://github.com/OthmaneBlial/decision-receipt-action) et publié en `v1.0.0` avec tag immuable, tag majeur maintenu, release illustrée et checksums revérifiés. La [PR verte du dépôt principal](https://github.com/OthmaneBlial/web-task-agent/pull/9) et la [PR rouge du dépôt de démonstration](https://github.com/OthmaneBlial/decision-receipt-demo/pull/1) exécutent toutes deux `@v1` sans secret. La rouge expose trois annotations sur `evidence/source.md` : octets, SHA-256 du manifeste et hash du snapshot. Un test exécute le chemin par défaut avec les primitives réseau bloquées ; le commentaire reste un opt-in séparé.
 
-Pour chaque chemin : question exacte, politique de sources, commande, arbre de sortie, receipt rendu, limitation/invalidation, et test de dérive. Le README, Pages, release notes et documentation doivent pointer vers les mêmes trois objets.
+### 3. Faire de chaque intégration une surface de découverte
 
-**Preuve d'acceptation :** une personne choisit un cas en moins d'une minute sans parcourir le catalogue ; les trois chemins passent dans CI et leurs artefacts générés restent synchronisés.
-
----
-
-## P1 — Enlever toute friction entre curiosité et première preuve
-
-**Dépendance :** P0. Promouvoir un setup compliqué avant de montrer un receipt vérifiable transformerait la curiosité en abandon.
-
-### 4. Choisir une distribution publique sans authentification
-
-- Décider d'un seul chemin canonique, maintenu et documenté : archive de release vérifiée ou package npm public. Le miroir GitHub Packages peut rester une option, mais ne doit pas être l'installation recommandée au grand public tant qu'il exige un PAT.
-- Si la publication npm est autorisée : réserver/contrôler le nom, publier uniquement depuis un tag vérifié et rendre `npx web-task-agent@<version> demo export …` fonctionnel sans clé. Ne jamais confondre un package tiers au même nom avec un artefact du projet.
-- Si npm n'est pas autorisé : attacher au release le tarball exact, son SHA-256, des notes d'installation sans `curl | bash` obligatoire et une commande de vérification.
-- Automatiser le chemin de release sur tag : `npm ci`, `release:check`, tarball, installation dans un dossier neuf, export de démo, checksum, release GitHub et provenance. Aucun publish sur un simple push de branche.
-
-**Preuve d'acceptation :** depuis une machine propre macOS et Linux/Node 22, le chemin documenté installe la version publiée, lance la démo et ouvre le receipt sans clé, token, navigateur ou modification manuelle. Tag, CLI, changelog, tarball, registre et release portent exactement la même version.
-
-### 5. Faire de la première minute un test, pas une promesse
-
-- Remplacer la multiplicité d'appels à l'action par une seule séquence visuelle : **question → package local → receipt vérifiable** ; la configuration de navigateur/LLM vient ensuite.
-- Ajouter un GIF ou une courte vidéo terminal→receipt, plus une capture statique accessible et un transcript texte. Ne pas cacher la différence entre fixture, recherche live et données actuelles.
-- Enregistrer le test de première réussite dans `docs/first-success.md` : environnement propre, commande exacte, durée, fichiers créés, limites et sortie attendue.
-- Ajouter ce test aux candidats de release et publier son receipt de test. Garder les tests réseau/LLM live opt-in et séparés des tests déterministes.
-
-**Preuve d'acceptation :** trois personnes externes au projet atteignent un receipt sans aide en moins de 60 secondes ; leurs blocages sont publiés/corrigés avant une campagne de visibilité.
-
-### 6. Transformer la confiance en surface produit
-
-- Créer une page « Trust model » avec un diagramme : ce qui reste local, ce qui peut être envoyé au navigateur et au endpoint LLM choisi, ce qui est expurgé, ce qu'un receipt prouve/ne prouve pas, et comment supprimer/restaurer/exporter l'état.
-- Joindre à chaque run live un **capability/acquisition ledger** : domaines autorisés/refusés, DNS public, chaîne de redirection, décision robots/rate-limit, signal d'injection, quarantaine et approbation humaine éventuelle.
-- Ajouter un manifeste de flux de données : rétention locale, catégories envoyées au modèle, hôte/modèle cible, trace/prompt retenu ou non, règles de redaction. Ne jamais mettre de cookies, secrets ou contenu brut sensible dans le receipt partageable.
-- Écrire un threat model public, incluant explicitement les limites : pas d'authentification de sites, pas d'actions externes, pas de contournement d'accès.
-
-**Preuve d'acceptation :** un nouveau lecteur répond aux cinq questions du trust model sans lire le code ; les tests confirment que secrets, cookies, URL privées et sources rejetées n'apparaissent jamais dans rapports, traces, receipts ou exports.
+- [x] Badge `Decision Receipt verified` lié au rapport ou à la documentation du protocole.
+- [x] Template de PR/RFC qui demande : décision, contradiction principale, invalidation et prochaine validation.
+- [x] Exemple complet dans un petit dépôt de démonstration, pas seulement dans le monorepo.
+- [x] Release notes illustrées avec un receipt et son diff, jamais une liste abstraite de commits.
 
 ---
 
-## P2 — Prouver la qualité au lieu de l'affirmer
+## P4 — Devenir la couche d'interopérabilité des agents existants
 
-**Dépendance :** P0 et P1. Un benchmark de « précision » sans contrat de preuve ne serait pas crédible.
+**Dépendance :** P1–P3. L'interop n'est utile que si le format et sa distribution sont stables.
 
-### 7. Publier un corpus d'évaluation d'auditabilité
+### 1. Contrat d'adapter
 
-- Préparer 8–12 cas publics, juridiquement redistribuables et figés : choix de produit, changement de concurrent, source contradictoire, information expirée, crash/reprise, redirection dangereuse, injection indirecte et export expurgé.
-- Pour chaque cas, définir un oracle humain : claims attendus, contre-source indispensable, état de fraîcheur, comportement de récupération et navigation qui doit être refusée.
-- Mesurer et versionner : couverture claim-citation, claims insuffisamment supportés, rappel des contradictions, diversité/fraîcheur de sources, refus de navigation non sûre, détection d'injection, exactitude de reprise et qualité du diff.
-- Publier les dénominateurs, limites, versions modèle/prompt/policy et score précédent. Un seuil de régression bloque une release ; il ne sert pas à annoncer que l'agent est « plus intelligent ».
+- [x] Définir une entrée fournisseur-neutre minimale : claims, sources, extraits, limites, date, modèle/policy connus et prochaine validation.
+- [x] Séparer strictement `imported`, `captured`, `inferred` et `operator-attested`.
+- [x] Refuser cookies, sessions, prompts fournisseurs, URLs avec identifiants et instructions exécutables.
+- [x] Fournir un générateur d'adapter et des tests contractuels.
 
-**Preuve d'acceptation :** CI produit un scorecard lisible et machine-readable ; chaque métrique pointe vers ses fixtures, son oracle et ses limites ; une régression intentionnelle échoue de façon déterministe.
+**État :** contrat `1.0.0` livré avec validation runtime et JSON Schema indépendant. Le générateur produit un adapter exécutable, une fixture explicitement synthétique et une recette de revue ; ses sorties passent le même validateur que l'importeur. Les champs inconnus et les données privées fournisseur échouent fermés, et toute inférence ou attestation opérateur exige une note.
 
-### 8. Attaquer les limites connues avec des fixtures adversariales
+### 2. Prouver deux imports authentiques
 
-- Étendre les tests à l'injection directe/indirecte et obfusquée, redirections cross-origin, DNS rebinding/réseaux privés, URLs avec identifiants, contenu hostile et persistance interdite.
-- Prévisualiser les extensions de politiques/domains/capacités avant le run et exiger une confirmation humaine pour tout élargissement. Le modèle ne reçoit jamais shell, cookies, réseau local, sessions authentifiées ou actions d'écriture.
-- Ajouter une receipt de sécurité déterministe : politique refusée, raison et preuve de non-persistence.
+- [x] Choisir le premier adapter à partir d'une demande réelle, pas du prestige du fournisseur.
+- [x] Importer un run authentique de deux moteurs parmi Browser Use, Stagehand et GPT Researcher.
+- [x] Publier les commandes, versions, données redistribuables, limites et receipts résultants.
+- [x] Ajouter ces runs à la matrice de compatibilité sans promettre que les sources tierces sont vraies.
 
-**Preuve d'acceptation :** le corpus rouge démontre que chaque charge interdite est bloquée ou mise en quarantaine avant navigation/persistance, et que la raison est compréhensible dans le ledger.
+**État — 2/2 :** la demande d'implémentation P4 et la contrainte réelle de disque de l'opérateur ont déterminé les adapters. Browser Use `0.13.8` a capturé une page publique avec Chrome ; GPT Researcher `0.16.0` a synthétisé un extrait public préchargé. Les deux runs réutilisent le seul modèle Ollama ultra-light de 523 Mo, n'ouvrent aucune session authentifiée et publient sortie moteur privacy-safe, commande, version, limites, adapter et receipt vérifié. Le second run évite volontairement la retrieval pour ne pas télécharger un modèle d'embedding ; il prouve l'import de la sortie du moteur, pas sa recherche web. La trace de raisonnement émise malgré `/no_think` est supprimée de la projection, dont seul le hash brut est conservé.
 
----
+### 3. Exposer les opérations via MCP local
 
-## P3 — Créer une communauté autour des artefacts, pas autour d'une promesse virale
+- [x] Serveur STDIO local limité à `verify_receipt`, `compare_receipts`, `import_result` et `render_receipt`.
+- [x] Aucun outil de navigation, shell, cookie, authentification ou écriture externe.
+- [ ] Publier le package npm avant les métadonnées du registre MCP officiel.
+- [x] Ajouter une Skill/recette d'installation qui apprend aux agents à produire ou vérifier un receipt sans contourner le consentement utilisateur.
 
-**Dépendance :** au moins P0, P1 et un premier scorecard P2 doivent être publics.
+**État intermédiaire :** le serveur négocie MCP `2025-11-25`, borne requêtes et réponses à 2 Mo, confine tous les chemins à `DECISION_RECEIPT_ROOT` et refuse les liens symboliques. Un test avec primitives réseau bloquées couvre les quatre outils ; un second test passe par le client TypeScript MCP officiel pour le handshake, la découverte et la vérification. La publication npm et les métadonnées du registre restent liées à la porte propriétaire de P3.
 
-### 9. Lancer trois études de cas qui invitent la critique
+**Preuve d'acceptation :** deux sorties authentiques de moteurs externes passent le corpus de conformité et conservent leurs limites. Un client MCP peut vérifier et comparer hors ligne ; aucune session fournisseur ni donnée privée n'entre dans le package.
 
-- Pour chaque golden path, publier une étude avant/après : question, politique de sources, receipt, décision, limite/invalidation et commande reproductible.
-- Les partager une fois dans les communautés où cette décision existe réellement : local-first devtools, builders d'agents navigateurs, praticiens product/research. Demander une critique de preuve, pas une étoile.
-- Convertir chaque retour utile en issue/Discussion, fixture, correction ou note de release. Ne pas inventer de benchmark, de traction ou de fraîcheur.
-
-**Preuve d'acceptation :** chaque publication mène à un artefact différent et vérifiable ; toute assertion publique importante a une limite et une source ; le retour reçu laisse une trace de décision mainteneur.
-
-### 10. Rendre la première contribution finie et sûre
-
-- Créer trois issues réellement prêtes : revue d'un receipt, amélioration d'une fixture/test et ajout d'un workflow borné. Chacune définit résultat, politique de sources, test, reviewer et périmètre.
-- Organiser les Discussions autour de `First-run help`, `Receipt review`, `Workflow ideas` et `Show your decision package`; amorcer chaque espace avec une contribution substantielle, pas avec une catégorie vide.
-- Mettre à jour `CONTRIBUTING.md` : une contribution de workflow requiert un problème approuvé, une fixture, une règle d'invalidation, une analyse de risque et un test. Le catalogue ne doit pas devenir une collection de prompts renommés.
-- Ajouter `ISSUE_TEMPLATE/config.yml` pour diriger questions, sécurité et propositions vers la bonne surface.
-
-**Preuve d'acceptation :** la page Contribute affiche un parcours `good first issue` autonome ; un contributeur peut livrer une PR courte sans connaître l'orchestrateur entier et le mainteneur peut la juger à partir d'un contrat explicite.
-
-### 11. Mesurer l'activation avant les étoiles
-
-Ne jamais ajouter d'analytics cachées au produit. Utiliser seulement les statistiques GitHub/registre, retours consentis et signaux publics.
-
-| Signal | Décision qu'il éclaire |
-| --- | --- |
-| Installation propre → receipt ouvert | Friction du premier succès |
-| Critiques de claims / receipts partagés | Valeur réelle de l'auditabilité |
-| Téléchargements de release ou installs vérifiés | Crédibilité de la distribution |
-| Issues/Discussions externes et délai de réponse | Santé de la boucle communautaire |
-| PRs de workflow avec fixture/eval | Qualité de la contribution |
-| Visiteurs, clones, forks, étoiles, références | Portée — uniquement après les signaux précédents |
-
-Prendre un baseline public le jour de lancement, puis revoir ces signaux après chaque étude de cas et release. Une hausse d'étoiles sans install réussie, receipt partagé ou contribution ne valide pas le produit.
+**Acceptation observée :** les receipts Browser Use et GPT Researcher passent le même validateur runtime, le JSON Schema indépendant et la vérification d'intégrité. Le client MCP officiel négocie et vérifie hors ligne. L'enregistrement au registre MCP reste bloqué, comme la publication npm dont il dépend ; ce canal de distribution n'est pas présenté comme livré.
 
 ---
 
-## P4 — Ouvrir l'écosystème une fois le contrat prouvé
+## P5 — Produire la preuve externe qui manque au dépôt
 
-**Dépendance :** Receipt v1, vérificateur, golden paths, scorecard et distribution sans token.
+**Dépendance :** au minimum P2 et P3.
 
-- Proposer une API d'ingestion minimaliste qui transforme des résultats provenant de Browser Use, Stagehand ou GPT Researcher en receipt validé. Commencer par **un** adaptateur demandé par des utilisateurs ; ne pas recréer leur moteur navigateur.
-- Versionner la compatibilité du receipt et publier une fixture d'interopérabilité. L'extension doit enrichir l'évidence, pas rendre le projet dépendant d'un fournisseur hébergé.
-- Ajouter une signature opérateur seulement après que la vérification non signée est utile et que l'expérience de gestion de clés est définie. Une signature atteste d'une clé, pas de la vérité d'une décision.
-- Explorer les packs récurrents/scheduling uniquement si les premiers utilisateurs demandent une décision répétée et acceptent la politique de fraîcheur/coût explicite.
+### Études de cas réellement falsifiables
 
-**Preuve d'acceptation :** un résultat externe peut produire un receipt conforme puis passer `receipt verify`; l'adaptateur conserve les limites, politiques et sources plutôt que de présenter un texte généré comme une preuve.
+- [ ] Recruter trois utilisateurs externes correspondant au beachhead.
+- [ ] Publier, avec accord, un cas PR/RFC, un changement de décision et un import depuis un agent tiers.
+- [ ] Pour chaque cas : question, entrée, policy, receipt, contradiction, décision, invalidation, temps de revue et retour critique.
+- [ ] Ne pas sélectionner uniquement les succès ; publier au moins un cas où le receipt reste `insufficient` ou ne change pas la décision.
 
-## Ordre d'exécution non négociable
+**Recrutement ouvert, baseline inchangée :** [l'issue #12](https://github.com/OthmaneBlial/web-task-agent/issues/12) invite trois tracks consentis et accepte explicitement résultats négatifs, neutres, abandonnés, `insufficient` ou sans changement. Elle ne constitue ni un participant ni un usage ; les quatre cases restent ouvertes jusqu'à des cas externes réels.
 
-1. Receipt v1, vérificateur, labels de vérité et golden path de changement de décision.
-2. Trois golden paths et une vitrine qui les rend plus visibles que les 243 workflows.
-3. Une installation publique sans token, testée en environnement propre, puis release avec artifact/provenance.
-4. Trust model, ledger d'acquisition et manifeste de flux de données.
-5. Corpus/scorecard et tests adversariaux.
-6. Études de cas, discussions, starter issues et mesure de l'activation.
-7. Un seul adaptateur d'écosystème demandé par des utilisateurs réels.
+### Test de valeur reviewer
 
-Ne pas inverser cet ordre : du trafic vers une installation avec token ou un receipt non vérifiable créerait de la curiosité, pas de la confiance durable.
+Comparer un rapport Markdown seul avec le même rapport accompagné d'un receipt. Mesurer :
 
-## Hors périmètre volontaire
+- temps pour retrouver la preuve d'un claim ;
+- détection d'une contradiction ;
+- détection d'une source périmée ;
+- détection d'une falsification ;
+- confiance déclarée, séparée de la justesse réelle.
 
-- SaaS multi-tenant, proxy de scraping hébergé ou télémetrie produit silencieuse.
-- Agents connectés à des comptes, cookies, réseau local, shell ou actions externes à écriture.
-- Marketplace ouverte de workflows sans contrat de source, fixture, sécurité et évaluation.
-- Course au nombre de modèles, navigateurs, intégrations ou workflows avant la preuve du receipt.
-- Promesses de vérité, d'exactitude supérieure, de fraîcheur universelle ou de viralité.
+Publier protocole, petits dénominateurs, données anonymisées consenties et limites. Ne revendiquer un gain que si le résultat le montre.
+
+### Revue de sécurité indépendante
+
+- [x] Demander une revue externe du schéma, de la canonicalisation, des chemins d'archive, des signatures, du rendu HTML et de la frontière local-only.
+- [ ] Convertir chaque faille en test de non-régression et advisory si nécessaire.
+- [x] Publier ce qui a été testé et ce qui ne l'a pas été.
+
+**Préparation livrée, adoption non simulée :** `EXTERNAL_VALIDATION.md` fixe trois tracks, le protocole reviewer, le consentement granulaire et une baseline externe à zéro. `SECURITY_REVIEW.md` publie le commit pinning, les six surfaces prioritaires, les commandes, les preuves mainteneur et les zones non auditées. La [demande publique de revue #10](https://github.com/OthmaneBlial/web-task-agent/issues/10) borne le résultat attendu et redirige toute faille vers une advisory privée. Aucun participant, audit reçu ni reviewer indépendant n'est compté avant une trace réelle.
+
+**Preuve d'acceptation :** au moins cinq receipts ont été vérifiés par des non-mainteneurs, trois utilisateurs ont produit un second receipt ou un diff, et une revue indépendante a laissé une trace publique exploitable.
+
+---
+
+## P6 — Lancer une communauté autour des preuves
+
+**Dépendance :** ne pas lancer largement avant d'avoir le vérificateur web, le package public et au moins une intégration reproductible.
+
+### Un lancement = un artefact
+
+1. **Protocol launch** — JSON Schema, conformance kit et receipt falsifié à détecter.
+2. **Verifier launch** — démo locale drag-and-drop, sans upload.
+3. **GitHub Action launch** — PR réelle avec diff de décision.
+4. **Interop launch** — un run Browser Use/Stagehand/GPT Researcher transformé et vérifié.
+5. **Evidence study** — résultats du test reviewer, y compris limites et échecs.
+
+Chaque publication doit pointer directement vers l'artefact essayable, pas seulement vers la homepage.
+
+### Canaux pertinents, sans spam
+
+- Show HN lorsque la démo tient en moins d'une minute.
+- Communautés local-first, agent builders, GitHub Actions, MCP et AI safety/provenance.
+- Articles techniques : canonicalisation et tamper detection, decision diff, sécurité d'import de résultats d'agents.
+- PRs vers des listes `awesome-*` uniquement quand le projet satisfait réellement leurs critères.
+- Topics GitHub (`provenance`, `json-schema`, `github-actions`, `mcp`, `ai-safety`) seulement après livraison des surfaces correspondantes.
+
+### Contributions qui renforcent le moat
+
+- [x] `good first adapter` avec fixture et contrat.
+- [x] `good first policy case` avec charge adversariale.
+- [x] `receipt review` avec preuve de reproduction.
+- [x] RFC obligatoire pour toute rupture de schéma.
+- [x] `MAINTAINERS.md`, politique de compatibilité et règles de release v1.
+- [x] Galerie opt-in de receipts publics, licenciés et expurgés ; aucune collecte automatique.
+
+**État :** les contrats existent comme issue forms testées et comme issues publiques : [adapter #11](https://github.com/OthmaneBlial/web-task-agent/issues/11), [policy case #3](https://github.com/OthmaneBlial/web-task-agent/issues/3) et [receipt review #2](https://github.com/OthmaneBlial/web-task-agent/issues/2). Le RFC définit les surfaces byte-level et la migration obligatoires ; la gouvernance nomme honnêtement un seul mainteneur ; la galerie exige licence, consentement et redaction, ne collecte rien et reste vide jusqu'à une vraie soumission. Les topics `decision-receipt`, `provenance`, `json-schema`, `github-actions`, `mcp` et `ai-safety` ne sont ajoutés qu'après livraison des surfaces correspondantes. Une issue ouverte n'est pas une contribution externe fusionnée.
+
+**Preuve d'acceptation :** deux PRs externes fusionnées, trois dépôts publics utilisant l'Action et au moins un cas communautaire devenu fixture, adapter ou décision de spec. Les posts manuels, partenariats et retours humains restent des tâches externes ; ils ne peuvent pas être simulés par le code.
+
+---
+
+## Gate `v1.0`
+
+Ne pas publier `v1.0` parce que la liste de features est longue. La publier seulement quand ces contrats sont vrais :
+
+- [x] Schéma v1 public, versionné, documenté et couvert par un corpus de conformité.
+- [x] CLI, SDK, web verifier et Action utilisent le même noyau.
+- [ ] Installation npm publique, provenance, tarball et checksum vérifiés depuis des environnements propres.
+- [x] Compatibilité N-1 testée et migration documentée.
+- [ ] Deux imports tiers authentiques et trois usages répétés externes.
+- [ ] Menaces liées aux archives, HTML, URL, secrets, signature et canonicalisation revues.
+- [x] Accessibilité, mobile, no-network et no-telemetry vérifiés sur le web verifier.
+- [x] Aucun claim marketing important sans source, dénominateur et limite.
+
+**Lecture du gate :** cinq contrats techniques v1 sont démontrés par le corpus, la migration, les builds partagés, la QA du verifier et les tests de positionnement. Ils n'autorisent pas une release v1 : npm public, trois usages externes répétés et la revue de menaces indépendante restent bloquants.
+
+## Métriques de décision
+
+La north star n'est pas « étoiles acquises ». C'est :
+
+> **Nombre de receipts externes vérifiés ou comparés une seconde fois.**
+
+Sans télémétrie cachée, utiliser uniquement des liens publics, retours consentis et agrégats de registre/GitHub.
+
+| Étape | Signal | Gate avant d'élargir |
+| --- | --- | --- |
+| Compréhension | Personne explique la différence en une phrase | 5/5 tests de message réussis |
+| Activation | Installation propre ou vérification web terminée | 10 réussites externes documentées |
+| Valeur | Receipt vérifié par une autre personne | 5 receipts externes |
+| Rétention | Second receipt ou premier diff | 3 utilisateurs répétés |
+| Intégration | Action active dans un dépôt tiers | 3 dépôts publics |
+| Interop | Run tiers authentique conforme | 2 moteurs externes |
+| Communauté | PR externe fusionnée | 2 contributions utiles |
+| Portée | Visiteurs, clones, forks, étoiles, citations | Suivis après les signaux précédents, jamais seuls |
+
+## Ce qu'il ne faut pas construire maintenant
+
+- Un nouveau moteur navigateur ou un clone de Browser Use/Stagehand.
+- Plus de workflows avant qu'un utilisateur externe ne demande un cas précis.
+- Un SaaS multi-tenant, une base de receipts hébergée ou de la télémétrie silencieuse.
+- Une marketplace ouverte de prompts/adapters sans conformance et revue de sécurité.
+- Une extension VS Code, app mobile ou dashboard d'équipe avant l'adoption de l'Action.
+- Des intégrations avec dix fournisseurs basées sur des fixtures inventées.
+- Des benchmarks « accuracy » qui comparent des modèles sans oracle publiable.
+- Des badges « verified truth », « unbiased » ou « hallucination-free ».
+
+## Risques et décisions de repli
+
+| Risque | Signal d'alerte | Décision |
+| --- | --- | --- |
+| Le receipt paraît trop lourd | Les utilisateurs préfèrent joindre un simple rapport | Proposer un profil minimal de 5–7 champs, sans affaiblir les labels de vérité. |
+| Le runner masque le protocole | Les visiteurs parlent uniquement de scraping/browser agent | Séparer encore plus SDK, Action et site du moteur de recherche de référence. |
+| L'Action ne crée pas de valeur répétée | Elle n'est installée que dans le dépôt de démo | Arrêter Marketplace et concentrer le produit sur web verifier + SDK. |
+| Les adapters perdent la provenance | Les imports remplissent les trous par inférence | Marquer `insufficient`, refuser l'import ou demander une attestation opérateur explicite. |
+| La promotion apporte des étoiles sans usage | Aucun receipt, diff ou contribution ne suit | Suspendre la promotion et corriger activation/message. |
+
+## Ordre d'exécution
+
+1. P0 — cohérence du message et parcours public.
+2. P1 — schéma, noyau et conformance.
+3. P2 — vérificateur web local.
+4. P3 — npm public et GitHub Action.
+5. P4 — deux imports authentiques puis MCP local.
+6. P5 — utilisateurs externes, test reviewer et revue sécurité.
+7. P6 — lancements par artefact et boucle de contribution.
+8. `v1.0` uniquement après les gates d'usage répété.
+
+Ne pas inverser P1–P3 : envoyer du trafic vers un protocole non réutilisable ou une installation exigeant un token reproduirait exactement le goulot actuel.
 
 ## Références de recherche
 
-- [Browser Use](https://github.com/browser-use/browser-use), [Stagehand](https://github.com/browserbase/stagehand) et [GPT Researcher](https://github.com/assafelovic/gpt-researcher) : le contrôle du navigateur et les rapports cités sont déjà des attentes de base ; l'opportunité est la décision vérifiable et diffable.
-- [Hugging Face Open Deep Research](https://huggingface.co/blog/open-deep-research) : les projets de recherche d'agents exposent aussi outils, état, coût et évaluation, pas seulement des réponses.
-- [NIST AI RMF Core](https://airc.nist.gov/airmf-resources/airmf/5-sec-core/), [NIST Generative AI Profile](https://nvlpubs.nist.gov/nistpubs/ai/NIST.AI.600-1.pdf) et [OWASP LLM01 Prompt Injection](https://genai.owasp.org/llmrisk/llm01-prompt-injection/) : base du corpus d'évaluation, des limites de confiance et des tests adversariaux.
-- [NIST Privacy Framework](https://www.nist.gov/privacy-framework/using-privacy-framework-11) et [SLSA provenance](https://slsa.dev/spec/v1.2/provenance) : inspiration pour le manifeste de flux de données et la provenance d'artefacts, sans revendiquer une conformité SLSA.
-- [GitHub Releases](https://docs.github.com/en/repositories/releasing-projects-on-github/about-releases) et [GitHub supply-chain security](https://docs.github.com/en/code-security/concepts/supply-chain-security/supply-chain-security) : release versionnée, attestations et provenance de publication.
+- [Browser Use](https://github.com/browser-use/browser-use), [Stagehand](https://github.com/browserbase/stagehand) et [GPT Researcher](https://github.com/assafelovic/gpt-researcher) : contrôle navigateur, packages, rapports, intégrations et quickstarts sont déjà des attentes de catégorie.
+- [npm Trusted Publishing](https://docs.npmjs.com/trusted-publishers/) : publication OIDC sans token longue durée et provenance automatique pour les packages publics éligibles.
+- [Publishing actions in GitHub Marketplace](https://docs.github.com/en/actions/how-tos/create-and-publish-actions/publish-in-github-marketplace) : contraintes de packaging et publication d'une Action publique.
+- [Official MCP Registry quickstart](https://modelcontextprotocol.io/registry/quickstart) : registre de métadonnées, package sous-jacent requis et statut preview.
+- [JSON Schema Draft 2020-12](https://json-schema.org/draft/2020-12) : base language-neutral du contrat de receipt.
+- [NIST AI RMF](https://airc.nist.gov/airmf-resources/airmf/5-sec-core/) et [OWASP LLM Prompt Injection](https://genai.owasp.org/llmrisk/llm01-prompt-injection/) : limites, provenance, gouvernance des risques et cas adversariaux.

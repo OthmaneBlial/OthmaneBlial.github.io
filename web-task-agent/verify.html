@@ -1,0 +1,149 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="Verify and compare Decision Receipt folders or ZIP archives locally in your browser. No upload, account, cookie, or analytics." />
+  <meta name="color-scheme" content="light" />
+  <title>Local Decision Receipt Verifier — Web Task Agent</title>
+  <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="verifier.css" />
+  <script src="assets/decision-receipt-verifier.js" defer></script>
+  <script src="assets/web-verifier-fixtures.js" defer></script>
+  <script src="verifier.js" defer></script>
+</head>
+<body data-page="verifier">
+  <a class="skip-link" href="#verifier-workspace">Skip to verifier</a>
+  <div class="site-shell verifier-shell">
+    <header class="topbar">
+      <a class="brand" href="index.html">
+        <span class="brand-mark" aria-hidden="true">W</span>
+        <span><strong>Web Task Agent</strong><small>Offline decision verification</small></span>
+      </a>
+      <nav class="topnav" aria-label="Primary navigation">
+        <a aria-current="page" href="verify.html">Local verifier</a>
+        <a href="receipt.html">Example receipt</a>
+        <a href="docs.html#page=decision-receipt-spec">Specification</a>
+        <a href="https://github.com/OthmaneBlial/web-task-agent">GitHub</a>
+      </nav>
+    </header>
+
+    <main id="verifier-workspace">
+      <section class="verifier-hero reveal">
+        <div>
+          <p class="eyebrow">100% LOCAL · DECISION RECEIPT V1</p>
+          <h1>Drop the evidence.<br /><em>Keep it private.</em></h1>
+          <p class="verifier-lede">
+            Verify a receipt folder or ZIP, inspect every claim-to-excerpt link, identify stale sources,
+            and compare a changed decision. Your files stay in this browser tab.
+          </p>
+        </div>
+        <aside class="local-contract" aria-label="Local processing contract">
+          <span class="local-pulse" aria-hidden="true"></span>
+          <div><strong>No upload path exists.</strong><p>No backend, account, cookie, analytics, telemetry, or persistent storage.</p></div>
+        </aside>
+      </section>
+
+      <section class="verifier-grid reveal" aria-labelledby="import-title">
+        <div class="import-panel">
+          <div class="section-number">01</div>
+          <div class="import-copy">
+            <p class="eyebrow">IMPORT</p>
+            <h2 id="import-title">Open a receipt package</h2>
+            <p>Select a folder, choose a ZIP, or drop either below. ZIPs are streamed through local size and path limits before verification.</p>
+          </div>
+
+          <div id="receipt-drop-zone" class="receipt-drop-zone" tabindex="0" role="button" aria-describedby="drop-help">
+            <span class="drop-mark" aria-hidden="true">↘</span>
+            <strong>Drop a receipt folder or .zip</strong>
+            <span id="drop-help">Expected: receipt.json, integrity-manifest.json, and optional snapshots.</span>
+          </div>
+
+          <div class="import-actions">
+            <label class="button button-accent" for="primary-folder-input">Choose folder</label>
+            <label class="button" for="primary-zip-input">Choose ZIP</label>
+            <input class="visually-hidden" id="primary-folder-input" type="file" webkitdirectory directory multiple />
+            <input class="visually-hidden" id="primary-zip-input" type="file" accept=".zip,application/zip" />
+          </div>
+          <p class="input-limits">Limits: 25 MB compressed · 50 MB extracted · 10 MB per file · 500 files.</p>
+        </div>
+
+        <aside class="fixture-panel">
+          <div class="section-number">DEMO</div>
+          <p class="eyebrow">SAFE FIXTURES</p>
+          <h2>Try it before sharing a file</h2>
+          <p>These synthetic bundles loaded with the page continue to work after the network is disabled.</p>
+          <div class="fixture-actions">
+            <button class="fixture-button" type="button" data-fixture="valid"><span>Integrity matches</span><strong>Load valid receipt</strong></button>
+            <button class="fixture-button fixture-button-warn" type="button" data-fixture="tampered"><span>Snapshot changed</span><strong>Catch tampering</strong></button>
+            <button class="fixture-button" type="button" data-fixture="changed" data-slot="comparison"><span>Evidence + policy changed</span><strong>Compare decisions</strong></button>
+          </div>
+        </aside>
+      </section>
+
+      <div id="verifier-announcer" class="verifier-announcer" role="status" aria-live="polite"></div>
+
+      <section id="verification-results" class="verification-results" aria-labelledby="result-title" hidden>
+        <header id="result-banner" class="result-banner">
+          <div>
+            <p class="eyebrow">LOCAL VERIFICATION RESULT</p>
+            <h2 id="result-title">Waiting for a receipt</h2>
+            <p id="result-subtitle"></p>
+          </div>
+          <span id="result-badge" class="result-badge"></span>
+        </header>
+
+        <div id="result-metrics" class="result-metrics" aria-label="Receipt summary"></div>
+
+        <div class="result-layout">
+          <div class="result-primary">
+            <section class="result-section" aria-labelledby="claims-title">
+              <div class="result-section-head"><div><p class="eyebrow">TRACE</p><h3 id="claims-title">Claims → evidence → snapshots</h3></div></div>
+              <div id="claims-list" class="claims-list"></div>
+            </section>
+
+            <section class="result-section" aria-labelledby="sources-title">
+              <div class="result-section-head">
+                <div><p class="eyebrow">FRESHNESS</p><h3 id="sources-title">Source trail</h3></div>
+                <label class="freshness-field">Stale after <input id="freshness-days" type="number" min="1" max="3650" value="180" inputmode="numeric" /> days</label>
+              </div>
+              <div id="sources-list" class="sources-list"></div>
+            </section>
+          </div>
+
+          <aside class="result-aside">
+            <section class="result-section" aria-labelledby="issues-title"><p class="eyebrow">INTEGRITY</p><h3 id="issues-title">Checks and exact failures</h3><div id="issues-list"></div></section>
+            <section class="result-section" aria-labelledby="limitations-title"><p class="eyebrow">TRUTH BOUNDARY</p><h3 id="limitations-title">Limitations</h3><div id="limitations-list"></div></section>
+          </aside>
+        </div>
+      </section>
+
+      <section id="comparison-workspace" class="comparison-workspace reveal" aria-labelledby="comparison-title">
+        <div class="comparison-intro">
+          <div class="section-number">02</div>
+          <div><p class="eyebrow">COMPARE</p><h2 id="comparison-title">Explain why the decision changed</h2><p>Load a second receipt. Sources, policy, model, synthesis, and decision are reported as separate signals.</p></div>
+        </div>
+        <div class="comparison-actions">
+          <label class="button" for="comparison-folder-input">Second folder</label>
+          <label class="button" for="comparison-zip-input">Second ZIP</label>
+          <input class="visually-hidden" id="comparison-folder-input" type="file" webkitdirectory directory multiple />
+          <input class="visually-hidden" id="comparison-zip-input" type="file" accept=".zip,application/zip" />
+        </div>
+        <div id="comparison-result" class="comparison-result" aria-live="polite"><p>Load a primary receipt, then a second receipt to see the decision diff.</p></div>
+      </section>
+
+      <section class="report-workspace reveal" aria-labelledby="report-title">
+        <div class="section-number">03</div>
+        <div class="report-copy"><p class="eyebrow">SHARE</p><h2 id="report-title">Export the verification, not the private evidence</h2><p>The default report includes check results and counts but omits claim text, excerpts, snapshot content, source titles, and URLs.</p></div>
+        <div class="report-controls">
+          <label class="privacy-toggle"><input id="include-private-data" type="checkbox" /> <span>Include receipt text and source data</span></label>
+          <button id="download-report" class="button button-accent" type="button" disabled>Download verification-report.json</button>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer">Integrity verified ≠ decision is true. Review provenance, freshness, authorization, and contrary evidence.</footer>
+  </div>
+</body>
+</html>

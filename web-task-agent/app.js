@@ -63,6 +63,13 @@ const DOC_PAGES = [
     path: "content/trust-model.md"
   },
   {
+    slug: "decision-receipt-spec",
+    section: "Reference",
+    title: "Decision Receipt Specification",
+    summary: "Versioning, canonical bytes, profiles, integrity boundary, and the language-neutral schema.",
+    path: "content/decision-receipt-spec.md"
+  },
+  {
     slug: "project-charter",
     section: "Reference",
     title: "Project Charter",

@@ -1,18 +1,19 @@
 # Web Task Agent
 
-> ## Make a web-research decision your team can audit — before they have to trust it.
+> ## The verification layer for AI research.
 >
-> Web Task Agent turns a messy question into a local decision package with the sources, contradictions, recovery state, and next validation still attached.
+> Turn any agent run into a local Decision Receipt your team can verify, challenge, and compare offline.
 
 [![CI](https://github.com/OthmaneBlial/web-task-agent/actions/workflows/ci.yml/badge.svg)](https://github.com/OthmaneBlial/web-task-agent/actions/workflows/ci.yml)
+[![Decision Receipt](https://github.com/OthmaneBlial/web-task-agent/actions/workflows/decision-receipt.yml/badge.svg)](https://github.com/OthmaneBlial/web-task-agent/actions/workflows/decision-receipt.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
-[![243 executable workflows](https://img.shields.io/badge/workflows-243%20executable-0f766e)](examples/workflows/CATALOG.md)
+[![Decision Receipt v1](https://img.shields.io/badge/Decision%20Receipt-v1-0f766e)](examples/receipts/)
 [![Local-first](https://img.shields.io/badge/privacy-local--first-164e63)](PRIVACY.md)
 [![Project site](https://img.shields.io/badge/site-live-0f766e)](https://othmaneblial.github.io/web-task-agent/)
 
-Most research tools stop at an answer. Web Task Agent preserves the path to it: source snapshots, evidence clusters, contradictions, recovery state, and the smallest next validation. The result is a handoff that survives a browser closing, a challenged recommendation, or an interrupted run.
+Browser agents and deep-research tools produce answers. Web Task Agent preserves the review contract after the run: claims, source excerpts, contradictions, freshness, integrity, recovery state, and the smallest next validation. The result is a handoff that survives a browser closing, a challenged recommendation, or an interrupted run.
 
-**Proof before setup:** [open the featured deterministic decision receipt](https://othmaneblial.github.io/web-task-agent/receipt.html). It is a standalone fixture with no key, browser session, scripts, analytics, or live request.
+**Proof before setup:** [verify a Decision Receipt locally](https://othmaneblial.github.io/web-task-agent/verify.html), or [open the featured deterministic receipt](https://othmaneblial.github.io/web-task-agent/receipt.html). The verifier has no upload path, backend, account, cookie, analytics, telemetry, or persistent storage.
 
 ```text
 Your question
@@ -31,7 +32,7 @@ Local decision package
 
 This is local research infrastructure, not a hosted scraper, access-control bypass, or generic browser-agent wrapper.
 
-**See the full product story:** [live documentation](https://othmaneblial.github.io/web-task-agent/) · [trust model](docs/content/trust-model.md) · [case studies](docs/content/case-studies.md) · [activation measures](docs/activation.md) · [eight inspectable receipts](RESEARCH_RECEIPTS.md) · [latest release](https://github.com/OthmaneBlial/web-task-agent/releases/latest)
+**See the full product story:** [live documentation](https://othmaneblial.github.io/web-task-agent/) · [Decision Receipt spec](docs/content/decision-receipt-spec.md) · [GitHub Action](https://github.com/OthmaneBlial/decision-receipt-action) · [green/red PR demo](https://github.com/OthmaneBlial/decision-receipt-demo) · [adapter contract](ADAPTERS.md) · authentic runs: [Browser Use](examples/interop/runs/browser-use/README.md) and [GPT Researcher](examples/interop/runs/gpt-researcher/README.md) · [local MCP server](MCP.md) · [compatibility matrix](COMPATIBILITY.md) · [publishing contract](PUBLISHING.md) · [trust model](docs/content/trust-model.md) · [case studies](docs/content/case-studies.md) · [activation measures](docs/activation.md) · [eight inspectable receipts](RESEARCH_RECEIPTS.md) · [latest release](https://github.com/OthmaneBlial/web-task-agent/releases/latest)
 
 The GitHub Packages mirror is available as `@othmaneblial/web-task-agent`. GitHub's npm registry requires a classic personal access token with `read:packages` even for public packages. Authenticate without committing that token, then install the mirror:
 
@@ -221,7 +222,7 @@ npm run build
 
 ## Contribute
 
-Start with [CONTRIBUTING.md](CONTRIBUTING.md), then read the [workflow catalog](examples/workflows/CATALOG.md). Run `web-task-agent workflow validate <proposal/workflow.json>` after scaffolding: it checks the contribution contract without registering or launching it, including explicit freshness and bounded-cost fields. A useful workflow contribution has a repeated decision, a distinct source strategy, a stable evidence-backed output, a safety boundary, and a test/fixture — not just a renamed prompt.
+Start with [CONTRIBUTING.md](CONTRIBUTING.md) and the [maintainer/change policy](MAINTAINERS.md), then read the [workflow catalog](examples/workflows/CATALOG.md). Breaking receipt changes require the [public RFC process](docs/rfcs/README.md) before implementation. Run `web-task-agent workflow validate <proposal/workflow.json>` after scaffolding: it checks the contribution contract without registering or launching it, including explicit freshness and bounded-cost fields. A useful workflow contribution has a repeated decision, a distinct source strategy, a stable evidence-backed output, a safety boundary, and a test/fixture — not just a renamed prompt.
 
 Use [Discussions](https://github.com/OthmaneBlial/web-task-agent/discussions/1) for workflow ideas, reviewable receipts, and first-run questions. Use Issues for reproducible bugs and focused implementation changes.
 
@@ -236,3 +237,6 @@ Use [Discussions](https://github.com/OthmaneBlial/web-task-agent/discussions/1) 
 - [Roadmap](ROADMAP.md)
 - [Release checklist](RELEASE_CHECKLIST.md)
 - [Security policy](SECURITY.md)
+- [Independent security review brief](SECURITY_REVIEW.md)
+- [External validation protocol](EXTERNAL_VALIDATION.md)
+- [Opt-in public receipt gallery](gallery/README.md)
