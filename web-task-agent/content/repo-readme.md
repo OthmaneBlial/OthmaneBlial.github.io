@@ -204,6 +204,8 @@ Use `storage backup --output <path>` for a consistent local SQLite snapshot. `st
 
 Read [PRIVACY.md](PRIVACY.md), [SECURITY.md](SECURITY.md), and [SUPPORT.md](SUPPORT.md) before running sensitive work or reporting a vulnerability.
 
+For evidence that the receipt helps a reviewer rather than merely looking impressive, run the [local-only Reviewer Evidence Lab](https://othmaneblial.github.io/web-task-agent/study.html) or use its counterbalanced [`studies/reviewer-value/`](studies/reviewer-value/) kit. It ships synthetic parallel cases, controlled tampering, strict consent-aware validation, and descriptive aggregation; the current real participant baseline is explicitly zero.
+
 ## Develop and verify
 
 ```bash

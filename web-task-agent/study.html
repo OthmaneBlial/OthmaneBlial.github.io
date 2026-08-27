@@ -1,0 +1,219 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="Run the counterbalanced Decision Receipt reviewer study locally. Two trials, controlled tampering, consent-aware JSON export, and no telemetry or upload." />
+  <meta name="color-scheme" content="light" />
+  <title>Reviewer Evidence Lab — Web Task Agent</title>
+  <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="study.css" />
+  <script src="assets/reviewer-study-materials.js" defer></script>
+  <script src="study.js" defer></script>
+</head>
+<body data-page="reviewer-study">
+  <a class="skip-link" href="#study-main">Skip to the study</a>
+  <div class="site-shell study-shell">
+    <header class="topbar">
+      <a class="brand" href="index.html">
+        <span class="brand-mark" aria-hidden="true">W</span>
+        <span><strong>Web Task Agent</strong><small>Offline decision verification</small></span>
+      </a>
+      <nav class="topnav" aria-label="Primary navigation">
+        <a href="verify.html">Local verifier</a>
+        <a aria-current="page" href="study.html">Reviewer study</a>
+        <a href="docs.html#page=repo-roadmap">Roadmap</a>
+        <a href="https://github.com/OthmaneBlial/web-task-agent/issues/12">Study issue</a>
+      </nav>
+    </header>
+
+    <main id="study-main">
+      <section class="study-hero">
+        <div class="study-hero-copy">
+          <p class="eyebrow">REVIEWER EVIDENCE LAB · STUDY V1</p>
+          <h1>Can a receipt make doubt <em>easier to inspect?</em></h1>
+          <p>
+            Complete two counterbalanced review trials: one plain Markdown report and one Decision Receipt.
+            Find the evidence, contradiction, stale source, and controlled falsification. This page records locally
+            and exports one JSON file; it never submits participant data.
+          </p>
+          <div class="study-facts" aria-label="Study facts">
+            <span><strong>2</strong> trials</span>
+            <span><strong>4</strong> tasks each</span>
+            <span><strong>0</strong> upload paths</span>
+          </div>
+        </div>
+        <aside class="study-contract" aria-label="Privacy and truth boundary">
+          <div class="contract-stamp">LOCAL<br />ONLY</div>
+          <div>
+            <h2>The boundary is part of the test.</h2>
+            <ul>
+              <li>No analytics, cookies, account, storage, model, or API.</li>
+              <li>Names, emails, handles, credentials, and prompt traces do not belong in the response.</li>
+              <li>Integrity proves exported bytes, not factual truth or decision quality.</li>
+            </ul>
+          </div>
+        </aside>
+      </section>
+
+      <div id="study-announcer" class="study-announcer" role="status" aria-live="polite"></div>
+
+      <section id="setup-panel" class="lab-panel setup-panel" aria-labelledby="setup-title">
+        <div class="panel-index" aria-hidden="true">00</div>
+        <div class="panel-heading">
+          <p class="eyebrow">SETUP</p>
+          <h2 id="setup-title">Record a boundary, not an identity.</h2>
+          <p>A facilitator alternates `AB` and `BA` between participants. The generated ID exists only in this tab.</p>
+        </div>
+        <form id="setup-form" class="setup-grid">
+          <label class="field-label">
+            Anonymous participant ID
+            <span class="inline-control">
+              <input id="participant-id" name="participantId" type="text" pattern="p-[a-f0-9]{8}" readonly />
+              <button id="regenerate-id" class="small-button" type="button">Regenerate</button>
+            </span>
+          </label>
+          <label class="field-label">
+            Reviewer role
+            <select id="participant-role" name="participantRole" required>
+              <option value="">Choose one</option>
+              <option value="maintainer">Maintainer</option>
+              <option value="developer">Developer</option>
+              <option value="agent-builder">Agent builder</option>
+              <option value="local-first-practitioner">Local-first practitioner</option>
+              <option value="other">Other</option>
+            </select>
+          </label>
+          <label class="field-label">
+            Prior receipt familiarity
+            <select id="prior-familiarity" name="priorFamiliarity" required>
+              <option value="">Choose one</option>
+              <option value="none">None</option>
+              <option value="basic">Basic</option>
+              <option value="experienced">Experienced</option>
+            </select>
+          </label>
+          <fieldset class="order-fieldset">
+            <legend>Counterbalance group</legend>
+            <label><input type="radio" name="orderGroup" value="AB" checked /> <span><strong>AB</strong> Markdown first</span></label>
+            <label><input type="radio" name="orderGroup" value="BA" /> <span><strong>BA</strong> Receipt first</span></label>
+          </fieldset>
+          <fieldset class="consent-fieldset">
+            <legend>Granular consent</legend>
+            <label><input id="consent-participation" type="checkbox" required /> <span><strong>Participate in this local study.</strong> Required to begin.</span></label>
+            <label><input id="consent-measures" type="checkbox" /> <span><strong>Allow anonymized measures.</strong> Without this, aggregation excludes the response.</span></label>
+            <label><input id="consent-row" type="checkbox" disabled /> <span><strong>Allow an anonymized row to be published.</strong> This never publishes automatically.</span></label>
+          </fieldset>
+          <div class="setup-action">
+            <p><strong>No autosave.</strong> Closing or refreshing the tab discards progress. Keep the exported JSON private until you choose to share it.</p>
+            <button class="button button-accent" type="submit">Begin timed trial 1</button>
+          </div>
+        </form>
+      </section>
+
+      <section id="trial-panel" class="lab-panel trial-panel" aria-labelledby="trial-title" hidden>
+        <div class="trial-rail" aria-label="Trial progress">
+          <span id="trial-position">TRIAL 1 / 2</span>
+          <strong id="trial-timer">00:00</strong>
+          <span id="trial-condition" class="condition-badge">MARKDOWN ONLY</span>
+        </div>
+        <div class="trial-heading">
+          <div>
+            <p class="eyebrow">BOUNDED REVIEW</p>
+            <h2 id="trial-title">Loading study case…</h2>
+            <p id="trial-question"></p>
+          </div>
+          <div id="trial-case-mark" class="trial-case-mark" aria-hidden="true">A</div>
+        </div>
+
+        <div class="trial-workbench">
+          <article class="material-desk" aria-labelledby="material-title">
+            <div class="desk-heading">
+              <div><p class="eyebrow">MATERIAL</p><h3 id="material-title">Review surface</h3></div>
+              <span id="material-mode-note"></span>
+            </div>
+            <div id="markdown-material" class="markdown-material" tabindex="0" hidden></div>
+            <div id="receipt-material" class="receipt-material" hidden>
+              <p>
+                Download both bounded ZIPs. Load the valid receipt in the local verifier to inspect claims and sources,
+                then load the tampered receipt and report the exact changed path.
+              </p>
+              <div class="receipt-downloads">
+                <button id="download-valid-receipt" class="download-card" type="button">
+                  <span>01 · BASELINE</span><strong>Download valid receipt</strong><small>Expected to pass offline verification</small>
+                </button>
+                <button id="download-tampered-receipt" class="download-card is-tampered" type="button">
+                  <span>02 · CONTROLLED CHANGE</span><strong>Download tampered receipt</strong><small>Expected to fail at one evidence path</small>
+                </button>
+              </div>
+              <a class="button button-accent verifier-launch" href="verify.html" target="_blank" rel="noopener">Open local verifier in a new tab</a>
+              <p class="boundary-note">Do not browse the example URLs. They are synthetic reserved paths; factual web research is outside this study.</p>
+            </div>
+          </article>
+
+          <form id="trial-form" class="answer-sheet">
+            <div class="desk-heading"><div><p class="eyebrow">ANSWER SHEET</p><h3>Return exact IDs or paths</h3></div><span>Case-sensitive is not required</span></div>
+            <label class="field-label">Evidence ID supporting the bounded positive claim
+              <input id="answer-supporting" type="text" maxlength="120" autocomplete="off" />
+            </label>
+            <label class="field-label">Contradicted claim ID
+              <input id="answer-contradicted" type="text" maxlength="120" autocomplete="off" />
+            </label>
+            <label class="field-label">Stale source ID
+              <input id="answer-stale" type="text" maxlength="120" autocomplete="off" />
+            </label>
+            <label class="field-label">Falsification result
+              <input id="answer-tamper" type="text" maxlength="200" autocomplete="off" placeholder="Exact changed path, or not-determinable" />
+            </label>
+            <fieldset class="confidence-fieldset">
+              <legend>Confidence in these answers</legend>
+              <div class="confidence-scale">
+                <label><input type="radio" name="confidence" value="1" /><span>1<small>Low</small></span></label>
+                <label><input type="radio" name="confidence" value="2" /><span>2</span></label>
+                <label><input type="radio" name="confidence" value="3" /><span>3</span></label>
+                <label><input type="radio" name="confidence" value="4" /><span>4</span></label>
+                <label><input type="radio" name="confidence" value="5" /><span>5<small>High</small></span></label>
+              </div>
+            </fieldset>
+            <label class="field-label">Friction or interruption notes <span class="optional">optional · one item per line</span>
+              <textarea id="trial-friction" rows="3" maxlength="3000"></textarea>
+            </label>
+            <label class="abandon-control"><input id="trial-abandoned" type="checkbox" /> <span>I could not complete this trial. Preserve it as abandoned instead of dropping it.</span></label>
+            <button class="button button-accent complete-trial" type="submit">Complete this trial</button>
+          </form>
+        </div>
+      </section>
+
+      <section id="finish-panel" class="lab-panel finish-panel" aria-labelledby="finish-title" hidden>
+        <div class="panel-index" aria-hidden="true">✓</div>
+        <div class="panel-heading">
+          <p class="eyebrow">LOCAL EXPORT</p>
+          <h2 id="finish-title">Two trials recorded. Nothing was sent.</h2>
+          <p>Give the tool the criticism it needs, review your consent, then download the response file.</p>
+        </div>
+        <div class="finish-grid">
+          <label class="field-label">Critical feedback <span class="optional">friction, ambiguity, or reasons not to adopt</span>
+            <textarea id="critical-feedback" rows="5" maxlength="2000" required></textarea>
+          </label>
+          <fieldset class="publication-fieldset">
+            <legend>Optional publication consent</legend>
+            <label><input id="consent-quote" type="checkbox" /> <span>Allow a redacted quote to be published.</span></label>
+            <label class="field-label">Quote text
+              <textarea id="publication-quote" rows="3" maxlength="500" disabled></textarea>
+            </label>
+            <p>Identity attribution is always false in this JSON. Any attributed quote requires a separate identity record and explicit agreement outside this page.</p>
+          </fieldset>
+          <div id="export-summary" class="export-summary"></div>
+          <div class="finish-actions">
+            <button id="download-response" class="button button-accent" type="button">Download anonymous response JSON</button>
+            <button id="restart-study" class="button" type="button">Discard and restart</button>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer">A fixture is not a participant. A hash is not truth. A faster answer is not automatically a better decision.</footer>
+  </div>
+</body>
+</html>

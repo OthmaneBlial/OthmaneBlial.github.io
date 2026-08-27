@@ -18,7 +18,7 @@ La viralité ne se programme pas et aucune roadmap ne peut promettre des étoile
 - ✅ Huit receipts déterministes, trois golden paths, scorecard et fixtures adversariales.
 - ✅ Trust model, guides de contribution, templates d'issues, Discussions et site GitHub Pages.
 - ✅ Release `v0.5.1` avec tarball, checksum et provenance ; CI actuelle verte.
-- ✅ Vérification locale de cette roadmap : **156 tests unitaires, 4 intégrations, 0 échec**, artefacts générés synchronisés et 408 liens Markdown locaux validés.
+- ✅ Vérification locale de cette roadmap : **162 tests unitaires, 4 intégrations, 0 échec**, artefacts générés synchronisés et 420 liens Markdown locaux validés.
 
 ### Ce que les signaux publics disent vraiment
 
@@ -283,13 +283,20 @@ Comparer un rapport Markdown seul avec le même rapport accompagné d'un receipt
 
 Publier protocole, petits dénominateurs, données anonymisées consenties et limites. Ne revendiquer un gain que si le résultat le montre.
 
+- [x] Figer avant recrutement deux cas synthétiques parallèles, l'assignation contrebalancée `AB`/`BA` et quatre réponses scorables.
+- [x] Livrer les receipts valides et falsifiés, le schéma de réponse strict, la validation locale et l'agrégateur descriptif sans télémétrie.
+- [x] Ouvrir un parcours web local-only avec chrono par trial, ZIPs bornés et export JSON anonyme, sans endpoint de soumission ni persistance.
+- [ ] Inclure au moins cinq reviewers externes consentants et publier les dénominateurs, abandons, limites et lignes autorisées.
+
+**Kit livré, résultat externe non inventé :** [`studies/reviewer-value/`](studies/reviewer-value/) contient deux rapports Markdown, deux receipts vérifiables et deux falsifications contrôlées. Le [Reviewer Evidence Lab](https://othmaneblial.github.io/web-task-agent/study.html) applique le même ordre `AB`/`BA`, lance le chrono au reveal, télécharge les ZIPs et exporte la réponse localement. Les falsifications échouent exactement sur `evidence/cache-policy.md` et `evidence/update-policy.md`. Le validateur refuse la dérive d'assignation et les champs d'identité/secret ; l'agrégateur exclut les fixtures et l'absence de consentement, sépare temps, justesse, confiance et abandons, et ne produit aucun test de significativité ni claim de supériorité. La seule réponse versionnée est synthétique : baseline réelle **0 participant**, donc la case externe reste ouverte.
+
 ### Revue de sécurité indépendante
 
 - [x] Demander une revue externe du schéma, de la canonicalisation, des chemins d'archive, des signatures, du rendu HTML et de la frontière local-only.
 - [ ] Convertir chaque faille en test de non-régression et advisory si nécessaire.
 - [x] Publier ce qui a été testé et ce qui ne l'a pas été.
 
-**Préparation livrée, adoption non simulée :** `EXTERNAL_VALIDATION.md` fixe trois tracks, le protocole reviewer, le consentement granulaire et une baseline externe à zéro. `SECURITY_REVIEW.md` publie le commit pinning, les six surfaces prioritaires, les commandes, les preuves mainteneur et les zones non auditées. La [demande publique de revue #10](https://github.com/OthmaneBlial/web-task-agent/issues/10) borne le résultat attendu et redirige toute faille vers une advisory privée. Aucun participant, audit reçu ni reviewer indépendant n'est compté avant une trace réelle.
+**Préparation livrée, adoption non simulée :** `EXTERNAL_VALIDATION.md` fixe trois tracks, le protocole reviewer, le consentement granulaire et une baseline externe à zéro ; le kit exécutable en matérialise maintenant le test avant recrutement. `SECURITY_REVIEW.md` publie le commit pinning, les six surfaces prioritaires, les commandes, les preuves mainteneur et les zones non auditées. La [demande publique de revue #10](https://github.com/OthmaneBlial/web-task-agent/issues/10) borne le résultat attendu et redirige toute faille vers une advisory privée. Aucun participant, audit reçu ni reviewer indépendant n'est compté avant une trace réelle.
 
 **Preuve d'acceptation :** au moins cinq receipts ont été vérifiés par des non-mainteneurs, trois utilisateurs ont produit un second receipt ou un diff, et une revue indépendante a laissé une trace publique exploitable.
 
