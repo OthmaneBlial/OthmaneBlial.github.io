@@ -1,10 +1,10 @@
 {
-  "generatedAt": "2026-03-16T07:20:58.418Z",
+  "generatedAt": "2026-08-30T16:37:31.369Z",
   "stats": {
-    "examples": 100,
-    "collections": 8,
+    "examples": 300,
+    "collections": 16,
     "quickWins": 10,
-    "uniqueSkills": 17
+    "uniqueSkills": 19
   },
   "warnings": []
 }
