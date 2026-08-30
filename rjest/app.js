@@ -20,12 +20,11 @@ if (menuButton && navigation) {
 
 const matrix = document.querySelector(".scenario-grid");
 if (matrix) {
-  for (let index = 0; index < 30; index += 1) {
+  const scenarioTotal = Number(matrix.dataset.total);
+  for (let index = 0; index < scenarioTotal; index += 1) {
     const cell = document.createElement("span");
     cell.className = "scenario-cell";
-    cell.style.animationDelay = reduceMotion
-      ? "0ms"
-      : String(index * 18) + "ms";
+    cell.style.animationDelay = reduceMotion ? "0ms" : String(index * 4) + "ms";
     cell.setAttribute("aria-hidden", "true");
     matrix.append(cell);
   }

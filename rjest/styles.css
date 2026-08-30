@@ -613,14 +613,14 @@ button {
 
 .scenario-grid {
   display: grid;
-  grid-template-columns: repeat(15, 1fr);
+  grid-template-columns: repeat(30, 1fr);
   gap: 4px;
   padding: 30px;
 }
 
 .scenario-cell {
   position: relative;
-  height: 45px;
+  height: 16px;
   background: var(--signal);
   transform: scaleY(0.12);
   transform-origin: bottom;
@@ -630,7 +630,7 @@ button {
 .scenario-cell::after {
   content: "";
   position: absolute;
-  inset: 3px;
+  inset: 2px;
   border: 1px solid rgba(10, 12, 10, 0.16);
 }
 
@@ -1486,13 +1486,13 @@ button {
   }
 
   .scenario-grid {
-    grid-template-columns: repeat(10, 1fr);
+    grid-template-columns: repeat(15, 1fr);
     gap: 3px;
     padding: 18px;
   }
 
   .scenario-cell {
-    height: 28px;
+    height: 16px;
   }
 
   .matrix-legend {
