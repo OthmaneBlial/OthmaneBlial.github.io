@@ -919,111 +919,70 @@ button {
   font-size: 17px;
 }
 
-.architecture-diagram {
-  position: relative;
-  padding: 24px;
+.architecture-flow {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 34px minmax(0, 1fr) 34px minmax(0, 1fr);
+  align-items: stretch;
+  padding: 16px;
   color: var(--paper);
   background: var(--ink);
   border: 1px solid var(--ink);
   box-shadow: 16px 16px 0 rgba(10, 12, 10, 0.12);
 }
 
-.diagram-stage {
-  padding: 16px 18px;
+.flow-step {
+  display: flex;
+  min-width: 0;
+  min-height: 170px;
+  padding: 20px;
+  flex-direction: column;
+  justify-content: space-between;
   border: 1px solid var(--line-dark);
 }
 
-.diagram-stage span,
-.worker-grid span {
-  display: block;
-  color: rgba(236, 235, 227, 0.43);
+.flow-step span {
+  color: rgba(236, 235, 227, 0.48);
   font-family: var(--mono);
-  font-size: 8px;
+  font-size: 9px;
   letter-spacing: 0.08em;
 }
 
-.diagram-stage strong {
-  display: block;
-  margin-top: 3px;
-  font-family: var(--mono);
-  font-size: 13px;
+.flow-step strong {
+  font-family: var(--display);
+  font-size: clamp(29px, 3vw, 42px);
+  font-weight: 400;
+  line-height: 0.9;
 }
 
-.diagram-stage--rust {
+.flow-step p {
+  max-width: 180px;
+  color: rgba(236, 235, 227, 0.64);
+  font-family: var(--mono);
+  font-size: 10px;
+  line-height: 1.5;
+}
+
+.flow-step--rust {
   color: var(--ink);
   background: var(--signal);
   border-color: var(--signal);
 }
 
-.diagram-stage--rust span {
-  color: rgba(10, 12, 10, 0.55);
-  font-family: var(--mono);
-  font-size: 8px;
+.flow-step--rust span,
+.flow-step--rust p {
+  color: rgba(10, 12, 10, 0.62);
 }
 
-.rust-functions {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 6px;
-  margin-top: 12px;
+.flow-step--node strong {
+  color: var(--orange);
 }
 
-.rust-functions b {
-  padding: 10px 6px;
-  border: 1px solid rgba(10, 12, 10, 0.23);
-  font-family: var(--mono);
-  font-size: 8px;
-  text-align: center;
-}
-
-.diagram-connector {
+.flow-arrow {
   display: grid;
   place-items: center;
-  height: 35px;
-  color: rgba(236, 235, 227, 0.36);
-  border-left: 1px dashed rgba(236, 235, 227, 0.26);
+  color: rgba(236, 235, 227, 0.42);
   font-family: var(--mono);
-  font-size: 8px;
-  margin-left: 50%;
-}
-
-.diagram-connector span {
-  padding: 0 5px;
-  background: var(--ink);
-  transform: translateX(-50%);
-}
-
-.worker-lines {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 10px;
-  height: 32px;
-}
-
-.worker-lines i {
-  width: 1px;
-  height: 100%;
-  margin: auto;
-  border-left: 1px dashed rgba(236, 235, 227, 0.26);
-}
-
-.worker-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 10px;
-}
-
-.worker-grid div {
-  min-width: 0;
-  padding: 15px 12px;
-  border: 1px solid var(--line-dark);
-}
-
-.worker-grid b {
-  color: var(--orange);
-  font-family: var(--display);
-  font-size: 27px;
-  font-weight: 400;
+  font-size: 18px;
 }
 
 .start-section {
@@ -1314,7 +1273,7 @@ button {
   .architecture-copy {
     max-width: 650px;
   }
-  .architecture-diagram {
+  .architecture-flow {
     max-width: 760px;
   }
   .start-panel {
@@ -1540,21 +1499,19 @@ button {
     grid-template-columns: repeat(2, 1fr);
   }
 
-  .architecture-diagram {
+  .architecture-flow {
+    grid-template-columns: 1fr;
     padding: 14px;
     box-shadow: 8px 8px 0 rgba(10, 12, 10, 0.12);
   }
 
-  .rust-functions,
-  .worker-grid {
-    grid-template-columns: 1fr;
+  .flow-step {
+    min-height: 140px;
   }
 
-  .worker-lines {
-    display: none;
-  }
-  .worker-grid {
-    margin-top: 15px;
+  .flow-arrow {
+    height: 34px;
+    transform: rotate(90deg);
   }
   .start-panel {
     box-shadow: 8px 8px 0 rgba(200, 255, 61, 0.08);

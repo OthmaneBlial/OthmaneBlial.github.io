@@ -42,7 +42,7 @@
         <span class="status-pulse" aria-hidden="true"></span>
         <span>ALPHA SIGNAL</span>
         <span class="signal-bar__divider" aria-hidden="true"></span>
-        <span>174 / 174 DIFFERENTIAL SCENARIOS</span>
+        <span>176 / 176 DIFFERENTIAL SCENARIOS</span>
         <a href="#limits"
           >Read the boundaries <span aria-hidden="true">↘</span></a
         >
@@ -191,15 +191,15 @@
             <div class="matrix-card__heading">
               <div>
                 <span>VERSIONED DIFFERENTIAL MATRIX</span>
-                <strong><b>174</b> / 174</strong>
+                <strong><b>176</b> / 176</strong>
               </div>
               <div class="matrix-badge">100% OF BOUNDED MATRIX</div>
             </div>
             <div
               class="scenario-grid"
-              data-total="174"
+              data-total="176"
               role="img"
-              aria-label="All 174 current differential scenarios pass"
+              aria-label="All 176 current differential scenarios pass"
             ></div>
             <div class="matrix-legend">
               <span><i class="legend-dot legend-dot--pass"></i> PASSING</span>
@@ -318,8 +318,8 @@
               <p>
                 Executable configs, presets, multi-project matrices, display
                 filters, global setup/teardown, result processors, sharding,
-                bail, failed-test history, native watch-all, custom resolvers,
-                sequencers, pnpm, and Yarn Plug'n'Play.
+                bail, failed-test history, native all/changed-test watch,
+                custom resolvers, sequencers, pnpm, and Yarn Plug'n'Play.
               </p>
               <div class="project-strip" aria-hidden="true">
                 <span>WEB</span><span>NODE</span><span>NATIVE</span
@@ -361,35 +361,27 @@
           </div>
 
           <div
-            class="architecture-diagram reveal"
-            aria-label="Rjest execution architecture"
+            class="architecture-flow reveal"
+            role="group"
+            aria-label="Rjest has three stages"
           >
-            <div class="diagram-stage diagram-stage--input">
-              <span>INPUT</span>
-              <strong>Jest config + test suite</strong>
-            </div>
-            <div class="diagram-connector"><span>normalize</span></div>
-            <div class="diagram-stage diagram-stage--rust">
-              <span>RUST COORDINATOR</span>
-              <div class="rust-functions">
-                <b>DISCOVER</b><b>SCHEDULE</b><b>AGGREGATE</b>
-              </div>
-            </div>
-            <div class="worker-lines" aria-hidden="true">
-              <i></i><i></i><i></i>
-            </div>
-            <div class="worker-grid">
-              <div><span>NODE WORKER</span><b>01</b></div>
-              <div><span>NODE WORKER</span><b>02</b></div>
-              <div><span>NODE WORKER</span><b>03</b></div>
-            </div>
-            <div class="diagram-connector diagram-connector--up">
-              <span>merge</span>
-            </div>
-            <div class="diagram-stage diagram-stage--output">
-              <span>OUTPUT</span>
-              <strong>Results + snapshots + coverage</strong>
-            </div>
+            <article class="flow-step flow-step--rust">
+              <span>01 · RUST</span>
+              <strong>Plan</strong>
+              <p>Config · discover · select · schedule</p>
+            </article>
+            <div class="flow-arrow" aria-hidden="true">→</div>
+            <article class="flow-step flow-step--node">
+              <span>02 · NODE</span>
+              <strong>Run</strong>
+              <p>Execute each Jest test file in isolation</p>
+            </article>
+            <div class="flow-arrow" aria-hidden="true">→</div>
+            <article class="flow-step flow-step--rust">
+              <span>03 · RUST</span>
+              <strong>Report</strong>
+              <p>Results · snapshots · coverage</p>
+            </article>
           </div>
         </div>
       </section>
@@ -439,18 +431,18 @@
         <div class="shell limits-grid">
           <div class="limits-title reveal">
             <p class="eyebrow">Alpha means alpha</p>
-            <h2>The open<br />20% matters.</h2>
+            <h2>The remaining<br />work matters.</h2>
           </div>
           <div class="limits-copy reveal">
             <p class="limits-intro">
-              The approximate 82% readiness view is directional, not an
-              automated Jest API percentage. The measured claim remains 174/174
+              The approximate 84% readiness view is directional, not an
+              automated Jest API percentage. The measured claim remains 176/176
               of the current bounded matrix.
             </p>
             <ul>
               <li>
-                <span>01</span> Dependency-aware watch, interactive controls,
-                and V8 coverage remain open. Native watch-all is available.
+                <span>01</span> Interactive watch controls, stale-run
+                cancellation, non-Git SCM support, and V8 coverage remain open.
               </li>
               <li>
                 <span>02</span> Transform/discovery persistence and worker reuse
