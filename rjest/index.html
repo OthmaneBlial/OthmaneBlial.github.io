@@ -8,6 +8,8 @@
       content="Rjest is an independent Jest-compatible test runner with a Rust coordinator and isolated Node workers."
     />
     <meta name="theme-color" content="#0a0c0a" />
+    <meta name="robots" content="index,follow,max-image-preview:large" />
+    <link rel="canonical" href="https://othmaneblial.github.io/rjest/" />
     <meta property="og:type" content="website" />
     <meta
       property="og:title"
@@ -18,11 +20,27 @@
       content="A Rust-coordinated Jest-compatible runner, proven against official Jest and real project suites."
     />
     <meta property="og:url" content="https://othmaneblial.github.io/rjest/" />
+    <meta property="og:site_name" content="Rjest" />
     <meta
       property="og:image"
       content="https://othmaneblial.github.io/rjest/og-card.png"
     />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta
+      property="og:image:alt"
+      content="Rjest: same tests, different engine"
+    />
     <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Rjest — switch the runner, keep the suite" />
+    <meta
+      name="twitter:description"
+      content="A Rust-powered Jest-compatible test runner measured against official Jest and real project suites."
+    />
+    <meta
+      name="twitter:image"
+      content="https://othmaneblial.github.io/rjest/og-card.png"
+    />
     <link rel="icon" href="favicon.svg" type="image/svg+xml" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -32,6 +50,20 @@
     />
     <link rel="stylesheet" href="styles.css" />
     <title>Rjest — Jest compatibility, Rust coordinated</title>
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "SoftwareApplication",
+        "name": "Rjest",
+        "applicationCategory": "DeveloperApplication",
+        "description": "A Rust-powered, Jest-compatible test runner for JavaScript and TypeScript.",
+        "url": "https://othmaneblial.github.io/rjest/",
+        "codeRepository": "https://github.com/OthmaneBlial/rjest",
+        "license": "https://opensource.org/license/mit",
+        "isAccessibleForFree": true,
+        "softwareRequirements": "Node.js 22.18 or newer and Rust"
+      }
+    </script>
   </head>
   <body>
     <a class="skip-link" href="#main">Skip to content</a>
@@ -42,7 +74,7 @@
         <span class="status-pulse" aria-hidden="true"></span>
         <span>ALPHA SIGNAL</span>
         <span class="signal-bar__divider" aria-hidden="true"></span>
-        <span>192 / 192 DIFFERENTIAL SCENARIOS</span>
+        <span>193 / 193 DIFFERENTIAL SCENARIOS</span>
         <a href="#limits"
           >Read the boundaries <span aria-hidden="true">↘</span></a
         >
@@ -191,15 +223,15 @@
             <div class="matrix-card__heading">
               <div>
                 <span>VERSIONED DIFFERENTIAL MATRIX</span>
-                <strong><b>192</b> / 192</strong>
+                <strong><b>193</b> / 193</strong>
               </div>
               <div class="matrix-badge">100% OF BOUNDED MATRIX</div>
             </div>
             <div
               class="scenario-grid"
-              data-total="192"
+              data-total="193"
               role="img"
-              aria-label="All 192 current differential scenarios pass"
+              aria-label="All 193 current differential scenarios pass"
             ></div>
             <div class="matrix-legend">
               <span><i class="legend-dot legend-dot--pass"></i> PASSING</span>
@@ -220,7 +252,6 @@
               <small
                 >99.940% frozen-status parity · zero Rjest-only failures</small
               >
-            </article>
             <article class="proof-card reveal">
               <span class="proof-card__index">02</span>
               <p class="proof-card__source">STYLED-COMPONENTS</p>
@@ -319,8 +350,8 @@
                 Executable configs, presets, multi-project matrices, display
                 filters, global setup/teardown, result processors, sharding,
                 bail, failed-test history, explicit related-test selection,
-                native all/changed-test watch, custom resolvers, sequencers,
-                pnpm, and Yarn Plug'n'Play.
+                native all/changed-test watch, interactive interruption, custom
+                resolvers, sequencers, pnpm, and Yarn Plug'n'Play.
               </p>
               <div class="project-strip" aria-hidden="true">
                 <span>WEB</span><span>NODE</span><span>NATIVE</span
@@ -437,13 +468,14 @@
           <div class="limits-copy reveal">
             <p class="limits-intro">
               The approximate 84% readiness view is directional, not an
-              automated Jest API percentage. The measured claim remains 192/192
+              automated Jest API percentage. The measured claim remains 193/193
               of the current bounded matrix.
             </p>
             <ul>
               <li>
-                <span>01</span> Interactive watch controls, stale-run
-                cancellation, non-Git SCM support, and V8 coverage remain open.
+                <span>01</span> Watch plugins and terminal polish, non-Git SCM
+                support, and V8 coverage remain open. Core controls and active
+                worker interruption are now tested against Jest.
               </li>
               <li>
                 <span>02</span> Transform/discovery persistence and worker reuse
