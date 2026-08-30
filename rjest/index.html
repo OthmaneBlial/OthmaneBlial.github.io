@@ -5,7 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta
       name="description"
-      content="Rjest is an independent Jest-compatible test runner with a Rust coordinator and isolated Node workers."
+      content="Rjest is a Rust-powered Jest-compatible test runner and Jest alternative for existing JavaScript and TypeScript suites, verified against official Jest."
+    />
+    <meta
+      name="keywords"
+      content="Jest alternative, Jest-compatible test runner, Rust test runner, JavaScript testing, TypeScript testing, V8 coverage"
     />
     <meta name="theme-color" content="#0a0c0a" />
     <meta name="robots" content="index,follow,max-image-preview:large" />
@@ -13,11 +17,11 @@
     <meta property="og:type" content="website" />
     <meta
       property="og:title"
-      content="Rjest — switch the runner, keep the suite"
+      content="Rjest — the compatibility-first Jest alternative"
     />
     <meta
       property="og:description"
-      content="A Rust-coordinated Jest-compatible runner, proven against official Jest and real project suites."
+      content="A Rust-powered Jest-compatible runner proven against official Jest, real project suites, and 207 executable differential scenarios."
     />
     <meta property="og:url" content="https://othmaneblial.github.io/rjest/" />
     <meta property="og:site_name" content="Rjest" />
@@ -32,10 +36,13 @@
       content="Rjest: same tests, different engine"
     />
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="Rjest — switch the runner, keep the suite" />
+    <meta
+      name="twitter:title"
+      content="Rjest — the compatibility-first Jest alternative"
+    />
     <meta
       name="twitter:description"
-      content="A Rust-powered Jest-compatible test runner measured against official Jest and real project suites."
+      content="Change the command, keep the suite: 207 executable scenarios measured against official Jest."
     />
     <meta
       name="twitter:image"
@@ -49,7 +56,7 @@
       rel="stylesheet"
     />
     <link rel="stylesheet" href="styles.css" />
-    <title>Rjest — Jest compatibility, Rust coordinated</title>
+    <title>Rjest — Rust-powered Jest-compatible test runner</title>
     <script type="application/ld+json">
       {
         "@context": "https://schema.org",
@@ -74,7 +81,7 @@
         <span class="status-pulse" aria-hidden="true"></span>
         <span>ALPHA SIGNAL</span>
         <span class="signal-bar__divider" aria-hidden="true"></span>
-        <span>203 / 203 DIFFERENTIAL SCENARIOS</span>
+        <span>207 / 207 DIFFERENTIAL SCENARIOS</span>
         <a href="#limits"
           >Read the boundaries <span aria-hidden="true">↘</span></a
         >
@@ -223,15 +230,15 @@
             <div class="matrix-card__heading">
               <div>
                 <span>VERSIONED DIFFERENTIAL MATRIX</span>
-                <strong><b>203</b> / 203</strong>
+                <strong><b>207</b> / 207</strong>
               </div>
               <div class="matrix-badge">100% OF BOUNDED MATRIX</div>
             </div>
             <div
               class="scenario-grid"
-              data-total="203"
+              data-total="207"
               role="img"
-              aria-label="All 203 current differential scenarios pass"
+              aria-label="All 207 current differential scenarios pass"
             ></div>
             <div class="matrix-legend">
               <span><i class="legend-dot legend-dot--pass"></i> PASSING</span>
@@ -252,6 +259,7 @@
               <small
                 >99.940% frozen-status parity · zero Rjest-only failures</small
               >
+            </article>
             <article class="proof-card reveal">
               <span class="proof-card__index">02</span>
               <p class="proof-card__source">STYLED-COMPONENTS</p>
@@ -362,11 +370,11 @@
 
             <article class="capability reveal">
               <span class="capability__number">06</span>
-              <h3>Istanbul coverage</h3>
+              <h3>Babel + V8 coverage</h3>
               <p>
-                Source maps, merged worker counters, text, JSON, LCOV/HTML,
-                Clover reports, collection globs, ignores, and Jest-compatible
-                global, path, directory, and per-file glob thresholds.
+                Babel instrumentation and precise V8 ranges, source maps,
+                cross-worker merging, text, JSON, LCOV/HTML, Clover, collection
+                globs, ignores, and Jest-compatible grouped thresholds.
               </p>
             </article>
           </div>
@@ -468,15 +476,15 @@
           </div>
           <div class="limits-copy reveal">
             <p class="limits-intro">
-              The approximate 87% readiness view is directional, not an
-              automated Jest API percentage. The measured claim remains 203/203
+              The approximate 88% readiness view is directional, not an
+              automated Jest API percentage. The measured claim remains 207/207
               of the current bounded matrix.
             </p>
             <ul>
               <li>
-                <span>01</span> Watch plugins and terminal polish, non-Git SCM
-                support, and V8 coverage remain open. Core controls and active
-                worker interruption are now tested against Jest.
+                <span>01</span> Watch plugins and terminal polish plus non-Git
+                SCM support remain open. Core controls and active-worker
+                interruption are tested against Jest.
               </li>
               <li>
                 <span>02</span> Transform/discovery persistence and worker reuse
@@ -484,8 +492,8 @@
               </li>
               <li>
                 <span>03</span> Custom VM identity, specialized reporter
-                built-ins, and long-tail resolver combinations need broader
-                proof. Live case timing is now tested against Jest.
+                built-ins, custom Istanbul reporters, cross-project provider
+                combinations, and long-tail resolvers need broader proof.
               </li>
               <li>
                 <span>04</span> Unlisted Jest behavior is not yet a

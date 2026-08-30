@@ -13,6 +13,6 @@
   <line x1="70" y1="458" x2="1130" y2="458" stroke="#ecebe3" stroke-opacity=".2"/>
   <text x="70" y="512" fill="#ecebe3" font-family="monospace" font-size="24">RUST COORDINATOR + ISOLATED NODE WORKERS</text>
   <rect x="70" y="548" width="255" height="46" fill="#c8ff3d"/>
-  <text x="88" y="579" fill="#0a0c0a" font-family="monospace" font-size="18" font-weight="700">203 / 203 SCENARIOS</text>
+  <text x="88" y="579" fill="#0a0c0a" font-family="monospace" font-size="18" font-weight="700">207 / 207 SCENARIOS</text>
   <text x="1129" y="580" fill="#ff6a3d" font-family="monospace" font-size="20" font-weight="700" text-anchor="end">github.com/OthmaneBlial/rjest</text>
 </svg>
