@@ -21,7 +21,7 @@
     />
     <meta
       property="og:description"
-      content="A Rust-powered Jest-compatible runner proven against official Jest, real project suites, and 207 executable differential scenarios."
+      content="A Rust-powered Jest-compatible runner proven against official Jest, real project suites, and 210 executable differential scenarios."
     />
     <meta property="og:url" content="https://othmaneblial.github.io/rjest/" />
     <meta property="og:site_name" content="Rjest" />
@@ -42,7 +42,7 @@
     />
     <meta
       name="twitter:description"
-      content="Change the command, keep the suite: 207 executable scenarios measured against official Jest."
+      content="Change the command, keep the suite: 210 executable scenarios measured against official Jest."
     />
     <meta
       name="twitter:image"
@@ -81,7 +81,7 @@
         <span class="status-pulse" aria-hidden="true"></span>
         <span>ALPHA SIGNAL</span>
         <span class="signal-bar__divider" aria-hidden="true"></span>
-        <span>207 / 207 DIFFERENTIAL SCENARIOS</span>
+        <span>210 / 210 DIFFERENTIAL SCENARIOS</span>
         <a href="#limits"
           >Read the boundaries <span aria-hidden="true">↘</span></a
         >
@@ -230,15 +230,15 @@
             <div class="matrix-card__heading">
               <div>
                 <span>VERSIONED DIFFERENTIAL MATRIX</span>
-                <strong><b>207</b> / 207</strong>
+                <strong><b>210</b> / 210</strong>
               </div>
               <div class="matrix-badge">100% OF BOUNDED MATRIX</div>
             </div>
             <div
               class="scenario-grid"
-              data-total="207"
+              data-total="210"
               role="img"
-              aria-label="All 207 current differential scenarios pass"
+              aria-label="All 210 current differential scenarios pass"
             ></div>
             <div class="matrix-legend">
               <span><i class="legend-dot legend-dot--pass"></i> PASSING</span>
@@ -317,7 +317,8 @@
               <p>
                 Nested suites, hooks, async and callback tests, retries, focus,
                 skips, custom matchers, asymmetric values, promise chains,
-                mocks, spies, assertion counts, and lifecycle resets.
+                return-history assertions, mocks, spies, teardown state, and
+                lifecycle resets.
               </p>
               <div class="code-line">
                 <code>expect(result).resolves.toMatchSnapshot()</code>
@@ -339,7 +340,10 @@
               <div class="clock-face" aria-hidden="true">
                 <span></span><b>00:00:20</b>
               </div>
-              <p>Covered scheduling semantics in Node and JSDOM.</p>
+              <p>
+                Covered scheduling in Node and JSDOM, including manual,
+                next-async, and interval tick modes.
+              </p>
             </article>
 
             <article class="capability reveal">
@@ -477,7 +481,7 @@
           <div class="limits-copy reveal">
             <p class="limits-intro">
               The approximate 88% readiness view is directional, not an
-              automated Jest API percentage. The measured claim remains 207/207
+              automated Jest API percentage. The measured claim remains 210/210
               of the current bounded matrix.
             </p>
             <ul>
