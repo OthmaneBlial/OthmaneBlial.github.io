@@ -1219,6 +1219,21 @@ button {
   }
 }
 
+@media (max-width: 1180px) {
+  .architecture-grid {
+    grid-template-columns: 1fr;
+    gap: 60px;
+  }
+
+  .architecture-copy {
+    max-width: 650px;
+  }
+
+  .architecture-flow {
+    max-width: 760px;
+  }
+}
+
 @media (max-width: 1020px) {
   :root {
     --shell: min(100% - 36px, 900px);
