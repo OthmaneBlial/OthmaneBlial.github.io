@@ -5,23 +5,59 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta
       name="description"
-      content="Agent Flight Recorder turns local AI coding-agent traces into an auditable replay of tools, edits, tests, retries, permissions, and code evolution."
+      content="Debug AI coding agents with a local, read-only forensic replay of tool calls, tests, retries, permissions, failures, and exact code evolution."
     />
+    <meta name="robots" content="index,follow,max-image-preview:large" />
     <meta name="theme-color" content="#0a0b0b" />
-    <meta property="og:title" content="Agent Flight Recorder" />
+    <meta property="og:title" content="Agent Flight Recorder — The local black box for AI coding agents" />
     <meta
       property="og:description"
-      content="Replay what happened. Preserve what you can prove. Keep the evidence local."
+      content="Debug Codex, Claude Code, Cursor, OpenCode, and compatible agents with read-only forensic replay, explicit evidence gaps, and no cloud telemetry."
     />
     <meta property="og:type" content="website" />
     <meta property="og:url" content="https://othmaneblial.github.io/Agent-Flight-Recorder/" />
-    <meta property="og:image" content="https://othmaneblial.github.io/Agent-Flight-Recorder/assets/replay-console.png" />
+    <meta property="og:site_name" content="Agent Flight Recorder" />
+    <meta property="og:image" content="https://othmaneblial.github.io/Agent-Flight-Recorder/assets/social-card.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Agent Flight Recorder, the local black box for AI coding agents" />
     <meta name="twitter:card" content="summary_large_image" />
-    <title>Agent Flight Recorder — Local evidence for AI coding agents</title>
+    <meta name="twitter:title" content="Agent Flight Recorder — Local AI agent debugging and replay" />
+    <meta name="twitter:description" content="Read-only forensic replay for coding-agent tools, tests, retries, permissions, failures, and code evolution." />
+    <meta name="twitter:image" content="https://othmaneblial.github.io/Agent-Flight-Recorder/assets/social-card.png" />
+    <meta name="twitter:image:alt" content="Agent Flight Recorder, the local black box for AI coding agents" />
+    <title>Agent Flight Recorder — Local AI Agent Debugging &amp; Replay</title>
     <link rel="canonical" href="https://othmaneblial.github.io/Agent-Flight-Recorder/" />
     <link rel="icon" href="favicon.svg" type="image/svg+xml" />
     <link rel="stylesheet" href="styles.css?v=0.2.0" />
     <script src="app.js?v=0.2.0" defer></script>
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "SoftwareApplication",
+        "name": "Agent Flight Recorder",
+        "description": "A local black box and read-only forensic replay console for AI coding agents.",
+        "applicationCategory": "DeveloperApplication",
+        "operatingSystem": "macOS, Linux, Windows",
+        "softwareVersion": "0.2.0",
+        "url": "https://othmaneblial.github.io/Agent-Flight-Recorder/",
+        "codeRepository": "https://github.com/OthmaneBlial/Agent-Flight-Recorder",
+        "license": "https://opensource.org/license/mit",
+        "isAccessibleForFree": true,
+        "offers": {
+          "@type": "Offer",
+          "price": "0",
+          "priceCurrency": "USD"
+        },
+        "featureList": [
+          "Read-only AI coding-agent replay",
+          "Local SQLite evidence storage",
+          "Exact and best-effort code evolution",
+          "Retry and permission lineage",
+          "Encrypted portable flight bundles"
+        ]
+      }
+    </script>
   </head>
   <body>
     <a class="skip-link" href="#main-content">Skip to content</a>
@@ -64,7 +100,7 @@
           <p class="hero-lede">
             A local black box for AI coding agents. Inspect prompts, tool calls, file edits,
             tests, retries, permissions, resource usage, failures, and code evolution as one
-            evidence-backed timeline.
+            evidence-backed timeline. Replay is read-only: recorded actions are never re-executed.
           </p>
           <div class="hero-actions">
             <a class="button button-primary" href="#quick-start">Run the safe demo</a>
@@ -122,7 +158,7 @@
 
       <section class="proof-rail" aria-label="Verified project facts">
         <div><strong>5</strong><span>evidence surfaces</span></div>
-        <div><strong>43</strong><span>unit + integration tests</span></div>
+        <div><strong>48</strong><span>unit + integration tests</span></div>
         <div><strong>3</strong><span>Chromium journeys</span></div>
         <div><strong>0</strong><span>telemetry endpoints</span></div>
         <div><strong>V7</strong><span>SQLite schema</span></div>
@@ -160,8 +196,8 @@
             <div>
               <h3>Capture</h3>
               <p>
-                Read Codex and OpenCode stores incrementally, receive Claude Code and Cursor
-                hooks, or accept the versioned <code>afr.event.v1</code> envelope.
+                Receive official Codex, Claude Code, and Cursor hooks; read version-tested Codex and
+                OpenCode backfill sources; or accept the <code>afr.event.v1</code> envelope.
               </p>
             </div>
             <span class="step-code" aria-hidden="true">NATIVE / HOOK / JSON</span>
@@ -182,8 +218,8 @@
             <div>
               <h3>Replay</h3>
               <p>
-                Navigate a virtualized timeline, inspect exact or best-effort code evolution,
-                compare flights, and export authenticated encrypted archives.
+                Navigate a read-only virtualized timeline, inspect exact or best-effort code
+                evolution, compare flights, and export authenticated encrypted archives.
               </p>
             </div>
             <span class="step-code" aria-hidden="true">TIMELINE / DIFF / BUNDLE</span>
@@ -205,23 +241,23 @@
             <tbody>
               <tr>
                 <th scope="row"><span class="provider-dot codex"></span>Codex</th>
-                <td>Native session JSONL</td>
-                <td>Tools, commands, patches, usage, collaboration, gaps</td>
+                <td>Official hooks + transcript backfill</td>
+                <td>11 lifecycle hooks; version-tested JSONL for history</td>
               </tr>
               <tr>
                 <th scope="row"><span class="provider-dot opencode"></span>OpenCode</th>
-                <td>Native SQLite + WAL</td>
+                <td>CLI-discovered SQLite + WAL</td>
                 <td>Messages, parts, tools, files, tokens, cost</td>
               </tr>
               <tr>
                 <th scope="row"><span class="provider-dot claude"></span>Claude Code</th>
                 <td>Official command hooks</td>
-                <td>31 documented events; exact file boundaries when available</td>
+                <td>33 documented events; exact file boundaries when available</td>
               </tr>
               <tr>
                 <th scope="row"><span class="provider-dot cursor"></span>Cursor</th>
                 <td>Official native hooks</td>
-                <td>21 documented events; shell and file evidence</td>
+                <td>21 local IDE/CLI events; shell and file evidence</td>
               </tr>
               <tr>
                 <th scope="row"><span class="provider-dot compat"></span>Compatible</th>
@@ -311,8 +347,8 @@
         <div class="section-index" aria-hidden="true">05 / SAFE FIRST FLIGHT</div>
         <div class="quick-grid">
           <div class="section-heading reveal">
-            <p class="eyebrow">Two commands, synthetic evidence</p>
-            <h2 id="quick-title">Open the complete product without scanning your machine.</h2>
+            <p class="eyebrow">Four commands from a clean terminal</p>
+            <h2 id="quick-title">Open the full product without scanning your machine.</h2>
             <p>
               The demo resets only its isolated store, seeds two deterministic flights, disables
               native discovery, and contains no personal data or account requirement.
@@ -325,7 +361,9 @@
                 <span data-copy-label>Copy</span>
               </button>
             </div>
-            <pre id="quick-command"><code>npm ci
+            <pre id="quick-command"><code>git clone https://github.com/OthmaneBlial/Agent-Flight-Recorder.git
+cd Agent-Flight-Recorder
+npm ci
 npm run demo -- --reset</code></pre>
             <p class="command-note">Then open <code>http://127.0.0.1:4174</code></p>
           </div>

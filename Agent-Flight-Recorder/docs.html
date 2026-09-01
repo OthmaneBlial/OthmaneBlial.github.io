@@ -5,9 +5,23 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta
       name="description"
-      content="Agent Flight Recorder field manual: safe demo, evidence model, provider capture, privacy, bundles, API, and operations."
+      content="Agent Flight Recorder documentation for safe local setup, Codex and coding-agent hooks, evidence replay, privacy, encrypted bundles, and loopback API use."
     />
+    <meta name="robots" content="index,follow,max-image-preview:large" />
     <meta name="theme-color" content="#0a0b0b" />
+    <meta property="og:title" content="Agent Flight Recorder Field Manual" />
+    <meta property="og:description" content="Set up private coding-agent capture, understand evidence assurance, and operate the local replay console safely." />
+    <meta property="og:type" content="article" />
+    <meta property="og:url" content="https://othmaneblial.github.io/Agent-Flight-Recorder/docs.html" />
+    <meta property="og:site_name" content="Agent Flight Recorder" />
+    <meta property="og:image" content="https://othmaneblial.github.io/Agent-Flight-Recorder/assets/social-card.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Agent Flight Recorder, the local black box for AI coding agents" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Agent Flight Recorder Field Manual" />
+    <meta name="twitter:description" content="Safe setup, provider hooks, evidence assurance, privacy, bundles, and loopback API reference." />
+    <meta name="twitter:image" content="https://othmaneblial.github.io/Agent-Flight-Recorder/assets/social-card.png" />
     <title>Field Manual — Agent Flight Recorder</title>
     <link rel="canonical" href="https://othmaneblial.github.io/Agent-Flight-Recorder/docs.html" />
     <link rel="icon" href="favicon.svg" type="image/svg+xml" />
@@ -129,7 +143,9 @@
                 <span>INSTALL + DEMO</span>
                 <button class="copy-button" type="button" data-copy-target="docs-demo"><span data-copy-label>Copy</span></button>
               </div>
-              <pre id="docs-demo"><code>npm ci
+              <pre id="docs-demo"><code>git clone https://github.com/OthmaneBlial/Agent-Flight-Recorder.git
+cd Agent-Flight-Recorder
+npm ci
 npm run demo -- --reset</code></pre>
             </div>
             <p>Open <code>http://127.0.0.1:4174</code>. If that port is occupied:</p>
@@ -220,10 +236,10 @@ npm run demo -- --reset</code></pre>
             <p class="eyebrow">Providers</p>
             <h2>Five capture surfaces, one operational vocabulary.</h2>
             <div class="provider-docs-grid">
-              <article><span class="provider-dot codex"></span><h3>Codex</h3><p>Incremental bounded reads of native session JSONL, including tools, commands, patches, usage, collaboration, and historical gaps.</p></article>
-              <article><span class="provider-dot opencode"></span><h3>OpenCode</h3><p>Read-only import from the native SQLite database and WAL with session, message, part, file, token, and cost evidence.</p></article>
-              <article><span class="provider-dot claude"></span><h3>Claude Code</h3><p>All 31 documented official hook events. Hidden reasoning and complete general token/cost usage are not exposed.</p></article>
-              <article><span class="provider-dot cursor"></span><h3>Cursor</h3><p>All 21 documented native hook events. No universal token/cost event or native manual permission-result event.</p></article>
+              <article><span class="provider-dot codex"></span><h3>Codex</h3><p>All 11 official lifecycle hooks. Incremental transcript reads remain a version-tested historical backfill, not a stable API.</p></article>
+              <article><span class="provider-dot opencode"></span><h3>OpenCode</h3><p>Uses <code>opencode db path</code> before a version-tested default fallback, then imports the internal SQLite database and WAL read-only. The schema is not a guaranteed API.</p></article>
+              <article><span class="provider-dot claude"></span><h3>Claude Code</h3><p>All 33 documented official hook events. The local hook adapter does not expose hidden reasoning or complete token/cost telemetry.</p></article>
+              <article><span class="provider-dot cursor"></span><h3>Cursor</h3><p>All 21 documented local IDE/CLI hook events. Cloud agents expose a smaller subset.</p></article>
               <article><span class="provider-dot compat"></span><h3>Compatible</h3><p><code>afr.event.v1</code> over stdin or loopback HTTP. Unknown fields survive normalization.</p></article>
             </div>
             <h3>Compatible envelope</h3>
@@ -249,7 +265,7 @@ npm run demo -- --reset</code></pre>
           </div>
         </section>
 
-        <section class="doc-section" id="hooks" data-doc-section data-search="hooks claude cursor install config uninstall rollback dry run apply">
+        <section class="doc-section" id="hooks" data-doc-section data-search="hooks codex claude cursor install config uninstall rollback dry run apply">
           <div class="doc-section-number">06</div>
           <div class="doc-section-content">
             <p class="eyebrow">Hook configuration</p>
@@ -261,24 +277,25 @@ npm run demo -- --reset</code></pre>
             </p>
             <div class="doc-command">
               <div class="command-head">
-                <span>CLAUDE / PREVIEW THEN APPLY</span>
+                <span>CODEX / PREVIEW THEN APPLY</span>
                 <button class="copy-button" type="button" data-copy-target="docs-hooks"><span data-copy-label>Copy</span></button>
               </div>
               <pre id="docs-hooks"><code>node build/server/cli.js install-hooks \
-  --provider=claude \
+  --provider=codex \
   --scope=user \
   --data-dir="$PWD/.flight-recorder"
 
 # Apply only after reviewing the preview:
 node build/server/cli.js install-hooks \
-  --provider=claude \
+  --provider=codex \
   --scope=user \
   --data-dir="$PWD/.flight-recorder" \
   --apply</code></pre>
             </div>
             <p>
-              Recorder hooks fail open: a recorder timeout does not block the coding agent. Hooks
-              run with the local user’s permissions, so generated commands must be reviewed.
+              Recorder hooks return success by default even after a capture failure and never emit
+              provider decisions. Provider timeout semantics differ. Hooks run with the local
+              user’s permissions, so generated commands must be reviewed.
             </p>
           </div>
         </section>
@@ -370,7 +387,7 @@ node build/server/cli.js prune \
               <div><span>GET</span><code>/api/health</code><p>Readiness, policy, source, snapshot, gap, call, permission, and heartbeat health.</p></div>
               <div><span>GET</span><code>/api/overview</code><p>Counts, storage policy, schema version, and source summary.</p></div>
               <div><span>GET</span><code>/api/sessions</code><p>Lightweight recorded-flight list projections.</p></div>
-              <div><span>GET</span><code>/api/sessions/:id/events</code><p>Ordered, paged timeline projections.</p></div>
+              <div><span>GET</span><code>/api/sessions/:id/events</code><p>Ordered timeline projections with a bounded <code>limit</code>.</p></div>
               <div><span>GET</span><code>/api/events/:id/evolution</code><p>Snapshot assurance, boundaries, and bounded unified diff.</p></div>
               <div><span>GET</span><code>/api/compare?left=:id&amp;right=:id</code><p>Canonical metrics, kinds, failures, gaps, and files.</p></div>
               <div><span>POST</span><code>/api/scan</code><p>Manual native scan; rejected inside the public demo sandbox.</p></div>
@@ -390,7 +407,7 @@ node build/server/cli.js prune \
             <h2>Evidence completeness is provider-bound.</h2>
             <ul class="limits-list docs-limits">
               <li>Provider-private reasoning, non-emitted callbacks, and unavailable permission decisions cannot be reconstructed.</li>
-              <li>Claude Code and Cursor callback delivery must be validated on an opted-in installation of those products.</li>
+              <li>Codex, Claude Code, and Cursor callback delivery must be validated on an opted-in installation of those products.</li>
               <li>Evidence columns are encrypted, but indexed metadata remains plaintext; full-page SQLCipher is not provided.</li>
               <li>Parallel identical actions without call IDs can remain temporally ambiguous.</li>
               <li>This is a single-user loopback tool. Remote access and multi-user authentication are outside the threat model.</li>

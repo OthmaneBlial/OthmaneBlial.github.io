@@ -1017,6 +1017,10 @@ h3 {
   align-items: end;
 }
 
+.quick-grid > * {
+  min-width: 0;
+}
+
 .command-window,
 .doc-command {
   border: 1px solid var(--line-bright);
@@ -1762,7 +1766,7 @@ code {
 
   .quick-grid,
   .limits-grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr);
     gap: 36px;
   }
 

@@ -1,0 +1,23 @@
+# Agent Flight Recorder
+
+Agent Flight Recorder is an open-source, local-first forensic replay console for AI coding agents. It records provider-emitted evidence and presents a read-only timeline; it never re-executes recorded tools, commands, or agent actions.
+
+## Primary links
+
+- Product tour: https://othmaneblial.github.io/Agent-Flight-Recorder/
+- Field manual: https://othmaneblial.github.io/Agent-Flight-Recorder/docs.html
+- Source repository: https://github.com/OthmaneBlial/Agent-Flight-Recorder
+- Security model: https://github.com/OthmaneBlial/Agent-Flight-Recorder/blob/main/SECURITY.md
+- Validation evidence: https://github.com/OthmaneBlial/Agent-Flight-Recorder/blob/main/docs/VALIDATION.md
+
+## Supported evidence surfaces
+
+- Codex: 11 official lifecycle hooks plus version-tested transcript backfill.
+- Claude Code: 33 documented command-hook events.
+- Cursor: 21 documented local IDE/CLI hook events.
+- OpenCode: CLI-discovered, version-tested SQLite/WAL backfill.
+- Compatible agents: versioned `afr.event.v1` envelopes over stdin or loopback HTTP.
+
+## Trust boundary
+
+The recorder binds to loopback, emits no telemetry, masks common credentials by default, and encrypts evidence-bearing SQLite columns with AES-256-GCM. Indexed metadata remains plaintext. Provider-private or non-emitted data is not reconstructed; missing proof remains null, unknown, or an explicit capture gap.
