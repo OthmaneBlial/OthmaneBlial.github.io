@@ -1,4 +1,4 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="utf-8" />
@@ -587,11 +587,11 @@
               <p class="eyebrow">Bring a real suite</p>
               <h2>Find the next gap.</h2>
               <p>
-                Build the alpha, list the tests in an existing project, run
+                Install the alpha, list the tests in an existing project, run
                 serially, and compare the result with official Jest.
               </p>
               <div class="step-list">
-                <span><b>1</b> Build from source</span>
+                <span><b>1</b> Install the alpha</span>
                 <span><b>2</b> Compare discovery</span>
                 <span><b>3</b> Run the suite</span>
               </div>
@@ -603,19 +603,17 @@
                 <button
                   class="copy-button"
                   type="button"
-                  data-copy="git clone https://github.com/OthmaneBlial/rjest.git&#10;cd rjest&#10;npm ci&#10;cargo build --release -p rjest-cli&#10;&#10;cd /path/to/your-jest-project&#10;/path/to/rjest/target/release/rjest --listTests&#10;/path/to/rjest/target/release/rjest --runInBand"
+                  data-copy="npm install --save-dev rjest-rust-runner@alpha&#10;npx rjest --listTests&#10;npx rjest --runInBand"
                 >
                   Copy
                 </button>
               </div>
-              <pre><code><span class="terminal-comment"># Build the current alpha</span>
-<span class="terminal-prompt">$</span> git clone https://github.com/OthmaneBlial/rjest.git
-<span class="terminal-prompt">$</span> cd rjest &amp;&amp; npm ci
-<span class="terminal-prompt">$</span> cargo build --release -p rjest-cli
+              <pre><code><span class="terminal-comment"># Install the current alpha</span>
+<span class="terminal-prompt">$</span> npm install --save-dev rjest-rust-runner@alpha
 
-<span class="terminal-comment"># Then enter your existing Jest project</span>
-<span class="terminal-prompt">$</span> /path/to/rjest/target/release/rjest --listTests
-<span class="terminal-prompt">$</span> /path/to/rjest/target/release/rjest --runInBand</code></pre>
+<span class="terminal-comment"># Compare discovery, then execute serially</span>
+<span class="terminal-prompt">$</span> npx rjest --listTests
+<span class="terminal-prompt">$</span> npx rjest --runInBand</code></pre>
             </div>
           </div>
         </div>
