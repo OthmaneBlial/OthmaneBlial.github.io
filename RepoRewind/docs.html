@@ -68,17 +68,14 @@
         <article class="docs-content">
           <section class="doc-section" id="getting-started">
             <p class="eyebrow">01 / Getting started</p>
-            <h2>Run the current build from source.</h2>
+            <h2>Open a repository with one command.</h2>
             <p>
-              RepoRewind requires Node.js 24 (recommended) or Node.js 22.13+ and Git. The public npm package is not
-              published yet; this verified source path analyzes a selected local repository and opens a loopback-only
-              viewer automatically.
+              RepoRewind requires Node.js 24 (recommended) or Node.js 22.13+ and Git. The public package analyzes a
+              selected local repository and opens a loopback-only viewer automatically.
             </p>
             <div class="doc-code">
-              <pre><code id="docs-install">git clone https://github.com/OthmaneBlial/RepoRewind.git
-cd RepoRewind
-npm ci
-npm run reporewind -- /path/to/your/repository</code></pre>
+              <pre><code id="docs-install">cd /path/to/your/repository
+npx reporewind .</code></pre>
               <button class="copy-button" type="button" data-copy="#docs-install">
                 <span data-copy-label>Copy</span>
                 <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M7 6V3h10v10h-3M3 7h10v10H3z" /></svg>
@@ -90,9 +87,8 @@ npm run reporewind -- /path/to/your/repository</code></pre>
               it. The fictional rebuild remains available from the <strong>Guided case</strong> link.
             </p>
             <p class="doc-note">
-              Repository analysis and viewing require no account, database, source upload, or application API. The
-              shorter <code>npx reporewind .</code> path remains pending until the package is public and clean-install
-              verified.
+              The first run downloads RepoRewind from npm. Repository analysis and viewing then require no account,
+              database, source upload, or application API.
             </p>
           </section>
 
@@ -104,7 +100,7 @@ npm run reporewind -- /path/to/your/repository</code></pre>
               commit structure and numeric diffs—not source file contents.
             </p>
             <div class="doc-code">
-              <pre><code id="docs-analyze">npm run reporewind -- analyze /path/to/repository \
+              <pre><code id="docs-analyze">npx reporewind analyze /path/to/repository \
   --output ./reporewind-history.json</code></pre>
               <button class="copy-button" type="button" data-copy="#docs-analyze">
                 <span data-copy-label>Copy</span>
@@ -121,24 +117,24 @@ npm run reporewind -- /path/to/your/repository</code></pre>
             <h3>Useful analyzer options</h3>
             <div class="doc-code">
               <pre><code id="docs-options"># Explore another branch or remote ref
-npm run reporewind -- /path/to/repository --branch release/3.x
+npx reporewind /path/to/repository --branch release/3.x
 
 # Bound an exceptionally large history
-npm run reporewind -- /path/to/repository --max-commits 5000
+npx reporewind /path/to/repository --max-commits 5000
 
 # Pipe clean JSON to another tool
-npm run reporewind -- analyze /path/to/repository --stdout \
+npx reporewind analyze /path/to/repository --stdout \
   &gt; reporewind-history.json
 
 # Explicitly replace an existing archive
-npm run reporewind -- analyze /path/to/repository \
+npx reporewind analyze /path/to/repository \
   --output ./reporewind-history.json --force</code></pre>
               <button class="copy-button" type="button" data-copy="#docs-options">
                 <span data-copy-label>Copy</span>
                 <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M7 6V3h10v10h-3M3 7h10v10H3z" /></svg>
               </button>
             </div>
-            <p>Run <code>npm run reporewind -- --help</code> for the complete interface.</p>
+            <p>Run <code>npx reporewind --help</code> for the complete interface.</p>
           </section>
 
           <section class="doc-section" id="explore">
