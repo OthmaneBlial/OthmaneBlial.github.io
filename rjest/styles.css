@@ -234,7 +234,9 @@ button {
   font-weight: 600;
   letter-spacing: 0.04em;
   text-decoration: none;
-  transition: color 180ms ease, background 180ms ease;
+  transition:
+    color 180ms ease,
+    background 180ms ease;
 }
 
 .header-cta:hover,
@@ -250,7 +252,8 @@ button {
 .hero {
   position: relative;
   color: var(--paper);
-  background: linear-gradient(rgba(236, 235, 227, 0.034) 1px, transparent 1px),
+  background:
+    linear-gradient(rgba(236, 235, 227, 0.034) 1px, transparent 1px),
     linear-gradient(90deg, rgba(236, 235, 227, 0.034) 1px, transparent 1px),
     var(--ink);
   background-size: 64px 64px;
@@ -350,7 +353,10 @@ button {
   font-weight: 600;
   letter-spacing: 0.03em;
   text-decoration: none;
-  transition: transform 180ms ease, color 180ms ease, background 180ms ease,
+  transition:
+    transform 180ms ease,
+    color 180ms ease,
+    background 180ms ease,
     border-color 180ms ease;
 }
 
@@ -540,6 +546,266 @@ button {
 .hero-rail span:last-child {
   border-right: 0;
 }
+
+.performance-section {
+  position: relative;
+  color: var(--paper);
+  background:
+    linear-gradient(rgba(236, 235, 227, 0.025) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(236, 235, 227, 0.025) 1px, transparent 1px),
+    var(--ink-soft);
+  background-size: 46px 46px;
+  border-top: 1px solid var(--line-dark);
+  border-bottom: 1px solid var(--ink);
+  overflow: hidden;
+}
+
+.performance-section::after {
+  content: "PERF";
+  position: absolute;
+  top: -0.18em;
+  right: -0.04em;
+  color: transparent;
+  font-family: var(--display);
+  font-size: min(21vw, 300px);
+  line-height: 1;
+  -webkit-text-stroke: 1px rgba(236, 235, 227, 0.035);
+  pointer-events: none;
+}
+
+.performance-section .shell {
+  position: relative;
+  z-index: 1;
+}
+
+.benchmark-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  border-top: 1px solid var(--line-dark);
+  border-left: 1px solid var(--line-dark);
+}
+
+.benchmark-card {
+  --benchmark-accent: var(--signal);
+  position: relative;
+  display: flex;
+  min-width: 0;
+  min-height: 390px;
+  padding: 26px 24px 24px;
+  flex-direction: column;
+  color: var(--paper);
+  background: rgba(10, 12, 10, 0.72);
+  border-right: 1px solid var(--line-dark);
+  border-bottom: 1px solid var(--line-dark);
+  overflow: hidden;
+}
+
+.benchmark-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 34px;
+  height: 5px;
+  background: var(--benchmark-accent);
+}
+
+.benchmark-card header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  font-family: var(--mono);
+  font-size: 8px;
+  letter-spacing: 0.08em;
+}
+
+.benchmark-card header span {
+  color: rgba(236, 235, 227, 0.48);
+}
+
+.benchmark-card header b {
+  padding: 4px 6px;
+  color: var(--benchmark-accent);
+  border: 1px solid color-mix(in srgb, var(--benchmark-accent) 45%, transparent);
+  font-size: 7px;
+  white-space: nowrap;
+}
+
+.benchmark-card > strong {
+  display: block;
+  margin-top: 62px;
+  color: var(--benchmark-accent);
+  font-family: var(--display);
+  font-size: clamp(52px, 5.2vw, 74px);
+  font-weight: 400;
+  line-height: 0.88;
+  letter-spacing: -0.06em;
+}
+
+.benchmark-card > p {
+  min-height: 44px;
+  margin: 12px 0 32px;
+  color: rgba(236, 235, 227, 0.57);
+  font-size: 13px;
+  line-height: 1.45;
+}
+
+.benchmark-card--signal {
+  --benchmark-accent: var(--ink);
+  color: var(--ink);
+  background: var(--signal);
+}
+
+.benchmark-card--signal header span,
+.benchmark-card--signal > p {
+  color: rgba(10, 12, 10, 0.62);
+}
+
+.benchmark-card--signal header b {
+  border-color: rgba(10, 12, 10, 0.36);
+}
+
+.benchmark-card--loss {
+  --benchmark-accent: var(--orange);
+  background:
+    linear-gradient(135deg, transparent 78%, rgba(255, 106, 61, 0.1) 78%),
+    rgba(10, 12, 10, 0.72);
+}
+
+.runner-bars {
+  display: grid;
+  gap: 12px;
+  margin-top: auto;
+  padding-top: 18px;
+  border-top: 1px solid var(--line-dark);
+}
+
+.runner-bar {
+  display: grid;
+  grid-template-columns: 40px minmax(0, 1fr) 54px;
+  gap: 8px;
+  align-items: center;
+  font-family: var(--mono);
+  font-size: 8px;
+}
+
+.runner-bar > span {
+  color: rgba(236, 235, 227, 0.43);
+}
+
+.runner-bar > i {
+  display: block;
+  height: 7px;
+  background: rgba(236, 235, 227, 0.1);
+  overflow: hidden;
+}
+
+.runner-bar > i > b {
+  display: block;
+  width: 100%;
+  height: 100%;
+  background: rgba(236, 235, 227, 0.42);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 800ms cubic-bezier(0.2, 0.75, 0.22, 1) 180ms;
+}
+
+.benchmark-card.is-visible .runner-bar > i > b {
+  transform: scaleX(var(--fill));
+}
+
+.runner-bar--rjest > span,
+.runner-bar--rjest > em {
+  color: var(--signal);
+}
+
+.runner-bar--rjest > i > b {
+  background: var(--signal);
+}
+
+.runner-bar--loss > span,
+.runner-bar--loss > em {
+  color: var(--orange);
+}
+
+.runner-bar--loss > i > b {
+  background: var(--orange);
+}
+
+.runner-bar > em {
+  color: rgba(236, 235, 227, 0.62);
+  font-style: normal;
+  text-align: right;
+}
+
+.benchmark-card--signal .runner-bars {
+  border-color: rgba(10, 12, 10, 0.24);
+}
+
+.benchmark-card--signal .runner-bar > span,
+.benchmark-card--signal .runner-bar > em {
+  color: rgba(10, 12, 10, 0.62);
+}
+
+.benchmark-card--signal .runner-bar > i {
+  background: rgba(10, 12, 10, 0.14);
+}
+
+.benchmark-card--signal .runner-bar > i > b {
+  background: rgba(10, 12, 10, 0.42);
+}
+
+.benchmark-card--signal .runner-bar--rjest > span,
+.benchmark-card--signal .runner-bar--rjest > em {
+  color: var(--ink);
+}
+
+.benchmark-card--signal .runner-bar--rjest > i > b {
+  background: var(--ink);
+}
+
+.benchmark-method {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 28px;
+  padding: 22px 24px;
+  color: rgba(236, 235, 227, 0.5);
+  background: rgba(10, 12, 10, 0.72);
+  border-right: 1px solid var(--line-dark);
+  border-bottom: 1px solid var(--line-dark);
+  border-left: 1px solid var(--line-dark);
+  font-family: var(--mono);
+  font-size: 8px;
+  letter-spacing: 0.06em;
+}
+
+.benchmark-method > div {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px 22px;
+}
+
+.benchmark-method > div span {
+  position: relative;
+}
+
+.benchmark-method > div span:not(:last-child)::after {
+  content: "/";
+  position: absolute;
+  right: -14px;
+  color: var(--orange);
+}
+
+.benchmark-method a {
+  color: var(--signal);
+  font-size: 10px;
+  font-weight: 600;
+  text-underline-offset: 4px;
+  white-space: nowrap;
+}
+
 .section {
   padding-block: 120px;
 }
@@ -566,7 +832,8 @@ button {
 
 .proof-section {
   position: relative;
-  background: radial-gradient(
+  background:
+    radial-gradient(
       circle at 8% 12%,
       rgba(255, 106, 61, 0.08),
       transparent 24%
@@ -678,7 +945,9 @@ button {
   padding: 26px;
   border-right: 1px solid var(--line-light);
   border-bottom: 1px solid var(--line-light);
-  transition: color 220ms ease, background 220ms ease;
+  transition:
+    color 220ms ease,
+    background 220ms ease;
 }
 
 .proof-card:hover {
@@ -755,11 +1024,8 @@ button {
 
 .capabilities-section {
   color: var(--paper);
-  background: linear-gradient(
-      120deg,
-      transparent 72%,
-      rgba(200, 255, 61, 0.035) 72%
-    ),
+  background:
+    linear-gradient(120deg, transparent 72%, rgba(200, 255, 61, 0.035) 72%),
     var(--ink);
 }
 
@@ -917,6 +1183,10 @@ button {
   margin: 30px 0 0;
   color: #51574f;
   font-size: 17px;
+}
+
+.architecture-benchmark-link {
+  margin-left: 24px;
 }
 
 .architecture-flow {
@@ -1182,7 +1452,8 @@ button {
 .reveal {
   opacity: 0;
   transform: translateY(22px);
-  transition: opacity 700ms ease,
+  transition:
+    opacity 700ms ease,
     transform 700ms cubic-bezier(0.2, 0.75, 0.22, 1);
 }
 
@@ -1259,6 +1530,14 @@ button {
   }
   .hero-rail span:nth-child(n + 5) {
     border-top: 1px solid var(--line-dark);
+  }
+
+  .signal-bar__optional {
+    display: none;
+  }
+
+  .benchmark-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
   .section-heading {
@@ -1445,6 +1724,32 @@ button {
     font-size: 15px;
   }
 
+  .benchmark-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .benchmark-card {
+    min-height: 350px;
+  }
+
+  .benchmark-card > strong {
+    font-size: 66px;
+  }
+
+  .benchmark-method {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .benchmark-method > div {
+    display: grid;
+    gap: 7px;
+  }
+
+  .benchmark-method > div span::after {
+    display: none;
+  }
+
   .matrix-card__heading {
     align-items: flex-start;
     padding: 21px 18px;
@@ -1518,6 +1823,12 @@ button {
     grid-template-columns: 1fr;
     padding: 14px;
     box-shadow: 8px 8px 0 rgba(10, 12, 10, 0.12);
+  }
+
+  .architecture-benchmark-link {
+    display: flex;
+    margin-top: 17px;
+    margin-left: 0;
   }
 
   .flow-step {
