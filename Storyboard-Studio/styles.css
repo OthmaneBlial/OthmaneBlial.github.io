@@ -54,4 +54,9 @@
   .release-note { padding:1.25rem; margin-bottom:3.5rem; }
 }
 
-.docs pre { padding-right:4.5rem; }
+@media (max-width:400px) {
+  .nav nav a:not(.nav-source) { display:none; }
+}
+
+.docs > * { min-width:0; }
+.docs pre { max-width:100%; padding-right:4.5rem; }
