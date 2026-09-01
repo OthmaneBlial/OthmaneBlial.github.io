@@ -442,6 +442,7 @@ h2 {
 }
 
 .hero-frame img {
+  display: block;
   width: 100%;
   aspect-ratio: 1.76 / 1;
   object-fit: cover;
@@ -614,92 +615,6 @@ h2 {
   clip-path: polygon(0 40%, 17% 0, 35% 30%, 52% 3%, 72% 35%, 100% 10%, 94% 100%, 0 100%);
 }
 
-.workflow {
-  position: relative;
-  background: var(--ink);
-  box-shadow: 0 0 0 100vmax var(--ink);
-  clip-path: inset(0 -100vmax);
-}
-
-.workflow::before {
-  display: none;
-}
-
-.workflow .section-marker,
-.workflow .section-heading,
-.workflow-steps {
-  color: var(--paper-bright);
-}
-
-.workflow .section-marker {
-  border-color: rgba(255, 250, 240, 0.3);
-}
-
-.workflow .section-marker b,
-.workflow .eyebrow {
-  color: #dc935f;
-}
-
-.section-heading {
-  display: grid;
-  grid-template-columns: 0.72fr 1.28fr;
-  align-items: end;
-  gap: 8vw;
-}
-
-.section-heading .eyebrow {
-  max-width: 300px;
-  margin: 0;
-}
-
-.workflow-steps {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  margin: 75px 0 0;
-  padding: 0;
-  list-style: none;
-  border-top: 1px solid rgba(255, 250, 240, 0.25);
-  border-left: 1px solid rgba(255, 250, 240, 0.25);
-}
-
-.workflow-steps li {
-  position: relative;
-  min-height: 320px;
-  padding: 32px 28px;
-  border-right: 1px solid rgba(255, 250, 240, 0.25);
-  border-bottom: 1px solid rgba(255, 250, 240, 0.25);
-}
-
-.step-number {
-  display: block;
-  color: #dc935f;
-  font-family: var(--mono);
-  font-size: 10px;
-  letter-spacing: 0.14em;
-}
-
-.workflow-steps h3 {
-  margin: 90px 0 12px;
-  font-family: var(--serif);
-  font-size: 30px;
-  font-weight: 400;
-}
-
-.workflow-steps p {
-  margin: 0;
-  color: #c5cec8;
-  font-size: 13px;
-  line-height: 1.7;
-}
-
-.workflow-steps code {
-  display: block;
-  margin-top: 19px;
-  color: #e5ae7b;
-  font: 10px/1.5 var(--mono);
-  overflow-wrap: anywhere;
-}
-
 .tour-heading {
   display: flex;
   align-items: end;
@@ -806,6 +721,10 @@ h2 {
   text-transform: uppercase;
 }
 
+.tour-case-link {
+  margin-top: 28px;
+}
+
 .tour-copy li::before {
   content: '—';
   margin-right: 9px;
@@ -880,6 +799,10 @@ h2 {
   grid-template-columns: 0.82fr 1.18fr;
   align-items: center;
   gap: 9vw;
+}
+
+.quick-grid > * {
+  min-width: 0;
 }
 
 .quick-copy p:not(.eyebrow) {
@@ -1638,13 +1561,6 @@ h2 {
     column-gap: 6vw;
   }
 
-  .workflow-steps li {
-    padding: 27px 20px;
-  }
-  .workflow-steps h3 {
-    margin-top: 65px;
-  }
-
   .tour-stage {
     min-height: 500px;
   }
@@ -1784,15 +1700,6 @@ h2 {
 
   .manifesto-copy {
     margin-bottom: 70px;
-  }
-
-  .section-heading {
-    grid-template-columns: 1fr;
-    gap: 25px;
-  }
-
-  .workflow-steps {
-    grid-template-columns: repeat(2, 1fr);
   }
 
   .tour-heading {
@@ -2042,16 +1949,6 @@ h2 {
 
   .city-grammar article {
     min-height: 190px;
-  }
-
-  .workflow-steps {
-    grid-template-columns: 1fr;
-  }
-  .workflow-steps li {
-    min-height: 260px;
-  }
-  .workflow-steps h3 {
-    margin-top: 52px;
   }
 
   .view-tabs {

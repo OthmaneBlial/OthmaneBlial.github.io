@@ -26,9 +26,9 @@
         <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M3 6h14M3 10h14M3 14h14" /></svg>
       </button>
       <nav class="site-nav" id="site-navigation" aria-label="Primary navigation" data-nav>
-        <a href="./play/">Live demo</a>
+        <a href="./play/?case=rebuild">Guided case</a>
         <a href="./index.html#tour">Tour</a>
-        <a href="./index.html#workflow">Workflow</a>
+        <a href="./index.html#run-local">Run local</a>
         <a href="./gallery.html">Stories</a>
         <a href="./docs.html" aria-current="page">Field notes</a>
         <a class="nav-source" href="https://github.com/OthmaneBlial/RepoRewind">View source</a>
@@ -68,14 +68,17 @@
         <article class="docs-content">
           <section class="doc-section" id="getting-started">
             <p class="eyebrow">01 / Getting started</p>
-            <h2>Open your repository in one command.</h2>
+            <h2>Run the current build from source.</h2>
             <p>
-              RepoRewind requires Node.js 24 (recommended) or Node.js 22.13+, npm 10+, and Git. Run it inside any local
-              Git repository; the checked-out branch is analyzed and opened in a loopback-only viewer automatically.
+              RepoRewind requires Node.js 24 (recommended) or Node.js 22.13+ and Git. The public npm package is not
+              published yet; this verified source path analyzes a selected local repository and opens a loopback-only
+              viewer automatically.
             </p>
             <div class="doc-code">
-              <pre><code id="docs-install">cd /path/to/your/repository
-npx reporewind .</code></pre>
+              <pre><code id="docs-install">git clone https://github.com/OthmaneBlial/RepoRewind.git
+cd RepoRewind
+npm ci
+npm run reporewind -- /path/to/your/repository</code></pre>
               <button class="copy-button" type="button" data-copy="#docs-install">
                 <span data-copy-label>Copy</span>
                 <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M7 6V3h10v10h-3M3 7h10v10H3z" /></svg>
@@ -84,11 +87,12 @@ npx reporewind .</code></pre>
             <p>
               RepoRewind starts on a random <code>127.0.0.1</code> port behind an unpredictable session path. Use
               <code>--no-open</code> to print the URL without launching a browser and press <kbd>Ctrl C</kbd> to stop
-              it. The live fictional demo remains available from the <strong>Live demo</strong> link.
+              it. The fictional rebuild remains available from the <strong>Guided case</strong> link.
             </p>
             <p class="doc-note">
-              The first <code>npx</code> run contacts npm to download RepoRewind. Repository analysis and viewing
-              require no account, database, source upload, or application API.
+              Repository analysis and viewing require no account, database, source upload, or application API. The
+              shorter <code>npx reporewind .</code> path remains pending until the package is public and clean-install
+              verified.
             </p>
           </section>
 
@@ -100,7 +104,7 @@ npx reporewind .</code></pre>
               commit structure and numeric diffs—not source file contents.
             </p>
             <div class="doc-code">
-              <pre><code id="docs-analyze">npx reporewind analyze /path/to/repository \
+              <pre><code id="docs-analyze">npm run reporewind -- analyze /path/to/repository \
   --output ./reporewind-history.json</code></pre>
               <button class="copy-button" type="button" data-copy="#docs-analyze">
                 <span data-copy-label>Copy</span>
@@ -108,32 +112,33 @@ npx reporewind .</code></pre>
               </button>
             </div>
             <p>
-              Import the resulting JSON file from the app. Contributor email addresses are omitted unless
-              <code>--include-emails</code> is explicitly supplied. The chosen branch follows first-parent history, so
-              each city frame represents a state that actually existed on that line of development.
+              Choose <strong>Open archive</strong> and select the resulting JSON file. Contributor email addresses are
+              omitted unless <code>--include-emails</code> is explicitly supplied. The chosen branch follows
+              first-parent history, so each city frame represents a state that actually existed on that line of
+              development.
             </p>
 
             <h3>Useful analyzer options</h3>
             <div class="doc-code">
               <pre><code id="docs-options"># Explore another branch or remote ref
-npx reporewind /path/to/repository --branch release/3.x
+npm run reporewind -- /path/to/repository --branch release/3.x
 
 # Bound an exceptionally large history
-npx reporewind /path/to/repository --max-commits 5000
+npm run reporewind -- /path/to/repository --max-commits 5000
 
 # Pipe clean JSON to another tool
-npx reporewind analyze /path/to/repository --stdout \
+npm run reporewind -- analyze /path/to/repository --stdout \
   &gt; reporewind-history.json
 
 # Explicitly replace an existing archive
-npx reporewind analyze /path/to/repository \
+npm run reporewind -- analyze /path/to/repository \
   --output ./reporewind-history.json --force</code></pre>
               <button class="copy-button" type="button" data-copy="#docs-options">
                 <span data-copy-label>Copy</span>
                 <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M7 6V3h10v10h-3M3 7h10v10H3z" /></svg>
               </button>
             </div>
-            <p>Run <code>npx reporewind --help</code> for the complete interface.</p>
+            <p>Run <code>npm run reporewind -- --help</code> for the complete interface.</p>
           </section>
 
           <section class="doc-section" id="explore">
