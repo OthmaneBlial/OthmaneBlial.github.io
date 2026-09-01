@@ -5,23 +5,73 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta
       name="description"
-      content="Runtime Atlas turns TypeScript declarations and recent trace evidence into a live, source-backed application map."
+      content="Replay Node.js requests on a live map derived from TypeScript source. Inspect every proven hop locally—no account or hosted observability stack."
     />
     <meta name="theme-color" content="#070908" />
+    <link
+      rel="canonical"
+      href="https://othmaneblial.github.io/Runtime-Atlas/"
+    />
     <meta property="og:type" content="website" />
     <meta
+      property="og:url"
+      content="https://othmaneblial.github.io/Runtime-Atlas/"
+    />
+    <meta
       property="og:title"
-      content="Runtime Atlas — See the request. Understand the system."
+      content="See where one Node.js request went — Runtime Atlas"
     />
     <meta
       property="og:description"
-      content="A local-first, source-backed map for understanding real Node.js request paths."
+      content="Replay a request on a live, source-backed TypeScript map. Inspect the declaration behind every proven hop—locally."
     />
-    <meta property="og:image" content="assets/runtime-atlas-checkout.png" />
-    <title>Runtime Atlas — Source-backed application tracing</title>
+    <meta
+      property="og:image"
+      content="https://othmaneblial.github.io/Runtime-Atlas/assets/runtime-atlas-social.png"
+    />
+    <meta property="og:image:width" content="1280" />
+    <meta property="og:image:height" content="640" />
+    <meta
+      property="og:image:alt"
+      content="Runtime Atlas request map with the message See where it went, see the code behind it"
+    />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta
+      name="twitter:title"
+      content="See where one Node.js request went — Runtime Atlas"
+    />
+    <meta
+      name="twitter:description"
+      content="Replay a request on a live, source-backed TypeScript map—locally."
+    />
+    <meta
+      name="twitter:image"
+      content="https://othmaneblial.github.io/Runtime-Atlas/assets/runtime-atlas-social.png"
+    />
+    <title>Node.js Request Map &amp; Trace Replay | Runtime Atlas</title>
     <link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
     <link rel="stylesheet" href="styles.css" />
     <script src="app.js" defer></script>
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "SoftwareApplication",
+        "name": "Runtime Atlas",
+        "url": "https://othmaneblial.github.io/Runtime-Atlas/",
+        "codeRepository": "https://github.com/OthmaneBlial/Runtime-Atlas",
+        "description": "A local, source-backed request map and causal trace replay tool for Node.js and TypeScript development.",
+        "applicationCategory": "DeveloperApplication",
+        "operatingSystem": "macOS, Linux",
+        "softwareVersion": "0.1.0",
+        "license": "https://opensource.org/license/mit",
+        "isAccessibleForFree": true,
+        "offers": {
+          "@type": "Offer",
+          "price": "0",
+          "priceCurrency": "USD"
+        }
+      }
+    </script>
   </head>
   <body>
     <a class="skip-link" href="#main-content">Skip to content</a>
@@ -36,8 +86,8 @@
         </a>
 
         <nav class="site-nav" aria-label="Primary navigation">
+          <a href="#live-demo">Demo</a>
           <a href="#how-it-works">How it works</a>
-          <a href="#evidence">Product tour</a>
           <a href="docs.html">Docs</a>
         </nav>
 
@@ -64,32 +114,39 @@
         <div class="hero-grid">
           <div class="hero-copy" data-reveal>
             <p class="eyebrow">
-              <span aria-hidden="true">⌁</span> LIVING ARCHITECTURE FOR NODE.JS
+              <span aria-hidden="true">⌁</span> LOCAL REQUEST FLIGHT RECORDER
             </p>
             <h1>
-              See the request.<br />
-              <span>Understand the system.</span>
+              See where it went.<br />
+              <span>See the code behind it.</span>
             </h1>
             <p class="hero-lede">
-              Runtime Atlas joins TypeScript declarations with recent trace
-              evidence to show the path a request actually took — then links
-              every proven node back to source.
+              Watch one Node.js request cross your app, inspect the TypeScript
+              declaration behind every proven hop, and replay the causal path —
+              locally, without a hosted observability stack.
             </p>
 
             <div class="hero-actions">
-              <a class="button button-primary" href="#quick-start">
-                <span>Run it locally</span>
+              <a class="button button-primary" href="#live-demo">
+                <span>Play the 3-step tour</span>
                 <span aria-hidden="true">→</span>
               </a>
-              <a class="button button-quiet" href="docs.html"
-                >Explore the docs</a
+              <a class="button button-quiet" href="#quick-start"
+                >Run it locally</a
+              >
+              <a
+                class="hero-source-link"
+                href="https://github.com/OthmaneBlial/Runtime-Atlas"
+                target="_blank"
+                rel="noreferrer"
+                >Star on GitHub <span aria-hidden="true">↗</span></a
               >
             </div>
 
             <ul class="hero-facts" aria-label="Project boundaries">
+              <li><span class="status-dot"></span>Node.js + TypeScript</li>
               <li><span class="status-dot"></span>No account</li>
-              <li><span class="status-dot"></span>No hosted backend</li>
-              <li><span class="status-dot"></span>In-memory by default</li>
+              <li><span class="status-dot"></span>OTLP/HTTP JSON</li>
             </ul>
           </div>
 
@@ -137,27 +194,112 @@
           </aside>
         </div>
 
-        <figure class="hero-product" data-reveal>
-          <button
-            class="media-open"
-            type="button"
-            data-image="assets/runtime-atlas-checkout.png"
-            data-caption="A completed checkout request across the source-backed application map."
-            aria-label="Enlarge the Runtime Atlas checkout screenshot"
+        <section
+          class="hero-walkthrough"
+          id="live-demo"
+          aria-labelledby="walkthrough-title"
+          data-walkthrough
+          data-reveal
+        >
+          <header class="walkthrough-head">
+            <div>
+              <p class="eyebrow">GUIDED PRODUCT WALKTHROUGH</p>
+              <h2 id="walkthrough-title">One request. Three useful views.</h2>
+            </div>
+            <button type="button" class="tour-play" data-tour-play>
+              <span class="tour-play-icon" aria-hidden="true">▶</span>
+              <span data-tour-play-label>Play tour</span>
+            </button>
+          </header>
+
+          <div
+            class="walkthrough-tabs"
+            role="tablist"
+            aria-label="Product tour"
           >
-            <img
-              src="assets/runtime-atlas-checkout.png"
-              width="1600"
-              height="1000"
-              alt="Runtime Atlas showing a completed checkout request across a source-backed application map"
-            />
-            <span class="media-hint" aria-hidden="true">EXPAND ↗</span>
-          </button>
-          <figcaption>
-            <span><i></i> REAL BROWSER CAPTURE</span>
-            <span>POST /checkout · source + runtime evidence</span>
-          </figcaption>
-        </figure>
+            <button
+              type="button"
+              id="tour-tab-1"
+              role="tab"
+              aria-selected="true"
+              aria-controls="walkthrough-stage"
+              data-tour-step="0"
+            >
+              <span>01</span>
+              <strong>Follow the path</strong>
+              <small>POST /checkout · 26 events</small>
+            </button>
+            <button
+              type="button"
+              id="tour-tab-2"
+              role="tab"
+              aria-selected="false"
+              aria-controls="walkthrough-stage"
+              data-tour-step="1"
+              tabindex="-1"
+            >
+              <span>02</span>
+              <strong>Open the source</strong>
+              <small>Orders DB · exact declaration</small>
+            </button>
+            <button
+              type="button"
+              id="tour-tab-3"
+              role="tab"
+              aria-selected="false"
+              aria-controls="walkthrough-stage"
+              data-tour-step="2"
+              tabindex="-1"
+            >
+              <span>03</span>
+              <strong>Stop on failure</strong>
+              <small>Payment API · causal error</small>
+            </button>
+          </div>
+
+          <div
+            class="walkthrough-stage"
+            id="walkthrough-stage"
+            role="tabpanel"
+            aria-labelledby="tour-tab-1"
+          >
+            <button
+              class="media-open walkthrough-media"
+              type="button"
+              data-tour-media
+              data-image="assets/runtime-atlas-checkout.png"
+              data-caption="Follow a completed checkout across the source-backed application map."
+              aria-label="Enlarge the completed checkout request capture"
+            >
+              <img
+                src="assets/runtime-atlas-checkout.png"
+                width="1600"
+                height="1000"
+                alt="A completed checkout request moving across the Runtime Atlas application map"
+                data-tour-image
+              />
+              <span class="media-hint" aria-hidden="true">EXPAND ↗</span>
+            </button>
+            <div class="walkthrough-story" aria-live="polite">
+              <span data-tour-counter>01 / 03</span>
+              <div>
+                <strong data-tour-title>Watch the causal path light up.</strong>
+                <p data-tour-description>
+                  Route, middleware, services, databases, queue, and external
+                  calls appear in execution order—not as an aggregate diagram.
+                </p>
+              </div>
+              <a href="#quick-start" data-tour-link
+                >Run this scenario locally →</a
+              >
+            </div>
+          </div>
+
+          <footer class="walkthrough-foot">
+            <span><i></i> REAL BROWSER CAPTURES</span>
+            <span>Representative traces from the deterministic local demo</span>
+          </footer>
+        </section>
       </section>
 
       <section class="proof-band" aria-label="Key capabilities">
@@ -485,12 +627,13 @@ const createOrder = atlas.route(
       <section class="section shell quick-start" id="quick-start">
         <div class="quick-start-copy" data-reveal>
           <p class="eyebrow">FIRST RUN</p>
-          <h2>Wake the map in four commands.</h2>
+          <h2>Go from a fresh clone to your first trace.</h2>
           <p>
-            Use Node.js 24.15.0 and npm 11, then open the loopback URL printed
-            by Vite. Launch
+            The pinned Node.js version and locked dependencies make the built-in
+            demo reproducible. Open the URL printed by Vite, then launch
             <strong>POST /checkout</strong>, <strong>GET /search</strong>, or
-            <strong>FAIL /payment</strong> from the workspace.
+            <strong>FAIL /payment</strong>. A 14-node topology appears before
+            the first request; the captured path then animates across it.
           </p>
           <div class="quick-links">
             <a href="docs.html#quick-start"
@@ -513,10 +656,10 @@ const createOrder = atlas.route(
               COPY
             </button>
           </div>
-          <pre><code id="quick-command"><span class="prompt">$</span> nvm install
-<span class="prompt">$</span> nvm use
-<span class="prompt">$</span> npm ci
-<span class="prompt">$</span> npm run dev</code></pre>
+          <pre><code id="quick-command"><span class="prompt">$</span> git clone https://github.com/OthmaneBlial/Runtime-Atlas.git
+<span class="prompt">$</span> cd Runtime-Atlas
+<span class="prompt">$</span> nvm install &amp;&amp; nvm use
+<span class="prompt">$</span> npm ci &amp;&amp; npm run dev</code></pre>
           <div class="terminal-status">
             <i></i><span>API 127.0.0.1:4319</span
             ><span>UI 127.0.0.1:5173*</span>
@@ -540,7 +683,7 @@ const createOrder = atlas.route(
               href="https://github.com/OthmaneBlial/Runtime-Atlas"
               target="_blank"
               rel="noreferrer"
-              >View the source <span aria-hidden="true">↗</span></a
+              >Star Runtime Atlas <span aria-hidden="true">↗</span></a
             >
             <a class="button button-quiet" href="docs.html"
               >Read documentation</a

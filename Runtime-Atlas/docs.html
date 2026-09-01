@@ -5,10 +5,29 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta
       name="description"
-      content="Runtime Atlas documentation: quick start, SDK instrumentation, OTLP/HTTP JSON, architecture, privacy, configuration, and deployment."
+      content="Install Runtime Atlas, capture a Node.js request, connect the local SDK or OTLP/HTTP JSON traces, and inspect the source-backed causal map."
     />
     <meta name="theme-color" content="#070908" />
-    <title>Documentation — Runtime Atlas</title>
+    <link
+      rel="canonical"
+      href="https://othmaneblial.github.io/Runtime-Atlas/docs.html"
+    />
+    <meta property="og:type" content="website" />
+    <meta
+      property="og:url"
+      content="https://othmaneblial.github.io/Runtime-Atlas/docs.html"
+    />
+    <meta property="og:title" content="Runtime Atlas Documentation" />
+    <meta
+      property="og:description"
+      content="Quick start, Node.js SDK, OTLP/HTTP JSON ingestion, architecture, privacy, configuration, and deployment."
+    />
+    <meta
+      property="og:image"
+      content="https://othmaneblial.github.io/Runtime-Atlas/assets/runtime-atlas-social.png"
+    />
+    <meta name="twitter:card" content="summary_large_image" />
+    <title>Node.js Trace Map Documentation | Runtime Atlas</title>
     <link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
     <link rel="stylesheet" href="styles.css" />
     <script src="app.js" defer></script>
@@ -173,10 +192,10 @@
                 COPY
               </button>
             </div>
-            <pre><code id="docs-quick-start">nvm install
-nvm use
-npm ci
-npm run dev</code></pre>
+            <pre><code id="docs-quick-start">git clone https://github.com/OthmaneBlial/Runtime-Atlas.git
+cd Runtime-Atlas
+nvm install &amp;&amp; nvm use
+npm ci &amp;&amp; npm run dev</code></pre>
           </div>
           <p>
             Open the loopback URL printed by Vite — normally

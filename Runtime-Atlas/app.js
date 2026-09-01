@@ -96,6 +96,7 @@ document.querySelectorAll(".copy-button").forEach((button) => {
 const imageViewer = document.getElementById("image-viewer");
 const viewerImage = imageViewer?.querySelector("[data-viewer-image]");
 const viewerCaption = imageViewer?.querySelector("[data-viewer-caption]");
+let viewerReturnFocus;
 
 document.querySelectorAll(".media-open").forEach((trigger) => {
   trigger.addEventListener("click", () => {
@@ -112,6 +113,7 @@ document.querySelectorAll(".media-open").forEach((trigger) => {
     viewerImage.src = source;
     viewerImage.alt = caption;
     viewerCaption.textContent = caption;
+    viewerReturnFocus = trigger;
     imageViewer.showModal();
   });
 });
@@ -124,6 +126,162 @@ imageViewer
 
 imageViewer?.addEventListener("click", (event) => {
   if (event.target === imageViewer) imageViewer.close();
+});
+
+imageViewer?.addEventListener("close", () => {
+  if (viewerReturnFocus instanceof HTMLElement) viewerReturnFocus.focus();
+});
+
+const tourTabs = [...document.querySelectorAll("[data-tour-step]")];
+const tourPlay = document.querySelector("[data-tour-play]");
+const tourPlayLabel = document.querySelector("[data-tour-play-label]");
+const tourStage = document.getElementById("walkthrough-stage");
+const tourMedia = document.querySelector("[data-tour-media]");
+const tourImage = document.querySelector("[data-tour-image]");
+const tourCounter = document.querySelector("[data-tour-counter]");
+const tourTitle = document.querySelector("[data-tour-title]");
+const tourDescription = document.querySelector("[data-tour-description]");
+const tourLink = document.querySelector("[data-tour-link]");
+
+const tourSteps = [
+  {
+    image: "assets/runtime-atlas-checkout.png",
+    alt: "A completed checkout request moving across the Runtime Atlas application map",
+    label: "Enlarge the completed checkout request capture",
+    caption:
+      "Follow a completed checkout across the source-backed application map.",
+    title: "Watch the causal path light up.",
+    description:
+      "Route, middleware, services, databases, queue, and external calls appear in execution order—not as an aggregate diagram.",
+    link: "Run this scenario locally →",
+  },
+  {
+    image: "assets/runtime-atlas-inspector.png",
+    alt: "Runtime Atlas source inspector opened on the Orders DB declaration",
+    label: "Enlarge the Orders DB source inspection capture",
+    caption:
+      "Open the exact TypeScript declaration behind a measured Orders DB span.",
+    title: "Move from a span to the code behind it.",
+    description:
+      "Select a proven node to see its approved source window, measured latency, call count, runtime state, and safe metadata in one place.",
+    link: "See the source model →",
+  },
+  {
+    image: "assets/runtime-atlas-failure.png",
+    alt: "Runtime Atlas stopped on a failed Payment API span and its source declaration",
+    label: "Enlarge the Payment API failure diagnosis capture",
+    caption:
+      "Stop on the failing Payment API span and inspect its causal source context.",
+    title: "Stop where the dependency failed.",
+    description:
+      "The deterministic outage path preserves the parent-child chain, marks the failing edge, and keeps the declaration beside the runtime error.",
+    link: "Run the failure locally →",
+  },
+];
+
+if (tourTabs.length) {
+  const preloadTourImages = () => {
+    tourSteps.slice(1).forEach(({ image: source }) => {
+      const preload = new Image();
+      preload.src = source;
+    });
+  };
+  window.addEventListener(
+    "load",
+    () => {
+      if ("requestIdleCallback" in window)
+        window.requestIdleCallback(preloadTourImages, { timeout: 1200 });
+      else window.setTimeout(preloadTourImages, 250);
+    },
+    { once: true },
+  );
+}
+
+let activeTourStep = 0;
+let tourTimer;
+let tourTransitionTimer;
+
+const stopTour = () => {
+  window.clearTimeout(tourTimer);
+  window.clearTimeout(tourTransitionTimer);
+  tourPlay?.classList.remove("is-playing");
+  if (tourPlayLabel) tourPlayLabel.textContent = "Play tour";
+};
+
+const commitTourStep = (index) => {
+  const step = tourSteps[index];
+  if (!step) return;
+  activeTourStep = index;
+
+  tourTabs.forEach((tab, tabIndex) => {
+    const selected = tabIndex === index;
+    tab.setAttribute("aria-selected", String(selected));
+    tab.setAttribute("tabindex", selected ? "0" : "-1");
+  });
+  if (tourStage && tourTabs[index]?.id)
+    tourStage.setAttribute("aria-labelledby", tourTabs[index].id);
+  if (tourImage instanceof HTMLImageElement) {
+    tourImage.src = step.image;
+    tourImage.alt = step.alt;
+  }
+  if (tourMedia instanceof HTMLElement) {
+    tourMedia.dataset.image = step.image;
+    tourMedia.dataset.caption = step.caption;
+    tourMedia.setAttribute("aria-label", step.label);
+    tourMedia.classList.remove("is-changing");
+  }
+  if (tourCounter)
+    tourCounter.textContent = `${String(index + 1).padStart(2, "0")} / 03`;
+  if (tourTitle) tourTitle.textContent = step.title;
+  if (tourDescription) tourDescription.textContent = step.description;
+  if (tourLink) tourLink.textContent = step.link;
+};
+
+const showTourStep = (index, focusTab = false) => {
+  window.clearTimeout(tourTransitionTimer);
+  if (index === activeTourStep || reducedMotion.matches) {
+    commitTourStep(index);
+  } else {
+    tourMedia?.classList.add("is-changing");
+    tourTransitionTimer = window.setTimeout(() => commitTourStep(index), 180);
+  }
+  if (focusTab) tourTabs[index]?.focus();
+};
+
+const playTourFrom = (index) => {
+  showTourStep(index);
+  if (index >= tourSteps.length - 1) {
+    tourTimer = window.setTimeout(stopTour, 2600);
+    return;
+  }
+  tourTimer = window.setTimeout(() => playTourFrom(index + 1), 3000);
+};
+
+tourPlay?.addEventListener("click", () => {
+  stopTour();
+  tourPlay.classList.add("is-playing");
+  if (tourPlayLabel) tourPlayLabel.textContent = "Playing tour";
+  playTourFrom(0);
+});
+
+tourTabs.forEach((tab, index) => {
+  tab.addEventListener("click", () => {
+    stopTour();
+    showTourStep(index);
+  });
+  tab.addEventListener("keydown", (event) => {
+    if (!["ArrowLeft", "ArrowRight", "Home", "End"].includes(event.key)) return;
+    event.preventDefault();
+    stopTour();
+    const nextIndex =
+      event.key === "Home"
+        ? 0
+        : event.key === "End"
+          ? tourTabs.length - 1
+          : (index + (event.key === "ArrowRight" ? 1 : -1) + tourTabs.length) %
+            tourTabs.length;
+    showTourStep(nextIndex, true);
+  });
 });
 
 const scrollableCandidates = [

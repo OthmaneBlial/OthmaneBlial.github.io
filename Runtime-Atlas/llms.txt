@@ -1,0 +1,21 @@
+# Runtime Atlas
+
+> Runtime Atlas is a local, source-backed request map and causal trace replay tool for Node.js and TypeScript development.
+
+Runtime Atlas analyzes literal TypeScript instrumentation declarations, joins them with recent runtime evidence, and lets a developer watch and replay one request across routes, middleware, services, databases, caches, queues, and external calls. Proven nodes link to analyzer-approved source context. Unmatched telemetry stays visibly runtime-only.
+
+The project is local-first and MIT licensed. It includes no account, hosted backend, analytics, or persistent telemetry database. Trace history is bounded and held in process memory.
+
+## Primary pages
+
+- [Product overview and guided walkthrough](https://othmaneblial.github.io/Runtime-Atlas/)
+- [Documentation](https://othmaneblial.github.io/Runtime-Atlas/docs.html)
+- [Source repository](https://github.com/OthmaneBlial/Runtime-Atlas)
+- [Latest release](https://github.com/OthmaneBlial/Runtime-Atlas/releases/latest)
+
+## Supported input paths
+
+- The workspace `@runtime-atlas/sdk` for framework-neutral Node.js instrumentation.
+- OTLP/HTTP JSON traces at `/v1/traces`, including gzip-compressed JSON.
+
+Runtime Atlas does not claim OTLP/gRPC or binary Protobuf support. It is not a durable tracing database, production APM replacement, metrics/logs platform, or public multi-tenant service.
