@@ -24,12 +24,20 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and
 - The README and public site now lead with RusDox's dual-output and parity
   wedge, keep critical examples available without JavaScript, publish canonical
   template evidence, and expose a link-complete AI-readable documentation corpus.
+- CI artifact uploads now use the Node 24 generation of GitHub's official
+  upload action.
 
 ### Contributors
 
 - [k4its1t](https://github.com/k4its1t) — first external contribution, adding
   loopback HTTP regression coverage for unsupported media types in
   [#40](https://github.com/OthmaneBlial/rusdox/pull/40).
+
+### Fixed
+
+- The raw HTTP fixture test now normalizes both LF and CRLF checkouts before
+  constructing wire-format CRLF, so the contributor regression passes on
+  Windows as well as Linux and macOS.
 
 ## [1.0.0] - 2026-08-24
 
