@@ -29,8 +29,8 @@
     <title>Agent Flight Recorder — Local AI Agent Debugging &amp; Replay</title>
     <link rel="canonical" href="https://othmaneblial.github.io/Agent-Flight-Recorder/" />
     <link rel="icon" href="favicon.svg" type="image/svg+xml" />
-    <link rel="stylesheet" href="styles.css?v=0.2.0" />
-    <script src="app.js?v=0.2.0" defer></script>
+    <link rel="stylesheet" href="styles.css?v=0.3.0" />
+    <script src="app.js?v=0.3.0" defer></script>
     <script type="application/ld+json">
       {
         "@context": "https://schema.org",
@@ -39,7 +39,7 @@
         "description": "A local black box and read-only forensic replay console for AI coding agents.",
         "applicationCategory": "DeveloperApplication",
         "operatingSystem": "macOS, Linux, Windows",
-        "softwareVersion": "0.2.0",
+        "softwareVersion": "0.3.0",
         "url": "https://othmaneblial.github.io/Agent-Flight-Recorder/",
         "codeRepository": "https://github.com/OthmaneBlial/Agent-Flight-Recorder",
         "license": "https://opensource.org/license/mit",
@@ -134,7 +134,7 @@
             <span><b>09</b> retry correlated</span>
             <span><b>11</b> test passed</span>
           </div>
-          <div class="flight-stamp" aria-hidden="true">AFR / V0.2</div>
+          <div class="flight-stamp" aria-hidden="true">AFR / V0.3</div>
         </section>
 
         <div class="hero-proof reveal">
@@ -347,7 +347,7 @@
         <div class="section-index" aria-hidden="true">05 / SAFE FIRST FLIGHT</div>
         <div class="quick-grid">
           <div class="section-heading reveal">
-            <p class="eyebrow">Four commands from a clean terminal</p>
+            <p class="eyebrow">One install. One safe demo.</p>
             <h2 id="quick-title">Open the full product without scanning your machine.</h2>
             <p>
               The demo resets only its isolated store, seeds two deterministic flights, disables
@@ -361,10 +361,8 @@
                 <span data-copy-label>Copy</span>
               </button>
             </div>
-            <pre id="quick-command"><code>git clone https://github.com/OthmaneBlial/Agent-Flight-Recorder.git
-cd Agent-Flight-Recorder
-npm ci
-npm run demo -- --reset</code></pre>
+            <pre id="quick-command"><code>npm install --global https://github.com/OthmaneBlial/Agent-Flight-Recorder/releases/download/v0.3.0/agent-flight-recorder-0.3.0.tgz
+agent-flight-recorder demo --reset</code></pre>
             <p class="command-note">Then open <code>http://127.0.0.1:4174</code></p>
           </div>
         </div>

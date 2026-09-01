@@ -25,8 +25,8 @@
     <title>Field Manual — Agent Flight Recorder</title>
     <link rel="canonical" href="https://othmaneblial.github.io/Agent-Flight-Recorder/docs.html" />
     <link rel="icon" href="favicon.svg" type="image/svg+xml" />
-    <link rel="stylesheet" href="styles.css?v=0.2.0" />
-    <script src="app.js?v=0.2.0" defer></script>
+    <link rel="stylesheet" href="styles.css?v=0.3.0" />
+    <script src="app.js?v=0.3.0" defer></script>
   </head>
   <body class="docs-body">
     <a class="skip-link" href="#docs-content">Skip to documentation</a>
@@ -57,7 +57,7 @@
       <aside class="docs-sidebar" aria-label="Documentation navigation">
         <div class="docs-sidebar-head">
           <span>FIELD MANUAL</span>
-          <strong>AFR / 0.2</strong>
+          <strong>AFR / 0.3</strong>
         </div>
         <label class="docs-search-label" for="docs-search">Search the manual</label>
         <div class="docs-search-wrap">
@@ -89,7 +89,7 @@
             conclusion bounded by what the provider actually exposed.
           </p>
           <section class="docs-version-strip" aria-label="Documentation metadata">
-            <span>VERSION <strong>0.2.0</strong></span>
+            <span>VERSION <strong>0.3.0</strong></span>
             <span>RUNTIME <strong>Node 24.18.1+</strong></span>
             <span>LICENSE <strong>MIT</strong></span>
           </section>
@@ -143,10 +143,8 @@
                 <span>INSTALL + DEMO</span>
                 <button class="copy-button" type="button" data-copy-target="docs-demo"><span data-copy-label>Copy</span></button>
               </div>
-              <pre id="docs-demo"><code>git clone https://github.com/OthmaneBlial/Agent-Flight-Recorder.git
-cd Agent-Flight-Recorder
-npm ci
-npm run demo -- --reset</code></pre>
+              <pre id="docs-demo"><code>npm install --global https://github.com/OthmaneBlial/Agent-Flight-Recorder/releases/download/v0.3.0/agent-flight-recorder-0.3.0.tgz
+agent-flight-recorder demo --reset</code></pre>
             </div>
             <p>Open <code>http://127.0.0.1:4174</code>. If that port is occupied:</p>
             <div class="doc-command">
@@ -154,7 +152,7 @@ npm run demo -- --reset</code></pre>
                 <span>ALTERNATE PORT</span>
                 <button class="copy-button" type="button" data-copy-target="docs-demo-port"><span data-copy-label>Copy</span></button>
               </div>
-              <pre id="docs-demo-port"><code>npm run demo -- --reset --port=4180</code></pre>
+              <pre id="docs-demo-port"><code>agent-flight-recorder demo --reset --port=4180</code></pre>
             </div>
             <h3>Development modes</h3>
             <table class="docs-table">
