@@ -1,0 +1,26 @@
+# Storyboard Studio
+
+> Local-first narrative review for editable decision decks.
+
+Storyboard Studio turns an author-supplied decision brief into an inspectable,
+diffable story, diagnoses narrative weaknesses deterministically, and exports a
+native editable PowerPoint plus a hash-verifiable Narrative Receipt. The no-key
+workflow runs locally. Optional providers are explicit per draft.
+
+## Primary links
+
+- Product showcase: https://othmaneblial.github.io/Storyboard-Studio/
+- Focused documentation: https://othmaneblial.github.io/Storyboard-Studio/docs.html
+- Source and README: https://github.com/OthmaneBlial/Storyboard-Studio
+- Latest stable release: https://github.com/OthmaneBlial/Storyboard-Studio/releases/latest
+- Security policy: https://github.com/OthmaneBlial/Storyboard-Studio/security/policy
+- Export compatibility: https://github.com/OthmaneBlial/Storyboard-Studio/blob/main/docs/EXPORT_COMPATIBILITY.md
+
+## Important boundaries
+
+- A Narrative Receipt verifies hashes and internal references, not factual truth.
+- The public showcase is a product tour, not a hosted editor.
+- The package is not published on PyPI yet; use the verified repository setup.
+- Public user-research counts remain zero until consented external sessions occur.
+- Gemini and loopback model adapters are optional; the deterministic compiler,
+  Doctor, renderer, and receipt verification do not require a remote provider.

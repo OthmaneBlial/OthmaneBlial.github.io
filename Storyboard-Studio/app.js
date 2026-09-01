@@ -2,19 +2,19 @@
 
 const slides = [
   {
-    title: "The first-week gap",
-    body: "New teammates need confidence and context before they can contribute meaningful work.",
-    points: ["Make belonging visible", "Reduce uncertainty", "Build early momentum"],
+    title: "Name the decision",
+    body: "Make the choice explicit before visual polish can obscure it.",
+    points: ["One decision", "One audience", "One desired outcome"],
   },
   {
-    title: "Design the first 30 days",
-    body: "A repeatable rhythm turns onboarding from a checklist into a shared experience.",
-    points: ["Create a human welcome", "Pair guided practice", "Reflect on ownership"],
+    title: "Expose the trade-off",
+    body: "The Narrative Doctor keeps options, missing evidence, and unresolved gaps visible for review.",
+    points: ["Compare options", "Challenge claims", "Assign ownership"],
   },
   {
-    title: "One shared signal",
-    body: "Measure whether people feel equipped to make a useful contribution, not just whether tasks were assigned.",
-    points: ["Ask early", "Look for behavior", "Improve the system"],
+    title: "Carry the proof",
+    body: "Export the reviewed story as native PowerPoint plus a receipt whose hashes can be checked locally.",
+    points: ["Editable PPTX", "Diffable story", "Verifiable receipt"],
   },
 ];
 

@@ -3,27 +3,59 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="Storyboard Studio installation, export, privacy, and API documentation.">
+    <meta name="description" content="Install Storyboard Studio, build a decision story, run the Narrative Doctor, export editable PowerPoint, and understand local privacy boundaries.">
+    <meta name="theme-color" content="#284a40">
+    <meta name="robots" content="index,follow,max-image-preview:large">
+    <link rel="canonical" href="https://othmaneblial.github.io/Storyboard-Studio/docs.html">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="Storyboard Studio documentation">
+    <meta property="og:description" content="The focused local setup, decision-story, Narrative Doctor, export, API, and privacy guide.">
+    <meta property="og:url" content="https://othmaneblial.github.io/Storyboard-Studio/docs.html">
+    <meta property="og:image" content="https://othmaneblial.github.io/Storyboard-Studio/assets/social-preview.png">
+    <meta name="twitter:card" content="summary_large_image">
     <title>Documentation — Storyboard Studio</title>
     <link rel="icon" href="favicon.svg" type="image/svg+xml">
-    <link rel="stylesheet" href="styles.css"><script src="app.js" defer></script>
+    <link rel="manifest" href="site.webmanifest">
+    <link rel="stylesheet" href="styles.css">
+    <script src="app.js" defer></script>
   </head>
   <body>
     <a class="skip-link" href="#docs-main">Skip to documentation</a>
-    <header class="nav"><a class="brand" href="index.html"><span class="mark" aria-hidden="true"><i></i><i></i><i></i></span>Storyboard <em>Studio</em></a><nav aria-label="Main navigation"><a href="index.html">Overview</a><a href="https://github.com/OthmaneBlial/Storyboard-Studio">Source <span aria-hidden="true">↗</span></a></nav></header>
-    <main class="docs" id="docs-main"><aside><p class="eyebrow">DOCUMENTATION</p><a href="#install">Install</a><a href="#gemini">Optional Gemini</a><a href="#export">CLI export</a><a href="#api">Local API</a><a href="#privacy">Privacy</a><a href="https://github.com/OthmaneBlial/Storyboard-Studio/blob/main/CONTRIBUTING.md">Contributing ↗</a></aside><article><p class="eyebrow">GET STARTED</p><h1>Run a focused deck studio on your own machine.</h1><p class="lead">Storyboard Studio is a FastAPI application with a dependency-free browser UI and a native PowerPoint renderer.</p>
-      <section id="install"><h2>Install and run</h2><pre><code>git clone https://github.com/OthmaneBlial/Storyboard-Studio.git
+    <header class="nav"><a class="brand" href="index.html"><span class="mark" aria-hidden="true"><i></i><i></i><i></i></span>Storyboard <em>Studio</em></a><nav aria-label="Main navigation"><a href="index.html">Overview</a><a href="https://github.com/OthmaneBlial/Storyboard-Studio">GitHub <span aria-hidden="true">↗</span></a></nav></header>
+    <main class="docs" id="docs-main">
+      <aside><p class="eyebrow">DOCUMENTATION</p><a href="#install">Install</a><a href="#first-proof">First proof</a><a href="#decision-story">Decision workflow</a><a href="#providers">Optional providers</a><a href="#api">Local API</a><a href="#privacy">Privacy & limits</a><a href="https://github.com/OthmaneBlial/Storyboard-Studio/blob/main/CONTRIBUTING.md">Contributing ↗</a></aside>
+      <article>
+        <p class="eyebrow">LOCAL SETUP</p>
+        <h1>Review the decision story before you render the deck.</h1>
+        <p class="lead">Storyboard Studio is a Python 3.10+ FastAPI application with a dependency-free browser UI, deterministic no-key compiler, Narrative Doctor, and native PowerPoint renderer.</p>
+
+        <section id="install"><h2>Install and run</h2><pre><code>git clone https://github.com/OthmaneBlial/Storyboard-Studio.git
 cd Storyboard-Studio
 make setup
-make run</code><button class="copy-button" data-copy="git clone https://github.com/OthmaneBlial/Storyboard-Studio.git\ncd Storyboard-Studio\nmake setup\nmake run">Copy</button></pre><p>Open <code>http://127.0.0.1:8000</code>. Python 3.10 or newer is required.</p></section>
-      <section id="gemini"><h2>Optional Gemini outlining</h2><p>The app works without an API key. To ask Gemini for a richer first draft, export your own key before starting the server:</p><pre><code>export GEMINI_API_KEY="your-key"
-make run</code><button class="copy-button" data-copy="export GEMINI_API_KEY=\"your-key\"\nmake run">Copy</button></pre><p>Gemini failures return an editable local outline. Your key is read only from the process environment and must never be committed.</p></section>
-      <section id="export"><h2>Command-line export</h2><pre><code>python3 generate_pptx.py \
-  --input examples/product-brief.json \
-  --output output/my-deck.pptx</code><button class="copy-button" data-copy="python3 generate_pptx.py --input examples/product-brief.json --output output/my-deck.pptx">Copy</button></pre><p>The included JSON example is runnable and produces a title slide plus three editable content slides.</p></section>
-      <section id="api"><h2>Local API</h2><p>Interactive OpenAPI documentation is available at <code>/docs</code> while the local server runs.</p><ul><li><code>GET /api/health</code> — readiness and whether Gemini is configured.</li><li><code>POST /api/content</code> — a validated outline from a brief.</li><li><code>POST /api/presentations</code> — a PPTX from an outline.</li></ul></section>
-      <section id="privacy"><h2>Privacy and retention</h2><p>Storyboard Studio does not create accounts, profiles, analytics events, or a presentation database. A generated export is kept only in the local <code>output/</code> folder for download, then removed after 24 hours. Turning on Gemini sends the brief to that provider; use it only for material you are allowed to share.</p></section>
-      <p class="docs-end">For full configuration, security reporting, and contribution guidance, read the <a href="https://github.com/OthmaneBlial/Storyboard-Studio#readme">repository README</a>.</p></article></main>
-    <footer><div><a class="brand" href="index.html"><span class="mark" aria-hidden="true"><i></i><i></i><i></i></span>Storyboard <em>Studio</em></a><p>Local-first, editable presentation decks.</p></div><nav aria-label="Footer navigation"><a href="index.html">Overview</a><a href="https://github.com/OthmaneBlial/Storyboard-Studio/releases">Releases</a></nav></footer>
+make run</code><button class="copy-button" data-copy="git clone https://github.com/OthmaneBlial/Storyboard-Studio.git\ncd Storyboard-Studio\nmake setup\nmake run">Copy</button></pre><p>Open <code>http://127.0.0.1:8000</code>. The documented path creates an isolated <code>.venv</code> and runs without an account, API key, or remote model.</p></section>
+
+        <section id="first-proof"><h2>Create the bundled local proof</h2><pre><code>storyboard demo --bundle --output storyboard-demo.pptx</code><button class="copy-button" data-copy="storyboard demo --bundle --output storyboard-demo.pptx">Copy</button></pre><p>The command writes a synthetic editable deck plus its canonical story and Narrative Receipt. It does not claim user research or factual verification.</p></section>
+
+        <section id="decision-story"><h2>Compile, diagnose, export, verify</h2><pre><code>storyboard compile \
+  --input examples/briefs/onboarding-decision.json \
+  --output output/onboarding.story.json
+storyboard doctor output/onboarding.story.json --format markdown
+storyboard export \
+  --input output/onboarding.story.json \
+  --output output/onboarding.pptx \
+  --bundle
+storyboard verify output/onboarding.receipt.json</code><button class="copy-button" data-copy="storyboard compile --input examples/briefs/onboarding-decision.json --output output/onboarding.story.json\nstoryboard doctor output/onboarding.story.json --format markdown\nstoryboard export --input output/onboarding.story.json --output output/onboarding.pptx --bundle\nstoryboard verify output/onboarding.receipt.json">Copy</button></pre><p>The Doctor checks narrative structure, evidence coverage, density, progression, ownership, and next actions deterministically. Receipt verification confirms hashes and internal references, not whether a claim is true.</p></section>
+
+        <section id="providers"><h2>Optional providers</h2><p>The browser defaults to the local compiler. Gemini is available only when you explicitly select it for a draft and provide <code>GEMINI_API_KEY</code> through your process environment. A loopback-only OpenAI-compatible adapter supports local Ollama/LM Studio-style endpoints.</p><pre><code>export GEMINI_API_KEY="your-key"
+make run</code><button class="copy-button" data-copy="export GEMINI_API_KEY=&quot;your-key&quot;\nmake run">Copy</button></pre><p>Provider requests exclude local assets, evidence files, sources, and speaker notes. Read the complete <a href="https://github.com/OthmaneBlial/Storyboard-Studio/blob/main/docs/PROVIDER_POLICY.md">provider capability and retention matrix ↗</a> before sending authorized material.</p></section>
+
+        <section id="api"><h2>Local API</h2><p>Interactive OpenAPI documentation is available at <code>/docs</code> while the local server runs. The versioned contract is published in the repository.</p><ul><li><code>GET /api/health</code> — readiness and optional-provider state.</li><li><code>GET /api/v1/providers</code> — network, model, policy, retention, and configuration disclosure.</li><li><code>POST /api/v1/stories/decision-brief</code> — compile a structured decision brief locally.</li><li><code>POST /api/v1/stories/doctor</code> — diagnose a versioned story.</li><li><code>POST /api/v1/layout/preflight</code> — find layout overflow before export.</li><li><code>POST /api/v1/bundles</code> — export PPTX, story, and Receipt as a ZIP.</li></ul><p><a href="https://github.com/OthmaneBlial/Storyboard-Studio/blob/main/docs/API.md">Read the complete API guide ↗</a></p></section>
+
+        <section id="privacy"><h2>Privacy, compatibility, and known limits</h2><p>Storyboard Studio creates no account, profile, analytics event, or shared presentation database. Generated server copies stay in the local <code>output/</code> directory and expire after 24 hours. Selecting a remote provider sends only the disclosed bounded brief fields for that draft.</p><ul><li>The current install path is clone + <code>make setup</code>; the package is not published on PyPI yet.</li><li>The showcase is an interactive product tour, not a hosted deck editor.</li><li>Fonts, effects, and viewer imports can differ across PowerPoint, LibreOffice, Keynote, and Google Slides.</li><li>The public research count remains zero until consented external sessions are completed.</li></ul><p><a href="https://github.com/OthmaneBlial/Storyboard-Studio/blob/main/docs/EXPORT_COMPATIBILITY.md">Viewer limits ↗</a> · <a href="https://github.com/OthmaneBlial/Storyboard-Studio/blob/main/docs/USER_RESEARCH_STATUS.md">Research status ↗</a> · <a href="https://github.com/OthmaneBlial/Storyboard-Studio/security/policy">Security policy ↗</a></p></section>
+
+        <p class="docs-end">For architecture, contribution rules, benchmarks, schemas, and the full command surface, use the <a href="https://github.com/OthmaneBlial/Storyboard-Studio#readme">repository README</a>.</p>
+      </article>
+    </main>
+    <footer><div><a class="brand" href="index.html"><span class="mark" aria-hidden="true"><i></i><i></i><i></i></span>Storyboard <em>Studio</em></a><p>Local-first narrative review for editable decision decks.</p></div><nav aria-label="Footer navigation"><a href="index.html">Overview</a><a href="https://github.com/OthmaneBlial/Storyboard-Studio/releases/latest">Latest release</a><a href="https://github.com/OthmaneBlial/Storyboard-Studio">GitHub</a></nav></footer>
   </body>
 </html>

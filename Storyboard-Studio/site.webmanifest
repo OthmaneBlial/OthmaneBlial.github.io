@@ -1,0 +1,17 @@
+{
+  "name": "Storyboard Studio",
+  "short_name": "Storyboard",
+  "description": "Local-first narrative review for editable decision decks.",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#f6f3eb",
+  "theme_color": "#284a40",
+  "icons": [
+    {
+      "src": "favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ]
+}
