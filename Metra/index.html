@@ -1,0 +1,181 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Metra is a safe, local-first Rust metadata toolkit and CLI for reading, validating, creating, comparing, and narrowly editing media containers.">
+    <meta name="theme-color" content="#091013">
+    <title>Metra — metadata workflows, with evidence</title>
+    <link rel="stylesheet" href="styles.css">
+    <script defer src="app.js"></script>
+  </head>
+  <body>
+    <div class="page-shell">
+      <header class="site-header">
+        <a class="brand" href="index.html" aria-label="Metra home">
+          <span class="brand-mark">M</span>
+          <span>METRA</span>
+        </a>
+        <nav class="site-nav" aria-label="Main navigation">
+          <a href="#workflows">Workflows</a>
+          <a href="#status">Status</a>
+          <a href="docs.html">Docs</a>
+          <a class="nav-repo" href="https://github.com/OthmaneBlial/Metra">GitHub <span aria-hidden="true">↗</span></a>
+        </nav>
+      </header>
+
+      <main>
+        <section class="hero section-grid">
+          <div class="hero-copy reveal">
+            <p class="eyebrow"><span class="pulse"></span> Rust-native / local-first / v0.1.0</p>
+            <h1>Metadata that can<br><em>show its work.</em></h1>
+            <p class="lede">A defensive metadata toolkit and CLI for reading, validating, creating, comparing, and narrowly editing image, audio, document, and media containers.</p>
+            <div class="hero-actions">
+              <a class="button button-primary" href="#demo">Watch the real demo <span>↘</span></a>
+              <a class="button button-quiet" href="https://github.com/OthmaneBlial/Metra#quick-start">Install from source <span>↗</span></a>
+            </div>
+            <p class="hero-note">No cloud upload. No hidden helper process. If a writer cannot prove the round trip, it refuses the edit.</p>
+          </div>
+          <div class="hero-panel reveal delay-1" aria-label="Metra capability snapshot">
+            <div class="panel-topline"><span>CAPABILITY SNAPSHOT</span><span class="status-dot">LIVE</span></div>
+            <div class="panel-metric"><strong>23</strong><span>registered<br>format families</span></div>
+            <div class="mini-table">
+              <div><span>read</span><b>bounded</b></div>
+              <div><span>output</span><b>typed</b></div>
+              <div><span>write</span><b>validated</b></div>
+              <div><span>schema</span><b>v1</b></div>
+            </div>
+            <div class="panel-foot"><span>Rust 1.95+</span><span>MIT</span><span>CLI + API</span></div>
+          </div>
+        </section>
+
+        <section id="demo" class="demo-section reveal">
+          <div class="section-heading">
+            <p class="eyebrow">01 / SEE THE WORKFLOW</p>
+            <h2>Start with the file.<br><span>Keep the evidence.</span></h2>
+            <p>A 49-second terminal walkthrough from the current binary: create small seeds, inspect canonical tags, rewrite a PNG timestamp, stream JSON Lines, and inspect the capability contract.</p>
+          </div>
+          <div class="video-frame">
+            <div class="video-chrome"><span class="chrome-lights"><i></i><i></i><i></i></span><span>metra-demo.mp4</span><a href="assets/metra-demo.mp4">Download MP4 ↗</a></div>
+            <video controls preload="metadata" poster="assets/metra-demo-poster.png">
+              <source src="assets/metra-demo.mp4" type="video/mp4">
+              Your browser cannot play the demo. <a href="assets/metra-demo.mp4">Download the MP4</a>.
+            </video>
+          </div>
+        </section>
+
+        <section id="workflows" class="workflows section-block">
+          <div class="section-heading narrow reveal">
+            <p class="eyebrow">02 / THE TOOLKIT</p>
+            <h2>Four ways to use Metra.</h2>
+          </div>
+          <div class="workflow-grid">
+            <article class="workflow-card accent-lime reveal">
+              <span class="card-index">A</span>
+              <h3>Inspect</h3>
+              <p>Detect by signature, walk bounded metadata regions, and keep typed values and warnings separate.</p>
+              <code>metra --json photo.jpg</code>
+            </article>
+            <article class="workflow-card accent-orange reveal delay-1">
+              <span class="card-index">B</span>
+              <h3>Change</h3>
+              <p>Use set, delete, or copy where a tested writer can preserve layout and validate the result.</p>
+              <code>metra --set KEY=VALUE file</code>
+            </article>
+            <article class="workflow-card accent-blue reveal delay-2">
+              <span class="card-index">C</span>
+              <h3>Create</h3>
+              <p>Generate bounded metadata-oriented seeds for fixtures, pipelines, and repeatable tests.</p>
+              <code>metra --create-png Comment=... out.png</code>
+            </article>
+            <article class="workflow-card accent-pale reveal delay-3">
+              <span class="card-index">D</span>
+              <h3>Scale</h3>
+              <p>Run deterministic batches with bounded workers, streaming output, cancellation, and safety budgets.</p>
+              <code>metra --jsonl --jobs 4 -r photos/</code>
+            </article>
+          </div>
+        </section>
+
+        <section class="format-section section-block">
+          <div class="format-copy reveal">
+            <p class="eyebrow">03 / FORMAT SURFACE</p>
+            <h2>Broad readers.<br><span>Narrow promises.</span></h2>
+            <p>Metra exposes support as a capability matrix instead of turning detection into an implied compatibility claim.</p>
+            <a class="text-link" href="https://github.com/OthmaneBlial/Metra/blob/main/compat/exiftool-compatibility.json">Read the compatibility matrix ↗</a>
+          </div>
+          <div class="format-list reveal delay-1">
+            <div><span class="format-label">IMAGES</span><span>JPEG · TIFF · PNG · WebP · GIF · SVG · PSD</span></div>
+            <div><span class="format-label">RAW</span><span>DNG · CR3 · RAF · MRW · CRW · X3F</span></div>
+            <div><span class="format-label">AUDIO</span><span>WAV · RF64 · BW64 · FLAC · Ogg · MP3</span></div>
+            <div><span class="format-label">MEDIA</span><span>AVI · MKV · WebM · MP4 · MOV · M4A · HEIF · AVIF</span></div>
+            <div><span class="format-label">DOCUMENTS</span><span>PDF · XMP · ICC</span></div>
+          </div>
+        </section>
+
+        <section id="status" class="status-section section-block">
+          <div class="section-heading narrow reveal">
+            <p class="eyebrow">04 / PROJECT LEDGER</p>
+            <h2>Trust the boundary.</h2>
+            <p>The status is intentionally split into what works, what is bounded, and what still needs evidence.</p>
+          </div>
+          <div class="status-grid">
+            <article class="status-card working reveal">
+              <div class="status-title"><span class="ledger-dot"></span><h3>Working</h3></div>
+              <ul><li>Typed metadata model and stable identifiers</li><li>Defensive parsing with resource limits</li><li>Validated seeds and narrow atomic rewrites</li><li>Text, JSON, JSONL, CSV, TOML, YAML</li></ul>
+            </article>
+            <article class="status-card experimental reveal delay-1">
+              <div class="status-title"><span class="ledger-dot"></span><h3>Experimental</h3></div>
+              <ul><li>Selected MakerNote families</li><li>Proprietary RAW readers remain read-only</li><li>Writers often require existing fixed storage</li><li>Opt-in corpus differential harness</li></ul>
+            </article>
+            <article class="status-card planned reveal delay-2">
+              <div class="status-title"><span class="ledger-dot"></span><h3>Planned</h3></div>
+              <ul><li>More real-world corpus evidence</li><li>Deeper tags and media structures</li><li>Additional writer and creator seams</li><li>Broader performance baselines</li></ul>
+            </article>
+          </div>
+        </section>
+
+        <section class="architecture section-block">
+          <div class="architecture-copy reveal">
+            <p class="eyebrow">05 / UNDER THE HOOD</p>
+            <h2>A small core.<br><span>Clear contracts.</span></h2>
+            <p>The CLI is a thin consumer. The public Rust API, format registry, parser limits, and writers share the same evidence model.</p>
+            <a class="text-link" href="docs.html">Read the architecture notes ↗</a>
+          </div>
+          <pre class="architecture-diagram reveal delay-1"><span>CLI</span> or <span>Rust API</span>
+      │
+      ▼
+<b>detection + format registry</b>
+      │
+      ▼
+<b>bounded readers → typed model</b>
+      │
+      ├── JSON / JSONL / CSV / TOML / YAML
+      │
+      └── set / delete / copy
+             │
+       validate → atomic replace</pre>
+        </section>
+
+        <section class="install-section section-block reveal">
+          <div class="install-copy">
+            <p class="eyebrow">06 / GET STARTED</p>
+            <h2>Install in one<br><span>small command.</span></h2>
+            <p>Metra is currently distributed as a source release for Rust 1.95+ on Linux, macOS, and Windows.</p>
+            <a class="button button-primary" href="https://github.com/OthmaneBlial/Metra#quick-start">Read the quick start <span>↗</span></a>
+          </div>
+          <div class="code-stack">
+            <div class="code-block"><button class="copy-button" type="button" data-copy="cargo install --git https://github.com/OthmaneBlial/Metra metra">Copy</button><span class="code-prompt">$</span><code>cargo install --git https://github.com/OthmaneBlial/Metra metra</code></div>
+            <div class="code-block"><button class="copy-button" type="button" data-copy="metra --json photo.jpg">Copy</button><span class="code-prompt">$</span><code>metra --json photo.jpg</code></div>
+          </div>
+        </section>
+      </main>
+
+      <footer class="site-footer">
+        <div><span class="brand-mark small">M</span><span>METRA / 2026</span></div>
+        <div class="footer-links"><a href="https://github.com/OthmaneBlial/Metra">GitHub</a><a href="docs.html">Docs</a><a href="https://github.com/OthmaneBlial/Metra/releases">Releases</a><a href="https://github.com/OthmaneBlial/Metra/issues">Issues</a></div>
+        <div class="footer-meta">MIT · Rust-native · local-first</div>
+      </footer>
+    </div>
+  </body>
+</html>
