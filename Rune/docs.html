@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#071018">
+    <meta name="description" content="Rune technical documentation: portable Rust core, confined VFS, SwiftUI boundary, validation, security, and roadmap.">
+    <title>Rune docs — boundaries you can inspect</title>
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body class="docs-page">
+    <a class="skip-link" href="#main">Skip to content</a>
+    <header class="site-header">
+      <a class="brand" href="./" aria-label="Rune home"><span class="brand-mark" aria-hidden="true">ᚱ</span><span>RUNE</span></a>
+      <nav class="nav-links" aria-label="Primary navigation"><a href="./">Home</a><a href="#portable-core">Portable core</a><a href="#apple-boundary">Apple boundary</a><a href="#validation">Validation</a><a href="https://github.com/OthmaneBlial/Rune">GitHub ↗</a></nav>
+      <a class="nav-cta" href="https://github.com/OthmaneBlial/Rune/blob/main/ROADMAP.md">Roadmap <span aria-hidden="true">↗</span></a>
+    </header>
+    <main id="main">
+      <section class="docs-hero section-shell">
+        <p class="eyebrow">RUNE / TECHNICAL NOTES</p>
+        <h1>Boundaries you<br><em>can inspect.</em></h1>
+        <p>Rune keeps the portable engine, the native Apple surface, and the unverified platform gates in separate boxes. This page is the short version; the repository docs remain canonical.</p>
+      </section>
+      <div class="docs-layout section-shell">
+        <aside class="docs-sidebar" aria-label="Documentation navigation">
+          <p>ON THIS PAGE</p>
+          <a href="#portable-core">Portable core</a>
+          <a href="#apple-boundary">Apple boundary</a>
+          <a href="#security">Security</a>
+          <a href="#validation">Validation</a>
+          <a href="#release">Release boundary</a>
+          <a href="https://github.com/OthmaneBlial/Rune/blob/main/docs/architecture.md">Full architecture ↗</a>
+        </aside>
+        <article class="docs-content">
+          <section id="portable-core" class="doc-block">
+            <p class="eyebrow">01 / portable core</p>
+            <h2>Rust owns the workflow.</h2>
+            <p>The CLI runs a Rust parser and planner. Commands receive a virtual filesystem and return bounded stdout, stderr, and status. Pipelines, redirections, scripts, loops, functions, command substitution, aliases, persistence, and cancellation remain inside the core.</p>
+            <div class="doc-grid">
+              <div><strong>rune-shell</strong><span>lexing + explicit execution plans</span></div>
+              <div><strong>rune-fs</strong><span>canonical paths + approved roots</span></div>
+              <div><strong>rune-core</strong><span>registry + session + output</span></div>
+              <div><strong>rune-runtime</strong><span>bounded Lua, Python, JavaScript</span></div>
+              <div><strong>rune-wasm</strong><span>WASI preview1 with explicit preopens</span></div>
+              <div><strong>rune-package</strong><span>manifest + SHA-256 verification</span></div>
+            </div>
+            <div class="snippet">
+              <code>cargo run -p rune-cli -- --root /tmp/rune-root -c "mkdir -p demo/src; echo 'fn main() {}' &gt; demo/src/main.rs; tree demo"</code>
+              <button class="copy-button" data-copy="cargo run -p rune-cli -- --root /tmp/rune-root -c &quot;mkdir -p demo/src; echo 'fn main() {}' &gt; demo/src/main.rs; tree demo&quot;" aria-label="Copy portable core command">COPY</button>
+            </div>
+          </section>
+          <section id="apple-boundary" class="doc-block">
+            <p class="eyebrow">02 / apple boundary</p>
+            <h2>Swift presents.<br>Providers ask.</h2>
+            <p>The source-only SwiftUI/UIKit layer talks to opaque Rust sessions through rune-ffi. It can render output, send commands, request cancellation, manage tabs, and surface host actions. Network, URL opening, clipboard, media, folders, and toolchains are explicit callbacks rather than ambient capabilities.</p>
+            <div class="boundary-diagram">
+              <div><span>SwiftUI</span><small>presentation</small></div><b>→</b><div><span>rune-ffi</span><small>owned buffers</small></div><b>→</b><div><span>rune-core</span><small>policy + execution</small></div>
+            </div>
+            <aside class="callout callout-orange"><strong>Runtime gate</strong><span>The package manifest and host Swift typecheck are source evidence. They are not proof of an iOS build, simulator, device, linking, entitlements, or App Store artifact.</span></aside>
+          </section>
+          <section id="security" class="doc-block">
+            <p class="eyebrow">03 / security</p>
+            <h2>Constrain first.</h2>
+            <ul class="doc-list"><li><strong>Filesystem:</strong> roots are canonicalized and symlinks cannot escape the approved VFS.</li><li><strong>Growth:</strong> command input, output channels, scripts, archives, runtimes, persistence, and UI transcript are bounded.</li><li><strong>Capabilities:</strong> host network, launch, clipboard, media, folder, and toolchain access require an injected provider; defaults are disabled.</li><li><strong>Privacy:</strong> history redaction covers environment/network/private phone actions by default, while environment persistence is opt-in.</li></ul>
+            <a class="text-link" href="https://github.com/OthmaneBlial/Rune/blob/main/SECURITY.md">Read the security policy ↗</a>
+          </section>
+          <section id="validation" class="doc-block">
+            <p class="eyebrow">04 / validation</p>
+            <h2>Evidence is a command.</h2>
+            <p>Run the same local gate used for the alpha release. It does not install Apple tooling or make a live compatibility claim.</p>
+            <div class="snippet"><code>./scripts/ci.sh</code><button class="copy-button" data-copy="./scripts/ci.sh" aria-label="Copy validation command">COPY</button></div>
+            <div class="validation-list"><span><b>✓</b> compatibility schema + scenarios</span><span><b>✓</b> Rust format, lint, tests, build</span><span><b>✓</b> SwiftPM header boundary</span><span><b>✓</b> host swiftc source check, when available</span><span><b>—</b> Apple runtime and direct a-Shell comparison</span></div>
+          </section>
+          <section id="release" class="doc-block">
+            <p class="eyebrow">05 / release boundary</p>
+            <h2>Alpha means alpha.</h2>
+            <p>v0.1.0-alpha is a public source preview of the portable foundation. It is not a stable iOS application, does not bundle Xcode or an SDK, and does not include a signed installable app. The changelog and roadmap keep those next gates visible.</p>
+            <div class="doc-actions"><a class="button button-dark" href="https://github.com/OthmaneBlial/Rune/releases">Release notes ↗</a><a class="button button-outline-dark" href="https://github.com/OthmaneBlial/Rune/blob/main/ROADMAP.md">Roadmap ↗</a></div>
+          </section>
+        </article>
+      </div>
+    </main>
+    <footer class="site-footer section-shell"><div><span class="brand-mark" aria-hidden="true">ᚱ</span><strong>RUNE</strong><span class="footer-note">Rust-native terminal core</span></div><div><span>MIT licensed</span><a href="https://github.com/OthmaneBlial/Rune">Source ↗</a></div></footer>
+    <script src="app.js"></script>
+  </body>
+</html>

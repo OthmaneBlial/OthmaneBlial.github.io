@@ -1,0 +1,189 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#071018">
+    <meta name="description" content="Rune is a Rust-native, bounded Unix-like terminal core for iPhone and iPad, with a source-only SwiftUI boundary.">
+    <title>Rune — a terminal core for the small screen</title>
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
+    <header class="site-header">
+      <a class="brand" href="./" aria-label="Rune home">
+        <span class="brand-mark" aria-hidden="true">ᚱ</span>
+        <span>RUNE</span>
+      </a>
+      <nav class="nav-links" aria-label="Primary navigation">
+        <a href="#proof">Proof</a>
+        <a href="#architecture">Architecture</a>
+        <a href="docs.html">Docs</a>
+        <a href="https://github.com/OthmaneBlial/Rune">GitHub <span aria-hidden="true">↗</span></a>
+      </nav>
+      <a class="nav-cta" href="https://othmaneblial.github.io/Rune/media/rune-cli-demo.mp4">Watch demo <span aria-hidden="true">↗</span></a>
+    </header>
+
+    <main id="main">
+      <section class="hero section-shell">
+        <div class="hero-copy reveal">
+          <p class="eyebrow"><span class="pulse-dot"></span> Rust core · iPhone + iPad · alpha source preview</p>
+          <h1>A terminal core built for the <em>small screen.</em></h1>
+          <p class="hero-lede">Rune brings a bounded Unix-like shell to Apple platforms. Rust owns the work; SwiftUI presents it.</p>
+          <div class="hero-actions">
+            <a class="button button-primary" href="https://github.com/OthmaneBlial/Rune">Explore the source <span aria-hidden="true">↗</span></a>
+            <a class="button button-quiet" href="#proof">See real proof <span aria-hidden="true">↓</span></a>
+          </div>
+          <dl class="hero-facts" aria-label="Project facts">
+            <div><dt>01</dt><dd>confined VFS</dd></div>
+            <div><dt>02</dt><dd>typed FFI</dd></div>
+            <div><dt>03</dt><dd>no host shell</dd></div>
+          </dl>
+        </div>
+        <div class="hero-terminal reveal reveal-delay-1" aria-label="Live-looking preview of a real Rune CLI session">
+          <div class="terminal-chrome">
+            <span class="traffic-lights" aria-hidden="true"><i></i><i></i><i></i></span>
+            <span>rune-cli / temporary-root</span>
+            <span class="terminal-readout">LOCAL / SAFE</span>
+          </div>
+          <div class="terminal-body">
+            <p><span class="prompt">rune</span><span class="muted">:</span><span class="path">~</span><span class="muted">$</span> mkdir -p project/src project/docs</p>
+            <p><span class="prompt">rune</span><span class="muted">:</span><span class="path">~</span><span class="muted">$</span> tree project</p>
+            <pre>project
+├── docs/
+│   └── notes.md
+└── src/
+    └── main.rs</pre>
+            <p><span class="prompt">rune</span><span class="muted">:</span><span class="path">~/project</span><span class="muted">$</span> find project -type f -name '*.rs'</p>
+            <p class="success">project/src/main.rs</p>
+            <p><span class="prompt">rune</span><span class="muted">:</span><span class="path">~/project</span><span class="muted">$</span> <span class="cursor" aria-hidden="true"></span></p>
+          </div>
+        </div>
+      </section>
+
+      <section class="signal-strip" aria-label="Evidence summary">
+        <div><span class="signal-label">01 / REAL</span><strong>Portable Rust CLI</strong><span>tested and built locally</span></div>
+        <div><span class="signal-label">02 / NATIVE</span><strong>SwiftUI boundary</strong><span>source-only, runtime pending</span></div>
+        <div><span class="signal-label">03 / HONEST</span><strong>Alpha release</strong><span>no parity claim</span></div>
+      </section>
+
+      <section id="proof" class="content-section section-shell proof-section">
+        <div class="section-heading reveal">
+          <p class="eyebrow">01 / proof</p>
+          <h2>Show the boundary.<br><em>Then show the work.</em></h2>
+          <p>Every visible claim below comes from the repository. The demo is a designed presentation built from real Rust CLI output against a temporary root; the iOS surface is intentionally labeled source-only until an Apple toolchain is available.</p>
+        </div>
+        <div class="demo-card reveal reveal-delay-1">
+          <div class="demo-meta"><span class="tag tag-orange">54 sec</span><span>real CLI output / MP4</span><span class="demo-meta-right">no credentials · no host paths</span></div>
+          <video controls preload="metadata" poster="media/rune-cli-demo-poster.png">
+            <source src="media/rune-cli-demo.mp4" type="video/mp4">
+            Your browser does not support embedded video. <a href="media/rune-cli-demo.mp4">Download the MP4 demo.</a>
+          </video>
+          <div class="demo-footer">
+            <p><strong>From empty root to persisted session.</strong> Create files, render the VFS, pipe text through grep, restore a process, and jump by frequency.</p>
+            <a class="text-link" href="media/rune-cli-demo.mp4">Open full MP4 <span aria-hidden="true">↗</span></a>
+          </div>
+        </div>
+      </section>
+
+      <section class="content-section section-shell value-section">
+        <div class="section-heading compact reveal">
+          <p class="eyebrow">02 / the thesis</p>
+          <h2>The boundary is<br><em>the feature.</em></h2>
+        </div>
+        <div class="value-grid">
+          <article class="value-card reveal">
+            <span class="card-index">A</span>
+            <h3>Useful without UIKit</h3>
+            <p>The Rust core runs as a normal CLI. Shell behavior, filesystem policy, persistence, and limits can be tested before an iPhone build exists.</p>
+            <a href="docs.html#portable-core" class="text-link">Portable core <span aria-hidden="true">→</span></a>
+          </article>
+          <article class="value-card value-card-accent reveal reveal-delay-1">
+            <span class="card-index">B</span>
+            <h3>Native where it matters</h3>
+            <p>SwiftUI owns presentation. Explicit host providers own Apple capabilities. No second shell, no ambient launcher, no mysterious bridge.</p>
+            <a href="docs.html#apple-boundary" class="text-link">Apple boundary <span aria-hidden="true">→</span></a>
+          </article>
+          <article class="value-card reveal reveal-delay-2">
+            <span class="card-index">C</span>
+            <h3>Honest by construction</h3>
+            <p>Working locally, source-only, experimental, pending, and unverified are separate states in the docs and compatibility matrix.</p>
+            <a href="https://github.com/OthmaneBlial/Rune/blob/main/compat/a-shell-compatibility.json" class="text-link">Read the matrix <span aria-hidden="true">↗</span></a>
+          </article>
+        </div>
+      </section>
+
+      <section id="architecture" class="content-section section-shell architecture-section">
+        <div class="section-heading reveal">
+          <p class="eyebrow">03 / architecture</p>
+          <h2>One core.<br><em>Several narrow doors.</em></h2>
+        </div>
+        <div class="architecture-board reveal reveal-delay-1">
+          <div class="architecture-node architecture-node-top"><span>presentation</span><strong>SwiftUI / UIKit</strong><small>source-only native surface</small></div>
+          <div class="architecture-line"><span>versioned C ABI</span></div>
+          <div class="architecture-node architecture-node-core"><span>engine</span><strong>rune-core</strong><small>commands · state · limits · output</small></div>
+          <div class="architecture-branches">
+            <div><b>rune-shell</b><span>parse + plan</span></div>
+            <div><b>rune-fs</b><span>confine + resolve</span></div>
+            <div><b>rune-runtime</b><span>bounded providers</span></div>
+            <div><b>rune-wasm</b><span>WASI preview1</span></div>
+            <div><b>rune-package</b><span>verify + materialize</span></div>
+          </div>
+          <div class="provider-row"><span>explicit host providers</span><b>network</b><b>open</b><b>clipboard</b><b>toolchain</b><i>disabled by default</i></div>
+        </div>
+      </section>
+
+      <section class="content-section section-shell capability-section">
+        <div class="capability-copy reveal">
+          <p class="eyebrow">04 / capability map</p>
+          <h2>Small surface.<br><em>Strong guardrails.</em></h2>
+          <p>Rune is built for command workflows that can be bounded, inspected, and carried across a native boundary.</p>
+          <a href="docs.html" class="button button-dark">Read the technical docs <span aria-hidden="true">↗</span></a>
+        </div>
+        <div class="capability-list reveal reveal-delay-1">
+          <button class="capability-row is-active" data-filter="all"><span>ALL</span><strong>What is in the alpha?</strong><em>↗</em></button>
+          <button class="capability-row" data-filter="shell"><span>SHELL</span><strong>pipes · scripts · filters · history</strong><em>↗</em></button>
+          <button class="capability-row" data-filter="filesystem"><span>VFS</span><strong>confined paths · archives · persistence</strong><em>↗</em></button>
+          <button class="capability-row" data-filter="bridge"><span>FFI</span><strong>events · cancellation · host providers</strong><em>↗</em></button>
+          <button class="capability-row" data-filter="native"><span>IOS</span><strong>SwiftUI source boundary · runtime pending</strong><em>↗</em></button>
+          <p class="filter-note" id="filter-note" aria-live="polite">Showing the complete evidence map.</p>
+        </div>
+      </section>
+
+      <section class="content-section section-shell status-section">
+        <div class="status-header reveal">
+          <p class="eyebrow">05 / status</p>
+          <h2>What works today,<br><em>without the asterisk.</em></h2>
+        </div>
+        <div class="status-table reveal reveal-delay-1">
+          <div class="status-table-head"><span>AREA</span><span>STATE</span><span>PROOF</span></div>
+          <div class="status-row"><span>Rust workspace + CLI</span><b class="state-working">WORKING LOCALLY</b><a href="https://github.com/OthmaneBlial/Rune/blob/main/scripts/ci.sh">local CI ↗</a></div>
+          <div class="status-row"><span>Shell, VFS, runtimes + archives</span><b class="state-working">WORKING LOCALLY</b><a href="docs.html#portable-core">core docs ↗</a></div>
+          <div class="status-row"><span>C FFI + capability contracts</span><b class="state-working">WORKING LOCALLY</b><a href="docs.html#apple-boundary">boundary docs ↗</a></div>
+          <div class="status-row"><span>SwiftUI/UIKit frontend</span><b class="state-source">SOURCE-ONLY</b><a href="https://github.com/OthmaneBlial/Rune/tree/main/apps/ios">iOS source ↗</a></div>
+          <div class="status-row"><span>iOS build + device runtime</span><b class="state-pending">UNVERIFIED</b><a href="https://github.com/OthmaneBlial/Rune/blob/main/ROADMAP.md">roadmap ↗</a></div>
+        </div>
+      </section>
+
+      <section class="final-cta section-shell reveal">
+        <div>
+          <p class="eyebrow">06 / start here</p>
+          <h2>Read the source.<br><em>Run the core.</em></h2>
+        </div>
+        <div class="final-cta-actions">
+          <div class="snippet">
+            <code>cargo run -p rune-cli -- --root /tmp/rune-root -c "tree ."</code>
+            <button class="copy-button" data-copy="cargo run -p rune-cli -- --root /tmp/rune-root -c &quot;tree .&quot;" aria-label="Copy quick start command">COPY</button>
+          </div>
+          <a class="button button-primary" href="https://github.com/OthmaneBlial/Rune">Open Rune on GitHub <span aria-hidden="true">↗</span></a>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer section-shell">
+      <div><span class="brand-mark" aria-hidden="true">ᚱ</span><strong>RUNE</strong><span class="footer-note">Rust-native terminal core</span></div>
+      <div><span>MIT licensed</span><span>v0.1.0-alpha</span><a href="https://github.com/OthmaneBlial/Rune/issues">Feedback ↗</a></div>
+    </footer>
+    <script src="app.js"></script>
+  </body>
+</html>
