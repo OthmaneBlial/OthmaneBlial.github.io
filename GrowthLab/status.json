@@ -32,13 +32,14 @@
     "Saved deterministic playbook runs with ordered answers, outputs and guardrails",
     "Distribution-aware local measurement comparisons that keep channel baselines separate",
     "Explicit public GitHub checkout import into a local, configured workspace",
-    "Workspace experiment map showing the shared goal and three untested growth branches"
+    "Workspace experiment map showing the shared goal and three untested growth branches",
+    "Prepared battles reuse persisted hypothesis IDs so the map remains linked to each variant"
   ],
   "validation": [
     {
       "name": "Rust tests",
       "status": "passed",
-      "detail": "942 tests per binary; 940 passed, zero failures and two inherited ignored tests"
+      "detail": "945 tests per binary; 943 passed, zero failures and two inherited ignored tests (serial run)"
     },
     {
       "name": "UI tests",
@@ -119,6 +120,11 @@
       "name": "Workspace experiment map",
       "status": "passed",
       "detail": "Chrome smoke created the deterministic starter map and rendered the shared goal with positioning, conversion and onboarding branches; cards remain UNTESTED until a battle and local evidence exist"
+    },
+    {
+      "name": "Experiment map lineage",
+      "status": "passed",
+      "detail": "Rust battle preparation tests confirm a persisted three-hypothesis map is reused in the frozen contract and variant records, while older workspaces retain the deterministic fallback"
     }
   ],
   "pending": [

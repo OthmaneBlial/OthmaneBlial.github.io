@@ -37,6 +37,11 @@ provider identity, causality and statistical significance remain unverified.
   never pushed or executed during import, and a missing contract stays an
   explicit setup error rather than silently inventing product context.
 
+- Connected the workspace experiment map to battle preparation. Once a local
+  three-hypothesis portfolio exists, its stable IDs and evidence lineage are
+  reused by the frozen battle contract and variant records; older workspaces
+  continue to use the deterministic starter fallback.
+
 - Added public GitHub metadata review and manual-brief onboarding. `repo-audit` and the Home review panel make one unauthenticated metadata request without cloning or executing source. `workspace brief` and the Home form create a private local analysis snapshot with no remote or provider request.
 
 - Added a read-only public URL SEO audit in the CLI, local API and Home screen.
