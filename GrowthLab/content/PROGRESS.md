@@ -38,7 +38,7 @@ screen-reader, Core Web Vital or conversion evidence.
   calculations stay aligned and make no provider request.
 
 - Added a conservative page-quality hint evaluator beside the SEO rubric. Battle
-  comparisons and shareable reports expose four structural dimensions,
+  comparisons and shareable reports expose five structural dimensions,
   recommendations and limits with **ESTIMATED** provenance; browser-based
   performance and accessibility validation remain separate release gates.
 
