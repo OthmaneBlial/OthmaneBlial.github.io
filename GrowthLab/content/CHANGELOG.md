@@ -3,6 +3,7 @@
 ## Next
 
 - Added a browser-local measurement panel for user-supplied CSV exports. It shows descriptive means, sample sizes, date range and baseline comparisons without sending rows to a provider; causality and significance remain unverified.
+- Added exploratory 95% mean and baseline-difference intervals for repeated local observations, with the normal-approximation assumptions shown in the CLI, dashboard and docs.
 
 - Expanded the local SEO rubric with deterministic, dimension-specific next
   steps for partial or missing signals. Recommendations are now visible in the

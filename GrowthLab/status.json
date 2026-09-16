@@ -2,10 +2,10 @@
   "schemaVersion": 1,
   "updated": "2026-09-16",
   "stage": "Source alpha",
-  "progressEstimate": 57,
+  "progressEstimate": 59,
   "progressExplanation": "Subjective estimate against the complete product specification, not a measured delivery metric.",
-  "milestone": "Local SEO audit and local measurement dashboard validated",
-  "validatedSourceCommit": "d57c68bd1155e047ae2f21ccb2c9db7aa0e6e4de",
+  "milestone": "Local measurement dashboard and exploratory interval analysis validated",
+  "validatedSourceCommit": "7855d7956ffe98a27618e6038985bcd662de57ad",
   "delivered": [
     "Local product import with reviewed growthlab.yaml permissions",
     "Three competing changes from one frozen starting point in isolated workspaces",
@@ -23,18 +23,19 @@
     "Standalone local SEO audit with actionable recommendations, JSON or Markdown output and safe file bounds",
     "Eight-second demo reel assembled from real local browser captures",
     "Local CSV measurement summaries with baseline comparisons, sample sizes, date range and MEASURED provenance",
-    "Local browser measurement dashboard over user-supplied CSV with local descriptive comparisons"
+    "Local browser measurement dashboard over user-supplied CSV with local descriptive comparisons",
+    "Exploratory 95% mean and baseline-difference intervals with documented assumptions"
   ],
   "validation": [
     {
       "name": "Rust tests",
       "status": "passed",
-      "detail": "919 tests per binary; 917 passed, zero failures and two inherited ignored tests"
+      "detail": "925 tests per binary; 923 passed, zero failures and two inherited ignored tests"
     },
     {
       "name": "UI tests",
       "status": "passed",
-      "detail": "170 tests; zero failures or skips"
+      "detail": "171 tests; zero failures or skips"
     },
     {
       "name": "Local quality checks",
@@ -49,12 +50,17 @@
     {
       "name": "Local CSV measurement",
       "status": "passed",
-      "detail": "Bounded UTF-8 CSV import smoke passed locally; means, sample sizes, optional date range, baseline differences and MEASURED limits are emitted without network access"
+      "detail": "Bounded UTF-8 CSV import smoke passed locally; means, sample sizes, optional date range, baseline differences, exploratory 95% intervals and MEASURED limits are emitted without network access"
     },
     {
       "name": "Browser measurement dashboard",
       "status": "passed",
-      "detail": "Local Chrome smoke uploaded a synthetic CSV; the dashboard rendered MEASURED means, sample sizes, baseline differences, date range and limits with no console warnings or errors"
+      "detail": "Local Chrome smoke uploaded a synthetic CSV; the dashboard rendered MEASURED means, sample sizes, baseline differences, date range, 95% intervals and limits with no console warnings or errors"
+    },
+    {
+      "name": "Exploratory interval analysis",
+      "status": "passed",
+      "detail": "Rust and TypeScript calculations matched on repeated synthetic samples; mean and difference intervals are omitted below n=2 and documented as descriptive normal approximations"
     },
     {
       "name": "Release build and runtime smokes",
@@ -73,7 +79,7 @@
     }
   ],
   "pending": [
-    "Cautious statistical analysis and provider adapters",
+    "Provider adapters and distribution-aware analysis",
     "Visual quality/performance evaluation and a continuous screen recording",
     "Native-agent battle verification and provider-specific launcher registration",
     "Complete experiment tree, settings and localized interface",
