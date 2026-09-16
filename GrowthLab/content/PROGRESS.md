@@ -1,7 +1,7 @@
 # GrowthLab progress
 
-Current milestone: **Phase 2/3/4 — editable experiment tree with frozen lineage, localized GrowthLab onboarding and measurement UI, local settings panel, provider-neutral measurement boundary, deterministic local CLI packaging with complete notices, estimated accessibility structure hints, public repository review, manual-brief onboarding, executable playbooks, public checkout import and distribution-aware measurement analysis validated** (2026-09-17).
-Overall completion: **about 90%, subjective estimate against the full specification**.
+Current milestone: **Phase 2/3/4 — editable experiment tree with frozen lineage, localized GrowthLab onboarding, measurement and battle/detail UI, local settings panel, provider-neutral measurement boundary, deterministic local CLI packaging with complete notices, estimated accessibility structure hints, public repository review, manual-brief onboarding, executable playbooks, public checkout import and distribution-aware measurement analysis validated** (2026-09-17).
+Overall completion: **about 91%, subjective estimate against the full specification**.
 The configuration/import, explicit non-Git initialization, read-only URL audit and three-variant replay CLI slices pass locally.
 Selected delivery and report behavior pass local Rust, real CLI and browser checks.
 Recovery passes local Rust and real CLI interruption/legacy-archive checks.
@@ -71,6 +71,8 @@ performance.
   and integration counts are visible without enabling a provider or changing
   product files.
 
+- Localized the Growth Battle detail surface across all six locale catalogs. Inspection tabs, explicit decision states and self-contained report actions now follow the shared language picker; Arabic and Persian keep the document's RTL direction.
+
 - Added deterministic local CLI packaging and an offline release-archive verifier.
   Host-target archives include the executable, README, demo and distribution
   guide, MIT and OpenResearch notices, and all six checked-in dependency notice
@@ -124,7 +126,7 @@ performance.
 - Added a localized GrowthLab onboarding shell. The dashboard language picker
   uses the shared persisted locale preference across six catalogs, refreshes the
   visible home flow after switching, and applies right-to-left document direction
-  for Arabic and Persian. Battle/detail copy remains a follow-up slice.
+  for Arabic and Persian. Battle/detail inspection, decision and report labels now follow all six locale catalogs; broader settings coverage and remaining technical detail copy remain open.
 
 - Added public GitHub metadata review and manual-brief onboarding. `repo-audit` and the Home review panel make one unauthenticated metadata request without cloning or executing source. `workspace brief` and the Home form create a private local analysis snapshot with no remote or provider request.
 
@@ -435,7 +437,7 @@ All six GitHub workflows remain manually disabled; validation runs locally only.
 Bundled-demo unit (2026-09-16): **passed locally**. `cargo test --locked` passes
 **902 tests per binary, zero failures, two inherited ignored tests**;
 `cargo clippy --all-targets -- -D warnings`, formatting and `cargo build --locked`
-pass. UI typecheck/i18n build/style checks and **166 tests, zero failures/skips**
+pass. UI typecheck/i18n build/style checks and **174 tests, zero failures/skips**
 pass; generated `ui/dist` is included. `scripts/test-growth-demo.py` passes with
 the real binary, built JS serving, nine actual checks, policy/seal verification,
 private reports, provider sentinels, Git-override refusal and graceful shutdown.
@@ -508,12 +510,12 @@ Earlier validation evidence follows; it is not a release or provider claim.
   `screenshots/cli-report-desktop.jpg` and `screenshots/cli-report-phone.jpg`, with
   current phone isolation details in `screenshots/cli-report-phone-isolation.png`;
   these show synthetic CLI report output, not the future dashboard or product renders.
-- UI localized generation/typecheck/unit tests: **passed**, 166 tests. New view
+- UI localized generation/typecheck/unit tests: **passed**, 174 tests. New view
   tests distinguish seals/checkpoints, completed selections and actual active
   command phases; deep-link tests preserve inherited route assertions.
 - `pnpm build` in ui: **passed**, regenerated embedded assets. The inherited
   circular route-generator warning and eager bundle size warning remain visible.
-  GrowthLab battle/detail localization and bundle splitting remain pending.
+  Bundle splitting remains pending.
 - GrowthLab dashboard real Chrome flow: **passed** on an owned fictional product
   in an empty isolated development slot. UI import, goal preparation, local replay
   file loading and actual execution produced three real worktrees/checks. All
@@ -566,7 +568,7 @@ Earlier validation evidence follows; it is not a release or provider claim.
 Known environment warning: installed external Claude CLI `--version` failed
 during inherited harness detection. Native-agent execution is not verified.
 Local CLI/domain/replay validation passed. Selected delivery/report behavior on Linux/Windows,
-battle/detail localization and broader settings coverage, native-agent battles, Linux confinement runtime verification,
+broader settings coverage and remaining technical detail copy, native-agent battles, Linux confinement runtime verification,
 provider-specific launcher registration, interrupted selected-delivery recovery,
 real demo recording, richer quality evaluation, cross-platform release installers and telemetry
 adapters remain **unverified / not
