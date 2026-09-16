@@ -1,7 +1,7 @@
 # GrowthLab progress
 
-Current milestone: **Phase 2/3/4 — public repository review, manual-brief onboarding, executable playbooks, public checkout import and distribution-aware measurement analysis validated** (2026-09-16).
-Overall completion: **about 79%, subjective estimate against the full specification**.
+Current milestone: **Phase 2/3/4 — public repository review, manual-brief onboarding, executable playbooks, public checkout import and distribution-aware measurement analysis validated** (2026-09-17).
+Overall completion: **about 80%, subjective estimate against the full specification**.
 The configuration/import, explicit non-Git initialization, read-only URL audit and three-variant replay CLI slices pass locally.
 Selected delivery and report behavior pass local Rust, real CLI and browser checks.
 Recovery passes local Rust and real CLI interruption/legacy-archive checks.
@@ -11,7 +11,7 @@ GitHub Actions is disabled at the user's request.
 The GrowthLab API and initial dashboard pass local Rust/UI and synthetic real
 browser checks. The bundled fictional replay now passes real CLI/HTTP and browser
 checks, including an estimated SEO page-hygiene rubric and standalone local audit. Native-agent execution
-and full visual/performance evaluation remain open release gates; the repository now includes verified desktop and
+and full visual regression/accessibility evaluation remain open release gates; the repository now includes verified desktop and
 phone render captures, observed local Chromium layout checks, a transparent static-render rubric plus an eight-second
 walkthrough assembled from the real browser captures.
 
@@ -30,6 +30,11 @@ capture metadata. It checks for a mobile viewport,
 named links and buttons, labelled form controls and parser-blocking resource
 hints. These signals are source-level prompts; they are not Lighthouse,
 screen-reader, Core Web Vital or conversion evidence.
+When the browser trace includes navigation timings, comparisons and reports also
+show a separate **OBSERVED** browser-timing rubric for DOM readiness, load,
+first-paint hints and metadata integrity. It is a local heuristic and does not
+claim Lighthouse, Core Web Vitals, accessibility, visual regression or field
+performance.
 
 ## Completed
 
@@ -55,6 +60,12 @@ screen-reader, Core Web Vital or conversion evidence.
 - Added the `static-render-hints-v1` rubric to comparisons and shareable reports.
   It decomposes observed desktop/phone capture coverage, overflow, visible copy
   and metadata integrity without combining those signals into a growth claim.
+
+- Added the `browser-timing-hints-v1` rubric to comparisons and shareable
+  reports when sealed Chromium captures include timing entries. It shows
+  desktop/phone DOM-ready, load, first-paint and metadata dimensions with
+  explicit local-only limits; it is not a Lighthouse, Core Web Vital,
+  accessibility, visual-regression or real-user result.
 
 - Carried persisted hypothesis IDs into comparison rows and private JSON, Markdown
   and HTML reports. Reviewers can trace a branch from the workspace map through

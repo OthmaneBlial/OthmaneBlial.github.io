@@ -27,13 +27,14 @@ by this roadmap.
   CLI reports and GrowthLab home/workspace/goal/battle/evidence/diff/delivery
   screens are implemented through Rust APIs. The workspace now shows a persisted
   three-branch experiment map and keeps its hypothesis IDs linked into battle
-  variants. Complete tree/settings/localized UX and browser-based visual/performance evaluation
-  remain pending. Restricted previews
+  variants. Complete tree/settings/localized UX and browser-based visual
+  regression/accessibility evaluation remain pending. Restricted previews
   of immutable static-source bundles pass Rust/HTTP and real desktop/phone checks;
   new runs also archive verified desktop and phone PNGs when local Chromium is
   available, together with observed viewport, overflow, visible-copy and
-  optional local timing checks. These PNGs and checks are render inspection
-  artifacts, not a quality score. The bundled key-free `growthlab demo` replay
+  optional local timing checks. Comparisons now expose a separate observed
+  browser-timing hint rubric when those timings are present. These PNGs and
+  checks are render inspection artifacts, not a quality score. The bundled key-free `growthlab demo` replay
   and real Home launch pass local CLI/HTTP and browser checks. Page-quality
   source hints are now shown beside the SEO rubric; a concise real recording,
   browser-based quality evaluation and release packaging remain pending.

@@ -9,6 +9,12 @@
   decomposed into viewport coverage, overflow, visible copy and metadata
   integrity; it remains separate from performance, accessibility and growth
   evidence.
+- Comparisons and shareable reports now include the optional
+  `browser-timing-hints-v1` rubric when a sealed Chromium capture includes
+  timing entries. It decomposes desktop/phone DOM-ready, load, first-paint and
+  metadata observations with explicit local-only limits; it is not Lighthouse,
+  Core Web Vitals, accessibility, visual-regression, field-performance or
+  growth evidence.
 - Ready static previews now record observed local Chromium checks alongside
   verified desktop and phone PNGs: viewport coverage, visible text length,
   horizontal overflow and optional local navigation/paint timings. The checks

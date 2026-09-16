@@ -1,11 +1,11 @@
 {
   "schemaVersion": 1,
-  "updated": "2026-09-16",
+  "updated": "2026-09-17",
   "stage": "Source alpha",
-  "progressEstimate": 79,
+  "progressEstimate": 80,
   "progressExplanation": "Subjective estimate against the complete product specification, not a measured delivery metric.",
-  "milestone": "Public repository review, manual-brief onboarding, executable playbooks, public checkout import, distribution-aware measurement and role-grouped experiment tree validated",
-  "validatedSourceCommit": "ba08777b6f2f602b5dc363521515b2a864e4083e",
+  "milestone": "Observed browser timing hints, public repository review, manual-brief onboarding, executable playbooks, public checkout import, distribution-aware measurement and role-grouped experiment tree validated",
+  "validatedSourceCommit": "82dc178da74d8469d19d312c5e7ae931597c5573",
   "delivered": [
     "Local product import with reviewed growthlab.yaml permissions",
     "Three competing changes from one frozen starting point in isolated workspaces",
@@ -38,13 +38,14 @@
     "Observed local Chromium render checks for viewport coverage, overflow, visible copy and optional timings",
     "Transparent observed static-render rubric in comparisons and shareable reports",
     "Role-grouped experiment tree keeps stable hypothesis IDs linked to each battle",
-    "Comparison rows and private reports preserve hypothesis IDs for end-to-end lineage"
+    "Comparison rows and private reports preserve hypothesis IDs for end-to-end lineage",
+    "Observed local browser timing rubric for first paint, DOM ready, load and timing metadata with explicit limits"
   ],
   "validation": [
     {
       "name": "Rust tests",
       "status": "passed",
-      "detail": "953 tests per binary; 951 passed, zero failures and two inherited ignored tests (serial run)"
+      "detail": "955 tests per binary; 953 passed, zero failures and two inherited ignored tests (serial run)"
     },
     {
       "name": "UI tests",
@@ -54,12 +55,17 @@
     {
       "name": "Local quality checks",
       "status": "passed",
-      "detail": "Formatting, Clippy, UI types, styles and builds"
+      "detail": "Formatting, Clippy, UI types, styles and builds; full serial Rust suite passed"
     },
     {
       "name": "Actual demo and browser flow",
       "status": "passed",
       "detail": "Real CLI/HTTP execution, desktop/phone captures, observed local Chromium render checks and static-render rubric, verified PNG endpoint checks, SEO rubric records, page-quality hints and standalone local audit on owned fixtures"
+    },
+    {
+      "name": "Observed browser timing rubric",
+      "status": "passed",
+      "detail": "Local Chromium smoke records desktop/phone DOM, load and first-paint timing hints in comparison rows and reports; no Lighthouse, Core Web Vitals, accessibility, visual-regression or field-performance claim"
     },
     {
       "name": "Local CSV measurement",
@@ -139,7 +145,7 @@
   ],
   "pending": [
     "Provider adapters",
-    "Visual quality/performance evaluation and a continuous screen recording",
+    "Full visual regression/accessibility evaluation and a continuous screen recording",
     "Native-agent battle verification and provider-specific launcher registration",
     "Editable experiment tree, settings and localized interface",
     "Cross-platform runtime proof, portable binaries/installers and distribution notices"
@@ -152,8 +158,8 @@
   },
   "release": {
     "published": true,
-    "version": "0.1.0-alpha.15",
-    "url": "https://github.com/OthmaneBlial/GrowthLab/releases/tag/v0.1.0-alpha.15",
+    "version": "0.1.0-alpha.16",
+    "url": "https://github.com/OthmaneBlial/GrowthLab/releases/tag/v0.1.0-alpha.16",
     "platform": "Source prerelease",
     "limitation": "Tagged source archives; no standalone binaries or installers. Provider adapters, native-agent verification and cross-platform packaging remain pending."
   }
