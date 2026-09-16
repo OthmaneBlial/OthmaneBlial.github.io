@@ -2,10 +2,10 @@
   "schemaVersion": 1,
   "updated": "2026-09-16",
   "stage": "Source alpha",
-  "progressEstimate": 76,
+  "progressEstimate": 78,
   "progressExplanation": "Subjective estimate against the complete product specification, not a measured delivery metric.",
   "milestone": "Public repository review, manual-brief onboarding, executable playbooks, public checkout import and distribution-aware measurement analysis validated",
-  "validatedSourceCommit": "d1d10a62eedcc6bee24564229bafd28ccbf8f747",
+  "validatedSourceCommit": "ddf0e63b2a75785744309693c21e20bbe9694d96",
   "delivered": [
     "Local product import with reviewed growthlab.yaml permissions",
     "Three competing changes from one frozen starting point in isolated workspaces",
@@ -35,7 +35,8 @@
     "Workspace experiment map showing the shared goal and three untested growth branches",
     "Prepared battles reuse persisted hypothesis IDs so the map remains linked to each variant",
     "Inspectable page-quality hints for mobile, controls, form labels, loading sources and claim guardrails",
-    "Observed local Chromium render checks for viewport coverage, overflow, visible copy and optional timings"
+    "Observed local Chromium render checks for viewport coverage, overflow, visible copy and optional timings",
+    "Transparent observed static-render rubric in comparisons and shareable reports"
   ],
   "validation": [
     {
@@ -56,7 +57,7 @@
     {
       "name": "Actual demo and browser flow",
       "status": "passed",
-      "detail": "Real CLI/HTTP execution, desktop/phone captures, observed local Chromium render checks, verified PNG endpoint checks, SEO rubric records, page-quality hints and standalone local audit on owned fixtures"
+      "detail": "Real CLI/HTTP execution, desktop/phone captures, observed local Chromium render checks and static-render rubric, verified PNG endpoint checks, SEO rubric records, page-quality hints and standalone local audit on owned fixtures"
     },
     {
       "name": "Local CSV measurement",
@@ -144,8 +145,8 @@
   },
   "release": {
     "published": true,
-    "version": "0.1.0-alpha.12",
-    "url": "https://github.com/OthmaneBlial/GrowthLab/releases/tag/v0.1.0-alpha.12",
+    "version": "0.1.0-alpha.13",
+    "url": "https://github.com/OthmaneBlial/GrowthLab/releases/tag/v0.1.0-alpha.13",
     "platform": "Source prerelease",
     "limitation": "Tagged source archives; no standalone binaries or installers. Provider adapters, native-agent verification and cross-platform packaging remain pending."
   }

@@ -1,7 +1,7 @@
 # GrowthLab progress
 
 Current milestone: **Phase 2/3/4 — public repository review, manual-brief onboarding, executable playbooks, public checkout import and distribution-aware measurement analysis validated** (2026-09-16).
-Overall completion: **about 76%, subjective estimate against the full specification**.
+Overall completion: **about 78%, subjective estimate against the full specification**.
 The configuration/import, explicit non-Git initialization, read-only URL audit and three-variant replay CLI slices pass locally.
 Selected delivery and report behavior pass local Rust, real CLI and browser checks.
 Recovery passes local Rust and real CLI interruption/legacy-archive checks.
@@ -11,8 +11,8 @@ GitHub Actions is disabled at the user's request.
 The GrowthLab API and initial dashboard pass local Rust/UI and synthetic real
 browser checks. The bundled fictional replay now passes real CLI/HTTP and browser
 checks, including an estimated SEO page-hygiene rubric and standalone local audit. Native-agent execution
-and visual/performance evaluation remain open release gates; the repository now includes verified desktop and
-phone render captures, observed local Chromium layout checks plus an eight-second
+and full visual/performance evaluation remain open release gates; the repository now includes verified desktop and
+phone render captures, observed local Chromium layout checks, a transparent static-render rubric plus an eight-second
 walkthrough assembled from the real browser captures.
 
 The local measurement slice now accepts bounded UTF-8 CSV exports and reports
@@ -24,7 +24,9 @@ exposes the same summary from a local file. It is user-supplied **MEASURED** dat
 provider identity, causality and statistical significance remain unverified.
 
 The archived HTML evaluator now also exposes a separate **Page quality hints
-(estimated)** record beside the SEO rubric. It checks for a mobile viewport,
+(estimated)** record beside the SEO rubric. Ready sealed previews additionally
+expose an **OBSERVED** static-render rubric when local Chromium produced the
+capture metadata. It checks for a mobile viewport,
 named links and buttons, labelled form controls and parser-blocking resource
 hints. These signals are source-level prompts; they are not Lighthouse,
 screen-reader, Core Web Vital or conversion evidence.
@@ -49,6 +51,10 @@ screen-reader, Core Web Vital or conversion evidence.
   checks are inspectable **OBSERVED** traces of the sanitized document, not
   Lighthouse, Core Web Vitals, accessibility, visual-regression, real-user or
   growth evidence.
+
+- Added the `static-render-hints-v1` rubric to comparisons and shareable reports.
+  It decomposes observed desktop/phone capture coverage, overflow, visible copy
+  and metadata integrity without combining those signals into a growth claim.
 
 - Added explicit public GitHub checkout import. The CLI, API and Home flow clone
   only into a new caller-selected folder, preserve an existing `growthlab.yaml`,
@@ -298,8 +304,8 @@ The initial GrowthLab API/dashboard operations now pass local and real synthetic
 browser checks. The workspace experiment map is visible and its persisted
 hypothesis lineage is reused by battles. Local CSV measurement summaries now
 expose descriptive baseline comparisons with sample sizes, date range and
-MEASURED provenance. Complete tree/settings/localized UX, continuous recording
-and richer quality evaluation remain pending. Restricted previews and archived PNG captures now pass local
+MEASURED provenance. Complete tree/settings/localized UX, continuous recording and full browser
+quality/performance evaluation remain pending. Restricted previews and archived PNG captures now pass local
 Rust/HTTP and real browser checks. Windows validation is unsupported.
 
 ## Next three concrete tasks
