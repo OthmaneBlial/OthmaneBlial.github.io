@@ -2,10 +2,10 @@
   "schemaVersion": 1,
   "updated": "2026-09-16",
   "stage": "Source alpha",
-  "progressEstimate": 70,
+  "progressEstimate": 72,
   "progressExplanation": "Subjective estimate against the complete product specification, not a measured delivery metric.",
-  "milestone": "Public repository review, manual-brief onboarding, executable playbooks, read-only URL audit and measurement analysis validated",
-  "validatedSourceCommit": "3281b6b6b13ff136cac7dcfff8290ce1c6868dee",
+  "milestone": "Public repository review, manual-brief onboarding, executable playbooks, read-only URL audit and distribution-aware measurement analysis validated",
+  "validatedSourceCommit": "de7c26b",
   "delivered": [
     "Local product import with reviewed growthlab.yaml permissions",
     "Three competing changes from one frozen starting point in isolated workspaces",
@@ -29,18 +29,19 @@
     "Explicit local-folder onboarding with protected-path checks and an opt-in local Git snapshot",
     "Read-only public HTTPS SEO audit with robots policy checks and bounded page retrieval",
     "Public GitHub metadata review and private local manual-brief onboarding",
-    "Saved deterministic playbook runs with ordered answers, outputs and guardrails"
+    "Saved deterministic playbook runs with ordered answers, outputs and guardrails",
+    "Distribution-aware local measurement comparisons that keep channel baselines separate"
   ],
   "validation": [
     {
       "name": "Rust tests",
       "status": "passed",
-      "detail": "941 tests per binary; 939 passed, zero failures and two inherited ignored tests"
+      "detail": "942 tests per binary; 940 passed, zero failures and two inherited ignored tests"
     },
     {
       "name": "UI tests",
       "status": "passed",
-      "detail": "171 tests; zero failures or skips"
+      "detail": "172 tests; zero failures or skips"
     },
     {
       "name": "Local quality checks",
@@ -101,10 +102,15 @@
       "name": "Executable playbooks",
       "status": "passed",
       "detail": "CLI, API and workspace dashboard execute and persist deterministic role contracts with bounded answers; runs remain UNTESTED and make no provider or product-file request"
+    },
+    {
+      "name": "Distribution-aware measurement",
+      "status": "passed",
+      "detail": "Local Rust and browser CSV summaries group by metric, distribution or channel and variant; comparisons stay within each distribution and remain MEASURED from user-supplied rows"
     }
   ],
   "pending": [
-    "Provider adapters and distribution-aware analysis",
+    "Provider adapters",
     "Visual quality/performance evaluation and a continuous screen recording",
     "Native-agent battle verification and provider-specific launcher registration",
     "Complete experiment tree, settings and localized interface",
