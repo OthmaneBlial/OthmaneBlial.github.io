@@ -30,8 +30,8 @@ by this roadmap.
   variants. Complete tree/settings/localized UX and browser-based visual/performance evaluation
   remain pending. Restricted previews
   of immutable static-source bundles pass Rust/HTTP and real desktop/phone checks;
-  new runs also archive a verified desktop PNG when local Chromium is available.
-  The PNG is a render artifact, not a quality score. The bundled
+  new runs also archive verified desktop and phone PNGs when local Chromium is
+  available. These PNGs are render artifacts, not a quality score. The bundled
   key-free `growthlab demo` replay and real Home launch pass local CLI/HTTP and
   browser checks. Page-quality source hints are now shown beside the SEO rubric;
   a concise real recording, browser-based quality evaluation and release

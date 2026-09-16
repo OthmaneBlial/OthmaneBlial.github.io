@@ -5,7 +5,7 @@
   "progressEstimate": 76,
   "progressExplanation": "Subjective estimate against the complete product specification, not a measured delivery metric.",
   "milestone": "Public repository review, manual-brief onboarding, executable playbooks, public checkout import and distribution-aware measurement analysis validated",
-  "validatedSourceCommit": "fd9ede0",
+  "validatedSourceCommit": "69ab801",
   "delivered": [
     "Local product import with reviewed growthlab.yaml permissions",
     "Three competing changes from one frozen starting point in isolated workspaces",
@@ -18,7 +18,7 @@
     "Inspected and explicitly resumed pending selected-delivery receipts without rollback",
     "Reworked the bundled demo to show intent, evidence and an explicit review choice",
     "Local and SSH launchers self-register their controller PID before payload work",
-    "Automatic desktop PNG capture from sealed preview documents with archive verification",
+    "Automatic desktop and phone PNG capture from sealed preview documents with archive verification",
     "Explainable SEO page-hygiene rubric with dimension scores and limits",
     "Standalone local SEO audit with actionable recommendations, JSON or Markdown output and safe file bounds",
     "Eight-second demo reel assembled from real local browser captures",
@@ -40,7 +40,7 @@
     {
       "name": "Rust tests",
       "status": "passed",
-      "detail": "945 tests per binary; 943 passed, zero failures and two inherited ignored tests (serial run)"
+      "detail": "949 tests per binary; 947 passed, zero failures and two inherited ignored tests (serial run)"
     },
     {
       "name": "UI tests",
@@ -143,8 +143,8 @@
   },
   "release": {
     "published": true,
-    "version": "0.1.0-alpha.10",
-    "url": "https://github.com/OthmaneBlial/GrowthLab/releases/tag/v0.1.0-alpha.10",
+    "version": "0.1.0-alpha.11",
+    "url": "https://github.com/OthmaneBlial/GrowthLab/releases/tag/v0.1.0-alpha.11",
     "platform": "Source prerelease",
     "limitation": "Tagged source archives; no standalone binaries or installers. Provider adapters, native-agent verification and cross-platform packaging remain pending."
   }

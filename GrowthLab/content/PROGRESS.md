@@ -11,7 +11,8 @@ GitHub Actions is disabled at the user's request.
 The GrowthLab API and initial dashboard pass local Rust/UI and synthetic real
 browser checks. The bundled fictional replay now passes real CLI/HTTP and browser
 checks, including an estimated SEO page-hygiene rubric and standalone local audit. Native-agent execution
-and visual/performance evaluation remain open release gates; the repository now includes an eight-second
+and visual/performance evaluation remain open release gates; the repository now includes verified desktop and
+phone render captures plus an eight-second
 walkthrough assembled from the real browser captures.
 
 The local measurement slice now accepts bounded UTF-8 CSV exports and reports
@@ -126,13 +127,16 @@ screen-reader, Core Web Vital or conversion evidence.
   Existing configuration/run serialization stays unchanged when the option is absent.
 - Added verified static-preview JSON and desktop/phone inspection with an opaque,
   inert iframe and restrictive archived CSP. Scripts, forms and navigation are
-  removed; external/unsupported resources are blocked. A failed validation can
-  still have a preview. Unavailable input records no fabricated document or image.
+  removed; external/unsupported resources are blocked. Ready candidates now
+  attempt both desktop and phone PNG captures from the sealed source when local
+  Chromium is available. A failed validation can still have a preview.
+  Unavailable input records no fabricated document or image.
 - Verified all three real demo pages in Chrome, including the failed variant's
   zero h1 elements and disabled selection. Desktop/phone widths fit, keyboard
   focus skips the frame and phone inspection tabs exceed 44px. Real manual UI
-  captures are committed; each new ready preview attempts an automatic desktop
-  PNG capture from the sealed document and verifies its archive digest. See
+  captures are committed; each new ready preview attempts automatic desktop and
+  phone PNG captures from the sealed document and verifies their archive digests.
+  See
   [static-previews.md](static-previews.md).
 - Added a deterministic `seo-page-hygiene-v1` rubric to the comparison and report.
   It scores eight visible structural signals (title, description, headings,
@@ -317,7 +321,7 @@ Rust/HTTP and real browser checks. Windows validation is unsupported.
 Standalone SEO audit and rubric unit tests (2026-09-16): **passed locally**;
 the real binary emitted JSON and Markdown for a UTF-8 fixture and refused a
 symlink input. Static-preview unit (2026-09-16): **passed locally**. Full serial
-`cargo test --locked -- --test-threads=1` passes **945 tests per binary, 943
+`cargo test --locked -- --test-threads=1` passes **949 tests per binary, 947
 passed, zero failures and two inherited ignored tests**;
 Clippy with `-D warnings`, formatting, style checks and the debug build pass.
 UI typecheck/i18n/build and **172 tests, zero failures/skips** pass; final `ui/dist`
