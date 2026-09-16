@@ -15,6 +15,11 @@ title, description, headings, document language, useful copy, canonical URL,
 useful links and image descriptions. Markdown is intended for a quick review
 or a local issue description.
 
+When a dimension is partial or missing, the output adds a concrete next step,
+such as adjusting the title range, adding a description or giving images useful
+alt text. A page that passes every dimension reports that no structural gaps
+were found; it still does not imply search performance.
+
 Every score is labeled **ESTIMATED**. The audit checks supplied HTML only; it
 does not crawl, index, rank or measure traffic. It cannot predict search
 position or conversion, and it does not replace accessibility, performance,

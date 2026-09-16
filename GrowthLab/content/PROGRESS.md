@@ -87,6 +87,8 @@ recording and visual/performance evaluation remain open release gates.
   symlinks and oversized/non-UTF-8 files, and make the no-network boundary
   explicit. This remains structural guidance, not ranking, traffic or conversion
   evidence.
+- Expanded the rubric with deterministic next steps for every partial or missing
+  dimension, and surfaced them in the CLI, dashboard and exported reports.
 - Fixed a macOS cancellation probe race exposed by the full parallel suite.
   No-signal EPERM probes retry briefly while the owned group is reaped; persistent
   permission failures and actual signal failures still propagate. Existing real

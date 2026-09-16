@@ -1,5 +1,11 @@
 # GrowthLab release notes
 
+## Next
+
+- Expanded the local SEO rubric with deterministic, dimension-specific next
+  steps for partial or missing signals. Recommendations are now visible in the
+  CLI, dashboard and HTML/Markdown battle reports.
+
 ## 0.1.0-alpha.3 — 2026-09-16 (source prerelease)
 
 - Added `growthlab seo-audit --html <file>` for a quick local SEO page review
