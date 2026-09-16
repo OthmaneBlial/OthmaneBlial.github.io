@@ -369,7 +369,7 @@ Rust/HTTP and real browser checks. Windows validation is unsupported.
 Standalone SEO audit and rubric unit tests (2026-09-16): **passed locally**;
 the real binary emitted JSON and Markdown for a UTF-8 fixture and refused a
 symlink input. Static-preview unit (2026-09-16): **passed locally**. Full serial
-`cargo test --locked -- --test-threads=1` passes **953 tests per binary, 951
+`cargo test --locked -- --test-threads=1` passes **959 tests per binary, 957
 passed, zero failures and two inherited ignored tests**;
 Clippy with `-D warnings`, formatting, style checks and the debug build pass.
 UI typecheck/i18n/build and **172 tests, zero failures/skips** pass; final `ui/dist`
@@ -386,6 +386,8 @@ Browser checks verify the actual candidate text/styles, 1280px/390px CSS viewpor
 opaque/inert attributes, phone default, keyboard exclusion, no horizontal overflow
 and empty captured warning/error logs. Hot reload interrupted an initial phone
 selector read; final checks/capture ran after the build completed and a reload.
+The editable hypothesis API test preserves IDs, roles, evidence and frozen
+battle contracts, and refuses updates while a battle is ready or running.
 Native providers, richer quality evaluation and release gates remain open. The
 continuous 30-second public-site walkthrough is now archived separately from the
 short eight-second reel.
