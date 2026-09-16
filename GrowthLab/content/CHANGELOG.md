@@ -18,7 +18,9 @@
   source, with source/document digests, bounded resource expansion, unavailable
   status and frozen-archive verification. The dashboard displays desktop/phone
   views through verified JSON in an opaque, inert frame; scripts and external
-  resources are blocked. These are not automatic PNG captures or quality scores.
+  resources are blocked. Ready runs also attempt a local Chromium desktop PNG;
+  its dimensions, size and digest are archived and rechecked. The image remains
+  a render artifact, not a quality score.
 - Fixed transient macOS cancellation probe errors during owned group reaping;
   persistent permission failures still propagate and group-gone checks remain.
 - Added schema-v1 `growthlab.yaml` with explicit product/goal, permission prefixes,
@@ -76,6 +78,6 @@
 This source prerelease is not the complete credible release in the specification. The complete experiment-tree/settings UX,
 verified native execution, cross-platform confinement proof, incomplete launcher registration
 and interrupted selected-delivery recovery,
-automatic per-run screenshot artifacts, a real demo recording and real outcome measurement
+real demo recording, richer visual evaluation and real outcome measurement
 remain work in the roadmap. No telemetry lift, production readiness, public
 installer or demonstrated adoption is claimed.

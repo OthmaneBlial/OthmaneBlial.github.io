@@ -1,7 +1,7 @@
 # GrowthLab progress
 
-Current milestone: **Phase 2/3 — archived static candidate previews validated** (2026-09-16).
-Overall completion: **about 40%, subjective estimate against the full specification**.
+Current milestone: **Phase 2/3 — archived static previews with local PNG captures validated** (2026-09-16).
+Overall completion: **about 45%, subjective estimate against the full specification**.
 The configuration/import and three-variant replay CLI slices pass locally.
 Selected delivery and report behavior pass local Rust, real CLI and browser checks.
 Recovery passes local Rust and real CLI interruption/legacy-archive checks.
@@ -10,7 +10,7 @@ sealed policy digests pass local checks; Linux runtime verification remains pend
 GitHub Actions is disabled at the user's request.
 The GrowthLab API and initial dashboard pass local Rust/UI and synthetic real
 browser checks. The bundled fictional replay now passes real CLI/HTTP and browser
-checks. The complete native-agent/archived-render vertical slice
+checks. The complete native-agent/recording/quality-evaluation vertical slice
 and credible release have not passed yet.
 
 ## Completed
@@ -19,7 +19,7 @@ and credible release have not passed yet.
   at immutable source commit `c477d2998df4b91f1145b0d347239b4e95efdef3`. GitHub
   confirmed public, non-draft prerelease metadata and tagged source archive links;
   no binaries/installers are attached. README and website share its release link
-  and the explicitly subjective 40% full-spec estimate. All six workflows remain
+  and the explicitly subjective 45% full-spec estimate. All six workflows remain
   manually disabled; source publication does not close pending product gates.
 
 - Published the canonical [website](https://othmaneblial.github.io/GrowthLab/)
@@ -67,7 +67,8 @@ and credible release have not passed yet.
 - Verified all three real demo pages in Chrome, including the failed variant's
   zero h1 elements and disabled selection. Desktop/phone widths fit, keyboard
   focus skips the frame and phone inspection tabs exceed 44px. Real manual UI
-  captures are committed; automatic per-run PNG archives remain pending. See
+  captures are committed; each new ready preview attempts an automatic desktop
+  PNG capture from the sealed document and verifies its archive digest. See
   [static-previews.md](static-previews.md).
 - Fixed a macOS cancellation probe race exposed by the full parallel suite.
   No-signal EPERM probes retry briefly while the owned group is reaped; persistent
@@ -202,14 +203,14 @@ confinement validated locally. Local and SSH launchers now self-register their
 controller PID before payload work. Native-agent verification, provider-specific
 launcher registration and Linux confinement runtime verification remain pending.
 The initial GrowthLab API/dashboard operations now pass local and real synthetic
-browser checks. Complete tree/settings/localized UX and bundled
-automatic candidate PNG capture remains pending. Restricted previews of archived
-static source now pass local Rust/HTTP and real browser checks. Windows validation is unsupported.
+browser checks. Complete tree/settings/localized UX, concise recording and richer
+quality evaluation remain pending. Restricted previews and archived PNG captures now pass local
+Rust/HTTP and real browser checks. Windows validation is unsupported.
 
 ## Next three concrete tasks
 
-1. Add actual per-run PNG capture to the archived static-preview foundation,
-   then create a concise real recording and richer inspectable quality evaluation.
+1. Create a concise real recording and richer inspectable quality evaluation from
+   the archived preview captures.
 2. Close remaining provider-specific launcher registration and cross-platform confinement gates,
    then verify genuine native-agent proposals without inventing provider data.
 3. Complete tree/settings/localized UX, broader inputs/playbooks/measurement and
@@ -230,7 +231,7 @@ static source now pass local Rust/HTTP and real browser checks. Windows validati
 ## Latest validation
 
 Static-preview unit (2026-09-16): **passed locally**. Full `cargo test --locked`
-passes **911 tests per binary, zero failures, two inherited ignored tests**;
+passes **914 tests per binary, 912 passed, zero failures and two inherited ignored tests**;
 Clippy with `-D warnings`, formatting, style checks and the debug build pass.
 UI typecheck/i18n/build and **167 tests, zero failures/skips** pass; final `ui/dist`
 is included. The real CLI demo regression verifies ready previews, exact served
@@ -385,7 +386,7 @@ during inherited harness detection. Native-agent execution is not verified.
 Local CLI/domain/replay validation passed. Selected delivery/report behavior on Linux/Windows,
 complete GrowthLab tree/settings/localized UX, native-agent battles, Linux confinement runtime verification,
 provider-specific launcher registration, interrupted selected-delivery recovery,
-automatic per-run screenshot artifacts, real demo
-recording, release installers and telemetry adapters remain **unverified / not
+real demo recording, richer quality evaluation, release installers and telemetry
+adapters remain **unverified / not
 implemented**. No growth lift, adoption, native-agent execution or public release
 is claimed.

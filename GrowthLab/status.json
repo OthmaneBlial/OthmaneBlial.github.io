@@ -2,10 +2,10 @@
   "schemaVersion": 1,
   "updated": "2026-09-16",
   "stage": "Source alpha",
-  "progressEstimate": 40,
+  "progressEstimate": 45,
   "progressExplanation": "Subjective estimate against the complete product specification, not a measured delivery metric.",
-  "milestone": "Three real growth surfaces with sealed evidence and archived static previews",
-  "validatedSourceCommit": "0d84b7171c3d686602110a36195a30b6b86992f6",
+  "milestone": "Three real growth surfaces with sealed evidence and verified local PNG captures",
+  "validatedSourceCommit": "55a95d3d489c0c6ac0d013b876234ffb7f0f7018",
   "delivered": [
     "Local Git workspace import and reviewed growthlab.yaml permissions",
     "Three competing changes from one frozen baseline in isolated Git worktrees",
@@ -17,13 +17,14 @@
     "Published v0.1.0-alpha.1 as a source prerelease with explicit alpha limitations",
     "Inspected and explicitly resumed pending selected-delivery receipts without rollback",
     "Reworked the bundled demo to show intent, evidence and an explicit review choice",
-    "Local and SSH launchers self-register their controller PID before payload work"
+    "Local and SSH launchers self-register their controller PID before payload work",
+    "Automatic desktop PNG capture from sealed preview documents with archive verification"
   ],
   "validation": [
     {
       "name": "Rust tests",
       "status": "passed",
-      "detail": "911 per binary; zero failures; two inherited ignored tests"
+      "detail": "914 per binary; 912 passed, zero failures and two inherited ignored tests"
     },
     {
       "name": "UI tests",
@@ -38,7 +39,7 @@
     {
       "name": "Actual demo and browser flow",
       "status": "passed",
-      "detail": "Real CLI/HTTP execution and desktop/phone checks on owned fictional fixtures"
+      "detail": "Real CLI/HTTP execution, desktop/phone checks and verified PNG endpoint checks on owned fictional fixtures"
     },
     {
       "name": "Release build and runtime smokes",
@@ -57,7 +58,7 @@
     }
   ],
   "pending": [
-    "Automatic per-run PNG capture and a short real demo recording",
+    "A short real demo recording and richer inspectable visual quality evaluation",
     "Native-agent battle verification and provider-specific launcher registration",
     "Complete experiment tree, settings and localized interface",
     "Broader inputs, growth playbooks and real measurement",
