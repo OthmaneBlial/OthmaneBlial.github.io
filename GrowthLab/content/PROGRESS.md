@@ -1,7 +1,7 @@
 # GrowthLab progress
 
-Current milestone: **Phase 2/3/4 — editable experiment tree with frozen lineage, localized GrowthLab onboarding shell, provider-neutral measurement boundary, estimated accessibility structure hints, public repository review, manual-brief onboarding, executable playbooks, public checkout import and distribution-aware measurement analysis validated** (2026-09-17).
-Overall completion: **about 87%, subjective estimate against the full specification**.
+Current milestone: **Phase 2/3/4 — editable experiment tree with frozen lineage, localized GrowthLab onboarding and measurement UI, provider-neutral measurement boundary, estimated accessibility structure hints, public repository review, manual-brief onboarding, executable playbooks, public checkout import and distribution-aware measurement analysis validated** (2026-09-17).
+Overall completion: **about 88%, subjective estimate against the full specification**.
 The configuration/import, explicit non-Git initialization, read-only URL audit and three-variant replay CLI slices pass locally.
 Selected delivery and report behavior pass local Rust, real CLI and browser checks.
 Recovery passes local Rust and real CLI interruption/legacy-archive checks.
@@ -60,6 +60,11 @@ performance.
   browser panel enumerate the available CSV adapter and six planned external
   integration boundaries with network, status, provenance and limitation
   metadata; planned sources remain unconfigured and no provider is contacted.
+
+- Localized the measurement panel across all six locale catalogs. Source status,
+  file controls, summary headings, table labels, interval explanation and
+  provenance limits now follow the shared language picker; Arabic and Persian
+  continue to use the document's RTL direction.
 
 - Added a conservative page-quality hint evaluator beside the SEO rubric. Battle
   comparisons and shareable reports expose five structural dimensions,

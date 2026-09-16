@@ -2,10 +2,10 @@
   "schemaVersion": 1,
   "updated": "2026-09-17",
   "stage": "Source alpha",
-  "progressEstimate": 87,
+  "progressEstimate": 88,
   "progressExplanation": "Subjective estimate against the complete product specification, not a measured delivery metric.",
-  "milestone": "Editable experiment tree with frozen lineage, localized GrowthLab onboarding shell, provider-neutral measurement boundary, estimated accessibility structure hints in comparisons and standalone page audits, continuous browser walkthrough, observed timing hints, public repository review, manual-brief onboarding, executable playbooks, public checkout import and distribution-aware measurement validated",
-  "validatedSourceCommit": "b06ca18",
+  "milestone": "Editable experiment tree with frozen lineage, localized GrowthLab onboarding and measurement UI, provider-neutral measurement boundary, estimated accessibility structure hints in comparisons and standalone page audits, continuous browser walkthrough, observed timing hints, public repository review, manual-brief onboarding, executable playbooks, public checkout import and distribution-aware measurement validated",
+  "validatedSourceCommit": "082e2e8",
   "delivered": [
     "Local product import with reviewed growthlab.yaml permissions",
     "Three competing changes from one frozen starting point in isolated workspaces",
@@ -47,7 +47,8 @@
     "Comparison rows and private reports preserve hypothesis IDs for end-to-end lineage",
     "Observed local browser timing rubric for first paint, DOM ready, load and timing metadata with explicit limits",
     "Localized GrowthLab onboarding shell follows six existing locale catalogs and applies RTL direction for Arabic and Persian",
-    "Provider-neutral measurement source registry exposes local CSV and explicit planned external boundaries without provider requests"
+    "Provider-neutral measurement source registry exposes local CSV and explicit planned external boundaries without provider requests",
+    "Localized GrowthLab measurement panel follows all six locale catalogs and preserves RTL rendering for Arabic and Persian"
   ],
   "validation": [
     {
@@ -58,7 +59,7 @@
     {
       "name": "UI tests",
       "status": "passed",
-      "detail": "173 tests; zero failures or skips"
+      "detail": "174 tests; zero failures or skips"
     },
     {
       "name": "Local quality checks",
@@ -84,6 +85,11 @@
       "name": "GrowthLab localized onboarding",
       "status": "passed",
       "detail": "Chrome exercised the shared language picker for Spanish and Arabic; the GrowthLab home shell refreshed its copy, Arabic set dir=rtl, desktop scroll width matched the viewport and the tab recorded no warning or error logs"
+    },
+    {
+      "name": "Localized measurement panel",
+      "status": "passed",
+      "detail": "Chrome switched the measurement panel to Spanish and Arabic; translated headings, source states and controls rendered, Arabic set dir=rtl, viewport width stayed fitted and no browser warnings or errors were recorded"
     },
     {
       "name": "Local CSV measurement",
