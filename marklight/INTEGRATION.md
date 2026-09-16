@@ -13,9 +13,9 @@ If the final app screenshots change, refresh these copies before publication.
 The downloadable Markdown and plain terminal output are copied from
 `fixtures/markdown/gfm.md` and `gfm.terminal.txt`.
 
-The public installation guide uses source builds; it does not claim crates.io
-availability, a completed package release, cross-platform validation or measured
-performance. The project owner can add verified release download links later.
+The public installation guide includes the verified macOS arm64 npm CLI and
+Rust source builds. Desktop downloads point to GitHub Releases. It does not claim
+crates.io availability, cross-platform validation or unmeasured performance.
 
 Local verification:
 
