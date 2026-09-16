@@ -25,6 +25,8 @@ causality and statistical significance remain unverified.
 
 - Published [source prerelease v0.1.0-alpha.5](https://github.com/OthmaneBlial/GrowthLab/releases/tag/v0.1.0-alpha.5) at the validated source line. It adds exploratory 95% mean and baseline-difference intervals for repeated local observations, with matching CLI/browser calculations and documented descriptive limits.
 
+- Published [source prerelease v0.1.0-alpha.6](https://github.com/OthmaneBlial/GrowthLab/releases/tag/v0.1.0-alpha.6) at the validated source line. It adds ten role-based growth playbooks with explicit questions, outputs and guardrails, exposed through the local API, dashboard and searchable docs.
+
 - Published [source prerelease v0.1.0-alpha.4](https://github.com/OthmaneBlial/GrowthLab/releases/tag/v0.1.0-alpha.4) at the validated source line. It adds the browser-local measurement dashboard, keeps the CSV rows local, and includes no standalone binaries or installers.
 
 - Published [source prerelease v0.1.0-alpha.3](https://github.com/OthmaneBlial/GrowthLab/releases/tag/v0.1.0-alpha.3)
