@@ -31,11 +31,12 @@ by this roadmap.
   remain pending. Restricted previews
   of immutable static-source bundles pass Rust/HTTP and real desktop/phone checks;
   new runs also archive verified desktop and phone PNGs when local Chromium is
-  available. These PNGs are render artifacts, not a quality score. The bundled
-  key-free `growthlab demo` replay and real Home launch pass local CLI/HTTP and
-  browser checks. Page-quality source hints are now shown beside the SEO rubric;
-  a concise real recording, browser-based quality evaluation and release
-  packaging remain pending.
+  available, together with observed viewport, overflow, visible-copy and
+  optional local timing checks. These PNGs and checks are render inspection
+  artifacts, not a quality score. The bundled key-free `growthlab demo` replay
+  and real Home launch pass local CLI/HTTP and browser checks. Page-quality
+  source hints are now shown beside the SEO rubric; a concise real recording,
+  browser-based quality evaluation and release packaging remain pending.
 - [ ] **4 — Playbooks:** focused roles and practical positioning, activation,
   onboarding, ethical discovery, pricing research and launch templates with evidence.
   The ten role contracts and deterministic local playbook runs are available in

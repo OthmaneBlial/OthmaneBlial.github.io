@@ -12,7 +12,7 @@ The GrowthLab API and initial dashboard pass local Rust/UI and synthetic real
 browser checks. The bundled fictional replay now passes real CLI/HTTP and browser
 checks, including an estimated SEO page-hygiene rubric and standalone local audit. Native-agent execution
 and visual/performance evaluation remain open release gates; the repository now includes verified desktop and
-phone render captures plus an eight-second
+phone render captures, observed local Chromium layout checks plus an eight-second
 walkthrough assembled from the real browser captures.
 
 The local measurement slice now accepts bounded UTF-8 CSV exports and reports
@@ -42,6 +42,13 @@ screen-reader, Core Web Vital or conversion evidence.
   comparisons and shareable reports expose five structural dimensions,
   recommendations and limits with **ESTIMATED** provenance; browser-based
   performance and accessibility validation remain separate release gates.
+
+- Added observed local Chromium render checks to ready static previews. Each
+  archived desktop/phone capture records viewport coverage, visible text length,
+  horizontal-overflow status and optional local navigation/paint timings. The
+  checks are inspectable **OBSERVED** traces of the sanitized document, not
+  Lighthouse, Core Web Vitals, accessibility, visual-regression, real-user or
+  growth evidence.
 
 - Added explicit public GitHub checkout import. The CLI, API and Home flow clone
   only into a new caller-selected folder, preserve an existing `growthlab.yaml`,

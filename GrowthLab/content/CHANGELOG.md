@@ -2,6 +2,11 @@
 
 ## Next
 
+- Ready static previews now record observed local Chromium checks alongside
+  verified desktop and phone PNGs: viewport coverage, visible text length,
+  horizontal overflow and optional local navigation/paint timings. The checks
+  describe the sanitized document and are not Lighthouse, Core Web Vitals,
+  accessibility, visual-regression, real-user or growth evidence.
 - Ready static previews now attempt verified desktop and phone Chromium PNGs;
   the inspector displays the capture matching the selected viewport.
 - Added a browser-local measurement panel for user-supplied CSV exports. It shows descriptive means, sample sizes, date range and baseline comparisons without sending rows to a provider; causality and significance remain unverified.
