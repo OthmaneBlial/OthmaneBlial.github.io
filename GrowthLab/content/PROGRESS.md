@@ -30,10 +30,11 @@ capture metadata. It checks for a mobile viewport,
 named links and buttons, labelled form controls and parser-blocking resource
 hints. These signals are source-level prompts; they are not Lighthouse,
 screen-reader, Core Web Vital or conversion evidence.
-Battle comparisons and reports also show an **ESTIMATED** accessibility structure
-rubric for language, landmarks, heading hierarchy, image alternatives, named
-controls and form labels. It is a source-level prompt and does not certify WCAG
-conformance or assistive-technology behavior.
+Battle comparisons, reports and standalone local/public page audits also show an
+**ESTIMATED** accessibility structure rubric for language, landmarks, heading
+hierarchy, image alternatives, named controls and form labels. It is a
+source-level prompt and does not certify WCAG conformance or
+assistive-technology behavior.
 When the browser trace includes navigation timings, comparisons and reports also
 show a separate **OBSERVED** browser-timing rubric for DOM readiness, load,
 first-paint hints and metadata integrity. It is a local heuristic and does not
@@ -182,6 +183,9 @@ performance.
   hierarchy, image alternatives, named controls and form labels from archived
   HTML, with explicit recommendations and limitations. It is a source prompt,
   not a WCAG, screen-reader, keyboard or assistive-technology result.
+- Extended the same accessibility hints to standalone local and read-only public
+  page audits so CLI JSON/Markdown, API responses and the dashboard use one
+  explainable rubric surface.
 - Added `growthlab seo-audit --html <file>` for a quick local review outside a
   battle. JSON and Markdown output share the eight-dimension rubric, reject
   symlinks and oversized/non-UTF-8 files, and make the no-network boundary
