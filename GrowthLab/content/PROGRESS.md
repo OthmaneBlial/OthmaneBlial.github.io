@@ -1,7 +1,7 @@
 # GrowthLab progress
 
-Current milestone: **Phase 2/3 — local SEO audit and an explainable page rubric validated** (2026-09-16).
-Overall completion: **about 55%, subjective estimate against the full specification**.
+Current milestone: **Phase 2/3 — local SEO audit and local measurement dashboard validated** (2026-09-16).
+Overall completion: **about 57%, subjective estimate against the full specification**.
 The configuration/import and three-variant replay CLI slices pass locally.
 Selected delivery and report behavior pass local Rust, real CLI and browser checks.
 Recovery passes local Rust and real CLI interruption/legacy-archive checks.
@@ -16,8 +16,9 @@ walkthrough assembled from the real browser captures.
 
 The local measurement slice now accepts bounded UTF-8 CSV exports and reports
 descriptive means, sample sizes, optional date range and arithmetic baseline
-comparisons. It is user-supplied **MEASURED** data; provider identity, causality
-and statistical significance remain unverified.
+comparisons. The browser dashboard exposes the same summary from a local file.
+It is user-supplied **MEASURED** data; provider identity, causality and statistical
+significance remain unverified.
 
 ## Completed
 
@@ -233,7 +234,7 @@ launcher registration and Linux confinement runtime verification remain pending.
 The initial GrowthLab API/dashboard operations now pass local and real synthetic
 browser checks. Local CSV measurement summaries now expose descriptive baseline
 comparisons with sample sizes, date range and MEASURED provenance. Complete
-tree/settings/localized UX, a measurement dashboard, continuous recording and richer
+tree/settings/localized UX, cautious statistical analysis, continuous recording and richer
 quality evaluation remain pending. Restricted previews and archived PNG captures now pass local
 Rust/HTTP and real browser checks. Windows validation is unsupported.
 
@@ -241,8 +242,8 @@ Rust/HTTP and real browser checks. Windows validation is unsupported.
 
 1. Add a continuous screen recording and richer inspectable quality evaluation from
    the archived preview captures.
-2. Add a measurement dashboard and cautious statistical analysis over the local CSV
-   summaries, then verify genuine native-agent proposals without inventing provider data.
+2. Add cautious statistical analysis over the local CSV summaries, then verify genuine
+   native-agent proposals without inventing provider data.
 3. Complete tree/settings/localized UX, broader inputs/playbooks and cross-platform
    release packaging against the full specification.
 
@@ -265,7 +266,7 @@ the real binary emitted JSON and Markdown for a UTF-8 fixture and refused a
 symlink input. Static-preview unit (2026-09-16): **passed locally**. Full `cargo test --locked`
 passes **919 tests per binary, 917 passed, zero failures and two inherited ignored tests**;
 Clippy with `-D warnings`, formatting, style checks and the debug build pass.
-UI typecheck/i18n/build and **167 tests, zero failures/skips** pass; final `ui/dist`
+UI typecheck/i18n/build and **170 tests, zero failures/skips** pass; final `ui/dist`
 is included. The real CLI demo regression verifies ready previews, exact served
 built assets, source/document/seal hashes and its existing no-provider, privacy,
 baseline and shutdown checks. Debug RustEmbed serves assets from disk; this is
