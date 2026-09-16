@@ -2,9 +2,9 @@
   "schemaVersion": 1,
   "updated": "2026-09-16",
   "stage": "Source alpha",
-  "progressEstimate": 65,
+  "progressEstimate": 68,
   "progressExplanation": "Subjective estimate against the complete product specification, not a measured delivery metric.",
-  "milestone": "Read-only public URL audit, local-folder onboarding, playbooks and measurement analysis validated",
+  "milestone": "Public repository review, manual-brief onboarding, read-only URL audit, playbooks and measurement analysis validated",
   "validatedSourceCommit": "2a23be1cb31abbaf2c5470a67bb857e44d79b583",
   "delivered": [
     "Local product import with reviewed growthlab.yaml permissions",
@@ -28,6 +28,7 @@
     "Ten role-based growth playbooks with questions, outputs and guardrails",
     "Explicit local-folder onboarding with protected-path checks and an opt-in local Git snapshot",
     "Read-only public HTTPS SEO audit with robots policy checks and bounded page retrieval"
+    ,"Public GitHub metadata review and private local manual-brief onboarding"
   ],
   "validation": [
     {
@@ -101,7 +102,7 @@
     "Visual quality/performance evaluation and a continuous screen recording",
     "Native-agent battle verification and provider-specific launcher registration",
     "Complete experiment tree, settings and localized interface",
-    "Public repository URL/manual-brief inputs and executable playbook workflows",
+    "Public repository checkout import and executable playbook workflows",
     "Cross-platform runtime proof, portable binaries/installers and distribution notices"
   ],
   "provenance": "Replay proposals: SIMULATED. Executed checks: OBSERVED. Growth outcomes: UNTESTED.",

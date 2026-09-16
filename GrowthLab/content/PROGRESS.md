@@ -1,7 +1,7 @@
 # GrowthLab progress
 
-Current milestone: **Phase 2/3/4 — read-only public URL audit, measurement analysis, playbooks and local-folder onboarding validated** (2026-09-16).
-Overall completion: **about 65%, subjective estimate against the full specification**.
+Current milestone: **Phase 2/3/4 — public repository review, manual-brief onboarding, read-only URL audit, measurement analysis and playbooks validated** (2026-09-16).
+Overall completion: **about 68%, subjective estimate against the full specification**.
 The configuration/import, explicit non-Git initialization, read-only URL audit and three-variant replay CLI slices pass locally.
 Selected delivery and report behavior pass local Rust, real CLI and browser checks.
 Recovery passes local Rust and real CLI interruption/legacy-archive checks.
@@ -22,6 +22,8 @@ from a local file. It is user-supplied **MEASURED** data; provider identity,
 causality and statistical significance remain unverified.
 
 ## Completed
+
+- Added public GitHub metadata review and manual-brief onboarding. `repo-audit` and the Home review panel make one unauthenticated metadata request without cloning or executing source. `workspace brief` and the Home form create a private local analysis snapshot with no remote or provider request.
 
 - Added a read-only public URL SEO audit in the CLI, local API and Home screen.
   It accepts one HTTPS page after a same-origin `robots.txt` check, follows no
