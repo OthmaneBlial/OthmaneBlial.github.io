@@ -1,7 +1,7 @@
 # GrowthLab progress
 
-Current milestone: **Phase 2/3/4 — public repository review, manual-brief onboarding, executable playbooks, read-only URL audit and distribution-aware measurement analysis validated** (2026-09-16).
-Overall completion: **about 72%, subjective estimate against the full specification**.
+Current milestone: **Phase 2/3/4 — public repository review, manual-brief onboarding, executable playbooks, public checkout import and distribution-aware measurement analysis validated** (2026-09-16).
+Overall completion: **about 76%, subjective estimate against the full specification**.
 The configuration/import, explicit non-Git initialization, read-only URL audit and three-variant replay CLI slices pass locally.
 Selected delivery and report behavior pass local Rust, real CLI and browser checks.
 Recovery passes local Rust and real CLI interruption/legacy-archive checks.
@@ -30,6 +30,12 @@ provider identity, causality and statistical significance remain unverified.
   `distribution` or channel column and compare each variant only with the
   matching distribution baseline; absent columns use `all`. Rust and browser
   calculations stay aligned and make no provider request.
+
+- Added explicit public GitHub checkout import. The CLI, API and Home flow clone
+  only into a new caller-selected folder, preserve an existing `growthlab.yaml`,
+  or commit a supplied local contract when the checkout has none. The clone is
+  never pushed or executed during import, and a missing contract stays an
+  explicit setup error rather than silently inventing product context.
 
 - Added public GitHub metadata review and manual-brief onboarding. `repo-audit` and the Home review panel make one unauthenticated metadata request without cloning or executing source. `workspace brief` and the Home form create a private local analysis snapshot with no remote or provider request.
 

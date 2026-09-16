@@ -2,10 +2,10 @@
   "schemaVersion": 1,
   "updated": "2026-09-16",
   "stage": "Source alpha",
-  "progressEstimate": 72,
+  "progressEstimate": 76,
   "progressExplanation": "Subjective estimate against the complete product specification, not a measured delivery metric.",
-  "milestone": "Public repository review, manual-brief onboarding, executable playbooks, read-only URL audit and distribution-aware measurement analysis validated",
-  "validatedSourceCommit": "de7c26b",
+  "milestone": "Public repository review, manual-brief onboarding, executable playbooks, public checkout import and distribution-aware measurement analysis validated",
+  "validatedSourceCommit": "f7e4c05",
   "delivered": [
     "Local product import with reviewed growthlab.yaml permissions",
     "Three competing changes from one frozen starting point in isolated workspaces",
@@ -30,7 +30,8 @@
     "Read-only public HTTPS SEO audit with robots policy checks and bounded page retrieval",
     "Public GitHub metadata review and private local manual-brief onboarding",
     "Saved deterministic playbook runs with ordered answers, outputs and guardrails",
-    "Distribution-aware local measurement comparisons that keep channel baselines separate"
+    "Distribution-aware local measurement comparisons that keep channel baselines separate",
+    "Explicit public GitHub checkout import into a local, configured workspace"
   ],
   "validation": [
     {
@@ -107,6 +108,11 @@
       "name": "Distribution-aware measurement",
       "status": "passed",
       "detail": "Local Rust and browser CSV summaries group by metric, distribution or channel and variant; comparisons stay within each distribution and remain MEASURED from user-supplied rows"
+    },
+    {
+      "name": "Public repository checkout import",
+      "status": "passed",
+      "detail": "CLI, API and Home UI clone only after an explicit new destination is supplied; existing contracts are preserved, missing contracts are committed locally, and no push or provider request occurs"
     }
   ],
   "pending": [
@@ -114,7 +120,6 @@
     "Visual quality/performance evaluation and a continuous screen recording",
     "Native-agent battle verification and provider-specific launcher registration",
     "Complete experiment tree, settings and localized interface",
-    "Public repository checkout import",
     "Cross-platform runtime proof, portable binaries/installers and distribution notices"
   ],
   "provenance": "Replay proposals: SIMULATED. Executed checks: OBSERVED. Growth outcomes: UNTESTED.",
