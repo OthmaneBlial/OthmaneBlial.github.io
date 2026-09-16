@@ -56,6 +56,10 @@ screen-reader, Core Web Vital or conversion evidence.
   It decomposes observed desktop/phone capture coverage, overflow, visible copy
   and metadata integrity without combining those signals into a growth claim.
 
+- Carried persisted hypothesis IDs into comparison rows and private JSON, Markdown
+  and HTML reports. Reviewers can trace a branch from the workspace map through
+  its frozen battle variant without relying on a private database path.
+
 - Added explicit public GitHub checkout import. The CLI, API and Home flow clone
   only into a new caller-selected folder, preserve an existing `growthlab.yaml`,
   or commit a supplied local contract when the checkout has none. The clone is
