@@ -1,7 +1,7 @@
 # GrowthLab progress
 
-Current milestone: **Phase 2/3/4 — editable experiment tree with frozen lineage, localized GrowthLab onboarding and measurement UI, local settings panel, provider-neutral measurement boundary, estimated accessibility structure hints, public repository review, manual-brief onboarding, executable playbooks, public checkout import and distribution-aware measurement analysis validated** (2026-09-17).
-Overall completion: **about 89%, subjective estimate against the full specification**.
+Current milestone: **Phase 2/3/4 — editable experiment tree with frozen lineage, localized GrowthLab onboarding and measurement UI, local settings panel, provider-neutral measurement boundary, deterministic local CLI packaging with complete notices, estimated accessibility structure hints, public repository review, manual-brief onboarding, executable playbooks, public checkout import and distribution-aware measurement analysis validated** (2026-09-17).
+Overall completion: **about 90%, subjective estimate against the full specification**.
 The configuration/import, explicit non-Git initialization, read-only URL audit and three-variant replay CLI slices pass locally.
 Selected delivery and report behavior pass local Rust, real CLI and browser checks.
 Recovery passes local Rust and real CLI interruption/legacy-archive checks.
@@ -70,6 +70,14 @@ performance.
   changed from an anchored settings surface and remain browser-local; privacy
   and integration counts are visible without enabling a provider or changing
   product files.
+
+- Added deterministic local CLI packaging and an offline release-archive verifier.
+  Host-target archives include the executable, README, demo and distribution
+  guide, MIT and OpenResearch notices, and all six checked-in dependency notice
+  files. The verifier checks SHA-256, archive traversal/link safety and runs the
+  binary only when the target matches the current operating system and CPU.
+  Cross-platform runtime evidence, signing and release-attached installers stay
+  separate gates.
 
 - Added a conservative page-quality hint evaluator beside the SEO rubric. Battle
   comparisons and shareable reports expose five structural dimensions,
@@ -560,7 +568,7 @@ during inherited harness detection. Native-agent execution is not verified.
 Local CLI/domain/replay validation passed. Selected delivery/report behavior on Linux/Windows,
 complete GrowthLab settings/localized UX, native-agent battles, Linux confinement runtime verification,
 provider-specific launcher registration, interrupted selected-delivery recovery,
-real demo recording, richer quality evaluation, release installers and telemetry
+real demo recording, richer quality evaluation, cross-platform release installers and telemetry
 adapters remain **unverified / not
 implemented**. No growth lift, adoption, native-agent execution or public release
 is claimed.

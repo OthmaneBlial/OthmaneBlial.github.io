@@ -2,10 +2,10 @@
   "schemaVersion": 1,
   "updated": "2026-09-17",
   "stage": "Source alpha",
-  "progressEstimate": 89,
+  "progressEstimate": 90,
   "progressExplanation": "Subjective estimate against the complete product specification, not a measured delivery metric.",
-  "milestone": "Editable experiment tree with frozen lineage, localized GrowthLab onboarding and measurement UI, local settings panel, provider-neutral measurement boundary, estimated accessibility structure hints in comparisons and standalone page audits, continuous browser walkthrough, observed timing hints, public repository review, manual-brief onboarding, executable playbooks, public checkout import and distribution-aware measurement validated",
-  "validatedSourceCommit": "9b85065",
+  "milestone": "Editable experiment tree with frozen lineage, localized GrowthLab onboarding and measurement UI, local settings panel, provider-neutral measurement boundary, deterministic local CLI packaging with complete notices, estimated accessibility structure hints in comparisons and standalone page audits, continuous browser walkthrough, observed timing hints, public repository review, manual-brief onboarding, executable playbooks, public checkout import and distribution-aware measurement validated",
+  "validatedSourceCommit": "7505bae",
   "delivered": [
     "Local product import with reviewed growthlab.yaml permissions",
     "Three competing changes from one frozen starting point in isolated workspaces",
@@ -49,7 +49,8 @@
     "Localized GrowthLab onboarding shell follows six existing locale catalogs and applies RTL direction for Arabic and Persian",
     "Provider-neutral measurement source registry exposes local CSV and explicit planned external boundaries without provider requests",
     "Localized GrowthLab measurement panel follows all six locale catalogs and preserves RTL rendering for Arabic and Persian",
-    "Local GrowthLab settings panel persists language and theme preferences and shows provider-neutral integration state"
+    "Local GrowthLab settings panel persists language and theme preferences and shows provider-neutral integration state",
+    "Deterministic local CLI packaging with complete checked-in license notices and offline archive verification"
   ],
   "validation": [
     {
@@ -176,6 +177,11 @@
       "name": "Role-grouped experiment tree",
       "status": "passed",
       "detail": "Workspace dashboard groups persisted hypotheses by role in accessible branches; stable hypothesis IDs remain linked into prepared battle variants"
+    },
+    {
+      "name": "CLI archive packaging",
+      "status": "passed",
+      "detail": "Local macOS arm64 archive build includes LICENSE, NOTICE.md, demo and six checked-in dependency notices; an offline verifier passed checksum, traversal/link checks, structure and real version/build-channel execution"
     }
   ],
   "pending": [
@@ -183,7 +189,7 @@
     "Full visual regression and assistive-technology accessibility evaluation",
     "Native-agent battle verification and provider-specific launcher registration",
     "Settings and localized interface",
-    "Cross-platform runtime proof, portable binaries/installers and distribution notices"
+    "Cross-platform runtime proof and release-attached portable binaries/installers"
   ],
   "provenance": "Replay proposals: SIMULATED. Executed checks: OBSERVED. Growth outcomes: UNTESTED.",
   "website": {
@@ -196,6 +202,6 @@
     "version": "0.1.0-alpha.19",
     "url": "https://github.com/OthmaneBlial/GrowthLab/releases/tag/v0.1.0-alpha.19",
     "platform": "Source prerelease",
-    "limitation": "The attached CLI archive is validated on macOS arm64 only; Linux and Windows binaries, installers, signing and notarization remain pending. Provider adapters and native-agent verification remain pending."
+    "limitation": "The attached CLI archive is validated on macOS arm64 only and is unsigned/unnotarized; Linux and Windows binaries, installers and runtime proof remain pending. Provider adapters and native-agent verification remain pending."
   }
 }
