@@ -2,10 +2,10 @@
   "schemaVersion": 1,
   "updated": "2026-09-16",
   "stage": "Source alpha",
-  "progressEstimate": 68,
+  "progressEstimate": 70,
   "progressExplanation": "Subjective estimate against the complete product specification, not a measured delivery metric.",
-  "milestone": "Public repository review, manual-brief onboarding, read-only URL audit, playbooks and measurement analysis validated",
-  "validatedSourceCommit": "2a23be1cb31abbaf2c5470a67bb857e44d79b583",
+  "milestone": "Public repository review, manual-brief onboarding, executable playbooks, read-only URL audit and measurement analysis validated",
+  "validatedSourceCommit": "3281b6b6b13ff136cac7dcfff8290ce1c6868dee",
   "delivered": [
     "Local product import with reviewed growthlab.yaml permissions",
     "Three competing changes from one frozen starting point in isolated workspaces",
@@ -27,14 +27,15 @@
     "Exploratory 95% mean and baseline-difference intervals with documented assumptions",
     "Ten role-based growth playbooks with questions, outputs and guardrails",
     "Explicit local-folder onboarding with protected-path checks and an opt-in local Git snapshot",
-    "Read-only public HTTPS SEO audit with robots policy checks and bounded page retrieval"
-    ,"Public GitHub metadata review and private local manual-brief onboarding"
+    "Read-only public HTTPS SEO audit with robots policy checks and bounded page retrieval",
+    "Public GitHub metadata review and private local manual-brief onboarding",
+    "Saved deterministic playbook runs with ordered answers, outputs and guardrails"
   ],
   "validation": [
     {
       "name": "Rust tests",
       "status": "passed",
-      "detail": "933 tests per binary; 931 passed, zero failures and two inherited ignored tests"
+      "detail": "941 tests per binary; 939 passed, zero failures and two inherited ignored tests"
     },
     {
       "name": "UI tests",
@@ -95,6 +96,11 @@
       "name": "Public URL SEO audit",
       "status": "passed",
       "detail": "CLI, API and dashboard paths enforce HTTPS-only read-only retrieval, same-origin robots checks, no redirects or credentials and bounded UTF-8 HTML"
+    },
+    {
+      "name": "Executable playbooks",
+      "status": "passed",
+      "detail": "CLI, API and workspace dashboard execute and persist deterministic role contracts with bounded answers; runs remain UNTESTED and make no provider or product-file request"
     }
   ],
   "pending": [
@@ -102,7 +108,7 @@
     "Visual quality/performance evaluation and a continuous screen recording",
     "Native-agent battle verification and provider-specific launcher registration",
     "Complete experiment tree, settings and localized interface",
-    "Public repository checkout import and executable playbook workflows",
+    "Public repository checkout import",
     "Cross-platform runtime proof, portable binaries/installers and distribution notices"
   ],
   "provenance": "Replay proposals: SIMULATED. Executed checks: OBSERVED. Growth outcomes: UNTESTED.",
