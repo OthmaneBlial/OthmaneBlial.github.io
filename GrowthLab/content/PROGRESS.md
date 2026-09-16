@@ -15,12 +15,32 @@ and credible release have not passed yet.
 
 ## Completed
 
+- Published [source prerelease v0.1.0-alpha.1](https://github.com/OthmaneBlial/GrowthLab/releases/tag/v0.1.0-alpha.1)
+  at immutable source commit `c477d2998df4b91f1145b0d347239b4e95efdef3`. GitHub
+  confirmed public, non-draft prerelease metadata and tagged source archive links;
+  no binaries/installers are attached. README and website share its release link
+  and the explicitly subjective 40% full-spec estimate. All six workflows remain
+  manually disabled; source publication does not close pending product gates.
+
+- Published the canonical [website](https://othmaneblial.github.io/GrowthLab/)
+  and [searchable docs](https://othmaneblial.github.io/GrowthLab/docs.html). Native
+  Pages build `1ea269a3d75ad5db6ff34ea4aee8451791082222` completed; landing, docs,
+  CSS, JavaScript, status and a representative capture matched source bytes over
+  HTTPS. Desktop/390px phone checks covered gallery/dialog, menu/Escape, docs
+  filtering and actual command copy/paste, with fitting scroll widths and no
+  captured console errors. No GitHub CI workflow was enabled or dispatched.
+- Prepared source prerelease `v0.1.0-alpha.1`: fresh locked macOS arm64 release
+  build and real release-binary import, selected delivery and HTTP demo smokes
+  passed, including exact embedded UI assets. Added original dashboard dependency
+  and font notices. Standalone binaries/installers and complete target distribution
+  remain pending; this does not close the credible-release specification gate.
+
 - Rebuilt the README around the working alpha: real variants, visible failure,
   archived previews, current local validation and explicitly pending product work.
   Added `docs/status.json` and a local-only synchronization command for README
   progress, badges and website status copies. Future validated milestones must
-  update the shared status; no GitHub automation is enabled. Website publication
-  and the requested alpha release are being prepared separately.
+  update the shared status; no GitHub automation is enabled. The new README was pushed first, followed by the project website, then
+  repository About/homepage/topics, as requested.
 
 - Added opt-in `static_preview` configuration and CLI init flags. Candidate Git
   objects supply archived HTML/CSS/local assets, a bounded self-contained document

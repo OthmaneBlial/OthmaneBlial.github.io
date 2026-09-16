@@ -1,7 +1,10 @@
 # GrowthLab release notes
 
-## Unreleased — source alpha (0.1.0-alpha.1)
+## 0.1.0-alpha.1 — 2026-09-16 (source prerelease)
 
+- Published the project website and searchable documentation with actual captures.
+- Rebuilt the README and added shared local-only progress synchronization.
+- Retained original dashboard ISC/MIT and font OFL notices in source archives.
 - Preserved OpenResearch history and MIT attribution; audited its Rust, SQLite,
   worktree, snapshot, run, agent-harness and dashboard foundations.
 - Added canonical `growthlab` CLI and retained the `orx` compatibility entry point.
@@ -70,7 +73,7 @@
   actual jobs, observed exit 2, cross-origin refusal, seal tampering and selected
   delivery without changing product HEAD/index/remotes.
 
-This is not a tagged credible release. The complete experiment-tree/settings UX,
+This source prerelease is not the complete credible release in the specification. The complete experiment-tree/settings UX,
 verified native execution, cross-platform confinement proof, incomplete launcher registration
 and interrupted selected-delivery recovery,
 automatic per-run screenshot artifacts, a real demo recording and real outcome measurement
