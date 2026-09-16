@@ -5,6 +5,10 @@
 - Expanded the local SEO rubric with deterministic, dimension-specific next
   steps for partial or missing signals. Recommendations are now visible in the
   CLI, dashboard and HTML/Markdown battle reports.
+- Added `growthlab measure --csv <file>` for a bounded, no-network summary of
+  user-supplied telemetry. JSON and Markdown expose means, sample sizes, date
+  range, arithmetic baseline comparisons, warnings and explicit MEASURED limits.
+- Added an eight-second demo reel assembled from verified local browser captures.
 
 ## 0.1.0-alpha.3 — 2026-09-16 (source prerelease)
 

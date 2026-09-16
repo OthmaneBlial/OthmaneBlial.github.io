@@ -2,10 +2,10 @@
   "schemaVersion": 1,
   "updated": "2026-09-16",
   "stage": "Source alpha",
-  "progressEstimate": 52,
+  "progressEstimate": 55,
   "progressExplanation": "Subjective estimate against the complete product specification, not a measured delivery metric.",
-  "milestone": "Local SEO audit and an explainable page rubric validated",
-  "validatedSourceCommit": "d5008439f4bd6c74300591581fc38c17a46eb996",
+  "milestone": "Local SEO audit and first local measurement summary validated",
+  "validatedSourceCommit": "e14687c4e05ad5bd9d8cf5e730df159e41ff1c29",
   "delivered": [
     "Local product import with reviewed growthlab.yaml permissions",
     "Three competing changes from one frozen starting point in isolated workspaces",
@@ -21,7 +21,8 @@
     "Automatic desktop PNG capture from sealed preview documents with archive verification",
     "Explainable SEO page-hygiene rubric with dimension scores and limits",
     "Standalone local SEO audit with actionable recommendations, JSON or Markdown output and safe file bounds",
-    "Eight-second demo reel assembled from real local browser captures"
+    "Eight-second demo reel assembled from real local browser captures",
+    "Local CSV measurement summaries with baseline comparisons, sample sizes, date range and MEASURED provenance"
   ],
   "validation": [
     {
@@ -45,6 +46,11 @@
       "detail": "Real CLI/HTTP execution, desktop/phone checks, verified PNG endpoint checks, SEO rubric records and standalone local audit on owned fixtures"
     },
     {
+      "name": "Local CSV measurement",
+      "status": "passed",
+      "detail": "Bounded UTF-8 CSV import smoke passed locally; means, sample sizes, optional date range, baseline differences and MEASURED limits are emitted without network access"
+    },
+    {
       "name": "Release build and runtime smokes",
       "status": "passed",
       "detail": "Fresh locked macOS arm64 build; real CLI import, delivery and HTTP demo; embedded UI verified"
@@ -61,10 +67,11 @@
     }
   ],
   "pending": [
+    "Measurement dashboard view, cautious statistical analysis and provider adapters",
     "Visual quality/performance evaluation and a continuous screen recording",
     "Native-agent battle verification and provider-specific launcher registration",
     "Complete experiment tree, settings and localized interface",
-    "Broader inputs, growth playbooks and real measurement",
+    "Broader inputs and growth playbooks",
     "Cross-platform runtime proof, portable binaries/installers and distribution notices"
   ],
   "provenance": "Replay proposals: SIMULATED. Executed checks: OBSERVED. Growth outcomes: UNTESTED.",
