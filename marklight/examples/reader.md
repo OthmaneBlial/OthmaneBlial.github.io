@@ -1,0 +1,29 @@
+# Marklight
+
+A **fast** and *quiet* reader. ~~Noise~~ and `inline code`.
+
+## Read
+
+> Markdown should be pleasant to read.
+
+1. Open a file
+2. Read it
+   - Nested item
+
+- [x] Native
+- [ ] Next release
+
+```rust
+fn main() {
+    println!("Marklight");
+}
+```
+
+[Website](https://example.com)
+
+| Feature | Status |
+|---|---|
+| Native | Yes |
+| Offline | Yes |
+
+---
