@@ -35,6 +35,15 @@ and credible release have not passed yet.
   and font notices. Standalone binaries/installers and complete target distribution
   remain pending; this does not close the credible-release specification gate.
 
+- Added explicit selected-delivery recovery for durable pending apply/export
+  receipts. Inspection finalizes an exact candidate or existing export; `--resume`
+  applies only files still matching the frozen baseline or creates the exact
+  missing patch. Local files matching neither baseline nor candidate remain a
+  pending conflict and are never rolled back. A per-workspace lease is inherited
+  by Git children so an orphaned writer cannot be mistaken for completion. The
+  focused battle suite passes **20 tests on both binaries**, including this
+  interruption path, with HEAD/index/remotes and local conflict bytes preserved.
+
 - Rebuilt the README around the working alpha: real variants, visible failure,
   archived previews, current local validation and explicitly pending product work.
   Added `docs/status.json` and a local-only synchronization command for README
@@ -177,10 +186,10 @@ and credible release have not passed yet.
 
 The Phase 1 identity/domain foundation is implemented. Broader URL/manual
 brief/non-Git onboarding and richer context remain required product work.
-Phase 2 has a tested replay CLI backend, selected delivery, local reports and
-checkpoint-based CLI recovery and macOS validation confinement validated locally.
-Native-agent verification, incomplete launcher registration, interrupted
-selected-delivery recovery and Linux confinement runtime verification remain pending.
+Phase 2 has a tested replay CLI backend, selected delivery, local reports,
+checkpoint-based CLI recovery, selected-delivery recovery and macOS validation
+confinement validated locally. Native-agent verification, incomplete launcher
+registration and Linux confinement runtime verification remain pending.
 The initial GrowthLab API/dashboard operations now pass local and real synthetic
 browser checks. Complete tree/settings/localized UX and bundled
 automatic candidate PNG capture remains pending. Restricted previews of archived
@@ -190,7 +199,7 @@ static source now pass local Rust/HTTP and real browser checks. Windows validati
 
 1. Add actual per-run PNG capture to the archived static-preview foundation,
    then create a concise real recording and richer inspectable quality evaluation.
-2. Close remaining launch/delivery recovery and cross-platform confinement gates,
+2. Close remaining launcher registration and cross-platform confinement gates,
    then verify genuine native-agent proposals without inventing provider data.
 3. Complete tree/settings/localized UX, broader inputs/playbooks/measurement and
    validate credible release packaging against the full specification.
