@@ -238,7 +238,7 @@ Rust/HTTP and real browser checks. Windows validation is unsupported.
 ## Latest validation
 
 Static-preview unit (2026-09-16): **passed locally**. Full `cargo test --locked`
-passes **914 tests per binary, 912 passed, zero failures and two inherited ignored tests**;
+passes **916 tests per binary, 914 passed, zero failures and two inherited ignored tests**;
 Clippy with `-D warnings`, formatting, style checks and the debug build pass.
 UI typecheck/i18n/build and **167 tests, zero failures/skips** pass; final `ui/dist`
 is included. The real CLI demo regression verifies ready previews, exact served
