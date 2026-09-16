@@ -44,6 +44,11 @@ and credible release have not passed yet.
   focused battle suite passes **20 tests on both binaries**, including this
   interruption path, with HEAD/index/remotes and local conflict bytes preserved.
 
+- Closed the local/SSH launcher registration gap: each detached launcher writes
+  its own controller PID before payload work, and local submission waits for that
+  registration before returning. Existing lifecycle and cancellation tests pass;
+  provider-specific launchers remain a separate gate.
+
 - Rebuilt the README around the working alpha: real variants, visible failure,
   archived previews, current local validation and explicitly pending product work.
   Added `docs/status.json` and a local-only synchronization command for README
@@ -188,8 +193,9 @@ The Phase 1 identity/domain foundation is implemented. Broader URL/manual
 brief/non-Git onboarding and richer context remain required product work.
 Phase 2 has a tested replay CLI backend, selected delivery, local reports,
 checkpoint-based CLI recovery, selected-delivery recovery and macOS validation
-confinement validated locally. Native-agent verification, incomplete launcher
-registration and Linux confinement runtime verification remain pending.
+confinement validated locally. Local and SSH launchers now self-register their
+controller PID before payload work. Native-agent verification, provider-specific
+launcher registration and Linux confinement runtime verification remain pending.
 The initial GrowthLab API/dashboard operations now pass local and real synthetic
 browser checks. Complete tree/settings/localized UX and bundled
 automatic candidate PNG capture remains pending. Restricted previews of archived
@@ -199,7 +205,7 @@ static source now pass local Rust/HTTP and real browser checks. Windows validati
 
 1. Add actual per-run PNG capture to the archived static-preview foundation,
    then create a concise real recording and richer inspectable quality evaluation.
-2. Close remaining launcher registration and cross-platform confinement gates,
+2. Close remaining provider-specific launcher registration and cross-platform confinement gates,
    then verify genuine native-agent proposals without inventing provider data.
 3. Complete tree/settings/localized UX, broader inputs/playbooks/measurement and
    validate credible release packaging against the full specification.
@@ -373,7 +379,7 @@ Known environment warning: installed external Claude CLI `--version` failed
 during inherited harness detection. Native-agent execution is not verified.
 Local CLI/domain/replay validation passed. Selected delivery/report behavior on Linux/Windows,
 complete GrowthLab tree/settings/localized UX, native-agent battles, Linux confinement runtime verification,
-incomplete launcher registration, interrupted selected-delivery recovery,
+provider-specific launcher registration, interrupted selected-delivery recovery,
 automatic per-run screenshot artifacts, real demo
 recording, release installers and telemetry adapters remain **unverified / not
 implemented**. No growth lift, adoption, native-agent execution or public release

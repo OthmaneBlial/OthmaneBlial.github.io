@@ -15,7 +15,8 @@
     "Key-free bundled replay demo with one deliberate validation failure",
     "Published project website and searchable docs with current progress and actual captures",
     "Published v0.1.0-alpha.1 as a source prerelease with explicit alpha limitations",
-    "Inspected and explicitly resumed pending selected-delivery receipts without rollback"
+    "Inspected and explicitly resumed pending selected-delivery receipts without rollback",
+    "Local and SSH launchers self-register their controller PID before payload work"
   ],
   "validation": [
     {
@@ -56,7 +57,7 @@
   ],
   "pending": [
     "Automatic per-run PNG capture and a short real demo recording",
-    "Native-agent battle verification and stronger launcher registration",
+    "Native-agent battle verification and provider-specific launcher registration",
     "Complete experiment tree, settings and localized interface",
     "Broader inputs, growth playbooks and real measurement",
     "Cross-platform runtime proof, portable binaries/installers and distribution notices"

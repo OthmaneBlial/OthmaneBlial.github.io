@@ -15,8 +15,8 @@ by this roadmap.
   explainable comparison, safe selected apply/export and local reports.
   The replay CLI backend, explicit selected delivery and local HTML/Markdown
   reports, checkpoint-based CLI recovery and explicit selected-delivery recovery
-  are implemented. Native execution, incomplete launcher registration and Linux confinement
-  runtime proof still prevent marking this phase complete. Windows validation
+  are implemented. Native execution, provider-specific launcher registration and Linux
+  confinement runtime proof still prevent marking this phase complete. Windows validation
   isolation is not implemented.
 - [ ] **3 — UX/demo:** growth-native onboarding, tree/battle/detail/console/
   evidence/rubric/settings screens, keyboard/mobile checks, one-command bundled
