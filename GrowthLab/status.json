@@ -42,7 +42,7 @@
     {
       "name": "Rust tests",
       "status": "passed",
-      "detail": "951 tests per binary; 949 passed, zero failures and two inherited ignored tests (serial run)"
+      "detail": "953 tests per binary; 951 passed, zero failures and two inherited ignored tests (serial run)"
     },
     {
       "name": "UI tests",
