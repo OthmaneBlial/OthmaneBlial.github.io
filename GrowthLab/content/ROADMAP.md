@@ -14,17 +14,21 @@ by this roadmap.
   immutable run records, failure/cancellation recovery, evidence/diffs/artifacts,
   explainable comparison, safe selected apply/export and local reports.
   The replay CLI backend, explicit selected delivery and local HTML/Markdown
-  reports, checkpoint-based CLI recovery, explicit selected-delivery recovery and
-  the first explainable SEO page-hygiene rubric and a standalone local SEO audit are implemented. Native execution, provider-specific launcher registration and Linux
-  confinement runtime proof still prevent marking this phase complete. Windows validation
+  reports, checkpoint-based CLI recovery, explicit selected-delivery recovery,
+  the explainable SEO page-hygiene rubric, standalone local SEO audit,
+  public-checkout import and distribution-aware local measurement are implemented.
+  Native execution, provider-specific launcher registration and Linux confinement
+  runtime proof still prevent marking this phase complete. Windows validation
   isolation is not implemented.
 - [ ] **3 — UX/demo:** growth-native onboarding, tree/battle/detail/console/
   evidence/rubric/settings screens, keyboard/mobile checks, one-command bundled
   demo, sanitized self-contained reports, badge, real screenshots/video,
   contributor/security/community documents and release packaging.
   CLI reports and GrowthLab home/workspace/goal/battle/evidence/diff/delivery
-  screens are implemented through Rust APIs. Complete tree/settings/localized
-  UX and visual/performance evaluation remain pending. Restricted previews
+  screens are implemented through Rust APIs. The workspace now shows a persisted
+  three-branch experiment map and keeps its hypothesis IDs linked into battle
+  variants. Complete tree/settings/localized UX and visual/performance evaluation
+  remain pending. Restricted previews
   of immutable static-source bundles pass Rust/HTTP and real desktop/phone checks;
   new runs also archive a verified desktop PNG when local Chromium is available.
   The PNG is a render artifact, not a quality score. The bundled
@@ -33,8 +37,9 @@ by this roadmap.
   packaging remain pending.
 - [ ] **4 — Playbooks:** focused roles and practical positioning, activation,
   onboarding, ethical discovery, pricing research and launch templates with evidence.
-  The ten read-only role contracts are available locally and in the dashboard;
-  executable, evidence-producing playbook workflows remain pending.
+  The ten role contracts and deterministic local playbook runs are available in
+  the CLI, API and dashboard; provider-backed research and evidence-producing
+  workflows remain pending.
 - [ ] **5 — Measurement:** CSV import, baseline/variant comparison, sample size,
   date range, provenance, cautious interval analysis and stable integration
   boundaries. Real telemetry is optional; no invented data.

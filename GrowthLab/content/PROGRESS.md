@@ -265,28 +265,28 @@ provider identity, causality and statistical significance remain unverified.
 ## Work in progress
 
 The Phase 1 identity/domain foundation is implemented. Public repository URLs,
-website analysis, manual briefs and richer product context remain required work;
-local non-Git folder initialization is now available behind an explicit flag.
+website analysis, manual briefs and local non-Git folder initialization are now
+available behind explicit, bounded flows.
 Phase 2 has a tested replay CLI backend, selected delivery, local reports,
 checkpoint-based CLI recovery, selected-delivery recovery and macOS validation
 confinement validated locally. Local and SSH launchers now self-register their
 controller PID before payload work. Native-agent verification, provider-specific
 launcher registration and Linux confinement runtime verification remain pending.
 The initial GrowthLab API/dashboard operations now pass local and real synthetic
-browser checks. Local CSV measurement summaries now expose descriptive baseline
-comparisons with sample sizes, date range and MEASURED provenance. Complete
-tree/settings/localized UX, cautious statistical analysis, continuous recording and richer
-quality evaluation remain pending. Restricted previews and archived PNG captures now pass local
+browser checks. The workspace experiment map is visible and its persisted
+hypothesis lineage is reused by battles. Local CSV measurement summaries now
+expose descriptive baseline comparisons with sample sizes, date range and
+MEASURED provenance. Complete tree/settings/localized UX, continuous recording
+and richer quality evaluation remain pending. Restricted previews and archived PNG captures now pass local
 Rust/HTTP and real browser checks. Windows validation is unsupported.
 
 ## Next three concrete tasks
 
 1. Add a continuous screen recording and richer inspectable quality evaluation from
    the archived preview captures.
-2. Add provider adapters and distribution-aware analysis over the local CSV summaries,
-   then verify genuine native-agent proposals without inventing provider data.
-3. Complete tree/settings/localized UX, executable playbook workflows, public
-   repository URL/manual-brief inputs and cross-platform release packaging against
+2. Add provider adapters over the local measurement model, then verify genuine
+   native-agent proposals without inventing provider data.
+3. Complete tree/settings/localized UX and cross-platform release packaging against
    the full specification.
 
 ## Architectural decisions
@@ -305,10 +305,11 @@ Rust/HTTP and real browser checks. Windows validation is unsupported.
 
 Standalone SEO audit and rubric unit tests (2026-09-16): **passed locally**;
 the real binary emitted JSON and Markdown for a UTF-8 fixture and refused a
-symlink input. Static-preview unit (2026-09-16): **passed locally**. Full `cargo test --locked`
-passes **933 tests per binary, 931 passed, zero failures and two inherited ignored tests**;
+symlink input. Static-preview unit (2026-09-16): **passed locally**. Full serial
+`cargo test --locked -- --test-threads=1` passes **945 tests per binary, 943
+passed, zero failures and two inherited ignored tests**;
 Clippy with `-D warnings`, formatting, style checks and the debug build pass.
-UI typecheck/i18n/build and **171 tests, zero failures/skips** pass; final `ui/dist`
+UI typecheck/i18n/build and **172 tests, zero failures/skips** pass; final `ui/dist`
 is included. The real CLI demo regression verifies ready previews, exact served
 built assets, source/document/seal hashes and its existing no-provider, privacy,
 baseline and shutdown checks. Debug RustEmbed serves assets from disk; this is
@@ -322,7 +323,8 @@ Browser checks verify the actual candidate text/styles, 1280px/390px CSS viewpor
 opaque/inert attributes, phone default, keyboard exclusion, no horizontal overflow
 and empty captured warning/error logs. Hot reload interrupted an initial phone
 selector read; final checks/capture ran after the build completed and a reload.
-Automatic PNG archival, native providers, recording and release gates remain open.
+Native providers, continuous recording, richer quality evaluation and release gates
+remain open.
 All six GitHub workflows remain manually disabled; validation runs locally only.
 
 Bundled-demo unit (2026-09-16): **passed locally**. `cargo test --locked` passes
