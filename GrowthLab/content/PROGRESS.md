@@ -12,8 +12,8 @@ The GrowthLab API and initial dashboard pass local Rust/UI and synthetic real
 browser checks. The bundled fictional replay now passes real CLI/HTTP and browser
 checks, including an estimated SEO page-hygiene rubric and standalone local audit. Native-agent execution
 and full visual regression/accessibility evaluation remain open release gates; the repository now includes verified desktop and
-phone render captures, observed local Chromium layout checks, a transparent static-render rubric plus an eight-second
-walkthrough assembled from the real browser captures.
+phone render captures, observed local Chromium layout checks, a transparent static-render rubric plus a continuous
+30-second walkthrough captured from an isolated Chrome profile.
 
 The local measurement slice now accepts bounded UTF-8 CSV exports and reports
 descriptive means, sample sizes, optional date range and arithmetic baseline
@@ -179,9 +179,9 @@ performance.
   evidence.
 - Expanded the rubric with deterministic next steps for every partial or missing
   dimension, and surfaced them in the CLI, dashboard and exported reports.
-- Added an eight-second `docs/assets/growthlab-demo.mp4` walkthrough assembled
-  from the real local browser captures; it is labelled as a visual reel, not as
-  a continuous recording or an SEO outcome.
+- Added a continuous 30-second `docs/assets/growthlab-demo-30s.mp4` screen
+  recording captured from an isolated Chrome profile showing the public site and
+  real browser evidence. It is labelled as a walkthrough, not an SEO outcome.
 - Fixed a macOS cancellation probe race exposed by the full parallel suite.
   No-signal EPERM probes retry briefly while the owned group is reaped; persistent
   permission failures and actual signal failures still propagate. Existing real
@@ -319,14 +319,15 @@ The initial GrowthLab API/dashboard operations now pass local and real synthetic
 browser checks. The workspace experiment map is visible, groups persisted hypotheses by role in
 accessible branches, and reuses their IDs in battles. Local CSV measurement summaries now
 expose descriptive baseline comparisons with sample sizes, date range and
-MEASURED provenance. Editable tree/settings/localized UX, continuous recording and full browser
-quality/performance evaluation remain pending. Restricted previews and archived PNG captures now pass local
+MEASURED provenance. Editable tree/settings/localized UX and full browser
+quality/performance evaluation remain pending. Restricted previews, archived PNG captures and the
+continuous public-site walkthrough now pass local
 Rust/HTTP and real browser checks. Windows validation is unsupported.
 
 ## Next three concrete tasks
 
-1. Add a continuous screen recording and richer inspectable quality evaluation from
-   the archived preview captures.
+1. Add richer inspectable quality evaluation from the archived preview captures,
+   including dedicated accessibility and visual-regression checks.
 2. Add provider adapters over the local measurement model, then verify genuine
    native-agent proposals without inventing provider data.
 3. Complete editable tree/settings/localized UX and cross-platform release packaging
@@ -366,8 +367,9 @@ Browser checks verify the actual candidate text/styles, 1280px/390px CSS viewpor
 opaque/inert attributes, phone default, keyboard exclusion, no horizontal overflow
 and empty captured warning/error logs. Hot reload interrupted an initial phone
 selector read; final checks/capture ran after the build completed and a reload.
-Native providers, continuous recording, richer quality evaluation and release gates
-remain open.
+Native providers, richer quality evaluation and release gates remain open. The
+continuous 30-second public-site walkthrough is now archived separately from the
+short eight-second reel.
 All six GitHub workflows remain manually disabled; validation runs locally only.
 
 Bundled-demo unit (2026-09-16): **passed locally**. `cargo test --locked` passes

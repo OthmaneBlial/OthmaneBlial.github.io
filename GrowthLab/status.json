@@ -2,9 +2,9 @@
   "schemaVersion": 1,
   "updated": "2026-09-17",
   "stage": "Source alpha",
-  "progressEstimate": 80,
+  "progressEstimate": 82,
   "progressExplanation": "Subjective estimate against the complete product specification, not a measured delivery metric.",
-  "milestone": "Observed browser timing hints, public repository review, manual-brief onboarding, executable playbooks, public checkout import, distribution-aware measurement and role-grouped experiment tree validated",
+  "milestone": "Continuous browser walkthrough, observed timing hints, public repository review, manual-brief onboarding, executable playbooks, public checkout import, distribution-aware measurement and role-grouped experiment tree validated",
   "validatedSourceCommit": "82dc178da74d8469d19d312c5e7ae931597c5573",
   "delivered": [
     "Local product import with reviewed growthlab.yaml permissions",
@@ -21,7 +21,7 @@
     "Automatic desktop and phone PNG capture from sealed preview documents with archive verification",
     "Explainable SEO page-hygiene rubric with dimension scores and limits",
     "Standalone local SEO audit with actionable recommendations, JSON or Markdown output and safe file bounds",
-    "Eight-second demo reel assembled from real local browser captures",
+    "30-second screen recording captured in an isolated Chrome profile, showing the public site and real demo evidence",
     "Local CSV measurement summaries with baseline comparisons, sample sizes, date range and MEASURED provenance",
     "Local browser measurement dashboard over user-supplied CSV with local descriptive comparisons",
     "Exploratory 95% mean and baseline-difference intervals with documented assumptions",
@@ -145,7 +145,7 @@
   ],
   "pending": [
     "Provider adapters",
-    "Full visual regression/accessibility evaluation and a continuous screen recording",
+    "Full visual regression/accessibility evaluation",
     "Native-agent battle verification and provider-specific launcher registration",
     "Editable experiment tree, settings and localized interface",
     "Cross-platform runtime proof, portable binaries/installers and distribution notices"
