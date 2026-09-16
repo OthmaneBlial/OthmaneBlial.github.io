@@ -1,5 +1,12 @@
 # GrowthLab release notes
 
+## Next
+
+- Added `growthlab seo-audit --html <file>` for a quick local SEO page review
+  outside a battle. JSON and Markdown output expose the same eight-dimension
+  structural rubric used by the dashboard, with an explicit `ESTIMATED`
+  provenance label and no network or outcome claims.
+
 ## 0.1.0-alpha.2 — 2026-09-16 (source prerelease)
 
 - Added the deterministic `seo-page-hygiene-v1` comparison rubric. Each HTML

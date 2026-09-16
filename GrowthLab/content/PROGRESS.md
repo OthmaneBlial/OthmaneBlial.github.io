@@ -1,7 +1,7 @@
 # GrowthLab progress
 
-Current milestone: **Phase 2/3 — archived previews and an explainable SEO page rubric validated** (2026-09-16).
-Overall completion: **about 48%, subjective estimate against the full specification**.
+Current milestone: **Phase 2/3 — local SEO audit and an explainable page rubric validated** (2026-09-16).
+Overall completion: **about 50%, subjective estimate against the full specification**.
 The configuration/import and three-variant replay CLI slices pass locally.
 Selected delivery and report behavior pass local Rust, real CLI and browser checks.
 Recovery passes local Rust and real CLI interruption/legacy-archive checks.
@@ -10,7 +10,7 @@ sealed policy digests pass local checks; Linux runtime verification remains pend
 GitHub Actions is disabled at the user's request.
 The GrowthLab API and initial dashboard pass local Rust/UI and synthetic real
 browser checks. The bundled fictional replay now passes real CLI/HTTP and browser
-checks, including an estimated SEO page-hygiene rubric. Native-agent execution,
+checks, including an estimated SEO page-hygiene rubric and standalone local audit. Native-agent execution,
 recording and visual/performance evaluation remain open release gates.
 
 ## Completed
@@ -26,7 +26,7 @@ recording and visual/performance evaluation remain open release gates.
 - Published the canonical [website](https://othmaneblial.github.io/GrowthLab/)
   and [searchable docs](https://othmaneblial.github.io/GrowthLab/docs.html). Native
   Pages build `79f66a22647f1270a42508a8fd3616d5862cb8f3` completed; landing, docs,
-  CSS, JavaScript, status and the current 48% progress snapshot matched source
+  CSS, JavaScript, status and the current 50% progress snapshot matched source
   bytes over HTTPS. Desktop/390px phone checks covered gallery/dialog, menu/Escape, docs
   filtering and actual command copy/paste, with fitting scroll widths and no
   captured console errors. No GitHub CI workflow was enabled or dispatched.
@@ -77,6 +77,11 @@ recording and visual/performance evaluation remain open release gates.
   archived candidate HTML. Every dimension exposes its score and observation;
   the rubric is marked **ESTIMATED** and does not claim rankings, traffic,
   accessibility certification, performance or conversion lift.
+- Added `growthlab seo-audit --html <file>` for a quick local review outside a
+  battle. JSON and Markdown output share the eight-dimension rubric, reject
+  symlinks and oversized/non-UTF-8 files, and make the no-network boundary
+  explicit. This remains structural guidance, not ranking, traffic or conversion
+  evidence.
 - Fixed a macOS cancellation probe race exposed by the full parallel suite.
   No-signal EPERM probes retry briefly while the owned group is reaped; persistent
   permission failures and actual signal failures still propagate. Existing real
@@ -237,8 +242,10 @@ Rust/HTTP and real browser checks. Windows validation is unsupported.
 
 ## Latest validation
 
-Static-preview unit (2026-09-16): **passed locally**. Full `cargo test --locked`
-passes **916 tests per binary, 914 passed, zero failures and two inherited ignored tests**;
+Standalone SEO audit and rubric unit tests (2026-09-16): **passed locally**;
+the real binary emitted JSON and Markdown for a UTF-8 fixture and refused a
+symlink input. Static-preview unit (2026-09-16): **passed locally**. Full `cargo test --locked`
+passes **919 tests per binary, 917 passed, zero failures and two inherited ignored tests**;
 Clippy with `-D warnings`, formatting, style checks and the debug build pass.
 UI typecheck/i18n/build and **167 tests, zero failures/skips** pass; final `ui/dist`
 is included. The real CLI demo regression verifies ready previews, exact served

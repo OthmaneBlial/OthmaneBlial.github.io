@@ -15,7 +15,7 @@ by this roadmap.
   explainable comparison, safe selected apply/export and local reports.
   The replay CLI backend, explicit selected delivery and local HTML/Markdown
   reports, checkpoint-based CLI recovery, explicit selected-delivery recovery and
-  the first explainable SEO page-hygiene rubric are implemented. Native execution, provider-specific launcher registration and Linux
+  the first explainable SEO page-hygiene rubric and a standalone local SEO audit are implemented. Native execution, provider-specific launcher registration and Linux
   confinement runtime proof still prevent marking this phase complete. Windows validation
   isolation is not implemented.
 - [ ] **3 — UX/demo:** growth-native onboarding, tree/battle/detail/console/
