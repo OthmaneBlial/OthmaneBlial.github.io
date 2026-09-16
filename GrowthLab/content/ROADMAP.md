@@ -28,8 +28,8 @@ by this roadmap.
   screens are implemented through Rust APIs. The workspace now shows a persisted
   three-branch experiment map and keeps its hypothesis IDs linked into battle
   variants. The experiment tree now supports controlled local edits while
-  preserving hypothesis IDs and evidence; settings/localized UX and
-  browser-based visual regression/accessibility evaluation remain pending.
+  preserving hypothesis IDs and evidence; battle/detail localization and broader settings coverage remain pending, alongside
+  browser-based visual regression/accessibility evaluation.
   Restricted previews
   of immutable static-source bundles pass Rust/HTTP and real desktop/phone checks;
   new runs also archive verified desktop and phone PNGs when local Chromium is

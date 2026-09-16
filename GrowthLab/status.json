@@ -188,7 +188,7 @@
     "Provider adapters",
     "Full visual regression and assistive-technology accessibility evaluation",
     "Native-agent battle verification and provider-specific launcher registration",
-    "Settings and localized interface",
+    "Battle/detail localization and broader settings coverage",
     "Cross-platform runtime proof and release-attached portable binaries/installers"
   ],
   "provenance": "Replay proposals: SIMULATED. Executed checks: OBSERVED. Growth outcomes: UNTESTED.",

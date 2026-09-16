@@ -566,7 +566,7 @@ Earlier validation evidence follows; it is not a release or provider claim.
 Known environment warning: installed external Claude CLI `--version` failed
 during inherited harness detection. Native-agent execution is not verified.
 Local CLI/domain/replay validation passed. Selected delivery/report behavior on Linux/Windows,
-complete GrowthLab settings/localized UX, native-agent battles, Linux confinement runtime verification,
+battle/detail localization and broader settings coverage, native-agent battles, Linux confinement runtime verification,
 provider-specific launcher registration, interrupted selected-delivery recovery,
 real demo recording, richer quality evaluation, cross-platform release installers and telemetry
 adapters remain **unverified / not
