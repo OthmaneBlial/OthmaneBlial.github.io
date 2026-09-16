@@ -5,7 +5,7 @@
   "progressEstimate": 76,
   "progressExplanation": "Subjective estimate against the complete product specification, not a measured delivery metric.",
   "milestone": "Public repository review, manual-brief onboarding, executable playbooks, public checkout import and distribution-aware measurement analysis validated",
-  "validatedSourceCommit": "f7e4c05",
+  "validatedSourceCommit": "bde2d08",
   "delivered": [
     "Local product import with reviewed growthlab.yaml permissions",
     "Three competing changes from one frozen starting point in isolated workspaces",
@@ -31,7 +31,8 @@
     "Public GitHub metadata review and private local manual-brief onboarding",
     "Saved deterministic playbook runs with ordered answers, outputs and guardrails",
     "Distribution-aware local measurement comparisons that keep channel baselines separate",
-    "Explicit public GitHub checkout import into a local, configured workspace"
+    "Explicit public GitHub checkout import into a local, configured workspace",
+    "Workspace experiment map showing the shared goal and three untested growth branches"
   ],
   "validation": [
     {
@@ -113,6 +114,11 @@
       "name": "Public repository checkout import",
       "status": "passed",
       "detail": "CLI, API and Home UI clone only after an explicit new destination is supplied; existing contracts are preserved, missing contracts are committed locally, and no push or provider request occurs"
+    },
+    {
+      "name": "Workspace experiment map",
+      "status": "passed",
+      "detail": "Chrome smoke created the deterministic starter map and rendered the shared goal with positioning, conversion and onboarding branches; cards remain UNTESTED until a battle and local evidence exist"
     }
   ],
   "pending": [
