@@ -2,10 +2,10 @@
   "schemaVersion": 1,
   "updated": "2026-09-16",
   "stage": "Source alpha",
-  "progressEstimate": 45,
+  "progressEstimate": 48,
   "progressExplanation": "Subjective estimate against the complete product specification, not a measured delivery metric.",
-  "milestone": "Three real growth surfaces with sealed evidence and verified local PNG captures",
-  "validatedSourceCommit": "09406c244cbdbcba0d8496c8089493659e4cbeed",
+  "milestone": "Three real growth surfaces with verified local PNG captures and an explainable SEO rubric",
+  "validatedSourceCommit": "eccd94cfb030eecb4c6560f3bb8be252b3c53307",
   "delivered": [
     "Local product import with reviewed growthlab.yaml permissions",
     "Three competing changes from one frozen starting point in isolated workspaces",
@@ -18,7 +18,8 @@
     "Inspected and explicitly resumed pending selected-delivery receipts without rollback",
     "Reworked the bundled demo to show intent, evidence and an explicit review choice",
     "Local and SSH launchers self-register their controller PID before payload work",
-    "Automatic desktop PNG capture from sealed preview documents with archive verification"
+    "Automatic desktop PNG capture from sealed preview documents with archive verification",
+    "Explainable SEO page-hygiene rubric with dimension scores and limits"
   ],
   "validation": [
     {
@@ -39,7 +40,7 @@
     {
       "name": "Actual demo and browser flow",
       "status": "passed",
-      "detail": "Real CLI/HTTP execution, desktop/phone checks and verified PNG endpoint checks on owned fictional fixtures"
+      "detail": "Real CLI/HTTP execution, desktop/phone checks, verified PNG endpoint checks and SEO rubric records on owned fictional fixtures"
     },
     {
       "name": "Release build and runtime smokes",
@@ -58,7 +59,7 @@
     }
   ],
   "pending": [
-    "A short real demo recording and richer inspectable visual quality evaluation",
+    "A short real demo recording and visual quality/performance evaluation",
     "Native-agent battle verification and provider-specific launcher registration",
     "Complete experiment tree, settings and localized interface",
     "Broader inputs, growth playbooks and real measurement",

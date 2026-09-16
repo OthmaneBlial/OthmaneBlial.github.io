@@ -14,8 +14,8 @@ by this roadmap.
   immutable run records, failure/cancellation recovery, evidence/diffs/artifacts,
   explainable comparison, safe selected apply/export and local reports.
   The replay CLI backend, explicit selected delivery and local HTML/Markdown
-  reports, checkpoint-based CLI recovery and explicit selected-delivery recovery
-  are implemented. Native execution, provider-specific launcher registration and Linux
+  reports, checkpoint-based CLI recovery, explicit selected-delivery recovery and
+  the first explainable SEO page-hygiene rubric are implemented. Native execution, provider-specific launcher registration and Linux
   confinement runtime proof still prevent marking this phase complete. Windows validation
   isolation is not implemented.
 - [ ] **3 — UX/demo:** growth-native onboarding, tree/battle/detail/console/
@@ -24,7 +24,7 @@ by this roadmap.
   contributor/security/community documents and release packaging.
   CLI reports and GrowthLab home/workspace/goal/battle/evidence/diff/delivery
   screens are implemented through Rust APIs. Complete tree/settings/localized
-  UX and richer visual quality evaluation remain pending. Restricted previews
+  UX and visual/performance evaluation remain pending. Restricted previews
   of immutable static-source bundles pass Rust/HTTP and real desktop/phone checks;
   new runs also archive a verified desktop PNG when local Chromium is available.
   The PNG is a render artifact, not a quality score. The bundled

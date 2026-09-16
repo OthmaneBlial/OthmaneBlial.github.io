@@ -1,7 +1,7 @@
 # GrowthLab progress
 
-Current milestone: **Phase 2/3 — archived static previews with local PNG captures validated** (2026-09-16).
-Overall completion: **about 45%, subjective estimate against the full specification**.
+Current milestone: **Phase 2/3 — archived previews and an explainable SEO page rubric validated** (2026-09-16).
+Overall completion: **about 48%, subjective estimate against the full specification**.
 The configuration/import and three-variant replay CLI slices pass locally.
 Selected delivery and report behavior pass local Rust, real CLI and browser checks.
 Recovery passes local Rust and real CLI interruption/legacy-archive checks.
@@ -10,8 +10,8 @@ sealed policy digests pass local checks; Linux runtime verification remains pend
 GitHub Actions is disabled at the user's request.
 The GrowthLab API and initial dashboard pass local Rust/UI and synthetic real
 browser checks. The bundled fictional replay now passes real CLI/HTTP and browser
-checks. The complete native-agent/recording/quality-evaluation vertical slice
-and credible release have not passed yet.
+checks, including an estimated SEO page-hygiene rubric. Native-agent execution,
+recording and visual/performance evaluation remain open release gates.
 
 ## Completed
 
@@ -19,7 +19,7 @@ and credible release have not passed yet.
   at immutable source commit `c477d2998df4b91f1145b0d347239b4e95efdef3`. GitHub
   confirmed public, non-draft prerelease metadata and tagged source archive links;
   no binaries/installers are attached. README and website share its release link
-  and the explicitly subjective 45% full-spec estimate. All six workflows remain
+  and the explicitly subjective 48% full-spec estimate. All six workflows remain
   manually disabled; source publication does not close pending product gates.
 
 - Published the canonical [website](https://othmaneblial.github.io/GrowthLab/)
@@ -70,6 +70,12 @@ and credible release have not passed yet.
   captures are committed; each new ready preview attempts an automatic desktop
   PNG capture from the sealed document and verifies its archive digest. See
   [static-previews.md](static-previews.md).
+- Added a deterministic `seo-page-hygiene-v1` rubric to the comparison and report.
+  It scores eight visible structural signals (title, description, headings,
+  language, useful copy, canonical, links and image descriptions) from the
+  archived candidate HTML. Every dimension exposes its score and observation;
+  the rubric is marked **ESTIMATED** and does not claim rankings, traffic,
+  accessibility certification, performance or conversion lift.
 - Fixed a macOS cancellation probe race exposed by the full parallel suite.
   No-signal EPERM probes retry briefly while the owned group is reaped; persistent
   permission failures and actual signal failures still propagate. Existing real

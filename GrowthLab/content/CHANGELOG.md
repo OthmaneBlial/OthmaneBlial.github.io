@@ -1,5 +1,15 @@
 # GrowthLab release notes
 
+## Unreleased
+
+- Added the deterministic `seo-page-hygiene-v1` comparison rubric. Each HTML
+  candidate now exposes title, description, heading, language, copy, canonical,
+  link and image-description signals with an `ESTIMATED` provenance label.
+  The score is structural page guidance; it makes no ranking, traffic or
+  conversion claim.
+- Repositioned the README, repository About text and public site around GrowthLab
+  as a simple SEO growth tool, with explicit credit to the OpenResearch foundation.
+
 ## 0.1.0-alpha.1 — 2026-09-16 (source prerelease)
 
 - Published the project website and searchable documentation with actual captures.
