@@ -2,10 +2,10 @@
   "schemaVersion": 1,
   "updated": "2026-09-16",
   "stage": "Source alpha",
-  "progressEstimate": 59,
+  "progressEstimate": 61,
   "progressExplanation": "Subjective estimate against the complete product specification, not a measured delivery metric.",
-  "milestone": "Local measurement dashboard and exploratory interval analysis validated",
-  "validatedSourceCommit": "7855d7956ffe98a27618e6038985bcd662de57ad",
+  "milestone": "Local playbook catalog and measurement analysis validated",
+  "validatedSourceCommit": "1b1da53f90eebd63231086c2eff65b2c95ab2437",
   "delivered": [
     "Local product import with reviewed growthlab.yaml permissions",
     "Three competing changes from one frozen starting point in isolated workspaces",
@@ -24,13 +24,14 @@
     "Eight-second demo reel assembled from real local browser captures",
     "Local CSV measurement summaries with baseline comparisons, sample sizes, date range and MEASURED provenance",
     "Local browser measurement dashboard over user-supplied CSV with local descriptive comparisons",
-    "Exploratory 95% mean and baseline-difference intervals with documented assumptions"
+    "Exploratory 95% mean and baseline-difference intervals with documented assumptions",
+    "Ten role-based growth playbooks with questions, outputs and guardrails"
   ],
   "validation": [
     {
       "name": "Rust tests",
       "status": "passed",
-      "detail": "925 tests per binary; 923 passed, zero failures and two inherited ignored tests"
+      "detail": "927 tests per binary; 925 passed, zero failures and two inherited ignored tests"
     },
     {
       "name": "UI tests",
@@ -63,6 +64,11 @@
       "detail": "Rust and TypeScript calculations matched on repeated synthetic samples; mean and difference intervals are omitted below n=2 and documented as descriptive normal approximations"
     },
     {
+      "name": "Growth playbook catalog",
+      "status": "passed",
+      "detail": "Read-only API and Chrome smoke expose all ten initial roles with focused questions, outputs and guardrails; no provider or analytics request is made"
+    },
+    {
       "name": "Release build and runtime smokes",
       "status": "passed",
       "detail": "Fresh locked macOS arm64 build; real CLI import, delivery and HTTP demo; embedded UI verified"
@@ -83,7 +89,7 @@
     "Visual quality/performance evaluation and a continuous screen recording",
     "Native-agent battle verification and provider-specific launcher registration",
     "Complete experiment tree, settings and localized interface",
-    "Broader inputs and growth playbooks",
+    "Broader inputs and executable playbook workflows",
     "Cross-platform runtime proof, portable binaries/installers and distribution notices"
   ],
   "provenance": "Replay proposals: SIMULATED. Executed checks: OBSERVED. Growth outcomes: UNTESTED.",

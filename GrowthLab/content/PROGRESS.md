@@ -1,7 +1,7 @@
 # GrowthLab progress
 
-Current milestone: **Phase 2/3 — local SEO audit, measurement dashboard and exploratory intervals validated** (2026-09-16).
-Overall completion: **about 59%, subjective estimate against the full specification**.
+Current milestone: **Phase 2/3 — SEO audit, measurement analysis and growth playbook catalog validated** (2026-09-16).
+Overall completion: **about 61%, subjective estimate against the full specification**.
 The configuration/import and three-variant replay CLI slices pass locally.
 Selected delivery and report behavior pass local Rust, real CLI and browser checks.
 Recovery passes local Rust and real CLI interruption/legacy-archive checks.
@@ -249,8 +249,8 @@ Rust/HTTP and real browser checks. Windows validation is unsupported.
    the archived preview captures.
 2. Add provider adapters and distribution-aware analysis over the local CSV summaries,
    then verify genuine native-agent proposals without inventing provider data.
-3. Complete tree/settings/localized UX, broader inputs/playbooks and cross-platform
-   release packaging against the full specification.
+3. Complete tree/settings/localized UX, executable playbook workflows, broader inputs
+   and cross-platform release packaging against the full specification.
 
 ## Architectural decisions
 
@@ -269,7 +269,7 @@ Rust/HTTP and real browser checks. Windows validation is unsupported.
 Standalone SEO audit and rubric unit tests (2026-09-16): **passed locally**;
 the real binary emitted JSON and Markdown for a UTF-8 fixture and refused a
 symlink input. Static-preview unit (2026-09-16): **passed locally**. Full `cargo test --locked`
-passes **925 tests per binary, 923 passed, zero failures and two inherited ignored tests**;
+passes **927 tests per binary, 925 passed, zero failures and two inherited ignored tests**;
 Clippy with `-D warnings`, formatting, style checks and the debug build pass.
 UI typecheck/i18n/build and **171 tests, zero failures/skips** pass; final `ui/dist`
 is included. The real CLI demo regression verifies ready previews, exact served
