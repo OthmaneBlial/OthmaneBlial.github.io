@@ -22,6 +22,8 @@ significance remain unverified.
 
 ## Completed
 
+- Published [source prerelease v0.1.0-alpha.4](https://github.com/OthmaneBlial/GrowthLab/releases/tag/v0.1.0-alpha.4) at the validated source line. It adds the browser-local measurement dashboard, keeps the CSV rows local, and includes no standalone binaries or installers.
+
 - Published [source prerelease v0.1.0-alpha.3](https://github.com/OthmaneBlial/GrowthLab/releases/tag/v0.1.0-alpha.3)
   at the validated source line ending in `18cad1f2a617a942a744798b16435690eaf0fac1`.
   The release adds the standalone local SEO audit with JSON/Markdown output;

@@ -88,8 +88,8 @@
   },
   "release": {
     "published": true,
-    "version": "0.1.0-alpha.3",
-    "url": "https://github.com/OthmaneBlial/GrowthLab/releases/tag/v0.1.0-alpha.3",
+    "version": "0.1.0-alpha.4",
+    "url": "https://github.com/OthmaneBlial/GrowthLab/releases/tag/v0.1.0-alpha.4",
     "platform": "Source prerelease",
     "limitation": "Tagged source archives; no standalone binaries or installers. Native-agent verification and cross-platform packaging remain pending."
   }
