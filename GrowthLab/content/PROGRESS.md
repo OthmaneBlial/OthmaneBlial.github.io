@@ -90,6 +90,11 @@ and credible release have not passed yet.
   errors are empty. Fixed route-first CSS layer ordering so the inherited base
   reset cannot override GrowthLab button styling. See [demo.md](demo.md).
 
+- Reworked the bundled PatchKit surface so the demo shows the product's review
+  loop directly: intent, proposed change, evidence and an explicit next action.
+  The three real variants still keep the deliberate heading failure and the
+  same observed `0/0/0`, `2/0/0`, `0/0/0` contract; no outcome claim was added.
+
 - Verified authenticated GitHub account and absence of `OthmaneBlial/GrowthLab`.
 - Created the public repository and preserved full upstream Git history locally.
 - Set origin to `git@github.com:OthmaneBlial/GrowthLab.git` and upstream to
