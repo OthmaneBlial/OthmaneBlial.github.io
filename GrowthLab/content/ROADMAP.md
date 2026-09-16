@@ -30,7 +30,7 @@ by this roadmap.
   key-free `growthlab demo` replay and real Home launch pass local CLI/HTTP and
   browser checks; a concise real recording and release packaging remain pending.
 - [ ] **4 — Playbooks:** focused roles and practical positioning, activation,
-  onboarding, ethical SEO, pricing research and launch templates with evidence.
+  onboarding, ethical discovery, pricing research and launch templates with evidence.
 - [ ] **5 — Measurement:** CSV import, baseline/variant comparison, sample size,
   date range, provenance, cautious interval analysis and stable integration
   boundaries. Real telemetry is optional; no invented data.
