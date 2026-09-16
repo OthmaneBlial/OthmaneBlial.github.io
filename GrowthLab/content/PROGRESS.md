@@ -1,7 +1,7 @@
 # GrowthLab progress
 
-Current milestone: **Phase 2/3/4 — editable experiment tree with frozen lineage, estimated accessibility structure hints, public repository review, manual-brief onboarding, executable playbooks, public checkout import and distribution-aware measurement analysis validated** (2026-09-17).
-Overall completion: **about 85%, subjective estimate against the full specification**.
+Current milestone: **Phase 2/3/4 — editable experiment tree with frozen lineage, localized GrowthLab onboarding shell, estimated accessibility structure hints, public repository review, manual-brief onboarding, executable playbooks, public checkout import and distribution-aware measurement analysis validated** (2026-09-17).
+Overall completion: **about 86%, subjective estimate against the full specification**.
 The configuration/import, explicit non-Git initialization, read-only URL audit and three-variant replay CLI slices pass locally.
 Selected delivery and report behavior pass local Rust, real CLI and browser checks.
 Recovery passes local Rust and real CLI interruption/legacy-archive checks.
@@ -91,6 +91,11 @@ performance.
   mechanism, metric, thresholds, guardrails and risks locally; IDs, roles,
   source snapshots, evidence and decision provenance remain immutable, and edits
   are refused while a battle is ready or running.
+
+- Added a localized GrowthLab onboarding shell. The dashboard language picker
+  uses the shared persisted locale preference across six catalogs, refreshes the
+  visible home flow after switching, and applies right-to-left document direction
+  for Arabic and Persian. Battle/detail copy remains a follow-up slice.
 
 - Added public GitHub metadata review and manual-brief onboarding. `repo-audit` and the Home review panel make one unauthenticated metadata request without cloning or executing source. `workspace brief` and the Home form create a private local analysis snapshot with no remote or provider request.
 
@@ -338,7 +343,9 @@ The initial GrowthLab API/dashboard operations now pass local and real synthetic
 browser checks. The workspace experiment map is visible, groups persisted hypotheses by role in
 accessible branches, supports local edits while preserving lineage, and reuses their IDs in battles. Local CSV measurement summaries now
 expose descriptive baseline comparisons with sample sizes, date range and
-MEASURED provenance. Settings/localized UX and full browser
+MEASURED provenance. The GrowthLab onboarding shell now follows the shared
+locale preference across six languages and applies RTL direction for Arabic and
+Persian. Remaining GrowthLab copy/settings polish and full browser
 quality/performance evaluation remain pending. Restricted previews, archived PNG captures and the
 continuous public-site walkthrough now pass local
 Rust/HTTP and real browser checks. Windows validation is unsupported.
@@ -349,7 +356,7 @@ Rust/HTTP and real browser checks. Windows validation is unsupported.
    accessibility rubric.
 2. Add provider adapters over the local measurement model, then verify genuine
    native-agent proposals without inventing provider data.
-3. Complete settings/localized UX and cross-platform release packaging
+3. Complete the remaining settings/localized strings and cross-platform release packaging
    against the full specification.
 
 ## Architectural decisions
@@ -372,7 +379,7 @@ symlink input. Static-preview unit (2026-09-16): **passed locally**. Full serial
 `cargo test --locked -- --test-threads=1` passes **959 tests per binary, 957
 passed, zero failures and two inherited ignored tests**;
 Clippy with `-D warnings`, formatting, style checks and the debug build pass.
-UI typecheck/i18n/build and **172 tests, zero failures/skips** pass; final `ui/dist`
+UI typecheck/i18n/build and **173 tests, zero failures/skips** pass; final `ui/dist`
 is included. The real CLI demo regression verifies ready previews, exact served
 built assets, source/document/seal hashes and its existing no-provider, privacy,
 baseline and shutdown checks. Debug RustEmbed serves assets from disk; this is
@@ -386,6 +393,9 @@ Browser checks verify the actual candidate text/styles, 1280px/390px CSS viewpor
 opaque/inert attributes, phone default, keyboard exclusion, no horizontal overflow
 and empty captured warning/error logs. Hot reload interrupted an initial phone
 selector read; final checks/capture ran after the build completed and a reload.
+The GrowthLab language selector was exercised in Chrome for Spanish and Arabic;
+the onboarding shell refreshed its copy, Arabic set `dir=rtl`, desktop scroll width
+remained equal to the viewport, and the tab recorded no warning/error logs.
 The editable hypothesis API test preserves IDs, roles, evidence and frozen
 battle contracts, and refuses updates while a battle is ready or running.
 Native providers, richer quality evaluation and release gates remain open. The
@@ -474,7 +484,7 @@ Earlier validation evidence follows; it is not a release or provider claim.
   command phases; deep-link tests preserve inherited route assertions.
 - `pnpm build` in ui: **passed**, regenerated embedded assets. The inherited
   circular route-generator warning and eager bundle size warning remain visible.
-  GrowthLab screen localization and bundle splitting remain pending.
+  GrowthLab battle/detail localization and bundle splitting remain pending.
 - GrowthLab dashboard real Chrome flow: **passed** on an owned fictional product
   in an empty isolated development slot. UI import, goal preparation, local replay
   file loading and actual execution produced three real worktrees/checks. All

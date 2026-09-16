@@ -2,10 +2,10 @@
   "schemaVersion": 1,
   "updated": "2026-09-17",
   "stage": "Source alpha",
-  "progressEstimate": 85,
+  "progressEstimate": 86,
   "progressExplanation": "Subjective estimate against the complete product specification, not a measured delivery metric.",
-  "milestone": "Editable experiment tree with frozen lineage, estimated accessibility structure hints in comparisons and standalone page audits, continuous browser walkthrough, observed timing hints, public repository review, manual-brief onboarding, executable playbooks, public checkout import and distribution-aware measurement validated",
-  "validatedSourceCommit": "6013644",
+  "milestone": "Editable experiment tree with frozen lineage, localized GrowthLab onboarding shell, estimated accessibility structure hints in comparisons and standalone page audits, continuous browser walkthrough, observed timing hints, public repository review, manual-brief onboarding, executable playbooks, public checkout import and distribution-aware measurement validated",
+  "validatedSourceCommit": "50d7d66",
   "delivered": [
     "Local product import with reviewed growthlab.yaml permissions",
     "Three competing changes from one frozen starting point in isolated workspaces",
@@ -45,7 +45,8 @@
     "Role-grouped experiment tree keeps stable hypothesis IDs linked to each battle",
     "Editable experiment tree preserves hypothesis identity, evidence and frozen battle contracts",
     "Comparison rows and private reports preserve hypothesis IDs for end-to-end lineage",
-    "Observed local browser timing rubric for first paint, DOM ready, load and timing metadata with explicit limits"
+    "Observed local browser timing rubric for first paint, DOM ready, load and timing metadata with explicit limits",
+    "Localized GrowthLab onboarding shell follows six existing locale catalogs and applies RTL direction for Arabic and Persian"
   ],
   "validation": [
     {
@@ -56,7 +57,7 @@
     {
       "name": "UI tests",
       "status": "passed",
-      "detail": "172 tests; zero failures or skips"
+      "detail": "173 tests; zero failures or skips"
     },
     {
       "name": "Local quality checks",
@@ -77,6 +78,11 @@
       "name": "Observed browser timing rubric",
       "status": "passed",
       "detail": "Local Chromium smoke records desktop/phone DOM, load and first-paint timing hints in comparison rows and reports; no Lighthouse, Core Web Vitals, accessibility, visual-regression or field-performance claim"
+    },
+    {
+      "name": "GrowthLab localized onboarding",
+      "status": "passed",
+      "detail": "Chrome exercised the shared language picker for Spanish and Arabic; the GrowthLab home shell refreshed its copy, Arabic set dir=rtl, desktop scroll width matched the viewport and the tab recorded no warning or error logs"
     },
     {
       "name": "Local CSV measurement",
