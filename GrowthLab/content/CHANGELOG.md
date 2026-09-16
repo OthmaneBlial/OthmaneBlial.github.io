@@ -1,6 +1,6 @@
 # GrowthLab release notes
 
-## Unreleased
+## 0.1.0-alpha.2 — 2026-09-16 (source prerelease)
 
 - Added the deterministic `seo-page-hygiene-v1` comparison rubric. Each HTML
   candidate now exposes title, description, heading, language, copy, canonical,
