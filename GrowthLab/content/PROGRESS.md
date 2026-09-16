@@ -1,7 +1,7 @@
 # GrowthLab progress
 
-Current milestone: **Phase 2/3/4 — estimated accessibility structure hints, public repository review, manual-brief onboarding, executable playbooks, public checkout import and distribution-aware measurement analysis validated** (2026-09-17).
-Overall completion: **about 84%, subjective estimate against the full specification**.
+Current milestone: **Phase 2/3/4 — editable experiment tree with frozen lineage, estimated accessibility structure hints, public repository review, manual-brief onboarding, executable playbooks, public checkout import and distribution-aware measurement analysis validated** (2026-09-17).
+Overall completion: **about 85%, subjective estimate against the full specification**.
 The configuration/import, explicit non-Git initialization, read-only URL audit and three-variant replay CLI slices pass locally.
 Selected delivery and report behavior pass local Rust, real CLI and browser checks.
 Recovery passes local Rust and real CLI interruption/legacy-archive checks.
@@ -86,6 +86,11 @@ performance.
   three-hypothesis portfolio exists, its stable IDs and evidence lineage are
   reused by the frozen battle contract and variant records; older workspaces
   continue to use the deterministic starter fallback.
+
+- Added controlled experiment-map editing. Users can revise hypothesis wording,
+  mechanism, metric, thresholds, guardrails and risks locally; IDs, roles,
+  source snapshots, evidence and decision provenance remain immutable, and edits
+  are refused while a battle is ready or running.
 
 - Added public GitHub metadata review and manual-brief onboarding. `repo-audit` and the Home review panel make one unauthenticated metadata request without cloning or executing source. `workspace brief` and the Home form create a private local analysis snapshot with no remote or provider request.
 
@@ -331,9 +336,9 @@ controller PID before payload work. Native-agent verification, provider-specific
 launcher registration and Linux confinement runtime verification remain pending.
 The initial GrowthLab API/dashboard operations now pass local and real synthetic
 browser checks. The workspace experiment map is visible, groups persisted hypotheses by role in
-accessible branches, and reuses their IDs in battles. Local CSV measurement summaries now
+accessible branches, supports local edits while preserving lineage, and reuses their IDs in battles. Local CSV measurement summaries now
 expose descriptive baseline comparisons with sample sizes, date range and
-MEASURED provenance. Editable tree/settings/localized UX and full browser
+MEASURED provenance. Settings/localized UX and full browser
 quality/performance evaluation remain pending. Restricted previews, archived PNG captures and the
 continuous public-site walkthrough now pass local
 Rust/HTTP and real browser checks. Windows validation is unsupported.
@@ -344,7 +349,7 @@ Rust/HTTP and real browser checks. Windows validation is unsupported.
    accessibility rubric.
 2. Add provider adapters over the local measurement model, then verify genuine
    native-agent proposals without inventing provider data.
-3. Complete editable tree/settings/localized UX and cross-platform release packaging
+3. Complete settings/localized UX and cross-platform release packaging
    against the full specification.
 
 ## Architectural decisions
@@ -520,7 +525,7 @@ Earlier validation evidence follows; it is not a release or provider claim.
 Known environment warning: installed external Claude CLI `--version` failed
 during inherited harness detection. Native-agent execution is not verified.
 Local CLI/domain/replay validation passed. Selected delivery/report behavior on Linux/Windows,
-complete GrowthLab tree/settings/localized UX, native-agent battles, Linux confinement runtime verification,
+complete GrowthLab settings/localized UX, native-agent battles, Linux confinement runtime verification,
 provider-specific launcher registration, interrupted selected-delivery recovery,
 real demo recording, richer quality evaluation, release installers and telemetry
 adapters remain **unverified / not

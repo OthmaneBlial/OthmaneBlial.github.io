@@ -3,7 +3,7 @@
 ## Next
 
 - Comparison rows and private JSON, Markdown and HTML reports now carry the persisted hypothesis ID that links each visible experiment-map branch to its frozen battle variant.
-- Grouped the workspace experiment map into accessible role branches while preserving each persisted hypothesis ID through battle preparation and variant records. The map is easier to scan, but it is not yet a fully editable tree or localized settings surface.
+- Grouped the workspace experiment map into accessible role branches while preserving each persisted hypothesis ID through battle preparation and variant records. The map now supports controlled local edits while keeping evidence and frozen battle contracts stable; settings and localized interface work remain pending.
 - Comparisons and shareable reports now include the `static-render-hints-v1`
   rubric when a sealed preview has local Chromium checks. Its observed score is
   decomposed into viewport coverage, overflow, visible copy and metadata

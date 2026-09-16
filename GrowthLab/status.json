@@ -2,10 +2,10 @@
   "schemaVersion": 1,
   "updated": "2026-09-17",
   "stage": "Source alpha",
-  "progressEstimate": 84,
+  "progressEstimate": 85,
   "progressExplanation": "Subjective estimate against the complete product specification, not a measured delivery metric.",
-  "milestone": "Estimated accessibility structure hints in comparisons and standalone page audits, continuous browser walkthrough, observed timing hints, public repository review, manual-brief onboarding, executable playbooks, public checkout import, distribution-aware measurement and role-grouped experiment tree validated",
-  "validatedSourceCommit": "27c12bd",
+  "milestone": "Editable experiment tree with frozen lineage, estimated accessibility structure hints in comparisons and standalone page audits, continuous browser walkthrough, observed timing hints, public repository review, manual-brief onboarding, executable playbooks, public checkout import and distribution-aware measurement validated",
+  "validatedSourceCommit": "6013644",
   "delivered": [
     "Local product import with reviewed growthlab.yaml permissions",
     "Three competing changes from one frozen starting point in isolated workspaces",
@@ -43,6 +43,7 @@
     "Observed local Chromium render checks for viewport coverage, overflow, visible copy and optional timings",
     "Transparent observed static-render rubric in comparisons and shareable reports",
     "Role-grouped experiment tree keeps stable hypothesis IDs linked to each battle",
+    "Editable experiment tree preserves hypothesis identity, evidence and frozen battle contracts",
     "Comparison rows and private reports preserve hypothesis IDs for end-to-end lineage",
     "Observed local browser timing rubric for first paint, DOM ready, load and timing metadata with explicit limits"
   ],
@@ -50,7 +51,7 @@
     {
       "name": "Rust tests",
       "status": "passed",
-      "detail": "955 tests per binary; 953 passed, zero failures and two inherited ignored tests (serial run)"
+      "detail": "959 tests per binary; 957 passed, zero failures and two inherited ignored tests (serial run)"
     },
     {
       "name": "UI tests",
@@ -157,7 +158,7 @@
     "Provider adapters",
     "Full visual regression and assistive-technology accessibility evaluation",
     "Native-agent battle verification and provider-specific launcher registration",
-    "Editable experiment tree, settings and localized interface",
+    "Settings and localized interface",
     "Cross-platform runtime proof, portable binaries/installers and distribution notices"
   ],
   "provenance": "Replay proposals: SIMULATED. Executed checks: OBSERVED. Growth outcomes: UNTESTED.",

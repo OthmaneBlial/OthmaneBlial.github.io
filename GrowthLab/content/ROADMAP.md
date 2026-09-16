@@ -27,8 +27,10 @@ by this roadmap.
   CLI reports and GrowthLab home/workspace/goal/battle/evidence/diff/delivery
   screens are implemented through Rust APIs. The workspace now shows a persisted
   three-branch experiment map and keeps its hypothesis IDs linked into battle
-  variants. Complete tree/settings/localized UX and browser-based visual
-  regression/accessibility evaluation remain pending. Restricted previews
+  variants. The experiment tree now supports controlled local edits while
+  preserving hypothesis IDs and evidence; settings/localized UX and
+  browser-based visual regression/accessibility evaluation remain pending.
+  Restricted previews
   of immutable static-source bundles pass Rust/HTTP and real desktop/phone checks;
   new runs also archive verified desktop and phone PNGs when local Chromium is
   available, together with observed viewport, overflow, visible-copy and
