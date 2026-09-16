@@ -2,9 +2,9 @@
   "schemaVersion": 1,
   "updated": "2026-09-17",
   "stage": "Source alpha",
-  "progressEstimate": 82,
+  "progressEstimate": 84,
   "progressExplanation": "Subjective estimate against the complete product specification, not a measured delivery metric.",
-  "milestone": "Continuous browser walkthrough, observed timing hints, public repository review, manual-brief onboarding, executable playbooks, public checkout import, distribution-aware measurement and role-grouped experiment tree validated",
+  "milestone": "Estimated accessibility structure hints, continuous browser walkthrough, observed timing hints, public repository review, manual-brief onboarding, executable playbooks, public checkout import, distribution-aware measurement and role-grouped experiment tree validated",
   "validatedSourceCommit": "82dc178da74d8469d19d312c5e7ae931597c5573",
   "delivered": [
     "Local product import with reviewed growthlab.yaml permissions",
@@ -16,6 +16,7 @@
     "Published project website and searchable docs with current progress and actual captures",
     "Published v0.1.0-alpha.2 as a source prerelease with the explainable SEO rubric",
     "Published v0.1.0-alpha.17 as a source prerelease with the continuous walkthrough",
+    "Published v0.1.0-alpha.18 as a source prerelease with the accessibility structure rubric",
     "Inspected and explicitly resumed pending selected-delivery receipts without rollback",
     "Reworked the bundled demo to show intent, evidence and an explicit review choice",
     "Local and SSH launchers self-register their controller PID before payload work",
@@ -36,6 +37,7 @@
     "Workspace experiment map showing the shared goal and three untested growth branches",
     "Prepared battles reuse persisted hypothesis IDs so the map remains linked to each variant",
     "Inspectable page-quality hints for mobile, controls, form labels, loading sources and claim guardrails",
+    "Estimated accessibility structure rubric for language, landmarks, headings, image alternatives, controls and form labels",
     "Observed local Chromium render checks for viewport coverage, overflow, visible copy and optional timings",
     "Transparent observed static-render rubric in comparisons and shareable reports",
     "Role-grouped experiment tree keeps stable hypothesis IDs linked to each battle",
@@ -61,7 +63,12 @@
     {
       "name": "Actual demo and browser flow",
       "status": "passed",
-      "detail": "Real CLI/HTTP execution, desktop/phone captures, observed local Chromium render checks and static-render rubric, verified PNG endpoint checks, SEO rubric records, page-quality hints and standalone local audit on owned fixtures"
+      "detail": "Real CLI/HTTP execution, desktop/phone captures, observed local Chromium render checks and static-render rubric, verified PNG endpoint checks, SEO and accessibility rubric records, page-quality hints and standalone local audit on owned fixtures"
+    },
+    {
+      "name": "Accessibility structure rubric",
+      "status": "passed",
+      "detail": "Deterministic archived-HTML checks cover language, landmarks, heading hierarchy, image alternatives, named controls and form labels; provenance stays ESTIMATED and does not claim WCAG or assistive-technology conformance"
     },
     {
       "name": "Observed browser timing rubric",
@@ -146,7 +153,7 @@
   ],
   "pending": [
     "Provider adapters",
-    "Full visual regression/accessibility evaluation",
+    "Full visual regression and assistive-technology accessibility evaluation",
     "Native-agent battle verification and provider-specific launcher registration",
     "Editable experiment tree, settings and localized interface",
     "Cross-platform runtime proof, portable binaries/installers and distribution notices"
@@ -159,8 +166,8 @@
   },
   "release": {
     "published": true,
-    "version": "0.1.0-alpha.17",
-    "url": "https://github.com/OthmaneBlial/GrowthLab/releases/tag/v0.1.0-alpha.17",
+    "version": "0.1.0-alpha.18",
+    "url": "https://github.com/OthmaneBlial/GrowthLab/releases/tag/v0.1.0-alpha.18",
     "platform": "Source prerelease",
     "limitation": "Tagged source archives; no standalone binaries or installers. Provider adapters, native-agent verification and cross-platform packaging remain pending."
   }

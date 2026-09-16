@@ -1,7 +1,7 @@
 # GrowthLab progress
 
-Current milestone: **Phase 2/3/4 — public repository review, manual-brief onboarding, executable playbooks, public checkout import and distribution-aware measurement analysis validated** (2026-09-17).
-Overall completion: **about 80%, subjective estimate against the full specification**.
+Current milestone: **Phase 2/3/4 — estimated accessibility structure hints, public repository review, manual-brief onboarding, executable playbooks, public checkout import and distribution-aware measurement analysis validated** (2026-09-17).
+Overall completion: **about 84%, subjective estimate against the full specification**.
 The configuration/import, explicit non-Git initialization, read-only URL audit and three-variant replay CLI slices pass locally.
 Selected delivery and report behavior pass local Rust, real CLI and browser checks.
 Recovery passes local Rust and real CLI interruption/legacy-archive checks.
@@ -10,8 +10,8 @@ sealed policy digests pass local checks; Linux runtime verification remains pend
 GitHub Actions is disabled at the user's request.
 The GrowthLab API and initial dashboard pass local Rust/UI and synthetic real
 browser checks. The bundled fictional replay now passes real CLI/HTTP and browser
-checks, including an estimated SEO page-hygiene rubric and standalone local audit. Native-agent execution
-and full visual regression/accessibility evaluation remain open release gates; the repository now includes verified desktop and
+checks, including estimated SEO, page-quality and accessibility structure rubrics and a standalone local audit. Native-agent execution
+and full visual regression/assistive-technology evaluation remain open release gates; the repository now includes verified desktop and
 phone render captures, observed local Chromium layout checks, a transparent static-render rubric plus a continuous
 30-second walkthrough captured from an isolated Chrome profile.
 
@@ -30,6 +30,10 @@ capture metadata. It checks for a mobile viewport,
 named links and buttons, labelled form controls and parser-blocking resource
 hints. These signals are source-level prompts; they are not Lighthouse,
 screen-reader, Core Web Vital or conversion evidence.
+Battle comparisons and reports also show an **ESTIMATED** accessibility structure
+rubric for language, landmarks, heading hierarchy, image alternatives, named
+controls and form labels. It is a source-level prompt and does not certify WCAG
+conformance or assistive-technology behavior.
 When the browser trace includes navigation timings, comparisons and reports also
 show a separate **OBSERVED** browser-timing rubric for DOM readiness, load,
 first-paint hints and metadata integrity. It is a local heuristic and does not
@@ -172,6 +176,12 @@ performance.
   archived candidate HTML. Every dimension exposes its score and observation;
   the rubric is marked **ESTIMATED** and does not claim rankings, traffic,
   accessibility certification, performance or conversion lift.
+
+- Added an estimated `accessibility-structure-v1` rubric to battle comparisons,
+  reports and the dashboard. It checks document language, landmarks, heading
+  hierarchy, image alternatives, named controls and form labels from archived
+  HTML, with explicit recommendations and limitations. It is a source prompt,
+  not a WCAG, screen-reader, keyboard or assistive-technology result.
 - Added `growthlab seo-audit --html <file>` for a quick local review outside a
   battle. JSON and Markdown output share the eight-dimension rubric, reject
   symlinks and oversized/non-UTF-8 files, and make the no-network boundary
@@ -326,8 +336,8 @@ Rust/HTTP and real browser checks. Windows validation is unsupported.
 
 ## Next three concrete tasks
 
-1. Add richer inspectable quality evaluation from the archived preview captures,
-   including dedicated accessibility and visual-regression checks.
+1. Add visual-regression and assistive-technology checks alongside the structural
+   accessibility rubric.
 2. Add provider adapters over the local measurement model, then verify genuine
    native-agent proposals without inventing provider data.
 3. Complete editable tree/settings/localized UX and cross-platform release packaging
