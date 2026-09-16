@@ -5,7 +5,7 @@
   "progressEstimate": 40,
   "progressExplanation": "Subjective estimate against the complete product specification, not a measured delivery metric.",
   "milestone": "Three real growth surfaces with sealed evidence and archived static previews",
-  "validatedSourceCommit": "950a76b3bc3408a3c036da128f29b5115455c614",
+  "validatedSourceCommit": "0d84b7171c3d686602110a36195a30b6b86992f6",
   "delivered": [
     "Local Git workspace import and reviewed growthlab.yaml permissions",
     "Three competing changes from one frozen baseline in isolated Git worktrees",
