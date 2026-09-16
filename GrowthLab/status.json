@@ -15,6 +15,7 @@
     "Key-free bundled replay demo with one deliberate validation failure",
     "Published project website and searchable docs with current progress and actual captures",
     "Published v0.1.0-alpha.2 as a source prerelease with the explainable SEO rubric",
+    "Published v0.1.0-alpha.17 as a source prerelease with the continuous walkthrough",
     "Inspected and explicitly resumed pending selected-delivery receipts without rollback",
     "Reworked the bundled demo to show intent, evidence and an explicit review choice",
     "Local and SSH launchers self-register their controller PID before payload work",
@@ -158,8 +159,8 @@
   },
   "release": {
     "published": true,
-    "version": "0.1.0-alpha.16",
-    "url": "https://github.com/OthmaneBlial/GrowthLab/releases/tag/v0.1.0-alpha.16",
+    "version": "0.1.0-alpha.17",
+    "url": "https://github.com/OthmaneBlial/GrowthLab/releases/tag/v0.1.0-alpha.17",
     "platform": "Source prerelease",
     "limitation": "Tagged source archives; no standalone binaries or installers. Provider adapters, native-agent verification and cross-platform packaging remain pending."
   }
