@@ -15,6 +15,11 @@ recording and visual/performance evaluation remain open release gates.
 
 ## Completed
 
+- Published [source prerelease v0.1.0-alpha.3](https://github.com/OthmaneBlial/GrowthLab/releases/tag/v0.1.0-alpha.3)
+  at the validated source line ending in `18cad1f2a617a942a744798b16435690eaf0fac1`.
+  The release adds the standalone local SEO audit with JSON/Markdown output;
+  all six workflows remain manually disabled and no binaries/installers are attached.
+
 - Published [source prerelease v0.1.0-alpha.2](https://github.com/OthmaneBlial/GrowthLab/releases/tag/v0.1.0-alpha.2)
   at immutable source commit `4a3f073cc1e601ae58db87efa2b10c5e4d785b64`. GitHub
   confirmed public, non-draft prerelease metadata and tagged source archive links;

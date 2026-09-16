@@ -1,6 +1,6 @@
 # GrowthLab release notes
 
-## Next
+## 0.1.0-alpha.3 — 2026-09-16 (source prerelease)
 
 - Added `growthlab seo-audit --html <file>` for a quick local SEO page review
   outside a battle. JSON and Markdown output expose the same eight-dimension
