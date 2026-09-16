@@ -1,7 +1,7 @@
 # GrowthLab progress
 
 Current milestone: **Phase 2/3 — local SEO audit and an explainable page rubric validated** (2026-09-16).
-Overall completion: **about 50%, subjective estimate against the full specification**.
+Overall completion: **about 52%, subjective estimate against the full specification**.
 The configuration/import and three-variant replay CLI slices pass locally.
 Selected delivery and report behavior pass local Rust, real CLI and browser checks.
 Recovery passes local Rust and real CLI interruption/legacy-archive checks.
@@ -10,8 +10,9 @@ sealed policy digests pass local checks; Linux runtime verification remains pend
 GitHub Actions is disabled at the user's request.
 The GrowthLab API and initial dashboard pass local Rust/UI and synthetic real
 browser checks. The bundled fictional replay now passes real CLI/HTTP and browser
-checks, including an estimated SEO page-hygiene rubric and standalone local audit. Native-agent execution,
-recording and visual/performance evaluation remain open release gates.
+checks, including an estimated SEO page-hygiene rubric and standalone local audit. Native-agent execution
+and visual/performance evaluation remain open release gates; the repository now includes an eight-second
+walkthrough assembled from the real browser captures.
 
 ## Completed
 
@@ -89,6 +90,9 @@ recording and visual/performance evaluation remain open release gates.
   evidence.
 - Expanded the rubric with deterministic next steps for every partial or missing
   dimension, and surfaced them in the CLI, dashboard and exported reports.
+- Added an eight-second `docs/assets/growthlab-demo.mp4` walkthrough assembled
+  from the real local browser captures; it is labelled as a visual reel, not as
+  a continuous recording or an SEO outcome.
 - Fixed a macOS cancellation probe race exposed by the full parallel suite.
   No-signal EPERM probes retry briefly while the owned group is reaped; persistent
   permission failures and actual signal failures still propagate. Existing real
@@ -222,13 +226,13 @@ confinement validated locally. Local and SSH launchers now self-register their
 controller PID before payload work. Native-agent verification, provider-specific
 launcher registration and Linux confinement runtime verification remain pending.
 The initial GrowthLab API/dashboard operations now pass local and real synthetic
-browser checks. Complete tree/settings/localized UX, concise recording and richer
+browser checks. Complete tree/settings/localized UX, continuous recording and richer
 quality evaluation remain pending. Restricted previews and archived PNG captures now pass local
 Rust/HTTP and real browser checks. Windows validation is unsupported.
 
 ## Next three concrete tasks
 
-1. Create a concise real recording and richer inspectable quality evaluation from
+1. Add a continuous screen recording and richer inspectable quality evaluation from
    the archived preview captures.
 2. Close remaining provider-specific launcher registration and cross-platform confinement gates,
    then verify genuine native-agent proposals without inventing provider data.

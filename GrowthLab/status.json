@@ -2,10 +2,10 @@
   "schemaVersion": 1,
   "updated": "2026-09-16",
   "stage": "Source alpha",
-  "progressEstimate": 50,
+  "progressEstimate": 52,
   "progressExplanation": "Subjective estimate against the complete product specification, not a measured delivery metric.",
   "milestone": "Local SEO audit and an explainable page rubric validated",
-  "validatedSourceCommit": "527e7dca532e3091dddc38a30163e21d05ba05af",
+  "validatedSourceCommit": "d5008439f4bd6c74300591581fc38c17a46eb996",
   "delivered": [
     "Local product import with reviewed growthlab.yaml permissions",
     "Three competing changes from one frozen starting point in isolated workspaces",
@@ -20,7 +20,8 @@
     "Local and SSH launchers self-register their controller PID before payload work",
     "Automatic desktop PNG capture from sealed preview documents with archive verification",
     "Explainable SEO page-hygiene rubric with dimension scores and limits",
-    "Standalone local SEO audit with actionable recommendations, JSON or Markdown output and safe file bounds"
+    "Standalone local SEO audit with actionable recommendations, JSON or Markdown output and safe file bounds",
+    "Eight-second demo reel assembled from real local browser captures"
   ],
   "validation": [
     {
@@ -60,7 +61,7 @@
     }
   ],
   "pending": [
-    "A short real demo recording and visual quality/performance evaluation",
+    "Visual quality/performance evaluation and a continuous screen recording",
     "Native-agent battle verification and provider-specific launcher registration",
     "Complete experiment tree, settings and localized interface",
     "Broader inputs, growth playbooks and real measurement",
