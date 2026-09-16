@@ -17,6 +17,7 @@
     "Published v0.1.0-alpha.2 as a source prerelease with the explainable SEO rubric",
     "Published v0.1.0-alpha.17 as a source prerelease with the continuous walkthrough",
     "Published v0.1.0-alpha.18 as a source prerelease with the accessibility structure rubric",
+    "Published v0.1.0-alpha.19 with a validated macOS arm64 CLI archive and checksum",
     "Inspected and explicitly resumed pending selected-delivery receipts without rollback",
     "Reworked the bundled demo to show intent, evidence and an explicit review choice",
     "Local and SSH launchers self-register their controller PID before payload work",
@@ -166,9 +167,9 @@
   },
   "release": {
     "published": true,
-    "version": "0.1.0-alpha.18",
-    "url": "https://github.com/OthmaneBlial/GrowthLab/releases/tag/v0.1.0-alpha.18",
+    "version": "0.1.0-alpha.19",
+    "url": "https://github.com/OthmaneBlial/GrowthLab/releases/tag/v0.1.0-alpha.19",
     "platform": "Source prerelease",
-    "limitation": "Tagged source archives; no standalone binaries or installers. Provider adapters, native-agent verification and cross-platform packaging remain pending."
+    "limitation": "The attached CLI archive is validated on macOS arm64 only; Linux and Windows binaries, installers, signing and notarization remain pending. Provider adapters and native-agent verification remain pending."
   }
 }
