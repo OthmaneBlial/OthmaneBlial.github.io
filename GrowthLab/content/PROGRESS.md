@@ -22,6 +22,12 @@ exploratory 95% mean and baseline-difference intervals. The browser dashboard
 exposes the same summary from a local file. It is user-supplied **MEASURED** data;
 provider identity, causality and statistical significance remain unverified.
 
+The archived HTML evaluator now also exposes a separate **Page quality hints
+(estimated)** record beside the SEO rubric. It checks for a mobile viewport,
+named links and buttons, labelled form controls and parser-blocking resource
+hints. These signals are source-level prompts; they are not Lighthouse,
+screen-reader, Core Web Vital or conversion evidence.
+
 ## Completed
 
 - Added executable playbook runs. The CLI, API and workspace dashboard save deterministic role contracts with ordered answers, outputs and guardrails; every run stays UNTESTED.
@@ -30,6 +36,11 @@ provider identity, causality and statistical significance remain unverified.
   `distribution` or channel column and compare each variant only with the
   matching distribution baseline; absent columns use `all`. Rust and browser
   calculations stay aligned and make no provider request.
+
+- Added a conservative page-quality hint evaluator beside the SEO rubric. Battle
+  comparisons and shareable reports expose four structural dimensions,
+  recommendations and limits with **ESTIMATED** provenance; browser-based
+  performance and accessibility validation remain separate release gates.
 
 - Added explicit public GitHub checkout import. The CLI, API and Home flow clone
   only into a new caller-selected folder, preserve an existing `growthlab.yaml`,
