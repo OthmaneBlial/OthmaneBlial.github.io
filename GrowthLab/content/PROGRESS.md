@@ -15,18 +15,19 @@ recording and visual/performance evaluation remain open release gates.
 
 ## Completed
 
-- Published [source prerelease v0.1.0-alpha.1](https://github.com/OthmaneBlial/GrowthLab/releases/tag/v0.1.0-alpha.1)
-  at immutable source commit `c477d2998df4b91f1145b0d347239b4e95efdef3`. GitHub
+- Published [source prerelease v0.1.0-alpha.2](https://github.com/OthmaneBlial/GrowthLab/releases/tag/v0.1.0-alpha.2)
+  at immutable source commit `4a3f073cc1e601ae58db87efa2b10c5e4d785b64`. GitHub
   confirmed public, non-draft prerelease metadata and tagged source archive links;
-  no binaries/installers are attached. README and website share its release link
-  and the explicitly subjective 48% full-spec estimate. All six workflows remain
-  manually disabled; source publication does not close pending product gates.
+  no binaries/installers are attached. The release documents the explainable SEO
+  page-hygiene rubric and the explicitly subjective 48% full-spec estimate. All
+  six workflows remain manually disabled; source publication does not close
+  pending product gates.
 
 - Published the canonical [website](https://othmaneblial.github.io/GrowthLab/)
   and [searchable docs](https://othmaneblial.github.io/GrowthLab/docs.html). Native
-  Pages build `1ea269a3d75ad5db6ff34ea4aee8451791082222` completed; landing, docs,
-  CSS, JavaScript, status and a representative capture matched source bytes over
-  HTTPS. Desktop/390px phone checks covered gallery/dialog, menu/Escape, docs
+  Pages build `79f66a22647f1270a42508a8fd3616d5862cb8f3` completed; landing, docs,
+  CSS, JavaScript, status and the current 48% progress snapshot matched source
+  bytes over HTTPS. Desktop/390px phone checks covered gallery/dialog, menu/Escape, docs
   filtering and actual command copy/paste, with fitting scroll widths and no
   captured console errors. No GitHub CI workflow was enabled or dispatched.
 - Prepared source prerelease `v0.1.0-alpha.1`: fresh locked macOS arm64 release

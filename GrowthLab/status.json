@@ -14,7 +14,7 @@
     "Private-by-default offline HTML/Markdown reports and interrupted-run recovery",
     "Key-free bundled replay demo with one deliberate validation failure",
     "Published project website and searchable docs with current progress and actual captures",
-    "Published v0.1.0-alpha.1 as a source prerelease with explicit alpha limitations",
+    "Published v0.1.0-alpha.2 as a source prerelease with the explainable SEO rubric",
     "Inspected and explicitly resumed pending selected-delivery receipts without rollback",
     "Reworked the bundled demo to show intent, evidence and an explicit review choice",
     "Local and SSH launchers self-register their controller PID before payload work",
@@ -73,8 +73,8 @@
   },
   "release": {
     "published": true,
-    "version": "0.1.0-alpha.1",
-    "url": "https://github.com/OthmaneBlial/GrowthLab/releases/tag/v0.1.0-alpha.1",
+    "version": "0.1.0-alpha.2",
+    "url": "https://github.com/OthmaneBlial/GrowthLab/releases/tag/v0.1.0-alpha.2",
     "platform": "Source prerelease",
     "limitation": "Tagged source archives; no standalone binaries or installers. Native-agent verification and cross-platform packaging remain pending."
   }
