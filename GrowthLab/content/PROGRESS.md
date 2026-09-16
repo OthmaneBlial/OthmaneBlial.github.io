@@ -1,7 +1,7 @@
 # GrowthLab progress
 
 Current milestone: **Phase 2/3/4 — public repository review, manual-brief onboarding, executable playbooks, public checkout import and distribution-aware measurement analysis validated** (2026-09-16).
-Overall completion: **about 78%, subjective estimate against the full specification**.
+Overall completion: **about 79%, subjective estimate against the full specification**.
 The configuration/import, explicit non-Git initialization, read-only URL audit and three-variant replay CLI slices pass locally.
 Selected delivery and report behavior pass local Rust, real CLI and browser checks.
 Recovery passes local Rust and real CLI interruption/legacy-archive checks.
@@ -301,10 +301,10 @@ confinement validated locally. Local and SSH launchers now self-register their
 controller PID before payload work. Native-agent verification, provider-specific
 launcher registration and Linux confinement runtime verification remain pending.
 The initial GrowthLab API/dashboard operations now pass local and real synthetic
-browser checks. The workspace experiment map is visible and its persisted
-hypothesis lineage is reused by battles. Local CSV measurement summaries now
+browser checks. The workspace experiment map is visible, groups persisted hypotheses by role in
+accessible branches, and reuses their IDs in battles. Local CSV measurement summaries now
 expose descriptive baseline comparisons with sample sizes, date range and
-MEASURED provenance. Complete tree/settings/localized UX, continuous recording and full browser
+MEASURED provenance. Editable tree/settings/localized UX, continuous recording and full browser
 quality/performance evaluation remain pending. Restricted previews and archived PNG captures now pass local
 Rust/HTTP and real browser checks. Windows validation is unsupported.
 
@@ -314,8 +314,8 @@ Rust/HTTP and real browser checks. Windows validation is unsupported.
    the archived preview captures.
 2. Add provider adapters over the local measurement model, then verify genuine
    native-agent proposals without inventing provider data.
-3. Complete tree/settings/localized UX and cross-platform release packaging against
-   the full specification.
+3. Complete editable tree/settings/localized UX and cross-platform release packaging
+   against the full specification.
 
 ## Architectural decisions
 

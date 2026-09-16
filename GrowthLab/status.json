@@ -2,10 +2,10 @@
   "schemaVersion": 1,
   "updated": "2026-09-16",
   "stage": "Source alpha",
-  "progressEstimate": 78,
+  "progressEstimate": 79,
   "progressExplanation": "Subjective estimate against the complete product specification, not a measured delivery metric.",
-  "milestone": "Public repository review, manual-brief onboarding, executable playbooks, public checkout import and distribution-aware measurement analysis validated",
-  "validatedSourceCommit": "ddf0e63b2a75785744309693c21e20bbe9694d96",
+  "milestone": "Public repository review, manual-brief onboarding, executable playbooks, public checkout import, distribution-aware measurement and role-grouped experiment tree validated",
+  "validatedSourceCommit": "3c12d447127978775257cfda91371c51ac5af7f2",
   "delivered": [
     "Local product import with reviewed growthlab.yaml permissions",
     "Three competing changes from one frozen starting point in isolated workspaces",
@@ -36,7 +36,8 @@
     "Prepared battles reuse persisted hypothesis IDs so the map remains linked to each variant",
     "Inspectable page-quality hints for mobile, controls, form labels, loading sources and claim guardrails",
     "Observed local Chromium render checks for viewport coverage, overflow, visible copy and optional timings",
-    "Transparent observed static-render rubric in comparisons and shareable reports"
+    "Transparent observed static-render rubric in comparisons and shareable reports",
+    "Role-grouped experiment tree keeps stable hypothesis IDs linked to each battle"
   ],
   "validation": [
     {
@@ -128,13 +129,18 @@
       "name": "Experiment map lineage",
       "status": "passed",
       "detail": "Rust battle preparation tests confirm a persisted three-hypothesis map is reused in the frozen contract and variant records, while older workspaces retain the deterministic fallback"
+    },
+    {
+      "name": "Role-grouped experiment tree",
+      "status": "passed",
+      "detail": "Workspace dashboard groups persisted hypotheses by role in accessible branches; stable hypothesis IDs remain linked into prepared battle variants"
     }
   ],
   "pending": [
     "Provider adapters",
     "Visual quality/performance evaluation and a continuous screen recording",
     "Native-agent battle verification and provider-specific launcher registration",
-    "Complete experiment tree, settings and localized interface",
+    "Editable experiment tree, settings and localized interface",
     "Cross-platform runtime proof, portable binaries/installers and distribution notices"
   ],
   "provenance": "Replay proposals: SIMULATED. Executed checks: OBSERVED. Growth outcomes: UNTESTED.",
@@ -145,8 +151,8 @@
   },
   "release": {
     "published": true,
-    "version": "0.1.0-alpha.13",
-    "url": "https://github.com/OthmaneBlial/GrowthLab/releases/tag/v0.1.0-alpha.13",
+    "version": "0.1.0-alpha.14",
+    "url": "https://github.com/OthmaneBlial/GrowthLab/releases/tag/v0.1.0-alpha.14",
     "platform": "Source prerelease",
     "limitation": "Tagged source archives; no standalone binaries or installers. Provider adapters, native-agent verification and cross-platform packaging remain pending."
   }
