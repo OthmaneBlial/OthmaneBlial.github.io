@@ -2,10 +2,10 @@
   "schemaVersion": 1,
   "updated": "2026-09-17",
   "stage": "Source alpha",
-  "progressEstimate": 86,
+  "progressEstimate": 87,
   "progressExplanation": "Subjective estimate against the complete product specification, not a measured delivery metric.",
-  "milestone": "Editable experiment tree with frozen lineage, localized GrowthLab onboarding shell, estimated accessibility structure hints in comparisons and standalone page audits, continuous browser walkthrough, observed timing hints, public repository review, manual-brief onboarding, executable playbooks, public checkout import and distribution-aware measurement validated",
-  "validatedSourceCommit": "50d7d66",
+  "milestone": "Editable experiment tree with frozen lineage, localized GrowthLab onboarding shell, provider-neutral measurement boundary, estimated accessibility structure hints in comparisons and standalone page audits, continuous browser walkthrough, observed timing hints, public repository review, manual-brief onboarding, executable playbooks, public checkout import and distribution-aware measurement validated",
+  "validatedSourceCommit": "b06ca18",
   "delivered": [
     "Local product import with reviewed growthlab.yaml permissions",
     "Three competing changes from one frozen starting point in isolated workspaces",
@@ -46,7 +46,8 @@
     "Editable experiment tree preserves hypothesis identity, evidence and frozen battle contracts",
     "Comparison rows and private reports preserve hypothesis IDs for end-to-end lineage",
     "Observed local browser timing rubric for first paint, DOM ready, load and timing metadata with explicit limits",
-    "Localized GrowthLab onboarding shell follows six existing locale catalogs and applies RTL direction for Arabic and Persian"
+    "Localized GrowthLab onboarding shell follows six existing locale catalogs and applies RTL direction for Arabic and Persian",
+    "Provider-neutral measurement source registry exposes local CSV and explicit planned external boundaries without provider requests"
   ],
   "validation": [
     {
@@ -138,6 +139,11 @@
       "name": "Distribution-aware measurement",
       "status": "passed",
       "detail": "Local Rust and browser CSV summaries group by metric, distribution or channel and variant; comparisons stay within each distribution and remain MEASURED from user-supplied rows"
+    },
+    {
+      "name": "Measurement source boundary",
+      "status": "passed",
+      "detail": "Local API and browser panel enumerate one available no-network CSV source plus six planned opt-in boundaries; planned entries remain UNTESTED and no provider credentials or events are accessed"
     },
     {
       "name": "Public repository checkout import",

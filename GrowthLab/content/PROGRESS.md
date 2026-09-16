@@ -1,7 +1,7 @@
 # GrowthLab progress
 
-Current milestone: **Phase 2/3/4 — editable experiment tree with frozen lineage, localized GrowthLab onboarding shell, estimated accessibility structure hints, public repository review, manual-brief onboarding, executable playbooks, public checkout import and distribution-aware measurement analysis validated** (2026-09-17).
-Overall completion: **about 86%, subjective estimate against the full specification**.
+Current milestone: **Phase 2/3/4 — editable experiment tree with frozen lineage, localized GrowthLab onboarding shell, provider-neutral measurement boundary, estimated accessibility structure hints, public repository review, manual-brief onboarding, executable playbooks, public checkout import and distribution-aware measurement analysis validated** (2026-09-17).
+Overall completion: **about 87%, subjective estimate against the full specification**.
 The configuration/import, explicit non-Git initialization, read-only URL audit and three-variant replay CLI slices pass locally.
 Selected delivery and report behavior pass local Rust, real CLI and browser checks.
 Recovery passes local Rust and real CLI interruption/legacy-archive checks.
@@ -22,6 +22,12 @@ the same acquisition source. Groups with repeated observations also expose
 exploratory 95% mean and baseline-difference intervals. The browser dashboard
 exposes the same summary from a local file. It is user-supplied **MEASURED** data;
 provider identity, causality and statistical significance remain unverified.
+
+The measurement API now exposes a provider-neutral source registry. Local CSV is
+the only available source and is marked **MEASURED** with no network access;
+privacy-friendly analytics, web and product analytics, A/B testing, search
+performance and GitHub signals are explicit opt-in boundaries marked planned and
+**UNTESTED**. No provider credentials, events or requests are implied.
 
 The archived HTML evaluator now also exposes a separate **Page quality hints
 (estimated)** record beside the SEO rubric. Ready sealed previews additionally
@@ -49,6 +55,11 @@ performance.
   `distribution` or channel column and compare each variant only with the
   matching distribution baseline; absent columns use `all`. Rust and browser
   calculations stay aligned and make no provider request.
+
+- Added the provider-neutral measurement source registry. The local API and
+  browser panel enumerate the available CSV adapter and six planned external
+  integration boundaries with network, status, provenance and limitation
+  metadata; planned sources remain unconfigured and no provider is contacted.
 
 - Added a conservative page-quality hint evaluator beside the SEO rubric. Battle
   comparisons and shareable reports expose five structural dimensions,
