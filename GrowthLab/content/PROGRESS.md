@@ -1,8 +1,8 @@
 # GrowthLab progress
 
-Current milestone: **Phase 2/3 — SEO audit, measurement analysis and growth playbook catalog validated** (2026-09-16).
-Overall completion: **about 61%, subjective estimate against the full specification**.
-The configuration/import and three-variant replay CLI slices pass locally.
+Current milestone: **Phase 2/3/4 — SEO audit, measurement analysis, playbooks and local-folder onboarding validated** (2026-09-16).
+Overall completion: **about 63%, subjective estimate against the full specification**.
+The configuration/import, explicit non-Git initialization and three-variant replay CLI slices pass locally.
 Selected delivery and report behavior pass local Rust, real CLI and browser checks.
 Recovery passes local Rust and real CLI interruption/legacy-archive checks.
 Validation commands now require an OS confinement driver. macOS isolation and
@@ -22,6 +22,12 @@ from a local file. It is user-supplied **MEASURED** data; provider identity,
 causality and statistical significance remain unverified.
 
 ## Completed
+
+- Added explicit local-folder onboarding. `workspace import --init-git` creates a
+  local-only `main` snapshot for a reviewed, valid `growthlab.yaml`, rejects
+  protected paths before the first commit and configures no remote. Existing
+  repositories are never auto-committed. The API and Home form expose the same
+  opt-in flag, with focused CLI/API tests covering both acceptance and refusal.
 
 - Published [source prerelease v0.1.0-alpha.5](https://github.com/OthmaneBlial/GrowthLab/releases/tag/v0.1.0-alpha.5) at the validated source line. It adds exploratory 95% mean and baseline-difference intervals for repeated local observations, with matching CLI/browser calculations and documented descriptive limits.
 
@@ -231,8 +237,9 @@ causality and statistical significance remain unverified.
 
 ## Work in progress
 
-The Phase 1 identity/domain foundation is implemented. Broader URL/manual
-brief/non-Git onboarding and richer context remain required product work.
+The Phase 1 identity/domain foundation is implemented. Public repository URLs,
+website analysis, manual briefs and richer product context remain required work;
+local non-Git folder initialization is now available behind an explicit flag.
 Phase 2 has a tested replay CLI backend, selected delivery, local reports,
 checkpoint-based CLI recovery, selected-delivery recovery and macOS validation
 confinement validated locally. Local and SSH launchers now self-register their
@@ -251,8 +258,8 @@ Rust/HTTP and real browser checks. Windows validation is unsupported.
    the archived preview captures.
 2. Add provider adapters and distribution-aware analysis over the local CSV summaries,
    then verify genuine native-agent proposals without inventing provider data.
-3. Complete tree/settings/localized UX, executable playbook workflows, broader inputs
-   and cross-platform release packaging against the full specification.
+3. Complete tree/settings/localized UX, executable playbook workflows, public URL/
+   manual-brief inputs and cross-platform release packaging against the full specification.
 
 ## Architectural decisions
 
@@ -271,7 +278,7 @@ Rust/HTTP and real browser checks. Windows validation is unsupported.
 Standalone SEO audit and rubric unit tests (2026-09-16): **passed locally**;
 the real binary emitted JSON and Markdown for a UTF-8 fixture and refused a
 symlink input. Static-preview unit (2026-09-16): **passed locally**. Full `cargo test --locked`
-passes **927 tests per binary, 925 passed, zero failures and two inherited ignored tests**;
+passes **930 tests per binary, 928 passed, zero failures and two inherited ignored tests**;
 Clippy with `-D warnings`, formatting, style checks and the debug build pass.
 UI typecheck/i18n/build and **171 tests, zero failures/skips** pass; final `ui/dist`
 is included. The real CLI demo regression verifies ready previews, exact served

@@ -33,6 +33,8 @@ by this roadmap.
   packaging remain pending.
 - [ ] **4 — Playbooks:** focused roles and practical positioning, activation,
   onboarding, ethical discovery, pricing research and launch templates with evidence.
+  The ten read-only role contracts are available locally and in the dashboard;
+  executable, evidence-producing playbook workflows remain pending.
 - [ ] **5 — Measurement:** CSV import, baseline/variant comparison, sample size,
   date range, provenance, cautious interval analysis and stable integration
   boundaries. Real telemetry is optional; no invented data.

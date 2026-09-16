@@ -2,10 +2,10 @@
   "schemaVersion": 1,
   "updated": "2026-09-16",
   "stage": "Source alpha",
-  "progressEstimate": 61,
+  "progressEstimate": 63,
   "progressExplanation": "Subjective estimate against the complete product specification, not a measured delivery metric.",
-  "milestone": "Local playbook catalog and measurement analysis validated",
-  "validatedSourceCommit": "1b1da53f90eebd63231086c2eff65b2c95ab2437",
+  "milestone": "Local-folder onboarding, playbook catalog and measurement analysis validated",
+  "validatedSourceCommit": "a98c124ad5b24bc15f688dcf2ddc69cb40efb253",
   "delivered": [
     "Local product import with reviewed growthlab.yaml permissions",
     "Three competing changes from one frozen starting point in isolated workspaces",
@@ -25,13 +25,14 @@
     "Local CSV measurement summaries with baseline comparisons, sample sizes, date range and MEASURED provenance",
     "Local browser measurement dashboard over user-supplied CSV with local descriptive comparisons",
     "Exploratory 95% mean and baseline-difference intervals with documented assumptions",
-    "Ten role-based growth playbooks with questions, outputs and guardrails"
+    "Ten role-based growth playbooks with questions, outputs and guardrails",
+    "Explicit local-folder onboarding with protected-path checks and an opt-in local Git snapshot"
   ],
   "validation": [
     {
       "name": "Rust tests",
       "status": "passed",
-      "detail": "927 tests per binary; 925 passed, zero failures and two inherited ignored tests"
+      "detail": "930 tests per binary; 928 passed, zero failures and two inherited ignored tests"
     },
     {
       "name": "UI tests",
@@ -82,6 +83,11 @@
       "name": "Cloud CI",
       "status": "disabled",
       "detail": "Cloud workflows are disabled; validation runs locally"
+    },
+    {
+      "name": "Local-folder onboarding",
+      "status": "passed",
+      "detail": "CLI and HTTP tests cover refusal without the explicit flag, protected-path refusal before commit, and a local-only initial snapshot with no remote"
     }
   ],
   "pending": [
@@ -89,7 +95,7 @@
     "Visual quality/performance evaluation and a continuous screen recording",
     "Native-agent battle verification and provider-specific launcher registration",
     "Complete experiment tree, settings and localized interface",
-    "Broader inputs and executable playbook workflows",
+    "Public repository/website/manual-brief inputs and executable playbook workflows",
     "Cross-platform runtime proof, portable binaries/installers and distribution notices"
   ],
   "provenance": "Replay proposals: SIMULATED. Executed checks: OBSERVED. Growth outcomes: UNTESTED.",
