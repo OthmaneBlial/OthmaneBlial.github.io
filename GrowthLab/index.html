@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Turn growth ideas into competing changes you can inspect. GrowthLab runs local Git-native experiments with real diffs, validation and honest evidence.">
+  <meta name="theme-color" content="#f7f6f0">
+  <meta property="og:title" content="GrowthLab — Your growth ideas. Real diffs.">
+  <meta property="og:description" content="A local experimentation workspace. Three competing changes, real checks, sealed evidence. You decide what ships.">
+  <meta property="og:type" content="website">
+  <title>GrowthLab — Your growth ideas. Real diffs.</title>
+  <link rel="icon" href="assets/mark.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="styles.css">
+  <script src="app.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <header class="site-header wrap">
+    <a class="wordmark" href="index.html" aria-label="GrowthLab home"><img src="assets/mark.svg" width="30" height="30" alt="">GrowthLab<span class="alpha-label">alpha</span></a>
+    <button class="menu-toggle" type="button" aria-controls="navigation" aria-expanded="false">Menu <span aria-hidden="true">+</span></button>
+    <nav id="navigation" aria-label="Main navigation">
+      <a href="#how-it-works">The workflow</a><a href="#progress">Progress</a><a href="docs.html">Docs</a>
+      <a class="nav-source" href="https://github.com/OthmaneBlial/GrowthLab">GitHub <span aria-hidden="true">↗</span></a>
+    </nav>
+  </header>
+  <main id="main">
+    <section class="hero wrap" aria-labelledby="hero-title">
+      <div class="hero-copy">
+        <p class="eyebrow">An open-source experimentation workspace</p>
+        <h1 id="hero-title">Your growth ideas.<br><em>Real diffs.</em></h1>
+        <p class="hero-description">Give competing strategies the same product and goal. Inspect the changes, run the checks, and decide what ships.</p>
+        <div class="hero-actions"><a class="button button-dark" href="docs.html#quick-start">Run the local demo <span aria-hidden="true">→</span></a><a class="text-link" href="#see-it">See the actual battle <span aria-hidden="true">↓</span></a></div>
+        <p class="hero-footnote">Local-first · Git-native · No Docker required</p>
+      </div>
+      <aside class="battle-sheet" aria-label="Observed results from the fictional bundled demo">
+        <div class="sheet-heading"><span class="eyebrow">Growth Battle / 001</span><span class="status-tag">Observed checks</span></div>
+        <h2>One baseline.<br>Three ways forward.</h2>
+        <p class="sheet-goal">Fictional PatchKit homepage · declared replay</p>
+        <ol class="result-list">
+          <li><span class="result-index">A</span><div><strong>Outcome-first positioning</strong><span>Structure · links · claims</span></div><span class="result-score">3 / 3<small>Eligible</small></span></li>
+          <li class="result-failed"><span class="result-index">B</span><div><strong>Proof beside the promise</strong><span>Primary heading check failed</span></div><span class="result-score">2 / 3<small>Ineligible</small></span></li>
+          <li><span class="result-index">C</span><div><strong>Faster first success</strong><span>Structure · links · claims</span></div><span class="result-score">3 / 3<small>Eligible</small></span></li>
+        </ol>
+        <p class="sheet-note">Passing checks support review. They do not prove conversion lift. No candidate is selected automatically.</p>
+        <span class="sheet-fold" aria-hidden="true"></span>
+      </aside>
+    </section>
+    <div class="status-strip"><div class="wrap status-strip-inner"><span><i class="live-dot" aria-hidden="true"></i><strong data-stage>Source alpha</strong></span><span data-milestone>Three real variants with sealed evidence and archived static previews</span><a href="#progress">What works today <span aria-hidden="true">↗</span></a></div></div>
+    <section class="section wrap screenshot-section" id="see-it" aria-labelledby="see-title">
+      <div class="section-intro"><div><p class="eyebrow">Evidence you can open</p><h2 id="see-title">The interesting part<br>is the <em>failure.</em></h2></div><p>One demo proposal removes the primary heading. The real check catches it. Its diff and logs stay visible; selection stays disabled. The other two candidates remain reviewable.</p></div>
+      <figure class="screenshot-frame"><button class="image-open" type="button" data-lightbox="assets/battle-comparison.jpg" data-caption="Actual local dashboard: nine observed checks, one deliberate heading failure, two eligible candidates." aria-label="Expand actual Growth Battle dashboard screenshot"><img src="assets/battle-comparison.jpg" width="1280" height="570" alt="GrowthLab dashboard comparing three real replay candidates, with one failed heading check and individual command results." fetchpriority="high"><span class="expand-label">Inspect screenshot <span aria-hidden="true">↗</span></span></button><figcaption><span><span class="caption-marker">Actual capture</span> Local dashboard, fictional product, real execution.</span><a href="docs.html#demo">Understand the demo →</a></figcaption></figure>
+    </section>
+    <section class="section wrap workflow-section" id="how-it-works" aria-labelledby="workflow-title">
+      <div class="section-intro"><div><p class="eyebrow">A reviewable experiment loop</p><h2 id="workflow-title">Make the hypothesis<br><em>touch the code.</em></h2></div><p>The unit of progress is a changed file with inspectable evidence. GrowthLab keeps the goal, baseline, constraints and check contract together.</p></div>
+      <ol class="workflow-list">
+        <li><span class="step-number">01</span><div><h3>Freeze the starting point</h3><p>Import a local Git product with a reviewed, committed <code>growthlab.yaml</code>. Every competitor receives the same source commit and permissions.</p></div><span class="step-detail">One contract</span></li>
+        <li><span class="step-number">02</span><div><h3>Explore three implementations</h3><p>Run declared replay proposals as actual edits in isolated Git worktrees. Native-agent battle verification is the next execution gate.</p></div><span class="step-detail">Separate worktrees</span></li>
+        <li><span class="step-number">03</span><div><h3>Keep the evidence</h3><p>Run real configured commands on immutable candidate snapshots. Inspect diffs, logs, source previews, failures and SHA-256 seals.</p></div><span class="step-detail">Observed checks</span></li>
+        <li><span class="step-number">04</span><div><h3>Choose what reaches your product</h3><p>Select an eligible sealed candidate. Preview its apply, export its patch, or explicitly copy it to a clean baseline. You own the commit and deployment.</p></div><span class="step-detail">Explicit delivery</span></li>
+      </ol>
+    </section>
+    <section class="preview-section" aria-labelledby="preview-title"><div class="wrap section">
+      <div class="section-intro"><div><p class="eyebrow">From sealed source to visible page</p><h2 id="preview-title">Review what<br><em>actually changed.</em></h2></div><p>The static preview uses archived candidate Git objects, local CSS and assets. Desktop and phone views run in a restricted, inert frame. Mutable checkout contents cannot supply it.</p></div>
+      <div class="preview-gallery">
+        <div class="gallery-controls" role="group" aria-label="Candidate screenshot"><button type="button" class="gallery-choice" data-gallery="desktop" aria-pressed="true">Desktop candidate</button><button type="button" class="gallery-choice" data-gallery="failed" aria-pressed="false">Failed candidate</button><button type="button" class="gallery-choice" data-gallery="phone" aria-pressed="false">Phone preview</button></div>
+        <div class="gallery-stage"><button class="image-open" type="button" id="preview-open" data-lightbox="assets/candidate-desktop.jpg" data-caption="Actual desktop view of a verified archived candidate source document." aria-label="Expand candidate screenshot"><img id="preview-image" src="assets/candidate-desktop.jpg" width="1280" height="626" alt="Actual desktop candidate preview with the Faster first success homepage and three onboarding steps." loading="lazy"><span class="expand-label">Expand capture <span aria-hidden="true">↗</span></span></button></div>
+        <p class="gallery-caption" id="gallery-caption" aria-live="polite">Actual desktop view of a verified archived candidate source document.</p>
+      </div>
+      <p class="preview-disclosure">These are manual documentation captures. Automatic per-run screenshots, dynamic application rendering and visual quality evaluation remain pending. <a href="docs.html#previews">Preview limits →</a></p>
+    </div></section>
+    <section class="section wrap principles-section" aria-labelledby="principles-title">
+      <div><p class="eyebrow">Your product. Your boundaries.</p><h2 id="principles-title">An experiment<br>is not permission<br>to <em>publish.</em></h2></div>
+      <div class="principles-list"><article><span class="principle-label">Local by default</span><h3>Files, worktrees and evidence stay on your machine.</h3><p>Rust, SQLite and a loopback dashboard. Optional provider proposals have a separate authorization boundary; the bundled replay needs no agent API key.</p></article><article><span class="principle-label">Permission before implementation</span><h3>Allowed paths are a contract.</h3><p>Denied paths take precedence. Credentials and protected directories are refused. Configured validation uses OS confinement, with no unrestricted fallback.</p></article><article><span class="principle-label">Provenance before persuasion</span><h3>Observed is not measured.</h3><p>The current demo records simulated proposals, observed checks and untested growth outcomes. Private-by-default offline reports preserve that distinction.</p></article></div>
+    </section>
+    <section class="progress-section" id="progress" aria-labelledby="progress-title"><div class="wrap section">
+      <div class="progress-heading"><div><p class="eyebrow">Built in the open</p><h2 id="progress-title">What works.<br><em>What comes next.</em></h2></div><div class="progress-estimate"><span class="estimate-value"><span data-progress>40</span><span class="estimate-percent">%</span></span><p>Approximate overall completion<br><span>Subjective estimate against the full specification</span></p></div></div>
+      <div class="progress-track" aria-hidden="true"><span data-progress-bar style="width:40%"></span></div>
+      <div class="status-meta"><span>Updated <time data-updated datetime="2026-09-16">16 September 2026</time></span><span>Validated source <a data-source-commit href="https://github.com/OthmaneBlial/GrowthLab/commit/950a76b3bc3408a3c036da128f29b5115455c614">950a76b</a></span><span id="status-fetch-note">Published progress snapshot</span></div>
+      <div class="progress-columns"><article><h3><span class="column-indicator" aria-hidden="true">✓</span> Delivered and locally checked</h3><ul class="status-list delivered-list" data-delivered><li>Local Git import and explicit permissions</li><li>Three real isolated replay implementations</li><li>Actual checks, cancellation and sealed evidence</li><li>Dashboard diffs, source previews and selected delivery</li><li>Private offline reports and interrupted-run recovery</li><li>Key-free bundled demo with a deliberate failure</li></ul></article><article><h3><span class="column-indicator pending-indicator" aria-hidden="true">↗</span> Still to build or verify</h3><ul class="status-list pending-list" data-pending><li>Automatic per-run screenshots and a real recording</li><li>Native-agent battles and remaining recovery gates</li><li>Complete experiment tree, settings and localized UI</li><li>Broader inputs, playbooks and real measurement</li><li>Cross-platform proof and release packaging</li></ul></article></div>
+      <div class="validation-block"><div><p class="eyebrow">Latest verification</p><p>Validation runs locally.<br>GitHub Actions is disabled.</p></div><ul data-validation class="validation-list"><li><span>Rust tests</span><strong>Passed</strong><p>911 per binary; zero failures; two inherited ignored tests</p></li><li><span>UI tests</span><strong>Passed</strong><p>167 tests; zero failures or skips</p></li><li><span>Real demo and browser flow</span><strong>Passed</strong><p>CLI/HTTP execution, desktop and phone checks on owned fictional fixtures</p></li><li><span>GitHub CI</span><strong class="validation-disabled">Disabled</strong><p>All six workflows manually disabled; local validation only</p></li></ul></div>
+      <p class="provenance-line" data-provenance>Replay proposals: SIMULATED. Executed checks: OBSERVED. Growth outcomes: UNTESTED.</p>
+      <div class="progress-links"><a class="text-link" href="content/PROGRESS.md">Full progress log ↗</a><a class="text-link" href="content/ROADMAP.md">Full roadmap ↗</a><a class="text-link" href="content/CHANGELOG.md">Changelog ↗</a><a class="text-link" href="https://github.com/OthmaneBlial/GrowthLab/blob/main/docs/SPEC.md">Product specification ↗</a></div>
+      <article class="release-note" data-release hidden><div><p class="eyebrow">Published prerelease</p><h3 data-release-title></h3><p data-release-limitation></p></div><a class="button button-dark" data-release-link href="https://github.com/OthmaneBlial/GrowthLab/releases">Inspect release →</a></article>
+    </div></section>
+    <section class="section wrap closing-section"><div><p class="eyebrow">Start with something you can inspect</p><h2>Run a battle.<br><em>Read the diff.</em></h2><p>The source alpha includes a fictional product and three declared proposals. It makes real changes and keeps the original baseline untouched.</p></div><div class="closing-command"><div class="code-heading"><span>From a source checkout</span><button type="button" class="copy-button" data-copy="demo-command">Copy</button></div><pre id="demo-command"><code>cargo run --locked --bin growthlab -- demo</code></pre><a class="button button-outline" href="docs.html#quick-start">Prerequisites &amp; quick start <span aria-hidden="true">→</span></a></div></section>
+  </main>
+  <footer class="site-footer wrap"><a class="wordmark" href="index.html">GrowthLab</a><p>Built from <a href="https://github.com/alphaXiv/OpenResearch">alphaXiv/OpenResearch</a>.<br>MIT licensed. Upstream history preserved. No endorsement implied.</p><nav aria-label="Footer"><a href="docs.html">Documentation</a><a href="https://github.com/OthmaneBlial/GrowthLab">Source</a><a href="https://github.com/OthmaneBlial/GrowthLab/blob/main/SECURITY.md">Security</a></nav></footer>
+  <dialog id="image-dialog" class="image-dialog" aria-labelledby="image-dialog-caption"><div class="dialog-toolbar"><p id="image-dialog-caption"></p><button class="dialog-close" type="button">Close <span aria-hidden="true">×</span></button></div><img id="dialog-image" alt=""></dialog>
+  <p class="sr-only" id="copy-feedback" role="status" aria-live="polite"></p>
+</body>
+</html>
