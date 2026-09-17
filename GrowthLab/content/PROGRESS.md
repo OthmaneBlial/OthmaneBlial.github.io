@@ -160,6 +160,11 @@ performance.
   explains why edits lock after hypotheses or an active battle. Remaining action
   and status copy outside the inspected surfaces remains open.
 
+- Localized the workspace and battle action/status layer across all six dashboard
+  catalogs. Experiment-map controls, candidate states, execution actions, checks,
+  artifact inspection and selected delivery now refresh with the shared language
+  preference; onboarding and auxiliary copy remain a separate follow-up.
+
 - Added public GitHub metadata review and manual-brief onboarding. `repo-audit` and the Home review panel make one unauthenticated metadata request without cloning or executing source. `workspace brief` and the Home form create a private local analysis snapshot with no remote or provider request.
 
 - Added a read-only public URL SEO audit in the CLI, local API and Home screen.
@@ -409,9 +414,11 @@ expose descriptive baseline comparisons with sample sizes, date range and
 MEASURED provenance. The GrowthLab onboarding shell now follows the shared
 locale preference across six languages and applies RTL direction for Arabic and
 Persian. Static-preview, evidence and rubric detail copy now uses all six
-locale catalogs. Workspace settings expose an explicit lifecycle policy: edits
+locale catalogs, and workspace/battle action and status labels follow the same
+catalog boundary. Workspace settings expose an explicit lifecycle policy: edits
 are available before hypotheses or active battles, then the control is disabled
-with a localized explanation. Remaining action/status copy and full browser
+with a localized explanation. Remaining onboarding and auxiliary action/status
+copy and full browser
 quality/performance evaluation remain pending. Restricted previews, archived PNG captures and the
 continuous public-site walkthrough now pass local
 Rust/HTTP and real browser checks. Windows validation is unsupported.
