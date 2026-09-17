@@ -183,8 +183,8 @@ performance.
 
 - Localized SEO, page-quality, accessibility, static-render and browser-timing rubric
   labels and dimension names across all six dashboard locale catalogs. Dynamic
-  evidence, calculations, recommendations, limitations and user-authored run
-  content remain explicit source-language follow-up work.
+  evidence and user-authored run content remain explicit source-language follow-up
+  work.
 
 - Added public GitHub metadata review and manual-brief onboarding. `repo-audit` and the Home review panel make one unauthenticated metadata request without cloning or executing source. `workspace brief` and the Home form create a private local analysis snapshot with no remote or provider request.
 

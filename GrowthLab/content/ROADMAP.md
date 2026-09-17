@@ -30,9 +30,9 @@ by this roadmap.
   variants. The experiment tree now supports controlled local edits while
   preserving hypothesis IDs and evidence; dashboard onboarding, audit, role,
   playbook, action/status and rubric labels now follow all six locale catalogs,
-  including public URL audit dimensions. Dynamic rubric evidence/calculations
-  and user-authored run content remain source-language because those values come
-  from inspected product data; browser-based visual regression and
+  including public URL audit dimensions. Dynamic rubric evidence and user-authored run content remain source-language
+  because those values come from inspected product data; browser-based visual
+  regression and
   assistive-technology evaluation remain open.
   Settings now expose a lifecycle policy: local edits are enabled before hypotheses
   or active battles and visibly locked afterwards with a localized explanation.
