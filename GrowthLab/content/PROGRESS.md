@@ -97,6 +97,10 @@ performance.
   detail now shows the evaluator returned by the comparison API beside its
   calculation, dimension evidence, recommendations, limitations and provenance.
 
+- Made evidence-to-claim links visible in the dashboard. Each evidence card
+  now lists the claims it supports or challenges, with labels in all six
+  dashboard locales, so reviewers can follow why a source affects a hypothesis.
+
 - Hardened evidence persistence. Every evidence record now requires complete
   provenance fields, a positive retrieval timestamp and a confidence rationale;
   credential-shaped text is rejected in source observations, publisher details,
@@ -582,7 +586,7 @@ symlink input. Static-preview unit (2026-09-16): **passed locally**. Full serial
 `cargo test --release --locked -- --test-threads=1` the preceding source commit passed **970 tests per binary, 968
 passed, zero failures and two inherited ignored tests**; the current source adds bounded metadata and claim-link validation; its targeted evidence-model and storage suites each pass **8 tests per binary** with zero failures, including incomplete, oversized, credential-shaped and persistence-refusal coverage;
 Clippy with `-D warnings`, formatting, style checks and the debug build pass.
-UI typecheck/i18n/build and **174 tests, zero failures/skips** pass; localized detail catalogs lint clean, and Chrome verified the pre-hypothesis edit control plus the post-hypothesis lock explanation; final `ui/dist`
+UI typecheck/i18n/build and **174 tests, zero failures/skips** pass; localized detail catalogs lint clean, and evidence cards expose localized support/challenge claim labels; Chrome verified the pre-hypothesis edit control plus the post-hypothesis lock explanation; final `ui/dist`
 is included. The real CLI demo regression verifies ready previews, exact served
 built assets, source/document/seal hashes and its existing no-provider, privacy,
 baseline and shutdown checks. Debug RustEmbed serves assets from disk; this is

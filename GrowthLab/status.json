@@ -5,7 +5,7 @@
   "progressEstimate": 95,
   "progressExplanation": "Subjective estimate against the complete product specification, not a measured delivery metric.",
   "milestone": "Editable experiment tree with frozen lineage, localized GrowthLab onboarding and inspection details, explicit workspace settings lifecycle, measurement and battle/detail UI, read-only settings contract overview, provider-neutral measurement boundary, deterministic local CLI packaging with complete notices, exact-tag macOS and Linux cross-target archives plus Windows GNU packaging, estimated accessibility structure hints in comparisons and standalone page audits, continuous browser walkthrough, observed timing hints, bundled Chromium and Firefox visual-regression baseline smokes, local Chromium accessibility-tree and keyboard smoke, public repository review, manual-brief onboarding, executable playbooks, public checkout import, distribution-aware measurement and the translated macOS x86_64 source suite validated",
-  "validatedSourceCommit": "d7d7bfc66772a622c2713c548c15958644925b78",
+  "validatedSourceCommit": "4fd53c36497492544e64d1a4e6faeba8e844ea15",
   "delivered": [
     "Local product import with reviewed growthlab.yaml permissions",
     "Three competing changes from one frozen starting point in isolated workspaces",
@@ -86,7 +86,8 @@
     "Published cargo-dist-compatible alpha.20 archive names and shell/PowerShell installers with public checksum verification",
     "Hypothesis evidence validation requires complete, bounded provenance metadata, including confidence rationale and at least one linked claim, and rejects credential-shaped text before persistence",
     "Evidence persistence rejects unlinked claims before inserting any hypothesis portfolio row",
-    "Growth Battle score details show the evaluator alongside calculation, evidence, limits and provenance"
+    "Growth Battle score details show the evaluator alongside calculation, evidence, limits and provenance",
+    "Evidence browser shows the claims each source supports or challenges across all six locales"
   ],
   "validation": [
     {
@@ -97,7 +98,7 @@
     {
       "name": "UI tests",
       "status": "passed",
-      "detail": "174 tests; zero failures or skips. Growth Battle rubric details now expose the API evaluator together with the transparent calculation, evidence dimensions, recommendations, limitations and provenance."
+      "detail": "174 tests; zero failures or skips. Growth Battle rubric details expose the API evaluator together with the transparent calculation, evidence dimensions, recommendations, limitations and provenance; evidence cards also show linked support and challenge claims in six locales."
     },
     {
       "name": "Local quality checks",
