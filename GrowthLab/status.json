@@ -5,7 +5,7 @@
   "progressEstimate": 92,
   "progressExplanation": "Subjective estimate against the complete product specification, not a measured delivery metric.",
   "milestone": "Editable experiment tree with frozen lineage, localized GrowthLab onboarding, measurement and battle/detail UI, read-only settings contract overview, provider-neutral measurement boundary, deterministic local CLI packaging with complete notices, local Linux musl cross-target packaging, estimated accessibility structure hints in comparisons and standalone page audits, continuous browser walkthrough, observed timing hints, public repository review, manual-brief onboarding, executable playbooks, public checkout import and distribution-aware measurement validated",
-  "validatedSourceCommit": "9232f3f",
+  "validatedSourceCommit": "3e54b60",
   "delivered": [
     "Local product import with reviewed growthlab.yaml permissions",
     "Three competing changes from one frozen starting point in isolated workspaces",
@@ -51,6 +51,7 @@
     "Localized GrowthLab measurement panel follows all six locale catalogs and preserves RTL rendering for Arabic and Persian",
     "Local GrowthLab settings panel persists language and theme preferences and shows provider-neutral integration state",
     "Read-only settings contract overview exposes product, permissions, validation, metrics and source snapshot per local workspace",
+    "Workspace contract labels and permission modes follow all six locale catalogs",
     "Deterministic local CLI packaging with complete checked-in license notices and offline archive verification",
     "Localized GrowthLab battle/detail inspection, decision and report labels follow all six locale catalogs",
     "Local x86_64 Linux musl archive built and structure-verified with cargo-zigbuild; runtime remains unverified",
@@ -100,7 +101,7 @@
     {
       "name": "GrowthLab settings panel",
       "status": "passed",
-      "detail": "Chrome opened the anchored settings surface, switched the theme to dark and restored the system preference; the read-only workspace contract stayed within the viewport in RTL and browser logs remained empty"
+      "detail": "Chrome opened the anchored settings surface, switched the theme to dark and restored the system preference; the read-only workspace contract and permission modes stayed localized within the RTL viewport and browser logs remained empty"
     },
     {
       "name": "Local CSV measurement",

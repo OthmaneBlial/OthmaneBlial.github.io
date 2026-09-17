@@ -77,6 +77,10 @@ performance.
   workspace; the home view lists local contracts without exposing secrets or
   enabling integrations.
 
+- Localized the workspace contract labels and permission modes across all six
+  locale catalogs. The dashboard now keeps the contract summary, paths,
+  validation metadata and permission state readable in RTL as well as LTR.
+
 - Added a typed, read-only measurement adapter contract. The local CSV implementation now runs through `LocalCsvAdapter`; planned provider entries remain unconfigured and no network request is implicit.
 
 - Built and structure-verified a local `x86_64-unknown-linux-musl` CLI archive with `cargo-zigbuild` and Zig. The archive passes checksum, traversal/link and notice checks; Linux runtime and installers remain separate gates.
