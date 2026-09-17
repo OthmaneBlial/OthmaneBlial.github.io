@@ -84,6 +84,11 @@ performance.
   indexable pages, source repository, local-first workflow and explicit evidence
   limits. The files are static and contain no analytics or growth claims.
 
+- Ran the real local GrowthLab SEO audit against the public home source after
+  those changes. The page now scores **100/100** on the explainable SEO
+  page-hygiene rubric, with all four images carrying useful descriptions; its
+  separate quality and accessibility hints remain clearly labelled estimates.
+
 - Added a local visual-regression smoke for the bundled demo. Six checked-in
   desktop/phone PNG baselines are compared byte-for-byte against fresh sealed
   Chromium captures for all three variants, with dimensions, archive digests

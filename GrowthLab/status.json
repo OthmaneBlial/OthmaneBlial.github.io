@@ -78,7 +78,8 @@
     "Local cargo-dist shell and PowerShell installer templates generated and syntax-checked; macOS arm64 shell install smoke passed, while publication and other target runtime remain pending",
     "cargo-dist target matrix aligned with the published Windows GNU archive; MSVC remains out until a Windows SDK runner validates it",
     "Versioned installer template mapping smoke prevents Windows GNU releases from selecting an unavailable MSVC asset",
-    "Public SEO discovery files, canonical URLs, social cards and truthful SoftwareApplication metadata are published"
+    "Public SEO discovery files, canonical URLs, social cards and truthful SoftwareApplication metadata are published",
+    "The local SEO audit scores the public home source 100/100 after the image-description fix"
   ],
   "validation": [
     {
@@ -330,6 +331,11 @@
       "name": "Public SEO discovery contract",
       "status": "passed",
       "detail": "The public home and documentation pages expose one canonical URL each, Open Graph and Twitter cards, and truthful SoftwareApplication structured data. Static robots.txt, sitemap.xml and llms.txt are present, list only the two indexable pages, and state the product's SEO focus and evidence limits without analytics or growth claims."
+    },
+    {
+      "name": "Public SEO page self-audit",
+      "status": "passed",
+      "detail": "The real GrowthLab CLI audited site/index.html locally: the explainable SEO page-hygiene rubric scored 100/100, all four images had useful alt descriptions, and no recommendation remained. The separate quality score stayed 28/30 and the accessibility structure score 100/100; both remain estimates rather than performance or WCAG certification."
     },
     {
       "name": "Native harness boundary fixture",
