@@ -82,7 +82,8 @@
     "The local SEO audit scores the public home source 100/100 after the image-description fix",
     "Refined the GitHub About, README and Pages copy around the SEO growth tool positioning",
     "Documented a manual VoiceOver and Safari accessibility handoff beside the reproducible Chromium smoke",
-    "Hardened the API terminal polling smoke so it waits for the persisted terminal battle state before reading sealed runs"
+    "Hardened the API terminal polling smoke so it waits for the persisted terminal battle state before reading sealed runs",
+    "Published cargo-dist-compatible alpha.20 archive names and shell/PowerShell installers with public checksum verification"
   ],
   "validation": [
     {
@@ -313,17 +314,17 @@
     {
       "name": "Public release asset verification",
       "status": "passed",
-      "detail": "The read-only scripts/test-release-assets.py check downloads all five alpha.20 archive/checksum pairs, matches GitHub asset digests and sidecars, and passes archive safety/notices verification; macOS arm64 runtime passes locally, macOS x86_64 passes under Rosetta, and Linux and Windows runtimes are skipped on the macOS host."
+      "detail": "The read-only scripts/test-release-assets.py check downloads all ten alpha.20 archive/checksum pairs (five cargo-dist installer names plus five historical versioned names), matches GitHub asset digests and sidecars, and passes root-layout or bin-layout archive safety/notices verification; macOS arm64 runtime passes locally, macOS x86_64 passes under Rosetta, and Linux and Windows runtimes are skipped on the macOS host."
     },
     {
       "name": "Local installer template generation",
       "status": "passed",
-      "detail": "cargo-dist generated the alpha.20 shell and PowerShell installer templates locally with no upload; sh -n and the PowerShell parser accepted both scripts. The shell installer also fetched the local aarch64-apple-darwin archive through a disposable HTTP server, verified its SHA-256 sidecar, installed growthlab and orx into an isolated prefix, and reported version 0.1.0-alpha.20 without editing the test profile. Other target installer/runtime execution remains unavailable."
+      "detail": "cargo-dist generated the alpha.20 shell and PowerShell installer templates locally; sh -n and the PowerShell parser accepted both scripts. A separate local SHA-256 preflight matched the macOS arm64 archive and sidecar before the shell installer fetched that archive through a disposable HTTP server, installed growthlab and orx into an isolated prefix, and reported version 0.1.0-alpha.20 without editing the test profile. The scripts and cargo-dist-compatible archives are attached to the public release; other target installer/runtime execution remains unavailable."
     },
     {
       "name": "Installer target matrix alignment",
       "status": "passed",
-      "detail": "The cargo-dist matrix now includes the published x86_64-pc-windows-gnu archive and leaves MSVC out until a Windows SDK runner can validate it. Regenerated shell and PowerShell templates select the GNU asset; mapping assertions, shell syntax, PowerShell parsing, SHA-256 sidecar verification and an isolated macOS shell-install smoke passed."
+      "detail": "The cargo-dist matrix now includes the published x86_64-pc-windows-gnu archive and leaves MSVC out until a Windows SDK runner can validate it. Regenerated PowerShell and shell templates select the GNU asset; mapping assertions, shell syntax, PowerShell parsing, public ten-pair SHA-256 verification and an isolated macOS shell-install smoke passed."
     },
     {
       "name": "Installer template mapping smoke",
@@ -359,6 +360,11 @@
       "name": "Windows MSVC build probe",
       "status": "unverified",
       "detail": "A local cargo-zigbuild attempt stopped in ring's C build because assert.h and a Windows SDK are unavailable on the macOS host; no MSVC artifact was produced or published."
+    },
+    {
+      "name": "Installer-compatible public release assets",
+      "status": "passed",
+      "detail": "Five cargo-dist archive/checksum pairs were generated with the configured .tar.gz Unix format, root-level growthlab/orx binaries and six attribution/dependency notices; a deterministic Windows GNU ZIP was built with Zig. All ten public archive/checksum pairs passed the read-only verifier. Linux and Windows runtime, MSVC packaging and signing remain unverified."
     }
   ],
   "pending": [
