@@ -34,7 +34,7 @@ function validStatus(status) {
     && typeof status.updated === "string" && /^\d{4}-\d{2}-\d{2}$/.test(status.updated)
     && typeof status.validatedSourceCommit === "string" && /^[a-f0-9]{40}$/.test(status.validatedSourceCommit)
     && validStrings(status.delivered) && validStrings(status.pending)
-    && Array.isArray(status.validation) && status.validation.length <= 30
+    && Array.isArray(status.validation) && status.validation.length <= 60
     && status.validation.every((entry) => entry && typeof entry.name === "string" && typeof entry.detail === "string" && ["passed", "disabled", "unverified", "blocked", "pending"].includes(entry.status));
 }
 
