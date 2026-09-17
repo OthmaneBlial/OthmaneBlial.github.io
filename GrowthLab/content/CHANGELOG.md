@@ -1,5 +1,11 @@
 # GrowthLab release notes
 
+## 0.1.0-alpha.20 — 2026-09-17 (source prerelease)
+
+- Added explicit opt-in HTML and Markdown report captures through the CLI and API, while preserving capture-free private defaults.
+- Added disclosure and smoke coverage for six verified desktop/phone captures across the three bundled demo variants.
+- Refreshed the public documentation page to match the current progress and report behavior.
+
 ## Next
 
 - Added deterministic local CLI archive packaging with the executable, demo,
