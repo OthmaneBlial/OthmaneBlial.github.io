@@ -5,7 +5,7 @@
   "progressEstimate": 95,
   "progressExplanation": "Subjective estimate against the complete product specification, not a measured delivery metric.",
   "milestone": "Editable experiment tree with frozen lineage, localized GrowthLab onboarding and inspection details, explicit workspace settings lifecycle, measurement and battle/detail UI, read-only settings contract overview, provider-neutral measurement boundary, deterministic local CLI packaging with complete notices, exact-tag macOS and Linux cross-target archives plus Windows GNU packaging, estimated accessibility structure hints in comparisons and standalone page audits, continuous browser walkthrough, observed timing hints, bundled Chromium and Firefox visual-regression baseline smokes, local Chromium accessibility-tree and keyboard smoke, public repository review, manual-brief onboarding, executable playbooks, public checkout import, distribution-aware measurement and the translated macOS x86_64 source suite validated",
-  "validatedSourceCommit": "d2a70e389368bc4082a1d1a97693b34fe2aa305b",
+  "validatedSourceCommit": "6ba48199c0afc4f469d61be1a27c3e59db989215",
   "delivered": [
     "Local product import with reviewed growthlab.yaml permissions",
     "Three competing changes from one frozen starting point in isolated workspaces",
@@ -84,13 +84,13 @@
     "Documented a manual VoiceOver and Safari accessibility handoff beside the reproducible Chromium smoke",
     "Hardened the API terminal polling smoke so it waits for the persisted terminal battle state before reading sealed runs",
     "Published cargo-dist-compatible alpha.20 archive names and shell/PowerShell installers with public checksum verification",
-    "Hypothesis evidence validation requires complete provenance metadata and rejects credential-shaped text before persistence"
+    "Hypothesis evidence validation requires complete provenance metadata, including confidence rationale, and rejects credential-shaped text before persistence"
   ],
   "validation": [
     {
       "name": "Rust tests",
       "status": "passed",
-      "detail": "966 tests per binary; 966 passed, zero failures and two inherited ignored tests (serial run on the current source), including incomplete and credential-shaped evidence rejection coverage"
+      "detail": "969 tests per binary; 967 passed, zero failures and two inherited ignored tests (serial run on the current source), including incomplete and credential-shaped evidence rejection coverage"
     },
     {
       "name": "UI tests",
