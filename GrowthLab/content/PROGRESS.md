@@ -514,7 +514,7 @@ Rust/HTTP and real browser checks. Windows validation is unsupported.
 Standalone SEO audit and rubric unit tests (2026-09-16): **passed locally**;
 the real binary emitted JSON and Markdown for a UTF-8 fixture and refused a
 symlink input. Static-preview unit (2026-09-16): **passed locally**. Full serial
-`cargo test --locked -- --test-threads=1` passes **962 tests per binary, 962
+`cargo test --locked -- --test-threads=1` passes **962 tests per binary, 960
 passed, zero failures and two inherited ignored tests**;
 Clippy with `-D warnings`, formatting, style checks and the debug build pass.
 UI typecheck/i18n/build and **174 tests, zero failures/skips** pass; localized detail catalogs lint clean, and Chrome verified the pre-hypothesis edit control plus the post-hypothesis lock explanation; final `ui/dist`
