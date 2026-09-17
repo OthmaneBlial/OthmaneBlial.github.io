@@ -157,6 +157,13 @@ performance.
 
 - Built and structure-verified a local `x86_64-unknown-linux-musl` CLI archive with `cargo-zigbuild` and Zig. The archive passes checksum, traversal/link and notice checks; Linux runtime and installers remain separate gates.
 
+- Added deterministic Windows GNU ZIP packaging. `rustup target add
+  x86_64-pc-windows-gnu` plus `cargo zigbuild --release --locked` produced a
+  real `growthlab.exe`; two independent packages had the same SHA-256, and the
+  offline verifier passed checksum, traversal/link and notice checks. The
+  executable was not run on Windows and is not attached to the alpha.20
+  release.
+
 - Localized the Growth Battle detail surface across all six locale catalogs. Inspection tabs, explicit decision states and self-contained report actions now follow the shared language picker; Arabic and Persian keep the document's RTL direction.
 
 - Added deterministic local CLI packaging and an offline release-archive verifier.
@@ -577,6 +584,12 @@ short eight-second reel.
 All six GitHub workflows remain manually disabled; validation runs locally only.
 Local cross-target packaging (2026-09-17): **passed structure verification**. `x86_64-unknown-linux-musl` built from the exact `v0.1.0-alpha.20` tag with `cargo-zigbuild` and Zig; the offline verifier passed checksum, archive safety and all required notices, and the archive is attached to the alpha.20 release. The ELF was not run on Linux, so runtime and installer proof remain pending.
 Public release assets (2026-09-17): **passed read-only verification**. `scripts/test-release-assets.py` downloaded the two alpha.20 archive/checksum pairs, matched GitHub digests and sidecars, passed archive safety/notices checks, and ran the macOS archive locally; Linux runtime was skipped on macOS.
+
+Windows cross-target packaging (2026-09-17): **passed structure and
+reproducibility verification**. The current source built
+`x86_64-pc-windows-gnu` with Zig, produced a deterministic ZIP containing the
+binary and six notices, and passed `scripts/verify-release-archive.sh`.
+Windows runtime, MSVC packaging, signing and release attachment remain open.
 
 Bundled-demo unit (2026-09-16): **passed locally**. `cargo test --locked` passes
 **902 tests per binary, zero failures, two inherited ignored tests**;
