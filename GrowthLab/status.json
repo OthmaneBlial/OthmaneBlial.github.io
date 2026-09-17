@@ -5,7 +5,7 @@
   "progressEstimate": 95,
   "progressExplanation": "Subjective estimate against the complete product specification, not a measured delivery metric.",
   "milestone": "Editable experiment tree with frozen lineage, localized GrowthLab onboarding and inspection details, explicit workspace settings lifecycle, measurement and battle/detail UI, read-only settings contract overview, provider-neutral measurement boundary, deterministic local CLI packaging with complete notices, local Linux musl cross-target packaging, estimated accessibility structure hints in comparisons and standalone page audits, continuous browser walkthrough, observed timing hints, bundled Chromium and Firefox visual-regression baseline smokes, local Chromium accessibility-tree and keyboard smoke, public repository review, manual-brief onboarding, executable playbooks, public checkout import and distribution-aware measurement validated",
-  "validatedSourceCommit": "32158cf397ad9b967dd2f139690ffb019b067fa3",
+  "validatedSourceCommit": "c0761b2f7cb4ea8cb3959cd9f5cafcfc33e9f1f0",
   "delivered": [
     "Local product import with reviewed growthlab.yaml permissions",
     "Three competing changes from one frozen starting point in isolated workspaces",
@@ -255,6 +255,11 @@
       "detail": "Five SEO, quality, accessibility, static-render and browser-timing rubric labels, dimensions and static guidance now resolve through all six locale catalogs; i18n, style, type, production build and 174 UI tests pass, and Chrome verified Spanish battle and public-URL audit guidance."
     },
     {
+      "name": "Localized rubric observations",
+      "status": "passed",
+      "detail": "Known evaluator-generated rubric evidence sentences now map counts, HTML states, viewport checks and timing tokens through all six locale catalogs; unrecognized evaluator text and user-authored run content keep their recorded language and provenance."
+    },
+    {
       "name": "Live dashboard accessibility structure smoke",
       "status": "passed",
       "detail": "Chrome AX and DOM inspection on a recorded battle found 23 named interactive controls, one h1 with no skipped heading level, no duplicate IDs, no images missing alt text and no horizontal overflow; this remains a local structure smoke, not WCAG or assistive-technology certification."
@@ -289,7 +294,7 @@
     "Provider adapters",
     "Full visual regression and assistive-technology accessibility evaluation",
     "Native-agent battle verification and provider-specific launcher registration",
-    "Dynamic rubric evidence and user-generated run content remain source-language until structured mapping is added",
+    "Unrecognized or future rubric evidence and user-generated run content remain source-language until an explicit mapping is added",
     "Cross-platform runtime proof and release-attached portable binaries/installers"
   ],
   "provenance": "Replay proposals: SIMULATED. Executed checks: OBSERVED. Growth outcomes: UNTESTED.",
