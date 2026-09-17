@@ -75,7 +75,7 @@
     "Public alpha.20 release assets have a read-only verifier for GitHub digests, checksum sidecars and archive safety",
     "Translated macOS x86_64 release suite now passes 964 tests with two inherited ignored tests under Rosetta after allowing the system Rosetta runtime read-only in the confinement profile",
     "Deterministic native-harness fixture runs three local Claude proposal adapters with no provider credentials; sealed runs remain UNTESTED",
-    "Local cargo-dist shell and PowerShell installer templates generated and syntax-checked; publication and target runtime remain pending"
+    "Local cargo-dist shell and PowerShell installer templates generated and syntax-checked; macOS arm64 shell install smoke passed, while publication and other target runtime remain pending"
   ],
   "validation": [
     {
@@ -311,7 +311,7 @@
     {
       "name": "Local installer template generation",
       "status": "passed",
-      "detail": "cargo-dist generated the alpha.20 shell and PowerShell installer templates locally with no upload; sh -n accepted the 55,250-byte shell script and the PowerShell parser accepted the 22,419-byte script. The templates remain local evidence because Windows MSVC artifacts and target runtime execution are still unavailable."
+      "detail": "cargo-dist generated the alpha.20 shell and PowerShell installer templates locally with no upload; sh -n accepted the 55,250-byte shell script and the PowerShell parser accepted the 22,419-byte script. The shell installer also fetched the local aarch64-apple-darwin archive through a disposable HTTP server, verified its SHA-256 sidecar, installed growthlab and orx into an isolated prefix, and reported version 0.1.0-alpha.20 without editing the test profile. Other target installer/runtime execution remains unavailable."
     },
     {
       "name": "Native harness boundary fixture",
@@ -329,7 +329,7 @@
     "Full visual regression and assistive-technology accessibility evaluation",
     "Real native-agent battle verification and provider-specific launcher registration",
     "Unrecognized or future rubric evidence and user-generated run content remain source-language until an explicit mapping is added",
-    "Cross-platform runtime proof, MSVC support and portable installers"
+    "Linux/Windows runtime proof, MSVC support and portable installers"
   ],
   "provenance": "Replay proposals: SIMULATED. Executed checks: OBSERVED. Growth outcomes: UNTESTED.",
   "website": {
