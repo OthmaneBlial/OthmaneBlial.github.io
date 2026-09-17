@@ -77,7 +77,7 @@
     "Deterministic native-harness fixture runs three local Claude proposal adapters with no provider credentials; sealed runs remain UNTESTED",
     "Local cargo-dist shell and PowerShell installer templates generated and syntax-checked; macOS arm64 shell install smoke passed, while publication and other target runtime remain pending",
     "cargo-dist target matrix aligned with the published Windows GNU archive; MSVC remains out until a Windows SDK runner validates it",
-    "Versioned installer template mapping smoke prevents Windows GNU releases from selecting an unavailable MSVC asset",
+    "Installer template mapping smoke covers all five published shell targets and keeps Windows GNU away from unavailable MSVC assets",
     "Public SEO discovery files, canonical URLs, social cards and truthful SoftwareApplication metadata are published",
     "The local SEO audit scores the public home source 100/100 after the image-description fix",
     "Refined the GitHub About, README and Pages copy around the SEO growth tool positioning",
@@ -329,7 +329,7 @@
     {
       "name": "Installer template mapping smoke",
       "status": "passed",
-      "detail": "scripts/test-installer-templates.py --check-shell is versioned and checks that generated shell and PowerShell templates select growthlab-x86_64-pc-windows-gnu.zip for the GNU target; shell syntax and PowerShell parsing passed without network, upload or provider access."
+      "detail": "scripts/test-installer-templates.py --check-shell is versioned and checks that the generated shell template selects the published macOS arm64, macOS x86_64, Linux musl arm64, Linux musl x86_64 and Windows GNU archives; the PowerShell template selects the Windows GNU asset, with shell syntax and PowerShell parsing passing without network, upload or provider access."
     },
     {
       "name": "Public SEO discovery contract",
