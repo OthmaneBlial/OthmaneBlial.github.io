@@ -70,7 +70,8 @@
     "Explicit opt-in self-contained HTML and Markdown reports embed verified desktop and phone captures",
     "Bundled demo visual-regression smoke matches six checked-in local Chromium PNG baselines with archive metadata verification",
     "Bundled demo Firefox visual-regression smoke matches six additional PNG baselines with viewport and layout invariant verification",
-    "Bundled demo accessibility-tree and keyboard smoke verifies named controls, headings, labels, focus stops and overflow with no provider invocation"
+    "Bundled demo accessibility-tree and keyboard smoke verifies named controls, headings, labels, focus stops and overflow with no provider invocation",
+    "Public alpha.20 release assets have a read-only verifier for GitHub digests, checksum sidecars and archive safety"
   ],
   "validation": [
     {
@@ -277,6 +278,11 @@
       "name": "Bundled accessibility-tree and keyboard smoke",
       "status": "passed",
       "detail": "A real recorded bundled battle rendered in local Chromium; 19 DOM and AX interactive controls were named, one h1 had no skipped level, IDs/images/forms and overflow passed, and 30 Tab events reached visible focus stops without invoking a provider. The optional --output JSON handoff records all role/name pairs and providerInvoked=false. This remains a local structure and keyboard smoke, not screen-reader, cross-browser or WCAG evidence."
+    },
+    {
+      "name": "Public release asset verification",
+      "status": "passed",
+      "detail": "The read-only scripts/test-release-assets.py check downloaded both alpha.20 archive/checksum pairs, matched GitHub asset digests and sidecars, and passed archive safety/notices verification; macOS runtime passed locally and Linux runtime was skipped on the macOS host."
     }
   ],
   "pending": [

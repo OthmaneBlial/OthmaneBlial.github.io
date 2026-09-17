@@ -100,6 +100,12 @@ performance.
   verified. This broadens local renderer coverage while keeping full
   cross-browser and assistive-technology evaluation open.
 
+- Added a read-only public release asset verifier. `scripts/test-release-assets.py`
+  checks the alpha.20 tag and both macOS/Linux archive pairs, compares GitHub
+  asset digests and checksum sidecars, then runs archive safety and notice
+  verification. It never contacts an analytics or agent provider; Linux
+  runtime remains explicitly skipped on the macOS host.
+
 - Added executable playbook runs. The CLI, API and workspace dashboard save deterministic role contracts with ordered answers, outputs and guardrails; every run stays UNTESTED.
 
 - Added distribution-aware local measurement. CSV summaries accept an optional
@@ -568,6 +574,7 @@ continuous 30-second public-site walkthrough is now archived separately from the
 short eight-second reel.
 All six GitHub workflows remain manually disabled; validation runs locally only.
 Local cross-target packaging (2026-09-17): **passed structure verification**. `x86_64-unknown-linux-musl` built from the exact `v0.1.0-alpha.20` tag with `cargo-zigbuild` and Zig; the offline verifier passed checksum, archive safety and all required notices, and the archive is attached to the alpha.20 release. The ELF was not run on Linux, so runtime and installer proof remain pending.
+Public release assets (2026-09-17): **passed read-only verification**. `scripts/test-release-assets.py` downloaded the two alpha.20 archive/checksum pairs, matched GitHub digests and sidecars, passed archive safety/notices checks, and ran the macOS archive locally; Linux runtime was skipped on macOS.
 
 Bundled-demo unit (2026-09-16): **passed locally**. `cargo test --locked` passes
 **902 tests per binary, zero failures, two inherited ignored tests**;
