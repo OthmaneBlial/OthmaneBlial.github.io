@@ -79,13 +79,14 @@
     "cargo-dist target matrix aligned with the published Windows GNU archive; MSVC remains out until a Windows SDK runner validates it",
     "Versioned installer template mapping smoke prevents Windows GNU releases from selecting an unavailable MSVC asset",
     "Public SEO discovery files, canonical URLs, social cards and truthful SoftwareApplication metadata are published",
-    "The local SEO audit scores the public home source 100/100 after the image-description fix"
+    "The local SEO audit scores the public home source 100/100 after the image-description fix",
+    "Hardened the API terminal polling smoke so it waits for the persisted terminal battle state before reading sealed runs"
   ],
   "validation": [
     {
       "name": "Rust tests",
       "status": "passed",
-      "detail": "966 tests per binary; 964 passed, zero failures and two inherited ignored tests (serial run on the current source)"
+      "detail": "966 tests per binary; 964 passed, zero failures and two inherited ignored tests (serial run on the current source), with the API terminal polling smoke passing three consecutive targeted runs"
     },
     {
       "name": "UI tests",

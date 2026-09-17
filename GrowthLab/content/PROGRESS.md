@@ -73,6 +73,12 @@ performance.
 
 ## Completed
 
+- Hardened the API terminal polling smoke so a worker is considered finished
+  only after the persisted battle row is terminal and all three sealed runs are
+  visible. The formerly timing-sensitive demo test now passes three consecutive
+  targeted runs and the full 966-test Rust target suite passes with 964 passed,
+  zero failures and two inherited ignored tests.
+
 - Added explicit opt-in self-contained HTML and Markdown report captures. The
   dashboard checkbox, CLI flag and API query preserve the private default while
   embedding verified archived desktop/phone PNGs with dimensions and SHA-256
