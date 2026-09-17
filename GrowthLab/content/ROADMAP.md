@@ -36,7 +36,10 @@ by this roadmap.
   assistive-technology evaluation remain open. The bundled demo now also has a
   pinned local visual-regression smoke that compares six desktop/phone PNG
   baselines byte-for-byte; cross-browser parity and assistive-technology
-  evaluation remain separate gates.
+  evaluation remain separate gates. A local Chromium accessibility-tree and
+  keyboard smoke now checks named DOM/AX controls, heading structure, labels,
+  overflow and thirty visible Tab focus stops; screen-reader and full
+  cross-browser evaluation remain separate gates.
   Settings now expose a lifecycle policy: local edits are enabled before hypotheses
   or active battles and visibly locked afterwards with a localized explanation.
   Restricted previews

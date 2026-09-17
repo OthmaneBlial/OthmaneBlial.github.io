@@ -30,6 +30,13 @@ PNG baselines, verifies archive metadata and keeps the provider boundary
 untouched. This raises the local regression signal without claiming
 cross-browser parity or assistive-technology conformance.
 
+The bundled demo also has a local Chromium accessibility-tree and keyboard
+smoke. It checks named DOM and AX controls, heading structure, unique IDs,
+image alternatives, form labels, overflow and thirty visible Tab focus stops;
+provider probes confirm replay stays local. This strengthens the keyboard and
+structure signal while full cross-browser and assistive-technology evaluation
+remain open.
+
 The local measurement slice now accepts bounded UTF-8 CSV exports and reports
 descriptive means, sample sizes, optional date range and arithmetic baseline
 comparisons. An optional distribution or channel column keeps comparisons within
@@ -75,6 +82,13 @@ performance.
   and the no-provider boundary verified. The fixture is intentionally scoped to
   the pinned local renderer; cross-browser and assistive-technology testing
   remain separate release gates.
+
+- Added a local Chromium accessibility-tree and keyboard smoke for the bundled
+  demo. It checks named DOM and AX controls, heading structure, unique IDs,
+  image alternatives, form labels, overflow and thirty visible Tab focus stops
+  while provider probes enforce the replay boundary. This remains a local
+  structure and keyboard signal, not screen-reader, cross-browser or WCAG
+  evidence.
 
 - Added executable playbook runs. The CLI, API and workspace dashboard save deterministic role contracts with ordered answers, outputs and guardrails; every run stays UNTESTED.
 
