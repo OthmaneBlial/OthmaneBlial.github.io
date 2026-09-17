@@ -101,10 +101,10 @@ performance.
   cross-browser and assistive-technology evaluation open.
 
 - Added a read-only public release asset verifier. `scripts/test-release-assets.py`
-  checks the alpha.20 tag and both macOS/Linux archive pairs, compares GitHub
-  asset digests and checksum sidecars, then runs archive safety and notice
-  verification. It never contacts an analytics or agent provider; Linux
-  runtime remains explicitly skipped on the macOS host.
+  checks the alpha.20 tag and all three macOS/Linux/Windows GNU archive pairs,
+  compares GitHub asset digests and checksum sidecars, then runs archive safety
+  and notice verification. It never contacts an analytics or agent provider;
+  Linux and Windows runtime remain explicitly skipped on the macOS host.
 
 - Added executable playbook runs. The CLI, API and workspace dashboard save deterministic role contracts with ordered answers, outputs and guardrails; every run stays UNTESTED.
 
@@ -161,8 +161,8 @@ performance.
   x86_64-pc-windows-gnu` plus `cargo zigbuild --release --locked` produced a
   real `growthlab.exe`; two independent packages had the same SHA-256, and the
   offline verifier passed checksum, traversal/link and notice checks. The
-  executable was not run on Windows and is not attached to the alpha.20
-  release.
+  executable was not run on Windows. The exact alpha.20 tag archive and
+  checksum are attached to the public release.
 
 - Localized the Growth Battle detail surface across all six locale catalogs. Inspection tabs, explicit decision states and self-contained report actions now follow the shared language picker; Arabic and Persian keep the document's RTL direction.
 
@@ -583,13 +583,14 @@ continuous 30-second public-site walkthrough is now archived separately from the
 short eight-second reel.
 All six GitHub workflows remain manually disabled; validation runs locally only.
 Local cross-target packaging (2026-09-17): **passed structure verification**. `x86_64-unknown-linux-musl` built from the exact `v0.1.0-alpha.20` tag with `cargo-zigbuild` and Zig; the offline verifier passed checksum, archive safety and all required notices, and the archive is attached to the alpha.20 release. The ELF was not run on Linux, so runtime and installer proof remain pending.
-Public release assets (2026-09-17): **passed read-only verification**. `scripts/test-release-assets.py` downloaded the two alpha.20 archive/checksum pairs, matched GitHub digests and sidecars, passed archive safety/notices checks, and ran the macOS archive locally; Linux runtime was skipped on macOS.
+Public release assets (2026-09-17): **passed read-only verification**. `scripts/test-release-assets.py` downloaded all three alpha.20 archive/checksum pairs, matched GitHub digests and sidecars, passed archive safety/notices checks, and ran the macOS archive locally; Linux and Windows runtimes were skipped on macOS.
 
 Windows cross-target packaging (2026-09-17): **passed structure and
 reproducibility verification**. The current source built
 `x86_64-pc-windows-gnu` with Zig, produced a deterministic ZIP containing the
 binary and six notices, and passed `scripts/verify-release-archive.sh`.
-Windows runtime, MSVC packaging, signing and release attachment remain open.
+The exact alpha.20 tag ZIP and checksum are attached to the public release.
+Windows runtime, MSVC packaging and signing remain open.
 
 Windows MSVC cross-build (2026-09-17): **not built**. The local macOS Zig
 toolchain reached the `ring` C compilation step but lacks the Windows SDK
