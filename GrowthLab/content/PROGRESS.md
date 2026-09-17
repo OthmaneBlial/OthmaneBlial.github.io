@@ -762,6 +762,9 @@ Earlier validation evidence follows; it is not a release or provider claim.
 
 Known environment warning: installed external Claude CLI `--version` failed
 during inherited harness detection. Native-agent execution is not verified.
+The 2026-09-17 Windows MSVC cross-build probe also stopped in `ring` because
+the macOS host has no Windows SDK headers (`assert.h`); no MSVC artifact was
+produced or published.
 Local CLI/domain/replay validation passed. Selected delivery/report behavior on
 Linux/Windows, native-agent battles, Linux confinement runtime verification,
 provider-specific launcher registration, richer quality evaluation, cross-platform

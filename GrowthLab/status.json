@@ -347,6 +347,11 @@
       "name": "Translated macOS x86_64 source suite",
       "status": "passed",
       "detail": "The current source x86_64-apple-darwin release suite ran under Rosetta on macOS arm64: 964 passed, zero failed and two inherited ignored tests. The confinement profile now permits only the Apple Rosetta runtime directory read-only; this does not prove native Intel hardware or the separately attached alpha.20 archive beyond its version smoke."
+    },
+    {
+      "name": "Windows MSVC build probe",
+      "status": "unverified",
+      "detail": "A local cargo-zigbuild attempt stopped in ring's C build because assert.h and a Windows SDK are unavailable on the macOS host; no MSVC artifact was produced or published."
     }
   ],
   "pending": [
