@@ -56,8 +56,8 @@
     "Read-only settings contract includes the product description alongside its goal and audience",
     "Deterministic local CLI packaging with complete checked-in license notices and offline archive verification",
     "Localized GrowthLab battle/detail inspection, decision and report labels follow all six locale catalogs",
-    "Local x86_64 Linux musl archive built and structure-verified with cargo-zigbuild; runtime remains unverified",
-    "Local x86_64 Windows GNU ZIP packaging is deterministic and structure-verified; the exact alpha.20 tag archive is attached, with runtime still unverified",
+    "Local x86_64 Linux musl archive built and structure-verified with cargo-zigbuild; current-main rebuild also passed the offline verifier; runtime remains unverified",
+    "Local x86_64 Windows GNU ZIP packaging is deterministic and structure-verified; current-main rebuild and the exact alpha.20 tag archive are verified, with runtime still unverified",
     "Typed read-only measurement adapter boundary with the local CSV implementation",
     "Guarded local workspace settings edits write the validated contract atomically before hypotheses are created and never create commits or remote changes",
     "Localized static-preview, evidence and rubric detail copy across all six dashboard locales, with visible settings lock policy after hypotheses or active battles",
@@ -214,7 +214,7 @@
     {
       "name": "Linux musl archive packaging",
       "status": "passed",
-      "detail": "Local x86_64-unknown-linux-musl release archive built from the exact alpha.20 tag with cargo-zigbuild and Zig; offline verifier passed SHA-256, traversal/link safety, required notices and archive structure, the asset is attached to alpha.20, and runtime was honestly skipped on macOS arm64"
+      "detail": "Local x86_64-unknown-linux-musl release archive built from the exact alpha.20 tag with cargo-zigbuild and Zig; current-main rebuild produced SHA-256 9b34c05918f22f662bb58153e97d04f4bc7d70f530276deb4cc1af01052f3f63, and the offline verifier passed SHA-256, traversal/link safety, required notices and archive structure. The tagged asset is attached to alpha.20 and runtime was honestly skipped on macOS arm64"
     },
     {
       "name": "macOS Intel archive packaging",
@@ -299,7 +299,7 @@
     {
       "name": "Windows GNU package smoke",
       "status": "passed",
-      "detail": "The current source built x86_64-pc-windows-gnu with cargo-zigbuild and Zig; two independent ZIP packages matched by SHA-256 and the offline archive verifier passed checksum, traversal/link and notice checks. The exact alpha.20 tag ZIP is attached to the public release; Windows runtime, MSVC packaging and signing remain unverified."
+      "detail": "The current source built x86_64-pc-windows-gnu with cargo-zigbuild and Zig; current-main packaging produced SHA-256 745d90bb9d51d70c535abd0e600421a95c39d81ac3bf0bc39834b3eff3d2eba7 and the offline archive verifier passed checksum, traversal/link and notice checks. The exact alpha.20 tag ZIP is attached to the public release; Windows runtime, MSVC packaging and signing remain unverified."
     },
     {
       "name": "Public release asset verification",
