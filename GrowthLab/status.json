@@ -5,7 +5,7 @@
   "progressEstimate": 94,
   "progressExplanation": "Subjective estimate against the complete product specification, not a measured delivery metric.",
   "milestone": "Editable experiment tree with frozen lineage, localized GrowthLab onboarding and inspection details, explicit workspace settings lifecycle, measurement and battle/detail UI, read-only settings contract overview, provider-neutral measurement boundary, deterministic local CLI packaging with complete notices, local Linux musl cross-target packaging, estimated accessibility structure hints in comparisons and standalone page audits, continuous browser walkthrough, observed timing hints, public repository review, manual-brief onboarding, executable playbooks, public checkout import and distribution-aware measurement validated",
-  "validatedSourceCommit": "e54c357268bdad0092e61801c639f61878afc672",
+  "validatedSourceCommit": "b2324973222d370e9dfcb4d765dfaa8e2644a60c",
   "delivered": [
     "Local product import with reviewed growthlab.yaml permissions",
     "Three competing changes from one frozen starting point in isolated workspaces",
@@ -65,7 +65,8 @@
     "Structured localized playbook titles, questions, outputs and guardrails across all six dashboard locale catalogs",
     "Localized rubric labels and dimension names across all six dashboard locale catalogs",
     "Localized rubric calculations, recommendations and limitations across all six dashboard locale catalogs",
-    "Corrected dashboard heading hierarchy and verified live accessible names, IDs, image alternatives and overflow"
+    "Corrected dashboard heading hierarchy and verified live accessible names, IDs, image alternatives and overflow",
+    "Explicit opt-in self-contained HTML and Markdown reports embed verified desktop and phone captures"
   ],
   "validation": [
     {
@@ -252,6 +253,11 @@
       "name": "Live dashboard accessibility structure smoke",
       "status": "passed",
       "detail": "Chrome AX and DOM inspection on a recorded battle found 23 named interactive controls, one h1 with no skipped heading level, no duplicate IDs, no images missing alt text and no horizontal overflow; this remains a local structure smoke, not WCAG or assistive-technology certification."
+    },
+    {
+      "name": "Visual report disclosure",
+      "status": "passed",
+      "detail": "CLI --include-visuals and API includeVisuals=true explicitly embed verified archived desktop/phone PNGs; default reports omit captures, Rust report tests cover opt-in encoding and the 4 MiB bound, and the real bundled demo still passes without provider requests. Embedded captures remain render artifacts, not visual-regression, accessibility, performance or growth results."
     }
   ],
   "pending": [

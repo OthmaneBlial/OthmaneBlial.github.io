@@ -18,6 +18,11 @@ The live dashboard accessibility smoke now also confirms named controls, a
 continuous heading hierarchy, unique IDs, image alternatives and no horizontal
 overflow on a recorded battle route; it remains a local structure check rather
 than WCAG or assistive-technology certification.
+Shareable HTML and Markdown reports now support explicit visual disclosure:
+`--include-visuals` for the CLI or `includeVisuals=true` for the API embeds
+verified archived desktop and phone captures. Default exports omit captures;
+embedded images remain render artifacts rather than accessibility, performance,
+visual-regression or growth results.
 
 The local measurement slice now accepts bounded UTF-8 CSV exports and reports
 descriptive means, sample sizes, optional date range and arithmetic baseline
@@ -52,6 +57,11 @@ claim Lighthouse, Core Web Vitals, accessibility, visual regression or field
 performance.
 
 ## Completed
+
+- Added explicit opt-in self-contained HTML and Markdown report captures. The
+  dashboard checkbox, CLI flag and API query preserve the private default while
+  embedding verified archived desktop/phone PNGs with dimensions and SHA-256
+  digests when requested; tests enforce the 4 MiB bound and report limitations.
 
 - Added executable playbook runs. The CLI, API and workspace dashboard save deterministic role contracts with ordered answers, outputs and guardrails; every run stays UNTESTED.
 
