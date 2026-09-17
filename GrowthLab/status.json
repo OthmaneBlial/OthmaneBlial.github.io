@@ -4,8 +4,8 @@
   "stage": "Source alpha",
   "progressEstimate": 95,
   "progressExplanation": "Subjective estimate against the complete product specification, not a measured delivery metric.",
-  "milestone": "Editable experiment tree with frozen lineage, localized GrowthLab onboarding and inspection details, explicit workspace settings lifecycle, measurement and battle/detail UI, read-only settings contract overview, provider-neutral measurement boundary, deterministic local CLI packaging with complete notices, local Linux musl cross-target packaging, estimated accessibility structure hints in comparisons and standalone page audits, continuous browser walkthrough, observed timing hints, bundled Chromium and Firefox visual-regression baseline smokes, local Chromium accessibility-tree and keyboard smoke, public repository review, manual-brief onboarding, executable playbooks, public checkout import and distribution-aware measurement validated",
-  "validatedSourceCommit": "f93580fe33dbfab929b27db69c38b49cf68765e9",
+  "milestone": "Editable experiment tree with frozen lineage, localized GrowthLab onboarding and inspection details, explicit workspace settings lifecycle, measurement and battle/detail UI, read-only settings contract overview, provider-neutral measurement boundary, deterministic local CLI packaging with complete notices, exact-tag macOS and Linux cross-target archives plus Windows GNU packaging, estimated accessibility structure hints in comparisons and standalone page audits, continuous browser walkthrough, observed timing hints, bundled Chromium and Firefox visual-regression baseline smokes, local Chromium accessibility-tree and keyboard smoke, public repository review, manual-brief onboarding, executable playbooks, public checkout import and distribution-aware measurement validated",
+  "validatedSourceCommit": "e2ec44b77a761f88ccfa47d1159c62c809eabbb8",
   "delivered": [
     "Local product import with reviewed growthlab.yaml permissions",
     "Three competing changes from one frozen starting point in isolated workspaces",
@@ -18,7 +18,7 @@
     "Published v0.1.0-alpha.17 as a source prerelease with the continuous walkthrough",
     "Published v0.1.0-alpha.18 as a source prerelease with the accessibility structure rubric",
     "Published v0.1.0-alpha.19 with a validated macOS arm64 CLI archive and checksum",
-    "Published v0.1.0-alpha.20 with opt-in visual report captures, a validated macOS arm64 CLI archive and structure-verified Linux musl and Windows GNU CLI archives",
+    "Published v0.1.0-alpha.20 with opt-in visual report captures, a validated macOS arm64 CLI archive and structure-verified macOS x86_64, Linux musl, Linux arm64 and Windows GNU CLI archives",
     "Inspected and explicitly resumed pending selected-delivery receipts without rollback",
     "Reworked the bundled demo to show intent, evidence and an explicit review choice",
     "Local and SSH launchers self-register their controller PID before payload work",
@@ -216,6 +216,16 @@
       "detail": "Local x86_64-unknown-linux-musl release archive built from the exact alpha.20 tag with cargo-zigbuild and Zig; offline verifier passed SHA-256, traversal/link safety, required notices and archive structure, the asset is attached to alpha.20, and runtime was honestly skipped on macOS arm64"
     },
     {
+      "name": "macOS Intel archive packaging",
+      "status": "passed",
+      "detail": "Local x86_64-apple-darwin release archive built from the exact alpha.20 tag with Cargo; offline verifier passed SHA-256, traversal/link safety, required notices and archive structure, the asset is attached to alpha.20, and runtime was skipped on this arm64 host"
+    },
+    {
+      "name": "Linux arm64 archive packaging",
+      "status": "passed",
+      "detail": "Local aarch64-unknown-linux-musl release archive built from the exact alpha.20 tag with cargo-zigbuild and Zig; offline verifier passed SHA-256, traversal/link safety, required notices and archive structure, the asset is attached to alpha.20, and runtime was honestly skipped on macOS arm64"
+    },
+    {
       "name": "Measurement adapter contract",
       "status": "passed",
       "detail": "LocalCsvAdapter implements the shared read-only request/report contract; focused Rust measurement and API tests passed and no provider request is made"
@@ -293,7 +303,7 @@
     {
       "name": "Public release asset verification",
       "status": "passed",
-      "detail": "The read-only scripts/test-release-assets.py check downloads all three alpha.20 archive/checksum pairs, matches GitHub asset digests and sidecars, and passes archive safety/notices verification; macOS runtime passes locally while Linux and Windows runtimes are skipped on the macOS host."
+      "detail": "The read-only scripts/test-release-assets.py check downloads all five alpha.20 archive/checksum pairs, matches GitHub asset digests and sidecars, and passes archive safety/notices verification; macOS arm64 runtime passes locally while macOS x86_64, Linux and Windows runtimes are skipped on the macOS host."
     }
   ],
   "pending": [
@@ -313,7 +323,7 @@
     "published": true,
     "version": "0.1.0-alpha.20",
     "url": "https://github.com/OthmaneBlial/GrowthLab/releases/tag/v0.1.0-alpha.20",
-    "platform": "Source prerelease with a macOS arm64 runtime-validated CLI archive plus Linux musl and Windows GNU structure-verified CLI archives",
-    "limitation": "The attached macOS CLI archive is runtime-validated on macOS arm64; the attached Linux musl and Windows GNU archives are structure-verified only. All are unsigned/unnotarized, installers and Linux/Windows runtime proof remain pending. Provider adapters and native-agent verification remain pending."
+    "platform": "Source prerelease with a macOS arm64 runtime-validated CLI archive plus macOS x86_64, Linux musl, Linux arm64 and Windows GNU structure-verified CLI archives",
+    "limitation": "The attached macOS arm64 CLI archive is runtime-validated on macOS arm64; the attached macOS x86_64, Linux musl, Linux arm64 and Windows GNU archives are structure-verified only. All are unsigned/unnotarized, installers and cross-target runtime proof remain pending. Provider adapters and native-agent verification remain pending."
   }
 }
