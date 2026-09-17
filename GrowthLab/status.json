@@ -296,7 +296,7 @@
     "published": true,
     "version": "0.1.0-alpha.20",
     "url": "https://github.com/OthmaneBlial/GrowthLab/releases/tag/v0.1.0-alpha.20",
-    "platform": "Source prerelease with a validated macOS arm64 CLI archive",
+    "platform": "Source prerelease with a macOS arm64 runtime-validated CLI archive and a Linux musl structure-verified CLI archive",
     "limitation": "The attached macOS CLI archive is runtime-validated on macOS arm64; the attached Linux musl archive is structure-verified only. Both are unsigned/unnotarized, installers and Linux/Windows runtime proof remain pending. Provider adapters and native-agent verification remain pending."
   }
 }
