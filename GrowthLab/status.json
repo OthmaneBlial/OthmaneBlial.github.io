@@ -5,7 +5,7 @@
   "progressEstimate": 95,
   "progressExplanation": "Subjective estimate against the complete product specification, not a measured delivery metric.",
   "milestone": "Editable experiment tree with frozen lineage, localized GrowthLab onboarding and inspection details, explicit workspace settings lifecycle, measurement and battle/detail UI, read-only settings contract overview, provider-neutral measurement boundary, deterministic local CLI packaging with complete notices, exact-tag macOS and Linux cross-target archives plus Windows GNU packaging, estimated accessibility structure hints in comparisons and standalone page audits, continuous browser walkthrough, observed timing hints, bundled Chromium and Firefox visual-regression baseline smokes, local Chromium accessibility-tree and keyboard smoke, public repository review, manual-brief onboarding, executable playbooks, public checkout import, distribution-aware measurement and the translated macOS x86_64 source suite validated",
-  "validatedSourceCommit": "f7c951f3dba1ed2277cb6f0cf1374bcdbde7eaee",
+  "validatedSourceCommit": "1e7286fafeb84e593e7b24d5fcf6a06173127f6a",
   "delivered": [
     "Local product import with reviewed growthlab.yaml permissions",
     "Three competing changes from one frozen starting point in isolated workspaces",
