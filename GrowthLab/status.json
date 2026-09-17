@@ -218,7 +218,7 @@
     {
       "name": "macOS Intel archive packaging",
       "status": "passed",
-      "detail": "Local x86_64-apple-darwin release archive built from the exact alpha.20 tag with Cargo; offline verifier passed SHA-256, traversal/link safety, required notices and archive structure, the asset is attached to alpha.20, and runtime was skipped on this arm64 host"
+      "detail": "Local x86_64-apple-darwin release archive built from the exact alpha.20 tag with Cargo; offline verifier passed SHA-256, traversal/link safety, required notices and archive structure, the asset is attached to alpha.20, and its version command passed under Rosetta on macOS arm64; native x86_64 hardware remains untested"
     },
     {
       "name": "Linux arm64 archive packaging",
@@ -303,7 +303,7 @@
     {
       "name": "Public release asset verification",
       "status": "passed",
-      "detail": "The read-only scripts/test-release-assets.py check downloads all five alpha.20 archive/checksum pairs, matches GitHub asset digests and sidecars, and passes archive safety/notices verification; macOS arm64 runtime passes locally while macOS x86_64, Linux and Windows runtimes are skipped on the macOS host."
+      "detail": "The read-only scripts/test-release-assets.py check downloads all five alpha.20 archive/checksum pairs, matches GitHub asset digests and sidecars, and passes archive safety/notices verification; macOS arm64 runtime passes locally, macOS x86_64 passes under Rosetta, and Linux and Windows runtimes are skipped on the macOS host."
     }
   ],
   "pending": [
@@ -324,6 +324,6 @@
     "version": "0.1.0-alpha.20",
     "url": "https://github.com/OthmaneBlial/GrowthLab/releases/tag/v0.1.0-alpha.20",
     "platform": "Source prerelease with a macOS arm64 runtime-validated CLI archive plus macOS x86_64, Linux musl, Linux arm64 and Windows GNU structure-verified CLI archives",
-    "limitation": "The attached macOS arm64 CLI archive is runtime-validated on macOS arm64; the attached macOS x86_64, Linux musl, Linux arm64 and Windows GNU archives are structure-verified only. All are unsigned/unnotarized, installers and cross-target runtime proof remain pending. Provider adapters and native-agent verification remain pending."
+    "limitation": "The attached macOS arm64 CLI archive is runtime-validated on macOS arm64; the attached macOS x86_64 archive also passes its version command under Rosetta on arm64, while the Linux musl, Linux arm64 and Windows GNU archives are structure-verified only. Native x86_64, Linux and Windows runtime proof, installers and signing remain pending. Provider adapters and native-agent verification remain pending."
   }
 }

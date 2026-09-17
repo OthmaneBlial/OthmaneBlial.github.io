@@ -596,7 +596,8 @@ Additional alpha.20 targets (2026-09-17): **passed structure verification**.
 Exact-tag `x86_64-apple-darwin` and `aarch64-unknown-linux-musl` binaries were
 built locally, packaged with the same six notices, and passed checksum,
 traversal/link and archive-structure checks. Both archives and checksums are
-attached to the public release; neither target was run on this arm64 host.
+attached to the public release; the macOS Intel version command also passed
+under Rosetta on arm64, while Linux arm64 was not run here.
 
 Windows MSVC cross-build (2026-09-17): **not built**. The local macOS Zig
 toolchain reached the `ring` C compilation step but lacks the Windows SDK
