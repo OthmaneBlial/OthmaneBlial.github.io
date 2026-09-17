@@ -583,7 +583,7 @@ continuous 30-second public-site walkthrough is now archived separately from the
 short eight-second reel.
 All six GitHub workflows remain manually disabled; validation runs locally only.
 Local cross-target packaging (2026-09-17): **passed structure verification**. `x86_64-unknown-linux-musl` built from the exact `v0.1.0-alpha.20` tag with `cargo-zigbuild` and Zig; the offline verifier passed checksum, archive safety and all required notices, and the archive is attached to the alpha.20 release. The ELF was not run on Linux, so runtime and installer proof remain pending.
-Public release assets (2026-09-17): **passed read-only verification**. `scripts/test-release-assets.py` downloaded all three alpha.20 archive/checksum pairs, matched GitHub digests and sidecars, passed archive safety/notices checks, and ran the macOS archive locally; Linux and Windows runtimes were skipped on macOS.
+Public release assets (2026-09-17): **passed read-only verification**. `scripts/test-release-assets.py` downloaded all five alpha.20 archive/checksum pairs, matched GitHub digests and sidecars, passed archive safety/notices checks, and ran the macOS arm64 archive locally; macOS x86_64, Linux and Windows runtimes were skipped on macOS.
 
 Windows cross-target packaging (2026-09-17): **passed structure and
 reproducibility verification**. The current source built
