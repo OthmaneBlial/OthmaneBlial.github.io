@@ -60,7 +60,8 @@
     "Guarded local workspace settings edits write the validated contract atomically before hypotheses are created and never create commits or remote changes",
     "Localized static-preview, evidence and rubric detail copy across all six dashboard locales, with visible settings lock policy after hypotheses or active battles",
     "Localized workspace and battle action/status copy across all six dashboard locale catalogs",
-    "Localized dashboard onboarding, audit and auxiliary action/status copy across all six dashboard locale catalogs"
+    "Localized dashboard onboarding, audit and auxiliary action/status copy across all six dashboard locale catalogs",
+    "Localized role labels, editor metadata and execution option copy across all six dashboard locale catalogs"
   ],
   "validation": [
     {
@@ -227,6 +228,11 @@
       "name": "Localized auxiliary dashboard copy",
       "status": "passed",
       "detail": "The six locale catalogs now cover dashboard busy states, home onboarding, public page and repository audit controls, playbook controls and execution status feedback; i18n, style, type, build and 174 UI tests pass, and Chrome verified the Spanish home flow with no browser warnings or errors"
+    },
+    {
+      "name": "Localized role and metadata copy",
+      "status": "passed",
+      "detail": "Role names, hypothesis editor labels, execution choices, check metadata and delivery notices now use the six locale catalogs; i18n, style, type, build and 174 UI tests pass, and Chrome verified Spanish role labels and footer copy"
     }
   ],
   "pending": [

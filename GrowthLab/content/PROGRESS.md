@@ -171,6 +171,11 @@ performance.
   use the shared message boundary; the Spanish home flow was checked in Chrome
   after the change.
 
+- Localized role labels, editor metadata and execution option copy across all
+  six dashboard locale catalogs. Role names, hypothesis editor labels, execution
+  choices, check metadata and delivery notices now follow the locale preference;
+  Chrome verified the Spanish role labels and footer copy.
+
 - Added public GitHub metadata review and manual-brief onboarding. `repo-audit` and the Home review panel make one unauthenticated metadata request without cloning or executing source. `workspace brief` and the Home form create a private local analysis snapshot with no remote or provider request.
 
 - Added a read-only public URL SEO audit in the CLI, local API and Home screen.
