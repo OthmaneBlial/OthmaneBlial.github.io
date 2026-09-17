@@ -74,7 +74,8 @@
     "Bundled demo accessibility-tree and keyboard smoke verifies named controls, headings, labels, focus stops and overflow with no provider invocation",
     "Public alpha.20 release assets have a read-only verifier for GitHub digests, checksum sidecars and archive safety",
     "Translated macOS x86_64 release suite now passes 964 tests with two inherited ignored tests under Rosetta after allowing the system Rosetta runtime read-only in the confinement profile",
-    "Deterministic native-harness fixture runs three local Claude proposal adapters with no provider credentials; sealed runs remain UNTESTED"
+    "Deterministic native-harness fixture runs three local Claude proposal adapters with no provider credentials; sealed runs remain UNTESTED",
+    "Local cargo-dist shell and PowerShell installer templates generated and syntax-checked; publication and target runtime remain pending"
   ],
   "validation": [
     {
@@ -306,6 +307,11 @@
       "name": "Public release asset verification",
       "status": "passed",
       "detail": "The read-only scripts/test-release-assets.py check downloads all five alpha.20 archive/checksum pairs, matches GitHub asset digests and sidecars, and passes archive safety/notices verification; macOS arm64 runtime passes locally, macOS x86_64 passes under Rosetta, and Linux and Windows runtimes are skipped on the macOS host."
+    },
+    {
+      "name": "Local installer template generation",
+      "status": "passed",
+      "detail": "cargo-dist generated the alpha.20 shell and PowerShell installer templates locally with no upload; sh -n accepted the 55,250-byte shell script and the PowerShell parser accepted the 22,419-byte script. The templates remain local evidence because Windows MSVC artifacts and target runtime execution are still unavailable."
     },
     {
       "name": "Native harness boundary fixture",

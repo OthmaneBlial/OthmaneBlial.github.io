@@ -608,6 +608,8 @@ runner with the appropriate SDK is required for runtime and installer proof.
 
 Current-main cross-target rebuilds (2026-09-17): **passed structure verification**. The current `main` source was rebuilt into `x86_64-unknown-linux-musl` and `x86_64-pc-windows-gnu` archives with `cargo-zigbuild`; the offline verifier passed both SHA-256 sidecars, traversal/link safety, required notices and archive structure. The current-main archive digests were `9b34c05918f22f662bb58153e97d04f4bc7d70f530276deb4cc1af01052f3f63` (Linux musl) and `745d90bb9d51d70c535abd0e600421a95c39d81ac3bf0bc39834b3eff3d2eba7` (Windows GNU). Neither target runtime was run on this macOS host, so this strengthens reproducible packaging evidence without closing the runtime or installer gates.
 
+Local installer generation (2026-09-17): **passed syntax verification**. `dist build --artifacts global --installer shell,powershell --tag v0.1.0-alpha.20 --allow-dirty` produced the cargo-dist shell and PowerShell installer templates locally. `sh -n` and the PowerShell parser accepted the 55,250-byte and 22,419-byte scripts. They remain local evidence only because the tagged release has no Windows MSVC artifact and neither installer has been executed on its target OS.
+
 Bundled-demo unit (2026-09-16): **passed locally**. `cargo test --locked` passes
 **902 tests per binary, zero failures, two inherited ignored tests**;
 `cargo clippy --all-targets -- -D warnings`, formatting and `cargo build --locked`
