@@ -90,7 +90,8 @@ performance.
   image alternatives, form labels, overflow and thirty visible Tab focus stops
   while provider probes enforce the replay boundary. This remains a local
   structure and keyboard signal, not screen-reader, cross-browser or WCAG
-  evidence.
+  evidence. `--output` now retains the passing AX roles, DOM summary, focus
+  count and provider boundary as a reviewable JSON handoff.
 
 - Added a Firefox visual-regression smoke for the bundled demo. Six additional
   desktop/phone PNG baselines are compared byte-for-byte against the same
@@ -547,12 +548,13 @@ The live battle dashboard accessibility smoke found 23 named interactive control
 one `h1` with no skipped heading level, no duplicate IDs, no images missing `alt`
 text and no horizontal overflow after the contract subsection headings were
 corrected to `h2`.
-The local `scripts/test-growth-accessibility.py` smoke then rendered a real
+The local `scripts/test-growth-accessibility.py --output result.json` smoke then rendered a real
 recorded battle in Chromium and passed 19 named DOM/AX controls, one `h1` with
 no skipped level, unique IDs, image alternatives, form labels, no overflow and
 30 visible Tab focus stops; provider probes recorded no external call. This is
 a structure and keyboard signal, not screen-reader, cross-browser or WCAG
-evidence.
+evidence; the JSON handoff records all 19 role/name pairs and the explicit
+`providerInvoked: false` boundary.
 The local `scripts/test-growth-firefox-regression.py` smoke then rendered the
 same three sealed preview documents in Firefox 139.0.4 at 1280×900 and 390×844,
 matched six checked-in PNG baselines byte-for-byte, passed viewport/overflow,

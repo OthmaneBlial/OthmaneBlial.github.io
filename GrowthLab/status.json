@@ -276,7 +276,7 @@
     {
       "name": "Bundled accessibility-tree and keyboard smoke",
       "status": "passed",
-      "detail": "A real recorded bundled battle rendered in local Chromium; 19 DOM and AX interactive controls were named, one h1 had no skipped level, IDs/images/forms and overflow passed, and 30 Tab events reached visible focus stops without invoking a provider. This remains a local structure and keyboard smoke, not screen-reader, cross-browser or WCAG evidence."
+      "detail": "A real recorded bundled battle rendered in local Chromium; 19 DOM and AX interactive controls were named, one h1 had no skipped level, IDs/images/forms and overflow passed, and 30 Tab events reached visible focus stops without invoking a provider. The optional --output JSON handoff records all role/name pairs and providerInvoked=false. This remains a local structure and keyboard smoke, not screen-reader, cross-browser or WCAG evidence."
     }
   ],
   "pending": [
