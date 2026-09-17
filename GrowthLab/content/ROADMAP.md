@@ -33,7 +33,10 @@ by this roadmap.
   including public URL audit dimensions. Dynamic rubric evidence and user-authored run content remain source-language
   because those values come from inspected product data; browser-based visual
   regression and
-  assistive-technology evaluation remain open.
+  assistive-technology evaluation remain open. The bundled demo now also has a
+  pinned local visual-regression smoke that compares six desktop/phone PNG
+  baselines byte-for-byte; cross-browser parity and assistive-technology
+  evaluation remain separate gates.
   Settings now expose a lifecycle policy: local edits are enabled before hypotheses
   or active battles and visibly locked afterwards with a localized explanation.
   Restricted previews
@@ -44,9 +47,9 @@ by this roadmap.
   browser-timing hint rubric when those timings are present. These PNGs and
   checks are render inspection artifacts, not a quality score. The bundled key-free `growthlab demo` replay
   and real Home launch pass local CLI/HTTP and browser checks. Page-quality
-  source hints are now shown beside the SEO rubric; full visual regression and
-  assistive-technology evaluation, native-agent verification and signed release
-  packaging remain pending.
+  source hints are now shown beside the SEO rubric; cross-browser visual
+  regression and assistive-technology evaluation, native-agent verification and
+  signed release packaging remain pending.
 - [ ] **4 — Playbooks:** focused roles and practical positioning, activation,
   onboarding, ethical discovery, pricing research and launch templates with evidence.
   The ten role contracts and deterministic local playbook runs are available in

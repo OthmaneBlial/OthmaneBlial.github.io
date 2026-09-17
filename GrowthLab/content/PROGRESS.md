@@ -1,7 +1,7 @@
 # GrowthLab progress
 
 Current milestone: **Phase 2/3/4 — editable experiment tree with frozen lineage, localized GrowthLab onboarding, controlled local workspace settings edits, measurement and battle/detail UI, read-only settings contract overview, provider-neutral measurement boundary, deterministic local CLI packaging with complete notices, local Linux musl cross-target packaging, estimated accessibility structure hints, public repository review, manual-brief onboarding, executable playbooks, public checkout import and distribution-aware measurement analysis validated** (2026-09-17).
-Overall completion: **about 94%, subjective estimate against the full specification**.
+Overall completion: **about 95%, subjective estimate against the full specification**.
 The configuration/import, explicit non-Git initialization, read-only URL audit and three-variant replay CLI slices pass locally.
 Selected delivery and report behavior pass local Rust, real CLI and browser checks.
 Recovery passes local Rust and real CLI interruption/legacy-archive checks.
@@ -10,8 +10,8 @@ sealed policy digests pass local checks; Linux runtime verification remains pend
 GitHub Actions is disabled at the user's request.
 The GrowthLab API and initial dashboard pass local Rust/UI and synthetic real
 browser checks. The bundled fictional replay now passes real CLI/HTTP and browser
-checks, including estimated SEO, page-quality and accessibility structure rubrics and a standalone local audit. Native-agent execution
-and full visual regression/assistive-technology evaluation remain open release gates; the repository now includes verified desktop and
+checks, including estimated SEO, page-quality and accessibility structure rubrics and a standalone local audit. Native-agent execution,
+cross-browser visual regression and assistive-technology evaluation remain open release gates; the repository now includes verified desktop and
 phone render captures, observed local Chromium layout checks, a transparent static-render rubric plus a continuous
 30-second walkthrough captured from an isolated Chrome profile.
 The live dashboard accessibility smoke now also confirms named controls, a
@@ -23,6 +23,12 @@ Shareable HTML and Markdown reports now support explicit visual disclosure:
 verified archived desktop and phone captures. Default exports omit captures;
 embedded images remain render artifacts rather than accessibility, performance,
 visual-regression or growth results.
+
+The bundled demo now has a pinned local visual-regression smoke. It compares
+all three sealed variants at desktop and phone viewports with six checked-in
+PNG baselines, verifies archive metadata and keeps the provider boundary
+untouched. This raises the local regression signal without claiming
+cross-browser parity or assistive-technology conformance.
 
 The local measurement slice now accepts bounded UTF-8 CSV exports and reports
 descriptive means, sample sizes, optional date range and arithmetic baseline
@@ -62,6 +68,13 @@ performance.
   dashboard checkbox, CLI flag and API query preserve the private default while
   embedding verified archived desktop/phone PNGs with dimensions and SHA-256
   digests when requested; tests enforce the 4 MiB bound and report limitations.
+
+- Added a local visual-regression smoke for the bundled demo. Six checked-in
+  desktop/phone PNG baselines are compared byte-for-byte against fresh sealed
+  Chromium captures for all three variants, with dimensions, archive digests
+  and the no-provider boundary verified. The fixture is intentionally scoped to
+  the pinned local renderer; cross-browser and assistive-technology testing
+  remain separate release gates.
 
 - Added executable playbook runs. The CLI, API and workspace dashboard save deterministic role contracts with ordered answers, outputs and guardrails; every run stays UNTESTED.
 
@@ -462,8 +475,8 @@ Rust/HTTP and real browser checks. Windows validation is unsupported.
 
 ## Next three concrete tasks
 
-1. Add visual-regression and assistive-technology checks alongside the structural
-   accessibility rubric.
+1. Extend the local visual baseline to supported browser versions and add an
+   assistive-technology evaluation path alongside the structural rubric.
 2. Add provider adapters over the local measurement model, then verify genuine
    native-agent proposals without inventing provider data.
 3. Complete cross-platform runtime proof and release packaging against the full
