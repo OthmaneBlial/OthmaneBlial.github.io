@@ -165,6 +165,11 @@ performance.
   artifact inspection and selected delivery now refresh with the shared language
   preference; onboarding and auxiliary copy remain a separate follow-up.
 
+- Localized dashboard progress feedback and home status copy across all six
+  dashboard locale catalogs. Busy labels, about text, import guidance and
+  measurement status details now use the shared message boundary; the Spanish
+  home flow was checked in Chrome after the change.
+
 - Added public GitHub metadata review and manual-brief onboarding. `repo-audit` and the Home review panel make one unauthenticated metadata request without cloning or executing source. `workspace brief` and the Home form create a private local analysis snapshot with no remote or provider request.
 
 - Added a read-only public URL SEO audit in the CLI, local API and Home screen.
