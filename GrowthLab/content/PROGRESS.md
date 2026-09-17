@@ -73,6 +73,13 @@ performance.
 
 ## Completed
 
+- Refined the public positioning after a live metadata check. GitHub About now
+  leads with an open-source SEO growth tool description and SEO-focused topics;
+  the README opening plus Pages title, meta description and hero use the same
+  plain-language message. The live HTML and repository metadata were verified
+  after publishing. This improves discovery copy without claiming rankings,
+  traffic or conversion lift.
+
 - Hardened the API terminal polling smoke so a worker is considered finished
   only after the persisted battle row is terminal and all three sealed runs are
   visible. The formerly timing-sensitive demo test now passes three consecutive

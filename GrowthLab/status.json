@@ -80,6 +80,7 @@
     "Versioned installer template mapping smoke prevents Windows GNU releases from selecting an unavailable MSVC asset",
     "Public SEO discovery files, canonical URLs, social cards and truthful SoftwareApplication metadata are published",
     "The local SEO audit scores the public home source 100/100 after the image-description fix",
+    "Refined the GitHub About, README and Pages copy around the SEO growth tool positioning",
     "Hardened the API terminal polling smoke so it waits for the persisted terminal battle state before reading sealed runs"
   ],
   "validation": [
@@ -337,6 +338,11 @@
       "name": "Public SEO page self-audit",
       "status": "passed",
       "detail": "The real GrowthLab CLI audited site/index.html locally: the explainable SEO page-hygiene rubric scored 100/100, all four images had useful alt descriptions, and no recommendation remained. The separate quality score stayed 28/30 and the accessibility structure score 100/100; both remain estimates rather than performance or WCAG certification."
+    },
+    {
+      "name": "Public SEO positioning",
+      "status": "passed",
+      "detail": "GitHub About metadata, the README opening, and the live Pages title, description and hero were verified to use consistent SEO growth tool positioning. This is messaging and discovery evidence, not ranking or conversion proof."
     },
     {
       "name": "Native harness boundary fixture",
