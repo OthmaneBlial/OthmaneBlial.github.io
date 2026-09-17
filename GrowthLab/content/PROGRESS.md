@@ -1,6 +1,6 @@
 # GrowthLab progress
 
-Current milestone: **Phase 2/3/4 — editable experiment tree with frozen lineage, localized GrowthLab onboarding, controlled local workspace settings edits, measurement and battle/detail UI, read-only settings contract overview, provider-neutral measurement boundary, deterministic local CLI packaging with complete notices, local Linux musl cross-target packaging, estimated accessibility structure hints, public repository review, manual-brief onboarding, executable playbooks, public checkout import and distribution-aware measurement analysis validated** (2026-09-17).
+Current milestone: **Phase 2/3/4 — editable experiment tree with frozen lineage, localized GrowthLab onboarding, controlled local workspace settings edits, measurement and battle/detail UI, read-only settings contract overview, provider-neutral measurement boundary, deterministic local CLI packaging with complete notices, local Linux musl cross-target packaging, estimated accessibility structure hints, public repository review, manual-brief onboarding, executable playbooks, public checkout import, distribution-aware measurement analysis and the translated macOS x86_64 source suite validated** (2026-09-17).
 Overall completion: **about 95%, subjective estimate against the full specification**.
 The configuration/import, explicit non-Git initialization, read-only URL audit and three-variant replay CLI slices pass locally.
 Selected delivery and report behavior pass local Rust, real CLI and browser checks.
