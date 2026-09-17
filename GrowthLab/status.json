@@ -5,7 +5,7 @@
   "progressEstimate": 95,
   "progressExplanation": "Subjective estimate against the complete product specification, not a measured delivery metric.",
   "milestone": "Editable experiment tree with frozen lineage, localized GrowthLab onboarding and inspection details, explicit workspace settings lifecycle, measurement and battle/detail UI, read-only settings contract overview, provider-neutral measurement boundary, deterministic local CLI packaging with complete notices, exact-tag macOS and Linux cross-target archives plus Windows GNU packaging, estimated accessibility structure hints in comparisons and standalone page audits, continuous browser walkthrough, observed timing hints, bundled Chromium and Firefox visual-regression baseline smokes, local Chromium accessibility-tree and keyboard smoke, public repository review, manual-brief onboarding, executable playbooks, public checkout import, distribution-aware measurement and the translated macOS x86_64 source suite validated",
-  "validatedSourceCommit": "1e7286fafeb84e593e7b24d5fcf6a06173127f6a",
+  "validatedSourceCommit": "95f3a289ed8ff71d9f5c22b056c561d050fa227e",
   "delivered": [
     "Local product import with reviewed growthlab.yaml permissions",
     "Three competing changes from one frozen starting point in isolated workspaces",
@@ -98,7 +98,7 @@
     {
       "name": "UI tests",
       "status": "passed",
-      "detail": "174 tests; zero failures or skips. Growth Battle rubric details expose the API evaluator together with the transparent calculation, evidence dimensions, recommendations, limitations and provenance; evidence cards also show linked support and challenge claims in six locales."
+      "detail": "174 tests; zero failures or skips. Growth Battle rubric details expose the API evaluator together with the transparent calculation, evidence dimensions, recommendations, limitations and provenance; evidence cards also show type, confidence, linked support and challenge claims in six locales."
     },
     {
       "name": "Local quality checks",
