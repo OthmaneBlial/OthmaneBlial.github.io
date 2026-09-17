@@ -5,7 +5,7 @@
   "progressEstimate": 95,
   "progressExplanation": "Subjective estimate against the complete product specification, not a measured delivery metric.",
   "milestone": "Editable experiment tree with frozen lineage, localized GrowthLab onboarding and inspection details, explicit workspace settings lifecycle, measurement and battle/detail UI, read-only settings contract overview, provider-neutral measurement boundary, deterministic local CLI packaging with complete notices, exact-tag macOS and Linux cross-target archives plus Windows GNU packaging, estimated accessibility structure hints in comparisons and standalone page audits, continuous browser walkthrough, observed timing hints, bundled Chromium and Firefox visual-regression baseline smokes, local Chromium accessibility-tree and keyboard smoke, public repository review, manual-brief onboarding, executable playbooks, public checkout import, distribution-aware measurement and the translated macOS x86_64 source suite validated",
-  "validatedSourceCommit": "b1e89dd80c84983a22071af0d6bb7a302de482a8",
+  "validatedSourceCommit": "306b5e70448308fd96c7b943bab8135f691f4090",
   "delivered": [
     "Local product import with reviewed growthlab.yaml permissions",
     "Three competing changes from one frozen starting point in isolated workspaces",
@@ -84,13 +84,14 @@
     "Documented a manual VoiceOver and Safari accessibility handoff beside the reproducible Chromium smoke",
     "Hardened the API terminal polling smoke so it waits for the persisted terminal battle state before reading sealed runs",
     "Published cargo-dist-compatible alpha.20 archive names and shell/PowerShell installers with public checksum verification",
-    "Hypothesis evidence validation requires complete, bounded provenance metadata, including confidence rationale and at least one linked claim, and rejects credential-shaped text before persistence"
+    "Hypothesis evidence validation requires complete, bounded provenance metadata, including confidence rationale and at least one linked claim, and rejects credential-shaped text before persistence",
+    "Evidence persistence rejects unlinked claims before inserting any hypothesis portfolio row"
   ],
   "validation": [
     {
       "name": "Rust tests",
       "status": "passed",
-      "detail": "Targeted evidence-model suite: 8 tests per binary; 8 passed with zero failures. The preceding full serial suite on the parent source passed 970 tests per binary (968 passed, two inherited ignored); this change adds bounded metadata and claim-link validation coverage."
+      "detail": "Targeted evidence-model and storage suites: 8 tests per binary in each suite; all passed with zero failures. The preceding full serial suite on the parent source passed 970 tests per binary (968 passed, two inherited ignored); current checks cover bounded metadata, credential redaction, claim links and atomic persistence refusal."
     },
     {
       "name": "UI tests",

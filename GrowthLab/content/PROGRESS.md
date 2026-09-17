@@ -91,7 +91,7 @@ performance.
   only after the persisted battle row is terminal and all three sealed runs are
   visible. The formerly timing-sensitive demo test now passes three consecutive
   targeted runs and the full 970-test Rust target suite on the parent source passed with 968 passed,
-  zero failures and two inherited ignored tests; the current source adds bounded metadata and claim-link checks, and the targeted evidence-model suite passes 8 tests per binary.
+  zero failures and two inherited ignored tests; the current source adds bounded metadata and claim-link checks, the targeted evidence-model and storage suites each pass 8 tests per binary, and invalid evidence is refused before any portfolio row is inserted.
 
 - Hardened evidence persistence. Every evidence record now requires complete
   provenance fields, a positive retrieval timestamp and a confidence rationale;
@@ -576,7 +576,7 @@ Standalone SEO audit and rubric unit tests (2026-09-16): **passed locally**;
 the real binary emitted JSON and Markdown for a UTF-8 fixture and refused a
 symlink input. Static-preview unit (2026-09-16): **passed locally**. Full serial
 `cargo test --release --locked -- --test-threads=1` the preceding source commit passed **970 tests per binary, 968
-passed, zero failures and two inherited ignored tests**; the current source adds bounded metadata and claim-link validation and its targeted evidence-model suite passes **8 tests per binary** with zero failures, including incomplete, oversized, credential-shaped, claim and confidence-rationale rejection coverage;
+passed, zero failures and two inherited ignored tests**; the current source adds bounded metadata and claim-link validation; its targeted evidence-model and storage suites each pass **8 tests per binary** with zero failures, including incomplete, oversized, credential-shaped and persistence-refusal coverage;
 Clippy with `-D warnings`, formatting, style checks and the debug build pass.
 UI typecheck/i18n/build and **174 tests, zero failures/skips** pass; localized detail catalogs lint clean, and Chrome verified the pre-hypothesis edit control plus the post-hypothesis lock explanation; final `ui/dist`
 is included. The real CLI demo regression verifies ready previews, exact served
