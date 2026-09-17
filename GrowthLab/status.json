@@ -18,7 +18,7 @@
     "Published v0.1.0-alpha.17 as a source prerelease with the continuous walkthrough",
     "Published v0.1.0-alpha.18 as a source prerelease with the accessibility structure rubric",
     "Published v0.1.0-alpha.19 with a validated macOS arm64 CLI archive and checksum",
-    "Published v0.1.0-alpha.20 with opt-in visual report captures and a validated macOS arm64 CLI archive",
+    "Published v0.1.0-alpha.20 with opt-in visual report captures, a validated macOS arm64 CLI archive and a structure-verified Linux musl CLI archive",
     "Inspected and explicitly resumed pending selected-delivery receipts without rollback",
     "Reworked the bundled demo to show intent, evidence and an explicit review choice",
     "Local and SSH launchers self-register their controller PID before payload work",
@@ -211,7 +211,7 @@
     {
       "name": "Linux musl archive packaging",
       "status": "passed",
-      "detail": "Local x86_64-unknown-linux-musl release archive built with cargo-zigbuild and Zig; offline verifier passed SHA-256, traversal/link safety, required notices and archive structure, while runtime was honestly skipped on macOS arm64"
+      "detail": "Local x86_64-unknown-linux-musl release archive built from the exact alpha.20 tag with cargo-zigbuild and Zig; offline verifier passed SHA-256, traversal/link safety, required notices and archive structure, the asset is attached to alpha.20, and runtime was honestly skipped on macOS arm64"
     },
     {
       "name": "Measurement adapter contract",
@@ -297,6 +297,6 @@
     "version": "0.1.0-alpha.20",
     "url": "https://github.com/OthmaneBlial/GrowthLab/releases/tag/v0.1.0-alpha.20",
     "platform": "Source prerelease with a validated macOS arm64 CLI archive",
-    "limitation": "The attached CLI archive is validated on macOS arm64 only and is unsigned/unnotarized; Linux and Windows binaries, installers and runtime proof remain pending. Provider adapters and native-agent verification remain pending."
+    "limitation": "The attached macOS CLI archive is runtime-validated on macOS arm64; the attached Linux musl archive is structure-verified only. Both are unsigned/unnotarized, installers and Linux/Windows runtime proof remain pending. Provider adapters and native-agent verification remain pending."
   }
 }
