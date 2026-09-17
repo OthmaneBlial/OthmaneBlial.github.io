@@ -202,8 +202,8 @@ performance.
   guide, MIT and OpenResearch notices, and all six checked-in dependency notice
   files. The verifier checks SHA-256, archive traversal/link safety and runs the
   binary only when the target matches the current operating system and CPU.
-  Cross-platform runtime evidence, signing and release-attached installers stay
-  separate gates.
+  Cross-platform runtime evidence and signing stay separate gates; the
+  cargo-dist-compatible installer assets are now attached to alpha.20.
 
 - Added a conservative page-quality hint evaluator beside the SEO rubric. Battle
   comparisons and shareable reports expose five structural dimensions,
@@ -613,8 +613,8 @@ Native providers, richer quality evaluation and release gates remain open. The
 continuous 30-second public-site walkthrough is now archived separately from the
 short eight-second reel.
 All six GitHub workflows remain manually disabled; validation runs locally only.
-Local cross-target packaging (2026-09-17): **passed structure verification**. `x86_64-unknown-linux-musl` built from the exact `v0.1.0-alpha.20` tag with `cargo-zigbuild` and Zig; the offline verifier passed checksum, archive safety and all required notices, and the archive is attached to the alpha.20 release. The ELF was not run on Linux, so runtime and installer proof remain pending.
-Public release assets (2026-09-17): **passed read-only verification**. `scripts/test-release-assets.py` downloaded all five alpha.20 archive/checksum pairs, matched GitHub digests and sidecars, passed archive safety/notices checks, and ran the macOS arm64 archive locally; Linux and Windows runtimes were skipped on macOS; the current source macOS x86_64 suite is covered separately under Rosetta.
+Local cross-target packaging (2026-09-17): **passed structure verification**. `x86_64-unknown-linux-musl` built from the exact `v0.1.0-alpha.20` tag with `cargo-zigbuild` and Zig; the offline verifier passed checksum, archive safety and all required notices, and the cargo-dist-compatible archive is attached to the alpha.20 release. The ELF was not run on Linux, so runtime proof remains pending.
+Public release assets (2026-09-17): **passed read-only verification**. `scripts/test-release-assets.py` downloaded all ten alpha.20 archive/checksum pairs, matched GitHub digests and sidecars, passed root-layout and bin-layout archive safety/notices checks, and ran the macOS arm64 archive locally; Linux and Windows runtimes were skipped on macOS; the current source macOS x86_64 suite is covered separately under Rosetta.
 
 Windows cross-target packaging (2026-09-17): **passed structure and
 reproducibility verification**. The current source built
@@ -639,7 +639,7 @@ runner with the appropriate SDK is required for runtime and installer proof.
 
 Current-main cross-target rebuilds (2026-09-17): **passed structure verification**. The current `main` source was rebuilt into `x86_64-unknown-linux-musl` and `x86_64-pc-windows-gnu` archives with `cargo-zigbuild`; the offline verifier passed both SHA-256 sidecars, traversal/link safety, required notices and archive structure. The current-main archive digests were `9b34c05918f22f662bb58153e97d04f4bc7d70f530276deb4cc1af01052f3f63` (Linux musl) and `745d90bb9d51d70c535abd0e600421a95c39d81ac3bf0bc39834b3eff3d2eba7` (Windows GNU). Neither target runtime was run on this macOS host, so this strengthens reproducible packaging evidence without closing the runtime or installer gates.
 
-Local installer generation (2026-09-17): **passed syntax and macOS shell-install verification**. `dist build --artifacts global --installer shell,powershell --tag v0.1.0-alpha.20 --allow-dirty` produced the cargo-dist shell and PowerShell installer templates locally. `sh -n` and the PowerShell parser accepted both scripts. The shell installer then fetched the local `aarch64-apple-darwin` archive (SHA-256 `0e5e0a0275f24b794938af9862efb1868d32e327e0bde8ab6d534226e3f672d4`) through a disposable HTTP server, verified its sidecar, installed both binaries into an isolated prefix and reported `growthlab 0.1.0-alpha.20` without editing the test profile. The templates remain local evidence only because the tagged release has no Windows MSVC artifact and target-specific installer/runtime proof is still incomplete.
+Local installer generation (2026-09-17): **passed syntax and macOS shell-install verification**. `dist build --artifacts global --installer shell,powershell --tag v0.1.0-alpha.20 --allow-dirty` produced the cargo-dist shell and PowerShell installer templates. `sh -n` and the PowerShell parser accepted both scripts. A local SHA-256 preflight matched the macOS arm64 archive and sidecar before the shell installer fetched that archive through a disposable HTTP server, installed both binaries into an isolated prefix and reported `growthlab 0.1.0-alpha.20` and `orx 0.1.0-alpha.20`. The scripts and five cargo-dist-compatible archive/checksum pairs are attached to the public release; other target installer/runtime execution remains unavailable.
 
 Distribution target matrix (2026-09-17): **corrected locally**. `dist-workspace.toml` now includes the published `x86_64-pc-windows-gnu` target and leaves MSVC out until a Windows SDK runner can build and validate it. Regenerated PowerShell and shell templates select the GNU archive when that is the available Windows artifact; `scripts/test-installer-templates.py --check-shell`, `sh -n`, and the PowerShell parser passed. GitHub Actions remains manually disabled.
 
