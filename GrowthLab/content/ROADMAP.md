@@ -10,16 +10,17 @@ by this roadmap.
 - [x] **1 — Growth domain:** native CLI, versioned `growthlab.yaml`, product
   contexts, typed hypotheses/permissions/provenance, SQLite migrations and tests.
 - [ ] **2 — Landing-page loop:** common snapshot/contract, three isolated
-  competitors, replay and native harness execution, configured validation,
+  competitors, replay and real native harness execution, configured validation,
   immutable run records, failure/cancellation recovery, evidence/diffs/artifacts,
   explainable comparison, safe selected apply/export and local reports.
   The replay CLI backend, explicit selected delivery and local HTML/Markdown
   reports, checkpoint-based CLI recovery, explicit selected-delivery recovery,
   the explainable SEO page-hygiene rubric, standalone local SEO audit,
   public-checkout import and distribution-aware local measurement are implemented.
-  Native execution, provider-specific launcher registration and Linux confinement
-  runtime proof still prevent marking this phase complete. Windows validation
-  isolation is not implemented.
+  The deterministic local native-harness fixture now exercises the adapter
+  boundary; real provider execution, provider-specific launcher registration
+  and Linux confinement runtime proof still prevent marking this phase complete.
+  Windows validation isolation is not implemented.
 - [ ] **3 — UX/demo:** growth-native onboarding, tree/battle/detail/console/
   evidence/rubric/settings screens, keyboard/mobile checks, one-command bundled
   demo, sanitized self-contained reports, badge, real screenshots/video,
@@ -54,7 +55,7 @@ by this roadmap.
   checks are render inspection artifacts, not a quality score. The bundled key-free `growthlab demo` replay
   and real Home launch pass local CLI/HTTP and browser checks. Page-quality
   source hints are now shown beside the SEO rubric; cross-browser visual
-  regression and assistive-technology evaluation, native-agent verification and
+  regression and assistive-technology evaluation, real native-agent verification and
   signed release packaging remain pending.
 - [ ] **4 — Playbooks:** focused roles and practical positioning, activation,
   onboarding, ethical discovery, pricing research and launch templates with evidence.
