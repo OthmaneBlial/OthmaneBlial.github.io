@@ -2,10 +2,10 @@
   "schemaVersion": 1,
   "updated": "2026-09-17",
   "stage": "Source alpha",
-  "progressEstimate": 92,
+  "progressEstimate": 93,
   "progressExplanation": "Subjective estimate against the complete product specification, not a measured delivery metric.",
-  "milestone": "Editable experiment tree with frozen lineage, localized GrowthLab onboarding, measurement and battle/detail UI, read-only settings contract overview, provider-neutral measurement boundary, deterministic local CLI packaging with complete notices, local Linux musl cross-target packaging, estimated accessibility structure hints in comparisons and standalone page audits, continuous browser walkthrough, observed timing hints, public repository review, manual-brief onboarding, executable playbooks, public checkout import and distribution-aware measurement validated",
-  "validatedSourceCommit": "b693abf",
+  "milestone": "Editable experiment tree with frozen lineage, localized GrowthLab onboarding, controlled local workspace settings edits, measurement and battle/detail UI, read-only settings contract overview, provider-neutral measurement boundary, deterministic local CLI packaging with complete notices, local Linux musl cross-target packaging, estimated accessibility structure hints in comparisons and standalone page audits, continuous browser walkthrough, observed timing hints, public repository review, manual-brief onboarding, executable playbooks, public checkout import and distribution-aware measurement validated",
+  "validatedSourceCommit": "36cdd0c930755cdbf6d80ac5b6d25596b28ef976",
   "delivered": [
     "Local product import with reviewed growthlab.yaml permissions",
     "Three competing changes from one frozen starting point in isolated workspaces",
@@ -56,7 +56,8 @@
     "Deterministic local CLI packaging with complete checked-in license notices and offline archive verification",
     "Localized GrowthLab battle/detail inspection, decision and report labels follow all six locale catalogs",
     "Local x86_64 Linux musl archive built and structure-verified with cargo-zigbuild; runtime remains unverified",
-    "Typed read-only measurement adapter boundary with the local CSV implementation"
+    "Typed read-only measurement adapter boundary with the local CSV implementation",
+    "Guarded local workspace settings edits write the validated contract atomically before hypotheses are created and never create commits or remote changes"
   ],
   "validation": [
     {
@@ -203,13 +204,18 @@
       "name": "Measurement adapter contract",
       "status": "passed",
       "detail": "LocalCsvAdapter implements the shared read-only request/report contract; focused Rust measurement and API tests passed and no provider request is made"
+    },
+    {
+      "name": "Editable workspace settings",
+      "status": "passed",
+      "detail": "Focused API and configuration tests prove validated local writes, stale-file refusal, atomic replacement and refusal after hypotheses or active battles; UI exposes localized save/cancel controls without automatic commits or remotes"
     }
   ],
   "pending": [
     "Provider adapters",
     "Full visual regression and assistive-technology accessibility evaluation",
     "Native-agent battle verification and provider-specific launcher registration",
-    "Editable settings mutations and remaining dashboard technical detail copy",
+    "Remaining dashboard technical detail copy and post-hypothesis settings policy",
     "Cross-platform runtime proof and release-attached portable binaries/installers"
   ],
   "provenance": "Replay proposals: SIMULATED. Executed checks: OBSERVED. Growth outcomes: UNTESTED.",

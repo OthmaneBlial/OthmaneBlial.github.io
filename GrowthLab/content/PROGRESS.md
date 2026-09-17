@@ -1,7 +1,7 @@
 # GrowthLab progress
 
-Current milestone: **Phase 2/3/4 — editable experiment tree with frozen lineage, localized GrowthLab onboarding, measurement and battle/detail UI, read-only settings contract overview, provider-neutral measurement boundary, deterministic local CLI packaging with complete notices, local Linux musl cross-target packaging, estimated accessibility structure hints, public repository review, manual-brief onboarding, executable playbooks, public checkout import and distribution-aware measurement analysis validated** (2026-09-17).
-Overall completion: **about 92%, subjective estimate against the full specification**.
+Current milestone: **Phase 2/3/4 — editable experiment tree with frozen lineage, localized GrowthLab onboarding, controlled local workspace settings edits, measurement and battle/detail UI, read-only settings contract overview, provider-neutral measurement boundary, deterministic local CLI packaging with complete notices, local Linux musl cross-target packaging, estimated accessibility structure hints, public repository review, manual-brief onboarding, executable playbooks, public checkout import and distribution-aware measurement analysis validated** (2026-09-17).
+Overall completion: **about 93%, subjective estimate against the full specification**.
 The configuration/import, explicit non-Git initialization, read-only URL audit and three-variant replay CLI slices pass locally.
 Selected delivery and report behavior pass local Rust, real CLI and browser checks.
 Recovery passes local Rust and real CLI interruption/legacy-archive checks.
@@ -60,6 +60,13 @@ performance.
   browser panel enumerate the available CSV adapter and six planned external
   integration boundaries with network, status, provenance and limitation
   metadata; planned sources remain unconfigured and no provider is contacted.
+
+- Added guarded local workspace settings edits. The selected contract can be
+  edited before hypotheses exist; GrowthLab validates the complete schema,
+  checks the recorded source and on-disk file for drift, replaces
+  `growthlab.yaml` atomically and persists the matching local contract. Active
+  battles, existing hypothesis maps and remote or automatic commits are
+  refused.
 
 - Localized the measurement panel across all six locale catalogs. Source status,
   file controls, summary headings, table labels, interval explanation and
@@ -148,7 +155,7 @@ performance.
 - Added a localized GrowthLab onboarding shell. The dashboard language picker
   uses the shared persisted locale preference across six catalogs, refreshes the
   visible home flow after switching, and applies right-to-left document direction
-  for Arabic and Persian. Battle/detail inspection, decision and report labels now follow all six locale catalogs; editable settings mutations and remaining dashboard technical detail copy remain open.
+  for Arabic and Persian. Battle/detail inspection, decision and report labels now follow all six locale catalogs; remaining dashboard technical detail copy and post-hypothesis settings policy remain open.
 
 - Added public GitHub metadata review and manual-brief onboarding. `repo-audit` and the Home review panel make one unauthenticated metadata request without cloning or executing source. `workspace brief` and the Home form create a private local analysis snapshot with no remote or provider request.
 
@@ -591,7 +598,7 @@ Earlier validation evidence follows; it is not a release or provider claim.
 Known environment warning: installed external Claude CLI `--version` failed
 during inherited harness detection. Native-agent execution is not verified.
 Local CLI/domain/replay validation passed. Selected delivery/report behavior on Linux/Windows,
-broader settings coverage and remaining technical detail copy, native-agent battles, Linux confinement runtime verification,
+remaining dashboard technical detail copy and post-hypothesis settings policy, native-agent battles, Linux confinement runtime verification,
 provider-specific launcher registration, interrupted selected-delivery recovery,
 real demo recording, richer quality evaluation, cross-platform release installers and telemetry
 adapters remain **unverified / not
