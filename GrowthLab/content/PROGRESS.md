@@ -436,10 +436,13 @@ MEASURED provenance. The GrowthLab onboarding shell now follows the shared
 locale preference across six languages and applies RTL direction for Arabic and
 Persian. Static-preview, evidence and rubric detail copy now uses all six
 locale catalogs, and workspace/battle action and status labels follow the same
-catalog boundary. Workspace settings expose an explicit lifecycle policy: edits
-are available before hypotheses or active battles, then the control is disabled
-with a localized explanation. Dynamic SEO/audit result dimensions and user-generated run content still have source-language strings;
-full browser quality/performance evaluation remains pending. Restricted previews, archived PNG captures and the
+  catalog boundary. Workspace settings expose an explicit lifecycle policy: edits
+  are available before hypotheses or active battles, then the control is disabled
+  with a localized explanation. SEO/audit labels, dimensions and static guidance
+  now follow the six catalogs; dynamic evidence and user-generated run content
+  still have source-language strings. Observed local browser quality and timing
+  checks pass, while full visual regression and assistive-technology evaluation
+  remain pending. Restricted previews, archived PNG captures and the
 continuous public-site walkthrough now pass local
 Rust/HTTP and real browser checks. Windows validation is unsupported.
 
@@ -449,8 +452,8 @@ Rust/HTTP and real browser checks. Windows validation is unsupported.
    accessibility rubric.
 2. Add provider adapters over the local measurement model, then verify genuine
    native-agent proposals without inventing provider data.
-3. Complete the remaining dashboard action/status strings and cross-platform release
-   packaging against the full specification.
+3. Complete cross-platform runtime proof and release packaging against the full
+   specification, keeping unsupported targets explicitly unverified.
 
 ## Architectural decisions
 
