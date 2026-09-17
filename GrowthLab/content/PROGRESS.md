@@ -591,6 +591,11 @@ reproducibility verification**. The current source built
 binary and six notices, and passed `scripts/verify-release-archive.sh`.
 Windows runtime, MSVC packaging, signing and release attachment remain open.
 
+Windows MSVC cross-build (2026-09-17): **not built**. The local macOS Zig
+toolchain reached the `ring` C compilation step but lacks the Windows SDK
+headers (`assert.h`); no MSVC artifact was created or advertised. A Windows
+runner with the appropriate SDK is required for runtime and installer proof.
+
 Bundled-demo unit (2026-09-16): **passed locally**. `cargo test --locked` passes
 **902 tests per binary, zero failures, two inherited ignored tests**;
 `cargo clippy --all-targets -- -D warnings`, formatting and `cargo build --locked`
