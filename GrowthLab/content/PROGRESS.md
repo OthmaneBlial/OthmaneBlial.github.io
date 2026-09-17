@@ -583,7 +583,7 @@ continuous 30-second public-site walkthrough is now archived separately from the
 short eight-second reel.
 All six GitHub workflows remain manually disabled; validation runs locally only.
 Local cross-target packaging (2026-09-17): **passed structure verification**. `x86_64-unknown-linux-musl` built from the exact `v0.1.0-alpha.20` tag with `cargo-zigbuild` and Zig; the offline verifier passed checksum, archive safety and all required notices, and the archive is attached to the alpha.20 release. The ELF was not run on Linux, so runtime and installer proof remain pending.
-Public release assets (2026-09-17): **passed read-only verification**. `scripts/test-release-assets.py` downloaded all five alpha.20 archive/checksum pairs, matched GitHub digests and sidecars, passed archive safety/notices checks, and ran the macOS arm64 archive locally; macOS x86_64, Linux and Windows runtimes were skipped on macOS.
+Public release assets (2026-09-17): **passed read-only verification**. `scripts/test-release-assets.py` downloaded all five alpha.20 archive/checksum pairs, matched GitHub digests and sidecars, passed archive safety/notices checks, and ran the macOS arm64 archive locally; Linux and Windows runtimes were skipped on macOS; the current source macOS x86_64 suite is covered separately under Rosetta.
 
 Windows cross-target packaging (2026-09-17): **passed structure and
 reproducibility verification**. The current source built
@@ -597,7 +597,7 @@ Exact-tag `x86_64-apple-darwin` and `aarch64-unknown-linux-musl` binaries were
 built locally, packaged with the same six notices, and passed checksum,
 traversal/link and archive-structure checks. Both archives and checksums are
 attached to the public release; the macOS Intel version command also passed
-under Rosetta on arm64, while Linux arm64 was not run here.
+under Rosetta on arm64, while Linux arm64 was not run here. The current source x86_64-apple-darwin release suite then passed 964 tests with two inherited ignored tests after the sandbox admitted the Apple Rosetta runtime directory read-only; native Intel hardware remains untested.
 
 Windows MSVC cross-build (2026-09-17): **not built**. The local macOS Zig
 toolchain reached the `ring` C compilation step but lacks the Windows SDK
@@ -742,3 +742,5 @@ Linux/Windows, native-agent battles, Linux confinement runtime verification,
 provider-specific launcher registration, richer quality evaluation, cross-platform
 release installers and telemetry adapters remain **unverified / not implemented**.
 No growth lift, adoption, native-agent execution or public release is claimed.
+
+- Rosetta confinement and translated source suite (2026-09-17): **passed locally**. The macOS seatbelt profile now includes only `/Library/Apple/usr/libexec/oah` as a read-only runtime root, allowing translated x86_64 validation commands to start without exposing product or lab data. The complete x86_64-apple-darwin release suite ran under Rosetta on macOS arm64 with 964 passed, zero failed and two inherited ignored tests. This is current-source evidence; native Intel hardware and the attached alpha.20 archive beyond its version smoke remain separate limits.

@@ -4,8 +4,8 @@
   "stage": "Source alpha",
   "progressEstimate": 95,
   "progressExplanation": "Subjective estimate against the complete product specification, not a measured delivery metric.",
-  "milestone": "Editable experiment tree with frozen lineage, localized GrowthLab onboarding and inspection details, explicit workspace settings lifecycle, measurement and battle/detail UI, read-only settings contract overview, provider-neutral measurement boundary, deterministic local CLI packaging with complete notices, exact-tag macOS and Linux cross-target archives plus Windows GNU packaging, estimated accessibility structure hints in comparisons and standalone page audits, continuous browser walkthrough, observed timing hints, bundled Chromium and Firefox visual-regression baseline smokes, local Chromium accessibility-tree and keyboard smoke, public repository review, manual-brief onboarding, executable playbooks, public checkout import and distribution-aware measurement validated",
-  "validatedSourceCommit": "e2ec44b77a761f88ccfa47d1159c62c809eabbb8",
+  "milestone": "Editable experiment tree with frozen lineage, localized GrowthLab onboarding and inspection details, explicit workspace settings lifecycle, measurement and battle/detail UI, read-only settings contract overview, provider-neutral measurement boundary, deterministic local CLI packaging with complete notices, exact-tag macOS and Linux cross-target archives plus Windows GNU packaging, estimated accessibility structure hints in comparisons and standalone page audits, continuous browser walkthrough, observed timing hints, bundled Chromium and Firefox visual-regression baseline smokes, local Chromium accessibility-tree and keyboard smoke, public repository review, manual-brief onboarding, executable playbooks, public checkout import, distribution-aware measurement and the translated macOS x86_64 source suite validated",
+  "validatedSourceCommit": "fa18b20a40ec40a34a7d6cc6f9cc12eaccd44995",
   "delivered": [
     "Local product import with reviewed growthlab.yaml permissions",
     "Three competing changes from one frozen starting point in isolated workspaces",
@@ -72,7 +72,8 @@
     "Bundled demo visual-regression smoke matches six checked-in local Chromium PNG baselines with archive metadata verification",
     "Bundled demo Firefox visual-regression smoke matches six additional PNG baselines with viewport and layout invariant verification",
     "Bundled demo accessibility-tree and keyboard smoke verifies named controls, headings, labels, focus stops and overflow with no provider invocation",
-    "Public alpha.20 release assets have a read-only verifier for GitHub digests, checksum sidecars and archive safety"
+    "Public alpha.20 release assets have a read-only verifier for GitHub digests, checksum sidecars and archive safety",
+    "Translated macOS x86_64 release suite now passes 964 tests with two inherited ignored tests under Rosetta after allowing the system Rosetta runtime read-only in the confinement profile"
   ],
   "validation": [
     {
@@ -304,6 +305,11 @@
       "name": "Public release asset verification",
       "status": "passed",
       "detail": "The read-only scripts/test-release-assets.py check downloads all five alpha.20 archive/checksum pairs, matches GitHub asset digests and sidecars, and passes archive safety/notices verification; macOS arm64 runtime passes locally, macOS x86_64 passes under Rosetta, and Linux and Windows runtimes are skipped on the macOS host."
+    },
+    {
+      "name": "Translated macOS x86_64 source suite",
+      "status": "passed",
+      "detail": "The current source x86_64-apple-darwin release suite ran under Rosetta on macOS arm64: 964 passed, zero failed and two inherited ignored tests. The confinement profile now permits only the Apple Rosetta runtime directory read-only; this does not prove native Intel hardware or the separately attached alpha.20 archive beyond its version smoke."
     }
   ],
   "pending": [
@@ -324,6 +330,6 @@
     "version": "0.1.0-alpha.20",
     "url": "https://github.com/OthmaneBlial/GrowthLab/releases/tag/v0.1.0-alpha.20",
     "platform": "Source prerelease with a macOS arm64 runtime-validated CLI archive plus macOS x86_64, Linux musl, Linux arm64 and Windows GNU structure-verified CLI archives",
-    "limitation": "The attached macOS arm64 CLI archive is runtime-validated on macOS arm64; the attached macOS x86_64 archive also passes its version command under Rosetta on arm64, while the Linux musl, Linux arm64 and Windows GNU archives are structure-verified only. Native x86_64, Linux and Windows runtime proof, installers and signing remain pending. Provider adapters and native-agent verification remain pending."
+    "limitation": "The attached macOS arm64 CLI archive is runtime-validated on macOS arm64; the attached macOS x86_64 archive passes its version command under Rosetta on arm64, while the Linux musl, Linux arm64 and Windows GNU archives are structure-verified only. The current source x86_64-apple-darwin suite also passes under Rosetta, but native Intel hardware remains untested. Native Linux and Windows runtime proof, installers and signing remain pending. Provider adapters and native-agent verification remain pending."
   }
 }
