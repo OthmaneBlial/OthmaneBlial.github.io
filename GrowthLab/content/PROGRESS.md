@@ -155,7 +155,10 @@ performance.
 - Added a localized GrowthLab onboarding shell. The dashboard language picker
   uses the shared persisted locale preference across six catalogs, refreshes the
   visible home flow after switching, and applies right-to-left document direction
-  for Arabic and Persian. Battle/detail inspection, decision and report labels now follow all six locale catalogs; remaining dashboard technical detail copy and post-hypothesis settings policy remain open.
+  for Arabic and Persian. Battle/detail inspection, decision, report and technical
+  detail labels now follow all six locale catalogs; the settings lifecycle also
+  explains why edits lock after hypotheses or an active battle. Remaining action
+  and status copy outside the inspected surfaces remains open.
 
 - Added public GitHub metadata review and manual-brief onboarding. `repo-audit` and the Home review panel make one unauthenticated metadata request without cloning or executing source. `workspace brief` and the Home form create a private local analysis snapshot with no remote or provider request.
 
@@ -600,10 +603,8 @@ Earlier validation evidence follows; it is not a release or provider claim.
 
 Known environment warning: installed external Claude CLI `--version` failed
 during inherited harness detection. Native-agent execution is not verified.
-Local CLI/domain/replay validation passed. Selected delivery/report behavior on Linux/Windows,
-remaining dashboard technical detail copy and post-hypothesis settings policy, native-agent battles, Linux confinement runtime verification,
-provider-specific launcher registration, interrupted selected-delivery recovery,
-real demo recording, richer quality evaluation, cross-platform release installers and telemetry
-adapters remain **unverified / not
-implemented**. No growth lift, adoption, native-agent execution or public release
-is claimed.
+Local CLI/domain/replay validation passed. Selected delivery/report behavior on
+Linux/Windows, native-agent battles, Linux confinement runtime verification,
+provider-specific launcher registration, richer quality evaluation, cross-platform
+release installers and telemetry adapters remain **unverified / not implemented**.
+No growth lift, adoption, native-agent execution or public release is claimed.
