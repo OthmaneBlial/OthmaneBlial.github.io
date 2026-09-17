@@ -5,7 +5,7 @@
   "progressEstimate": 95,
   "progressExplanation": "Subjective estimate against the complete product specification, not a measured delivery metric.",
   "milestone": "Editable experiment tree with frozen lineage, localized GrowthLab onboarding and inspection details, explicit workspace settings lifecycle, measurement and battle/detail UI, read-only settings contract overview, provider-neutral measurement boundary, deterministic local CLI packaging with complete notices, local Linux musl cross-target packaging, estimated accessibility structure hints in comparisons and standalone page audits, continuous browser walkthrough, observed timing hints, bundled Chromium and Firefox visual-regression baseline smokes, local Chromium accessibility-tree and keyboard smoke, public repository review, manual-brief onboarding, executable playbooks, public checkout import and distribution-aware measurement validated",
-  "validatedSourceCommit": "b03088adbe65de8dba85675672db9b3bda73cfff",
+  "validatedSourceCommit": "f93580fe33dbfab929b27db69c38b49cf68765e9",
   "delivered": [
     "Local product import with reviewed growthlab.yaml permissions",
     "Three competing changes from one frozen starting point in isolated workspaces",
@@ -57,7 +57,7 @@
     "Deterministic local CLI packaging with complete checked-in license notices and offline archive verification",
     "Localized GrowthLab battle/detail inspection, decision and report labels follow all six locale catalogs",
     "Local x86_64 Linux musl archive built and structure-verified with cargo-zigbuild; runtime remains unverified",
-    "Local x86_64 Windows GNU ZIP packaging is deterministic and structure-verified; runtime and release attachment remain unverified",
+    "Local x86_64 Windows GNU ZIP packaging is deterministic and structure-verified; the exact alpha.20 tag archive is attached, with runtime still unverified",
     "Typed read-only measurement adapter boundary with the local CSV implementation",
     "Guarded local workspace settings edits write the validated contract atomically before hypotheses are created and never create commits or remote changes",
     "Localized static-preview, evidence and rubric detail copy across all six dashboard locales, with visible settings lock policy after hypotheses or active battles",
@@ -288,12 +288,12 @@
     {
       "name": "Windows GNU package smoke",
       "status": "passed",
-      "detail": "The current source built x86_64-pc-windows-gnu with cargo-zigbuild and Zig; two independent ZIP packages matched by SHA-256 and the offline archive verifier passed checksum, traversal/link and notice checks. Windows runtime, MSVC packaging, signing and release attachment remain unverified."
+      "detail": "The current source built x86_64-pc-windows-gnu with cargo-zigbuild and Zig; two independent ZIP packages matched by SHA-256 and the offline archive verifier passed checksum, traversal/link and notice checks. The exact alpha.20 tag ZIP is attached to the public release; Windows runtime, MSVC packaging and signing remain unverified."
     },
     {
       "name": "Public release asset verification",
       "status": "passed",
-      "detail": "The read-only scripts/test-release-assets.py check downloaded both alpha.20 archive/checksum pairs, matched GitHub asset digests and sidecars, and passed archive safety/notices verification; macOS runtime passed locally and Linux runtime was skipped on the macOS host."
+      "detail": "The read-only scripts/test-release-assets.py check downloads all three alpha.20 archive/checksum pairs, matches GitHub asset digests and sidecars, and passes archive safety/notices verification; macOS runtime passes locally while Linux and Windows runtimes are skipped on the macOS host."
     }
   ],
   "pending": [
@@ -301,7 +301,7 @@
     "Full visual regression and assistive-technology accessibility evaluation",
     "Native-agent battle verification and provider-specific launcher registration",
     "Unrecognized or future rubric evidence and user-generated run content remain source-language until an explicit mapping is added",
-    "Cross-platform runtime proof and release-attached portable binaries/installers"
+    "Cross-platform runtime proof, MSVC support and portable installers"
   ],
   "provenance": "Replay proposals: SIMULATED. Executed checks: OBSERVED. Growth outcomes: UNTESTED.",
   "website": {
@@ -313,7 +313,7 @@
     "published": true,
     "version": "0.1.0-alpha.20",
     "url": "https://github.com/OthmaneBlial/GrowthLab/releases/tag/v0.1.0-alpha.20",
-    "platform": "Source prerelease with a macOS arm64 runtime-validated CLI archive and a Linux musl structure-verified CLI archive",
-    "limitation": "The attached macOS CLI archive is runtime-validated on macOS arm64; the attached Linux musl archive is structure-verified only. Both are unsigned/unnotarized, installers and Linux/Windows runtime proof remain pending. Provider adapters and native-agent verification remain pending."
+    "platform": "Source prerelease with a macOS arm64 runtime-validated CLI archive plus Linux musl and Windows GNU structure-verified CLI archives",
+    "limitation": "The attached macOS CLI archive is runtime-validated on macOS arm64; the attached Linux musl and Windows GNU archives are structure-verified only. All are unsigned/unnotarized, installers and Linux/Windows runtime proof remain pending. Provider adapters and native-agent verification remain pending."
   }
 }
