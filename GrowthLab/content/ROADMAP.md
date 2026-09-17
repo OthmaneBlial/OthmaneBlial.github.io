@@ -44,6 +44,8 @@ by this roadmap.
   keyboard smoke now checks named DOM/AX controls, heading structure, labels,
   overflow and thirty visible Tab focus stops; screen-reader and full
   cross-browser evaluation remain separate gates.
+  A manual VoiceOver/Safari handoff is documented in
+  `docs/accessibility-evaluation.md`; its execution remains unverified.
   Settings now expose a lifecycle policy: local edits are enabled before hypotheses
   or active battles and visibly locked afterwards with a localized explanation.
   Restricted previews

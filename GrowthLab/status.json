@@ -81,6 +81,7 @@
     "Public SEO discovery files, canonical URLs, social cards and truthful SoftwareApplication metadata are published",
     "The local SEO audit scores the public home source 100/100 after the image-description fix",
     "Refined the GitHub About, README and Pages copy around the SEO growth tool positioning",
+    "Documented a manual VoiceOver and Safari accessibility handoff beside the reproducible Chromium smoke",
     "Hardened the API terminal polling smoke so it waits for the persisted terminal battle state before reading sealed runs"
   ],
   "validation": [

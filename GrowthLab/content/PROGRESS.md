@@ -73,6 +73,13 @@ performance.
 
 ## Completed
 
+- Documented a manual VoiceOver and Safari accessibility handoff beside the
+  reproducible Chromium accessibility-tree and keyboard smoke. The checklist
+  covers landmarks, headings, focus return, status/error states, phone sizing,
+  RTL reading order and privacy-safe evidence. Its execution remains
+  **UNVERIFIED** until a human reviewer runs it with the recorded browser and
+  operating-system versions.
+
 - Refined the public positioning after a live metadata check. GitHub About now
   leads with an open-source SEO growth tool description and SEO-focused topics;
   the README opening plus Pages title, meta description and hero use the same
