@@ -28,9 +28,12 @@ by this roadmap.
   screens are implemented through Rust APIs. The workspace now shows a persisted
   three-branch experiment map and keeps its hypothesis IDs linked into battle
   variants. The experiment tree now supports controlled local edits while
-  preserving hypothesis IDs and evidence; battle/detail localization is
-  complete, while remaining dashboard action/status copy localization remains
-  pending, alongside browser-based visual regression/accessibility evaluation.
+  preserving hypothesis IDs and evidence; dashboard onboarding, audit, role,
+  playbook, action/status and rubric labels now follow all six locale catalogs,
+  including public URL audit dimensions. Dynamic rubric evidence/calculations
+  and user-authored run content remain source-language because those values come
+  from inspected product data; browser-based visual regression and
+  assistive-technology evaluation remain open.
   Settings now expose a lifecycle policy: local edits are enabled before hypotheses
   or active battles and visibly locked afterwards with a localized explanation.
   Restricted previews
@@ -41,8 +44,9 @@ by this roadmap.
   browser-timing hint rubric when those timings are present. These PNGs and
   checks are render inspection artifacts, not a quality score. The bundled key-free `growthlab demo` replay
   and real Home launch pass local CLI/HTTP and browser checks. Page-quality
-  source hints are now shown beside the SEO rubric; a concise real recording,
-  browser-based quality evaluation and signed release packaging remain pending.
+  source hints are now shown beside the SEO rubric; full visual regression and
+  assistive-technology evaluation, native-agent verification and signed release
+  packaging remain pending.
 - [ ] **4 — Playbooks:** focused roles and practical positioning, activation,
   onboarding, ethical discovery, pricing research and launch templates with evidence.
   The ten role contracts and deterministic local playbook runs are available in
