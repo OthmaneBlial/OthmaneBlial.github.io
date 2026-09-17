@@ -23,7 +23,7 @@ function replaceList(selector, values) {
 }
 
 function validStrings(values) {
-  return Array.isArray(values) && values.length <= 30 && values.every((value) => typeof value === "string" && value.length <= 2000);
+  return Array.isArray(values) && values.length <= 100 && values.every((value) => typeof value === "string" && value.length <= 2000);
 }
 
 function validStatus(status) {
