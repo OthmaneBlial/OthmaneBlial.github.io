@@ -5,7 +5,7 @@
   "progressEstimate": 94,
   "progressExplanation": "Subjective estimate against the complete product specification, not a measured delivery metric.",
   "milestone": "Editable experiment tree with frozen lineage, localized GrowthLab onboarding and inspection details, explicit workspace settings lifecycle, measurement and battle/detail UI, read-only settings contract overview, provider-neutral measurement boundary, deterministic local CLI packaging with complete notices, local Linux musl cross-target packaging, estimated accessibility structure hints in comparisons and standalone page audits, continuous browser walkthrough, observed timing hints, public repository review, manual-brief onboarding, executable playbooks, public checkout import and distribution-aware measurement validated",
-  "validatedSourceCommit": "e2d59149254bfd65898798b94e12424dee0d75be",
+  "validatedSourceCommit": "e54c357268bdad0092e61801c639f61878afc672",
   "delivered": [
     "Local product import with reviewed growthlab.yaml permissions",
     "Three competing changes from one frozen starting point in isolated workspaces",
@@ -64,7 +64,8 @@
     "Localized role labels, editor metadata and execution option copy across all six dashboard locale catalogs",
     "Structured localized playbook titles, questions, outputs and guardrails across all six dashboard locale catalogs",
     "Localized rubric labels and dimension names across all six dashboard locale catalogs",
-    "Localized rubric calculations, recommendations and limitations across all six dashboard locale catalogs"
+    "Localized rubric calculations, recommendations and limitations across all six dashboard locale catalogs",
+    "Corrected dashboard heading hierarchy and verified live accessible names, IDs, image alternatives and overflow"
   ],
   "validation": [
     {
@@ -246,6 +247,11 @@
       "name": "Localized rubric labels",
       "status": "passed",
       "detail": "Five SEO, quality, accessibility, static-render and browser-timing rubric labels, dimensions and static guidance now resolve through all six locale catalogs; i18n, style, type, production build and 174 UI tests pass, and Chrome verified Spanish battle and public-URL audit guidance."
+    },
+    {
+      "name": "Live dashboard accessibility structure smoke",
+      "status": "passed",
+      "detail": "Chrome AX and DOM inspection on a recorded battle found 23 named interactive controls, one h1 with no skipped heading level, no duplicate IDs, no images missing alt text and no horizontal overflow; this remains a local structure smoke, not WCAG or assistive-technology certification."
     }
   ],
   "pending": [

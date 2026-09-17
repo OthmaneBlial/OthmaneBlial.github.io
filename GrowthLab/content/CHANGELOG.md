@@ -7,8 +7,8 @@
   notice. The offline verifier checks the checksum, archive paths and target
   runtime before an artifact is shared.
 - Comparison rows and private JSON, Markdown and HTML reports now carry the persisted hypothesis ID that links each visible experiment-map branch to its frozen battle variant.
-- Grouped the workspace experiment map into accessible role branches while preserving each persisted hypothesis ID through battle preparation and variant records. The map now supports controlled local edits while keeping evidence and frozen battle contracts stable; settings and localized interface work remain pending.
-- Added a localized GrowthLab onboarding shell with a persisted six-language picker, refreshed copy on locale changes, and right-to-left document direction for Arabic and Persian. Battle and detail copy remain a follow-up slice.
+- Grouped the workspace experiment map into accessible role branches while preserving each persisted hypothesis ID through battle preparation and variant records. The map now supports controlled local edits while keeping evidence and frozen battle contracts stable; settings and the inspected GrowthLab interface use the same six-language boundary.
+- Added a localized GrowthLab onboarding shell with a persisted six-language picker, refreshed copy on locale changes, and right-to-left document direction for Arabic and Persian. Battle, detail, action/status and rubric guidance copy now follow those catalogs; dynamic evidence remains in its recorded source language.
 - Comparisons and shareable reports now include the `static-render-hints-v1`
   rubric when a sealed preview has local Chromium checks. Its observed score is
   decomposed into viewport coverage, overflow, visible copy and metadata

@@ -14,6 +14,10 @@ checks, including estimated SEO, page-quality and accessibility structure rubric
 and full visual regression/assistive-technology evaluation remain open release gates; the repository now includes verified desktop and
 phone render captures, observed local Chromium layout checks, a transparent static-render rubric plus a continuous
 30-second walkthrough captured from an isolated Chrome profile.
+The live dashboard accessibility smoke now also confirms named controls, a
+continuous heading hierarchy, unique IDs, image alternatives and no horizontal
+overflow on a recorded battle route; it remains a local structure check rather
+than WCAG or assistive-technology certification.
 
 The local measurement slice now accepts bounded UTF-8 CSV exports and reports
 descriptive means, sample sizes, optional date range and arithmetic baseline
@@ -492,6 +496,10 @@ selector read; final checks/capture ran after the build completed and a reload.
 The GrowthLab language selector was exercised in Chrome for Spanish and Arabic;
 the onboarding shell refreshed its copy, Arabic set `dir=rtl`, desktop scroll width
 remained equal to the viewport, and the tab recorded no warning/error logs.
+The live battle dashboard accessibility smoke found 23 named interactive controls,
+one `h1` with no skipped heading level, no duplicate IDs, no images missing `alt`
+text and no horizontal overflow after the contract subsection headings were
+corrected to `h2`.
 The editable hypothesis API test preserves IDs, roles, evidence and frozen
 battle contracts, and refuses updates while a battle is ready or running.
 Native providers, richer quality evaluation and release gates remain open. The
