@@ -78,6 +78,12 @@ performance.
   embedding verified archived desktop/phone PNGs with dimensions and SHA-256
   digests when requested; tests enforce the 4 MiB bound and report limitations.
 
+- Added SEO discovery metadata to the public site. The home and documentation
+  pages now expose canonical URLs, social cards and truthful SoftwareApplication
+  structured data; `robots.txt`, `sitemap.xml` and `llms.txt` describe the two
+  indexable pages, source repository, local-first workflow and explicit evidence
+  limits. The files are static and contain no analytics or growth claims.
+
 - Added a local visual-regression smoke for the bundled demo. Six checked-in
   desktop/phone PNG baselines are compared byte-for-byte against fresh sealed
   Chromium captures for all three variants, with dimensions, archive digests

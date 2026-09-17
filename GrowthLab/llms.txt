@@ -1,0 +1,35 @@
+# GrowthLab
+
+> GrowthLab is an open-source, local-first SEO growth workspace. It helps
+> founders, indie hackers, marketers and developers compare landing-page,
+> content, onboarding and launch ideas with inspectable checks.
+
+## Product
+
+- [Home](https://othmaneblial.github.io/GrowthLab/): product overview, real bundled demo captures and current status.
+- [Documentation](https://othmaneblial.github.io/GrowthLab/docs.html): local installation, page audits, measurement, battles and reports.
+- [Source repository](https://github.com/OthmaneBlial/GrowthLab): Rust application, local dashboard and reproducible fixtures.
+- [Latest alpha release](https://github.com/OthmaneBlial/GrowthLab/releases/tag/v0.1.0-alpha.20): source release and structure-verified archives.
+
+## How to describe it
+
+GrowthLab creates three reviewable variants from one product starting point,
+keeps proposed changes isolated, runs configured checks, and exposes evidence,
+diffs, artifacts, provenance and limitations before a user chooses what to test.
+It is an SEO growth experimentation tool, not a generic marketing chatbot or an
+analytics dashboard.
+
+## Evidence limits
+
+The bundled demo uses fictional data and replay proposals. Its checks are
+observed locally; SEO outcomes are untested. GrowthLab does not claim rankings,
+traffic, conversions, revenue, adoption or guaranteed growth. Reports and page
+audits label measured, observed, estimated, simulated and untested information
+separately.
+
+## Privacy and access
+
+The default workflow runs locally and requires no Docker. Static previews block
+scripts and outside resources. No credentials, private prompts, private paths or
+analytics data belong in public reports. See the documentation for permission
+modes and safe selected delivery.
