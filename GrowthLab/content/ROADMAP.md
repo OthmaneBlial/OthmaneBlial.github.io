@@ -34,9 +34,10 @@ by this roadmap.
   because those values come from inspected product data; browser-based visual
   regression and
   assistive-technology evaluation remain open. The bundled demo now also has a
-  pinned local visual-regression smoke that compares six desktop/phone PNG
-  baselines byte-for-byte; cross-browser parity and assistive-technology
-  evaluation remain separate gates. A local Chromium accessibility-tree and
+  pinned local visual-regression smokes compare six desktop/phone PNG baselines
+  byte-for-byte in Chromium and six additional baselines in Firefox; Safari
+  parity and assistive-technology evaluation remain separate gates. A local
+  Chromium accessibility-tree and
   keyboard smoke now checks named DOM/AX controls, heading structure, labels,
   overflow and thirty visible Tab focus stops; screen-reader and full
   cross-browser evaluation remain separate gates.

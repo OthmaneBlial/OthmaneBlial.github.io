@@ -10,10 +10,10 @@ sealed policy digests pass local checks; Linux runtime verification remains pend
 GitHub Actions is disabled at the user's request.
 The GrowthLab API and initial dashboard pass local Rust/UI and synthetic real
 browser checks. The bundled fictional replay now passes real CLI/HTTP and browser
-checks, including estimated SEO, page-quality and accessibility structure rubrics and a standalone local audit. Native-agent execution,
-cross-browser visual regression and assistive-technology evaluation remain open release gates; the repository now includes verified desktop and
-phone render captures, observed local Chromium layout checks, a transparent static-render rubric plus a continuous
-30-second walkthrough captured from an isolated Chrome profile.
+checks, including estimated SEO, page-quality and accessibility structure rubrics and a standalone local audit. Native-agent execution and full
+assistive-technology evaluation remain open release gates; the repository now includes verified desktop and phone render captures, observed local
+Chromium and Firefox layout checks, a transparent static-render rubric plus a continuous 30-second walkthrough captured from an isolated Chrome
+profile.
 The live dashboard accessibility smoke now also confirms named controls, a
 continuous heading hierarchy, unique IDs, image alternatives and no horizontal
 overflow on a recorded battle route; it remains a local structure check rather
@@ -24,11 +24,13 @@ verified archived desktop and phone captures. Default exports omit captures;
 embedded images remain render artifacts rather than accessibility, performance,
 visual-regression or growth results.
 
-The bundled demo now has a pinned local visual-regression smoke. It compares
-all three sealed variants at desktop and phone viewports with six checked-in
-PNG baselines, verifies archive metadata and keeps the provider boundary
-untouched. This raises the local regression signal without claiming
-cross-browser parity or assistive-technology conformance.
+The bundled demo now has pinned local visual-regression smokes for Chromium and
+Firefox. Each renderer compares all three sealed variants at desktop and phone
+viewports with six checked-in PNG baselines, verifies the sealed archive
+metadata and keeps the provider boundary untouched. The Firefox smoke also
+checks viewport dimensions, overflow, named controls and heading-level
+continuity. These are local renderer fixtures and do not claim every browser,
+Safari parity or assistive-technology conformance.
 
 The bundled demo also has a local Chromium accessibility-tree and keyboard
 smoke. It checks named DOM and AX controls, heading structure, unique IDs,
@@ -89,6 +91,13 @@ performance.
   while provider probes enforce the replay boundary. This remains a local
   structure and keyboard signal, not screen-reader, cross-browser or WCAG
   evidence.
+
+- Added a Firefox visual-regression smoke for the bundled demo. Six additional
+  desktop/phone PNG baselines are compared byte-for-byte against the same
+  sealed preview HTML in Firefox 139.0.4, with viewport dimensions, overflow,
+  named controls, heading-level continuity and the no-provider boundary
+  verified. This broadens local renderer coverage while keeping full
+  cross-browser and assistive-technology evaluation open.
 
 - Added executable playbook runs. The CLI, API and workspace dashboard save deterministic role contracts with ordered answers, outputs and guardrails; every run stays UNTESTED.
 
@@ -544,6 +553,12 @@ no skipped level, unique IDs, image alternatives, form labels, no overflow and
 30 visible Tab focus stops; provider probes recorded no external call. This is
 a structure and keyboard signal, not screen-reader, cross-browser or WCAG
 evidence.
+The local `scripts/test-growth-firefox-regression.py` smoke then rendered the
+same three sealed preview documents in Firefox 139.0.4 at 1280×900 and 390×844,
+matched six checked-in PNG baselines byte-for-byte, passed viewport/overflow,
+named-control and heading-level checks, and recorded no provider invocation.
+This is a second local renderer signal; Safari, other browser versions and
+assistive-technology evaluation remain unverified.
 The editable hypothesis API test preserves IDs, roles, evidence and frozen
 battle contracts, and refuses updates while a battle is ready or running.
 Native providers, richer quality evaluation and release gates remain open. The

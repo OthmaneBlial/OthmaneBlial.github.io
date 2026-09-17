@@ -4,7 +4,7 @@
   "stage": "Source alpha",
   "progressEstimate": 95,
   "progressExplanation": "Subjective estimate against the complete product specification, not a measured delivery metric.",
-  "milestone": "Editable experiment tree with frozen lineage, localized GrowthLab onboarding and inspection details, explicit workspace settings lifecycle, measurement and battle/detail UI, read-only settings contract overview, provider-neutral measurement boundary, deterministic local CLI packaging with complete notices, local Linux musl cross-target packaging, estimated accessibility structure hints in comparisons and standalone page audits, continuous browser walkthrough, observed timing hints, bundled visual-regression baseline smoke, local Chromium accessibility-tree and keyboard smoke, public repository review, manual-brief onboarding, executable playbooks, public checkout import and distribution-aware measurement validated",
+  "milestone": "Editable experiment tree with frozen lineage, localized GrowthLab onboarding and inspection details, explicit workspace settings lifecycle, measurement and battle/detail UI, read-only settings contract overview, provider-neutral measurement boundary, deterministic local CLI packaging with complete notices, local Linux musl cross-target packaging, estimated accessibility structure hints in comparisons and standalone page audits, continuous browser walkthrough, observed timing hints, bundled Chromium and Firefox visual-regression baseline smokes, local Chromium accessibility-tree and keyboard smoke, public repository review, manual-brief onboarding, executable playbooks, public checkout import and distribution-aware measurement validated",
   "validatedSourceCommit": "6e62808c3d127aa3276e995c5d9b0e4b8385bde4",
   "delivered": [
     "Local product import with reviewed growthlab.yaml permissions",
@@ -69,6 +69,7 @@
     "Corrected dashboard heading hierarchy and verified live accessible names, IDs, image alternatives and overflow",
     "Explicit opt-in self-contained HTML and Markdown reports embed verified desktop and phone captures",
     "Bundled demo visual-regression smoke matches six checked-in local Chromium PNG baselines with archive metadata verification",
+    "Bundled demo Firefox visual-regression smoke matches six additional PNG baselines with viewport and layout invariant verification",
     "Bundled demo accessibility-tree and keyboard smoke verifies named controls, headings, labels, focus stops and overflow with no provider invocation"
   ],
   "validation": [
@@ -266,6 +267,11 @@
       "name": "Bundled visual regression smoke",
       "status": "passed",
       "detail": "The real bundled demo's three sealed variants match six checked-in SHA-256 PNG baselines at 1280x900 desktop and 390x844 phone; archive dimensions, digests and the no-provider boundary are verified locally. This is a pinned local renderer smoke, not cross-browser parity or assistive-technology conformance."
+    },
+    {
+      "name": "Bundled Firefox visual regression smoke",
+      "status": "passed",
+      "detail": "The real bundled demo's three sealed preview documents match six additional checked-in SHA-256 PNG baselines in Firefox 139.0.4 at 1280x900 desktop and 390x844 phone; viewport dimensions, overflow, named controls, heading-level continuity and the no-provider boundary are verified locally. Safari, other browser versions and assistive-technology conformance remain unverified."
     },
     {
       "name": "Bundled accessibility-tree and keyboard smoke",
