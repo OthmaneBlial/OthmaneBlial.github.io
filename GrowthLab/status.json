@@ -61,7 +61,8 @@
     "Localized static-preview, evidence and rubric detail copy across all six dashboard locales, with visible settings lock policy after hypotheses or active battles",
     "Localized workspace and battle action/status copy across all six dashboard locale catalogs",
     "Localized dashboard onboarding, audit and auxiliary action/status copy across all six dashboard locale catalogs",
-    "Localized role labels, editor metadata and execution option copy across all six dashboard locale catalogs"
+    "Localized role labels, editor metadata and execution option copy across all six dashboard locale catalogs",
+    "Structured localized playbook titles, questions, outputs and guardrails across all six dashboard locale catalogs"
   ],
   "validation": [
     {
@@ -233,13 +234,18 @@
       "name": "Localized role and metadata copy",
       "status": "passed",
       "detail": "Role names, hypothesis editor labels, execution choices, check metadata and delivery notices now use the six locale catalogs; i18n, style, type, build and 174 UI tests pass, and Chrome verified Spanish role labels and footer copy"
+    },
+    {
+      "name": "Localized playbook content",
+      "status": "passed",
+      "detail": "The ten role playbooks now map titles, focus, summaries, questions, outputs, guardrails and saved-run follow-up text through locale catalogs; i18n, style, type, build and 174 UI tests pass, and Chrome verified Spanish playbook content"
     }
   ],
   "pending": [
     "Provider adapters",
     "Full visual regression and assistive-technology accessibility evaluation",
     "Native-agent battle verification and provider-specific launcher registration",
-    "Dynamic playbook and audit result content remains source-language until structured catalog mapping is added",
+    "Dynamic SEO/audit result dimensions and user-generated run content remain source-language until structured mapping is added",
     "Cross-platform runtime proof and release-attached portable binaries/installers"
   ],
   "provenance": "Replay proposals: SIMULATED. Executed checks: OBSERVED. Growth outcomes: UNTESTED.",

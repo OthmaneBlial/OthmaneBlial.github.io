@@ -176,6 +176,11 @@ performance.
   choices, check metadata and delivery notices now follow the locale preference;
   Chrome verified the Spanish role labels and footer copy.
 
+- Added structured localized playbook content across all six dashboard locale
+  catalogs. The ten roles map titles, focus, summaries, questions, outputs,
+  guardrails and saved-run follow-up text without changing the provider-neutral
+  API contract; Chrome verified Spanish playbook content.
+
 - Added public GitHub metadata review and manual-brief onboarding. `repo-audit` and the Home review panel make one unauthenticated metadata request without cloning or executing source. `workspace brief` and the Home form create a private local analysis snapshot with no remote or provider request.
 
 - Added a read-only public URL SEO audit in the CLI, local API and Home screen.
@@ -428,7 +433,7 @@ Persian. Static-preview, evidence and rubric detail copy now uses all six
 locale catalogs, and workspace/battle action and status labels follow the same
 catalog boundary. Workspace settings expose an explicit lifecycle policy: edits
 are available before hypotheses or active battles, then the control is disabled
-with a localized explanation. Dynamic playbook and audit result content still has source-language strings;
+with a localized explanation. Dynamic SEO/audit result dimensions and user-generated run content still have source-language strings;
 full browser quality/performance evaluation remains pending. Restricted previews, archived PNG captures and the
 continuous public-site walkthrough now pass local
 Rust/HTTP and real browser checks. Windows validation is unsupported.
