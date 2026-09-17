@@ -93,6 +93,10 @@ performance.
   targeted runs and the full 970-test Rust target suite on the parent source passed with 968 passed,
   zero failures and two inherited ignored tests; the current source adds bounded metadata and claim-link checks, the targeted evidence-model and storage suites each pass 8 tests per binary, and invalid evidence is refused before any portfolio row is inserted.
 
+- Made score inspection explicit in the Growth Battle. Opening any rubric
+  detail now shows the evaluator returned by the comparison API beside its
+  calculation, dimension evidence, recommendations, limitations and provenance.
+
 - Hardened evidence persistence. Every evidence record now requires complete
   provenance fields, a positive retrieval timestamp and a confidence rationale;
   credential-shaped text is rejected in source observations, publisher details,
