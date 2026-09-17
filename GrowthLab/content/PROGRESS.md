@@ -1,7 +1,7 @@
 # GrowthLab progress
 
-Current milestone: **Phase 2/3/4 — editable experiment tree with frozen lineage, localized GrowthLab onboarding, measurement and battle/detail UI, local settings panel, provider-neutral measurement boundary, deterministic local CLI packaging with complete notices, estimated accessibility structure hints, public repository review, manual-brief onboarding, executable playbooks, public checkout import and distribution-aware measurement analysis validated** (2026-09-17).
-Overall completion: **about 91%, subjective estimate against the full specification**.
+Current milestone: **Phase 2/3/4 — editable experiment tree with frozen lineage, localized GrowthLab onboarding, measurement and battle/detail UI, local settings panel, provider-neutral measurement boundary, deterministic local CLI packaging with complete notices, local Linux musl cross-target packaging, estimated accessibility structure hints, public repository review, manual-brief onboarding, executable playbooks, public checkout import and distribution-aware measurement analysis validated** (2026-09-17).
+Overall completion: **about 92%, subjective estimate against the full specification**.
 The configuration/import, explicit non-Git initialization, read-only URL audit and three-variant replay CLI slices pass locally.
 Selected delivery and report behavior pass local Rust, real CLI and browser checks.
 Recovery passes local Rust and real CLI interruption/legacy-archive checks.
@@ -70,6 +70,8 @@ performance.
   changed from an anchored settings surface and remain browser-local; privacy
   and integration counts are visible without enabling a provider or changing
   product files.
+
+- Built and structure-verified a local `x86_64-unknown-linux-musl` CLI archive with `cargo-zigbuild` and Zig. The archive passes checksum, traversal/link and notice checks; Linux runtime and installers remain separate gates.
 
 - Localized the Growth Battle detail surface across all six locale catalogs. Inspection tabs, explicit decision states and self-contained report actions now follow the shared language picker; Arabic and Persian keep the document's RTL direction.
 
@@ -410,7 +412,7 @@ symlink input. Static-preview unit (2026-09-16): **passed locally**. Full serial
 `cargo test --locked -- --test-threads=1` passes **959 tests per binary, 957
 passed, zero failures and two inherited ignored tests**;
 Clippy with `-D warnings`, formatting, style checks and the debug build pass.
-UI typecheck/i18n/build and **173 tests, zero failures/skips** pass; final `ui/dist`
+UI typecheck/i18n/build and **174 tests, zero failures/skips** pass; final `ui/dist`
 is included. The real CLI demo regression verifies ready previews, exact served
 built assets, source/document/seal hashes and its existing no-provider, privacy,
 baseline and shutdown checks. Debug RustEmbed serves assets from disk; this is
@@ -433,6 +435,7 @@ Native providers, richer quality evaluation and release gates remain open. The
 continuous 30-second public-site walkthrough is now archived separately from the
 short eight-second reel.
 All six GitHub workflows remain manually disabled; validation runs locally only.
+Local cross-target packaging (2026-09-17): **passed structure verification**. `x86_64-unknown-linux-musl` built with `cargo-zigbuild` and Zig; the offline verifier passed checksum, archive safety and all required notices. The ELF was not run on Linux, so runtime and installer proof remain pending.
 
 Bundled-demo unit (2026-09-16): **passed locally**. `cargo test --locked` passes
 **902 tests per binary, zero failures, two inherited ignored tests**;
@@ -510,7 +513,7 @@ Earlier validation evidence follows; it is not a release or provider claim.
   `screenshots/cli-report-desktop.jpg` and `screenshots/cli-report-phone.jpg`, with
   current phone isolation details in `screenshots/cli-report-phone-isolation.png`;
   these show synthetic CLI report output, not the future dashboard or product renders.
-- UI localized generation/typecheck/unit tests: **passed**, 174 tests. New view
+ - UI localized generation/typecheck/unit tests: **passed**, 174 tests. New view
   tests distinguish seals/checkpoints, completed selections and actual active
   command phases; deep-link tests preserve inherited route assertions.
 - `pnpm build` in ui: **passed**, regenerated embedded assets. The inherited

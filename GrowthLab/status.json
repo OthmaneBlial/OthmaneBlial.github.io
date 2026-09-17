@@ -2,9 +2,9 @@
   "schemaVersion": 1,
   "updated": "2026-09-17",
   "stage": "Source alpha",
-  "progressEstimate": 91,
+  "progressEstimate": 92,
   "progressExplanation": "Subjective estimate against the complete product specification, not a measured delivery metric.",
-  "milestone": "Editable experiment tree with frozen lineage, localized GrowthLab onboarding, measurement and battle/detail UI, local settings panel, provider-neutral measurement boundary, deterministic local CLI packaging with complete notices, estimated accessibility structure hints in comparisons and standalone page audits, continuous browser walkthrough, observed timing hints, public repository review, manual-brief onboarding, executable playbooks, public checkout import and distribution-aware measurement validated",
+  "milestone": "Editable experiment tree with frozen lineage, localized GrowthLab onboarding, measurement and battle/detail UI, local settings panel, provider-neutral measurement boundary, deterministic local CLI packaging with complete notices, local Linux musl cross-target packaging, estimated accessibility structure hints in comparisons and standalone page audits, continuous browser walkthrough, observed timing hints, public repository review, manual-brief onboarding, executable playbooks, public checkout import and distribution-aware measurement validated",
   "validatedSourceCommit": "b9f5ebd",
   "delivered": [
     "Local product import with reviewed growthlab.yaml permissions",
@@ -51,7 +51,8 @@
     "Localized GrowthLab measurement panel follows all six locale catalogs and preserves RTL rendering for Arabic and Persian",
     "Local GrowthLab settings panel persists language and theme preferences and shows provider-neutral integration state",
     "Deterministic local CLI packaging with complete checked-in license notices and offline archive verification",
-    "Localized GrowthLab battle/detail inspection, decision and report labels follow all six locale catalogs"
+    "Localized GrowthLab battle/detail inspection, decision and report labels follow all six locale catalogs",
+    "Local x86_64 Linux musl archive built and structure-verified with cargo-zigbuild; runtime remains unverified"
   ],
   "validation": [
     {
@@ -188,6 +189,11 @@
       "name": "Localized battle/detail UI",
       "status": "passed",
       "detail": "Chrome exercised Spanish and Arabic on a real recorded battle; inspection tabs, decision labels and report actions translated, Arabic set dir=rtl, viewport width stayed fitted and no browser warnings or errors were recorded"
+    },
+    {
+      "name": "Linux musl archive packaging",
+      "status": "passed",
+      "detail": "Local x86_64-unknown-linux-musl release archive built with cargo-zigbuild and Zig; offline verifier passed SHA-256, traversal/link safety, required notices and archive structure, while runtime was honestly skipped on macOS arm64"
     }
   ],
   "pending": [

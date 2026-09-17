@@ -28,7 +28,8 @@ by this roadmap.
   screens are implemented through Rust APIs. The workspace now shows a persisted
   three-branch experiment map and keeps its hypothesis IDs linked into battle
   variants. The experiment tree now supports controlled local edits while
-  preserving hypothesis IDs and evidence; battle/detail localization and broader settings coverage remain pending, alongside
+  preserving hypothesis IDs and evidence; battle/detail localization is
+  complete, while broader settings coverage remains pending, alongside
   browser-based visual regression/accessibility evaluation.
   Restricted previews
   of immutable static-source bundles pass Rust/HTTP and real desktop/phone checks;
@@ -39,7 +40,7 @@ by this roadmap.
   checks are render inspection artifacts, not a quality score. The bundled key-free `growthlab demo` replay
   and real Home launch pass local CLI/HTTP and browser checks. Page-quality
   source hints are now shown beside the SEO rubric; a concise real recording,
-  browser-based quality evaluation and release packaging remain pending.
+  browser-based quality evaluation and signed release packaging remain pending.
 - [ ] **4 — Playbooks:** focused roles and practical positioning, activation,
   onboarding, ethical discovery, pricing research and launch templates with evidence.
   The ten role contracts and deterministic local playbook runs are available in
