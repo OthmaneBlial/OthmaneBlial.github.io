@@ -165,10 +165,11 @@ performance.
   artifact inspection and selected delivery now refresh with the shared language
   preference; onboarding and auxiliary copy remain a separate follow-up.
 
-- Localized dashboard progress feedback and home status copy across all six
-  dashboard locale catalogs. Busy labels, about text, import guidance and
-  measurement status details now use the shared message boundary; the Spanish
-  home flow was checked in Chrome after the change.
+- Localized dashboard onboarding, audit and auxiliary action/status copy across
+  all six dashboard locale catalogs. Busy labels, home onboarding, public page and
+  repository audit controls, playbook controls and execution status feedback now
+  use the shared message boundary; the Spanish home flow was checked in Chrome
+  after the change.
 
 - Added public GitHub metadata review and manual-brief onboarding. `repo-audit` and the Home review panel make one unauthenticated metadata request without cloning or executing source. `workspace brief` and the Home form create a private local analysis snapshot with no remote or provider request.
 
@@ -422,9 +423,8 @@ Persian. Static-preview, evidence and rubric detail copy now uses all six
 locale catalogs, and workspace/battle action and status labels follow the same
 catalog boundary. Workspace settings expose an explicit lifecycle policy: edits
 are available before hypotheses or active battles, then the control is disabled
-with a localized explanation. Remaining onboarding and auxiliary action/status
-copy and full browser
-quality/performance evaluation remain pending. Restricted previews, archived PNG captures and the
+with a localized explanation. Dynamic playbook and audit result content still has source-language strings;
+full browser quality/performance evaluation remains pending. Restricted previews, archived PNG captures and the
 continuous public-site walkthrough now pass local
 Rust/HTTP and real browser checks. Windows validation is unsupported.
 
