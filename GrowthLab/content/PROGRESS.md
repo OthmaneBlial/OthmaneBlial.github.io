@@ -1,6 +1,6 @@
 # GrowthLab progress
 
-Current milestone: **Phase 2/3/4 — editable experiment tree with frozen lineage, localized GrowthLab onboarding, measurement and battle/detail UI, local settings panel, provider-neutral measurement boundary, deterministic local CLI packaging with complete notices, local Linux musl cross-target packaging, estimated accessibility structure hints, public repository review, manual-brief onboarding, executable playbooks, public checkout import and distribution-aware measurement analysis validated** (2026-09-17).
+Current milestone: **Phase 2/3/4 — editable experiment tree with frozen lineage, localized GrowthLab onboarding, measurement and battle/detail UI, read-only settings contract overview, provider-neutral measurement boundary, deterministic local CLI packaging with complete notices, local Linux musl cross-target packaging, estimated accessibility structure hints, public repository review, manual-brief onboarding, executable playbooks, public checkout import and distribution-aware measurement analysis validated** (2026-09-17).
 Overall completion: **about 92%, subjective estimate against the full specification**.
 The configuration/import, explicit non-Git initialization, read-only URL audit and three-variant replay CLI slices pass locally.
 Selected delivery and report behavior pass local Rust, real CLI and browser checks.
@@ -70,6 +70,12 @@ performance.
   changed from an anchored settings surface and remain browser-local; privacy
   and integration counts are visible without enabling a provider or changing
   product files.
+
+- Expanded the settings surface with a read-only workspace contract overview.
+  Product facts, permission mode, allowed and denied paths, validation commands,
+  metrics, parallelism and source snapshot are visible for the selected local
+  workspace; the home view lists local contracts without exposing secrets or
+  enabling integrations.
 
 - Added a typed, read-only measurement adapter contract. The local CSV implementation now runs through `LocalCsvAdapter`; planned provider entries remain unconfigured and no network request is implicit.
 
