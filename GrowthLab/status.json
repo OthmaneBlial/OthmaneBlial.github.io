@@ -220,7 +220,7 @@
     {
       "name": "Localized workspace and battle actions",
       "status": "passed",
-      "detail": "GrowthDashboard action and status labels for the experiment tree, battle execution, candidate inspection and selected delivery now use localized message keys; six catalogs define the shared keys and the 174-test UI suite passes"
+      "detail": "GrowthDashboard action and status labels for the experiment tree, battle execution, candidate inspection and selected delivery now use localized message keys; six catalogs define the shared keys, Chrome verified Spanish and Arabic controls, and the 174-test UI suite passes"
     }
   ],
   "pending": [
