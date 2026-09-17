@@ -181,6 +181,11 @@ performance.
   guardrails and saved-run follow-up text without changing the provider-neutral
   API contract; Chrome verified Spanish playbook content.
 
+- Localized SEO, page-quality, accessibility, static-render and browser-timing rubric
+  labels and dimension names across all six dashboard locale catalogs. Dynamic
+  evidence, calculations, recommendations, limitations and user-authored run
+  content remain explicit source-language follow-up work.
+
 - Added public GitHub metadata review and manual-brief onboarding. `repo-audit` and the Home review panel make one unauthenticated metadata request without cloning or executing source. `workspace brief` and the Home form create a private local analysis snapshot with no remote or provider request.
 
 - Added a read-only public URL SEO audit in the CLI, local API and Home screen.
