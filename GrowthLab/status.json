@@ -5,7 +5,7 @@
   "progressEstimate": 94,
   "progressExplanation": "Subjective estimate against the complete product specification, not a measured delivery metric.",
   "milestone": "Editable experiment tree with frozen lineage, localized GrowthLab onboarding and inspection details, explicit workspace settings lifecycle, measurement and battle/detail UI, read-only settings contract overview, provider-neutral measurement boundary, deterministic local CLI packaging with complete notices, local Linux musl cross-target packaging, estimated accessibility structure hints in comparisons and standalone page audits, continuous browser walkthrough, observed timing hints, public repository review, manual-brief onboarding, executable playbooks, public checkout import and distribution-aware measurement validated",
-  "validatedSourceCommit": "b2324973222d370e9dfcb4d765dfaa8e2644a60c",
+  "validatedSourceCommit": "6e62808715d59993039549c9094c9ef44eb7f6ec",
   "delivered": [
     "Local product import with reviewed growthlab.yaml permissions",
     "Three competing changes from one frozen starting point in isolated workspaces",
@@ -257,7 +257,7 @@
     {
       "name": "Visual report disclosure",
       "status": "passed",
-      "detail": "CLI --include-visuals and API includeVisuals=true explicitly embed verified archived desktop/phone PNGs; default reports omit captures, Rust report tests cover opt-in encoding and the 4 MiB bound, and the real bundled demo still passes without provider requests. Embedded captures remain render artifacts, not visual-regression, accessibility, performance or growth results."
+      "detail": "CLI --include-visuals and API includeVisuals=true explicitly embed verified archived desktop/phone PNGs; default reports omit captures, Rust report tests cover opt-in encoding and the 4 MiB bound, and the screenshot-required bundled demo asserts both default omission and six opt-in captures without provider requests. Embedded captures remain render artifacts, not visual-regression, accessibility, performance or growth results."
     }
   ],
   "pending": [
