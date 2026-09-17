@@ -90,8 +90,13 @@ performance.
 - Hardened the API terminal polling smoke so a worker is considered finished
   only after the persisted battle row is terminal and all three sealed runs are
   visible. The formerly timing-sensitive demo test now passes three consecutive
-  targeted runs and the full 966-test Rust target suite passes with 964 passed,
+  targeted runs and the full 969-test Rust target suite passes with 967 passed,
   zero failures and two inherited ignored tests.
+
+- Hardened evidence persistence. Every evidence record now requires complete
+  provenance fields, a positive retrieval timestamp and a confidence rationale;
+  credential-shaped text is rejected in source observations, publisher details,
+  limitations and confidence notes before a hypothesis can be persisted.
 
 - Added explicit opt-in self-contained HTML and Markdown report captures. The
   dashboard checkbox, CLI flag and API query preserve the private default while
