@@ -85,6 +85,10 @@ performance.
   contract, keeping the complete product context visible without enabling file
   writes or provider integrations.
 
+- Rendered the same contract panel on the selected workspace route, so a
+  workspace owner can inspect its settings beside the experiment map instead
+  of returning to Home.
+
 - Added a typed, read-only measurement adapter contract. The local CSV implementation now runs through `LocalCsvAdapter`; planned provider entries remain unconfigured and no network request is implicit.
 
 - Built and structure-verified a local `x86_64-unknown-linux-musl` CLI archive with `cargo-zigbuild` and Zig. The archive passes checksum, traversal/link and notice checks; Linux runtime and installers remain separate gates.

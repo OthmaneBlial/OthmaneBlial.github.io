@@ -5,7 +5,7 @@
   "progressEstimate": 92,
   "progressExplanation": "Subjective estimate against the complete product specification, not a measured delivery metric.",
   "milestone": "Editable experiment tree with frozen lineage, localized GrowthLab onboarding, measurement and battle/detail UI, read-only settings contract overview, provider-neutral measurement boundary, deterministic local CLI packaging with complete notices, local Linux musl cross-target packaging, estimated accessibility structure hints in comparisons and standalone page audits, continuous browser walkthrough, observed timing hints, public repository review, manual-brief onboarding, executable playbooks, public checkout import and distribution-aware measurement validated",
-  "validatedSourceCommit": "d8d0c87",
+  "validatedSourceCommit": "b693abf",
   "delivered": [
     "Local product import with reviewed growthlab.yaml permissions",
     "Three competing changes from one frozen starting point in isolated workspaces",
@@ -102,7 +102,7 @@
     {
       "name": "GrowthLab settings panel",
       "status": "passed",
-      "detail": "Chrome opened the anchored settings surface, switched the theme to dark and restored the system preference; the read-only workspace contract and permission modes stayed localized within the RTL viewport and browser logs remained empty"
+      "detail": "Chrome opened the anchored settings surface and a selected workspace contract, switched the theme to dark and restored the system preference; the read-only contract and permission modes stayed localized within the RTL viewport and browser logs remained empty"
     },
     {
       "name": "Local CSV measurement",
