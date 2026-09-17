@@ -52,7 +52,8 @@
     "Local GrowthLab settings panel persists language and theme preferences and shows provider-neutral integration state",
     "Deterministic local CLI packaging with complete checked-in license notices and offline archive verification",
     "Localized GrowthLab battle/detail inspection, decision and report labels follow all six locale catalogs",
-    "Local x86_64 Linux musl archive built and structure-verified with cargo-zigbuild; runtime remains unverified"
+    "Local x86_64 Linux musl archive built and structure-verified with cargo-zigbuild; runtime remains unverified",
+    "Typed read-only measurement adapter boundary with the local CSV implementation"
   ],
   "validation": [
     {
@@ -194,6 +195,11 @@
       "name": "Linux musl archive packaging",
       "status": "passed",
       "detail": "Local x86_64-unknown-linux-musl release archive built with cargo-zigbuild and Zig; offline verifier passed SHA-256, traversal/link safety, required notices and archive structure, while runtime was honestly skipped on macOS arm64"
+    },
+    {
+      "name": "Measurement adapter contract",
+      "status": "passed",
+      "detail": "LocalCsvAdapter implements the shared read-only request/report contract; focused Rust measurement and API tests passed and no provider request is made"
     }
   ],
   "pending": [

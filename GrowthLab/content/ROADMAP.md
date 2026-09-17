@@ -48,7 +48,9 @@ by this roadmap.
   workflows remain pending.
 - [ ] **5 — Measurement:** CSV import, baseline/variant comparison, sample size,
   date range, provenance, cautious interval analysis and stable integration
-  boundaries. Real telemetry is optional; no invented data.
+  boundaries. The typed read-only adapter contract and local CSV implementation
+  are in place; external adapters and real telemetry remain optional and pending.
+  No invented data is used.
 
 ## Release gate
 

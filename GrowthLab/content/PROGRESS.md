@@ -23,7 +23,7 @@ exploratory 95% mean and baseline-difference intervals. The browser dashboard
 exposes the same summary from a local file. It is user-supplied **MEASURED** data;
 provider identity, causality and statistical significance remain unverified.
 
-The measurement API now exposes a provider-neutral source registry. Local CSV is
+The measurement API now exposes a provider-neutral source registry. A typed read-only adapter contract backs the local CSV path; external provider adapters remain planned. Local CSV is
 the only available source and is marked **MEASURED** with no network access;
 privacy-friendly analytics, web and product analytics, A/B testing, search
 performance and GitHub signals are explicit opt-in boundaries marked planned and
@@ -70,6 +70,8 @@ performance.
   changed from an anchored settings surface and remain browser-local; privacy
   and integration counts are visible without enabling a provider or changing
   product files.
+
+- Added a typed, read-only measurement adapter contract. The local CSV implementation now runs through `LocalCsvAdapter`; planned provider entries remain unconfigured and no network request is implicit.
 
 - Built and structure-verified a local `x86_64-unknown-linux-musl` CLI archive with `cargo-zigbuild` and Zig. The archive passes checksum, traversal/link and notice checks; Linux runtime and installers remain separate gates.
 
