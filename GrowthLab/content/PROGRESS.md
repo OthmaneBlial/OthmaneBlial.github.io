@@ -599,6 +599,8 @@ traversal/link and archive-structure checks. Both archives and checksums are
 attached to the public release; the macOS Intel version command also passed
 under Rosetta on arm64, while Linux arm64 was not run here. The current source x86_64-apple-darwin release suite then passed 964 tests with two inherited ignored tests after the sandbox admitted the Apple Rosetta runtime directory read-only; native Intel hardware remains untested.
 
+Native harness boundary fixture (2026-09-17): **passed locally**. `scripts/test-growth-native-fixture.py` places a disposable fake `claude` CLI first on `PATH`, returns valid implementation JSON without credentials, and drives the real `growthlab run` path. GrowthLab created three isolated worktrees, ran each configured check, sealed three `UNTESTED` runs and left the product HEAD, files and remotes unchanged. This covers the local adapter boundary; real provider execution and provider-specific launcher registration remain unverified.
+
 Windows MSVC cross-build (2026-09-17): **not built**. The local macOS Zig
 toolchain reached the `ring` C compilation step but lacks the Windows SDK
 headers (`assert.h`); no MSVC artifact was created or advertised. A Windows
