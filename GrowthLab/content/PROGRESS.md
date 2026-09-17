@@ -405,7 +405,10 @@ accessible branches, supports local edits while preserving lineage, and reuses t
 expose descriptive baseline comparisons with sample sizes, date range and
 MEASURED provenance. The GrowthLab onboarding shell now follows the shared
 locale preference across six languages and applies RTL direction for Arabic and
-Persian. Remaining GrowthLab copy/settings polish and full browser
+Persian. Static-preview, evidence and rubric detail copy now uses all six
+locale catalogs. Workspace settings expose an explicit lifecycle policy: edits
+are available before hypotheses or active battles, then the control is disabled
+with a localized explanation. Remaining action/status copy and full browser
 quality/performance evaluation remain pending. Restricted previews, archived PNG captures and the
 continuous public-site walkthrough now pass local
 Rust/HTTP and real browser checks. Windows validation is unsupported.
@@ -416,8 +419,8 @@ Rust/HTTP and real browser checks. Windows validation is unsupported.
    accessibility rubric.
 2. Add provider adapters over the local measurement model, then verify genuine
    native-agent proposals without inventing provider data.
-3. Complete the remaining settings/localized strings and cross-platform release packaging
-   against the full specification.
+3. Complete the remaining dashboard action/status strings and cross-platform release
+   packaging against the full specification.
 
 ## Architectural decisions
 
@@ -436,10 +439,10 @@ Rust/HTTP and real browser checks. Windows validation is unsupported.
 Standalone SEO audit and rubric unit tests (2026-09-16): **passed locally**;
 the real binary emitted JSON and Markdown for a UTF-8 fixture and refused a
 symlink input. Static-preview unit (2026-09-16): **passed locally**. Full serial
-`cargo test --locked -- --test-threads=1` passes **962 tests per binary, 960
+`cargo test --locked -- --test-threads=1` passes **962 tests per binary, 962
 passed, zero failures and two inherited ignored tests**;
 Clippy with `-D warnings`, formatting, style checks and the debug build pass.
-UI typecheck/i18n/build and **174 tests, zero failures/skips** pass; final `ui/dist`
+UI typecheck/i18n/build and **174 tests, zero failures/skips** pass; localized detail catalogs lint clean, and Chrome verified the pre-hypothesis edit control plus the post-hypothesis lock explanation; final `ui/dist`
 is included. The real CLI demo regression verifies ready previews, exact served
 built assets, source/document/seal hashes and its existing no-provider, privacy,
 baseline and shutdown checks. Debug RustEmbed serves assets from disk; this is

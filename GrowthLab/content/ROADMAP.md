@@ -29,9 +29,10 @@ by this roadmap.
   three-branch experiment map and keeps its hypothesis IDs linked into battle
   variants. The experiment tree now supports controlled local edits while
   preserving hypothesis IDs and evidence; battle/detail localization is
-  complete, while remaining dashboard technical detail copy and post-hypothesis
-  settings policy remain pending, alongside
-  browser-based visual regression/accessibility evaluation.
+  complete, while remaining dashboard action/status copy localization remains
+  pending, alongside browser-based visual regression/accessibility evaluation.
+  Settings now expose a lifecycle policy: local edits are enabled before hypotheses
+  or active battles and visibly locked afterwards with a localized explanation.
   Restricted previews
   of immutable static-source bundles pass Rust/HTTP and real desktop/phone checks;
   new runs also archive verified desktop and phone PNGs when local Chromium is
