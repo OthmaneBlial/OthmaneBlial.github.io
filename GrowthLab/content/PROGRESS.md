@@ -482,8 +482,9 @@ locale catalogs, and workspace/battle action and status labels follow the same
   with a localized explanation. SEO/audit labels, dimensions and static guidance
   now follow the six catalogs; dynamic evidence and user-generated run content
   still have source-language strings. Observed local browser quality and timing
-  checks pass, while full visual regression and assistive-technology evaluation
-  remain pending. Restricted previews, archived PNG captures and the
+  checks pass, and the bundled demo now has pinned visual-regression plus
+  Chromium accessibility-tree/keyboard smokes; full cross-browser and
+  assistive-technology evaluation remain pending. Restricted previews, archived PNG captures and the
 continuous public-site walkthrough now pass local
 Rust/HTTP and real browser checks. Windows validation is unsupported.
 
@@ -537,6 +538,12 @@ The live battle dashboard accessibility smoke found 23 named interactive control
 one `h1` with no skipped heading level, no duplicate IDs, no images missing `alt`
 text and no horizontal overflow after the contract subsection headings were
 corrected to `h2`.
+The local `scripts/test-growth-accessibility.py` smoke then rendered a real
+recorded battle in Chromium and passed 19 named DOM/AX controls, one `h1` with
+no skipped level, unique IDs, image alternatives, form labels, no overflow and
+30 visible Tab focus stops; provider probes recorded no external call. This is
+a structure and keyboard signal, not screen-reader, cross-browser or WCAG
+evidence.
 The editable hypothesis API test preserves IDs, roles, evidence and frozen
 battle contracts, and refuses updates while a battle is ready or running.
 Native providers, richer quality evaluation and release gates remain open. The
