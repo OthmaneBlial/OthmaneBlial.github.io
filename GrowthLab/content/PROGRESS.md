@@ -513,7 +513,7 @@ Earlier validation evidence follows; it is not a release or provider claim.
   `screenshots/cli-report-desktop.jpg` and `screenshots/cli-report-phone.jpg`, with
   current phone isolation details in `screenshots/cli-report-phone-isolation.png`;
   these show synthetic CLI report output, not the future dashboard or product renders.
- - UI localized generation/typecheck/unit tests: **passed**, 174 tests. New view
+- UI localized generation/typecheck/unit tests: **passed**, 174 tests. New view
   tests distinguish seals/checkpoints, completed selections and actual active
   command phases; deep-link tests preserve inherited route assertions.
 - `pnpm build` in ui: **passed**, regenerated embedded assets. The inherited
