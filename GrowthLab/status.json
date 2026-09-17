@@ -5,7 +5,7 @@
   "progressEstimate": 95,
   "progressExplanation": "Subjective estimate against the complete product specification, not a measured delivery metric.",
   "milestone": "Editable experiment tree with frozen lineage, localized GrowthLab onboarding and inspection details, explicit workspace settings lifecycle, measurement and battle/detail UI, read-only settings contract overview, provider-neutral measurement boundary, deterministic local CLI packaging with complete notices, exact-tag macOS and Linux cross-target archives plus Windows GNU packaging, estimated accessibility structure hints in comparisons and standalone page audits, continuous browser walkthrough, observed timing hints, bundled Chromium and Firefox visual-regression baseline smokes, local Chromium accessibility-tree and keyboard smoke, public repository review, manual-brief onboarding, executable playbooks, public checkout import, distribution-aware measurement and the translated macOS x86_64 source suite validated",
-  "validatedSourceCommit": "fa18b20a40ec40a34a7d6cc6f9cc12eaccd44995",
+  "validatedSourceCommit": "954da25afad43d6e67172a480ae1f6691d943bdb",
   "delivered": [
     "Local product import with reviewed growthlab.yaml permissions",
     "Three competing changes from one frozen starting point in isolated workspaces",
@@ -75,7 +75,8 @@
     "Public alpha.20 release assets have a read-only verifier for GitHub digests, checksum sidecars and archive safety",
     "Translated macOS x86_64 release suite now passes 964 tests with two inherited ignored tests under Rosetta after allowing the system Rosetta runtime read-only in the confinement profile",
     "Deterministic native-harness fixture runs three local Claude proposal adapters with no provider credentials; sealed runs remain UNTESTED",
-    "Local cargo-dist shell and PowerShell installer templates generated and syntax-checked; macOS arm64 shell install smoke passed, while publication and other target runtime remain pending"
+    "Local cargo-dist shell and PowerShell installer templates generated and syntax-checked; macOS arm64 shell install smoke passed, while publication and other target runtime remain pending",
+    "cargo-dist target matrix aligned with the published Windows GNU archive; MSVC remains out until a Windows SDK runner validates it"
   ],
   "validation": [
     {
@@ -311,7 +312,12 @@
     {
       "name": "Local installer template generation",
       "status": "passed",
-      "detail": "cargo-dist generated the alpha.20 shell and PowerShell installer templates locally with no upload; sh -n accepted the 55,250-byte shell script and the PowerShell parser accepted the 22,419-byte script. The shell installer also fetched the local aarch64-apple-darwin archive through a disposable HTTP server, verified its SHA-256 sidecar, installed growthlab and orx into an isolated prefix, and reported version 0.1.0-alpha.20 without editing the test profile. Other target installer/runtime execution remains unavailable."
+      "detail": "cargo-dist generated the alpha.20 shell and PowerShell installer templates locally with no upload; sh -n and the PowerShell parser accepted both scripts. The shell installer also fetched the local aarch64-apple-darwin archive through a disposable HTTP server, verified its SHA-256 sidecar, installed growthlab and orx into an isolated prefix, and reported version 0.1.0-alpha.20 without editing the test profile. Other target installer/runtime execution remains unavailable."
+    },
+    {
+      "name": "Installer target matrix alignment",
+      "status": "passed",
+      "detail": "The cargo-dist matrix now includes the published x86_64-pc-windows-gnu archive and leaves MSVC out until a Windows SDK runner can validate it. Regenerated shell and PowerShell templates select the GNU asset; mapping assertions, shell syntax, PowerShell parsing, SHA-256 sidecar verification and an isolated macOS shell-install smoke passed."
     },
     {
       "name": "Native harness boundary fixture",
