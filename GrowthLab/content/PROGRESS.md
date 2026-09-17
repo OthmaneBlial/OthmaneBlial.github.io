@@ -144,7 +144,7 @@ performance.
 - Added a localized GrowthLab onboarding shell. The dashboard language picker
   uses the shared persisted locale preference across six catalogs, refreshes the
   visible home flow after switching, and applies right-to-left document direction
-  for Arabic and Persian. Battle/detail inspection, decision and report labels now follow all six locale catalogs; broader settings coverage and remaining technical detail copy remain open.
+  for Arabic and Persian. Battle/detail inspection, decision and report labels now follow all six locale catalogs; editable settings mutations and remaining dashboard technical detail copy remain open.
 
 - Added public GitHub metadata review and manual-brief onboarding. `repo-audit` and the Home review panel make one unauthenticated metadata request without cloning or executing source. `workspace brief` and the Home form create a private local analysis snapshot with no remote or provider request.
 
