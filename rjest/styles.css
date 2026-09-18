@@ -1202,6 +1202,7 @@ button {
 
 .flow-step {
   display: flex;
+  container-type: inline-size;
   min-width: 0;
   min-height: 170px;
   padding: 20px;
@@ -1219,7 +1220,7 @@ button {
 
 .flow-step strong {
   font-family: var(--display);
-  font-size: clamp(29px, 3vw, 42px);
+  font-size: clamp(24px, 25cqi, 42px);
   font-weight: 400;
   line-height: 0.9;
 }
@@ -1885,4 +1886,30 @@ button {
     opacity: 1;
     transform: none;
   }
+}
+
+.benchmark-context {
+  margin: 20px 0 0;
+  color: rgba(236, 235, 227, 0.65);
+  font-size: 12px;
+  line-height: 1.8;
+}
+
+.benchmark-context a {
+  text-underline-offset: 3px;
+}
+
+.corpus-note {
+  margin: 16px 0 0;
+  color: #555b51;
+  font-size: 13px;
+}
+
+.install-terminal pre {
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+.release-link {
+  margin-top: 28px;
 }

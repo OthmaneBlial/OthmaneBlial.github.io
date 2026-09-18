@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta
       name="description"
-      content="Rjest is a Rust-powered Jest-compatible test runner with 286/286 differential scenarios and measured wins in cold start, assertion throughput, and discovery."
+      content="Rjest is a Rust-powered Jest-compatible test runner. Alpha.2 passes 288/288 differential scenarios and beats Jest on all four controlled benchmark workloads."
     />
     <meta
       name="keywords"
@@ -21,13 +21,13 @@
     />
     <meta
       property="og:description"
-      content="Keep your Jest suite. Gain measured speed where Rust coordinates: 3.95× faster discovery, with every win and loss published."
+      content="Alpha.2 beats Jest in cold start, assertions, discovery, and many-file execution on four controlled Apple M2 benchmarks. Raw samples included."
     />
     <meta property="og:url" content="https://othmaneblial.github.io/rjest/" />
     <meta property="og:site_name" content="Rjest" />
     <meta
       property="og:image"
-      content="https://othmaneblial.github.io/rjest/og-card.png"
+      content="https://othmaneblial.github.io/rjest/og-card.png?v=alpha-2"
     />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
@@ -42,11 +42,11 @@
     />
     <meta
       name="twitter:description"
-      content="286/286 differential scenarios. 3.95× faster discovery. 1 known many-file regression. All raw samples published."
+      content="288/288 differential scenarios. Four controlled benchmark wins. Many-file execution is now 1.39× faster. All raw samples published."
     />
     <meta
       name="twitter:image"
-      content="https://othmaneblial.github.io/rjest/og-card.png"
+      content="https://othmaneblial.github.io/rjest/og-card.png?v=alpha-2"
     />
     <link rel="icon" href="favicon.svg" type="image/svg+xml" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -55,7 +55,7 @@
       href="https://fonts.googleapis.com/css2?family=Archivo+Black&amp;family=IBM+Plex+Mono:wght@400;500;600&amp;family=Manrope:wght@400;500;600;700&amp;display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="styles.css?v=performance-1" />
+    <link rel="stylesheet" href="styles.css?v=alpha-2" />
     <title>Rjest — Jest compatibility with measured Rust speed</title>
     <script type="application/ld+json">
       {
@@ -63,12 +63,13 @@
         "@type": "SoftwareApplication",
         "name": "Rjest",
         "applicationCategory": "DeveloperApplication",
-        "description": "A Rust-powered, Jest-compatible test runner with controlled performance wins in startup, assertion throughput, and discovery.",
+        "description": "A Rust-powered, Jest-compatible test runner with controlled performance wins in startup, assertion throughput, discovery, and many-file execution.",
         "url": "https://othmaneblial.github.io/rjest/",
-        "codeRepository": "https://github.com/OthmaneBlial/rjest",
+        "codeRepository": "https://github.com/OthmaneBlial/Rjest",
         "license": "https://opensource.org/license/mit",
         "isAccessibleForFree": true,
-        "softwareRequirements": "Node.js 22.18 or newer and Rust"
+        "softwareVersion": "0.1.0-alpha.2",
+        "softwareRequirements": "Node.js 22.18 or newer and Rust 1.95 via rustup"
       }
     </script>
   </head>
@@ -79,14 +80,14 @@
     <div class="signal-bar">
       <div class="shell signal-bar__inner">
         <span class="status-pulse" aria-hidden="true"></span>
-        <span>ALPHA SIGNAL</span>
+        <span>ALPHA.2</span>
         <span class="signal-bar__divider" aria-hidden="true"></span>
-        <span>286 / 286 DIFFERENTIAL SCENARIOS</span>
+        <span>288 / 288 DIFFERENTIAL SCENARIOS</span>
         <span
           class="signal-bar__divider signal-bar__optional"
           aria-hidden="true"
         ></span>
-        <span class="signal-bar__optional">3 SPEED WINS / 1 KNOWN LOSS</span>
+        <span class="signal-bar__optional">4 / 4 BENCHMARK WINS</span>
         <a href="#performance"
           >See the measurements <span aria-hidden="true">↘</span></a
         >
@@ -114,7 +115,7 @@
           <a href="#performance">Performance</a>
           <a href="#proof">Proof</a>
           <a
-            href="https://github.com/OthmaneBlial/rjest/blob/main/docs/project-status.md"
+            href="https://github.com/OthmaneBlial/Rjest/blob/main/docs/project-status.md"
             target="_blank"
             rel="noreferrer"
             >Status</a
@@ -126,7 +127,7 @@
 
         <a
           class="header-cta"
-          href="https://github.com/OthmaneBlial/rjest"
+          href="https://github.com/OthmaneBlial/Rjest"
           target="_blank"
           rel="noreferrer"
         >
@@ -147,10 +148,10 @@
               <span>Different engine.</span>
             </h1>
             <p class="hero-lede reveal">
-              Rjest is built for the moment when changing test runners means
-              changing one command—not rewriting years of JavaScript and
-              TypeScript tests. Rust owns the coordination paths that are
-              already measurably faster.
+              Run your JavaScript and TypeScript tests with Jest-style
+              assertions, mocks, snapshots, and configuration. Rust coordinates
+              the run; Node executes your code. Alpha.2 beats Jest on all four
+              controlled benchmark workloads below.
             </p>
             <div class="hero-actions reveal">
               <a class="button button--primary" href="#start">
@@ -158,7 +159,7 @@
               </a>
               <a
                 class="button button--ghost"
-                href="https://github.com/OthmaneBlial/rjest/blob/main/docs/compatibility.md"
+                href="https://github.com/OthmaneBlial/Rjest/blob/main/docs/compatibility.md"
                 target="_blank"
                 rel="noreferrer"
               >
@@ -166,8 +167,8 @@
               </a>
             </div>
             <p class="hero-note reveal">
-              Current alpha · 3 controlled wins · 1 published regression · raw
-              samples included
+              Alpha.2 · 4 controlled benchmark wins · 288 passing scenarios ·
+              raw samples included
             </p>
           </div>
 
@@ -203,7 +204,7 @@
               </div>
               <div>
                 <span>STATUS</span>
-                <strong class="status-alpha">BUILDING</strong>
+                <strong class="status-alpha">ALPHA.2</strong>
               </div>
             </div>
             <p>
@@ -235,9 +236,9 @@
               <h2>Rust earns<br />its place.</h2>
             </div>
             <p>
-              The answer is measured, not implied. On one controlled Apple M2
-              run, Rjest wins startup, assertion throughput, and discovery. The
-              same report exposes the many-file worker-startup loss.
+              On the September 18 Apple M2 run, alpha.2 beats pinned Jest on
+              all four workloads. Many-file execution now reuses one Node host
+              with a fresh isolate per file. Compare your own suite too.
             </p>
           </div>
 
@@ -250,19 +251,19 @@
                 <span>01 / COLD START</span>
                 <b>RJEST WIN</b>
               </header>
-              <strong>1.59×</strong>
+              <strong>2.07×</strong>
               <p>faster end-to-end startup</p>
               <div
                 class="runner-bars"
-                aria-label="Jest 737.2 milliseconds, Rjest 462.9 milliseconds"
+                aria-label="Jest 499.6 milliseconds, Rjest 241.8 milliseconds"
               >
                 <div class="runner-bar">
                   <span>JEST</span><i><b style="--fill: 1"></b></i
-                  ><em>737 ms</em>
+                  ><em>499.6 ms</em>
                 </div>
                 <div class="runner-bar runner-bar--rjest">
-                  <span>RJEST</span><i><b style="--fill: 0.63"></b></i
-                  ><em>463 ms</em>
+                  <span>RJEST</span><i><b style="--fill: 0.48"></b></i
+                  ><em>241.8 ms</em>
                 </div>
               </div>
             </article>
@@ -272,19 +273,19 @@
                 <span>02 / ASSERTIONS</span>
                 <b>RJEST WIN</b>
               </header>
-              <strong>2.86×</strong>
+              <strong>2.95×</strong>
               <p>faster across 50,000 assertions</p>
               <div
                 class="runner-bars"
-                aria-label="Jest 2.19 seconds, Rjest 764.4 milliseconds"
+                aria-label="Jest 2.87 seconds, Rjest 974.7 milliseconds"
               >
                 <div class="runner-bar">
                   <span>JEST</span><i><b style="--fill: 1"></b></i
-                  ><em>2.19 s</em>
+                  ><em>2.87 s</em>
                 </div>
                 <div class="runner-bar runner-bar--rjest">
-                  <span>RJEST</span><i><b style="--fill: 0.35"></b></i
-                  ><em>764 ms</em>
+                  <span>RJEST</span><i><b style="--fill: 0.34"></b></i
+                  ><em>974.7 ms</em>
                 </div>
               </div>
             </article>
@@ -292,43 +293,43 @@
             <article class="benchmark-card benchmark-card--signal reveal">
               <header>
                 <span>03 / DISCOVERY</span>
-                <b>FASTEST WIN</b>
+                <b>RJEST WIN</b>
               </header>
-              <strong>3.95×</strong>
+              <strong>2.95×</strong>
               <p>faster listing 1,500 test files</p>
               <div
                 class="runner-bars"
-                aria-label="Jest 727.5 milliseconds, Rjest 184 milliseconds"
+                aria-label="Jest 550.8 milliseconds, Rjest 186.8 milliseconds"
               >
                 <div class="runner-bar">
                   <span>JEST</span><i><b style="--fill: 1"></b></i
-                  ><em>728 ms</em>
+                  ><em>550.8 ms</em>
                 </div>
                 <div class="runner-bar runner-bar--rjest">
-                  <span>RJEST</span><i><b style="--fill: 0.25"></b></i
-                  ><em>184 ms</em>
+                  <span>RJEST</span><i><b style="--fill: 0.34"></b></i
+                  ><em>186.8 ms</em>
                 </div>
               </div>
             </article>
 
-            <article class="benchmark-card benchmark-card--loss reveal">
+            <article class="benchmark-card benchmark-card--win reveal">
               <header>
                 <span>04 / MANY FILES</span>
-                <b>KNOWN LOSS</b>
+                <b>RJEST WIN</b>
               </header>
-              <strong>2.83×</strong>
-              <p>slower across 48 fresh workers</p>
+              <strong>1.39×</strong>
+              <p>faster across 48 files, 4 workers</p>
               <div
                 class="runner-bars"
-                aria-label="Jest 1.92 seconds, Rjest 5.43 seconds"
+                aria-label="Jest 1.67 seconds, Rjest 1.20 seconds"
               >
                 <div class="runner-bar">
-                  <span>JEST</span><i><b style="--fill: 0.35"></b></i
-                  ><em>1.92 s</em>
+                  <span>JEST</span><i><b style="--fill: 1"></b></i
+                  ><em>1.67 s</em>
                 </div>
-                <div class="runner-bar runner-bar--loss">
-                  <span>RJEST</span><i><b style="--fill: 1"></b></i
-                  ><em>5.43 s</em>
+                <div class="runner-bar runner-bar--rjest">
+                  <span>RJEST</span><i><b style="--fill: 0.72"></b></i
+                  ><em>1.20 s</em>
                 </div>
               </div>
             </article>
@@ -336,19 +337,26 @@
 
           <div class="benchmark-method reveal">
             <div>
-              <span>APPLE M2 / 16 GIB</span>
+              <span>2026-09-18 / APPLE M2 / 16 GIB</span>
+              <span>NODE 25.9.0 / JEST 30.5.0 / ALPHA.2</span>
               <span>2 WARM-UPS + 10 MEASURED PAIRS</span>
               <span>CACHES OFF</span>
               <span>PARITY PREFLIGHT</span>
             </div>
             <a
-              href="https://github.com/OthmaneBlial/Rjest/blob/main/benchmarks/results/apple-m2-2026-09-01.md"
+              href="https://github.com/OthmaneBlial/Rjest/blob/main/benchmarks/results/apple-m2-2026-09-18.md"
               target="_blank"
               rel="noreferrer"
             >
               Audit every sample <span aria-hidden="true">↗</span>
             </a>
           </div>
+          <p class="benchmark-context reveal">
+            <a href="benchmarks/apple-m2-2026-09-18.json" download>Download raw timing samples</a> ·
+            <a href="benchmarks/apple-m2-2026-09-18.md">Full method and variance</a> ·
+            <a href="https://github.com/OthmaneBlial/Rjest/blob/main/benchmarks/results/apple-m2-2026-09-01.md" target="_blank" rel="noreferrer">Earlier alpha.1 results</a><br />
+            Controlled workloads on one machine; results will vary with your project.
+          </p>
         </div>
       </section>
 
@@ -370,15 +378,15 @@
             <div class="matrix-card__heading">
               <div>
                 <span>VERSIONED DIFFERENTIAL MATRIX</span>
-                <strong><b>286</b> / 286</strong>
+                <strong><b>288</b> / 288</strong>
               </div>
               <div class="matrix-badge">100% OF BOUNDED MATRIX</div>
             </div>
             <div
               class="scenario-grid"
-              data-total="286"
+              data-total="288"
               role="img"
-              aria-label="All 286 current differential scenarios pass"
+              aria-label="All 288 current differential scenarios pass"
             ></div>
             <div class="matrix-legend">
               <span><i class="legend-dot legend-dot--pass"></i> PASSING</span>
@@ -427,12 +435,15 @@
 
           <a
             class="text-link reveal"
-            href="https://github.com/OthmaneBlial/rjest/tree/main/docs/corpus"
+            href="https://github.com/OthmaneBlial/Rjest/tree/main/docs/corpus"
             target="_blank"
             rel="noreferrer"
           >
             Audit every corpus report <span aria-hidden="true">↗</span>
           </a>
+          <p class="corpus-note reveal">
+            Historical pinned reports; these projects were not all rerun for alpha.2.
+          </p>
         </div>
       </section>
 
@@ -531,14 +542,15 @@
             <p class="eyebrow">A deliberate hybrid</p>
             <h2>Rust controls.<br />Node executes.</h2>
             <p>
-              Native coordination where determinism and bounded concurrency
-              matter. Real JavaScript semantics where ecosystem compatibility
-              matters. That split now has receipts: 3.95× faster discovery, but
-              2.83× slower when 48 files each pay for a fresh worker.
+              Rust handles discovery, scheduling, cancellation, and result
+              aggregation. Multi-file batches reuse one Node host with a fresh
+              worker-thread isolate per file. Globals, module caches,
+              environment changes, and timers stay separate. Babel and snapshot
+              formatting tools initialize when needed.
             </p>
             <a
               class="text-link"
-              href="https://github.com/OthmaneBlial/rjest/blob/main/docs/architecture.md"
+              href="https://github.com/OthmaneBlial/Rjest/blob/main/docs/architecture.md"
               target="_blank"
               rel="noreferrer"
             >
@@ -568,7 +580,7 @@
             <article class="flow-step flow-step--node">
               <span>02 · NODE</span>
               <strong>Run</strong>
-              <p>Execute each Jest test file in isolation</p>
+              <p>Fresh isolate per file · one reused host</p>
             </article>
             <div class="flow-arrow" aria-hidden="true">→</div>
             <article class="flow-step flow-step--rust">
@@ -585,35 +597,45 @@
           <div class="start-panel reveal">
             <div class="start-panel__copy">
               <p class="eyebrow">Bring a real suite</p>
-              <h2>Find the next gap.</h2>
+              <h2>Try your existing suite.</h2>
               <p>
-                Install the alpha, list the tests in an existing project, run
-                serially, and compare the result with official Jest.
+                Install alpha.2 from the release below. Requires Node.js 22.18
+                or newer and rustup; installation builds the native coordinator
+                with Rust 1.95. Compare discovery, then run serially and in
+                parallel with official Jest.
               </p>
               <div class="step-list">
-                <span><b>1</b> Install the alpha</span>
+                <span><b>1</b> Install alpha.2</span>
                 <span><b>2</b> Compare discovery</span>
                 <span><b>3</b> Run the suite</span>
               </div>
+              <a class="text-link release-link" href="https://github.com/OthmaneBlial/Rjest/releases/tag/v0.1.0-alpha.2" target="_blank" rel="noreferrer">
+                Alpha.2 release &amp; checksums <span aria-hidden="true">↗</span>
+              </a>
             </div>
 
             <div class="install-terminal">
               <div class="terminal-toolbar">
-                <span>BUILD / TRY</span>
+                <span>INSTALL / ALPHA.2</span>
                 <button
                   class="copy-button"
                   type="button"
-                  data-copy="npm install --save-dev rjest-rust-runner@alpha&#10;npx rjest --listTests&#10;npx rjest --runInBand"
+                  data-copy="npm install --save-dev https://github.com/OthmaneBlial/Rjest/releases/download/v0.1.0-alpha.2/rjest-rust-runner-0.1.0-alpha.2.tgz&#10;npx jest --listTests&#10;npx rjest --listTests&#10;npx jest --runInBand&#10;npx rjest --runInBand&#10;npx rjest --maxWorkers=4"
                 >
                   Copy
                 </button>
               </div>
-              <pre><code><span class="terminal-comment"># Install the current alpha</span>
-<span class="terminal-prompt">$</span> npm install --save-dev rjest-rust-runner@alpha
+              <pre><code><span class="terminal-comment"># Install alpha.2 from GitHub</span>
+<span class="terminal-prompt">$</span> npm install --save-dev https://github.com/OthmaneBlial/Rjest/releases/download/v0.1.0-alpha.2/rjest-rust-runner-0.1.0-alpha.2.tgz
 
-<span class="terminal-comment"># Compare discovery, then execute serially</span>
+<span class="terminal-comment"># Compare discovered tests</span>
+<span class="terminal-prompt">$</span> npx jest --listTests
 <span class="terminal-prompt">$</span> npx rjest --listTests
-<span class="terminal-prompt">$</span> npx rjest --runInBand</code></pre>
+
+<span class="terminal-comment"># Compare serial results, then run in parallel</span>
+<span class="terminal-prompt">$</span> npx jest --runInBand
+<span class="terminal-prompt">$</span> npx rjest --runInBand
+<span class="terminal-prompt">$</span> npx rjest --maxWorkers=4</code></pre>
             </div>
           </div>
         </div>
@@ -628,7 +650,7 @@
           <div class="limits-copy reveal">
             <p class="limits-intro">
               The approximate 91% readiness view is directional, not an
-              automated Jest API percentage. The measured claim remains 286/286
+              automated Jest API percentage. The measured claim remains 288/288
               of the current bounded matrix.
             </p>
             <ul>
@@ -638,8 +660,9 @@
                 interruption are tested against Jest.
               </li>
               <li>
-                <span>02</span> Transform/discovery persistence and worker reuse
-                remain performance work.
+                <span>02</span> Persistent discovery/transform caches and reuse
+                of test isolates remain open. Alpha.2 reuses the Node host;
+                every file still gets a fresh isolate.
               </li>
               <li>
                 <span>03</span> Custom VM identity, specialized reporter
@@ -647,13 +670,21 @@
                 combinations, and long-tail resolvers need broader proof.
               </li>
               <li>
-                <span>04</span> Unlisted Jest behavior is not yet a
-                compatibility claim.
+                <span>04</span> Multi-file threads share a PID and native
+                process resources. Main-thread-only APIs such as
+                <code>process.chdir</code> are unavailable; a native crash or
+                killing the host PID can stop the batch. Single-file runs use
+                a separate process.
+              </li>
+              <li>
+                <span>05</span> Unlisted Jest behavior needs comparison with
+                your project. Test execution uses your permissions and is not
+                a security sandbox.
               </li>
             </ul>
             <a
               class="button button--dark"
-              href="https://github.com/OthmaneBlial/rjest/blob/main/docs/project-status.md"
+              href="https://github.com/OthmaneBlial/Rjest/blob/main/docs/project-status.md"
               target="_blank"
               rel="noreferrer"
             >
@@ -674,20 +705,21 @@
           <p>Switch the runner. Keep the test suite.</p>
         </div>
         <div class="footer-links">
+          <a href="https://github.com/OthmaneBlial/Rjest/releases/tag/v0.1.0-alpha.2" target="_blank" rel="noreferrer">Alpha.2 release ↗</a>
           <a
-            href="https://github.com/OthmaneBlial/rjest"
+            href="https://github.com/OthmaneBlial/Rjest"
             target="_blank"
             rel="noreferrer"
             >GitHub ↗</a
           >
           <a
-            href="https://github.com/OthmaneBlial/rjest/blob/main/docs/compatibility.md"
+            href="https://github.com/OthmaneBlial/Rjest/blob/main/docs/compatibility.md"
             target="_blank"
             rel="noreferrer"
             >Compatibility ↗</a
           >
           <a
-            href="https://github.com/OthmaneBlial/rjest/tree/main/docs/corpus"
+            href="https://github.com/OthmaneBlial/Rjest/tree/main/docs/corpus"
             target="_blank"
             rel="noreferrer"
             >Corpus ↗</a
@@ -699,7 +731,7 @@
             >Benchmarks ↗</a
           >
           <a
-            href="https://github.com/OthmaneBlial/rjest/blob/main/LICENSE"
+            href="https://github.com/OthmaneBlial/Rjest/blob/main/LICENSE"
             target="_blank"
             rel="noreferrer"
             >MIT License ↗</a
@@ -712,6 +744,6 @@
       </div>
     </footer>
 
-    <script src="app.js?v=performance-1"></script>
+    <script src="app.js?v=alpha-2"></script>
   </body>
 </html>
