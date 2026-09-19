@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="en" data-phx-theme="slate">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      name="description"
+      content="A native form using PhoenixCSS core and the documented slate token override."
+    />
+    <title>A native form · PhoenixCSS example</title>
+    <link rel="stylesheet" href="../assets/phoenix.core.min.css" />
+    <link rel="stylesheet" href="slate.css" />
+  </head>
+  <body>
+    <header>
+      <p>PhoenixCSS / real page example</p>
+      <h1>A native form in slate</h1>
+      <p>
+        Labels, required fields, choices, and feedback use browser controls and
+        the light slate CSS variable override. This page validates locally;
+        nothing is sent or stored.
+      </p>
+      <nav aria-label="Examples">
+        <a href="./guide.html">Guide</a> ·
+        <a href="./landing.html">Landing page</a>
+      </nav>
+    </header>
+    <main>
+      <section aria-labelledby="form-title">
+        <h2 id="form-title">Try the form</h2>
+        <p>Submit it empty first to see native validation and focus.</p>
+        <form id="example-form" action="#form-title" method="get">
+          <label for="email">Email <span aria-hidden="true">*</span></label>
+          <input
+            id="email"
+            name="email"
+            type="email"
+            autocomplete="email"
+            aria-describedby="email-help email-error"
+            required
+          />
+          <p id="email-help">Use any valid address for this local example.</p>
+          <p id="email-error" role="alert" hidden>
+            Enter a valid email address before continuing.
+          </p>
+
+          <label for="topic">Topic</label>
+          <select id="topic" name="topic">
+            <option value="defaults">Native HTML defaults</option>
+            <option value="tokens">CSS variable overrides</option>
+            <option value="layout">Optional layout classes</option>
+          </select>
+
+          <fieldset>
+            <legend>Which file would you start with?</legend>
+            <label
+              ><input type="radio" name="file" value="core" checked /> Core
+              CSS</label
+            >
+            <label
+              ><input type="radio" name="file" value="full" /> Full CSS</label
+            >
+          </fieldset>
+
+          <label for="note">What are you building?</label>
+          <textarea
+            id="note"
+            name="note"
+            rows="4"
+            maxlength="240"
+            aria-describedby="note-help"
+          ></textarea>
+          <p id="note-help">Optional. Up to 240 characters.</p>
+
+          <label
+            ><input type="checkbox" name="review" /> I checked the labels and
+            focus states</label
+          >
+          <button type="submit">Check this form</button>
+          <p id="form-status" role="status" aria-live="polite"></p>
+        </form>
+      </section>
+      <section aria-labelledby="palette-title">
+        <h2 id="palette-title">One stylesheet, different tokens</h2>
+        <p>
+          The page uses the same core CSS file as the guide. The only palette
+          change comes from <code>slate.css</code>, a local override of
+          <code>--phx-*</code> variables. There is no theme switcher or dark
+          palette in this example.
+        </p>
+      </section>
+    </main>
+    <footer><p>Example script: local form validation only.</p></footer>
+    <script>
+      const form = document.getElementById("example-form");
+      const email = document.getElementById("email");
+      const emailError = document.getElementById("email-error");
+      const status = document.getElementById("form-status");
+      form.addEventListener(
+        "invalid",
+        (event) => {
+          event.target.setAttribute("aria-invalid", "true");
+          emailError.hidden = false;
+        },
+        true,
+      );
+      email.addEventListener("input", () => {
+        if (email.validity.valid) {
+          email.removeAttribute("aria-invalid");
+          emailError.hidden = true;
+          status.textContent = "";
+        }
+      });
+      form.addEventListener("submit", (event) => {
+        event.preventDefault();
+        status.textContent = "Valid sample. Nothing was sent or stored.";
+      });
+    </script>
+  </body>
+</html>

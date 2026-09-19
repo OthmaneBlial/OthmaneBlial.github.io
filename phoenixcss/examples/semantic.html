@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>PhoenixCSS semantic HTML fixture</title>
+    <link rel="stylesheet" href="../assets/phoenix.min.css" />
+  </head>
+  <body>
+    <header>
+      <h1>A field guide to quieter interfaces</h1>
+      <p>
+        One HTML document, compared with the same document under each
+        stylesheet.
+      </p>
+      <nav aria-label="On this page">
+        <a href="#story">Story</a>
+        <a href="#details">Details</a>
+        <a href="#contact">Contact</a>
+      </nav>
+    </header>
+    <main>
+      <article id="story">
+        <h2>Readable from the first line</h2>
+        <p>
+          A small page should make its <a href="#details">links</a>, content,
+          and controls easy to find before a developer learns a class system.
+        </p>
+        <blockquote>
+          <p>Good defaults are useful only when they survive real content.</p>
+        </blockquote>
+        <h3>What the page contains</h3>
+        <ul>
+          <li>Native headings, paragraphs, lists, links, and code.</li>
+          <li>A table that still conveys its column headers.</li>
+          <li>A labelled form operable without a pointer.</li>
+        </ul>
+        <p>
+          Install with a stylesheet link, then write <code>semantic HTML</code>.
+        </p>
+        <pre><code>&lt;main&gt;
+  &lt;h1&gt;A useful page&lt;/h1&gt;
+&lt;/main&gt;</code></pre>
+      </article>
+      <section id="details" aria-labelledby="details-title">
+        <h2 id="details-title">Details</h2>
+        <table>
+          <caption>
+            Example package choices
+          </caption>
+          <thead>
+            <tr>
+              <th scope="col">Option</th>
+              <th scope="col">Best for</th>
+              <th scope="col">Input</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <th scope="row">Core</th>
+              <td>Articles and docs</td>
+              <td>HTML</td>
+            </tr>
+            <tr>
+              <th scope="row">Full</th>
+              <td>Small interfaces</td>
+              <td>HTML plus classes</td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+      <section id="contact" aria-labelledby="contact-title">
+        <h2 id="contact-title">Contact</h2>
+        <form action="#contact" method="get">
+          <label for="name">Name</label>
+          <input
+            id="name"
+            name="name"
+            type="text"
+            autocomplete="name"
+            required
+          />
+          <label for="email">Email</label>
+          <input
+            id="email"
+            name="email"
+            type="email"
+            autocomplete="email"
+            required
+          />
+          <label for="topic">Topic</label>
+          <select id="topic" name="topic">
+            <option value="docs">Documentation</option>
+            <option value="design">Design</option>
+          </select>
+          <fieldset>
+            <legend>Reply preference</legend>
+            <label
+              ><input type="radio" name="reply" value="email" checked />
+              Email</label
+            >
+            <label
+              ><input type="radio" name="reply" value="none" /> No reply</label
+            >
+          </fieldset>
+          <label
+            ><input type="checkbox" name="updates" /> Send me updates</label
+          >
+          <label for="message">Message</label>
+          <textarea id="message" name="message" rows="4"></textarea>
+          <button type="submit">Send message</button>
+        </form>
+      </section>
+    </main>
+    <footer><p>One fixture. No library-specific classes.</p></footer>
+  </body>
+</html>

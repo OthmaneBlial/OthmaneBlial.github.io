@@ -1,0 +1,441 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      name="description"
+      content="PhoenixCSS starts with readable semantic HTML and adds optional CSS classes for small interfaces. Explore the real core and full builds."
+    />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="PhoenixCSS — Start with the HTML" />
+    <meta
+      property="og:description"
+      content="One stylesheet for readable semantic HTML; optional layout classes when a page needs them. Explore real core and full CSS examples."
+    />
+    <meta
+      property="og:image"
+      content="https://raw.githubusercontent.com/OthmaneBlial/phoenixcss/main/assets/screenshots/docs-1440.png"
+    />
+    <meta
+      property="og:image:alt"
+      content="PhoenixCSS documentation showing its Start with the HTML introduction"
+    />
+    <meta name="twitter:card" content="summary_large_image" />
+    <title>PhoenixCSS — Start with the HTML</title>
+    <link rel="icon" href="./favicon.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="./assets/phoenix.min.css" />
+    <link rel="stylesheet" href="./site.css" />
+    <script src="./demo.js" defer></script>
+  </head>
+  <body>
+    <button
+      class="menu-toggle"
+      id="menuToggle"
+      type="button"
+      aria-label="Toggle documentation navigation"
+      aria-controls="sidebar"
+      aria-expanded="false"
+      hidden
+    >
+      Menu
+    </button>
+
+    <aside class="doc-rail" id="sidebar" aria-label="Documentation navigation">
+      <a class="brand" href="#top"
+        ><span class="brand-mark" aria-hidden="true">✦</span> PhoenixCSS</a
+      >
+      <p class="rail-label">Field guide</p>
+      <nav class="rail-nav" aria-label="Sections">
+        <a href="#choose"><span>01</span> Choose a file</a>
+        <a href="#start"><span>02</span> Start locally</a>
+        <a href="#core"><span>03</span> Native HTML</a>
+        <a href="#full"><span>04</span> Optional classes</a>
+        <a href="#themes"><span>05</span> Customize</a>
+        <a href="#reference"><span>06</span> Reference</a>
+        <a href="#status"><span>07</span> Project status</a>
+      </nav>
+      <div class="rail-meta">
+        <p>CSS at runtime. No JavaScript framework required.</p>
+        <a href="https://github.com/OthmaneBlial/phoenixcss"
+          >Source on GitHub ↗</a
+        >
+      </div>
+    </aside>
+
+    <main class="doc-main">
+      <header class="hero" id="top">
+        <p class="eyebrow">PhoenixCSS / A progressive stylesheet</p>
+        <h1>Start with the <em>HTML.</em></h1>
+        <p class="hero-lead">
+          Readable content and native controls from one CSS file. Add the full
+          build when your page needs a grid, cards, buttons, or navigation.
+        </p>
+        <div class="hero-actions">
+          <a class="doc-button" href="#start">Start from source ↗</a>
+          <a class="doc-button doc-button--quiet" href="#core"
+            >See the live page</a
+          >
+        </div>
+        <p class="hero-footnote">
+          Source version 0.1.0. The local tarball is tested; check GitHub for
+          current release status.
+        </p>
+      </header>
+
+      <section class="doc-section" id="choose" aria-labelledby="choose-title">
+        <p class="section-number">01 / The decision</p>
+        <h2 id="choose-title">Choose how much CSS you need.</h2>
+        <p class="section-lead">
+          Both files share the same semantic base. Optional classes only enter
+          the full build; neither file brings a JavaScript runtime.
+        </p>
+        <div class="split">
+          <article class="path-card">
+            <p class="mini-label">Core / native HTML</p>
+            <h3>Write the document first.</h3>
+            <p>
+              Headings, links, lists, code, tables, labels, and native controls
+              get readable defaults. Best for an article, docs page, or form.
+            </p>
+            <span class="file-name">phoenix.core.min.css</span>
+            <p><a href="#core">Explore the core page →</a></p>
+          </article>
+          <article class="path-card">
+            <p class="mini-label">Full / optional classes</p>
+            <h3>Add layout when it earns its place.</h3>
+            <p>
+              Core plus a 12-column grid, buttons, cards, utilities, navigation,
+              and styles for a native dialog.
+            </p>
+            <span class="file-name">phoenix.min.css</span>
+            <p><a href="#full">Explore the full page →</a></p>
+          </article>
+        </div>
+        <p class="note">
+          See three runnable pages: a
+          <a href="./examples/guide.html">guide with a live CSS before/after</a
+          >, a <a href="./examples/form.html">native form in slate</a>, and a
+          <a href="./examples/landing.html">small landing page</a> built with
+          the full file.
+        </p>
+      </section>
+
+      <section class="doc-section" id="start" aria-labelledby="start-title">
+        <p class="section-number">02 / Get running</p>
+        <h2 id="start-title">From checkout to a real page.</h2>
+        <p class="section-lead">
+          The local tarball is installable; registry publication and release
+          downloads are separate checks. These commands use the public source
+          repository and Node.js 24.
+        </p>
+        <div class="code-panel">
+          <div class="code-panel__bar">
+            <span>Terminal / build and serve</span>
+            <button
+              class="copy-button"
+              type="button"
+              data-copy-target="start-commands"
+            >
+              Copy
+            </button>
+          </div>
+          <pre><code id="start-commands">git clone https://github.com/OthmaneBlial/phoenixcss.git
+cd phoenixcss
+npm ci
+npm run build
+python3 -m http.server 8765</code></pre>
+        </div>
+        <p>
+          Open <code>http://127.0.0.1:8765/examples/core.html</code> or
+          <code>http://127.0.0.1:8765/examples/themed.html</code>. To use the
+          CSS in your own site, copy a generated file beside your page and link
+          it like this:
+        </p>
+        <div class="code-panel">
+          <div class="code-panel__bar">
+            <span>HTML / after copying the file</span>
+            <button
+              class="copy-button"
+              type="button"
+              data-copy-target="start-link"
+            >
+              Copy
+            </button>
+          </div>
+          <pre><code id="start-link">&lt;link rel="stylesheet" href="./phoenix.core.min.css" /&gt;</code></pre>
+        </div>
+        <p class="note">
+          Choose <code>phoenix.min.css</code> instead when you use the optional
+          classes below. The files in <code>dist/</code> are local build
+          artifacts; npm publication must be verified separately.
+        </p>
+      </section>
+
+      <section class="doc-section" id="core" aria-labelledby="core-title">
+        <p class="section-number">03 / Core</p>
+        <h2 id="core-title">Semantic HTML, rendered.</h2>
+        <p class="section-lead">
+          This frame loads the actual <code>phoenix.core.min.css</code> output.
+          Its page contains no PhoenixCSS component classes. Open it directly to
+          inspect the markup or use the form.
+        </p>
+        <div class="demo-frame">
+          <div class="demo-frame__bar">
+            <span>Live example / core.css</span>
+            <a href="./examples/core.html">Open full page ↗</a>
+          </div>
+          <iframe
+            title="PhoenixCSS core example"
+            src="./examples/core.html"
+            loading="lazy"
+          ></iframe>
+        </div>
+        <div class="feature-grid">
+          <article class="feature-card">
+            <h3>Content keeps its meaning.</h3>
+            <p>
+              Links stay underlined, lists keep markers, and narrow tables
+              scroll with their headers intact.
+            </p>
+          </article>
+          <article class="feature-card">
+            <h3>Forms stay native.</h3>
+            <p>
+              Labels, inputs, selects, radio buttons, checkboxes, and validation
+              remain standard browser controls.
+            </p>
+          </article>
+        </div>
+      </section>
+
+      <section class="doc-section" id="full" aria-labelledby="full-title">
+        <p class="section-number">04 / Full</p>
+        <h2 id="full-title">Use classes where they help.</h2>
+        <p class="section-lead">
+          The full file adds layout and components. The examples below are live
+          elements in this page, using the same generated CSS you can copy.
+        </p>
+        <div class="component-demo">
+          <p class="mini-label">Navigation</p>
+          <nav class="nav" aria-label="Component example">
+            <a class="nav__brand" href="#full">PhoenixCSS</a>
+            <button
+              class="nav__toggle"
+              id="exampleNavToggle"
+              type="button"
+              aria-controls="exampleNavMenu"
+              aria-expanded="false"
+              hidden
+            >
+              Menu
+            </button>
+            <div class="nav__menu" id="exampleNavMenu">
+              <a class="nav__link" href="#core">Core</a>
+              <a class="nav__link" href="#themes">Themes</a>
+              <a class="nav__link" href="#reference">Reference</a>
+            </div>
+          </nav>
+          <p class="mini-label">Cards and grid</p>
+          <div class="row">
+            <div class="col-6">
+              <article class="card">
+                <h3 class="card__header">One column</h3>
+                <p class="card__body">
+                  Half the row above 600 px, full width below it.
+                </p>
+              </article>
+            </div>
+            <div class="col-6">
+              <article class="card">
+                <h3 class="card__header">Another column</h3>
+                <p class="card__body">
+                  The same markup responds to the viewport.
+                </p>
+              </article>
+            </div>
+          </div>
+          <p class="mini-label">Buttons and native dialog</p>
+          <a class="btn btn--outline" href="#themes">Outline link</a>
+          <button class="btn btn--primary" type="button" id="openModal">
+            Open dialog
+          </button>
+          <dialog class="modal" id="exampleModal" aria-labelledby="modalTitle">
+            <div class="modal__content">
+              <button
+                class="modal__close"
+                type="button"
+                id="closeModal"
+                aria-label="Close dialog"
+              >
+                &times;
+              </button>
+              <h3 id="modalTitle">A native dialog</h3>
+              <p>
+                Press Escape or use a Close button. Focus returns to the opener.
+              </p>
+              <button class="btn btn--secondary" type="button" id="modalAction">
+                Close
+              </button>
+            </div>
+          </dialog>
+        </div>
+        <p class="note">
+          PhoenixCSS supplies dialog and navigation styles. The small
+          <a href="./demo.js">documentation script</a> wires up these live
+          interactions; it is optional example code, not a library runtime.
+        </p>
+        <div class="code-panel">
+          <div class="code-panel__bar">
+            <span>HTML / optional grid</span>
+            <button
+              class="copy-button"
+              type="button"
+              data-copy-target="grid-code"
+            >
+              Copy
+            </button>
+          </div>
+          <pre><code id="grid-code">&lt;div class="row"&gt;
+  &lt;div class="col-6"&gt;First column&lt;/div&gt;
+  &lt;div class="col-6"&gt;Second column&lt;/div&gt;
+&lt;/div&gt;</code></pre>
+        </div>
+      </section>
+
+      <section class="doc-section" id="themes" aria-labelledby="themes-title">
+        <p class="section-number">05 / Customization</p>
+        <h2 id="themes-title">Change the palette, keep the markup.</h2>
+        <p class="section-lead">
+          CSS variables describe surfaces, text, focus, and actions. This second
+          real page uses the same components with a light slate palette. A
+          complete dark theme is not shipped.
+        </p>
+        <div class="demo-frame">
+          <div class="demo-frame__bar">
+            <span>Live example / slate override</span>
+            <a href="./examples/themed.html">Open full page ↗</a>
+          </div>
+          <iframe
+            title="PhoenixCSS slate palette example"
+            src="./examples/themed.html"
+            loading="lazy"
+          ></iframe>
+        </div>
+        <p>
+          <a
+            class="text-link"
+            href="https://github.com/OthmaneBlial/phoenixcss/blob/main/docs/THEMING.md"
+            >See the token contract ↗</a
+          >
+        </p>
+      </section>
+
+      <section
+        class="doc-section"
+        id="reference"
+        aria-labelledby="reference-title"
+      >
+        <p class="section-number">06 / Reference</p>
+        <h2 id="reference-title">The next details, in one place.</h2>
+        <p class="section-lead">
+          The source documents the boundaries as carefully as the classes. Use
+          these guides when you move beyond the first page.
+        </p>
+        <ul class="reference-list">
+          <li>
+            <a
+              href="https://github.com/OthmaneBlial/phoenixcss/blob/main/docs/BUILD.md"
+              >Build and entry points ↗</a
+            ><br />Core/full files and verification.
+          </li>
+          <li>
+            <a
+              href="https://github.com/OthmaneBlial/phoenixcss/blob/main/docs/GRID.md"
+              >Responsive grid ↗</a
+            ><br />Breakpoints, columns, and gutters.
+          </li>
+          <li>
+            <a
+              href="https://github.com/OthmaneBlial/phoenixcss/blob/main/docs/THEMING.md"
+              >Theming ↗</a
+            ><br />Supported CSS variable roles.
+          </li>
+          <li>
+            <a
+              href="https://github.com/OthmaneBlial/phoenixcss/blob/main/docs/ACCESSIBILITY.md"
+              >Accessibility ↗</a
+            ><br />Focus, errors, and pending audits.
+          </li>
+          <li>
+            <a
+              href="https://github.com/OthmaneBlial/phoenixcss/blob/main/docs/MIGRATION.md"
+              >Class migration ↗</a
+            ><br />Structural names changed before release.
+          </li>
+          <li>
+            <a
+              href="https://github.com/OthmaneBlial/phoenixcss/blob/main/docs/COMPARISON.md"
+              >Measurements ↗</a
+            ><br />Method and reproducible size budget.
+          </li>
+          <li>
+            <a
+              href="https://github.com/OthmaneBlial/phoenixcss/blob/main/docs/EXAMPLES.md"
+              >Runnable pages ↗</a
+            ><br />Three pages and the interactions they actually support.
+          </li>
+        </ul>
+        <p class="note">
+          Sass variables are not a supported configuration API. Use the CSS
+          custom properties for customization. Components such as dialog need
+          documented behavior code or native browser APIs.
+        </p>
+      </section>
+
+      <section class="doc-section" id="status" aria-labelledby="status-title">
+        <p class="section-number">07 / Evidence and limits</p>
+        <h2 id="status-title">What is ready, and what is still open.</h2>
+        <p class="section-lead">
+          Core and full build locally; their contrast pairs, CSS budgets, and
+          package contents are checked in this repository. Browser CI covers
+          Chromium, Firefox, and WebKit; the live roadmap records the remaining
+          manual and publication gates.
+        </p>
+        <div class="split">
+          <article class="feature-card">
+            <h3>Verified from source</h3>
+            <p>
+              Node 24 build, matching package CSS, two color palettes, and real
+              browser examples.
+            </p>
+          </article>
+          <article class="feature-card">
+            <h3>Check the live evidence</h3>
+            <p>
+              Actions logs, release downloads, manual accessibility review, and
+              final product video have separate verification gates.
+            </p>
+          </article>
+        </div>
+        <p>
+          <a
+            class="doc-button"
+            href="https://github.com/OthmaneBlial/phoenixcss/blob/main/ROADMAP.md"
+            >Read the live roadmap ↗</a
+          >
+        </p>
+      </section>
+
+      <footer class="doc-footer">
+        <p>
+          PhoenixCSS is open source under MIT. Built from actual CSS and
+          runnable examples.
+        </p>
+        <a href="https://github.com/OthmaneBlial/phoenixcss"
+          >View the repository ↗</a
+        >
+      </footer>
+    </main>
+  </body>
+</html>

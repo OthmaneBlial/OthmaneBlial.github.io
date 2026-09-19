@@ -1,0 +1,25 @@
+:root[data-phx-theme="slate"] {
+  --phx-surface: #f8fafc;
+  --phx-surface-muted: #e8eef4;
+  --phx-text: #182433;
+  --phx-link: #174d91;
+  --phx-border: #61728a;
+  --phx-focus: #174d91;
+  --phx-action: #174d91;
+  --phx-action-hover: #123c72;
+  --phx-action-active: #102f59;
+  --phx-action-text: #ffffff;
+  --phx-success: #246b3b;
+  --phx-success-hover: #194f2b;
+  --phx-success-active: #113a1f;
+  --phx-danger: #b42318;
+  --phx-danger-hover: #871a12;
+  --phx-danger-active: #5a110c;
+  --phx-nav-surface: #182433;
+  --phx-nav-text: #ffffff;
+  --phx-nav-accent: #a8d3ff;
+  --phx-disabled-surface: #e1e7ee;
+  --phx-disabled-border: #a9b5c3;
+  --phx-placeholder: #4f6074;
+  --phx-select-arrow: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 16 16'%3E%3Cpath d='m3 6 5 5 5-5' fill='none' stroke='%23182433' stroke-linecap='round' stroke-linejoin='round' stroke-width='2'/%3E%3C/svg%3E");
+}

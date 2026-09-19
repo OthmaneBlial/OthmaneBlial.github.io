@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      name="description"
+      content="A real documentation page with semantic HTML and the PhoenixCSS core stylesheet."
+    />
+    <title>A small guide · PhoenixCSS example</title>
+    <link
+      id="phoenix-stylesheet"
+      rel="stylesheet"
+      href="../assets/phoenix.core.min.css"
+    />
+  </head>
+  <body>
+    <header>
+      <p>PhoenixCSS / real page example</p>
+      <h1>A small guide to a readable page</h1>
+      <p>
+        This document uses ordinary headings, links, lists, code, and a table.
+        The button below removes the actual PhoenixCSS file so you can compare
+        the same HTML before and after styling.
+      </p>
+      <p>
+        <button type="button" id="toggle-css" aria-pressed="true">
+          Remove PhoenixCSS
+        </button>
+        <a href="./landing.html">See the optional classes</a>
+      </p>
+      <nav aria-label="On this page">
+        <a href="#start">Start</a> · <a href="#choice">Choose a file</a> ·
+        <a href="#next">Next step</a>
+      </nav>
+    </header>
+    <main>
+      <article id="start">
+        <h2>Start with the document</h2>
+        <p>
+          A short guide should be usable before it becomes an interface. Give
+          sections clear headings, keep links recognizable, and let lists retain
+          their markers. PhoenixCSS core adds readable defaults to that native
+          structure without component classes.
+        </p>
+        <blockquote>
+          <p>
+            Write the content first. Add classes when the layout needs them.
+          </p>
+        </blockquote>
+        <h3>What the core file covers</h3>
+        <ul>
+          <li>Headings, paragraphs, links, lists, quotes, and code.</li>
+          <li>
+            Tables whose cells and headers remain available on small screens.
+          </li>
+          <li>Native form controls and visible keyboard focus.</li>
+        </ul>
+        <pre><code>&lt;link rel="stylesheet" href="./phoenix.core.min.css" /&gt;</code></pre>
+      </article>
+      <section id="choice" aria-labelledby="choice-title">
+        <h2 id="choice-title">Choose the file you need</h2>
+        <p>Both outputs are built from the same source checkout.</p>
+        <table>
+          <caption>
+            PhoenixCSS build choices
+          </caption>
+          <thead>
+            <tr>
+              <th scope="col">File</th>
+              <th scope="col">Use it for</th>
+              <th scope="col">Adds</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <th scope="row">Core</th>
+              <td>Article, docs, native form</td>
+              <td>HTML defaults and tokens</td>
+            </tr>
+            <tr>
+              <th scope="row">Full</th>
+              <td>Small interface or landing page</td>
+              <td>Grid, cards, buttons, navigation</td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+      <section id="next" aria-labelledby="next-title">
+        <h2 id="next-title">Next step</h2>
+        <p>
+          Open the <a href="./form.html">native form example</a> to test input
+          labels and validation, or the
+          <a href="./landing.html">small landing page</a> for optional classes.
+          These links lead to runnable pages in the same checkout.
+        </p>
+      </section>
+    </main>
+    <footer>
+      <p>
+        Same HTML in both states. The toggle is example code, not library code.
+      </p>
+    </footer>
+    <script>
+      const stylesheet = document.getElementById("phoenix-stylesheet");
+      const toggle = document.getElementById("toggle-css");
+      toggle.addEventListener("click", () => {
+        stylesheet.disabled = !stylesheet.disabled;
+        toggle.setAttribute("aria-pressed", String(!stylesheet.disabled));
+        toggle.textContent = stylesheet.disabled
+          ? "Apply PhoenixCSS"
+          : "Remove PhoenixCSS";
+      });
+    </script>
+  </body>
+</html>

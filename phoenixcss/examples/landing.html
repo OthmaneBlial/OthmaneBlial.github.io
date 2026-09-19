@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      name="description"
+      content="A small, runnable landing page built with the optional classes in PhoenixCSS full."
+    />
+    <title>A small landing page · PhoenixCSS example</title>
+    <link rel="stylesheet" href="../assets/phoenix.min.css" />
+  </head>
+  <body>
+    <nav class="nav" aria-label="Example navigation">
+      <a class="nav__brand" href="./landing.html">PhoenixCSS</a>
+      <div class="nav__menu">
+        <a class="nav__link" href="#choices">Choose a file</a>
+        <a class="nav__link" href="./guide.html">Core guide</a>
+        <a class="nav__link" href="./form.html">Native form</a>
+      </div>
+    </nav>
+    <main class="container">
+      <header class="pt-5 pb-5">
+        <p>One CSS source · Two entry points</p>
+        <h1>Write the page. Then add only the classes you need.</h1>
+        <p>
+          The core file styles readable HTML. The full file adds a responsive
+          grid, cards, buttons, and navigation. This page uses those optional
+          classes with no JavaScript.
+        </p>
+        <p>
+          <a class="btn btn--primary" href="./guide.html">See the core guide</a>
+          <a class="btn btn--outline" href="#choices">Explore the layout</a>
+        </p>
+      </header>
+
+      <section id="choices" aria-labelledby="choices-title" class="pb-5">
+        <h2 id="choices-title">Choose a starting point</h2>
+        <p>These links open real pages from the same checkout.</p>
+        <div class="row">
+          <div class="col-6 mb-3">
+            <article class="card">
+              <h3 class="card__header">Begin with native HTML</h3>
+              <p class="card__body">
+                Open a guide made from headings, lists, code, and a table.
+                Toggle the built CSS file to compare the same document without
+                it.
+              </p>
+              <p class="card__footer">
+                <a class="btn btn--outline" href="./guide.html">Open guide</a>
+              </p>
+            </article>
+          </div>
+          <div class="col-6 mb-3">
+            <article class="card">
+              <h3 class="card__header">Try native controls</h3>
+              <p class="card__body">
+                Use a labelled form with required fields and visible feedback.
+                The slate example changes CSS tokens without changing the core
+                stylesheet.
+              </p>
+              <p class="card__footer">
+                <a class="btn btn--outline" href="./form.html">Open form</a>
+              </p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section aria-labelledby="what-title" class="pb-5">
+        <h2 id="what-title">What this page demonstrates</h2>
+        <ul>
+          <li>The two cards share a row above the small breakpoint.</li>
+          <li>Each card fills the width on a narrow screen.</li>
+          <li>
+            The links remain ordinary anchors; there is no navigation runtime.
+          </li>
+        </ul>
+        <p>
+          PhoenixCSS provides styling. A product that needs application state,
+          form delivery, or richer menu behavior must add its own logic.
+        </p>
+      </section>
+    </main>
+    <footer class="container pb-5">
+      <p>
+        Runnable example built with <code>phoenix.min.css</code>.
+        <a href="./guide.html">Compare the core file</a>.
+      </p>
+    </footer>
+  </body>
+</html>

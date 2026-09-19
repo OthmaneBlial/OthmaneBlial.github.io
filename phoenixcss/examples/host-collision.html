@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>PhoenixCSS host class collision fixture</title>
+    <link rel="stylesheet" href="../assets/phoenix.min.css" />
+    <style>
+      .host {
+        max-width: 48rem;
+        margin: 2rem auto;
+        padding: 1rem;
+      }
+
+      .host > .sidebar,
+      .host > .footer,
+      .host > .main-content {
+        margin: 1rem 0;
+        padding: 1rem;
+        border: 2px solid #212121;
+        background: #fff4e5;
+      }
+    </style>
+  </head>
+  <body>
+    <main class="host">
+      <h1>Host layout beside PhoenixCSS</h1>
+      <aside class="sidebar" aria-label="Host sidebar">
+        Host sidebar keeps its own layout.
+      </aside>
+      <div class="main-content">Host content keeps its own layout.</div>
+      <footer class="footer">Host footer keeps its own layout.</footer>
+      <aside class="phx-sidebar" aria-label="PhoenixCSS sidebar">
+        <div class="phx-sidebar__title">PhoenixCSS sidebar</div>
+        <nav class="phx-sidebar__nav" aria-label="Example navigation">
+          <a class="nav__link" href="#end">End of fixture</a>
+        </nav>
+      </aside>
+      <div class="phx-main">PhoenixCSS content uses an explicit class.</div>
+      <footer class="phx-footer" id="end">PhoenixCSS footer</footer>
+    </main>
+  </body>
+</html>

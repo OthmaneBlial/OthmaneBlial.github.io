@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>PhoenixCSS core fixture</title>
+    <link rel="stylesheet" href="../assets/phoenix.core.min.css" />
+  </head>
+  <body>
+    <header>
+      <h1>Start with ordinary HTML</h1>
+      <p>
+        Core styles content and native controls, without component or grid
+        classes.
+      </p>
+      <nav aria-label="Page sections">
+        <a href="#content">Content</a> · <a href="#contact">Contact</a>
+      </nav>
+    </header>
+    <main>
+      <article id="content">
+        <h2>Readable defaults</h2>
+        <p>
+          Links remain underlined and <code>inline code</code> is distinct from
+          prose.
+        </p>
+        <ul>
+          <li>Semantic lists</li>
+          <li>Responsive tables</li>
+          <li>Native forms</li>
+        </ul>
+        <pre><code>&lt;link rel="stylesheet" href="phoenix.core.min.css" /&gt;</code></pre>
+        <table>
+          <caption>
+            Core is small by design
+          </caption>
+          <thead>
+            <tr>
+              <th scope="col">File</th>
+              <th scope="col">Includes</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <th scope="row">Core</th>
+              <td>HTML elements</td>
+            </tr>
+            <tr>
+              <th scope="row">Full</th>
+              <td>HTML and optional classes</td>
+            </tr>
+          </tbody>
+        </table>
+      </article>
+      <section id="contact" aria-labelledby="contact-title">
+        <h2 id="contact-title">A native form</h2>
+        <form action="#contact" method="get">
+          <label for="core-email">Email</label>
+          <input id="core-email" type="email" name="email" required />
+          <label for="core-topic">Topic</label>
+          <select id="core-topic" name="topic">
+            <option>Documentation</option>
+            <option>Feedback</option>
+          </select>
+          <label><input type="checkbox" name="reply" /> Send a reply</label>
+          <button type="submit">Send</button>
+        </form>
+      </section>
+    </main>
+  </body>
+</html>

@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="en" data-phx-theme="slate">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>PhoenixCSS alternate palette fixture</title>
+    <link rel="stylesheet" href="../assets/phoenix.min.css" />
+    <link rel="stylesheet" href="slate.css" />
+    <style>
+      body > header,
+      body > main {
+        max-width: 62rem;
+        margin-inline: auto;
+        padding-inline: 1rem;
+      }
+
+      section {
+        margin-block: 2rem;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <h1>One page, two palettes.</h1>
+      <p>
+        One CSS variable override changes native content and optional classes.
+      </p>
+    </header>
+    <main>
+      <section aria-labelledby="article-title">
+        <h2 id="article-title">Article and table</h2>
+        <p>
+          Read a <a href="#form-title">linked form</a> and compare this page
+          with the default palette.
+        </p>
+        <ul>
+          <li>Clear links</li>
+          <li>Readable lists</li>
+        </ul>
+        <pre><code>&lt;link rel="stylesheet" href="./phoenix.min.css" /&gt;</code></pre>
+        <table>
+          <caption>
+            Example options
+          </caption>
+          <thead>
+            <tr>
+              <th scope="col">Option</th>
+              <th scope="col">Purpose</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <th scope="row">Core</th>
+              <td>Content</td>
+            </tr>
+            <tr>
+              <th scope="row">Full</th>
+              <td>Layout</td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+      <section aria-labelledby="form-title">
+        <h2 id="form-title">Form</h2>
+        <form action="#form-title" method="get">
+          <label for="theme-email">Email</label>
+          <input
+            id="theme-email"
+            type="email"
+            name="email"
+            placeholder="you@example.com"
+            required
+          />
+          <label for="theme-topic">Topic</label>
+          <select id="theme-topic" name="topic">
+            <option>Documentation</option>
+            <option>Components</option>
+          </select>
+          <label><input type="checkbox" name="updates" /> Send updates</label>
+          <button type="submit">Send</button>
+        </form>
+      </section>
+      <section aria-labelledby="layout-title">
+        <h2 id="layout-title">Optional layout and components</h2>
+        <nav class="nav" aria-label="Example navigation">
+          <a class="nav__brand" href="#article-title">PhoenixCSS</a>
+          <div class="nav__menu">
+            <a class="nav__link" href="#form-title">Form</a
+            ><a class="nav__link" href="#layout-title">Layout</a>
+          </div>
+        </nav>
+        <div class="row">
+          <div class="col-6">
+            <div class="card">
+              <div class="card__header">First card</div>
+              <div class="card__body">A compact content block.</div>
+            </div>
+          </div>
+          <div class="col-6">
+            <div class="card">
+              <div class="card__header">Second card</div>
+              <div class="card__body">Another content block.</div>
+            </div>
+          </div>
+        </div>
+        <p>
+          <a href="#article-title" class="btn btn--primary">Primary action</a>
+          <a href="#form-title" class="btn btn--outline">Outline action</a>
+        </p>
+      </section>
+    </main>
+  </body>
+</html>
