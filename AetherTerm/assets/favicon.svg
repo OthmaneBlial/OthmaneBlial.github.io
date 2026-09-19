@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="AetherTerm">
+  <rect width="64" height="64" rx="12" fill="#101719"/>
+  <path d="M13 15h38v34H13z" fill="none" stroke="#9fdac1" stroke-width="2" transform="rotate(-8 32 32)"/>
+  <path d="M21 36h6v7h-6zm9-17h6v24h-6zm9 8h6v16h-6z" fill="#9fdac1" transform="rotate(-8 32 32)"/>
+</svg>

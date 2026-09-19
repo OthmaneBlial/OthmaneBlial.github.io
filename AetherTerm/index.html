@@ -1,0 +1,340 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AetherTerm — a self-hosted browser terminal for enrolled Linux agents</title>
+<meta name="description" content="AetherTerm is a small self-hosted server plus an agent you place on each Linux machine. The agent dials out over an authenticated WebSocket, so the browser only receives the operator's own PTY sessions. Early alpha, loopback-tested.">
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="styles.css">
+<meta property="og:type" content="website">
+<meta property="og:title" content="AetherTerm — a self-hosted browser terminal for enrolled Linux agents">
+<meta property="og:description" content="Enrolled Linux agents dial out to your own AetherTerm server. The browser receives only the operator's own PTY sessions. Early alpha, loopback-tested, not ready for network deployment.">
+<meta property="og:image" content="assets/social-preview.png">
+</head>
+<body>
+
+<a class="skip" href="#overview">Skip to content</a>
+
+<header class="topbar">
+  <div class="wrap topbar-inner">
+    <a class="brand" href="index.html">
+      <span class="brand-mark" aria-hidden="true"><span></span><span></span><span></span></span>
+      <span>Aether<em>Term</em></span>
+    </a>
+    <nav class="nav" aria-label="Main">
+      <a href="#overview">Overview</a>
+      <a href="#architecture">Architecture</a>
+      <a href="#quickstart">Quickstart</a>
+      <a href="#status">Status</a>
+      <a href="docs.html">Docs</a>
+      <a class="nav-cta" href="https://github.com/OthmaneBlial/AetherTerm">GitHub</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+
+  <section class="hero">
+    <div class="wrap">
+      <p class="eyebrow"><span class="dot"></span>Early alpha · loopback-tested</p>
+      <h1>A browser terminal for the Linux machines you already run.</h1>
+      <p class="lede">
+        AetherTerm is a small self-hosted server plus an agent you place on each machine you administer.
+        The agent opens an authenticated WebSocket out to the server, so the browser receives only the
+        operator's own PTY sessions. There is no inbound listener to add on the target and no SSH
+        protocol involved.
+      </p>
+      <div class="hero-actions">
+        <a class="button primary" href="#quickstart">Run it locally</a>
+        <a class="button" href="docs.html#quickstart">Read the quickstart</a>
+        <a class="button ghost" href="https://github.com/OthmaneBlial/AetherTerm">Source on GitHub</a>
+      </div>
+
+      <figure class="shot">
+        <img src="assets/screenshots/desktop.png" width="1280" height="861"
+             alt="AetherTerm console in Chromium showing a device list and a live Linux shell">
+        <figcaption>
+          Real browser capture from the Ubuntu CI job: sign-in, an interactive PTY, then a second shell
+          after the server restarted. The pictured <code>browser-agent</code> is a temporary CI identity,
+          not a user deployment. Provenance and SHA-256 values are in
+          <a href="docs.html#screenshots">the capture record</a>.
+        </figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <section class="notice-band">
+    <div class="wrap notice">
+      <strong>Not ready for network deployment.</strong>
+      The documented run uses plain <code>ws://</code> on loopback. A TLS option exists and has been tried
+      locally with a temporary certificate, but public HTTPS/WSS has not been validated. Keep the server
+      on <code>127.0.0.1</code> while the <a href="docs.html#roadmap">security roadmap</a> is implemented.
+    </div>
+  </section>
+
+  <section id="overview" class="section">
+    <div class="wrap">
+      <p class="eyebrow">What exists today</p>
+      <h2>An alpha you can inspect, not a release you can deploy</h2>
+      <p class="section-lede">
+        Everything below is implemented in this repository and covered by local tests or Linux CI runs.
+        Nothing here is a production-readiness claim.
+      </p>
+
+      <ul class="feature-grid">
+        <li>
+          <h3>Server</h3>
+          <p>A Python FastAPI service with two WebSocket endpoints: <code>/ws</code> for the browser console
+          and <code>/client</code> for enrolled agents.</p>
+        </li>
+        <li>
+          <h3>Agent</h3>
+          <p>A Python agent that opens a real <code>/bin/bash</code> PTY on request and reconnects after a
+          temporary outage with bounded backoff.</p>
+        </li>
+        <li>
+          <h3>Console</h3>
+          <p>A bundled xterm.js interface listing enrolled devices and their connection state, with
+          independent terminal tabs, resize, Unicode paste and a toolbar Ctrl+C action.</p>
+        </li>
+        <li>
+          <h3>Access control</h3>
+          <p>Operator password sign-in with a cookie session, plus per-device credentials stored in
+          owner-readable files that the server can rotate and revoke.</p>
+        </li>
+        <li>
+          <h3>Session model</h3>
+          <p>Each browser session owns only the PTYs it starts. Shells close on disconnect and no command
+          history or session recording is stored by default.</p>
+        </li>
+        <li>
+          <h3>No external assets</h3>
+          <p>The terminal UI ships inside the Python package. The page derives its WebSocket URL from its own
+          origin and needs no CDN connection.</p>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <section id="architecture" class="section alt">
+    <div class="wrap">
+      <p class="eyebrow">Architecture</p>
+      <h2>Who talks to whom</h2>
+      <p class="section-lede">
+        The agent initiates the connection. Nothing in the browser can reach a machine that is not enrolled
+        on that server, and every active device belongs to the single operator account.
+      </p>
+
+      <ol class="flow">
+        <li>
+          <span class="flow-step">01</span>
+          <h3>Browser</h3>
+          <p>The operator signs in and opens <code>/web/</code>. The console holds an authenticated
+          WebSocket to the server and shows only its own sessions.</p>
+        </li>
+        <li>
+          <span class="flow-step">02</span>
+          <h3>Server</h3>
+          <p>One process is authoritative for live WebSocket and PTY state. Durable operator and device
+          identities survive a restart; live shells do not.</p>
+        </li>
+        <li>
+          <span class="flow-step">03</span>
+          <h3>Agent</h3>
+          <p>Each enrolled device holds its own credential file and dials out to <code>/client</code>.
+          A rotated or revoked credential stops authorizing connections.</p>
+        </li>
+        <li>
+          <span class="flow-step">04</span>
+          <h3>PTY</h3>
+          <p>A shell runs as the agent's own operating-system user. AetherTerm does not sandbox that shell
+          or elevate its privilege.</p>
+        </li>
+      </ol>
+
+      <p class="aside">
+        AetherTerm does not implement SSH and makes no SSH-compatibility claim. Documented differences with
+        existing terminal gateways are tracked, deliberately unmeasured, in
+        <a href="docs.html#positioning">the positioning notes</a>.
+      </p>
+    </div>
+  </section>
+
+  <section id="quickstart" class="section">
+    <div class="wrap">
+      <p class="eyebrow">Quickstart</p>
+      <h2>From a checkout to a real shell</h2>
+      <p class="section-lede">
+        Targets Python 3.13 and a POSIX shell. The sequence below runs one server and one agent on the same
+        machine over loopback — a demonstration, not an Internet deployment.
+      </p>
+
+      <figure class="code">
+        <figcaption>
+          <span class="code-label">disposable first look</span>
+          <button type="button" class="copy" data-copy>Copy</button>
+        </figcaption>
+        <pre><code>python3.13 -m venv .venv
+source .venv/bin/activate
+python -m pip install .
+python -m scripts.demo_local</code></pre>
+      </figure>
+      <p class="code-note">
+        The demo starts a real server and agent on a random loopback port and prints a one-time operator
+        password. Select <code>demo-agent</code>, then press Ctrl+C to stop both processes and delete the
+        temporary identities. It never touches your normal AetherTerm configuration.
+      </p>
+
+      <h3 class="steps-heading">Keep the identities instead</h3>
+
+      <figure class="code">
+        <figcaption>
+          <span class="code-label">1 · create private identities</span>
+          <button type="button" class="copy" data-copy>Copy</button>
+        </figcaption>
+        <pre><code>python3.13 -m venv .venv
+source .venv/bin/activate
+python -m pip install .
+aetherterm-admin init
+aetherterm-admin enroll local-agent --output ~/.config/aetherterm/local-agent.token</code></pre>
+      </figure>
+
+      <figure class="code">
+        <figcaption>
+          <span class="code-label">2 · start the server</span>
+          <button type="button" class="copy" data-copy>Copy</button>
+        </figcaption>
+        <pre><code>source .venv/bin/activate
+aetherterm-server --port 8001</code></pre>
+      </figure>
+
+      <figure class="code">
+        <figcaption>
+          <span class="code-label">3 · start the agent</span>
+          <button type="button" class="copy" data-copy>Copy</button>
+        </figcaption>
+        <pre><code>source .venv/bin/activate
+aetherterm-agent --host 127.0.0.1 --port 8001 --device-id local-agent \
+  --token-file ~/.config/aetherterm/local-agent.token</code></pre>
+      </figure>
+
+      <p class="code-note">
+        Then open <code>http://127.0.0.1:8001/web/</code>, enter the operator password and choose
+        <code>local-agent</code>. Full rotation, revocation and shutdown steps are in the
+        <a href="docs.html#quickstart">quickstart</a>; the installed entry point binds to
+        <code>127.0.0.1</code> only.
+      </p>
+
+      <p class="aside warn">
+        Keep credential files out of Git, screenshots and command arguments. Never run the agent as root
+        merely to make a command work.
+      </p>
+    </div>
+  </section>
+
+  <section id="status" class="section alt">
+    <div class="wrap">
+      <p class="eyebrow">Evidence</p>
+      <h2>What is verified, and what is still open</h2>
+      <p class="section-lede">
+        CI results support only their tested matrix. A passing build is not a device claim, a deployment
+        claim or an adoption claim.
+      </p>
+
+      <div class="table-scroll">
+        <table>
+          <thead>
+            <tr><th scope="col">Area</th><th scope="col">Verified today</th><th scope="col">Still open</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <th scope="row">Shell relay</th>
+              <td>Two independent PTYs, explicit close, browser disconnect, agent SIGTERM/SIGINT and server restart have integration tests. Chrome showed Unicode, ANSI colours, <code>less</code>, Ctrl+C and resize; Chromium, Firefox and WebKit each complete a real agent/PTY browser journey in CI.</td>
+              <td>Remaining graphical terminal interactions and real deployment validation.</td>
+            </tr>
+            <tr>
+              <th scope="row">Browser access</th>
+              <td>Password login, cookie session, same-origin WebSocket and a negative cross-browser injection test.</td>
+              <td>Expiry and revocation under load, external deployment, independent security review.</td>
+            </tr>
+            <tr>
+              <th scope="row">Agent identity</th>
+              <td>Per-device credential-file enrolment, rotation and revocation tested locally.</td>
+              <td>Remote encrypted transport plus Linux installation and operating guidance.</td>
+            </tr>
+            <tr>
+              <th scope="row">Transport</th>
+              <td>Remote cleartext is refused in code. Direct TLS and a local Caddy HTTPS/WSS proxy test with certificate validation passed.</td>
+              <td>Public certificate, external network and graphical browser validation.</td>
+            </tr>
+            <tr>
+              <th scope="row">Packaging</th>
+              <td>A wheel installed in clean Python 3.13 environments served its bundled UI and completed an authorised PTY round trip on macOS and Ubuntu 24.04 CI. The non-root container, dependency scans, three browser journeys and a Linux x86_64 agent binary with a real PTY passed in CI.</td>
+              <td>Publicly tested downloads and a verified release artifact.</td>
+            </tr>
+            <tr>
+              <th scope="row">Layout</th>
+              <td>The live shell has no horizontal overflow at 320, 375, 390, 768 or 1280 px in CI, and two real terminal tabs switch with arrow, Home and End keys.</td>
+              <td>Physical touch input, a human screen-reader review and clipboard behaviour outside Chrome.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <p class="aside">
+        Not yet measured anywhere: a remote HTTPS/WSS deployment on a public host, a published release
+        download, a hands-on comparison with other terminal gateways, and any target-user study. The
+        <a href="docs.html#roadmap">roadmap</a> holds the work and the evidence each item still needs.
+      </p>
+    </div>
+  </section>
+
+  <section id="docs" class="section">
+    <div class="wrap">
+      <p class="eyebrow">Documentation</p>
+      <h2>Read the real contracts</h2>
+      <p class="section-lede">
+        The repository keeps its product contract, threat model and test matrix next to the code. The
+        versions published here are copies of those files at the current commit.
+      </p>
+
+      <ul class="doc-grid">
+        <li><a href="docs.html#quickstart"><h3>Local quickstart</h3><p>First shell, a second device, rotation, revocation and shutdown.</p></a></li>
+        <li><a href="docs.html#install"><h3>Installation</h3><p>Wheel, container and the short-lived CI agent binary.</p></a></li>
+        <li><a href="docs.html#architecture"><h3>Architecture</h3><p>Processes, endpoints, state ownership and trust boundaries.</p></a></li>
+        <li><a href="docs.html#threat_model"><h3>Threat model</h3><p>What the current design does and does not defend against.</p></a></li>
+        <li><a href="docs.html#deployment"><h3>Deployment and TLS</h3><p>The proposed remote topology and the evidence it is missing.</p></a></li>
+        <li><a href="docs.html#test_matrix"><h3>Test matrix</h3><p>Which checks run where, and what they do not prove.</p></a></li>
+      </ul>
+
+      <p class="doc-more"><a class="button" href="docs.html">Browse all documents</a></p>
+    </div>
+  </section>
+
+</main>
+
+<footer class="footer">
+  <div class="wrap footer-inner">
+    <div>
+      <a class="brand" href="index.html">
+        <span class="brand-mark" aria-hidden="true"><span></span><span></span><span></span></span>
+        <span>Aether<em>Term</em></span>
+      </a>
+      <p class="footer-note">
+        An early alpha prototype. AetherTerm does not implement SSH and is not ready for network
+        deployment.
+      </p>
+    </div>
+    <nav class="footer-links" aria-label="Footer">
+      <a href="https://github.com/OthmaneBlial/AetherTerm">Repository</a>
+      <a href="docs.html#roadmap">Roadmap</a>
+      <a href="https://github.com/OthmaneBlial/AetherTerm/blob/main/LICENSE">MIT licence</a>
+      <a href="https://github.com/OthmaneBlial/AetherTerm/blob/main/SECURITY.md">Security policy</a>
+    </nav>
+  </div>
+</footer>
+
+<script src="app.js"></script>
+</body>
+</html>
