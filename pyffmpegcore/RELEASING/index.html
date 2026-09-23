@@ -1991,7 +1991,7 @@
 </code></pre></div>
 <ol>
 <li>Push the tag. The workflow builds once, tests the exact wheel on the supported OS/Python anchors, attests it, and publishes it through OIDC.</li>
-<li>The workflow waits for the exact wheel and source distribution to appear in the public PyPI JSON endpoint. It then performs a clean <code>pipx install</code>, <code>--version</code>, <code>doctor</code>, and <code>smoke-test</code> on Linux, macOS, and Windows before creating the matching GitHub Release with checksums. A failed public-install gate must be fixed forward; it must not be bypassed by creating the release manually.</li>
+<li>The workflow waits for the exact wheel and source distribution to appear in the public PyPI JSON endpoint. It then performs a clean <code>pipx install</code>, <code>--version</code>, <code>doctor</code>, and <code>smoke-test</code> on Linux, macOS, and Windows before creating the matching GitHub Release with checksums. The GitHub Release is marked as a prerelease while the package classifier says Beta. A failed public-install gate must be fixed forward; it must not be bypassed by creating the release manually.</li>
 <li>Record the public terminal proof only after those endpoints are healthy:</li>
 </ol>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>scripts/record_terminal_demo.sh<span class="w"> </span><span class="s2">"docs/assets/terminal-demo-v</span><span class="si">${</span><span class="nv">release_version</span><span class="si">}</span><span class="s2">.cast"</span><span class="w"> </span><span class="s2">"</span><span class="si">${</span><span class="nv">release_version</span><span class="si">}</span><span class="s2">"</span>
