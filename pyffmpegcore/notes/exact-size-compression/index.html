@@ -1814,8 +1814,8 @@ PyFFmpegCore converts the target to bytes, reserves container overhead and audio
 bitrate, derives the remaining video bitrate from probed duration, and rejects
 an impossible request before mutation when that budget falls below the declared
 quality floor.</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>usable bits = target bytes × 8 × (1 - container reserve)
-<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>video bitrate = usable bits / duration - audio bitrate
+<div class="highlight"><pre><span></span><code>usable bits = target bytes × 8 × (1 - container reserve)
+video bitrate = usable bits / duration - audio bitrate
 </code></pre></div>
 <p>The maintained workflow uses two-pass encoding when requested, keeps pass files
 in a controlled temporary workspace, and cleans them according to the explicit

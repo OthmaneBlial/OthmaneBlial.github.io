@@ -1817,11 +1817,11 @@ selected streams, operations, warnings, and structured metadata.</p>
 for humans only; it is never evaluated by a shell. This keeps spaces,
 apostrophes, Unicode, filter expressions, and untrusted path values from turning
 into shell syntax.</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>pyffmpegcore<span class="w"> </span>thumbnail<span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="w">  </span>--input<span class="w"> </span><span class="s2">"media/O'Brien clip.mp4"</span><span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="w">  </span>--output<span class="w"> </span><span class="s2">"proof images/poster.jpg"</span><span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="w">  </span>--timestamp<span class="w"> </span><span class="m">00</span>:00:01<span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="w">  </span>--dry-run<span class="w"> </span>--plan-json
+<div class="highlight"><pre><span></span><code>pyffmpegcore<span class="w"> </span>thumbnail<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--input<span class="w"> </span><span class="s2">"media/O'Brien clip.mp4"</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--output<span class="w"> </span><span class="s2">"proof images/poster.jpg"</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--timestamp<span class="w"> </span><span class="m">00</span>:00:01<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--dry-run<span class="w"> </span>--plan-json
 </code></pre></div>
 <p>Plans are deterministic after normalizing environment-specific paths. CLI,
 Python, examples, profiles, batches, and pipelines all consume the shared

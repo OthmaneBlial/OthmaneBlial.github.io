@@ -1943,12 +1943,12 @@
 <p>A receipt is optional evidence for one executed workflow. It records the exact
 typed plan, preflight facts, tool versions, normalized progress/result facts,
 warnings, and compact input/output probe summaries.</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>pyffmpegcore<span class="w"> </span>thumbnail<span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="w">  </span>--input<span class="w"> </span>talk.mp4<span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="w">  </span>--output<span class="w"> </span>poster.jpg<span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="w">  </span>--receipt<span class="w"> </span>run-receipt.json
-<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>
-<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>pyffmpegcore<span class="w"> </span>receipt<span class="w"> </span>validate<span class="w"> </span>run-receipt.json
+<div class="highlight"><pre><span></span><code>pyffmpegcore<span class="w"> </span>thumbnail<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--input<span class="w"> </span>talk.mp4<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--output<span class="w"> </span>poster.jpg<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--receipt<span class="w"> </span>run-receipt.json
+
+pyffmpegcore<span class="w"> </span>receipt<span class="w"> </span>validate<span class="w"> </span>run-receipt.json
 </code></pre></div>
 <p>The job can fail and still produce a valid receipt. This is intentional: the
 exit category and preflight/result facts are often most valuable when
@@ -1971,28 +1971,28 @@ remote inputs are marked unverified instead of causing a second network read.</p
 </ul>
 <p>Hashing can expose stable content identity and can be slow for large files. It
 requires an explicit opt-in and records its algorithm:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>pyffmpegcore<span class="w"> </span>convert<span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="w">  </span>--input<span class="w"> </span>source.mov<span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="w">  </span>--output<span class="w"> </span>publish.mp4<span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="w">  </span>--receipt<span class="w"> </span>run-receipt.json<span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a><span class="w">  </span>--hash-content
+<div class="highlight"><pre><span></span><code>pyffmpegcore<span class="w"> </span>convert<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--input<span class="w"> </span>source.mov<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--output<span class="w"> </span>publish.mp4<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--receipt<span class="w"> </span>run-receipt.json<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--hash-content
 </code></pre></div>
 <p>The current algorithm is SHA-256. A receipt never contains media bytes.</p>
 <h2 id="bug-reports-without-private-media">Bug reports without private media<a class="headerlink" href="#bug-reports-without-private-media" title="Permanent link">&para;</a></h2>
 <p>Validate the receipt locally, then combine it with current <code>doctor</code> facts:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>pyffmpegcore<span class="w"> </span>receipt<span class="w"> </span>bug-report<span class="w"> </span>run-receipt.json<span class="w"> </span>--output<span class="w"> </span>bug-report.json
+<div class="highlight"><pre><span></span><code>pyffmpegcore<span class="w"> </span>receipt<span class="w"> </span>bug-report<span class="w"> </span>run-receipt.json<span class="w"> </span>--output<span class="w"> </span>bug-report.json
 </code></pre></div>
 <p>This command does not open or probe the original input/output media. Review the
 JSON before attaching it to an issue because filenames and technical metadata
 can still be sensitive in some environments.</p>
 <h2 id="python">Python<a class="headerlink" href="#python" title="Permanent link">&para;</a></h2>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">pyffmpegcore</span><span class="w"> </span><span class="kn">import</span> <span class="n">ReceiptBuilder</span><span class="p">,</span> <span class="n">WorkflowEngine</span>
-<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>
-<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="n">engine</span> <span class="o">=</span> <span class="n">WorkflowEngine</span><span class="p">()</span>
-<a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="n">plan</span> <span class="o">=</span> <span class="n">engine</span><span class="o">.</span><span class="n">planner</span><span class="o">.</span><span class="n">thumbnail</span><span class="p">(</span><span class="s2">"talk.mp4"</span><span class="p">,</span> <span class="s2">"poster.jpg"</span><span class="p">,</span> <span class="n">timestamp</span><span class="o">=</span><span class="s2">"00:00:01"</span><span class="p">)</span>
-<a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a><span class="n">batch</span> <span class="o">=</span> <span class="n">engine</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">plan</span><span class="p">)</span>
-<a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a><span class="n">receipt</span> <span class="o">=</span> <span class="n">ReceiptBuilder</span><span class="p">()</span><span class="o">.</span><span class="n">build</span><span class="p">(</span><span class="n">batch</span><span class="p">)</span>
-<a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a><span class="n">receipt</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">"run-receipt.json"</span><span class="p">)</span>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">pyffmpegcore</span><span class="w"> </span><span class="kn">import</span> <span class="n">ReceiptBuilder</span><span class="p">,</span> <span class="n">WorkflowEngine</span>
+
+<span class="n">engine</span> <span class="o">=</span> <span class="n">WorkflowEngine</span><span class="p">()</span>
+<span class="n">plan</span> <span class="o">=</span> <span class="n">engine</span><span class="o">.</span><span class="n">planner</span><span class="o">.</span><span class="n">thumbnail</span><span class="p">(</span><span class="s2">"talk.mp4"</span><span class="p">,</span> <span class="s2">"poster.jpg"</span><span class="p">,</span> <span class="n">timestamp</span><span class="o">=</span><span class="s2">"00:00:01"</span><span class="p">)</span>
+<span class="n">batch</span> <span class="o">=</span> <span class="n">engine</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">plan</span><span class="p">)</span>
+<span class="n">receipt</span> <span class="o">=</span> <span class="n">ReceiptBuilder</span><span class="p">()</span><span class="o">.</span><span class="n">build</span><span class="p">(</span><span class="n">batch</span><span class="p">)</span>
+<span class="n">receipt</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">"run-receipt.json"</span><span class="p">)</span>
 </code></pre></div>
 <h2 id="schema-examples-and-migration">Schema, examples, and migration<a class="headerlink" href="#schema-examples-and-migration" title="Permanent link">&para;</a></h2>
 <ul>

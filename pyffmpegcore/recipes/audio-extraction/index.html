@@ -1810,17 +1810,17 @@
 
 <h1 id="extract-audio">Extract audio<a class="headerlink" href="#extract-audio" title="Permanent link">&para;</a></h1>
 <p>The output extension selects a sensible default codec when no codec is specified.</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>pyffmpegcore<span class="w"> </span>extract-audio<span class="w"> </span>--input<span class="w"> </span>interview.mp4<span class="w"> </span>--output<span class="w"> </span>interview.mp3
-<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>pyffmpegcore<span class="w"> </span>probe<span class="w"> </span>--input<span class="w"> </span>interview.mp3<span class="w"> </span>--json
+<div class="highlight"><pre><span></span><code>pyffmpegcore<span class="w"> </span>extract-audio<span class="w"> </span>--input<span class="w"> </span>interview.mp4<span class="w"> </span>--output<span class="w"> </span>interview.mp3
+pyffmpegcore<span class="w"> </span>probe<span class="w"> </span>--input<span class="w"> </span>interview.mp3<span class="w"> </span>--json
 </code></pre></div>
 <p>For uncompressed editing audio:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="n">pyffmpegcore</span> <span class="n">extract-audio</span> <span class="p">-</span><span class="n">-input</span> <span class="s2">"interview.mp4"</span> <span class="p">-</span><span class="n">-output</span> <span class="s2">"interview.wav"</span> <span class="p">-</span><span class="n">-sample-rate</span> <span class="n">48000</span> <span class="p">-</span><span class="n">-channels</span> <span class="n">2</span>
+<div class="highlight"><pre><span></span><code><span class="n">pyffmpegcore</span> <span class="n">extract-audio</span> <span class="p">-</span><span class="n">-input</span> <span class="s2">"interview.mp4"</span> <span class="p">-</span><span class="n">-output</span> <span class="s2">"interview.wav"</span> <span class="p">-</span><span class="n">-sample-rate</span> <span class="n">48000</span> <span class="p">-</span><span class="n">-channels</span> <span class="n">2</span>
 </code></pre></div>
 <p>Python:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">pyffmpegcore</span><span class="w"> </span><span class="kn">import</span> <span class="n">FFmpegRunner</span>
-<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>
-<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="n">result</span> <span class="o">=</span> <span class="n">FFmpegRunner</span><span class="p">()</span><span class="o">.</span><span class="n">extract_audio</span><span class="p">(</span><span class="s2">"interview.mp4"</span><span class="p">,</span> <span class="s2">"interview.wav"</span><span class="p">,</span> <span class="n">sample_rate</span><span class="o">=</span><span class="mi">48000</span><span class="p">,</span> <span class="n">channels</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
-<a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="k">assert</span> <span class="n">result</span><span class="o">.</span><span class="n">returncode</span> <span class="o">==</span> <span class="mi">0</span><span class="p">,</span> <span class="n">result</span><span class="o">.</span><span class="n">stderr</span>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">pyffmpegcore</span><span class="w"> </span><span class="kn">import</span> <span class="n">FFmpegRunner</span>
+
+<span class="n">result</span> <span class="o">=</span> <span class="n">FFmpegRunner</span><span class="p">()</span><span class="o">.</span><span class="n">extract_audio</span><span class="p">(</span><span class="s2">"interview.mp4"</span><span class="p">,</span> <span class="s2">"interview.wav"</span><span class="p">,</span> <span class="n">sample_rate</span><span class="o">=</span><span class="mi">48000</span><span class="p">,</span> <span class="n">channels</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="k">assert</span> <span class="n">result</span><span class="o">.</span><span class="n">returncode</span> <span class="o">==</span> <span class="mi">0</span><span class="p">,</span> <span class="n">result</span><span class="o">.</span><span class="n">stderr</span>
 </code></pre></div>
 <p>Verify that the output contains audio and no video stream.</p>
 

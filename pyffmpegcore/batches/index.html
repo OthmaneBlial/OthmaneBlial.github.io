@@ -1921,37 +1921,37 @@
 <p>A batch manifest runs maintained profiles through the same planner, preflight,
 executor, and receipt contracts used by one-off commands. Jobs can mix video,
 audio, subtitle, and archival work without embedding shell strings.</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="p">{</span>
-<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="w">  </span><span class="nt">"schema_version"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1.1"</span><span class="p">,</span>
-<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="w">  </span><span class="nt">"policy"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="w">    </span><span class="nt">"max_workers"</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span>
-<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="w">    </span><span class="nt">"max_retries"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span>
-<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="w">    </span><span class="nt">"max_input_bytes"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2GiB"</span><span class="p">,</span>
-<a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a><span class="w">    </span><span class="nt">"per_job_timeout_seconds"</span><span class="p">:</span><span class="w"> </span><span class="mi">900</span>
-<a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a><span class="w">  </span><span class="p">},</span>
-<a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a><span class="w">  </span><span class="nt">"jobs"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
-<a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a><span class="w">    </span><span class="p">{</span>
-<a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a><span class="w">      </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"web-video"</span><span class="p">,</span>
-<a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a><span class="w">      </span><span class="nt">"profile"</span><span class="p">:</span><span class="w"> </span><span class="s2">"web/mp4-compatible"</span><span class="p">,</span>
-<a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a><span class="w">      </span><span class="nt">"input"</span><span class="p">:</span><span class="w"> </span><span class="s2">"media/source.mov"</span><span class="p">,</span>
-<a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a><span class="w">      </span><span class="nt">"output"</span><span class="p">:</span><span class="w"> </span><span class="s2">"build/source.mp4"</span>
-<a id="__codelineno-0-15" name="__codelineno-0-15" href="#__codelineno-0-15"></a><span class="w">    </span><span class="p">},</span>
-<a id="__codelineno-0-16" name="__codelineno-0-16" href="#__codelineno-0-16"></a><span class="w">    </span><span class="p">{</span>
-<a id="__codelineno-0-17" name="__codelineno-0-17" href="#__codelineno-0-17"></a><span class="w">      </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"podcast-audio"</span><span class="p">,</span>
-<a id="__codelineno-0-18" name="__codelineno-0-18" href="#__codelineno-0-18"></a><span class="w">      </span><span class="nt">"profile"</span><span class="p">:</span><span class="w"> </span><span class="s2">"audio/podcast-speech"</span><span class="p">,</span>
-<a id="__codelineno-0-19" name="__codelineno-0-19" href="#__codelineno-0-19"></a><span class="w">      </span><span class="nt">"input"</span><span class="p">:</span><span class="w"> </span><span class="s2">"media/episode.wav"</span><span class="p">,</span>
-<a id="__codelineno-0-20" name="__codelineno-0-20" href="#__codelineno-0-20"></a><span class="w">      </span><span class="nt">"output"</span><span class="p">:</span><span class="w"> </span><span class="s2">"build/episode.m4a"</span>
-<a id="__codelineno-0-21" name="__codelineno-0-21" href="#__codelineno-0-21"></a><span class="w">    </span><span class="p">},</span>
-<a id="__codelineno-0-22" name="__codelineno-0-22" href="#__codelineno-0-22"></a><span class="w">    </span><span class="p">{</span>
-<a id="__codelineno-0-23" name="__codelineno-0-23" href="#__codelineno-0-23"></a><span class="w">      </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"captioned-video"</span><span class="p">,</span>
-<a id="__codelineno-0-24" name="__codelineno-0-24" href="#__codelineno-0-24"></a><span class="w">      </span><span class="nt">"profile"</span><span class="p">:</span><span class="w"> </span><span class="s2">"subtitles/accessibility"</span><span class="p">,</span>
-<a id="__codelineno-0-25" name="__codelineno-0-25" href="#__codelineno-0-25"></a><span class="w">      </span><span class="nt">"input"</span><span class="p">:</span><span class="w"> </span><span class="s2">"media/lesson.mp4"</span><span class="p">,</span>
-<a id="__codelineno-0-26" name="__codelineno-0-26" href="#__codelineno-0-26"></a><span class="w">      </span><span class="nt">"output"</span><span class="p">:</span><span class="w"> </span><span class="s2">"build/lesson-captioned.mp4"</span><span class="p">,</span>
-<a id="__codelineno-0-27" name="__codelineno-0-27" href="#__codelineno-0-27"></a><span class="w">      </span><span class="nt">"subtitle"</span><span class="p">:</span><span class="w"> </span><span class="s2">"media/captions.srt"</span><span class="p">,</span>
-<a id="__codelineno-0-28" name="__codelineno-0-28" href="#__codelineno-0-28"></a><span class="w">      </span><span class="nt">"subtitle_language"</span><span class="p">:</span><span class="w"> </span><span class="s2">"fra"</span>
-<a id="__codelineno-0-29" name="__codelineno-0-29" href="#__codelineno-0-29"></a><span class="w">    </span><span class="p">}</span>
-<a id="__codelineno-0-30" name="__codelineno-0-30" href="#__codelineno-0-30"></a><span class="w">  </span><span class="p">]</span>
-<a id="__codelineno-0-31" name="__codelineno-0-31" href="#__codelineno-0-31"></a><span class="p">}</span>
+<div class="highlight"><pre><span></span><code><span class="p">{</span>
+<span class="w">  </span><span class="nt">"schema_version"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1.1"</span><span class="p">,</span>
+<span class="w">  </span><span class="nt">"policy"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nt">"max_workers"</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">"max_retries"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">"max_input_bytes"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2GiB"</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">"per_job_timeout_seconds"</span><span class="p">:</span><span class="w"> </span><span class="mi">900</span>
+<span class="w">  </span><span class="p">},</span>
+<span class="w">  </span><span class="nt">"jobs"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">      </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"web-video"</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">"profile"</span><span class="p">:</span><span class="w"> </span><span class="s2">"web/mp4-compatible"</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">"input"</span><span class="p">:</span><span class="w"> </span><span class="s2">"media/source.mov"</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">"output"</span><span class="p">:</span><span class="w"> </span><span class="s2">"build/source.mp4"</span>
+<span class="w">    </span><span class="p">},</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">      </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"podcast-audio"</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">"profile"</span><span class="p">:</span><span class="w"> </span><span class="s2">"audio/podcast-speech"</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">"input"</span><span class="p">:</span><span class="w"> </span><span class="s2">"media/episode.wav"</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">"output"</span><span class="p">:</span><span class="w"> </span><span class="s2">"build/episode.m4a"</span>
+<span class="w">    </span><span class="p">},</span>
+<span class="w">    </span><span class="p">{</span>
+<span class="w">      </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"captioned-video"</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">"profile"</span><span class="p">:</span><span class="w"> </span><span class="s2">"subtitles/accessibility"</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">"input"</span><span class="p">:</span><span class="w"> </span><span class="s2">"media/lesson.mp4"</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">"output"</span><span class="p">:</span><span class="w"> </span><span class="s2">"build/lesson-captioned.mp4"</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">"subtitle"</span><span class="p">:</span><span class="w"> </span><span class="s2">"media/captions.srt"</span><span class="p">,</span>
+<span class="w">      </span><span class="nt">"subtitle_language"</span><span class="p">:</span><span class="w"> </span><span class="s2">"fra"</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">  </span><span class="p">]</span>
+<span class="p">}</span>
 </code></pre></div>
 <p>Paths are resolved relative to the manifest. Unknown fields, duplicate work,
 duplicate IDs, case-insensitive output collisions, invalid profiles, and inputs
@@ -1959,13 +1959,13 @@ larger than the explicit resource limit fail before any job starts.
 Accessibility-profile jobs require <code>subtitle</code> and accept optional
 <code>subtitle_language</code>; omitted language retains the profile's <code>und</code> label.</p>
 <h2 id="validate-preview-and-run">Validate, preview, and run<a class="headerlink" href="#validate-preview-and-run" title="Permanent link">&para;</a></h2>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>pyffmpegcore<span class="w"> </span>batch<span class="w"> </span>validate<span class="w"> </span>batch.json<span class="w"> </span>--json
-<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>pyffmpegcore<span class="w"> </span>batch<span class="w"> </span>run<span class="w"> </span>batch.json<span class="w"> </span>--explain<span class="w"> </span>--plan-json
-<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>pyffmpegcore<span class="w"> </span>batch<span class="w"> </span>run<span class="w"> </span>batch.json<span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="w">  </span>--state<span class="w"> </span>.pyffmpegcore/batch-state.json<span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a><span class="w">  </span>--events<span class="w"> </span>.pyffmpegcore/batch-events.jsonl<span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a><span class="w">  </span>--receipt-dir<span class="w"> </span>.pyffmpegcore/receipts<span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a><span class="w">  </span>--result-json
+<div class="highlight"><pre><span></span><code>pyffmpegcore<span class="w"> </span>batch<span class="w"> </span>validate<span class="w"> </span>batch.json<span class="w"> </span>--json
+pyffmpegcore<span class="w"> </span>batch<span class="w"> </span>run<span class="w"> </span>batch.json<span class="w"> </span>--explain<span class="w"> </span>--plan-json
+pyffmpegcore<span class="w"> </span>batch<span class="w"> </span>run<span class="w"> </span>batch.json<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--state<span class="w"> </span>.pyffmpegcore/batch-state.json<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--events<span class="w"> </span>.pyffmpegcore/batch-events.jsonl<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--receipt-dir<span class="w"> </span>.pyffmpegcore/receipts<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--result-json
 </code></pre></div>
 <p><code>max_workers</code> is a hard concurrency bound from 1 to 32. <code>max_input_bytes</code> limits
 each local input; it accepts an integer or a documented size such as <code>2GiB</code>.

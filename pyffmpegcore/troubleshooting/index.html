@@ -2053,8 +2053,8 @@
 
 <h1 id="troubleshooting">Troubleshooting<a class="headerlink" href="#troubleshooting" title="Permanent link">&para;</a></h1>
 <h2 id="start-with-diagnostics">Start with diagnostics<a class="headerlink" href="#start-with-diagnostics" title="Permanent link">&para;</a></h2>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>pyffmpegcore<span class="w"> </span>doctor<span class="w"> </span>--json
-<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>pyffmpegcore<span class="w"> </span>smoke-test
+<div class="highlight"><pre><span></span><code>pyffmpegcore<span class="w"> </span>doctor<span class="w"> </span>--json
+pyffmpegcore<span class="w"> </span>smoke-test
 </code></pre></div>
 <p>If either command fails, preserve the exit code and sanitized stderr. Do not post URL credentials, private paths, or personal metadata.</p>
 <h2 id="ffmpeg-or-ffprobe-is-missing"><code>ffmpeg</code> or <code>ffprobe</code> is missing<a class="headerlink" href="#ffmpeg-or-ffprobe-is-missing" title="Permanent link">&para;</a></h2>
@@ -2062,7 +2062,7 @@
 <a href="../installation/#macos-and-windows-ffmpeg">macOS and Windows commands</a> or the
 <a href="../installation/#fedora-linux-and-arch-linux">Fedora and Arch Linux commands</a>),
 open a new terminal, and rerun <code>doctor</code>. An explicit path is supported:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>pyffmpegcore<span class="w"> </span>--ffmpeg-path<span class="w"> </span>/trusted/path/ffmpeg<span class="w"> </span>--ffprobe-path<span class="w"> </span>/trusted/path/ffprobe<span class="w"> </span>doctor
+<div class="highlight"><pre><span></span><code>pyffmpegcore<span class="w"> </span>--ffmpeg-path<span class="w"> </span>/trusted/path/ffmpeg<span class="w"> </span>--ffprobe-path<span class="w"> </span>/trusted/path/ffprobe<span class="w"> </span>doctor
 </code></pre></div>
 <h2 id="an-encoder-or-filter-is-absent">An encoder or filter is absent<a class="headerlink" href="#an-encoder-or-filter-is-absent" title="Permanent link">&para;</a></h2>
 <p>FFmpeg builds differ. Inspect <code>doctor --json</code> and the workflow's error. Install an FFmpeg build that contains the required capability or choose a documented fallback. PyFFmpegCore does not silently download a codec build.</p>
@@ -2073,11 +2073,11 @@ with <a href="https://superuser.com/questions/1513289/track-2-and-sub-titles-los
 and <a href="https://superuser.com/questions/1808132/how-to-copy-the-video-covert-all-audio-streams-to-ac3-and-only-keep-the-subtit">multilingual subtitle sets</a>.</p>
 <p>Probe before and after. If the goal is a lossless remux and the destination
 container supports every source codec, use:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>pyffmpegcore<span class="w"> </span>convert<span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="w">  </span>--input<span class="w"> </span>source.mkv<span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="w">  </span>--output<span class="w"> </span>preserved.mkv<span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="w">  </span>--preserve-all-streams<span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a><span class="w">  </span>--explain
+<div class="highlight"><pre><span></span><code>pyffmpegcore<span class="w"> </span>convert<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--input<span class="w"> </span>source.mkv<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--output<span class="w"> </span>preserved.mkv<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--preserve-all-streams<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--explain
 </code></pre></div>
 <p>Then execute the same command without <code>--explain</code>. See the <a href="../recipes/preserve-streams/">complete stream
 preservation contract</a>. PyFFmpegCore fails rather
@@ -2100,7 +2100,7 @@ stalls.</p>
 <p>The refusal is intentional. Choose a new output path or explicitly add <code>--force</code> after checking the target.</p>
 <h2 id="a-path-contains-spaces-or-apostrophes">A path contains spaces or apostrophes<a class="headerlink" href="#a-path-contains-spaces-or-apostrophes" title="Permanent link">&para;</a></h2>
 <p>Quote it in your shell. PyFFmpegCore passes paths as process arguments rather than shell strings:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>pyffmpegcore<span class="w"> </span>probe<span class="w"> </span>--input<span class="w"> </span><span class="s2">"media/O'Brien clip.mp4"</span>
+<div class="highlight"><pre><span></span><code>pyffmpegcore<span class="w"> </span>probe<span class="w"> </span>--input<span class="w"> </span><span class="s2">"media/O'Brien clip.mp4"</span>
 </code></pre></div>
 <h2 id="ffmpeg-succeeds-but-pyffmpegcore-fails">FFmpeg succeeds but PyFFmpegCore fails<a class="headerlink" href="#ffmpeg-succeeds-but-pyffmpegcore-fails" title="Permanent link">&para;</a></h2>
 <p>Open a bug report with the exact PyFFmpegCore command, exit code, sanitized <code>doctor --json</code>, the raw FFmpeg command that succeeds, and a generated or redistribution-safe reproduction. See the <a href="https://github.com/OthmaneBlial/pyffmpegcore/blob/main/SUPPORT.md">support guide</a>.</p>

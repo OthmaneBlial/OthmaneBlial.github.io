@@ -1814,11 +1814,11 @@
 users ask how to <a href="https://stackoverflow.com/questions/29082422/ffmpeg-video-compression-specific-file-size/61146975">encode to a specific size</a>,
 how to <a href="https://stackoverflow.com/questions/68608701/targeting-a-specific-file-size-in-vp8vorbis-encoding-using-ffmpeg">avoid clipping while staying under a limit</a>,
 and why FFmpeg's hard <a href="https://stackoverflow.com/questions/59051058/limit-file-size-in-ffmpeg"><code>-fs</code> limit is not exact</a>.</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>pyffmpegcore<span class="w"> </span>compress<span class="w"> </span>--input<span class="w"> </span>upload.mp4<span class="w"> </span>--output<span class="w"> </span>upload-small.mp4<span class="w"> </span>--target-size<span class="w"> </span>24MiB<span class="w"> </span>--two-pass<span class="w"> </span>--receipt<span class="w"> </span>upload.json
-<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>pyffmpegcore<span class="w"> </span>probe<span class="w"> </span>--input<span class="w"> </span>upload-small.mp4<span class="w"> </span>--json
+<div class="highlight"><pre><span></span><code>pyffmpegcore<span class="w"> </span>compress<span class="w"> </span>--input<span class="w"> </span>upload.mp4<span class="w"> </span>--output<span class="w"> </span>upload-small.mp4<span class="w"> </span>--target-size<span class="w"> </span>24MiB<span class="w"> </span>--two-pass<span class="w"> </span>--receipt<span class="w"> </span>upload.json
+pyffmpegcore<span class="w"> </span>probe<span class="w"> </span>--input<span class="w"> </span>upload-small.mp4<span class="w"> </span>--json
 </code></pre></div>
 <p>For a quality-first output without an exact byte budget:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>pyffmpegcore<span class="w"> </span>compress<span class="w"> </span>--input<span class="w"> </span>upload.mp4<span class="w"> </span>--output<span class="w"> </span>upload-small.mp4<span class="w"> </span>--crf<span class="w"> </span><span class="m">28</span>
+<div class="highlight"><pre><span></span><code>pyffmpegcore<span class="w"> </span>compress<span class="w"> </span>--input<span class="w"> </span>upload.mp4<span class="w"> </span>--output<span class="w"> </span>upload-small.mp4<span class="w"> </span>--crf<span class="w"> </span><span class="m">28</span>
 </code></pre></div>
 <p>Choose one primary goal: use CRF when visual quality matters more than final
 bytes, and two-pass target-size mode when an upload or storage ceiling is the

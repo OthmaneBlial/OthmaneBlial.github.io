@@ -1875,12 +1875,12 @@
 
 <h1 id="versioned-workflow-profiles">Versioned workflow profiles<a class="headerlink" href="#versioned-workflow-profiles" title="Permanent link">&para;</a></h1>
 <p>Profiles are small, reviewable sets of maintained choices. They are not raw command strings and never contain shell fragments.</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>pyffmpegcore<span class="w"> </span>profile<span class="w"> </span>list
-<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>pyffmpegcore<span class="w"> </span>profile<span class="w"> </span>show<span class="w"> </span>web/mp4-compatible
-<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>pyffmpegcore<span class="w"> </span>profile<span class="w"> </span>show<span class="w"> </span>audio/podcast-speech<span class="w"> </span>--json
-<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>pyffmpegcore<span class="w"> </span>profile<span class="w"> </span>validate<span class="w"> </span>./review-copy.toml
-<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>pyffmpegcore<span class="w"> </span>profile<span class="w"> </span>run<span class="w"> </span>web/mp4-compatible<span class="w"> </span>--input<span class="w"> </span>source.webm<span class="w"> </span>--output<span class="w"> </span>publish.mp4<span class="w"> </span>--receipt<span class="w"> </span>publish.json
-<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>pyffmpegcore<span class="w"> </span>profile<span class="w"> </span>run<span class="w"> </span>subtitles/accessibility<span class="w"> </span>--input<span class="w"> </span>lesson.mp4<span class="w"> </span>--subtitle<span class="w"> </span>captions.srt<span class="w"> </span>--language<span class="w"> </span>fra<span class="w"> </span>--output<span class="w"> </span>lesson-captioned.mp4
+<div class="highlight"><pre><span></span><code>pyffmpegcore<span class="w"> </span>profile<span class="w"> </span>list
+pyffmpegcore<span class="w"> </span>profile<span class="w"> </span>show<span class="w"> </span>web/mp4-compatible
+pyffmpegcore<span class="w"> </span>profile<span class="w"> </span>show<span class="w"> </span>audio/podcast-speech<span class="w"> </span>--json
+pyffmpegcore<span class="w"> </span>profile<span class="w"> </span>validate<span class="w"> </span>./review-copy.toml
+pyffmpegcore<span class="w"> </span>profile<span class="w"> </span>run<span class="w"> </span>web/mp4-compatible<span class="w"> </span>--input<span class="w"> </span>source.webm<span class="w"> </span>--output<span class="w"> </span>publish.mp4<span class="w"> </span>--receipt<span class="w"> </span>publish.json
+pyffmpegcore<span class="w"> </span>profile<span class="w"> </span>run<span class="w"> </span>subtitles/accessibility<span class="w"> </span>--input<span class="w"> </span>lesson.mp4<span class="w"> </span>--subtitle<span class="w"> </span>captions.srt<span class="w"> </span>--language<span class="w"> </span>fra<span class="w"> </span>--output<span class="w"> </span>lesson-captioned.mp4
 </code></pre></div>
 <p>The built-in registry deliberately stays small:</p>
 <table>
@@ -1931,16 +1931,16 @@ Every built-in profile runs a golden real-media contract from the exact wheel on
 the Linux, macOS, and Windows compatibility matrix.</p>
 <h2 id="project-and-user-profiles">Project and user profiles<a class="headerlink" href="#project-and-user-profiles" title="Permanent link">&para;</a></h2>
 <p>JSON and TOML use the same strict <code>1.0</code> schema. Unknown fields fail validation.</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="n">schema_version</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"1.0"</span>
-<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="n">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"project/review-copy"</span>
-<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="n">profile_version</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span>
-<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="n">description</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"Small review copy"</span>
-<a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a><span class="n">workflow</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"convert"</span>
-<a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a><span class="n">required_capabilities</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="s2">"encoder:libx264"</span><span class="p">]</span>
-<a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a>
-<a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a><span class="k">[options]</span>
-<a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a><span class="n">video_codec</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"libx264"</span>
-<a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a><span class="n">crf</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">30</span>
+<div class="highlight"><pre><span></span><code><span class="n">schema_version</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"1.0"</span>
+<span class="n">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"project/review-copy"</span>
+<span class="n">profile_version</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span>
+<span class="n">description</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"Small review copy"</span>
+<span class="n">workflow</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"convert"</span>
+<span class="n">required_capabilities</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="s2">"encoder:libx264"</span><span class="p">]</span>
+
+<span class="k">[options]</span>
+<span class="n">video_codec</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"libx264"</span>
+<span class="n">crf</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">30</span>
 </code></pre></div>
 <p>Required fields are <code>schema_version</code>, <code>name</code>, <code>profile_version</code>, <code>description</code>, <code>workflow</code>, and <code>options</code>. Names must be namespaced. Options may contain only JSON-compatible data. Capabilities use <code>kind:name</code>, such as <code>encoder:libx264</code> or <code>filter:loudnorm</code>.</p>
 <p>Service-specific presets are not accepted into the built-in registry unless the service publishes stable requirements and the project commits to maintaining and testing them. A local profile is the safer place for organization-specific policy.</p>

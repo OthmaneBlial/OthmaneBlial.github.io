@@ -1921,13 +1921,13 @@
 
 <h1 id="subtitle-workflows">Subtitle workflows<a class="headerlink" href="#subtitle-workflows" title="Permanent link">&para;</a></h1>
 <h2 id="add-a-selectable-track">Add a selectable track<a class="headerlink" href="#add-a-selectable-track" title="Permanent link">&para;</a></h2>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>pyffmpegcore<span class="w"> </span>subtitles<span class="w"> </span>add<span class="w"> </span>--video<span class="w"> </span>lesson.mp4<span class="w"> </span>--subtitle<span class="w"> </span>captions.srt<span class="w"> </span>--output<span class="w"> </span>lesson-captioned.mp4<span class="w"> </span>--language<span class="w"> </span>eng
+<div class="highlight"><pre><span></span><code>pyffmpegcore<span class="w"> </span>subtitles<span class="w"> </span>add<span class="w"> </span>--video<span class="w"> </span>lesson.mp4<span class="w"> </span>--subtitle<span class="w"> </span>captions.srt<span class="w"> </span>--output<span class="w"> </span>lesson-captioned.mp4<span class="w"> </span>--language<span class="w"> </span>eng
 </code></pre></div>
 <h2 id="extract-an-embedded-track">Extract an embedded track<a class="headerlink" href="#extract-an-embedded-track" title="Permanent link">&para;</a></h2>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>pyffmpegcore<span class="w"> </span>subtitles<span class="w"> </span>extract<span class="w"> </span>--video<span class="w"> </span>lesson-captioned.mp4<span class="w"> </span>--output<span class="w"> </span>extracted.srt<span class="w"> </span>--stream-index<span class="w"> </span><span class="m">0</span>
+<div class="highlight"><pre><span></span><code>pyffmpegcore<span class="w"> </span>subtitles<span class="w"> </span>extract<span class="w"> </span>--video<span class="w"> </span>lesson-captioned.mp4<span class="w"> </span>--output<span class="w"> </span>extracted.srt<span class="w"> </span>--stream-index<span class="w"> </span><span class="m">0</span>
 </code></pre></div>
 <h2 id="burn-text-into-video">Burn text into video<a class="headerlink" href="#burn-text-into-video" title="Permanent link">&para;</a></h2>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>pyffmpegcore<span class="w"> </span>subtitles<span class="w"> </span>burn<span class="w"> </span>--video<span class="w"> </span>lesson.mp4<span class="w"> </span>--subtitle<span class="w"> </span>captions.srt<span class="w"> </span>--output<span class="w"> </span>lesson-burned.mp4
+<div class="highlight"><pre><span></span><code>pyffmpegcore<span class="w"> </span>subtitles<span class="w"> </span>burn<span class="w"> </span>--video<span class="w"> </span>lesson.mp4<span class="w"> </span>--subtitle<span class="w"> </span>captions.srt<span class="w"> </span>--output<span class="w"> </span>lesson-burned.mp4
 </code></pre></div>
 <p>Selectable subtitles can be preserved separately; burned subtitles permanently change video pixels. The FFmpeg build must provide the relevant subtitle decoder/muxer and the <code>subtitles</code> filter for burning. Paths embedded in filter syntax receive separate escaping from normal process arguments.</p>
 

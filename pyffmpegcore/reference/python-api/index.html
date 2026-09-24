@@ -5161,25 +5161,25 @@
 <h2 id="batchevent"><code>BatchEvent</code><a class="headerlink" href="#batchevent" title="Permanent link">&para;</a></h2>
 <p>One privacy-redacted JSON Lines event emitted by a batch run.</p>
 <h3 id="to_dictself-dictstr-object"><code>to_dict(self) -&gt; 'dict[str, object]'</code><a class="headerlink" href="#to_dictself-dictstr-object" title="Permanent link">&para;</a></h3>
-<p>No public docstring is available.</p>
+<p>Serialize the versioned event as privacy-redacted JSON data.</p>
 <h2 id="batchitemoutcome"><code>BatchItemOutcome</code><a class="headerlink" href="#batchitemoutcome" title="Permanent link">&para;</a></h2>
 <p>Stable per-item result, including resumed and cancelled jobs.</p>
 <h3 id="to_dictself-dictstr-object_1"><code>to_dict(self) -&gt; 'dict[str, object]'</code><a class="headerlink" href="#to_dictself-dictstr-object_1" title="Permanent link">&para;</a></h3>
-<p>No public docstring is available.</p>
+<p>Serialize the outcome and include execution evidence when available.</p>
 <h2 id="batchjob"><code>BatchJob</code><a class="headerlink" href="#batchjob" title="Permanent link">&para;</a></h2>
 <p>One stable job identity paired with an immutable typed plan.</p>
 <h2 id="batchmanifest"><code>BatchManifest</code><a class="headerlink" href="#batchmanifest" title="Permanent link">&para;</a></h2>
 <p>Strict versioned profile-job manifest compiled through the typed planner.</p>
 <h3 id="to_dictself-dictstr-object_2"><code>to_dict(self) -&gt; 'dict[str, object]'</code><a class="headerlink" href="#to_dictself-dictstr-object_2" title="Permanent link">&para;</a></h3>
-<p>No public docstring is available.</p>
+<p>Serialize manifest version, policy, signatures, and redacted plans.</p>
 <h2 id="batchpolicy"><code>BatchPolicy</code><a class="headerlink" href="#batchpolicy" title="Permanent link">&para;</a></h2>
 <p>Explicit concurrency, retry, input-size, and timeout limits.</p>
 <h3 id="to_dictself-dictstr-object_3"><code>to_dict(self) -&gt; 'dict[str, object]'</code><a class="headerlink" href="#to_dictself-dictstr-object_3" title="Permanent link">&para;</a></h3>
-<p>No public docstring is available.</p>
+<p>Return validated concurrency, retry, input-size, and timeout limits.</p>
 <h2 id="batchrun"><code>BatchRun</code><a class="headerlink" href="#batchrun" title="Permanent link">&para;</a></h2>
 <p>Versioned ordered outcome for one bounded batch execution.</p>
 <h3 id="to_dictself-dictstr-object_4"><code>to_dict(self) -&gt; 'dict[str, object]'</code><a class="headerlink" href="#to_dictself-dictstr-object_4" title="Permanent link">&para;</a></h3>
-<p>No public docstring is available.</p>
+<p>Serialize policy, ordered item outcomes, and aggregate counts.</p>
 <h2 id="batchrunner"><code>BatchRunner</code><a class="headerlink" href="#batchrunner" title="Permanent link">&para;</a></h2>
 <p>Execute validated jobs concurrently with receipts, events, retry, and resume.</p>
 <h3 id="runself-jobs-iterablebatchjob-policy-batchpolicy-none-none-cancellation-threadingevent-none-none-event_callback-callablebatchevent-none-none-none-state_path-str-path-none-none-resume-bool-false-receipt_dir-str-path-none-none-hash_content-bool-false-batchrun"><code>run(self, jobs: 'Iterable[BatchJob]', *, policy: 'BatchPolicy | None' = None, cancellation: 'threading.Event | None' = None, event_callback: 'Callable[[BatchEvent], None] | None' = None, state_path: 'str | Path | None' = None, resume: 'bool' = False, receipt_dir: 'str | Path | None' = None, hash_content: 'bool' = False) -&gt; 'BatchRun'</code><a class="headerlink" href="#runself-jobs-iterablebatchjob-policy-batchpolicy-none-none-cancellation-threadingevent-none-none-event_callback-callablebatchevent-none-none-none-state_path-str-path-none-none-resume-bool-false-receipt_dir-str-path-none-none-hash_content-bool-false-batchrun" title="Permanent link">&para;</a></h3>
@@ -5189,11 +5189,11 @@
 <h2 id="capabilityinventory"><code>CapabilityInventory</code><a class="headerlink" href="#capabilityinventory" title="Permanent link">&para;</a></h2>
 <p>Versioned inventory of an installed FFmpeg executable.</p>
 <h3 id="missingself-requirements-tuplestr-tuplestr"><code>missing(self, requirements: 'tuple[str, ...]') -&gt; 'tuple[str, ...]'</code><a class="headerlink" href="#missingself-requirements-tuplestr-tuplestr" title="Permanent link">&para;</a></h3>
-<p>No public docstring is available.</p>
+<p>Return unsupported requirements in the same order as requested.</p>
 <h3 id="supportsself-requirement-str-bool"><code>supports(self, requirement: 'str') -&gt; 'bool'</code><a class="headerlink" href="#supportsself-requirement-str-bool" title="Permanent link">&para;</a></h3>
 <p>Check a normalized <code>kind:name</code> requirement.</p>
 <h3 id="to_dictself-dictstr-any"><code>to_dict(self) -&gt; 'dict[str, Any]'</code><a class="headerlink" href="#to_dictself-dictstr-any" title="Permanent link">&para;</a></h3>
-<p>No public docstring is available.</p>
+<p>Serialize inventory, capability counts, baseline coverage, and subtitle support.</p>
 <h2 id="capturepolicy"><code>CapturePolicy</code><a class="headerlink" href="#capturepolicy" title="Permanent link">&para;</a></h2>
 <p>Python 3.10-compatible string enumeration.</p>
 <h2 id="compressoptions"><code>CompressOptions</code><a class="headerlink" href="#compressoptions" title="Permanent link">&para;</a></h2>
@@ -5205,7 +5205,7 @@
 <h2 id="executionplan"><code>ExecutionPlan</code><a class="headerlink" href="#executionplan" title="Permanent link">&para;</a></h2>
 <p>Deterministic, non-shell execution plan for one media workflow.</p>
 <h3 id="to_dictself-dictstr-any_1"><code>to_dict(self) -&gt; 'dict[str, Any]'</code><a class="headerlink" href="#to_dictself-dictstr-any_1" title="Permanent link">&para;</a></h3>
-<p>No public docstring is available.</p>
+<p>Serialize workflow, argument vectors, policy, streams, warnings, and metadata.</p>
 <h2 id="executionpolicy"><code>ExecutionPolicy</code><a class="headerlink" href="#executionpolicy" title="Permanent link">&para;</a></h2>
 <p>Explicit process, overwrite, capture, and cleanup behavior.</p>
 <h2 id="executionstep"><code>ExecutionStep</code><a class="headerlink" href="#executionstep" title="Permanent link">&para;</a></h2>
@@ -5275,7 +5275,7 @@
 <h2 id="jobresult"><code>JobResult</code><a class="headerlink" href="#jobresult" title="Permanent link">&para;</a></h2>
 <p>Stable execution result with diagnostics and output evidence.</p>
 <h3 id="to_dictself-dictstr-any_2"><code>to_dict(self) -&gt; 'dict[str, Any]'</code><a class="headerlink" href="#to_dictself-dictstr-any_2" title="Permanent link">&para;</a></h3>
-<p>No public docstring is available.</p>
+<p>Serialize the result with wire-format status and captured output evidence.</p>
 <h2 id="jobstatus"><code>JobStatus</code><a class="headerlink" href="#jobstatus" title="Permanent link">&para;</a></h2>
 <p>Python 3.10-compatible string enumeration.</p>
 <h2 id="jobtimeouterror"><code>JobTimeoutError</code><a class="headerlink" href="#jobtimeouterror" title="Permanent link">&para;</a></h2>
@@ -5283,63 +5283,69 @@
 <h2 id="mediainfo"><code>MediaInfo</code><a class="headerlink" href="#mediainfo" title="Permanent link">&para;</a></h2>
 <p>Typed container, stream, and chapter information from FFprobe.</p>
 <h3 id="to_dictself-dictstr-any_3"><code>to_dict(self) -&gt; 'dict[str, Any]'</code><a class="headerlink" href="#to_dictself-dictstr-any_3" title="Permanent link">&para;</a></h3>
-<p>No public docstring is available.</p>
+<p>Serialize stream, container, and chapter facts as nested mappings.</p>
 <h2 id="overwritepolicy"><code>OverwritePolicy</code><a class="headerlink" href="#overwritepolicy" title="Permanent link">&para;</a></h2>
 <p>Python 3.10-compatible string enumeration.</p>
 <h2 id="pipelinecachepolicy"><code>PipelineCachePolicy</code><a class="headerlink" href="#pipelinecachepolicy" title="Permanent link">&para;</a></h2>
 <p>Optional output-validity cache; content hashing is explicit.</p>
 <h3 id="to_dictself-dictstr-object_5"><code>to_dict(self) -&gt; 'dict[str, object]'</code><a class="headerlink" href="#to_dictself-dictstr-object_5" title="Permanent link">&para;</a></h3>
-<p>No public docstring is available.</p>
+<p>Return JSON-compatible cache settings.</p>
 <h2 id="pipelinecompiler"><code>PipelineCompiler</code><a class="headerlink" href="#pipelinecompiler" title="Permanent link">&para;</a></h2>
 <p>Resolve variables/dependencies and compile every step through the typed planner.</p>
 <h3 id="compileself-spec-pipelinespec-variables-dictstr-str-none-none-force-bool-false-timeout_seconds-float-none-none-cache_enabled-bool-none-none-pipelineplan"><code>compile(self, spec: 'PipelineSpec', *, variables: 'dict[str, str] | None' = None, force: 'bool' = False, timeout_seconds: 'float | None' = None, cache_enabled: 'bool | None' = None) -&gt; 'PipelinePlan'</code><a class="headerlink" href="#compileself-spec-pipelinespec-variables-dictstr-str-none-none-force-bool-false-timeout_seconds-float-none-none-cache_enabled-bool-none-none-pipelineplan" title="Permanent link">&para;</a></h3>
-<p>No public docstring is available.</p>
+<p>Resolve pipeline variables and compile steps without running FFmpeg.</p>
+<p>Dependency references become producer output paths. Secret values are
+retained only for redaction in the resulting plan and receipts.</p>
 <h2 id="pipelineevent"><code>PipelineEvent</code><a class="headerlink" href="#pipelineevent" title="Permanent link">&para;</a></h2>
 <p>PipelineEvent(sequence: 'int', event: 'str', step_id: 'str', detail: 'str | None' = None, schema_version: 'str' = '1.0')</p>
 <h3 id="to_dictself-secrets-tuplestr-dictstr-object"><code>to_dict(self, secrets: 'tuple[str, ...]' = ()) -&gt; 'dict[str, object]'</code><a class="headerlink" href="#to_dictself-secrets-tuplestr-dictstr-object" title="Permanent link">&para;</a></h3>
-<p>No public docstring is available.</p>
+<p>Serialize this event and mask supplied secret values.</p>
 <h2 id="pipelineplan"><code>PipelinePlan</code><a class="headerlink" href="#pipelineplan" title="Permanent link">&para;</a></h2>
 <p>Compiled DAG whose steps contain argument arrays, never shell strings.</p>
 <h3 id="graphself-format-str-text-str"><code>graph(self, format: 'str' = 'text') -&gt; 'str'</code><a class="headerlink" href="#graphself-format-str-text-str" title="Permanent link">&para;</a></h3>
 <p>Render the dependency DAG as text, Mermaid, or Graphviz DOT.</p>
 <h3 id="to_dictself-dictstr-object_6"><code>to_dict(self) -&gt; 'dict[str, object]'</code><a class="headerlink" href="#to_dictself-dictstr-object_6" title="Permanent link">&para;</a></h3>
-<p>No public docstring is available.</p>
+<p>Serialize compiled plans while masking declared secret values.</p>
 <h2 id="pipelinepreflightengine"><code>PipelinePreflightEngine</code><a class="headerlink" href="#pipelinepreflightengine" title="Permanent link">&para;</a></h2>
 <p>Preflight an entire DAG while explicitly deferring dependency outputs.</p>
 <h3 id="prepareself-pipeline-pipelineplan-allow_existing_outputs-bool-false-preparedpipeline"><code>prepare(self, pipeline: 'PipelinePlan', *, allow_existing_outputs: 'bool' = False) -&gt; 'PreparedPipeline'</code><a class="headerlink" href="#prepareself-pipeline-pipelineplan-allow_existing_outputs-bool-false-preparedpipeline" title="Permanent link">&para;</a></h3>
-<p>No public docstring is available.</p>
+<p>Preflight each step and defer missing inputs produced by dependencies.</p>
+<p>Existing outputs remain errors unless explicitly allowed for a later
+cache or resume check; this method never executes a step.</p>
 <h2 id="pipelinerun"><code>PipelineRun</code><a class="headerlink" href="#pipelinerun" title="Permanent link">&para;</a></h2>
 <p>PipelineRun(pipeline: 'PipelinePlan', items: 'tuple[PipelineStepOutcome, ...]', schema_version: 'str' = '1.0')</p>
 <h3 id="to_dictself-dictstr-object_7"><code>to_dict(self) -&gt; 'dict[str, object]'</code><a class="headerlink" href="#to_dictself-dictstr-object_7" title="Permanent link">&para;</a></h3>
-<p>No public docstring is available.</p>
+<p>Serialize ordered outcomes with a stable summary.</p>
 <h2 id="pipelinerunner"><code>PipelineRunner</code><a class="headerlink" href="#pipelinerunner" title="Permanent link">&para;</a></h2>
 <p>Execute a prepared DAG with dependency blocking, cancellation, resume, and caching.</p>
 <h3 id="runself-pipeline-pipelineplan-cancellation-threadingevent-none-none-state_path-str-path-none-none-resume-bool-false-receipt_dir-str-path-none-none-hash_content-bool-false-event_callback-any-none-pipelinerun"><code>run(self, pipeline: 'PipelinePlan', *, cancellation: 'threading.Event | None' = None, state_path: 'str | Path | None' = None, resume: 'bool' = False, receipt_dir: 'str | Path | None' = None, hash_content: 'bool' = False, event_callback: 'Any' = None) -&gt; 'PipelineRun'</code><a class="headerlink" href="#runself-pipeline-pipelineplan-cancellation-threadingevent-none-none-state_path-str-path-none-none-resume-bool-false-receipt_dir-str-path-none-none-hash_content-bool-false-event_callback-any-none-pipelinerun" title="Permanent link">&para;</a></h3>
-<p>No public docstring is available.</p>
+<p>Execute steps in dependency order and return one outcome per step.</p>
+<p>Failed dependencies block downstream steps. Optional state supports
+resume and caching; receipts and event callbacks are opt-in.</p>
 <h2 id="pipelinespec"><code>PipelineSpec</code><a class="headerlink" href="#pipelinespec" title="Permanent link">&para;</a></h2>
 <p>Versioned pipeline source with strict variables, cache, and typed steps.</p>
 <h3 id="to_dictself-dictstr-object_8"><code>to_dict(self) -&gt; 'dict[str, object]'</code><a class="headerlink" href="#to_dictself-dictstr-object_8" title="Permanent link">&para;</a></h3>
-<p>No public docstring is available.</p>
+<p>Serialize the versioned manifest without its local base directory.</p>
 <h2 id="pipelinestepoutcome"><code>PipelineStepOutcome</code><a class="headerlink" href="#pipelinestepoutcome" title="Permanent link">&para;</a></h2>
 <p>PipelineStepOutcome(step_id: 'str', status: 'str', cache_key: 'str', execution: 'WorkflowExecution | None' = None, receipt: 'str | None' = None, detail: 'str | None' = None)</p>
 <h3 id="to_dictself-secrets-tuplestr-dictstr-object_1"><code>to_dict(self, secrets: 'tuple[str, ...]' = ()) -&gt; 'dict[str, object]'</code><a class="headerlink" href="#to_dictself-secrets-tuplestr-dictstr-object_1" title="Permanent link">&para;</a></h3>
-<p>No public docstring is available.</p>
+<p>Serialize this step outcome and redact nested execution evidence.</p>
 <h2 id="pipelinestepplan"><code>PipelineStepPlan</code><a class="headerlink" href="#pipelinestepplan" title="Permanent link">&para;</a></h2>
 <p>One topologically ordered typed plan and its dependencies.</p>
 <h2 id="pipelinestepspec"><code>PipelineStepSpec</code><a class="headerlink" href="#pipelinestepspec" title="Permanent link">&para;</a></h2>
 <p>One strict declarative step before variable and dependency resolution.</p>
 <h3 id="to_dictself-dictstr-object_9"><code>to_dict(self) -&gt; 'dict[str, object]'</code><a class="headerlink" href="#to_dictself-dictstr-object_9" title="Permanent link">&para;</a></h3>
-<p>No public docstring is available.</p>
+<p>Serialize the declarative step with JSON-compatible options.</p>
 <h2 id="profile"><code>Profile</code><a class="headerlink" href="#profile" title="Permanent link">&para;</a></h2>
 <p>A named, versioned set of choices for one supported workflow.</p>
 <h3 id="to_dictself-dictstr-any_4"><code>to_dict(self) -&gt; 'dict[str, Any]'</code><a class="headerlink" href="#to_dictself-dictstr-any_4" title="Permanent link">&para;</a></h3>
-<p>No public docstring is available.</p>
+<p>Serialize the versioned profile with JSON-compatible options and capabilities.</p>
 <h2 id="profileregistry"><code>ProfileRegistry</code><a class="headerlink" href="#profileregistry" title="Permanent link">&para;</a></h2>
 <p>Resolve built-in profiles and strictly validate local profile files.</p>
 <h3 id="getself-name-str-profile"><code>get(self, name: 'str') -&gt; 'Profile'</code><a class="headerlink" href="#getself-name-str-profile" title="Permanent link">&para;</a></h3>
-<p>No public docstring is available.</p>
+<p>Return a built-in profile or raise <code>ValidationError</code> for an unknown name.</p>
 <h3 id="listself-tupleprofile"><code>list(self) -&gt; 'tuple[Profile, ...]'</code><a class="headerlink" href="#listself-tupleprofile" title="Permanent link">&para;</a></h3>
-<p>No public docstring is available.</p>
+<p>Return built-in profiles sorted by stable profile name.</p>
 <h3 id="load_fileself-path-str-path-profile"><code>load_file(self, path: 'str | Path') -&gt; 'Profile'</code><a class="headerlink" href="#load_fileself-path-str-path-profile" title="Permanent link">&para;</a></h3>
 <p>Load one strict versioned profile from JSON or TOML.</p>
 <h3 id="planself-name-str-planner-workflowplanner-input_file-str-output_file-str-subtitle_file-str-none-none-subtitle_language-str-none-none-force-bool-false-timeout_seconds-float-none-none-executionplan"><code>plan(self, name: 'str', planner: 'WorkflowPlanner', input_file: 'str', output_file: 'str', *, subtitle_file: 'str | None' = None, subtitle_language: 'str | None' = None, force: 'bool' = False, timeout_seconds: 'float | None' = None) -&gt; 'ExecutionPlan'</code><a class="headerlink" href="#planself-name-str-planner-workflowplanner-input_file-str-output_file-str-subtitle_file-str-none-none-subtitle_language-str-none-none-force-bool-false-timeout_seconds-float-none-none-executionplan" title="Permanent link">&para;</a></h3>
@@ -5347,7 +5353,7 @@
 <h2 id="preparedpipeline"><code>PreparedPipeline</code><a class="headerlink" href="#preparedpipeline" title="Permanent link">&para;</a></h2>
 <p>Whole-pipeline structural, capability, and external-input preflight facts.</p>
 <h3 id="to_dictself-dictstr-object_10"><code>to_dict(self) -&gt; 'dict[str, object]'</code><a class="headerlink" href="#to_dictself-dictstr-object_10" title="Permanent link">&para;</a></h3>
-<p>No public docstring is available.</p>
+<p>Return per-step preflight facts and the aggregate pipeline status.</p>
 <h2 id="preparedworkflow"><code>PreparedWorkflow</code><a class="headerlink" href="#preparedworkflow" title="Permanent link">&para;</a></h2>
 <p>An immutable plan paired with its non-mutating preflight facts.</p>
 <h2 id="preflightcheck"><code>PreflightCheck</code><a class="headerlink" href="#preflightcheck" title="Permanent link">&para;</a></h2>
@@ -5355,19 +5361,21 @@
 <h2 id="preflightengine"><code>PreflightEngine</code><a class="headerlink" href="#preflightengine" title="Permanent link">&para;</a></h2>
 <p>Check a plan without creating directories, outputs, or temporary files.</p>
 <h3 id="checkself-plan-executionplan-preflightreport"><code>check(self, plan: 'ExecutionPlan') -&gt; 'PreflightReport'</code><a class="headerlink" href="#checkself-plan-executionplan-preflightreport" title="Permanent link">&para;</a></h3>
-<p>No public docstring is available.</p>
+<p>Check tools, capabilities, inputs, and output paths without executing.</p>
+<p>Input streams may be probed when the plan requires them. The report
+records failures and remediation hints instead of raising for them.</p>
 <h2 id="preflightreport"><code>PreflightReport</code><a class="headerlink" href="#preflightreport" title="Permanent link">&para;</a></h2>
 <p>Versioned preflight result shared by human and JSON presenters.</p>
 <h3 id="renderself-str"><code>render(self) -&gt; 'str'</code><a class="headerlink" href="#renderself-str" title="Permanent link">&para;</a></h3>
-<p>No public docstring is available.</p>
+<p>Render checks and available remedies as a concise human-readable report.</p>
 <h3 id="to_dictself-dictstr-any_5"><code>to_dict(self) -&gt; 'dict[str, Any]'</code><a class="headerlink" href="#to_dictself-dictstr-any_5" title="Permanent link">&para;</a></h3>
-<p>No public docstring is available.</p>
+<p>Return versioned JSON-ready preflight facts and overall status.</p>
 <h2 id="progresscallback"><code>ProgressCallback</code><a class="headerlink" href="#progresscallback" title="Permanent link">&para;</a></h2>
 <p>A helper class for creating progress callbacks with context.</p>
 <h2 id="progressevent"><code>ProgressEvent</code><a class="headerlink" href="#progressevent" title="Permanent link">&para;</a></h2>
 <p>Versioned progress fact suitable for callbacks or JSON Lines output.</p>
 <h3 id="to_dictself-dictstr-any_6"><code>to_dict(self) -&gt; 'dict[str, Any]'</code><a class="headerlink" href="#to_dictself-dictstr-any_6" title="Permanent link">&para;</a></h3>
-<p>No public docstring is available.</p>
+<p>Serialize this versioned progress event for callbacks or JSON Lines.</p>
 <h2 id="progresstracker"><code>ProgressTracker</code><a class="headerlink" href="#progresstracker" title="Permanent link">&para;</a></h2>
 <p>Tracks FFmpeg progress by parsing progress output.</p>
 <h3 id="runself-cmd-list-subprocesscompletedprocess"><code>run(self, cmd: list) -&gt; subprocess.CompletedProcess</code><a class="headerlink" href="#runself-cmd-list-subprocesscompletedprocess" title="Permanent link">&para;</a></h3>
@@ -5391,11 +5399,11 @@
 <h2 id="runreceipt"><code>RunReceipt</code><a class="headerlink" href="#runreceipt" title="Permanent link">&para;</a></h2>
 <p>Validated schema 1.0 receipt suitable for storage or bug reports.</p>
 <h3 id="to_dictself-dictstr-any_7"><code>to_dict(self) -&gt; 'dict[str, Any]'</code><a class="headerlink" href="#to_dictself-dictstr-any_7" title="Permanent link">&para;</a></h3>
-<p>No public docstring is available.</p>
+<p>Return the validated receipt mapping.</p>
 <h3 id="to_jsonself-str"><code>to_json(self) -&gt; 'str'</code><a class="headerlink" href="#to_jsonself-str" title="Permanent link">&para;</a></h3>
-<p>No public docstring is available.</p>
+<p>Render the receipt as indented UTF-8-compatible JSON with a trailing newline.</p>
 <h3 id="writeself-path-str-path-path"><code>write(self, path: 'str | Path') -&gt; 'Path'</code><a class="headerlink" href="#writeself-path-str-path-path" title="Permanent link">&para;</a></h3>
-<p>No public docstring is available.</p>
+<p>Create parent directories, write the JSON receipt, and return its path.</p>
 <h2 id="streaminfo"><code>StreamInfo</code><a class="headerlink" href="#streaminfo" title="Permanent link">&para;</a></h2>
 <p>Typed stream facts while preserving metadata needed for safe decisions.</p>
 <h2 id="temporaryfilepolicy"><code>TemporaryFilePolicy</code><a class="headerlink" href="#temporaryfilepolicy" title="Permanent link">&para;</a></h2>
@@ -5405,35 +5413,43 @@
 <h2 id="workflowplanner"><code>WorkflowPlanner</code><a class="headerlink" href="#workflowplanner" title="Permanent link">&para;</a></h2>
 <p>Build deterministic plans used by CLI, Python, examples, and pipelines.</p>
 <h3 id="compressself-input_file-str-output_file-str-options-compressoptions-none-none-force-bool-false-timeout_seconds-float-none-none-executionplan"><code>compress(self, input_file: 'str', output_file: 'str', options: 'CompressOptions | None' = None, *, force: 'bool' = False, timeout_seconds: 'float | None' = None) -&gt; 'ExecutionPlan'</code><a class="headerlink" href="#compressself-input_file-str-output_file-str-options-compressoptions-none-none-force-bool-false-timeout_seconds-float-none-none-executionplan" title="Permanent link">&para;</a></h3>
-<p>No public docstring is available.</p>
+<p>Plan CRF or target-size compression from <code>CompressOptions</code>.</p>
+<p>A two-pass target-size plan probes the input duration and rejects video stream copy.</p>
 <h3 id="concatself-input_files-liststr-output_file-str-mode-str-copy-video_codec-str-libx264-audio_codec-str-aac-force-bool-false-timeout_seconds-float-none-none-executionplan"><code>concat(self, input_files: 'list[str]', output_file: 'str', *, mode: 'str' = 'copy', video_codec: 'str' = 'libx264', audio_codec: 'str' = 'aac', force: 'bool' = False, timeout_seconds: 'float | None' = None) -&gt; 'ExecutionPlan'</code><a class="headerlink" href="#concatself-input_files-liststr-output_file-str-mode-str-copy-video_codec-str-libx264-audio_codec-str-aac-force-bool-false-timeout_seconds-float-none-none-executionplan" title="Permanent link">&para;</a></h3>
-<p>No public docstring is available.</p>
+<p>Plan ordered clip concatenation using stream copy or re-encoding.</p>
+<p>Stream-copy mode expects compatible inputs; re-encode mode uses the requested codecs.</p>
 <h3 id="convertself-input_file-str-output_file-str-options-convertoptions-none-none-force-bool-false-timeout_seconds-float-none-none-executionplan"><code>convert(self, input_file: 'str', output_file: 'str', options: 'ConvertOptions | None' = None, *, force: 'bool' = False, timeout_seconds: 'float | None' = None) -&gt; 'ExecutionPlan'</code><a class="headerlink" href="#convertself-input_file-str-output_file-str-options-convertoptions-none-none-force-bool-false-timeout_seconds-float-none-none-executionplan" title="Permanent link">&para;</a></h3>
-<p>No public docstring is available.</p>
+<p>Plan conversion with explicit codec options and stream selection.</p>
+<p>By default, map the first video and audio streams. Use
+<code>preserve_all_streams</code> to copy every stream or <code>audio_only</code> to omit video.</p>
 <h3 id="extract_audioself-input_file-str-output_file-str-audio_codec-str-none-none-audio_bitrate-str-192k-sample_rate-int-none-none-channels-int-none-none-threads-int-none-none-force-bool-false-timeout_seconds-float-none-none-executionplan"><code>extract_audio(self, input_file: 'str', output_file: 'str', *, audio_codec: 'str | None' = None, audio_bitrate: 'str' = '192k', sample_rate: 'int | None' = None, channels: 'int | None' = None, threads: 'int | None' = None, force: 'bool' = False, timeout_seconds: 'float | None' = None) -&gt; 'ExecutionPlan'</code><a class="headerlink" href="#extract_audioself-input_file-str-output_file-str-audio_codec-str-none-none-audio_bitrate-str-192k-sample_rate-int-none-none-channels-int-none-none-threads-int-none-none-force-bool-false-timeout_seconds-float-none-none-executionplan" title="Permanent link">&para;</a></h3>
-<p>No public docstring is available.</p>
+<p>Plan audio extraction with optional codec, bitrate, sample-rate, and channel settings.</p>
+<p>Video streams are omitted from the output.</p>
 <h3 id="imageself-input_file-str-output_file-str-quality-int-85-resize-tupleint-int-none-none-force-bool-false-timeout_seconds-float-none-none-executionplan"><code>image(self, input_file: 'str', output_file: 'str', *, quality: 'int' = 85, resize: 'tuple[int, int] | None' = None, force: 'bool' = False, timeout_seconds: 'float | None' = None) -&gt; 'ExecutionPlan'</code><a class="headerlink" href="#imageself-input_file-str-output_file-str-quality-int-85-resize-tupleint-int-none-none-force-bool-false-timeout_seconds-float-none-none-executionplan" title="Permanent link">&para;</a></h3>
 <p>Plan one still-image conversion without routing through a directory batch.</p>
 <h3 id="imagesself-action-str-input_dir-str-output_dir-str-output_format-str-jpg-quality-int-85-resize-tupleint-int-none-none-max_width-int-1920-max_height-int-1080-force-bool-false-timeout_seconds-float-none-none-executionplan"><code>images(self, action: 'str', input_dir: 'str', output_dir: 'str', *, output_format: 'str' = 'jpg', quality: 'int' = 85, resize: 'tuple[int, int] | None' = None, max_width: 'int' = 1920, max_height: 'int' = 1080, force: 'bool' = False, timeout_seconds: 'float | None' = None) -&gt; 'ExecutionPlan'</code><a class="headerlink" href="#imagesself-action-str-input_dir-str-output_dir-str-output_format-str-jpg-quality-int-85-resize-tupleint-int-none-none-max_width-int-1920-max_height-int-1080-force-bool-false-timeout_seconds-float-none-none-executionplan" title="Permanent link">&para;</a></h3>
-<p>No public docstring is available.</p>
+<p>Plan a directory batch that converts, optimizes, or writes supported images as WebP.</p>
 <h3 id="mix_audioself-action-str-input_files-liststr-output_file-str-volumes-listfloat-none-none-crossfade_duration-float-20-background_volume-float-03-force-bool-false-timeout_seconds-float-none-none-executionplan"><code>mix_audio(self, action: 'str', input_files: 'list[str]', output_file: 'str', *, volumes: 'list[float] | None' = None, crossfade_duration: 'float' = 2.0, background_volume: 'float' = 0.3, force: 'bool' = False, timeout_seconds: 'float | None' = None) -&gt; 'ExecutionPlan'</code><a class="headerlink" href="#mix_audioself-action-str-input_files-liststr-output_file-str-volumes-listfloat-none-none-crossfade_duration-float-20-background_volume-float-03-force-bool-false-timeout_seconds-float-none-none-executionplan" title="Permanent link">&para;</a></h3>
-<p>No public docstring is available.</p>
+<p>Plan audio mixing, concatenation, crossfade mashup, or background mixing.</p>
+<p><code>volumes</code> applies to a mix; <code>crossfade_duration</code> applies to a mashup, and
+<code>background_volume</code> applies to a two-input background mix.</p>
 <h3 id="normalize_audioself-input_file-str-output_file-str-method-str-loudnorm-target_i-float-160-target_tp-float-15-target_lra-float-110-force-bool-false-timeout_seconds-float-none-none-executionplan"><code>normalize_audio(self, input_file: 'str', output_file: 'str', *, method: 'str' = 'loudnorm', target_i: 'float' = -16.0, target_tp: 'float' = -1.5, target_lra: 'float' = 11.0, force: 'bool' = False, timeout_seconds: 'float | None' = None) -&gt; 'ExecutionPlan'</code><a class="headerlink" href="#normalize_audioself-input_file-str-output_file-str-method-str-loudnorm-target_i-float-160-target_tp-float-15-target_lra-float-110-force-bool-false-timeout_seconds-float-none-none-executionplan" title="Permanent link">&para;</a></h3>
-<p>No public docstring is available.</p>
+<p>Plan <code>loudnorm</code> normalization to the requested targets or the <code>master</code> chain.</p>
+<p>The master chain applies fixed loudness targets, compression, and a limiter.</p>
 <h3 id="resizeself-input_file-str-output_file-str-options-resizeoptions-force-bool-false-timeout_seconds-float-none-none-executionplan"><code>resize(self, input_file: 'str', output_file: 'str', options: 'ResizeOptions', *, force: 'bool' = False, timeout_seconds: 'float | None' = None) -&gt; 'ExecutionPlan'</code><a class="headerlink" href="#resizeself-input_file-str-output_file-str-options-resizeoptions-force-bool-false-timeout_seconds-float-none-none-executionplan" title="Permanent link">&para;</a></h3>
-<p>No public docstring is available.</p>
+<p>Plan scaling the input video to the dimensions in <code>ResizeOptions</code>.</p>
 <h3 id="speedself-kind-str-input_file-str-output_file-str-factor-float-preserve_pitch-bool-true-force-bool-false-timeout_seconds-float-none-none-executionplan"><code>speed(self, kind: 'str', input_file: 'str', output_file: 'str', *, factor: 'float', preserve_pitch: 'bool' = True, force: 'bool' = False, timeout_seconds: 'float | None' = None) -&gt; 'ExecutionPlan'</code><a class="headerlink" href="#speedself-kind-str-input_file-str-output_file-str-factor-float-preserve_pitch-bool-true-force-bool-false-timeout_seconds-float-none-none-executionplan" title="Permanent link">&para;</a></h3>
-<p>No public docstring is available.</p>
+<p>Plan a video or audio speed change; pitch preservation applies to audio filtering.</p>
 <h3 id="subtitlesself-action-str-video_file-str-output_file-str-subtitle_file-str-none-none-language-str-eng-stream_index-int-0-font_size-int-24-font_color-str-hffffff-force-bool-false-timeout_seconds-float-none-none-executionplan"><code>subtitles(self, action: 'str', video_file: 'str', output_file: 'str', *, subtitle_file: 'str | None' = None, language: 'str' = 'eng', stream_index: 'int' = 0, font_size: 'int' = 24, font_color: 'str' = '&amp;HFFFFFF', force: 'bool' = False, timeout_seconds: 'float | None' = None) -&gt; 'ExecutionPlan'</code><a class="headerlink" href="#subtitlesself-action-str-video_file-str-output_file-str-subtitle_file-str-none-none-language-str-eng-stream_index-int-0-font_size-int-24-font_color-str-hffffff-force-bool-false-timeout_seconds-float-none-none-executionplan" title="Permanent link">&para;</a></h3>
-<p>No public docstring is available.</p>
+<p>Plan adding, extracting, or burning subtitles; add and burn require <code>subtitle_file</code>.</p>
 <h3 id="thumbnailself-input_file-str-output_file-str-timestamp-str-000001-width-int-320-height-int-none-none-quality-int-2-force-bool-false-timeout_seconds-float-none-none-executionplan"><code>thumbnail(self, input_file: 'str', output_file: 'str', *, timestamp: 'str' = '00:00:01', width: 'int' = 320, height: 'int | None' = None, quality: 'int' = 2, force: 'bool' = False, timeout_seconds: 'float | None' = None) -&gt; 'ExecutionPlan'</code><a class="headerlink" href="#thumbnailself-input_file-str-output_file-str-timestamp-str-000001-width-int-320-height-int-none-none-quality-int-2-force-bool-false-timeout_seconds-float-none-none-executionplan" title="Permanent link">&para;</a></h3>
-<p>No public docstring is available.</p>
+<p>Plan one video frame as a still image at <code>timestamp</code> and the requested dimensions.</p>
 <h3 id="waveformself-input_file-str-output_file-str-width-int-800-height-int-200-colors-str-white-force-bool-false-timeout_seconds-float-none-none-executionplan"><code>waveform(self, input_file: 'str', output_file: 'str', *, width: 'int' = 800, height: 'int' = 200, colors: 'str' = 'white', force: 'bool' = False, timeout_seconds: 'float | None' = None) -&gt; 'ExecutionPlan'</code><a class="headerlink" href="#waveformself-input_file-str-output_file-str-width-int-800-height-int-200-colors-str-white-force-bool-false-timeout_seconds-float-none-none-executionplan" title="Permanent link">&para;</a></h3>
-<p>No public docstring is available.</p>
+<p>Plan a waveform image from the input audio stream at the requested size and color.</p>
 <h2 id="workflowbatch"><code>WorkflowBatch</code><a class="headerlink" href="#workflowbatch" title="Permanent link">&para;</a></h2>
 <p>Versioned machine-readable outcome for a single or multi-item plan.</p>
 <h3 id="to_dictself-dictstr-object_11"><code>to_dict(self) -&gt; 'dict[str, object]'</code><a class="headerlink" href="#to_dictself-dictstr-object_11" title="Permanent link">&para;</a></h3>
-<p>No public docstring is available.</p>
+<p>Serialize the plan, preflight, ordered item results, and summary.</p>
 <h2 id="workflowengine"><code>WorkflowEngine</code><a class="headerlink" href="#workflowengine" title="Permanent link">&para;</a></h2>
 <p>Compile, preflight, and execute every supported workflow through one public layer.</p>
 <h3 id="prepareself-plan-executionplan-preparedworkflow"><code>prepare(self, plan: 'ExecutionPlan') -&gt; 'PreparedWorkflow'</code><a class="headerlink" href="#prepareself-plan-executionplan-preparedworkflow" title="Permanent link">&para;</a></h3>
@@ -5443,7 +5459,7 @@
 <h2 id="workflowexecution"><code>WorkflowExecution</code><a class="headerlink" href="#workflowexecution" title="Permanent link">&para;</a></h2>
 <p>Preflight and execution facts for one input/output item.</p>
 <h3 id="to_dictself-dictstr-object_12"><code>to_dict(self) -&gt; 'dict[str, object]'</code><a class="headerlink" href="#to_dictself-dictstr-object_12" title="Permanent link">&para;</a></h3>
-<p>No public docstring is available.</p>
+<p>Serialize item preflight, result, and measurable path/size proof.</p>
 
 
 

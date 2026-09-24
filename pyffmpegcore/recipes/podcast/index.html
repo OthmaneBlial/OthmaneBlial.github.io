@@ -1810,10 +1810,10 @@
 
 <h1 id="normalize-podcast-speech">Normalize podcast speech<a class="headerlink" href="#normalize-podcast-speech" title="Permanent link">&para;</a></h1>
 <p>Use EBU R128 loudness normalization for a consistent speech-oriented deliverable.</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>pyffmpegcore<span class="w"> </span>normalize-audio<span class="w"> </span>--input<span class="w"> </span>episode.wav<span class="w"> </span>--output<span class="w"> </span>episode-normalized.wav<span class="w"> </span>--method<span class="w"> </span>loudnorm
+<div class="highlight"><pre><span></span><code>pyffmpegcore<span class="w"> </span>normalize-audio<span class="w"> </span>--input<span class="w"> </span>episode.wav<span class="w"> </span>--output<span class="w"> </span>episode-normalized.wav<span class="w"> </span>--method<span class="w"> </span>loudnorm
 </code></pre></div>
 <p>For an MP3 deliverable:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>pyffmpegcore<span class="w"> </span>normalize-audio<span class="w"> </span>--input<span class="w"> </span>episode.wav<span class="w"> </span>--output<span class="w"> </span>episode-normalized.mp3<span class="w"> </span>--method<span class="w"> </span>loudnorm
+<div class="highlight"><pre><span></span><code>pyffmpegcore<span class="w"> </span>normalize-audio<span class="w"> </span>--input<span class="w"> </span>episode.wav<span class="w"> </span>--output<span class="w"> </span>episode-normalized.mp3<span class="w"> </span>--method<span class="w"> </span>loudnorm
 </code></pre></div>
 <p>Listen to the complete result and compare clipping, noise, and quiet sections. Loudness normalization cannot repair a distorted recording and should not be advertised as mastering.</p>
 <p>MP3 output currently uses the maintained 192 kbps workflow default. See the

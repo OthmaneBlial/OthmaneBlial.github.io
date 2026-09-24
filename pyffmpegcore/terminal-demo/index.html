@@ -1955,13 +1955,13 @@ and transcript preserve the console evidence, not a downloadable media file.
 <li><a href="../assets/terminal-demo-v0.2.1.cast">Inspect the archived <code>0.2.1</code> cast</a></li>
 </ul>
 <p>To replay the cast locally with the open-source asciinema client:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>asciinema<span class="w"> </span>play<span class="w"> </span>terminal-demo-v0.2.2.cast
+<div class="highlight"><pre><span></span><code>asciinema<span class="w"> </span>play<span class="w"> </span>terminal-demo-v0.2.2.cast
 </code></pre></div>
 <p>To verify the recording and regenerate its transcript from the repository:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>python<span class="w"> </span>scripts/validate_terminal_demo.py<span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="w">  </span>--cast<span class="w"> </span>docs/assets/terminal-demo-v0.2.2.cast<span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="w">  </span>--expected-version<span class="w"> </span><span class="m">0</span>.2.2<span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="w">  </span>--transcript<span class="w"> </span>/tmp/terminal-demo-v0.2.2.txt
+<div class="highlight"><pre><span></span><code>python<span class="w"> </span>scripts/validate_terminal_demo.py<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--cast<span class="w"> </span>docs/assets/terminal-demo-v0.2.2.cast<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--expected-version<span class="w"> </span><span class="m">0</span>.2.2<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--transcript<span class="w"> </span>/tmp/terminal-demo-v0.2.2.txt
 </code></pre></div>
 <h2 id="what-the-recording-proves">What the recording proves<a class="headerlink" href="#what-the-recording-proves" title="Permanent link">&para;</a></h2>
 <ol>

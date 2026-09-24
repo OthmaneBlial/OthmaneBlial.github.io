@@ -1822,11 +1822,11 @@ content.</p>
 <li>content hashes are disabled unless <code>--hash-content</code> explicitly opts in;</li>
 <li>the JSON can be validated offline without opening the media.</li>
 </ul>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>pyffmpegcore<span class="w"> </span>profile<span class="w"> </span>run<span class="w"> </span>web/mp4-compatible<span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="w">  </span>--input<span class="w"> </span>private.mov<span class="w"> </span>--output<span class="w"> </span>web.mp4<span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="w">  </span>--receipt<span class="w"> </span>run.receipt.json
-<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>pyffmpegcore<span class="w"> </span>receipt<span class="w"> </span>validate<span class="w"> </span>run.receipt.json<span class="w"> </span>--json
-<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>pyffmpegcore<span class="w"> </span>receipt<span class="w"> </span>bug-report<span class="w"> </span>run.receipt.json<span class="w"> </span>--output<span class="w"> </span>bug-report.json
+<div class="highlight"><pre><span></span><code>pyffmpegcore<span class="w"> </span>profile<span class="w"> </span>run<span class="w"> </span>web/mp4-compatible<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--input<span class="w"> </span>private.mov<span class="w"> </span>--output<span class="w"> </span>web.mp4<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--receipt<span class="w"> </span>run.receipt.json
+pyffmpegcore<span class="w"> </span>receipt<span class="w"> </span>validate<span class="w"> </span>run.receipt.json<span class="w"> </span>--json
+pyffmpegcore<span class="w"> </span>receipt<span class="w"> </span>bug-report<span class="w"> </span>run.receipt.json<span class="w"> </span>--output<span class="w"> </span>bug-report.json
 </code></pre></div>
 <p>Redaction is defense in depth, not permission to publish blindly. Users should
 inspect a receipt before sharing it, especially when raw FFmpeg metadata or a

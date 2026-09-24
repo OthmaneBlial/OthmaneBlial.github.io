@@ -1907,16 +1907,16 @@ expose useful FFmpeg capabilities; the right choice depends on the task.</p>
 command before writing, then retain evidence of the result. From a clean
 repository checkout with the installed PyFFmpegCore <code>0.2.2</code> wheel, the replay
 used these commands (choose fresh output names when repeating it):</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>python<span class="w"> </span>tests/media/download_fixtures.py<span class="w"> </span>--force
-<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>pyffmpegcore<span class="w"> </span>doctor<span class="w"> </span>--json
-<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>pyffmpegcore<span class="w"> </span>profile<span class="w"> </span>run<span class="w"> </span>web/mp4-compatible<span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="w">  </span>--input<span class="w"> </span>tests/media/downloads/sample_webm_vp9.webm<span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="w">  </span>--output<span class="w"> </span>web-from-vp9.mp4<span class="w"> </span>--explain
-<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>pyffmpegcore<span class="w"> </span>profile<span class="w"> </span>run<span class="w"> </span>web/mp4-compatible<span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a><span class="w">  </span>--input<span class="w"> </span>tests/media/downloads/sample_webm_vp9.webm<span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a><span class="w">  </span>--output<span class="w"> </span>web-from-vp9.mp4<span class="w"> </span>--receipt<span class="w"> </span>web-from-vp9.receipt.json
-<a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a>pyffmpegcore<span class="w"> </span>probe<span class="w"> </span>--input<span class="w"> </span>web-from-vp9.mp4<span class="w"> </span>--json
-<a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a>pyffmpegcore<span class="w"> </span>receipt<span class="w"> </span>validate<span class="w"> </span>web-from-vp9.receipt.json<span class="w"> </span>--json
+<div class="highlight"><pre><span></span><code>python<span class="w"> </span>tests/media/download_fixtures.py<span class="w"> </span>--force
+pyffmpegcore<span class="w"> </span>doctor<span class="w"> </span>--json
+pyffmpegcore<span class="w"> </span>profile<span class="w"> </span>run<span class="w"> </span>web/mp4-compatible<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--input<span class="w"> </span>tests/media/downloads/sample_webm_vp9.webm<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--output<span class="w"> </span>web-from-vp9.mp4<span class="w"> </span>--explain
+pyffmpegcore<span class="w"> </span>profile<span class="w"> </span>run<span class="w"> </span>web/mp4-compatible<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--input<span class="w"> </span>tests/media/downloads/sample_webm_vp9.webm<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--output<span class="w"> </span>web-from-vp9.mp4<span class="w"> </span>--receipt<span class="w"> </span>web-from-vp9.receipt.json
+pyffmpegcore<span class="w"> </span>probe<span class="w"> </span>--input<span class="w"> </span>web-from-vp9.mp4<span class="w"> </span>--json
+pyffmpegcore<span class="w"> </span>receipt<span class="w"> </span>validate<span class="w"> </span>web-from-vp9.receipt.json<span class="w"> </span>--json
 </code></pre></div>
 <p>On macOS arm64, Python 3.14.6, and FFmpeg 9.0.1, the output probed as H.264/AAC,
 the receipt validated, and a full FFmpeg decode passed. Its size was

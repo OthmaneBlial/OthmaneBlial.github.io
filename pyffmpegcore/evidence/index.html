@@ -684,6 +684,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#exact-size-replay-on-24-september-2026" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Exact-size replay on 24 September 2026
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#reproduce" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -1865,6 +1876,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#exact-size-replay-on-24-september-2026" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Exact-size replay on 24 September 2026
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#reproduce" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -1974,33 +1996,51 @@ file size. Its output has <code>moov</code> before <code>mdat</code> for progres
 <a href="recipe-proof-2026-09-19.json">replay index</a> records the environment,
 receipt SHA-256 values, stream facts, and checks. Measurements on other FFmpeg
 builds may differ.</p>
+<h2 id="exact-size-replay-on-24-september-2026">Exact-size replay on 24 September 2026<a class="headerlink" href="#exact-size-replay-on-24-september-2026" title="Permanent link">&para;</a></h2>
+<p>The <code>0.3.0</code> checkout reran the generated six-second H.264/AAC fixture
+(4,042,503 bytes) on macOS arm64, Python 3.14.6, and FFmpeg 9.0.1. <code>--explain</code>
+created no output. Two-pass compression targeting 262,144 bytes produced a
+248,417-byte H.264/AAC MP4 (<code>yuv420p</code>); probe, schema 1.0 receipt validation,
+and full decode passed. The <a href="exact-size-2026-09-24.receipt.json">receipt</a>
+has SHA-256 <code>121a127b72cf15cccfc6b9aa5043f029d4437f2aaada8ff41ada32830b77d435</code>.
+An independent rerun on the same host produced identical output bytes and
+matched the receipt's output SHA-256
+<code>6cd9a2a6a23a493e7fbd46e6095dc2e75bd32fa847421266695f84e9d8435566</code>. FFmpeg's
+SSIM filter measured <code>All:0.926144</code> on this generated fixture:</p>
+<div class="highlight"><pre><span></span><code>ffmpeg<span class="w"> </span>-v<span class="w"> </span>info<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-i<span class="w"> </span>tests/media/downloads/sample_mp4_h264.mp4<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-i<span class="w"> </span>under-limit.mp4<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-lavfi<span class="w"> </span>ssim<span class="w"> </span>-f<span class="w"> </span>null<span class="w"> </span>-
+</code></pre></div>
+<p>That fixture-only metric does not establish perceptual quality for
+representative media; human review remains open.</p>
 <h2 id="reproduce">Reproduce<a class="headerlink" href="#reproduce" title="Permanent link">&para;</a></h2>
 <p>Generate the same inputs, then run:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>python<span class="w"> </span>tests/media/download_fixtures.py<span class="w"> </span>--force
-<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>
-<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>pyffmpegcore<span class="w"> </span>profile<span class="w"> </span>run<span class="w"> </span>web/mp4-compatible<span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="w">  </span>--input<span class="w"> </span>tests/media/downloads/sample_video_mov.mov<span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="w">  </span>--output<span class="w"> </span>web.mp4<span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="w">  </span>--receipt<span class="w"> </span>web-video.receipt.json
-<a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>
-<a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a><span class="c1"># Replay the VP9 counterexample separately, using a new output path.</span>
-<a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a>pyffmpegcore<span class="w"> </span>profile<span class="w"> </span>run<span class="w"> </span>web/mp4-compatible<span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a><span class="w">  </span>--input<span class="w"> </span>tests/media/downloads/sample_webm_vp9.webm<span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a><span class="w">  </span>--output<span class="w"> </span>web-from-vp9.mp4<span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a><span class="w">  </span>--receipt<span class="w"> </span>web-from-vp9.receipt.json
-<a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a>
-<a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a>pyffmpegcore<span class="w"> </span>compress<span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-0-15" name="__codelineno-0-15" href="#__codelineno-0-15"></a><span class="w">  </span>--input<span class="w"> </span>tests/media/downloads/sample_mp4_h264.mp4<span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-0-16" name="__codelineno-0-16" href="#__codelineno-0-16"></a><span class="w">  </span>--output<span class="w"> </span>under-limit.mp4<span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-0-17" name="__codelineno-0-17" href="#__codelineno-0-17"></a><span class="w">  </span>--target-size<span class="w"> </span>256KiB<span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-0-18" name="__codelineno-0-18" href="#__codelineno-0-18"></a><span class="w">  </span>--two-pass<span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-0-19" name="__codelineno-0-19" href="#__codelineno-0-19"></a><span class="w">  </span>--receipt<span class="w"> </span>exact-size.receipt.json
-<a id="__codelineno-0-20" name="__codelineno-0-20" href="#__codelineno-0-20"></a>
-<a id="__codelineno-0-21" name="__codelineno-0-21" href="#__codelineno-0-21"></a>pyffmpegcore<span class="w"> </span>normalize-audio<span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-0-22" name="__codelineno-0-22" href="#__codelineno-0-22"></a><span class="w">  </span>--input<span class="w"> </span>tests/media/downloads/sample_audio_wav.wav<span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-0-23" name="__codelineno-0-23" href="#__codelineno-0-23"></a><span class="w">  </span>--output<span class="w"> </span>podcast.mp3<span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-0-24" name="__codelineno-0-24" href="#__codelineno-0-24"></a><span class="w">  </span>--method<span class="w"> </span>loudnorm<span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-0-25" name="__codelineno-0-25" href="#__codelineno-0-25"></a><span class="w">  </span>--receipt<span class="w"> </span>podcast.receipt.json
+<div class="highlight"><pre><span></span><code>python<span class="w"> </span>tests/media/download_fixtures.py<span class="w"> </span>--force
+
+pyffmpegcore<span class="w"> </span>profile<span class="w"> </span>run<span class="w"> </span>web/mp4-compatible<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--input<span class="w"> </span>tests/media/downloads/sample_video_mov.mov<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--output<span class="w"> </span>web.mp4<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--receipt<span class="w"> </span>web-video.receipt.json
+
+<span class="c1"># Replay the VP9 counterexample separately, using a new output path.</span>
+pyffmpegcore<span class="w"> </span>profile<span class="w"> </span>run<span class="w"> </span>web/mp4-compatible<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--input<span class="w"> </span>tests/media/downloads/sample_webm_vp9.webm<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--output<span class="w"> </span>web-from-vp9.mp4<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--receipt<span class="w"> </span>web-from-vp9.receipt.json
+
+pyffmpegcore<span class="w"> </span>compress<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--input<span class="w"> </span>tests/media/downloads/sample_mp4_h264.mp4<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--output<span class="w"> </span>under-limit.mp4<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--target-size<span class="w"> </span>256KiB<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--two-pass<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--receipt<span class="w"> </span>exact-size.receipt.json
+
+pyffmpegcore<span class="w"> </span>normalize-audio<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--input<span class="w"> </span>tests/media/downloads/sample_audio_wav.wav<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--output<span class="w"> </span>podcast.mp3<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--method<span class="w"> </span>loudnorm<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--receipt<span class="w"> </span>podcast.receipt.json
 </code></pre></div>
 <p>The loudness figures use FFmpeg's <code>ebur128=peak=true</code> analysis before and after
 normalization. File sizes and stream facts come from the receipt probes. Exact

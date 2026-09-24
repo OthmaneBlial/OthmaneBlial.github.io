@@ -1818,9 +1818,9 @@ required capabilities, probes the input, checks stream requirements, output
 collision, writable space, estimated disk space, and container support, then
 returns one versioned <code>PreflightReport</code>. Human <code>--explain</code> and machine
 <code>--plan-json</code> views serialize the same facts.</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>pyffmpegcore<span class="w"> </span>profile<span class="w"> </span>run<span class="w"> </span>web/mp4-compatible<span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="w">  </span>--input<span class="w"> </span>source.mov<span class="w"> </span>--output<span class="w"> </span>web.mp4<span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="w">  </span>--explain
+<div class="highlight"><pre><span></span><code>pyffmpegcore<span class="w"> </span>profile<span class="w"> </span>run<span class="w"> </span>web/mp4-compatible<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--input<span class="w"> </span>source.mov<span class="w"> </span>--output<span class="w"> </span>web.mp4<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--explain
 </code></pre></div>
 <p>If <code>libx264</code> is absent, the report names <code>encoder:libx264</code> and supplies a tested
 fallback or platform remedy when the capability catalog has one. It does not

@@ -1986,16 +1986,16 @@
 <h1 id="five-minute-start">Five-minute start<a class="headerlink" href="#five-minute-start" title="Permanent link">&para;</a></h1>
 <p>This flow needs no repository checkout and no personal media.</p>
 <h2 id="1-install-the-public-beta">1. Install the public beta<a class="headerlink" href="#1-install-the-public-beta" title="Permanent link">&para;</a></h2>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>pipx<span class="w"> </span>install<span class="w"> </span><span class="s2">"pyffmpegcore==0.2.2"</span>
+<div class="highlight"><pre><span></span><code>pipx<span class="w"> </span>install<span class="w"> </span><span class="s2">"pyffmpegcore==0.2.2"</span>
 </code></pre></div>
 <p>Version <code>0.2.2</code> is the signed public artifact that passed the project's
 cross-platform install gate. Pinning it keeps this proof reproducible.</p>
 <h2 id="2-diagnose-the-media-stack">2. Diagnose the media stack<a class="headerlink" href="#2-diagnose-the-media-stack" title="Permanent link">&para;</a></h2>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>pyffmpegcore<span class="w"> </span>doctor
+<div class="highlight"><pre><span></span><code>pyffmpegcore<span class="w"> </span>doctor
 </code></pre></div>
 <p>The command reports Python, operating system, FFmpeg/FFprobe paths and versions, capability counts, hardware accelerators, and any missing optional core capability.</p>
 <h2 id="3-generate-a-sample-clip">3. Generate a sample clip<a class="headerlink" href="#3-generate-a-sample-clip" title="Permanent link">&para;</a></h2>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>pyffmpegcore<span class="w"> </span>smoke-test<span class="w"> </span>--keep-dir<span class="w"> </span>pyffmpegcore-demo
+<div class="highlight"><pre><span></span><code>pyffmpegcore<span class="w"> </span>smoke-test<span class="w"> </span>--keep-dir<span class="w"> </span>pyffmpegcore-demo
 </code></pre></div>
 <p>The smoke test creates a short synthetic clip at
 <code>pyffmpegcore-demo/synthetic-input.mp4</code>. It also checks a thumbnail. It needs
@@ -2004,8 +2004,8 @@ neither a repository checkout nor personal media. On a fresh run, it reports
 <h2 id="4-preview-and-produce-a-web-mp4">4. Preview and produce a web MP4<a class="headerlink" href="#4-preview-and-produce-a-web-mp4" title="Permanent link">&para;</a></h2>
 <p>The following commands work as written in Bash, zsh, and PowerShell. Preview
 first; <code>--explain</code> does not create <code>web.mp4</code>.</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>pyffmpegcore<span class="w"> </span>profile<span class="w"> </span>run<span class="w"> </span>web/mp4-compatible<span class="w"> </span>--input<span class="w"> </span>pyffmpegcore-demo/synthetic-input.mp4<span class="w"> </span>--output<span class="w"> </span>pyffmpegcore-demo/web.mp4<span class="w"> </span>--explain
-<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>pyffmpegcore<span class="w"> </span>profile<span class="w"> </span>run<span class="w"> </span>web/mp4-compatible<span class="w"> </span>--input<span class="w"> </span>pyffmpegcore-demo/synthetic-input.mp4<span class="w"> </span>--output<span class="w"> </span>pyffmpegcore-demo/web.mp4<span class="w"> </span>--receipt<span class="w"> </span>pyffmpegcore-demo/web.receipt.json
+<div class="highlight"><pre><span></span><code>pyffmpegcore<span class="w"> </span>profile<span class="w"> </span>run<span class="w"> </span>web/mp4-compatible<span class="w"> </span>--input<span class="w"> </span>pyffmpegcore-demo/synthetic-input.mp4<span class="w"> </span>--output<span class="w"> </span>pyffmpegcore-demo/web.mp4<span class="w"> </span>--explain
+pyffmpegcore<span class="w"> </span>profile<span class="w"> </span>run<span class="w"> </span>web/mp4-compatible<span class="w"> </span>--input<span class="w"> </span>pyffmpegcore-demo/synthetic-input.mp4<span class="w"> </span>--output<span class="w"> </span>pyffmpegcore-demo/web.mp4<span class="w"> </span>--receipt<span class="w"> </span>pyffmpegcore-demo/web.receipt.json
 </code></pre></div>
 <p>This profile targets a browser-compatible H.264/AAC MP4. The CLI refuses to
 replace an existing output unless you explicitly add <code>--force</code>. This step
@@ -2013,8 +2013,8 @@ requires an FFmpeg build with <code>libx264</code> and <code>aac</code> encoders
 lists the capabilities of your selected binary. If either is absent, see
 <a href="../installation/">installation help</a> and use a build that provides them.</p>
 <h2 id="5-check-the-result-and-receipt">5. Check the result and receipt<a class="headerlink" href="#5-check-the-result-and-receipt" title="Permanent link">&para;</a></h2>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>pyffmpegcore<span class="w"> </span>probe<span class="w"> </span>--input<span class="w"> </span>pyffmpegcore-demo/web.mp4<span class="w"> </span>--json
-<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>pyffmpegcore<span class="w"> </span>receipt<span class="w"> </span>validate<span class="w"> </span>pyffmpegcore-demo/web.receipt.json<span class="w"> </span>--json
+<div class="highlight"><pre><span></span><code>pyffmpegcore<span class="w"> </span>probe<span class="w"> </span>--input<span class="w"> </span>pyffmpegcore-demo/web.mp4<span class="w"> </span>--json
+pyffmpegcore<span class="w"> </span>receipt<span class="w"> </span>validate<span class="w"> </span>pyffmpegcore-demo/web.receipt.json<span class="w"> </span>--json
 </code></pre></div>
 <p>Check the <code>video.codec</code> and <code>audio.codec</code> fields in the probe output and
 <code>"valid": true</code> in the receipt validation output. The file duration and size
@@ -2023,7 +2023,7 @@ depend on your FFmpeg build. You can inspect the generated input with
 Remove <code>pyffmpegcore-demo</code> when finished. A plain <code>smoke-test</code> cleans up its
 temporary files automatically.</p>
 <h2 id="6-run-a-task-on-your-own-file">6. Run a task on your own file<a class="headerlink" href="#6-run-a-task-on-your-own-file" title="Permanent link">&para;</a></h2>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>pyffmpegcore<span class="w"> </span>convert<span class="w"> </span>--input<span class="w"> </span>clip.webm<span class="w"> </span>--output<span class="w"> </span>clip.mp4<span class="w"> </span>--video-codec<span class="w"> </span>libx264<span class="w"> </span>--audio-codec<span class="w"> </span>aac
+<div class="highlight"><pre><span></span><code>pyffmpegcore<span class="w"> </span>convert<span class="w"> </span>--input<span class="w"> </span>clip.webm<span class="w"> </span>--output<span class="w"> </span>clip.mp4<span class="w"> </span>--video-codec<span class="w"> </span>libx264<span class="w"> </span>--audio-codec<span class="w"> </span>aac
 </code></pre></div>
 <p>Use <code>probe</code> before and after when streams or metadata matter. See
 <a href="../installation/">installation help</a> if <code>doctor</code> reports a missing FFmpeg

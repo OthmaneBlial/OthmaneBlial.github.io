@@ -1919,45 +1919,45 @@
 
 <h1 id="dry-runs-and-deterministic-plans">Dry runs and deterministic plans<a class="headerlink" href="#dry-runs-and-deterministic-plans" title="Permanent link">&para;</a></h1>
 <p>Every command that can write media accepts <code>--dry-run</code> and <code>--explain</code>. Both modes are non-mutating: they do not create output directories, temporary files, pass logs, or media outputs.</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>pyffmpegcore<span class="w"> </span>convert<span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="w">  </span>--input<span class="w"> </span>input.webm<span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="w">  </span>--output<span class="w"> </span>output.mp4<span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="w">  </span>--video-codec<span class="w"> </span>libx264<span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="w">  </span>--audio-codec<span class="w"> </span>aac<span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="w">  </span>--explain
+<div class="highlight"><pre><span></span><code>pyffmpegcore<span class="w"> </span>convert<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--input<span class="w"> </span>input.webm<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--output<span class="w"> </span>output.mp4<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--video-codec<span class="w"> </span>libx264<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--audio-codec<span class="w"> </span>aac<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--explain
 </code></pre></div>
 <p><code>--dry-run</code> shows the exact argument vector, overwrite policy, expected outputs, and preflight. <code>--explain</code> also spells out selected/copied/dropped streams, codecs, filters, quality or size trade-offs, and hardware policy.</p>
 <p>Use <code>--plan-json</code> with either preview mode for automation:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>pyffmpegcore<span class="w"> </span>compress<span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="w">  </span>--input<span class="w"> </span>talk.mov<span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="w">  </span>--output<span class="w"> </span>upload.mp4<span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="w">  </span>--target-size<span class="w"> </span>25MB<span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a><span class="w">  </span>--min-video-bitrate<span class="w"> </span>150k<span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a><span class="w">  </span>--dry-run<span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a><span class="w">  </span>--plan-json<span class="w"> </span>&gt;<span class="w"> </span>plan.json
+<div class="highlight"><pre><span></span><code>pyffmpegcore<span class="w"> </span>compress<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--input<span class="w"> </span>talk.mov<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--output<span class="w"> </span>upload.mp4<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--target-size<span class="w"> </span>25MB<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--min-video-bitrate<span class="w"> </span>150k<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--dry-run<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--plan-json<span class="w"> </span>&gt;<span class="w"> </span>plan.json
 </code></pre></div>
 <p>The <code>command</code> and each multi-pass <code>steps[].command</code> value are JSON arrays, never shell strings. Human output uses unambiguous shell-like quoting only for display; PyFFmpegCore executes the original array without a shell.</p>
 <p>Plans normalize paths so the same request is snapshot-testable. Environment-specific capability and free-space facts live in the separate preflight object and do not change the plan.</p>
 <h2 id="execute-and-keep-a-machine-result">Execute and keep a machine result<a class="headerlink" href="#execute-and-keep-a-machine-result" title="Permanent link">&para;</a></h2>
 <p>Every writing command compiles through the same planner, preflight engine, and executor as its preview. Add <code>--result-json</code> to execute the job and emit one parseable document containing the exact plan, preflight checks, per-item <code>JobResult</code>, and success/failure counts:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>pyffmpegcore<span class="w"> </span>thumbnail<span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="w">  </span>--input<span class="w"> </span>talk.mov<span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="w">  </span>--output<span class="w"> </span>poster.jpg<span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="w">  </span>--result-json<span class="w"> </span>&gt;<span class="w"> </span>result.json
+<div class="highlight"><pre><span></span><code>pyffmpegcore<span class="w"> </span>thumbnail<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--input<span class="w"> </span>talk.mov<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--output<span class="w"> </span>poster.jpg<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--result-json<span class="w"> </span>&gt;<span class="w"> </span>result.json
 </code></pre></div>
 <p>Progress and human summaries are suppressed in this mode so stdout remains valid JSON. The normal stable exit categories still apply: <code>0</code> success, <code>3</code> environment, <code>4</code> validation/preflight, <code>5</code> execution, and <code>6</code> partial batch success. <code>--result-json</code> executes media and therefore cannot be combined with the non-mutating <code>--dry-run</code> or <code>--explain</code> modes.</p>
 <h2 id="execute-the-same-plan-from-python">Execute the same plan from Python<a class="headerlink" href="#execute-the-same-plan-from-python" title="Permanent link">&para;</a></h2>
 <p><code>WorkflowEngine</code> exposes the same planner, preflight, item-aware execution, and stable result envelope used by the CLI:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">pyffmpegcore</span><span class="w"> </span><span class="kn">import</span> <span class="n">WorkflowEngine</span>
-<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>
-<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="n">engine</span> <span class="o">=</span> <span class="n">WorkflowEngine</span><span class="p">()</span>
-<a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="n">plan</span> <span class="o">=</span> <span class="n">engine</span><span class="o">.</span><span class="n">planner</span><span class="o">.</span><span class="n">thumbnail</span><span class="p">(</span><span class="s2">"talk.mov"</span><span class="p">,</span> <span class="s2">"poster.jpg"</span><span class="p">,</span> <span class="n">timestamp</span><span class="o">=</span><span class="s2">"00:00:03"</span><span class="p">)</span>
-<a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a><span class="n">batch</span> <span class="o">=</span> <span class="n">engine</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">plan</span><span class="p">)</span>
-<a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a>
-<a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a><span class="k">if</span> <span class="n">batch</span><span class="o">.</span><span class="n">succeeded</span><span class="p">:</span>
-<a id="__codelineno-3-8" name="__codelineno-3-8" href="#__codelineno-3-8"></a>    <span class="nb">print</span><span class="p">(</span><span class="n">batch</span><span class="o">.</span><span class="n">items</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">result</span><span class="o">.</span><span class="n">outputs</span><span class="p">)</span>
-<a id="__codelineno-3-9" name="__codelineno-3-9" href="#__codelineno-3-9"></a><span class="k">else</span><span class="p">:</span>
-<a id="__codelineno-3-10" name="__codelineno-3-10" href="#__codelineno-3-10"></a>    <span class="nb">print</span><span class="p">(</span><span class="n">batch</span><span class="o">.</span><span class="n">items</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">result</span><span class="o">.</span><span class="n">stderr</span><span class="p">)</span>
+<div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">pyffmpegcore</span><span class="w"> </span><span class="kn">import</span> <span class="n">WorkflowEngine</span>
+
+<span class="n">engine</span> <span class="o">=</span> <span class="n">WorkflowEngine</span><span class="p">()</span>
+<span class="n">plan</span> <span class="o">=</span> <span class="n">engine</span><span class="o">.</span><span class="n">planner</span><span class="o">.</span><span class="n">thumbnail</span><span class="p">(</span><span class="s2">"talk.mov"</span><span class="p">,</span> <span class="s2">"poster.jpg"</span><span class="p">,</span> <span class="n">timestamp</span><span class="o">=</span><span class="s2">"00:00:03"</span><span class="p">)</span>
+<span class="n">batch</span> <span class="o">=</span> <span class="n">engine</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">plan</span><span class="p">)</span>
+
+<span class="k">if</span> <span class="n">batch</span><span class="o">.</span><span class="n">succeeded</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">batch</span><span class="o">.</span><span class="n">items</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">result</span><span class="o">.</span><span class="n">outputs</span><span class="p">)</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">batch</span><span class="o">.</span><span class="n">items</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">result</span><span class="o">.</span><span class="n">stderr</span><span class="p">)</span>
 </code></pre></div>
 <p>The engine executes the exact typed plan and returns a <code>WorkflowBatch</code> containing item-level <code>JobResult</code> values rather than exposing only a raw process object. FFmpeg's <code>-progress pipe:1</code> protocol is part of every workflow plan, and the final normalized <code>ProgressEvent</code> is stored in the result. A callback can receive the typed events while the job runs.</p>
 <p>The execution policy controls overwrite refusal, timeout, cancellation, captured output, and temporary-file retention. CLI jobs expose <code>--timeout SECONDS</code> and <code>--temp-files clean|keep-on-error|keep</code>; <code>Ctrl-C</code> terminates the active FFmpeg child and records a cancelled result. Two-pass logs, concat manifests, and defensive subtitle copies are materialized in an isolated workspace only when execution begins. The default <code>clean</code> policy removes that workspace after success or failure; retention is always explicit.</p>

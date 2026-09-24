@@ -1981,20 +1981,29 @@
    The maintainer key must match <code>.github/allowed_signers</code>, and the GitHub tag
    ruleset prevents deletion and non-fast-forward updates of <code>v*</code> refs:</li>
 </ol>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nv">release_version</span><span class="o">=</span><span class="s2">"</span><span class="k">$(</span>python<span class="w"> </span>-c<span class="w"> </span><span class="s1">'from pyffmpegcore import __version__; print(__version__)'</span><span class="k">)</span><span class="s2">"</span>
-<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>git<span class="w"> </span>-c<span class="w"> </span>gpg.format<span class="o">=</span>ssh<span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="w">  </span>-c<span class="w"> </span>user.signingkey<span class="o">=</span><span class="s2">"</span><span class="nv">$HOME</span><span class="s2">/.ssh/id_ed25519"</span><span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="w">  </span>tag<span class="w"> </span>-s<span class="w"> </span><span class="s2">"v</span><span class="si">${</span><span class="nv">release_version</span><span class="si">}</span><span class="s2">"</span><span class="w"> </span>-m<span class="w"> </span><span class="s2">"pyffmpegcore </span><span class="si">${</span><span class="nv">release_version</span><span class="si">}</span><span class="s2">"</span>
-<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>git<span class="w"> </span>-c<span class="w"> </span>gpg.format<span class="o">=</span>ssh<span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="w">  </span>-c<span class="w"> </span>gpg.ssh.allowedSignersFile<span class="o">=</span>.github/allowed_signers<span class="w"> </span><span class="se">\</span>
-<a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a><span class="w">  </span>tag<span class="w"> </span>--verify<span class="w"> </span><span class="s2">"v</span><span class="si">${</span><span class="nv">release_version</span><span class="si">}</span><span class="s2">"</span>
+<div class="highlight"><pre><span></span><code><span class="nv">release_version</span><span class="o">=</span><span class="s2">"</span><span class="k">$(</span>python<span class="w"> </span>-c<span class="w"> </span><span class="s1">'from pyffmpegcore import __version__; print(__version__)'</span><span class="k">)</span><span class="s2">"</span>
+git<span class="w"> </span>-c<span class="w"> </span>gpg.format<span class="o">=</span>ssh<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-c<span class="w"> </span>user.signingkey<span class="o">=</span><span class="s2">"</span><span class="nv">$HOME</span><span class="s2">/.ssh/id_ed25519"</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>tag<span class="w"> </span>-s<span class="w"> </span><span class="s2">"v</span><span class="si">${</span><span class="nv">release_version</span><span class="si">}</span><span class="s2">"</span><span class="w"> </span>-m<span class="w"> </span><span class="s2">"pyffmpegcore </span><span class="si">${</span><span class="nv">release_version</span><span class="si">}</span><span class="s2">"</span>
+git<span class="w"> </span>-c<span class="w"> </span>gpg.format<span class="o">=</span>ssh<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-c<span class="w"> </span>gpg.ssh.allowedSignersFile<span class="o">=</span>.github/allowed_signers<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>tag<span class="w"> </span>--verify<span class="w"> </span><span class="s2">"v</span><span class="si">${</span><span class="nv">release_version</span><span class="si">}</span><span class="s2">"</span>
 </code></pre></div>
 <ol>
 <li>Push the tag. The workflow builds once, tests the exact wheel on the supported OS/Python anchors, attests it, and publishes it through OIDC.</li>
 <li>The workflow waits for the exact wheel and source distribution to appear in the public PyPI JSON endpoint. It then performs a clean <code>pipx install</code>, <code>--version</code>, <code>doctor</code>, and <code>smoke-test</code> on Linux, macOS, and Windows before creating the matching GitHub Release with checksums. The GitHub Release is marked as a prerelease while the package classifier says Beta. A failed public-install gate must be fixed forward; it must not be bypassed by creating the release manually.</li>
+</ol>
+<p><code>scripts.build_cli_artifacts</code> sets <code>SOURCE_DATE_EPOCH</code> from the source
+   commit (or from the packaged <code>PKG-INFO</code> timestamp when rebuilding an sdist)
+   unless a valid explicit value is supplied. It normalizes sdist tar/gzip
+   timestamps and ownership metadata. Rebuilding the same source with the same
+   pinned toolchain therefore reproduces the wheel and sdist bytes; the release
+   workflow still tests and publishes the single artifact bundle it built
+   first.</p>
+<ol>
 <li>Record the public terminal proof only after those endpoints are healthy:</li>
 </ol>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>scripts/record_terminal_demo.sh<span class="w"> </span><span class="s2">"docs/assets/terminal-demo-v</span><span class="si">${</span><span class="nv">release_version</span><span class="si">}</span><span class="s2">.cast"</span><span class="w"> </span><span class="s2">"</span><span class="si">${</span><span class="nv">release_version</span><span class="si">}</span><span class="s2">"</span>
+<div class="highlight"><pre><span></span><code>scripts/record_terminal_demo.sh<span class="w"> </span><span class="s2">"docs/assets/terminal-demo-v</span><span class="si">${</span><span class="nv">release_version</span><span class="si">}</span><span class="s2">.cast"</span><span class="w"> </span><span class="s2">"</span><span class="si">${</span><span class="nv">release_version</span><span class="si">}</span><span class="s2">"</span>
 </code></pre></div>
 <p>The recorder installs the exact public version in a fresh environment, captures a real PTY session, enforces a 60–90 second duration and required proof steps, rejects private home paths, and writes an accessible text transcript beside the cast. Never hand-edit the recording to invent output.</p>
 <p>Never rebuild or replace files for an existing version. A failed gate means fix forward with a new commit and, if any immutable artifact was already published, a new version.</p>
