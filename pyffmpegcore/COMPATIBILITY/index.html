@@ -323,7 +323,7 @@
   <span class="md-ellipsis">
     
   
-    63.5-second 0.3.0 public run
+    63.4-second 0.3.1 public run
   
 
     
@@ -2039,6 +2039,20 @@ cross-platform media result. Even a tested cell proves only the named workflows
 on that runner and FFmpeg build.</p>
 <p>The <a href="https://github.com/OthmaneBlial/pyffmpegcore/actions/workflows/ci.yml">CI workflow</a> is authoritative. A cell counts as tested only when its current required check is green. Compatibility JSON artifacts record the runner architecture, Python version, CLI version, FFmpeg path/version, and FFprobe path/version. The workflow also validates the six artifacts and uploads a readable summary; <code>python scripts/summarize_compatibility.py &lt;downloaded-artifact-directory&gt; --run-url &lt;run-url&gt;</code> reproduces it locally.</p>
 <h3 id="verified-release-snapshot-24-september-2026">Verified release snapshot: 24 September 2026<a class="headerlink" href="#verified-release-snapshot-24-september-2026" title="Permanent link">&para;</a></h3>
+<p>The signed <code>v0.3.1</code> tag points to source SHA
+<code>562ae6ce92a8b321f15a6a250cf7802f2c9bb5bc</code>. Manual build/test run
+<a href="https://github.com/OthmaneBlial/pyffmpegcore/actions/runs/35975145754"><code>35975145754</code></a>
+and tagged release workflow
+<a href="https://github.com/OthmaneBlial/pyffmpegcore/actions/runs/35975371541"><code>35975371541</code></a>
+passed the exact artifact checks on Linux, macOS, and Windows with Python 3.10
+and 3.14. Six clean public installs also passed. The full Python 3.10–3.14
+package-contract workflow was not run for this release.</p>
+<p>Wheel <code>pyffmpegcore-0.3.1-py3-none-any.whl</code> is 101,638 bytes with SHA-256
+<code>ea222d3dc5d09ae0ffd79c310ea415eb4edb2d7e04a87532cda939a7890d255d</code>.
+The 335,713-byte source distribution has SHA-256
+<code>e0ff591589dd3950e11450dcecc0d1b39718c42415332568e606c98207c94074</code>.
+Both match the PyPI JSON and GitHub Release checksums. No container image or
+GitHub Action image was built or tested.</p>
 <p>The signed <code>v0.3.0</code> tag points to source SHA
 <code>492d4b0a808cd429b75b2d21735652260eee9296</code>. Release workflow
 <a href="https://github.com/OthmaneBlial/pyffmpegcore/actions/runs/35971504440"><code>35971504440</code></a>

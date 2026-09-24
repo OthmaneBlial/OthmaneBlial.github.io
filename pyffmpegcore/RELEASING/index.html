@@ -323,7 +323,7 @@
   <span class="md-ellipsis">
     
   
-    63.5-second 0.3.0 public run
+    63.4-second 0.3.1 public run
   
 
     
@@ -2006,9 +2006,10 @@ git<span class="w"> </span>-c<span class="w"> </span>gpg.format<span class="o">=
 <ol>
 <li>Record the public terminal proof only after those endpoints are healthy:</li>
 </ol>
-<div class="highlight"><pre><span></span><code>scripts/record_terminal_demo.sh<span class="w"> </span><span class="s2">"docs/assets/terminal-demo-v</span><span class="si">${</span><span class="nv">release_version</span><span class="si">}</span><span class="s2">.cast"</span><span class="w"> </span><span class="s2">"</span><span class="si">${</span><span class="nv">release_version</span><span class="si">}</span><span class="s2">"</span>
+<div class="highlight"><pre><span></span><code><span class="nb">export</span><span class="w"> </span><span class="nv">PYFFMPEGCORE_DEMO_WHEEL_HASH</span><span class="o">=</span><span class="s2">"&lt;SHA-256 of the exact versioned PyPI wheel&gt;"</span>
+scripts/record_terminal_demo.sh<span class="w"> </span><span class="s2">"docs/assets/terminal-demo-v</span><span class="si">${</span><span class="nv">release_version</span><span class="si">}</span><span class="s2">.cast"</span><span class="w"> </span><span class="s2">"</span><span class="si">${</span><span class="nv">release_version</span><span class="si">}</span><span class="s2">"</span>
 </code></pre></div>
-<p>The recorder installs the exact public version in a fresh environment, captures a real PTY session, enforces a 60–90 second duration and required proof steps, rejects private home paths, and writes an accessible text transcript beside the cast. Never hand-edit the recording to invent output.</p>
+<p>Get the hash from that version's PyPI JSON <code>digests.sha256</code> for the wheel (not the source archive). The recorder checks the installed wheel against it, captures a real PTY session, enforces a 60–90 second duration and required proof steps, rejects private home paths, and writes an accessible text transcript beside the cast. Never hand-edit the recording to invent output.</p>
 <p>Never rebuild or replace files for an existing version. A failed gate means fix forward with a new commit and, if any immutable artifact was already published, a new version.</p>
 <h2 id="rollback-and-yanking">Rollback and Yanking<a class="headerlink" href="#rollback-and-yanking" title="Permanent link">&para;</a></h2>
 <p>Python packages cannot be safely “rolled back” by replacing files. For a broken but non-malicious release:</p>

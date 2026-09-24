@@ -323,7 +323,7 @@
   <span class="md-ellipsis">
     
   
-    63.5-second 0.3.0 public run
+    63.4-second 0.3.1 public run
   
 
     
@@ -1970,7 +1970,8 @@ pyffmpegcore<span class="w"> </span>batch<span class="w"> </span>run<span class=
 <p><code>max_workers</code> is a hard concurrency bound from 1 to 32. <code>max_input_bytes</code> limits
 each local input; it accepts an integer or a documented size such as <code>2GiB</code>.
 <code>per_job_timeout_seconds</code> applies the normal cancellation and cleanup policy to
-every job.</p>
+every job. <code>BatchRunner.run(..., policy=...)</code> also applies this override to
+direct Python API jobs; when it is unset, each plan keeps its own timeout.</p>
 <p>The result keeps manifest order even when jobs finish out of order. Exit code
 <code>0</code> means every item succeeded, <code>6</code> means stable partial success, and the normal
 environment, validation, and runtime categories apply when no item succeeds.</p>
