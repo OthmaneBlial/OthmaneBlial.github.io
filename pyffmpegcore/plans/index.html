@@ -2010,6 +2010,10 @@
 <span class="w">  </span>--result-json<span class="w"> </span>&gt;<span class="w"> </span>result.json
 </code></pre></div>
 <p>Progress and human summaries are suppressed in this mode so stdout remains valid JSON. The normal stable exit categories still apply: <code>0</code> success, <code>3</code> environment, <code>4</code> validation/preflight, <code>5</code> execution, and <code>6</code> partial batch success. <code>--result-json</code> executes media and therefore cannot be combined with the non-mutating <code>--dry-run</code> or <code>--explain</code> modes.</p>
+<p>After successful execution, <code>WorkflowEngine</code> probes outputs when FFprobe is
+available. Workflows with a declared output contract fail validation if the
+probe cannot find a required primary stream. If FFprobe is unavailable, the
+result records that output verification could not be completed.</p>
 <h2 id="execute-the-same-plan-from-python">Execute the same plan from Python<a class="headerlink" href="#execute-the-same-plan-from-python" title="Permanent link">&para;</a></h2>
 <p><code>WorkflowEngine</code> exposes the same planner, preflight, item-aware execution, and stable result envelope used by the CLI:</p>
 <div class="highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">pyffmpegcore</span><span class="w"> </span><span class="kn">import</span> <span class="n">WorkflowEngine</span>
