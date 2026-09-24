@@ -1994,6 +1994,9 @@ can still be sensitive in some environments.</p>
 <span class="n">receipt</span> <span class="o">=</span> <span class="n">ReceiptBuilder</span><span class="p">()</span><span class="o">.</span><span class="n">build</span><span class="p">(</span><span class="n">batch</span><span class="p">)</span>
 <span class="n">receipt</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">"run-receipt.json"</span><span class="p">)</span>
 </code></pre></div>
+<p><code>RunReceipt.write()</code> refuses an existing path. Pass <code>overwrite=True</code> only when
+replacement is intentional; it replaces the receipt atomically. CLI receipt
+writes require <code>--force</code> to replace an existing file.</p>
 <h2 id="schema-examples-and-migration">Schema, examples, and migration<a class="headerlink" href="#schema-examples-and-migration" title="Permanent link">&para;</a></h2>
 <ul>
 <li><a href="../schemas/run-receipt-1.0.schema.json">JSON Schema 1.0</a></li>

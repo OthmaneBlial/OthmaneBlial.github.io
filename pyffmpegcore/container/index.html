@@ -1992,7 +1992,7 @@ publishing an image.</p>
 <li>attaches BuildKit SBOM and maximum provenance;</li>
 <li>creates a GitHub artifact attestation for the pushed digest.</li>
 </ol>
-<p>Pushes, tags, and the weekly scheduled run rebuild and scan without publishing.
+<p>The workflow is manual-only; it does not run on pushes, tags, or a schedule.
 Dependency or base updates require review and a new immutable digest. A
 maintainer must deliberately dispatch the workflow with <code>publish=true</code> after
 reviewing the exact scan artifact.

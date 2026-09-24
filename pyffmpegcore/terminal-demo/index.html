@@ -80,7 +80,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#a-public-install-895-real-seconds" class="md-skip">
+        <a href="#a-public-030-install-635-real-seconds" class="md-skip">
           Skip to content
         </a>
       
@@ -374,17 +374,6 @@
       Table of contents
     </label>
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#frames-from-the-real-terminal" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Frames from the real terminal
-      
-    </span>
-  </a>
-  
-</li>
       
         <li class="md-nav__item">
   <a href="#inspect-or-replay-the-evidence" class="md-nav__link">
@@ -1865,17 +1854,6 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#frames-from-the-real-terminal" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Frames from the real terminal
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
   <a href="#inspect-or-replay-the-evidence" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -1917,65 +1895,55 @@
   
 
 
-<h1 id="a-public-install-895-real-seconds">A public install. 89.5 real seconds.<a class="headerlink" href="#a-public-install-895-real-seconds" title="Permanent link">&para;</a></h1>
-<p>This asciicast was recorded on 19 September 2026 from a fresh virtual
-environment on macOS arm64, Python 3.14.6, and FFmpeg 9.0.1. It downloaded
-<code>pyffmpegcore==0.2.2</code> from public PyPI, generated synthetic media locally,
-previewed the web profile, encoded the result, probed its streams, and
-validated its receipt. The repository's recording validator measured <strong>89.5
-seconds</strong> and rejected private home-directory paths.</p>
+<h1 id="a-public-030-install-635-real-seconds">A public 0.3.0 install. 63.5 real seconds.<a class="headerlink" href="#a-public-030-install-635-real-seconds" title="Permanent link">&para;</a></h1>
+<p>This terminal capture was recorded on 24 September 2026 from a fresh virtual
+environment on macOS arm64, Python 3.14.6, and FFmpeg 9.0.1. It installs the
+exact public <code>0.3.0</code> wheel from PyPI, creates synthetic media, previews a web
+profile, encodes a result, probes its streams, and validates its receipt. The
+repository validator measured <strong>63.5 seconds</strong> and rejected private home paths.</p>
 <div class="pfc-demo-ledger" aria-label="Terminal demonstration facts">
-  <div><span>Artifact</span><strong>PyPI 0.2.2</strong></div>
-  <div><span>Duration</span><strong>89.5 s</strong></div>
-  <div><span>Media</span><strong>Synthetic</strong></div>
-  <div><span>Result</span><strong>PASS</strong></div>
+  <div><span>Artifact</span><strong>PyPI 0.3.0</strong></div>
+  <div><span>Duration</span><strong>63.5 s</strong></div>
+  <div><span>Host</span><strong>macOS arm64</strong></div>
+  <div><span>Media</span><strong>Synthetic / local</strong></div>
 </div>
 
-<h2 id="frames-from-the-real-terminal">Frames from the real terminal<a class="headerlink" href="#frames-from-the-real-terminal" title="Permanent link">&para;</a></h2>
-<p>The images below render two frames from the validated asciicast. The second
-is cropped to the output and receipt; no command text or measured fact was
-added. The complete, timestamped cast and accessible transcript are linked
-below.</p>
-<p><img alt="Actual 0.2.2 terminal frame: web profile command, FFmpeg argument plan, selected streams, required capabilities, and preflight PASS." src="../assets/terminal-plan-v0.2.2.png" /></p>
-<p>The plan exposes H.264/AAC, <code>yuv420p</code>, the two selected streams, and the
-required encoders and MP4 muxer before the file is written.
-<a href="../assets/terminal-plan-v0.2.2.png">Open the plan frame at full resolution</a>.</p>
-<p><img alt="Actual 0.2.2 terminal frame: probed H.264/AAC MP4 and successful schema 1.0 receipt validation." src="../assets/terminal-result-v0.2.2.png" /></p>
-<p>The output was a 60.02-second H.264/AAC MP4 reported as 2.5 MB. The synthetic
-input and output lived in the recorder's temporary directory; the recording
-and transcript preserve the console evidence, not a downloadable media file.
-<a href="../assets/terminal-result-v0.2.2.png">Open the result frame at full resolution</a>.</p>
 <h2 id="inspect-or-replay-the-evidence">Inspect or replay the evidence<a class="headerlink" href="#inspect-or-replay-the-evidence" title="Permanent link">&para;</a></h2>
 <ul>
-<li><a href="../assets/terminal-demo-v0.2.2.cast">Download the original asciicast</a></li>
-<li><a href="../assets/terminal-demo-v0.2.2.txt">Read the complete accessible transcript</a></li>
-<li><a href="../assets/terminal-demo-v0.2.2.frames.json">Inspect frame timestamps, crops, renderer, and SHA-256 hashes</a></li>
-<li><a href="https://github.com/OthmaneBlial/pyffmpegcore/actions/runs/32955455841">Inspect the exact public release workflow</a></li>
-<li><a href="https://github.com/OthmaneBlial/pyffmpegcore/releases/tag/v0.2.2">Inspect the signed release and checksums</a></li>
-<li><a href="../assets/terminal-demo-v0.2.1.cast">Inspect the archived <code>0.2.1</code> cast</a></li>
+<li><a href="../assets/terminal-demo-v0.3.0.cast">Download the original asciicast</a></li>
+<li><a href="../assets/terminal-demo-v0.3.0.txt">Read the complete accessible transcript</a></li>
+<li><a href="https://github.com/OthmaneBlial/pyffmpegcore/releases/tag/v0.3.0">Inspect the signed GitHub prerelease, checksums, and artifact report</a></li>
+<li><a href="https://github.com/OthmaneBlial/pyffmpegcore/actions/runs/35971504440">Inspect the exact publication and six-cell public-install workflow</a></li>
+<li><a href="https://pypi.org/project/pyffmpegcore/0.3.0/">Open the public PyPI files</a></li>
+<li><a href="https://pypi.org/integrity/pyffmpegcore/0.3.0/pyffmpegcore-0.3.0-py3-none-any.whl/provenance">Verify the wheel Trusted Publisher attestation</a></li>
+<li><a href="../assets/terminal-demo-v0.2.2.cast">Inspect the archived 0.2.2 recording and transcript</a></li>
 </ul>
-<p>To replay the cast locally with the open-source asciinema client:</p>
-<div class="highlight"><pre><span></span><code>asciinema<span class="w"> </span>play<span class="w"> </span>terminal-demo-v0.2.2.cast
+<p>The published wheel is 101,305 bytes with SHA-256
+<code>8ed1b315b3326cc115e5df4bd1ac32d69b6c77175663d6c630cf3e75c3186df7</code>.
+That hash matches both the PyPI JSON and the release's <code>SHA256SUMS</code> file.</p>
+<p>To replay the cast with the open-source asciinema client:</p>
+<div class="highlight"><pre><span></span><code>asciinema<span class="w"> </span>play<span class="w"> </span>terminal-demo-v0.3.0.cast
 </code></pre></div>
-<p>To verify the recording and regenerate its transcript from the repository:</p>
+<p>To validate the recording and regenerate its transcript:</p>
 <div class="highlight"><pre><span></span><code>python<span class="w"> </span>scripts/validate_terminal_demo.py<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--cast<span class="w"> </span>docs/assets/terminal-demo-v0.2.2.cast<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--expected-version<span class="w"> </span><span class="m">0</span>.2.2<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--transcript<span class="w"> </span>/tmp/terminal-demo-v0.2.2.txt
+<span class="w">  </span>--cast<span class="w"> </span>docs/assets/terminal-demo-v0.3.0.cast<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--expected-version<span class="w"> </span><span class="m">0</span>.3.0<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--transcript<span class="w"> </span>/tmp/terminal-demo-v0.3.0.txt
 </code></pre></div>
 <h2 id="what-the-recording-proves">What the recording proves<a class="headerlink" href="#what-the-recording-proves" title="Permanent link">&para;</a></h2>
 <ol>
-<li>The package came from public PyPI rather than the repository checkout.</li>
-<li><code>doctor</code> resolved the actual FFmpeg and FFprobe binaries and indexed their
-   capabilities.</li>
-<li><code>smoke-test</code> generated and verified local media without a personal file.</li>
-<li><code>--explain</code> showed the argument vector and trade-offs before mutation.</li>
-<li>The run emitted progress, probed the output, and wrote a receipt.</li>
-<li>The receipt validator accepted schema 1.0 and its single item.</li>
+<li>The installed package came from the public PyPI wheel, checked by SHA-256.</li>
+<li><code>doctor</code> resolved the real FFmpeg and FFprobe binaries and their capabilities.</li>
+<li><code>smoke-test</code> generated a local synthetic input and verified a thumbnail.</li>
+<li><code>--explain</code> showed the argument plan and preflight without writing output.</li>
+<li>The run emitted progress and produced a 60.02-second H.264/AAC MP4 at
+   320×180, reported as 2.5 MB.</li>
+<li>The receipt validator accepted schema 1.0 and the recorded item.</li>
 </ol>
-<p>This generated fixture does not establish quality on user media, support for
-every FFmpeg build, or a size reduction. See the <a href="../COMPATIBILITY/">compatibility
-policy</a> and <a href="../evidence/">measured recipe evidence</a>.</p>
+<p>The fixture and measured output are synthetic. They do not establish quality
+on user media or support for every FFmpeg build. No personal media or telemetry
+was involved. See the <a href="../COMPATIBILITY/">compatibility policy</a> and <a href="../evidence/">measured
+recipe evidence</a>.</p>
 
 
 

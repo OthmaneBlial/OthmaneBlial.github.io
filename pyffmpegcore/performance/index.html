@@ -1827,10 +1827,11 @@ one second of processing orchestration. The warm run must report <code>cached</c
 complete faster than the cold run. These are absolute bounds because percentage
 overhead on a two-second synthetic fixture exaggerates startup cost; real media
 processing time is dominated by FFmpeg.</p>
-<p>The scheduled <a href="https://github.com/OthmaneBlial/pyffmpegcore/actions/workflows/benchmark.yml">Benchmarks workflow</a>
-publishes the complete report as an artifact. Results are environment-specific,
-so the project does not claim to be faster than FFmpeg or compare unrelated
-libraries using synthetic headline numbers.</p>
+<p>The <a href="https://github.com/OthmaneBlial/pyffmpegcore/actions/workflows/benchmark.yml">Benchmarks workflow</a>
+runs for relevant pull requests or manual dispatch and publishes its complete
+report as an artifact. Results are environment-specific, so the project does
+not claim to be faster than FFmpeg or compare unrelated libraries using
+synthetic headline numbers.</p>
 <p>The checked-in <a href="https://github.com/OthmaneBlial/pyffmpegcore/blob/main/benchmarks/baseline-macos-arm64-2026-08-25.json">2026-08-25 Apple Silicon baseline</a>
 recorded 89 ms median startup overhead, 501 ms orchestration around an exact
 46 ms thumbnail plan, identical 9,118-byte outputs, an 84,661-byte wheel, and a

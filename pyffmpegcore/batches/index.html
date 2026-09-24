@@ -1988,7 +1988,12 @@ has a monotonic sequence, job ID, attempt, and one of these states:</p>
 </ul>
 <p><code>--receipt-dir</code> writes one redacted run receipt for every executed item,
 including deterministic failures. Content hashing remains opt-in with
-<code>--hash-content</code>.</p>
+<code>--hash-content</code>. Existing receipt files are preserved by default; use
+<code>--force</code> or <code>--resume</code> to authorize replacement. The Python API accepts
+<code>overwrite_receipts=True</code>. Receipt destinations that collide with media
+outputs are rejected before jobs start.
+State, event log, per-job receipts, and media outputs must use distinct paths;
+the CLI rejects collisions before opening the event log.</p>
 <h2 id="retry-and-resume-safety">Retry and resume safety<a class="headerlink" href="#retry-and-resume-safety" title="Permanent link">&para;</a></h2>
 <p>Retries are disabled by default. When enabled, only an explicit runtime
 transport or temporarily-unavailable diagnostic is retryable. Validation,
@@ -1998,7 +2003,13 @@ never retried blindly.</p>
 atomically. After interruption, add <code>--resume</code>: a job is skipped only when its
 ID and exact plan signature match and every expected output still exists.
 Changed plans or deleted outputs run again. The state stores signatures rather
-than private paths.</p>
+than private paths. State destinations that collide with a media output or
+generated receipt are rejected before jobs start, including through the
+Python API. A fresh state path is claimed exclusively before the first job
+starts, so a concurrent default run fails rather than replacing it. Existing
+state files are preserved by default; use <code>--force</code>,
+<code>--resume</code>, or <code>overwrite_state=True</code> in the Python API to replace or continue
+one.</p>
 <p>The complete schema and example are published under <a href="../schemas/">JSON schemas</a>.</p>
 
 

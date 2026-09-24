@@ -2044,7 +2044,9 @@ pyffmpegcore<span class="w"> </span>pipeline<span class="w"> </span>run<span cla
 run, and the result keeps deterministic topological order. <code>Ctrl-C</code> sets the
 same cancellation contract used by one-off workflows. State is written
 atomically after each successful step and contains only step IDs and cache
-keys—never source paths or secret values.</p>
+keys—never source paths or secret values. A fresh explicit state path is
+claimed exclusively before the first runnable step; a concurrent default run
+fails rather than replacing it.</p>
 <h3 id="powershell-variable-evidence-and-resume">PowerShell: variable, evidence, and resume<a class="headerlink" href="#powershell-variable-evidence-and-resume" title="Permanent link">&para;</a></h3>
 <p>From a repository checkout with PyFFmpegCore and FFmpeg installed, generate
 the local fixture and run the included <code>web-publish.json</code> template. The
@@ -2072,8 +2074,16 @@ and reads their values from the environment. Quoted paths keep spaces intact.</p
 <p>The first run writes one redacted receipt per step, JSON Lines events, and
 atomic resume state. The second run reuses steps only when their signatures
 and outputs still match; inspect the result's item statuses. Receipts omit
-private paths by default. Do not put credentials in the command, pipeline
-file, or <code>OUTPUT_DIR</code> value.</p>
+private paths by default. Existing receipts are preserved unless <code>--force</code> or
+<code>--resume</code> is used; the Python API accepts <code>overwrite_receipts=True</code>. Receipt
+destinations that collide with media outputs are rejected before steps start.
+State destinations that collide with media outputs or receipts are rejected
+before execution, including through the Python API. Existing explicit state
+files are preserved unless <code>--force</code>, <code>--resume</code>, or <code>overwrite_state=True</code> is
+used. The pipeline's own cache state remains reusable by default.
+State, event log, per-step receipts, and media outputs must use distinct
+paths; the CLI rejects collisions before opening the event log.
+Do not put credentials in the command, pipeline file, or <code>OUTPUT_DIR</code> value.</p>
 <h2 id="optional-content-aware-cache">Optional content-aware cache<a class="headerlink" href="#optional-content-aware-cache" title="Permanent link">&para;</a></h2>
 <div class="highlight"><pre><span></span><code><span class="p">{</span>
 <span class="w">  </span><span class="nt">"cache"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
@@ -2100,8 +2110,10 @@ pipeline or command line:</p>
 pyffmpegcore<span class="w"> </span>pipeline<span class="w"> </span>run<span class="w"> </span>private.json<span class="w"> </span>--var<span class="w"> </span>SOURCE_URL<span class="w"> </span>--receipt-dir<span class="w"> </span>receipts
 </code></pre></div>
 <p>Secret defaults in pipeline files are rejected. Named values are masked from
-plans, JSON output, event logs, cache keys, and per-step receipts. URL userinfo
-and query strings also use the normal receipt redaction policy.</p>
+plans, result JSON, cache keys, and per-step receipts. When a declared secret is
+active, CLI event logs omit event details because FFmpeg diagnostics can echo a
+source URL. URL userinfo and query strings also use the normal receipt
+redaction policy in other artifacts.</p>
 <p>Remote inputs require a server that supports the access pattern of the media.
 In a local replay on 19 September 2026, a fast-start MP4 completed over HTTP,
 while a MOV whose <code>moov</code> atom followed <code>mdat</code> failed against a minimal server

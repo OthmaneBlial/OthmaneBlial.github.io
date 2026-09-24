@@ -2065,18 +2065,18 @@ build. Inspect <code>pyffmpegcore doctor --json</code> before relying on a parti
 workflow; PyFFmpegCore does not fetch missing codecs.</p>
 <h2 id="bash-or-zsh">Bash or zsh<a class="headerlink" href="#bash-or-zsh" title="Permanent link">&para;</a></h2>
 <p>Install the exact validated public release:</p>
-<div class="highlight"><pre><span></span><code>pipx<span class="w"> </span>install<span class="w"> </span><span class="s2">"pyffmpegcore==0.2.2"</span>
+<div class="highlight"><pre><span></span><code>pipx<span class="w"> </span>install<span class="w"> </span><span class="s2">"pyffmpegcore==0.3.0"</span>
 pyffmpegcore<span class="w"> </span>--version
 pyffmpegcore<span class="w"> </span>doctor
 pyffmpegcore<span class="w"> </span>smoke-test
 </code></pre></div>
 <p>A repository checkout also provides <code>./install.sh</code>.</p>
 <p><code>uv</code> users can install the same release as an isolated tool:</p>
-<div class="highlight"><pre><span></span><code>uv<span class="w"> </span>tool<span class="w"> </span>install<span class="w"> </span><span class="s2">"pyffmpegcore==0.2.2"</span>
+<div class="highlight"><pre><span></span><code>uv<span class="w"> </span>tool<span class="w"> </span>install<span class="w"> </span><span class="s2">"pyffmpegcore==0.3.0"</span>
 pyffmpegcore<span class="w"> </span>smoke-test
 </code></pre></div>
 <h2 id="powershell">PowerShell<a class="headerlink" href="#powershell" title="Permanent link">&para;</a></h2>
-<div class="highlight"><pre><span></span><code><span class="n">pipx</span> <span class="n">install</span> <span class="s2">"pyffmpegcore==0.2.2"</span>
+<div class="highlight"><pre><span></span><code><span class="n">pipx</span> <span class="n">install</span> <span class="s2">"pyffmpegcore==0.3.0"</span>
 <span class="n">pyffmpegcore</span> <span class="p">-</span><span class="n">-version</span>
 <span class="n">pyffmpegcore</span> <span class="n">doctor</span>
 <span class="n">pyffmpegcore</span> <span class="n">smoke-test</span>
@@ -2084,7 +2084,7 @@ pyffmpegcore<span class="w"> </span>smoke-test
 <p>From a checkout, use <code>./install.ps1</code>; do not run the POSIX shell installer on Windows.</p>
 <h2 id="python-project-dependency">Python project dependency<a class="headerlink" href="#python-project-dependency" title="Permanent link">&para;</a></h2>
 <p>For a Python project dependency:</p>
-<div class="highlight"><pre><span></span><code>python<span class="w"> </span>-m<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span><span class="s2">"pyffmpegcore==0.2.2"</span>
+<div class="highlight"><pre><span></span><code>python<span class="w"> </span>-m<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span><span class="s2">"pyffmpegcore==0.3.0"</span>
 </code></pre></div>
 <p>Use an appropriate compatible-release constraint after validating future
 versions against your own media workflows.</p>
@@ -2094,7 +2094,7 @@ external FFmpeg dependency.</p>
 <h2 id="verify-the-selected-binaries">Verify the selected binaries<a class="headerlink" href="#verify-the-selected-binaries" title="Permanent link">&para;</a></h2>
 <div class="highlight"><pre><span></span><code>pyffmpegcore<span class="w"> </span>doctor<span class="w"> </span>--json
 </code></pre></div>
-<p>The report includes resolved paths, versions, build configuration, capability counts, selected workflow encoders/filters, and hardware accelerators. Supplying an untrusted <code>--ffmpeg-path</code> or <code>--ffprobe-path</code> executes that binary; treat it like any other executable.</p>
+<p>The report includes resolved paths, versions, build configuration, capability counts, selected workflow encoders/filters, and hardware accelerators. If a capability listing times out, <code>capabilities</code> is <code>null</code>, <code>capabilities_error</code> explains the failure, and <code>doctor</code> exits with code 3. Supplying an untrusted <code>--ffmpeg-path</code> or <code>--ffprobe-path</code> executes that binary; treat it like any other executable.</p>
 
 
 

@@ -1479,10 +1479,10 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#runself-jobs-iterablebatchjob-policy-batchpolicy-none-none-cancellation-threadingevent-none-none-event_callback-callablebatchevent-none-none-none-state_path-str-path-none-none-resume-bool-false-receipt_dir-str-path-none-none-hash_content-bool-false-batchrun" class="md-nav__link">
+  <a href="#runself-jobs-iterablebatchjob-policy-batchpolicy-none-none-cancellation-threadingevent-none-none-event_callback-callablebatchevent-none-none-none-state_path-str-path-none-none-resume-bool-false-overwrite_state-bool-false-receipt_dir-str-path-none-none-overwrite_receipts-bool-false-hash_content-bool-false-batchrun" class="md-nav__link">
     <span class="md-ellipsis">
       
-        run(self, jobs: 'Iterable[BatchJob]', *, policy: 'BatchPolicy | None' = None, cancellation: 'threading.Event | None' = None, event_callback: 'Callable[[BatchEvent], None] | None' = None, state_path: 'str | Path | None' = None, resume: 'bool' = False, receipt_dir: 'str | Path | None' = None, hash_content: 'bool' = False) -&gt; 'BatchRun'
+        run(self, jobs: 'Iterable[BatchJob]', *, policy: 'BatchPolicy | None' = None, cancellation: 'threading.Event | None' = None, event_callback: 'Callable[[BatchEvent], None] | None' = None, state_path: 'str | Path | None' = None, resume: 'bool' = False, overwrite_state: 'bool' = False, receipt_dir: 'str | Path | None' = None, overwrite_receipts: 'bool' = False, hash_content: 'bool' = False) -&gt; 'BatchRun'
       
     </span>
   </a>
@@ -2184,10 +2184,10 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#runself-pipeline-pipelineplan-cancellation-threadingevent-none-none-state_path-str-path-none-none-resume-bool-false-receipt_dir-str-path-none-none-hash_content-bool-false-event_callback-any-none-pipelinerun" class="md-nav__link">
+  <a href="#runself-pipeline-pipelineplan-cancellation-threadingevent-none-none-state_path-str-path-none-none-resume-bool-false-overwrite_state-bool-false-receipt_dir-str-path-none-none-overwrite_receipts-bool-false-hash_content-bool-false-event_callback-any-none-pipelinerun" class="md-nav__link">
     <span class="md-ellipsis">
       
-        run(self, pipeline: 'PipelinePlan', *, cancellation: 'threading.Event | None' = None, state_path: 'str | Path | None' = None, resume: 'bool' = False, receipt_dir: 'str | Path | None' = None, hash_content: 'bool' = False, event_callback: 'Any' = None) -&gt; 'PipelineRun'
+        run(self, pipeline: 'PipelinePlan', *, cancellation: 'threading.Event | None' = None, state_path: 'str | Path | None' = None, resume: 'bool' = False, overwrite_state: 'bool' = False, receipt_dir: 'str | Path | None' = None, overwrite_receipts: 'bool' = False, hash_content: 'bool' = False, event_callback: 'Any' = None) -&gt; 'PipelineRun'
       
     </span>
   </a>
@@ -2552,10 +2552,10 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#runself-cmd-list-subprocesscompletedprocess" class="md-nav__link">
+  <a href="#runself-cmd-liststr-subprocesscompletedprocessstr" class="md-nav__link">
     <span class="md-ellipsis">
       
-        run(self, cmd: list) -&gt; subprocess.CompletedProcess
+        run(self, cmd: list[str]) -&gt; subprocess.CompletedProcess[str]
       
     </span>
   </a>
@@ -2663,10 +2663,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#writeself-path-str-path-path" class="md-nav__link">
+  <a href="#writeself-path-str-path-overwrite-bool-false-path" class="md-nav__link">
     <span class="md-ellipsis">
       
-        write(self, path: 'str | Path') -&gt; 'Path'
+        write(self, path: 'str | Path', *, overwrite: 'bool' = False) -&gt; 'Path'
       
     </span>
   </a>
@@ -3648,10 +3648,10 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#runself-jobs-iterablebatchjob-policy-batchpolicy-none-none-cancellation-threadingevent-none-none-event_callback-callablebatchevent-none-none-none-state_path-str-path-none-none-resume-bool-false-receipt_dir-str-path-none-none-hash_content-bool-false-batchrun" class="md-nav__link">
+  <a href="#runself-jobs-iterablebatchjob-policy-batchpolicy-none-none-cancellation-threadingevent-none-none-event_callback-callablebatchevent-none-none-none-state_path-str-path-none-none-resume-bool-false-overwrite_state-bool-false-receipt_dir-str-path-none-none-overwrite_receipts-bool-false-hash_content-bool-false-batchrun" class="md-nav__link">
     <span class="md-ellipsis">
       
-        run(self, jobs: 'Iterable[BatchJob]', *, policy: 'BatchPolicy | None' = None, cancellation: 'threading.Event | None' = None, event_callback: 'Callable[[BatchEvent], None] | None' = None, state_path: 'str | Path | None' = None, resume: 'bool' = False, receipt_dir: 'str | Path | None' = None, hash_content: 'bool' = False) -&gt; 'BatchRun'
+        run(self, jobs: 'Iterable[BatchJob]', *, policy: 'BatchPolicy | None' = None, cancellation: 'threading.Event | None' = None, event_callback: 'Callable[[BatchEvent], None] | None' = None, state_path: 'str | Path | None' = None, resume: 'bool' = False, overwrite_state: 'bool' = False, receipt_dir: 'str | Path | None' = None, overwrite_receipts: 'bool' = False, hash_content: 'bool' = False) -&gt; 'BatchRun'
       
     </span>
   </a>
@@ -4353,10 +4353,10 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#runself-pipeline-pipelineplan-cancellation-threadingevent-none-none-state_path-str-path-none-none-resume-bool-false-receipt_dir-str-path-none-none-hash_content-bool-false-event_callback-any-none-pipelinerun" class="md-nav__link">
+  <a href="#runself-pipeline-pipelineplan-cancellation-threadingevent-none-none-state_path-str-path-none-none-resume-bool-false-overwrite_state-bool-false-receipt_dir-str-path-none-none-overwrite_receipts-bool-false-hash_content-bool-false-event_callback-any-none-pipelinerun" class="md-nav__link">
     <span class="md-ellipsis">
       
-        run(self, pipeline: 'PipelinePlan', *, cancellation: 'threading.Event | None' = None, state_path: 'str | Path | None' = None, resume: 'bool' = False, receipt_dir: 'str | Path | None' = None, hash_content: 'bool' = False, event_callback: 'Any' = None) -&gt; 'PipelineRun'
+        run(self, pipeline: 'PipelinePlan', *, cancellation: 'threading.Event | None' = None, state_path: 'str | Path | None' = None, resume: 'bool' = False, overwrite_state: 'bool' = False, receipt_dir: 'str | Path | None' = None, overwrite_receipts: 'bool' = False, hash_content: 'bool' = False, event_callback: 'Any' = None) -&gt; 'PipelineRun'
       
     </span>
   </a>
@@ -4721,10 +4721,10 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#runself-cmd-list-subprocesscompletedprocess" class="md-nav__link">
+  <a href="#runself-cmd-liststr-subprocesscompletedprocessstr" class="md-nav__link">
     <span class="md-ellipsis">
       
-        run(self, cmd: list) -&gt; subprocess.CompletedProcess
+        run(self, cmd: list[str]) -&gt; subprocess.CompletedProcess[str]
       
     </span>
   </a>
@@ -4832,10 +4832,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#writeself-path-str-path-path" class="md-nav__link">
+  <a href="#writeself-path-str-path-overwrite-bool-false-path" class="md-nav__link">
     <span class="md-ellipsis">
       
-        write(self, path: 'str | Path') -&gt; 'Path'
+        write(self, path: 'str | Path', *, overwrite: 'bool' = False) -&gt; 'Path'
       
     </span>
   </a>
@@ -5182,12 +5182,15 @@
 <p>Serialize policy, ordered item outcomes, and aggregate counts.</p>
 <h2 id="batchrunner"><code>BatchRunner</code><a class="headerlink" href="#batchrunner" title="Permanent link">&para;</a></h2>
 <p>Execute validated jobs concurrently with receipts, events, retry, and resume.</p>
-<h3 id="runself-jobs-iterablebatchjob-policy-batchpolicy-none-none-cancellation-threadingevent-none-none-event_callback-callablebatchevent-none-none-none-state_path-str-path-none-none-resume-bool-false-receipt_dir-str-path-none-none-hash_content-bool-false-batchrun"><code>run(self, jobs: 'Iterable[BatchJob]', *, policy: 'BatchPolicy | None' = None, cancellation: 'threading.Event | None' = None, event_callback: 'Callable[[BatchEvent], None] | None' = None, state_path: 'str | Path | None' = None, resume: 'bool' = False, receipt_dir: 'str | Path | None' = None, hash_content: 'bool' = False) -&gt; 'BatchRun'</code><a class="headerlink" href="#runself-jobs-iterablebatchjob-policy-batchpolicy-none-none-cancellation-threadingevent-none-none-event_callback-callablebatchevent-none-none-none-state_path-str-path-none-none-resume-bool-false-receipt_dir-str-path-none-none-hash_content-bool-false-batchrun" title="Permanent link">&para;</a></h3>
-<p>Run jobs once, retry transient failures, and persist successful signatures atomically.</p>
+<h3 id="runself-jobs-iterablebatchjob-policy-batchpolicy-none-none-cancellation-threadingevent-none-none-event_callback-callablebatchevent-none-none-none-state_path-str-path-none-none-resume-bool-false-overwrite_state-bool-false-receipt_dir-str-path-none-none-overwrite_receipts-bool-false-hash_content-bool-false-batchrun"><code>run(self, jobs: 'Iterable[BatchJob]', *, policy: 'BatchPolicy | None' = None, cancellation: 'threading.Event | None' = None, event_callback: 'Callable[[BatchEvent], None] | None' = None, state_path: 'str | Path | None' = None, resume: 'bool' = False, overwrite_state: 'bool' = False, receipt_dir: 'str | Path | None' = None, overwrite_receipts: 'bool' = False, hash_content: 'bool' = False) -&gt; 'BatchRun'</code><a class="headerlink" href="#runself-jobs-iterablebatchjob-policy-batchpolicy-none-none-cancellation-threadingevent-none-none-event_callback-callablebatchevent-none-none-none-state_path-str-path-none-none-resume-bool-false-overwrite_state-bool-false-receipt_dir-str-path-none-none-overwrite_receipts-bool-false-hash_content-bool-false-batchrun" title="Permanent link">&para;</a></h3>
+<p>Run jobs once and refuse receipt replacement unless explicitly allowed.</p>
+<p>Existing state files require resume or explicit overwrite. State files
+are claimed before the first job starts and cannot alias media outputs
+or generated receipts.</p>
 <h2 id="capabilityunavailableerror"><code>CapabilityUnavailableError</code><a class="headerlink" href="#capabilityunavailableerror" title="Permanent link">&para;</a></h2>
 <p>The installed FFmpeg build cannot satisfy the requested workflow.</p>
 <h2 id="capabilityinventory"><code>CapabilityInventory</code><a class="headerlink" href="#capabilityinventory" title="Permanent link">&para;</a></h2>
-<p>Versioned inventory of an installed FFmpeg executable.</p>
+<p>Versioned FFmpeg inventory; inspection raises when a five-second listing times out.</p>
 <h3 id="missingself-requirements-tuplestr-tuplestr"><code>missing(self, requirements: 'tuple[str, ...]') -&gt; 'tuple[str, ...]'</code><a class="headerlink" href="#missingself-requirements-tuplestr-tuplestr" title="Permanent link">&para;</a></h3>
 <p>Return unsupported requirements in the same order as requested.</p>
 <h3 id="supportsself-requirement-str-bool"><code>supports(self, requirement: 'str') -&gt; 'bool'</code><a class="headerlink" href="#supportsself-requirement-str-bool" title="Permanent link">&para;</a></h3>
@@ -5235,7 +5238,9 @@
 <h3 id="run_with_progressself-args-liststr-show_percentage-bool-true-overwrite-overwritepolicy-overwritepolicyrefuse-refuse-subprocesscompletedprocessstr"><code>run_with_progress(self, args: 'list[str]', show_percentage: 'bool' = True, *, overwrite: 'OverwritePolicy' = &lt;OverwritePolicy.REFUSE: 'refuse'&gt;) -&gt; 'subprocess.CompletedProcess[str]'</code><a class="headerlink" href="#run_with_progressself-args-liststr-show_percentage-bool-true-overwrite-overwritepolicy-overwritepolicyrefuse-refuse-subprocesscompletedprocessstr" title="Permanent link">&para;</a></h3>
 <p>Run the low-level escape hatch and print its legacy progress stream.</p>
 <h2 id="ffproberunner"><code>FFprobeRunner</code><a class="headerlink" href="#ffproberunner" title="Permanent link">&para;</a></h2>
-<p>A runner for extracting metadata from media files using FFprobe.</p>
+<p>Extract media metadata through FFprobe.</p>
+<p>Media probes time out after 60 seconds by default; configure
+<code>probe_timeout_seconds</code> when constructing the runner.</p>
 <h3 id="get_bitrateself-input_file-str-int-none"><code>get_bitrate(self, input_file: 'str') -&gt; 'int | None'</code><a class="headerlink" href="#get_bitrateself-input_file-str-int-none" title="Permanent link">&para;</a></h3>
 <p>Get the bitrate of a media file.</p>
 <p>Args:
@@ -5318,10 +5323,14 @@ cache or resume check; this method never executes a step.</p>
 <p>Serialize ordered outcomes with a stable summary.</p>
 <h2 id="pipelinerunner"><code>PipelineRunner</code><a class="headerlink" href="#pipelinerunner" title="Permanent link">&para;</a></h2>
 <p>Execute a prepared DAG with dependency blocking, cancellation, resume, and caching.</p>
-<h3 id="runself-pipeline-pipelineplan-cancellation-threadingevent-none-none-state_path-str-path-none-none-resume-bool-false-receipt_dir-str-path-none-none-hash_content-bool-false-event_callback-any-none-pipelinerun"><code>run(self, pipeline: 'PipelinePlan', *, cancellation: 'threading.Event | None' = None, state_path: 'str | Path | None' = None, resume: 'bool' = False, receipt_dir: 'str | Path | None' = None, hash_content: 'bool' = False, event_callback: 'Any' = None) -&gt; 'PipelineRun'</code><a class="headerlink" href="#runself-pipeline-pipelineplan-cancellation-threadingevent-none-none-state_path-str-path-none-none-resume-bool-false-receipt_dir-str-path-none-none-hash_content-bool-false-event_callback-any-none-pipelinerun" title="Permanent link">&para;</a></h3>
+<h3 id="runself-pipeline-pipelineplan-cancellation-threadingevent-none-none-state_path-str-path-none-none-resume-bool-false-overwrite_state-bool-false-receipt_dir-str-path-none-none-overwrite_receipts-bool-false-hash_content-bool-false-event_callback-any-none-pipelinerun"><code>run(self, pipeline: 'PipelinePlan', *, cancellation: 'threading.Event | None' = None, state_path: 'str | Path | None' = None, resume: 'bool' = False, overwrite_state: 'bool' = False, receipt_dir: 'str | Path | None' = None, overwrite_receipts: 'bool' = False, hash_content: 'bool' = False, event_callback: 'Any' = None) -&gt; 'PipelineRun'</code><a class="headerlink" href="#runself-pipeline-pipelineplan-cancellation-threadingevent-none-none-state_path-str-path-none-none-resume-bool-false-overwrite_state-bool-false-receipt_dir-str-path-none-none-overwrite_receipts-bool-false-hash_content-bool-false-event_callback-any-none-pipelinerun" title="Permanent link">&para;</a></h3>
 <p>Execute steps in dependency order and return one outcome per step.</p>
 <p>Failed dependencies block downstream steps. Optional state supports
-resume and caching; receipts and event callbacks are opt-in.</p>
+resume and caching; receipts and event callbacks are opt-in. Existing
+receipts are preserved unless <code>overwrite_receipts</code> is enabled. State
+files are preserved unless resuming or <code>overwrite_state</code> is enabled,
+fresh state files are claimed before the first runnable step, and state
+files cannot alias media outputs or generated receipts.</p>
 <h2 id="pipelinespec"><code>PipelineSpec</code><a class="headerlink" href="#pipelinespec" title="Permanent link">&para;</a></h2>
 <p>Versioned pipeline source with strict variables, cache, and typed steps.</p>
 <h3 id="to_dictself-dictstr-object_8"><code>to_dict(self) -&gt; 'dict[str, object]'</code><a class="headerlink" href="#to_dictself-dictstr-object_8" title="Permanent link">&para;</a></h3>
@@ -5378,7 +5387,7 @@ records failures and remediation hints instead of raising for them.</p>
 <p>Serialize this versioned progress event for callbacks or JSON Lines.</p>
 <h2 id="progresstracker"><code>ProgressTracker</code><a class="headerlink" href="#progresstracker" title="Permanent link">&para;</a></h2>
 <p>Tracks FFmpeg progress by parsing progress output.</p>
-<h3 id="runself-cmd-list-subprocesscompletedprocess"><code>run(self, cmd: list) -&gt; subprocess.CompletedProcess</code><a class="headerlink" href="#runself-cmd-list-subprocesscompletedprocess" title="Permanent link">&para;</a></h3>
+<h3 id="runself-cmd-liststr-subprocesscompletedprocessstr"><code>run(self, cmd: list[str]) -&gt; subprocess.CompletedProcess[str]</code><a class="headerlink" href="#runself-cmd-liststr-subprocesscompletedprocessstr" title="Permanent link">&para;</a></h3>
 <p>Run a command and track progress.</p>
 <p>Args:
     cmd: Command to run</p>
@@ -5402,8 +5411,8 @@ records failures and remediation hints instead of raising for them.</p>
 <p>Return the validated receipt mapping.</p>
 <h3 id="to_jsonself-str"><code>to_json(self) -&gt; 'str'</code><a class="headerlink" href="#to_jsonself-str" title="Permanent link">&para;</a></h3>
 <p>Render the receipt as indented UTF-8-compatible JSON with a trailing newline.</p>
-<h3 id="writeself-path-str-path-path"><code>write(self, path: 'str | Path') -&gt; 'Path'</code><a class="headerlink" href="#writeself-path-str-path-path" title="Permanent link">&para;</a></h3>
-<p>Create parent directories, write the JSON receipt, and return its path.</p>
+<h3 id="writeself-path-str-path-overwrite-bool-false-path"><code>write(self, path: 'str | Path', *, overwrite: 'bool' = False) -&gt; 'Path'</code><a class="headerlink" href="#writeself-path-str-path-overwrite-bool-false-path" title="Permanent link">&para;</a></h3>
+<p>Create parent directories and refuse replacement unless explicitly requested.</p>
 <h2 id="streaminfo"><code>StreamInfo</code><a class="headerlink" href="#streaminfo" title="Permanent link">&para;</a></h2>
 <p>Typed stream facts while preserving metadata needed for safe decisions.</p>
 <h2 id="temporaryfilepolicy"><code>TemporaryFilePolicy</code><a class="headerlink" href="#temporaryfilepolicy" title="Permanent link">&para;</a></h2>

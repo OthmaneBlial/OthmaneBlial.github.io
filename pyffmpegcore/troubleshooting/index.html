@@ -2066,6 +2066,12 @@ open a new terminal, and rerun <code>doctor</code>. An explicit path is supporte
 </code></pre></div>
 <h2 id="an-encoder-or-filter-is-absent">An encoder or filter is absent<a class="headerlink" href="#an-encoder-or-filter-is-absent" title="Permanent link">&para;</a></h2>
 <p>FFmpeg builds differ. Inspect <code>doctor --json</code> and the workflow's error. Install an FFmpeg build that contains the required capability or choose a documented fallback. PyFFmpegCore does not silently download a codec build.</p>
+<p>If <code>doctor</code> reports <code>Capabilities: UNAVAILABLE</code>, its five-second capability
+listing timed out. Check that the selected FFmpeg executable responds to
+<code>-hide_banner -protocols</code>, then rerun <code>doctor</code> with the same binary path.</p>
+<p>An existing binary that does not answer its version check is reported as
+<code>UNAVAILABLE</code>; install or select a responsive FFmpeg/FFprobe executable using
+the matching <code>--ffmpeg-path</code> or <code>--ffprobe-path</code> option.</p>
 <h2 id="a-second-audio-track-or-subtitle-disappeared">A second audio track or subtitle disappeared<a class="headerlink" href="#a-second-audio-track-or-subtitle-disappeared" title="Permanent link">&para;</a></h2>
 <p>The normal <code>convert</code> workflow deliberately selects the first video and first
 audio streams. FFmpeg users repeatedly encounter this implicit-selection trap

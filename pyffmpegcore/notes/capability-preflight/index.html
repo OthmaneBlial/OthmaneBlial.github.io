@@ -1825,6 +1825,10 @@ returns one versioned <code>PreflightReport</code>. Human <code>--explain</code>
 <p>If <code>libx264</code> is absent, the report names <code>encoder:libx264</code> and supplies a tested
 fallback or platform remedy when the capability catalog has one. It does not
 silently choose a different output contract.</p>
+<p>Each FFmpeg capability-listing command has a five-second timeout. If a command
+times out, <code>doctor</code> marks capability inspection unavailable and preflight
+returns a failed <code>capabilities</code> check; neither path reports the timed-out list
+as proof that individual encoders or filters are missing.</p>
 <p>The implementation lives in <code>pyffmpegcore/capabilities.py</code> and
 <code>pyffmpegcore/preflight.py</code>; the cross-platform catalog contract is exercised
 by <code>scripts/validate_capability_catalog.py</code>. The maintained rules are bounded:

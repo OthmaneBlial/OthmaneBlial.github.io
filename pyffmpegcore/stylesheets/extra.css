@@ -179,7 +179,7 @@ body {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  padding: clamp(3rem, 7vw, 7rem) clamp(1.5rem, 5vw, 5rem);
+  padding: clamp(2rem, 3.5vw, 3.5rem) clamp(1.25rem, 3vw, 3rem);
 }
 
 .pfc-eyebrow,
@@ -214,10 +214,10 @@ body {
 }
 
 .pfc-hero h1 {
-  max-width: 12ch;
+  max-width: 22ch;
   margin: 0;
-  font-size: clamp(3.2rem, 8.5vw, 7.5rem);
-  line-height: 0.82;
+  font-size: clamp(2.8rem, 4.8vw, 5rem);
+  line-height: 0.92;
   letter-spacing: -0.065em;
   text-transform: uppercase;
 }
@@ -244,6 +244,54 @@ body {
   flex-wrap: wrap;
   gap: 0.8rem;
   margin-top: 2rem;
+}
+
+.pfc-install {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 0.9rem 1.25rem;
+  max-width: 43rem;
+  margin-top: 1.8rem;
+  padding: 1rem 1.1rem;
+  border: 1px solid #3b4540;
+  border-left: 4px solid var(--pfc-signal);
+  background: var(--pfc-panel);
+  color: var(--pfc-paper);
+}
+
+.pfc-install__label {
+  display: block;
+  color: var(--pfc-signal);
+  font-family: var(--pfc-mono);
+  font-size: 0.68rem;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.pfc-install__command code {
+  display: block;
+  margin-top: 0.45rem;
+  overflow-wrap: anywhere;
+  color: var(--pfc-paper);
+}
+
+.pfc-install .pfc-copy {
+  width: auto;
+  margin: 0;
+  padding: 0.7rem 0.85rem;
+}
+
+.pfc-install p {
+  grid-column: 1 / -1;
+  margin: 0;
+  color: #aeb9b3;
+  font-size: 0.8rem;
+}
+
+.pfc-install p a {
+  color: var(--pfc-signal);
 }
 
 .pfc-button {
@@ -775,7 +823,15 @@ body {
   }
 
   .pfc-hero h1 {
-    font-size: clamp(3.2rem, 18vw, 5.2rem);
+    font-size: clamp(2.8rem, 13vw, 4.4rem);
+  }
+
+  .pfc-install {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .pfc-install p {
+    grid-column: auto;
   }
 
   .pfc-terminal-capture img {
