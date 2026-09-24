@@ -5239,6 +5239,8 @@ in each job plan.</p>
 <p>A required executable or host resource is unavailable.</p>
 <h2 id="executionplan"><code>ExecutionPlan</code><a class="headerlink" href="#executionplan" title="Permanent link">&para;</a></h2>
 <p>Deterministic, non-shell execution plan for one media workflow.</p>
+<p>Plan fields are frozen; nested mapping/list metadata is read-only. <code>to_dict()</code>
+returns a detached, mutable serialization copy.</p>
 <h3 id="to_dictself-dictstr-any_1"><code>to_dict(self) -&gt; 'dict[str, Any]'</code><a class="headerlink" href="#to_dictself-dictstr-any_1" title="Permanent link">&para;</a></h3>
 <p>Serialize workflow, argument vectors, policy, streams, warnings, and metadata.</p>
 <h2 id="executionpolicy"><code>ExecutionPolicy</code><a class="headerlink" href="#executionpolicy" title="Permanent link">&para;</a></h2>
