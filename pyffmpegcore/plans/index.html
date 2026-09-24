@@ -503,6 +503,23 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="Execute the same plan from Python">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#cancel-from-python" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Cancel from Python
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
@@ -1884,6 +1901,23 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="Execute the same plan from Python">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#cancel-from-python" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Cancel from Python
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
@@ -1968,6 +2002,25 @@ stats, and records a fallback warning plus the actual retry argument vector.
 Timeouts, cancellations, and ordinary processing errors are never retried as a
 capability fallback. Graph output is not yet consumed because current supported
 runner builds do not expose one portable stable graph schema.</p>
+<h3 id="cancel-from-python">Cancel from Python<a class="headerlink" href="#cancel-from-python" title="Permanent link">&para;</a></h3>
+<p>Pass a <code>threading.Event</code> to <code>WorkflowEngine.run</code>. Call <code>set()</code> from another
+thread while the run is active; interactive applications should run the
+synchronous engine call on a worker so their UI can keep responding. A
+cancelled workflow still returns its item result with
+<code>JobStatus.CANCELLED</code>:</p>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">threading</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pyffmpegcore</span><span class="w"> </span><span class="kn">import</span> <span class="n">JobStatus</span><span class="p">,</span> <span class="n">WorkflowEngine</span>
+
+<span class="n">engine</span> <span class="o">=</span> <span class="n">WorkflowEngine</span><span class="p">()</span>
+<span class="n">plan</span> <span class="o">=</span> <span class="n">engine</span><span class="o">.</span><span class="n">planner</span><span class="o">.</span><span class="n">thumbnail</span><span class="p">(</span><span class="s2">"talk.mov"</span><span class="p">,</span> <span class="s2">"poster.jpg"</span><span class="p">,</span> <span class="n">timestamp</span><span class="o">=</span><span class="s2">"00:00:03"</span><span class="p">)</span>
+<span class="n">cancellation</span> <span class="o">=</span> <span class="n">threading</span><span class="o">.</span><span class="n">Event</span><span class="p">()</span>
+
+<span class="c1"># In an interactive app, run this call on a worker thread.</span>
+<span class="n">batch</span> <span class="o">=</span> <span class="n">engine</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">plan</span><span class="p">,</span> <span class="n">cancellation</span><span class="o">=</span><span class="n">cancellation</span><span class="p">)</span>
+<span class="n">item</span> <span class="o">=</span> <span class="n">batch</span><span class="o">.</span><span class="n">items</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="k">if</span> <span class="n">item</span><span class="o">.</span><span class="n">result</span><span class="o">.</span><span class="n">status</span> <span class="ow">is</span> <span class="n">JobStatus</span><span class="o">.</span><span class="n">CANCELLED</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">item</span><span class="o">.</span><span class="n">result</span><span class="o">.</span><span class="n">stderr</span><span class="p">)</span>
+</code></pre></div>
 <h2 id="target-size-feasibility">Target-size feasibility<a class="headerlink" href="#target-size-feasibility" title="Permanent link">&para;</a></h2>
 <p><code>--target-size</code> accepts explicit decimal (<code>MB</code>, <code>GB</code>) or binary (<code>MiB</code>, <code>GiB</code>) units. The plan reserves audio and container overhead, calculates the two-pass video bitrate, and enforces <code>--min-video-bitrate</code>. An impossible target fails before FFmpeg starts and states the minimum feasible byte count.</p>
 <p><code>--target-size-kb</code> remains available for compatibility but is less clear than an explicit unit.</p>
