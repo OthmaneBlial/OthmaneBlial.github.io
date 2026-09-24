@@ -1976,7 +1976,10 @@
 <ol>
 <li>Confirm every earlier P0 roadmap gate and all required checks are green.</li>
 <li>Update <code>CHANGELOG.md</code>, compatibility notes, and the runtime version.</li>
-<li>Run the Release workflow manually in dry-run mode.</li>
+<li>Run the Release workflow manually with <code>workflow_dispatch</code>. That event only
+   builds and tests the release bundle. Attestation, PyPI publication,
+   public-install, and GitHub Release jobs run only after a signed version-tag
+   push.</li>
 <li>Create an SSH-signed annotated tag matching the runtime version exactly.
    The maintainer key must match <code>.github/allowed_signers</code>, and the GitHub tag
    ruleset prevents deletion and non-fast-forward updates of <code>v*</code> refs:</li>
