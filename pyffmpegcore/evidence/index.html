@@ -703,6 +703,23 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="Public-domain real-video check on 24 September 2026">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#reproduce-the-web-profile-check" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Reproduce the web-profile check
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
@@ -728,11 +745,28 @@
   
 </li>
         
-          <li class="md-nav__item">
-  <a href="#reproduce-the-web-profile-check" class="md-nav__link">
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#generated-audio-video-exact-size-check-on-24-september-2026" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Reproduce the web-profile check
+        Generated audio-video exact-size check on 24 September 2026
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Generated audio-video exact-size check on 24 September 2026">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#reproduce-the-audio-video-check" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Reproduce the audio-video check
       
     </span>
   </a>
@@ -1945,6 +1979,23 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="Public-domain real-video check on 24 September 2026">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#reproduce-the-web-profile-check" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Reproduce the web-profile check
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
@@ -1970,11 +2021,28 @@
   
 </li>
         
-          <li class="md-nav__item">
-  <a href="#reproduce-the-web-profile-check" class="md-nav__link">
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#generated-audio-video-exact-size-check-on-24-september-2026" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Reproduce the web-profile check
+        Generated audio-video exact-size check on 24 September 2026
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Generated audio-video exact-size check on 24 September 2026">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#reproduce-the-audio-video-check" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Reproduce the audio-video check
       
     </span>
   </a>
@@ -2133,6 +2201,25 @@ FFmpeg build, or another platform.</p>
 <p>Output SHA-256: <code>3fa464804b67062c856a08116704bd645d3707ffd25f4c77967c421d12483703</code>.
 Receipt SHA-256:
 <code>ef761c23f938d43cbaa6d11700cde8b7dc0414d11d1d61406ff6d424c619dafb</code>.</p>
+<h3 id="reproduce-the-web-profile-check">Reproduce the web-profile check<a class="headerlink" href="#reproduce-the-web-profile-check" title="Permanent link">&para;</a></h3>
+<p>Reproduce against the linked Xiph download with fresh output paths:</p>
+<div class="highlight"><pre><span></span><code>curl<span class="w"> </span>-fLsS<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>https://media.xiph.org/video/derf/webm/vidyo1_720p_60fps.webm<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>-o<span class="w"> </span>vidyo1_720p_60fps.webm
+
+pyffmpegcore<span class="w"> </span>profile<span class="w"> </span>run<span class="w"> </span>web/mp4-compatible<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--input<span class="w"> </span>vidyo1_720p_60fps.webm<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--output<span class="w"> </span>vidyo1.mp4<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--explain
+
+pyffmpegcore<span class="w"> </span>profile<span class="w"> </span>run<span class="w"> </span>web/mp4-compatible<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--input<span class="w"> </span>vidyo1_720p_60fps.webm<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--output<span class="w"> </span>vidyo1.mp4<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--receipt<span class="w"> </span>vidyo1.receipt.json
+
+pyffmpegcore<span class="w"> </span>receipt<span class="w"> </span>validate<span class="w"> </span>vidyo1.receipt.json<span class="w"> </span>--json
+ffmpeg<span class="w"> </span>-v<span class="w"> </span>error<span class="w"> </span>-i<span class="w"> </span>vidyo1.mp4<span class="w"> </span>-f<span class="w"> </span>null<span class="w"> </span>-
+</code></pre></div>
 <h2 id="public-domain-exact-size-check-on-24-september-2026">Public-domain exact-size check on 24 September 2026<a class="headerlink" href="#public-domain-exact-size-check-on-24-september-2026" title="Permanent link">&para;</a></h2>
 <p>The same Xiph <code>vidyo1</code> VP9 clip was tested with two-pass compression on macOS
 arm64, Python 3.14.6, and FFmpeg/FFprobe 9.0.1. The input has one video stream
@@ -2164,24 +2251,31 @@ pyffmpegcore<span class="w"> </span>compress<span class="w"> </span>--input<span
 pyffmpegcore<span class="w"> </span>receipt<span class="w"> </span>validate<span class="w"> </span>vidyo1-exact-size.receipt.json<span class="w"> </span>--json
 ffmpeg<span class="w"> </span>-v<span class="w"> </span>error<span class="w"> </span>-i<span class="w"> </span>vidyo1-exact-size.mp4<span class="w"> </span>-f<span class="w"> </span>null<span class="w"> </span>-
 </code></pre></div>
-<h3 id="reproduce-the-web-profile-check">Reproduce the web-profile check<a class="headerlink" href="#reproduce-the-web-profile-check" title="Permanent link">&para;</a></h3>
-<p>Reproduce against the linked Xiph download with fresh output paths:</p>
-<div class="highlight"><pre><span></span><code>curl<span class="w"> </span>-fLsS<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>https://media.xiph.org/video/derf/webm/vidyo1_720p_60fps.webm<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>-o<span class="w"> </span>vidyo1_720p_60fps.webm
-
-pyffmpegcore<span class="w"> </span>profile<span class="w"> </span>run<span class="w"> </span>web/mp4-compatible<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--input<span class="w"> </span>vidyo1_720p_60fps.webm<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--output<span class="w"> </span>vidyo1.mp4<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--explain
-
-pyffmpegcore<span class="w"> </span>profile<span class="w"> </span>run<span class="w"> </span>web/mp4-compatible<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--input<span class="w"> </span>vidyo1_720p_60fps.webm<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--output<span class="w"> </span>vidyo1.mp4<span class="w"> </span><span class="se">\</span>
-<span class="w">  </span>--receipt<span class="w"> </span>vidyo1.receipt.json
-
-pyffmpegcore<span class="w"> </span>receipt<span class="w"> </span>validate<span class="w"> </span>vidyo1.receipt.json<span class="w"> </span>--json
-ffmpeg<span class="w"> </span>-v<span class="w"> </span>error<span class="w"> </span>-i<span class="w"> </span>vidyo1.mp4<span class="w"> </span>-f<span class="w"> </span>null<span class="w"> </span>-
+<h2 id="generated-audio-video-exact-size-check-on-24-september-2026">Generated audio-video exact-size check on 24 September 2026<a class="headerlink" href="#generated-audio-video-exact-size-check-on-24-september-2026" title="Permanent link">&para;</a></h2>
+<p>The repository's six-second, 1920×1080 <code>testsrc2</code>/440 Hz fixture contains H.264
+video and AAC audio. On macOS arm64, Python 3.14.6, and FFmpeg/FFprobe 9.0.1,
+the two-pass planner selected both streams, required <code>libx264</code> and AAC, and
+reserved 128 kb/s for audio plus 7% for the container.</p>
+<p>The 4,042,503-byte source produced a 1,984,802-byte H.264/AAC MP4 under a
+2 MiB (2,097,152-byte) limit. Its receipt reports <code>target_met: true</code>; receipt
+validation and full decode passed. The <a href="exact-size-av-fixture-2026-09-24.receipt.json">privacy-redacted receipt</a>
+has SHA-256
+<code>56615d07744a2d86e7852acecb6d06659b591d29856083421bfbc9694ed7c68e</code>.
+The existing focused CLI two-pass real-media test also passed against this
+fixture. This generated pattern and tone verify the audio-present execution
+path, not perceptual quality on representative footage or speech.</p>
+<h3 id="reproduce-the-audio-video-check">Reproduce the audio-video check<a class="headerlink" href="#reproduce-the-audio-video-check" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code>python<span class="w"> </span>tests/media/download_fixtures.py
+pyffmpegcore<span class="w"> </span>compress<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--input<span class="w"> </span>tests/media/downloads/sample_mp4_h264.mp4<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--output<span class="w"> </span>sample-target.mp4<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--target-size<span class="w"> </span>2MiB<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--two-pass<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--container-overhead-percent<span class="w"> </span><span class="m">7</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--receipt<span class="w"> </span>sample-target.receipt.json<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--hash-content
+pyffmpegcore<span class="w"> </span>receipt<span class="w"> </span>validate<span class="w"> </span>sample-target.receipt.json<span class="w"> </span>--json
+ffmpeg<span class="w"> </span>-v<span class="w"> </span>error<span class="w"> </span>-i<span class="w"> </span>sample-target.mp4<span class="w"> </span>-f<span class="w"> </span>null<span class="w"> </span>-
 </code></pre></div>
 <h2 id="reproduce">Reproduce<a class="headerlink" href="#reproduce" title="Permanent link">&para;</a></h2>
 <p>Generate the same inputs, then run:</p>
