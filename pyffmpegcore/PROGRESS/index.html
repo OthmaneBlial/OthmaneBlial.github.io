@@ -2058,7 +2058,7 @@
 <li>This local baseline covers one macOS/Python/FFmpeg combination. Cross-platform claims rely on the linked CI matrix, not this run.</li>
 <li>FFprobe verification confirms readable container metadata and profile-level stream/codec contracts when available; it does not decode every packet or frame.</li>
 <li>Seven local tests skipped because optional media capabilities or fixtures were unavailable; pytest reported each skip.</li>
-<li>The strict local MkDocs build, generated-reference check, local-link/alt-text check, responsive layout, and install-copy interaction passed for the updated 0.3.0 site. The Pages deployment result will be recorded after live verification.</li>
+<li>The updated 0.3.0 MkDocs site passed the strict clean build, generated-reference check, and docs checker. Local responsive checks passed at 320, 375, 768, and 1280 px. Published under the existing Pages folder at commit <code>1554d1ff9c3fe43c293c419c0d18741884426045</code>; Pages deployment <a href="https://github.com/OthmaneBlial/OthmaneBlial.github.io/actions/runs/35973085295">35973085295</a> passed. Live homepage, quickstart, terminal demo, compatibility page, and both 0.3.0 recording assets returned HTTP 200 with current release content. Chrome copied the exact install command and reported no console errors. CodeQL <a href="https://github.com/OthmaneBlial/pyffmpegcore/actions/runs/35973070799">35973070799</a> passed on source SHA <code>ac7d6d1ab84c8b6446b25d49cd0a0566c3c6b08d</code>.</li>
 <li>No container or GitHub Action image was built or tested for <code>0.3.0</code>, per the maintainer's Docker prohibition.</li>
 </ul>
 
