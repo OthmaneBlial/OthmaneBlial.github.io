@@ -425,6 +425,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#ubuntu-and-debian-ffmpeg" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Ubuntu and Debian FFmpeg
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#fedora-linux-and-arch-linux" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -1961,6 +1972,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#ubuntu-and-debian-ffmpeg" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Ubuntu and Debian FFmpeg
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#fedora-linux-and-arch-linux" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2064,8 +2086,23 @@ in PowerShell:</p>
 and <code>PATH</code>, or pass trusted absolute binary paths as shown in
 <a href="../troubleshooting/#ffmpeg-or-ffprobe-is-missing">troubleshooting</a>. The WinGet,
 Fedora, Arch, and Homebrew package pages were checked on 24 September 2026.
-The Windows, Fedora, and Arch installations were not run on this macOS host.
+The Windows and Linux installations were not run on this macOS host.
 CI also installs FFmpeg separately on hosted macOS and Windows runners.</p>
+<h2 id="ubuntu-and-debian-ffmpeg">Ubuntu and Debian FFmpeg<a class="headerlink" href="#ubuntu-and-debian-ffmpeg" title="Permanent link">&para;</a></h2>
+<p>Install the distribution package with APT:</p>
+<div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>apt-get<span class="w"> </span>update
+sudo<span class="w"> </span>apt-get<span class="w"> </span>install<span class="w"> </span>ffmpeg
+ffmpeg<span class="w"> </span>-version
+ffprobe<span class="w"> </span>-version
+</code></pre></div>
+<p>Ubuntu 24.04 lists <a href="https://packages.ubuntu.com/noble/ffmpeg"><code>ffmpeg</code> in Universe</a>;
+its <a href="https://packages.ubuntu.com/noble/amd64/ffmpeg/filelist">package file list</a>
+includes both executables. Debian 12's <a href="https://packages.debian.org/bookworm/ffmpeg"><code>ffmpeg</code> package</a>
+also includes both command-line tools. If APT cannot find the Ubuntu package,
+check that the Universe repository is enabled. See the <a href="https://manpages.ubuntu.com/manpages/noble/man8/apt-get.8.html">APT install command
+reference</a>.
+Package pages were checked on 24 September 2026. Then install PyFFmpegCore with
+<code>pipx</code> below and run <code>pyffmpegcore doctor</code> and <code>pyffmpegcore smoke-test</code>.</p>
 <h2 id="fedora-linux-and-arch-linux">Fedora Linux and Arch Linux<a class="headerlink" href="#fedora-linux-and-arch-linux" title="Permanent link">&para;</a></h2>
 <p>On Fedora 44, install the distribution's
 <a href="https://packages.fedoraproject.org/pkgs/ffmpeg/ffmpeg-free/"><code>ffmpeg-free</code> package</a>
