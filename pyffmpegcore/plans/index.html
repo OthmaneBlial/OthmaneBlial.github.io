@@ -2056,7 +2056,7 @@ cancelled workflow still returns its item result with
     <span class="nb">print</span><span class="p">(</span><span class="n">item</span><span class="o">.</span><span class="n">result</span><span class="o">.</span><span class="n">stderr</span><span class="p">)</span>
 </code></pre></div>
 <h2 id="target-size-feasibility">Target-size feasibility<a class="headerlink" href="#target-size-feasibility" title="Permanent link">&para;</a></h2>
-<p><code>--target-size</code> accepts explicit decimal (<code>MB</code>, <code>GB</code>) or binary (<code>MiB</code>, <code>GiB</code>) units. The plan reserves audio and container overhead, calculates the two-pass video bitrate, and enforces <code>--min-video-bitrate</code>. An impossible target fails before FFmpeg starts and states the minimum feasible byte count.</p>
+<p><code>--target-size</code> accepts explicit decimal (<code>MB</code>, <code>GB</code>) or binary (<code>MiB</code>, <code>GiB</code>) units. Decimal sizes and bitrates are parsed exactly; compression targets and bitrates must fit a signed 64-bit FFmpeg value. The plan reserves audio and container overhead, calculates the two-pass video bitrate, and enforces <code>--min-video-bitrate</code>. An impossible target fails before FFmpeg starts and states the minimum feasible byte count.</p>
 <p><code>--target-size-kb</code> remains available for compatibility but is less clear than an explicit unit.</p>
 
 
