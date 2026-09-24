@@ -323,7 +323,7 @@
   <span class="md-ellipsis">
     
   
-    63.3-second 0.3.2 public run
+    64.3-second 0.3.3 public run
   
 
     
@@ -2060,6 +2060,10 @@ not a general secret sandbox, and it cannot guarantee redaction for every
 future FFmpeg diagnostic format.</p>
 <h2 id="malicious-media-and-metadata">Malicious Media and Metadata<a class="headerlink" href="#malicious-media-and-metadata" title="Permanent link">&para;</a></h2>
 <p>FFmpeg parses complex attacker-controlled formats. Keep FFmpeg patched and process hostile media inside an operating-system sandbox or disposable container with minimal permissions. Do not trust titles, filenames, subtitle content, or chapter metadata as safe terminal or HTML text. PyFFmpegCore should render metadata as data and must not evaluate it.</p>
+<p>Human-readable CLI output escapes terminal control and formatting characters in
+metadata, paths, plans, and diagnostics before printing them. JSON output keeps
+its structured string values; downstream terminals and renderers must still
+treat those values as untrusted data.</p>
 <h2 id="resource-exhaustion">Resource Exhaustion<a class="headerlink" href="#resource-exhaustion" title="Permanent link">&para;</a></h2>
 <p>Small compressed inputs can require large amounts of CPU, memory, disk, or output bandwidth. FFmpeg capability listings stop after five seconds per command; a timeout is reported as an inspection failure, not an empty inventory. FFprobe metadata calls stop after 60 seconds by default; direct <code>FFprobeRunner</code> users can configure <code>probe_timeout_seconds</code>. Version-only diagnostics stop after five seconds. Managed media jobs accept an explicit <code>--timeout</code>, but there is no universal deadline across a batch or pipeline and no memory, frame, pixel, or output-size limit. These deadlines bound waiting only. Run untrusted jobs with OS/container quotas and validate media dimensions and duration before expensive work. Future limits must fail closed and appear in plans and receipts.</p>
 <p>Managed process pipes are drained in bounded read chunks. The default <code>TAIL</code>
