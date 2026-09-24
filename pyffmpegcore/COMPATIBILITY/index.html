@@ -6,7 +6,7 @@
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width,initial-scale=1">
       
-        <meta name="description" content="The safe, explainable FFmpeg task runner for the terminal, Python, and CI">
+        <meta name="description" content="Preview FFmpeg plans, run local media workflows, and verify results from Python or the terminal.">
       
       
       
@@ -323,7 +323,7 @@
   <span class="md-ellipsis">
     
   
-    63.4-second 0.3.1 public run
+    63.3-second 0.3.2 public run
   
 
     
@@ -1548,10 +1548,21 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#verified-release-snapshot-24-september-2026" class="md-nav__link">
+  <a href="#verified-release-snapshot-v032-24-september-2026" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Verified release snapshot: 24 September 2026
+        Verified release snapshot: v0.3.2 (24 September 2026)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#previous-release-snapshot-v031-24-september-2026" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Previous release snapshot: v0.3.1 (24 September 2026)
       
     </span>
   </a>
@@ -1929,10 +1940,21 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#verified-release-snapshot-24-september-2026" class="md-nav__link">
+  <a href="#verified-release-snapshot-v032-24-september-2026" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Verified release snapshot: 24 September 2026
+        Verified release snapshot: v0.3.2 (24 September 2026)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#previous-release-snapshot-v031-24-september-2026" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Previous release snapshot: v0.3.1 (24 September 2026)
       
     </span>
   </a>
@@ -2038,7 +2060,24 @@ the tested runners are <strong>not in the support policy</strong>. "Expected" ce
 cross-platform media result. Even a tested cell proves only the named workflows
 on that runner and FFmpeg build.</p>
 <p>The <a href="https://github.com/OthmaneBlial/pyffmpegcore/actions/workflows/ci.yml">CI workflow</a> is authoritative. A cell counts as tested only when its current required check is green. Compatibility JSON artifacts record the runner architecture, Python version, CLI version, FFmpeg path/version, and FFprobe path/version. The workflow also validates the six artifacts and uploads a readable summary; <code>python scripts/summarize_compatibility.py &lt;downloaded-artifact-directory&gt; --run-url &lt;run-url&gt;</code> reproduces it locally.</p>
-<h3 id="verified-release-snapshot-24-september-2026">Verified release snapshot: 24 September 2026<a class="headerlink" href="#verified-release-snapshot-24-september-2026" title="Permanent link">&para;</a></h3>
+<h3 id="verified-release-snapshot-v032-24-september-2026">Verified release snapshot: v0.3.2 (24 September 2026)<a class="headerlink" href="#verified-release-snapshot-v032-24-september-2026" title="Permanent link">&para;</a></h3>
+<p>The signed <code>v0.3.2</code> tag points to source SHA
+<code>862209c5090c896e22e1b720d7508338a53eb763</code>. Manual exact-artifact run
+<a href="https://github.com/OthmaneBlial/pyffmpegcore/actions/runs/35988609967"><code>35988609967</code></a>
+passed, and tagged release workflow
+<a href="https://github.com/OthmaneBlial/pyffmpegcore/actions/runs/35988945203"><code>35988945203</code></a>
+passed the exact wheel on Linux, macOS, and Windows with Python 3.10 and 3.14,
+release provenance, PyPI Trusted Publishing, six clean public installs, and
+GitHub prerelease creation. The full Python 3.10–3.14 package-contract workflow
+was not run for this release.</p>
+<p>Wheel <code>pyffmpegcore-0.3.2-py3-none-any.whl</code> is 100,902 bytes with SHA-256
+<code>d57ca4d8659df460149f37e4f76aa44d6a4160384804291bee8276a389dfa3c7</code>.
+Source distribution <code>pyffmpegcore-0.3.2.tar.gz</code> is 340,374 bytes with SHA-256
+<code>e2eaef15fdc2a2ecba0e1e3ca63b34f4e4cc81320ad2dab27409da3a37d96592</code>. Both
+hashes match PyPI's public JSON and GitHub Release <code>SHA256SUMS</code>; both files have
+Trusted Publisher provenance attestations. No container image or GitHub Action
+image was built or tested.</p>
+<h3 id="previous-release-snapshot-v031-24-september-2026">Previous release snapshot: v0.3.1 (24 September 2026)<a class="headerlink" href="#previous-release-snapshot-v031-24-september-2026" title="Permanent link">&para;</a></h3>
 <p>The signed <code>v0.3.1</code> tag points to source SHA
 <code>562ae6ce92a8b321f15a6a250cf7802f2c9bb5bc</code>. Manual build/test run
 <a href="https://github.com/OthmaneBlial/pyffmpegcore/actions/runs/35975145754"><code>35975145754</code></a>
