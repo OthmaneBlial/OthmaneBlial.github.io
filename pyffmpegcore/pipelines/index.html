@@ -989,6 +989,8 @@
       
         
       
+        
+      
     
     
     
@@ -1058,6 +1060,34 @@
     
   
     Web-compatible video
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../recipes/concatenate-videos/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Join video clips
   
 
     
@@ -2094,10 +2124,18 @@ Do not put credentials in the command, pipeline file, or <code>OUTPUT_DIR</code>
 <span class="p">}</span>
 </code></pre></div>
 <p>This is a completion cache, not a hidden artifact store. A step is skipped only
-when its redacted typed plan, input fingerprint, saved key, and every expected
-output match. With <code>content_aware: true</code>, local inputs use SHA-256; otherwise the
-fingerprint uses size and modification time. Deleted outputs or changed inputs
-run again.</p>
+when its redacted typed plan, local input fingerprints, runtime identity, saved
+key, and every expected output fingerprint match. Runtime identity includes
+PyFFmpegCore, Python, OS/architecture, FFmpeg and FFprobe versions, and both
+binary file fingerprints. With <code>content_aware: true</code>, local inputs and outputs
+use SHA-256; otherwise they use size and modification time. Missing, empty, or
+symlinked outputs invalidate a cache entry. Remote inputs are never reused
+because their contents cannot be fingerprinted reliably.</p>
+<p>When an input, output, or runtime fingerprint changes, the cache will not skip
+the step. Existing outputs still require explicit <code>--force</code> before replacement;
+without it, execution reports the collision and preserves the file. Cache
+entries written by older signatures miss once; if their outputs remain, rerun
+with <code>--force</code> to regenerate them and write fresh signatures.</p>
 <h2 id="keep-secrets-outside-files">Keep secrets outside files<a class="headerlink" href="#keep-secrets-outside-files" title="Permanent link">&para;</a></h2>
 <p>Declare only the variable name:</p>
 <div class="highlight"><pre><span></span><code><span class="p">{</span>

@@ -870,6 +870,8 @@
       
         
       
+        
+      
     
     
     
@@ -939,6 +941,34 @@
     
   
     Web-compatible video
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../recipes/concatenate-videos/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Join video clips
   
 
     
@@ -5429,7 +5459,8 @@ records failures and remediation hints instead of raising for them.</p>
 <p>A two-pass target-size plan probes the input duration and rejects video stream copy.</p>
 <h3 id="concatself-input_files-liststr-output_file-str-mode-str-copy-video_codec-str-libx264-audio_codec-str-aac-force-bool-false-timeout_seconds-float-none-none-executionplan"><code>concat(self, input_files: 'list[str]', output_file: 'str', *, mode: 'str' = 'copy', video_codec: 'str' = 'libx264', audio_codec: 'str' = 'aac', force: 'bool' = False, timeout_seconds: 'float | None' = None) -&gt; 'ExecutionPlan'</code><a class="headerlink" href="#concatself-input_files-liststr-output_file-str-mode-str-copy-video_codec-str-libx264-audio_codec-str-aac-force-bool-false-timeout_seconds-float-none-none-executionplan" title="Permanent link">&para;</a></h3>
 <p>Plan ordered clip concatenation using stream copy or re-encoding.</p>
-<p>Stream-copy mode expects compatible inputs; re-encode mode uses the requested codecs.</p>
+<p>Stream-copy mode expects matching stream metadata. Re-encode mode accepts codec differences,
+but the first video and audio streams must share dimensions and stream layout.</p>
 <h3 id="convertself-input_file-str-output_file-str-options-convertoptions-none-none-force-bool-false-timeout_seconds-float-none-none-executionplan"><code>convert(self, input_file: 'str', output_file: 'str', options: 'ConvertOptions | None' = None, *, force: 'bool' = False, timeout_seconds: 'float | None' = None) -&gt; 'ExecutionPlan'</code><a class="headerlink" href="#convertself-input_file-str-output_file-str-options-convertoptions-none-none-force-bool-false-timeout_seconds-float-none-none-executionplan" title="Permanent link">&para;</a></h3>
 <p>Plan conversion with explicit codec options and stream selection.</p>
 <p>By default, map the first video and audio streams. Use
