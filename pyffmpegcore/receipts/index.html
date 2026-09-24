@@ -6,7 +6,7 @@
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width,initial-scale=1">
       
-        <meta name="description" content="Preview FFmpeg plans, run local media workflows, and verify results from Python or the terminal.">
+        <meta name="description" content="Safe, explainable FFmpeg workflows: preview exact plans, verify local outputs, and keep privacy-conscious receipts from Python, CLI, and CI.">
       
       
       
@@ -1989,7 +1989,11 @@ receipt keeps the observed stream facts and validation reason so the mismatch
 can be diagnosed without probing the file again.
 Managed <code>--preserve-all-streams</code> receipts also retain the input/output stream
 layout comparison under <code>output_probe.stream_preservation</code>. Unprobeable or
-remote inputs are marked unverified instead of causing a second network read.</p>
+remote inputs are marked unverified instead of causing a second network read.
+Conversion receipts record <code>output_probe.selected_streams</code> when a local input
+can be probed, and fail validation if output lacks a selected input audio or
+video stream. Audio-only conversion also fails validation when output lacks
+audio.</p>
 <h2 id="private-by-default">Private by default<a class="headerlink" href="#private-by-default" title="Permanent link">&para;</a></h2>
 <p>Schema <code>1.0</code> applies these transformations before the document can be written:</p>
 <ul>
