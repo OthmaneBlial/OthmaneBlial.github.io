@@ -1823,18 +1823,25 @@ pyffmpegcore<span class="w"> </span>probe<span class="w"> </span>--input<span cl
 <p>Choose one primary goal: use CRF when visual quality matters more than final
 bytes, and two-pass target-size mode when an upload or storage ceiling is the
 hard constraint.</p>
-<p>Successful target-size jobs print a measured proof using the actual source,
+<p>Completed target-size jobs print a measured proof using the actual source,
 output, and limit, for example <code>Target-size proof: INPUT -&gt; OUTPUT; limit
 LIMIT; PASS</code>. The same byte counts and <code>target_met</code> boolean are present in
 <code>--result-json</code> and the optional receipt.</p>
+<p>FFmpeg can finish encoding while the measured result says <code>MISS</code>. The command
+exit status reports execution, not whether the byte limit was met. CI and other
+automations must check <code>target_met</code> before accepting the output.</p>
 <p>Very small targets fail before mutation with a human-readable minimum size at
 the selected <code>--min-video-bitrate</code> quality floor. Two-pass work creates
 temporary pass logs and cleans them after completion. Decode and review the
 result before deleting the source; meeting a byte limit does not itself prove
 subjective quality.</p>
-<p>The default reserves a conservative 5% for muxing overhead. Advanced users can
-override it with <code>--container-overhead-percent</code>; lowering the reserve can move
-the result closer to the limit but increases the risk of a reported <code>MISS</code>.</p>
+<p>For target-size plans, FFprobe reads source duration and streams. Video-only
+input reserves no audio bitrate and does not require an audio encoder.</p>
+<p>The default reserves 5% for muxing overhead. Advanced users can override it
+with <code>--container-overhead-percent</code>; a larger reserve can help when a measured
+run misses its cap. On one public-domain 720p sample, 5% missed by 7,803 bytes
+and an explicit 7% passed. This result depends on input and FFmpeg build; see
+the <a href="../../evidence/#public-domain-exact-size-check-on-24-september-2026">dated receipt and quality check</a>.</p>
 <p>See the <a href="../../evidence/#reproducible-recipe-evidence">dated target-size proof and redacted receipt</a>.</p>
 
 
