@@ -1,13 +1,19 @@
-import { anchor, atom } from "./ast.js?v=ea8c783bf185";
-import { fail } from "./diagnostics.js?v=ea8c783bf185";
+import { anchor, atom } from "./ast.js?v=28f41bc158f9";
+import { fail } from "./diagnostics.js?v=28f41bc158f9";
 
-/** @typedef {import('./ast.js?v=ea8c783bf185').Location} Location */
-/** @typedef {import('./ast.js?v=ea8c783bf185').Repetition} Repetition */
-/** @typedef {import('./ast.js?v=ea8c783bf185').AtomNode} AtomNode */
-/** @typedef {import('./ast.js?v=ea8c783bf185').RuleNode} RuleNode */
-/** @typedef {import('./ast.js?v=ea8c783bf185').ParsedRules} ParsedRules */
+/** @typedef {import('./ast.js?v=28f41bc158f9').Location} Location */
+/** @typedef {import('./ast.js?v=28f41bc158f9').Repetition} Repetition */
+/** @typedef {import('./ast.js?v=28f41bc158f9').AtomNode} AtomNode */
+/** @typedef {import('./ast.js?v=28f41bc158f9').RuleNode} RuleNode */
+/** @typedef {import('./ast.js?v=28f41bc158f9').ParsedRules} ParsedRules */
 
-export const LIMITS = Object.freeze({ sourceLength: 16_384, lines: 200, repetition: 1_000 });
+const MAX_SOURCE_LENGTH = 16_384;
+export const LIMITS = Object.freeze({
+  sourceLength: MAX_SOURCE_LENGTH,
+  regexSourceLength: MAX_SOURCE_LENGTH * 8, // U+2028 and U+2029 each escape to eight code units.
+  lines: 200,
+  repetition: 1_000,
+});
 
 /** @param {string} source @returns {string[]} */
 export function splitLines(source) {
