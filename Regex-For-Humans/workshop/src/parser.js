@@ -1,11 +1,11 @@
-import { anchor, atom } from "./ast.js?v=4b41c7251482";
-import { fail } from "./diagnostics.js?v=4b41c7251482";
+import { anchor, atom } from "./ast.js?v=afb026e3b4ee";
+import { fail } from "./diagnostics.js?v=afb026e3b4ee";
 
-/** @typedef {import('./ast.js?v=4b41c7251482').Location} Location */
-/** @typedef {import('./ast.js?v=4b41c7251482').Repetition} Repetition */
-/** @typedef {import('./ast.js?v=4b41c7251482').AtomNode} AtomNode */
-/** @typedef {import('./ast.js?v=4b41c7251482').RuleNode} RuleNode */
-/** @typedef {import('./ast.js?v=4b41c7251482').ParsedRules} ParsedRules */
+/** @typedef {import('./ast.js?v=afb026e3b4ee').Location} Location */
+/** @typedef {import('./ast.js?v=afb026e3b4ee').Repetition} Repetition */
+/** @typedef {import('./ast.js?v=afb026e3b4ee').AtomNode} AtomNode */
+/** @typedef {import('./ast.js?v=afb026e3b4ee').RuleNode} RuleNode */
+/** @typedef {import('./ast.js?v=afb026e3b4ee').ParsedRules} ParsedRules */
 
 const MAX_SOURCE_LENGTH = 16_384;
 export const LIMITS = Object.freeze({
@@ -64,8 +64,6 @@ export function validateSourceLength(source) {
 const SHORTHANDS = new Map([
   ["word", "\\w"],
   ["not word", "\\W"],
-  ["non-alphanumeric character", "\\W"],
-  ["alphanumeric character", "\\w"],
   ["not digit", "\\D"],
   ["digit", "\\d"],
   ["non-digit character", "\\D"],
