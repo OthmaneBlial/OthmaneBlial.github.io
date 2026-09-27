@@ -1,4 +1,4 @@
-/** @param {import('./ast.js?v=b4e93d5ab050').Repetition|null} repetition */
+/** @param {import('./ast.js?v=fa407cf2bf21').Repetition|null} repetition */
 function repetitionText(repetition) {
   if (!repetition) return "";
   switch (repetition.kind) {
@@ -19,7 +19,7 @@ function repetitionText(repetition) {
   }
 }
 
-/** @param {import('./ast.js?v=b4e93d5ab050').RuleNode} node @param {string} flags */
+/** @param {import('./ast.js?v=fa407cf2bf21').RuleNode} node @param {string} flags */
 export function explainNode(node, flags) {
   if (node.kind === "anchor") {
     if (node.mode === "line") {
@@ -27,9 +27,7 @@ export function explainNode(node, flags) {
         ? "Start of a line. The m flag makes ^ work after line breaks."
         : "End of a line. The m flag lets $ match before a line break.";
     }
-    return node.edge === "start"
-      ? "Start of the input."
-      : "End of the input, or just before a final line break in JavaScript.";
+    return node.edge === "start" ? "Start of the input." : "End of the input.";
   }
 
   if (node.repetition?.kind === "zeroOrMore") {
