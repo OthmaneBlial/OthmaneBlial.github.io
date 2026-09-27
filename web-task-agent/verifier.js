@@ -310,6 +310,9 @@
       ["Policy", comparison.changes.policy],
       ["Model", comparison.changes.model],
       ["Synthesis / claims", comparison.changes.claims],
+      ["Contradictions", comparison.changes.contradictions],
+      ["Limitations", comparison.changes.limitations],
+      ["Next validation", comparison.changes.nextValidation],
       ["Decision", comparison.changes.decision]
     ];
     for (const [label, changed] of signalItems) {
@@ -319,7 +322,39 @@
     }
     const reasons = element("ul", "comparison-reasons");
     comparison.changedBecause.forEach((reason) => reasons.append(element("li", "", reason)));
+    const detailsList = element("ul", "comparison-reasons");
+    if (comparison.nextValidationChange) {
+      detailsList.append(element("li", "", `Next validation: ${previewText(comparison.nextValidationChange.earlier)} → ${previewText(comparison.nextValidationChange.later)}`));
+    }
+    comparison.changedContradictions.forEach(({ id, earlier, later }) => {
+      const earlierText = earlier ? `${previewText(earlier.topic)}: ${previewText(earlier.note)}` : "(new)";
+      const laterText = later ? `${previewText(later.topic)}: ${previewText(later.note)}` : "(removed)";
+      detailsList.append(element("li", "", `Contradiction ${id}: ${earlierText} → ${laterText}`));
+    });
+    comparison.changedClaims.forEach(({ id, earlier, later }) => {
+      const earlierText = earlier ? `${earlier.status}: ${previewText(earlier.text)}` : "(new)";
+      const laterText = later ? `${later.status}: ${previewText(later.text)}` : "(removed)";
+      detailsList.append(element("li", "", `Claim ${id}: ${earlierText} → ${laterText}`));
+      const earlierEvidence = new Map((earlier?.evidence || []).map((item) => [item.id, item]));
+      const laterEvidence = new Map((later?.evidence || []).map((item) => [item.id, item]));
+      [...new Set([...earlierEvidence.keys(), ...laterEvidence.keys()])].sort().forEach((evidenceId) => {
+        const oldEvidence = earlierEvidence.get(evidenceId);
+        const newEvidence = laterEvidence.get(evidenceId);
+        const evidenceText = (item) => JSON.stringify([item.sourceId, item.relation, item.excerpt]);
+        if (oldEvidence && newEvidence && evidenceText(oldEvidence) === evidenceText(newEvidence)) return;
+        const describe = (item) => item ? `${item.relation} from ${previewText(item.sourceId, 120)}: ${previewText(item.excerpt, 500)}` : "(none)";
+        detailsList.append(element("li", "", `Evidence ${evidenceId}: ${describe(oldEvidence)} → ${describe(newEvidence)}`));
+      });
+      if (earlier?.limitation !== later?.limitation) {
+        detailsList.append(element("li", "", `Claim limitation: ${previewText(earlier?.limitation || "(none)")} → ${previewText(later?.limitation || "(none)")}`));
+      }
+    });
+    comparison.addedLimitations.forEach((item) => detailsList.append(element("li", "", `Limitation added: ${previewText(item)}`)));
+    comparison.removedLimitations.forEach((item) => detailsList.append(element("li", "", `Limitation removed: ${previewText(item)}`)));
+    const exactChanges = element("details", "comparison-details");
+    exactChanges.append(element("summary", "", "Show exact changes"), detailsList);
     target.append(heading, signals, reasons);
+    if (detailsList.childElementCount > 0) target.append(exactChanges);
   }
 
   async function loadBundle(slot, name, bundle) {

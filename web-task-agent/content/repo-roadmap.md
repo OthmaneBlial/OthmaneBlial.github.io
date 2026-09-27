@@ -188,7 +188,7 @@ Le badge doit dire **integrity verified**, jamais **decision is true**. Un hash 
 
 **Preuve d'acceptation :** avec le réseau bloqué après chargement, le site valide une archive correcte, identifie le fichier exact d'une archive falsifiée et compare deux décisions. Aucun contenu du receipt n'apparaît dans une requête réseau, un log distant ou un stockage persistant sans consentement.
 
-**État :** livré et vérifié dans Chrome sur desktop et mobile. Après arrêt complet du serveur local, les fixtures préchargées continuent de valider puis de nommer `evidence/source.md` comme fichier falsifié. Le diff sépare les cinq signaux attendus. Aucun appel réseau, stockage persistant ou erreur console n'est présent ; le DOM n'a ni identifiant dupliqué ni input sans label, et le viewport mobile ne déborde pas.
+**État :** livré et vérifié dans Chrome sur desktop et mobile. Après arrêt complet du serveur local, les fixtures préchargées continuent de valider puis de nommer `evidence/source.md` comme fichier falsifié. Le diff montre les changements de sources, policy, modèle, claims/preuves, contradictions, limites, prochaine validation et décision. Aucun appel réseau, stockage persistant ou erreur console n'est présent ; le DOM n'a ni identifiant dupliqué ni input sans label, et le viewport mobile ne déborde pas.
 
 ---
 

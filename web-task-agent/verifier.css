@@ -177,12 +177,14 @@
 .comparison-result > p { margin: 0; color: var(--muted); }
 .comparison-heading { display: flex; justify-content: space-between; gap: 12px; margin-bottom: 16px; }
 .comparison-heading h3 { margin: 0; font-size: 1.6rem; }
-.comparison-signals { display: grid; grid-template-columns: repeat(5, minmax(0,1fr)); gap: 8px; }
+.comparison-signals { display: grid; grid-template-columns: repeat(auto-fit, minmax(132px, 1fr)); gap: 8px; }
 .comparison-signal { padding: 13px; border: 1px solid var(--line); border-radius: 12px; background: var(--paper-strong); }
 .comparison-signal span { display: block; color: var(--muted); font-size: .72rem; text-transform: uppercase; letter-spacing: .08em; }
 .comparison-signal strong { display: block; margin-top: 4px; color: var(--teal-deep); }
 .comparison-signal.is-changed strong { color: var(--rust); }
 .comparison-reasons { margin: 16px 0 0; padding-left: 20px; line-height: 1.6; }
+.comparison-details { margin-top: 14px; }
+.comparison-details summary { color: var(--teal-deep); cursor: pointer; font-weight: 650; }
 
 .report-workspace { grid-template-columns: auto minmax(0,1fr) auto; align-items: center; }
 .report-controls { justify-content: flex-end; }

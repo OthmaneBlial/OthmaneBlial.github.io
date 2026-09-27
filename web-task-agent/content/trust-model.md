@@ -9,7 +9,7 @@ Web Task Agent is designed to make a research decision inspectable. It does not 
 | Acquisition policy | HTTPS-only targets, public-address checks, robots signals, redirect quarantine, domain pacing, and prompt-injection flags | That a publisher is honest or that a page is complete |
 | Evidence linkage | Claims point to source IDs and excerpts; source records include canonical URL, role, and collection time | That the claim follows logically from the source |
 | Artifact integrity | `integrity-manifest.json` stores SHA-256 hashes for exported files and snapshots | That the source content was correct before collection |
-| Decision receipt | Decision, confidence, limitations, contradictions, and next validation are versioned in `receipt.json` | That the decision is suitable for every operator or context |
+| Decision receipt | Decision summary, claim statuses, limitations, contradictions, and next validation are versioned in `receipt.json` | A standardized overall confidence value or suitability for every operator or context |
 | Runtime durability | SQLite state, leases, events, and recovery metadata survive an interrupted run | That a resumed run has the same external web state |
 
 Run `web-task-agent receipt verify <directory>` before sharing a package. Verification is offline and deterministic. A valid status means the package is internally consistent; it is not a fact-check, freshness guarantee, or authorization check.
