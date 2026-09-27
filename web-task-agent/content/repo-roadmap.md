@@ -1,6 +1,6 @@
 # Roadmap d'adoption — Web Task Agent
 
-> Roadmap post-`v0.5.1`, actualisée le 27 août 2026. Les phases sont ordonnées par dépendance, pas par dates artificielles.
+> Roadmap post-`v0.5.1`. Baseline publique du 27 août et état actualisé le 27 septembre 2026. Les phases sont ordonnées par dépendance, pas par dates artificielles.
 
 ## Le diagnostic en une phrase
 
@@ -8,7 +8,7 @@ Le produit est déjà techniquement sérieux ; ce qui lui manque n'est pas une n
 
 La viralité ne se programme pas et aucune roadmap ne peut promettre des étoiles. En revanche, le projet peut créer une boucle crédible où chaque usage produit un artefact utile, partageable et vérifiable qui expose naturellement le dépôt à d'autres personnes.
 
-## État réel au 27 août 2026
+## Baseline publique au 27 août 2026
 
 ### Ce qui est déjà livré
 
@@ -33,7 +33,9 @@ La viralité ne se programme pas et aucune roadmap ne peut promettre des étoile
 
 Le goulot n'est donc plus la crédibilité technique. Il est situé entre **voir**, **essayer**, **intégrer**, **réutiliser** et **recommander**.
 
-### Les écarts qui comptent maintenant
+### Écarts relevés au 27 août 2026 — snapshot historique
+
+Les points suivants décrivent la baseline datée du 27 août. Leur état actuel est vérifié dans la section suivante.
 
 1. L'ancienne roadmap décrivait comme futures des fonctions déjà livrées en `v0.5.1`.
 2. `LAUNCH.md` parle encore de `v0.4.0`.
@@ -43,6 +45,21 @@ Le goulot n'est donc plus la crédibilité technique. Il est situé entre **voir
 6. `package.json` pointe `main` vers le CLI, sans `exports` ni `types` publics ; réutiliser le vérificateur importe inutilement la surface complète du runner et du fournisseur LLM.
 7. Il n'existe ni GitHub Action, ni MCP local, ni intégration qui place le produit dans un workflow déjà fréquenté.
 8. Le projet a beaucoup de preuves générées par son mainteneur, mais aucune preuve d'utilité répétée par un tiers.
+
+## Actualisation vérifiée au 27 septembre 2026
+
+- La page d'accueil publiée propose maintenant un échantillon consultable et un accès direct au guide de démarrage. L'échantillon n'exige ni compte, ni clé, ni requête de recherche. Le [guide en ligne](https://othmaneblial.github.io/web-task-agent/docs.html#page=getting-started) commence par ce parcours, puis décrit la recherche locale.
+- `LAUNCH.md` est aligné sur la release `v0.5.1`. Le vérificateur web local, le schéma indépendant, le noyau réutilisable et le serveur MCP local sont déjà livrés ; les écarts 2 à 6 du snapshot du 27 août sont résolus. Le point 7 est partiellement résolu : les workflows GitHub sont versionnés et le MCP local fonctionne, mais aucune intégration tierce répétée n'est observée.
+- Les deux noms npm publics renvoient `404` au registre : ni le CLI ni le noyau ne sont publiés. La publication npm reste la porte propriétaire de P3 et l'inscription MCP officielle en dépend.
+- GitHub Actions est désactivé pour ce dépôt. Les workflows restent versionnés ; exécuter les contrôles avec `npm run test:ci`, `npm run security:review`, `npm run audit:secrets` et `npm run audit:prod` sur la machine locale.
+- La revue mainteneur couvre toujours six surfaces, désormais avec **26 ancres dans 16 fichiers**, dont un test du rendu HTML du tableau de bord. Ce n'est pas une revue indépendante.
+- Au dernier relevé GitHub, le dépôt avait **0 étoile, 0 fork et 0 watcher**. Les quatre issues ouvertes (#4, #10, #11 et #12) sont toutes créées par le mainteneur. La dernière release reste `v0.5.1`, avec un téléchargement par asset. Ces signaux ne démontrent pas d'usage externe répété.
+
+### Écarts encore ouverts
+
+1. La publication bootstrap des deux paquets npm exige encore l'action manuelle du propriétaire ; les tags OIDC ne peuvent pas publier un paquet qui n'existe pas.
+2. L'inscription du serveur MCP au registre officiel attend la publication npm.
+3. Aucune étude reviewer consentie, revue de sécurité indépendante ou réutilisation répétée par un tiers n'est documentée. La baseline externe reste à zéro.
 
 ---
 
@@ -111,7 +128,7 @@ Cette boucle est défendable parce que chaque nouveau receipt peut améliorer le
 
 **Preuve d'acceptation :** cinq personnes qui ne connaissent pas le dépôt peuvent répondre, sans aide, à « qu'est-ce que c'est ? », « pourquoi pas un autre browser agent ? » et « où est la preuve ? ». Le premier écran propose une action qui ne demande ni clone, ni clé, ni compte.
 
-**État :** implémentation technique et QA desktop/mobile terminées ; les cinq tests de compréhension externes restent un gate humain suivi en P5.
+**État :** implémentation technique et QA desktop/mobile terminées ; les cinq tests de compréhension externes restent un gate humain suivi en P5. Le parcours simplifié publié le 27 septembre remplace le hero détaillé décrit dans les anciennes tâches : échantillon d'abord, guide de démarrage ensuite, sans animation ni liste d'états dans le premier écran.
 
 ---
 
@@ -296,7 +313,7 @@ Publier protocole, petits dénominateurs, données anonymisées consenties et li
 - [ ] Convertir chaque faille en test de non-régression et advisory si nécessaire.
 - [x] Publier ce qui a été testé et ce qui ne l'a pas été.
 
-**Préparation livrée, adoption non simulée :** `EXTERNAL_VALIDATION.md` fixe trois tracks, le protocole reviewer, le consentement granulaire et une baseline externe à zéro ; le kit exécutable en matérialise maintenant le test avant recrutement. `SECURITY_REVIEW.md` publie le commit pinning, les six surfaces prioritaires, les preuves mainteneur et les zones non auditées. `npm run security:review` relie ces six surfaces à 18 ancres dans 12 fichiers, exécute les régressions ciblées, la conformité, l'audit secrets et l'audit production ; sa sortie rappelle qu'elle n'est pas une revue indépendante. La [demande publique #10](https://github.com/OthmaneBlial/web-task-agent/issues/10) et un formulaire d'attestation séparé redirigent toute faille vers une advisory privée et n'acceptent publiquement que périmètre, méthode, statut et limites. Aucun participant, audit reçu ni reviewer indépendant n'est compté avant une trace réelle.
+**Préparation livrée, adoption non simulée :** `EXTERNAL_VALIDATION.md` fixe trois tracks, le protocole reviewer, le consentement granulaire et une baseline externe à zéro ; le kit exécutable en matérialise maintenant le test avant recrutement. `SECURITY_REVIEW.md` publie le commit pinning, les six surfaces prioritaires, les preuves mainteneur et les zones non auditées. `npm run security:review` relie ces six surfaces à 26 ancres dans 16 fichiers, exécute les régressions ciblées, la conformité, l'audit secrets et l'audit production ; sa sortie rappelle qu'elle n'est pas une revue indépendante. La [demande publique #10](https://github.com/OthmaneBlial/web-task-agent/issues/10) et un formulaire d'attestation séparé redirigent toute faille vers une advisory privée et n'acceptent publiquement que périmètre, méthode, statut et limites. Aucun participant, audit reçu ni reviewer indépendant n'est compté avant une trace réelle.
 
 **Preuve d'acceptation :** au moins cinq receipts ont été vérifiés par des non-mainteneurs, trois utilisateurs ont produit un second receipt ou un diff, et une revue indépendante a laissé une trace publique exploitable.
 
