@@ -1,5 +1,5 @@
-import { CompileError, compile } from "../index.js?v=d1b8998d55b7";
-import { TestRunner } from "./test-runner.js?v=d1b8998d55b7";
+import { CompileError, compile } from "../index.js?v=4cd4407bbbbd";
+import { TestRunner } from "./test-runner.js?v=4cd4407bbbbd";
 
 const ui = {
   examples: document.querySelector("#example-list"),
@@ -25,7 +25,7 @@ let testCases = [];
 let nextTestId = 1;
 let compiled = null;
 const testRunner = new TestRunner(
-  () => new Worker(new URL("./match-worker.js?v=d1b8998d55b7", import.meta.url), { type: "module" }),
+  () => new Worker(new URL("./match-worker.js?v=4cd4407bbbbd", import.meta.url), { type: "module" }),
 );
 
 function make(tag, className, text) {
@@ -314,7 +314,7 @@ ui.copy.addEventListener("click", async () => {
 });
 
 try {
-  const response = await fetch(new URL("../test/fixtures/product-scenarios.json?v=d1b8998d55b7", import.meta.url));
+  const response = await fetch(new URL("../test/fixtures/product-scenarios.json?v=4cd4407bbbbd", import.meta.url));
   if (!response.ok) throw new Error(`HTTP ${response.status}`);
   scenarios = await response.json();
   renderScenarioButtons();
