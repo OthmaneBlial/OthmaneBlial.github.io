@@ -26,12 +26,12 @@ web-task-agent workflow enqueue <template> --topic <text>
 web-task-agent workflow scaffold <new-workflow-id>
 web-task-agent workflow validate <proposal/workflow.json>
 web-task-agent pack list
-web-task-agent pack plan <pack-id> --topic <text> [--dry-run]
+web-task-agent pack plan <pack-id> --topic <text> [--output <path>] [--force] [--dry-run]
 web-task-agent agent run <instruction>
 web-task-agent agent enqueue <instruction>
 web-task-agent queue list
 web-task-agent queue stats
-web-task-agent job logs <job-id> --limit 100
+web-task-agent job logs <job-id> --limit 100 [--output <path>] [--force]
 web-task-agent job report <job-id>
 web-task-agent job budget <job-id>
 web-task-agent job export <job-id> --format markdown --redact --dry-run
@@ -56,6 +56,7 @@ web-task-agent server run --port 4317
 - `workflow list --category` or `--search` when you want to find one of the 240 catalog workflows. Start with the three curated paths in `examples/golden-paths/` when you need a decision-shaped entry point.
 - `workflow preview` when you need to inspect one workflow's source strategy, queries, outputs, and budgets before doing work.
 - `pack plan --dry-run` when you need the full ordered plan and its aggregate run bounds without writing a file.
+- `pack plan` writes under `reports/packs/` by default or to `--output`. Existing files are preserved unless you pass `--force`.
 - `workflow validate` when you want to check a proposal's required decision, source-policy, query, deliverable, freshness, invalidation, bounded-cost, and risk fields before review.
 - `workflow run` when you want a full research package immediately.
 - `agent run` when you want a free-form instruction without a template.
@@ -138,11 +139,11 @@ Use `storage gate` when you want a quick readiness check for the local platform.
 
 ## Log Export
 
-Use `job logs <job-id> --output <path>` to write the recent event history to a file for later review or sharing.
+Use `job logs <job-id> --output <path>` to write recent events for later review or sharing. Existing files are preserved unless you pass `--force`.
 
 ## Shareable Job Exports And Run Comparisons
 
-Use `job export` to write a local Markdown decision receipt, structured JSON, or a CSV of cached source metadata. The command never sends content anywhere. It refuses overwrites unless `--force` is deliberate.
+Use `job export` to write a local Markdown decision receipt, structured JSON, or a CSV of cached source metadata. The command never sends content anywhere. It refuses overwrites unless `--force` is deliberate; symlinks and hard links are always refused.
 
 ```bash
 web-task-agent job export <job-id> --format markdown --redact --dry-run
