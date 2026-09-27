@@ -52,7 +52,7 @@ Les points suivants décrivent la baseline datée du 27 août. Leur état actuel
 - `LAUNCH.md` est aligné sur la release `v0.5.1`. Le vérificateur web local, le schéma indépendant, le noyau réutilisable et le serveur MCP local sont déjà livrés ; les écarts 2 à 6 du snapshot du 27 août sont résolus. Le point 7 est partiellement résolu : les workflows GitHub sont versionnés et le MCP local fonctionne, mais aucune intégration tierce répétée n'est observée.
 - Les deux noms npm publics renvoient `404` au registre : ni le CLI ni le noyau ne sont publiés. La publication npm reste la porte propriétaire de P3 et l'inscription MCP officielle en dépend.
 - GitHub Actions est désactivé pour ce dépôt. Les workflows restent versionnés ; exécuter les contrôles avec `npm run test:ci`, `npm run security:review`, `npm run audit:secrets` et `npm run audit:prod` sur la machine locale.
-- La revue mainteneur couvre toujours six surfaces, désormais avec **31 ancres dans 17 fichiers**, dont des tests du rendu HTML du tableau de bord, des en-têtes `Host` distants, des URL d'app-store avec identifiants ou ports inhabituels, des accès concurrents aux mêmes domaines et des règles `robots.txt` à motifs. Ce n'est pas une revue indépendante.
+- La revue mainteneur couvre toujours six surfaces, désormais avec **35 ancres dans 17 fichiers**, dont les contrôles de redirection et d'échec de `robots.txt`. Ce n'est pas une revue indépendante.
 - Au dernier relevé GitHub, le dépôt avait **0 étoile, 0 fork et 0 watcher**. Les quatre issues ouvertes (#4, #10, #11 et #12) sont toutes créées par le mainteneur. La dernière release reste `v0.5.1`, avec un téléchargement par asset. Ces signaux ne démontrent pas d'usage externe répété.
 
 ### Écarts encore ouverts
