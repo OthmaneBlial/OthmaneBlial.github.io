@@ -4,11 +4,11 @@ The package declares Node.js `>=22`. These local results passed on 27 September 
 
 | Node version | Verification |
 | --- | --- |
-| 22.x | GitHub Actions run `36349667666` |
-| 24.x | GitHub Actions run `36349667666` |
-| 25.9.0 | `npm test` — 60 tests |
+| 22.x | GitHub Actions run `36350834705` |
+| 24.x | GitHub Actions run `36350834705` |
+| 25.9.0 | `npm test` — 61 tests |
 
-These results verify the three versions shown, not every possible Node release accepted by the package's engine range. The 44 browser tests passed in local Chrome at desktop and mobile viewports on 27 September 2026. GitHub Actions [run `36349667666`](https://github.com/OthmaneBlial/Regex-For-Humans/actions/runs/36349667666) passed on commit `0bb13de`: 60 Node tests across Linux Node 22/24, macOS and Windows Node 24, and 44 browser tests on Linux Chromium. Earlier [run `35444963260`](https://github.com/OthmaneBlial/Regex-For-Humans/actions/runs/35444963260) also passed; its tested `npm-package-tested` tarball was downloaded and SHA-256 checked (`e3202a0db96e06f21a70d2d714e703ed055c41bb11eff64415328bd4b431211c`). Disposable draft [PR #1](https://github.com/OthmaneBlial/Regex-For-Humans/pull/1) confirmed that invalid syntax fails `npm run check` on a real pull-request run, then was closed without merging. The automated accessibility tests do not replace a real screen reader session.
+These results verify the three versions shown, not every possible Node release accepted by the package's engine range. The 44 browser tests passed in local Chrome at desktop and mobile viewports on 27 September 2026. GitHub Actions [run `36350834705`](https://github.com/OthmaneBlial/Regex-For-Humans/actions/runs/36350834705) passed on commit `d28b613`: 61 Node tests across Linux Node 22/24, macOS and Windows Node 24, and 44 browser tests on Linux Chromium. Earlier [run `35444963260`](https://github.com/OthmaneBlial/Regex-For-Humans/actions/runs/35444963260) also passed; its tested `npm-package-tested` tarball was downloaded and SHA-256 checked (`e3202a0db96e06f21a70d2d714e703ed055c41bb11eff64415328bd4b431211c`). Disposable draft [PR #1](https://github.com/OthmaneBlial/Regex-For-Humans/pull/1) confirmed that invalid syntax fails `npm run check` on a real pull-request run, then was closed without merging. The automated accessibility tests do not replace a real screen reader session.
 
 ## Reproduce locally
 
@@ -26,7 +26,7 @@ npm audit --audit-level=moderate
 npm pack --dry-run --json
 ```
 
-`npm run check` runs Biome format/lint/import checks and `tsc --noEmit`. Strict JavaScript type checking currently covers `index.js`, `src/` and the CLI in `bin/`. The browser UI and build scripts are linted and exercised by browser/build tests but are not yet in the TypeScript checking scope. The package tarball must contain only the runtime library, CLI, license, README and published docs; `npm pack --dry-run --json` lists its exact contents.
+`npm run check` runs Biome format/lint/import checks and `tsc --noEmit`. Strict JavaScript type checking covers `index.js`, `src/`, the CLI in `bin/`, and the isolated browser worker files `web/test-runner.js` and `web/match-worker.js`. The main browser UI (`web/app.js`) and build scripts remain outside the TypeScript check; browser and build tests cover the shipped workshop. The package tarball must contain only the runtime library, CLI, license, README and published docs; `npm pack --dry-run --json` lists its exact contents.
 
 `npm run test:package` packs the current checkout, installs that exact tarball into a new temporary consumer, then checks package import, matching, trace, diagnostics, the installed CLI link, version and JSON output. It removes the temporary consumer afterward. CI can set `PACK_OUTPUT_DIR=artifacts` to retain the exact tested tarball as a downloadable workflow artifact. This workflow artifact is not an npm publication or GitHub Release.
 
