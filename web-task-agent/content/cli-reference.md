@@ -56,7 +56,7 @@ web-task-agent server run --port 4317
 - `workflow list --category` or `--search` when you want to find one of the 240 catalog workflows. Start with the three curated paths in `examples/golden-paths/` when you need a decision-shaped entry point.
 - `workflow preview` when you need to inspect one workflow's source strategy, queries, outputs, and budgets before doing work.
 - `pack plan --dry-run` when you need the full ordered plan and its aggregate run bounds without writing a file.
-- `workflow validate` when you want to check a proposal's required decision, source-policy, query, deliverable, freshness, bounded-cost, and risk fields before review.
+- `workflow validate` when you want to check a proposal's required decision, source-policy, query, deliverable, freshness, invalidation, bounded-cost, and risk fields before review.
 - `workflow run` when you want a full research package immediately.
 - `agent run` when you want a free-form instruction without a template.
 - `queue list` and `job logs` when you are already operating a long run.
@@ -120,7 +120,7 @@ Create a consistent SQLite copy without uploading any data:
 web-task-agent storage backup --output ./web-task-agent-backup.sqlite
 ```
 
-Restoration is intentionally explicit because it replaces the local database. It requires `--force`, validates the SQLite input, and first creates a safety backup of the current state (or writes it to `--backup <path>` when you choose the location):
+Restoration is intentionally explicit because it replaces the local database. It requires `--force`, checks SQLite integrity and the job-store schema before replacement, and first creates a safety backup of the current state (or writes it to `--backup <path>` when you choose the location):
 
 ```bash
 web-task-agent storage restore \

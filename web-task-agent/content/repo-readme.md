@@ -1,254 +1,62 @@
 # Web Task Agent
 
-> ## The verification layer for AI research.
->
-> Turn any agent run into a local Decision Receipt your team can verify, challenge, and compare offline.
+> Research with sources attached.
 
-[![CI](https://github.com/OthmaneBlial/web-task-agent/actions/workflows/ci.yml/badge.svg)](https://github.com/OthmaneBlial/web-task-agent/actions/workflows/ci.yml)
-[![Decision Receipt](https://github.com/OthmaneBlial/web-task-agent/actions/workflows/decision-receipt.yml/badge.svg)](https://github.com/OthmaneBlial/web-task-agent/actions/workflows/decision-receipt.yml)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
-[![Decision Receipt v1](https://img.shields.io/badge/Decision%20Receipt-v1-0f766e)](examples/receipts/)
-[![Local-first](https://img.shields.io/badge/privacy-local--first-164e63)](PRIVACY.md)
-[![Project site](https://img.shields.io/badge/site-live-0f766e)](https://othmaneblial.github.io/web-task-agent/)
+Turn a research question into a local package with a short report, source links, and an offline file check.
 
-GitHub Actions are disabled for this repository. The workflow files remain checked in, but GitHub does not run them. Run `npm ci && npm run test:ci && npm run audit:secrets && npm run audit:prod` to execute the local CI checks.
+[Try the sample](https://othmaneblial.github.io/web-task-agent/receipt.html) · [Quick start](https://othmaneblial.github.io/web-task-agent/docs.html#page=getting-started) · [Documentation](https://othmaneblial.github.io/web-task-agent/) · [GitHub](https://github.com/OthmaneBlial/web-task-agent)
 
-Browser agents and deep-research tools produce answers. Web Task Agent preserves the review contract after the run: claims, source excerpts, contradictions, freshness, integrity, recovery state, and the smallest next validation. The result is a handoff that survives a browser closing, a challenged recommendation, or an interrupted run.
+## Try a saved sample
 
-**Proof before setup:** take the [60-second tamper challenge](https://othmaneblial.github.io/web-task-agent/challenge.html), [verify a Decision Receipt locally](https://othmaneblial.github.io/web-task-agent/verify.html), or [open the featured deterministic receipt](https://othmaneblial.github.io/web-task-agent/receipt.html). Both interactive paths use embedded synthetic fixtures and have no upload path, backend, account, cookie, analytics, telemetry, or persistent storage.
-
-```text
-Your question
-  └─ “What should we validate before building this?”
-
-Local decision package
-  ├─ receipt.html                  Visual, portable decision handoff
-  ├─ handoff/workflow-brief.md     Start here: recommendation + next validation
-  ├─ report.md                     Findings, uncertainty, and contradictions
-  ├─ evidence/sources.json         Source trail, role, and collection date
-  ├─ package-manifest.json         Explicit, versioned file contract
-  ├─ receipt.json                  Claim-to-evidence decision contract
-  ├─ integrity-manifest.json       Offline SHA-256 file verification
-  └─ runtime/                      Durable state for inspection and recovery
-```
-
-This is local research infrastructure, not a hosted scraper, access-control bypass, or generic browser-agent wrapper.
-
-**See the full product story:** [live documentation](https://othmaneblial.github.io/web-task-agent/) · [60-second challenge](https://othmaneblial.github.io/web-task-agent/challenge.html) · [Decision Receipt spec](docs/content/decision-receipt-spec.md) · [built-in GitHub Actions gate](GITHUB_WORKFLOW.md) · [adapter contract](ADAPTERS.md) · authentic runs: [Browser Use](examples/interop/runs/browser-use/README.md) and [GPT Researcher](examples/interop/runs/gpt-researcher/README.md) · [local MCP server](MCP.md) · [compatibility matrix](COMPATIBILITY.md) · [publishing contract](PUBLISHING.md) · [trust model](docs/content/trust-model.md) · [case studies](docs/content/case-studies.md) · [activation measures](docs/activation.md) · [eight inspectable receipts](RESEARCH_RECEIPTS.md) · [latest release](https://github.com/OthmaneBlial/web-task-agent/releases/latest)
-
-The GitHub Packages mirror is available as `@othmaneblial/web-task-agent`. GitHub's npm registry requires a classic personal access token with `read:packages` even for public packages. Authenticate without committing that token, then install the mirror:
-
-```bash
-npm login --scope=@othmaneblial --auth-type=legacy --registry=https://npm.pkg.github.com
-npm install @othmaneblial/web-task-agent
-```
-
-See [GitHub's npm-registry authentication guide](https://docs.github.com/en/packages/working-with-a-github-packages-registry/working-with-the-npm-registry); never commit the token to `.npmrc` or the repository.
-
-## Get a real package in two minutes — no key, browser, or network
-
-Start with a deterministic research receipt. It has no API key, browser session, or network request, and shows the exact package shape a live workflow produces.
-
-```bash
-curl -fsSL https://raw.githubusercontent.com/OthmaneBlial/web-task-agent/main/install.sh \
-  | bash -s -- --skip-llm-setup
-
-web-task-agent demo export browser-agent-landscape
-open reports/demos/browser-agent-landscape/receipt.html
-```
-
-You get a complete, source-linked handoff:
-
-- `receipt.html` — a visual, standalone decision receipt with source cards, uncertainty, and the next validation.
-- `handoff/workflow-brief.md` — the decision-ready reading start.
-- `report.md` — findings, uncertainty, and the next validation.
-- `evidence/sources.json` — the source trail with role and collection date.
-- `package-manifest.json` — an explicit, versioned file contract.
-- `receipt.json` — a versioned claim-to-evidence contract with source snapshots and explicit limitations.
-- `integrity-manifest.json` — SHA-256 hashes that can be checked offline.
-
-Verify the package without network access:
-
-```bash
-web-task-agent receipt verify reports/demos/browser-agent-landscape
-```
-
-The verifier checks the receipt structure, evidence references, source snapshots, and exported file hashes. It cannot prove that a source is true, complete, authorized, or fresh.
-
-The same bounded operations are available to local MCP hosts after installing a release tarball:
-
-```bash
-web-task-agent mcp serve
-```
-
-This STDIO command exposes only verify, compare, import, and render; it has no browser, HTTP, shell, cookie, or authentication capability. See [MCP.md](MCP.md) for host configuration and the explicit publication boundary. The metadata is prepared, but neither npm nor official MCP registry availability is claimed until both are observed publicly.
-
-For a versioned install, use the tarball and checksum attached to a GitHub release. This is the canonical public distribution path; it does not require a registry token:
-
-```bash
-VERSION=0.5.1
-curl -fsSLO "https://github.com/OthmaneBlial/web-task-agent/releases/download/v${VERSION}/web-task-agent-${VERSION}.tgz"
-curl -fsSLO "https://github.com/OthmaneBlial/web-task-agent/releases/download/v${VERSION}/SHA256SUMS"
-grep "web-task-agent-${VERSION}.tgz" SHA256SUMS | sha256sum -c -
-npm install --global "./web-task-agent-${VERSION}.tgz"
-```
-
-The tag, package version, tarball name, and checksum are generated together by the release workflow. `npm run first-success` rehearses this clean-install path locally before a tag is published.
-
-Try the other deterministic demos with `web-task-agent demo list`. Every export includes a standalone `receipt.html` you can open locally or attach to a handoff. They are fixtures, clearly marked as such; they never pretend to be fresh research.
-
-Read all eight versioned [research receipts](RESEARCH_RECEIPTS.md) directly in the repository: launch readiness, competitor mapping, GitHub feedback, technical writing, app-review opportunities, workflow quality, and local-first risk review.
-
-The receipt contract also ships with an inspectable [evaluation scorecard](evaluation/scorecard.md) and four [adversarial policy fixtures](evaluation/adversarial/). They are regression evidence for package integrity and trust boundaries, not claims that the model or the web is always right.
-
-Provider-neutral results can be brought into the same contract with the [interop fixture](examples/interop/README.md). The adapter preserves source metadata, excerpts, limitations, and the next validation; it never imports cookies, browser sessions, or hosted-provider instructions.
-
-## Why teams keep the package instead of just the answer
-
-| When research goes wrong | What stays available |
-| --- | --- |
-| A run crashes halfway through | SQLite state, leases, heartbeats, queue recovery, and stage resume |
-| A recommendation gets challenged | Source snapshots, quality signals, citations, evidence clusters, and contradictions |
-| A teammate needs to act | A stable brief, report, raw evidence, manifest, drafts, and smallest next validation |
-| A workflow becomes routine | 243 executable workflows, reusable presets, stable output paths, and deterministic fixtures |
-
-The point is not to automate a web page. The point is to make the decision defensible after the browser closes.
-
-## Run live research
-
-Copy the safe template, set a narrow compatible API key only for live research, then choose a workflow and a topic:
-
-```bash
-cp .env.example .env
-# Edit .env and set ANTHROPIC_API_KEY (or a compatible endpoint) locally.
-
-web-task-agent workflow list --category "Voice of Customer"
-
-web-task-agent workflow run cybersecurity-voice-of-customer \
-  --topic "security review workflow for SaaS teams" \
-  --audience "product and security leads" \
-  --preset focused
-```
-
-For the complete workflow catalog:
-
-```bash
-web-task-agent workflow list --search ecommerce
-web-task-agent workflow list --category "Pricing and Packaging"
-```
-
-There are four focused core workflows plus 240 executable catalog workflows. Start with the three [golden paths](examples/golden-paths/) before browsing the full [workflow catalog](examples/workflows/CATALOG.md).
-
-The three golden paths are deliberately opinionated:
-
-- [Decision Change Review](examples/golden-paths/decision-change-review/) — explain what changed between two decision receipts.
-- [Competitor Map](examples/golden-paths/competitor-map/) — choose where not to compete with evidence attached.
-- [Launch Risk Review](examples/golden-paths/launch-risk-review/) — test a public promise before announcing it.
-
-## Why this instead of a crawler or generic browser agent?
-
-Browser automation and extraction are necessary infrastructure. Web Task Agent adds the operator-facing research contract:
-
-| Need | Web Task Agent behavior |
-| --- | --- |
-| A job survives a crash | Durable SQLite state, leases, heartbeats, queue recovery, and stage resume |
-| A recommendation is inspectable | Sources, snapshots, evidence clusters, citations, quality signals, and contradictions remain attached |
-| A report is useful outside the terminal | Stable workflow package with brief, report, raw research, plan, drafts, manifest, and prompt trace |
-| Work stays understandable on one machine | Local CLI, local dashboard, local storage, explicit output paths, and no required hosted control plane |
-| A workflow is reusable | Presets, catalog metadata, topic-scoped output paths, examples, and deterministic package fixtures |
-
-Use a crawler or a browser agent when you only need page control or extraction. Use Web Task Agent when the result must remain reviewable, resumable, and decision-ready.
-
-## Find the research decision you actually need
-
-Each catalog entry carries a distinct decision focus, source strategy, query set, expected deliverables, output package, and example. They are grouped by the decision to make:
-
-- Voice of customer and feature-gap discovery
-- Competitor mapping and market entry
-- Pricing, packaging, segments, and buyer journey
-- Launch positioning and content demand
-- Integrations and partnerships
-- Product validation, retention, and churn
-
-The same decision families are available across AI developer tools, API platforms, DevOps, security, data, B2B SaaS, e-commerce, fintech, HR, education, wellness, creators, marketplaces, real estate, local business, sustainability, productivity, travel, and mobile apps.
-
-## Operator controls
-
-```bash
-web-task-agent pack plan validate-an-idea --topic "local research assistant" --dry-run
-web-task-agent browser status
-web-task-agent workflow enqueue market-opportunity --topic "offline PDF tools"
-web-task-agent worker run --once
-web-task-agent queue list
-web-task-agent job inspect <job-id>
-web-task-agent job report <job-id>
-web-task-agent job logs <job-id> --limit 100
-web-task-agent job budget <job-id>
-web-task-agent job export <job-id> --format markdown --redact --dry-run
-web-task-agent job compare <earlier-job-id> <later-job-id> --redact --dry-run
-web-task-agent storage gate
-web-task-agent storage backup --output ./web-task-agent-backup.sqlite
-web-task-agent server run --port 4317
-```
-
-`pack plan --dry-run` prints its report destinations plus aggregate query, candidate, and runtime bounds without writing a plan or launching a browser/LLM step. The bounds are deliberately not a price estimate: actual usage depends on the selected sources and model.
-
-`browser status` reports whether the configured local CDP endpoint is Lightpanda, Chrome/Chromium, another CDP implementation, or unavailable — without starting or touching a browser. See the browser-backend table in the [getting started guide](docs/content/getting-started.md).
-
-The dashboard is local at `http://127.0.0.1:4317`. Runtime data is kept outside the code tree:
-
-- `.cache/` — resumable work state.
-- `.data/web-task-agent.sqlite` — durable jobs, queue data, source/evidence metadata, and artifacts.
-- `reports/` — human-facing packages.
-
-Use `storage backup --output <path>` for a consistent local SQLite snapshot. `storage restore --input <path> --force` always writes a safety backup of the database it replaces.
-
-## Safety and privacy
-
-- Browser pages, search snippets, files, and LLM output are untrusted input.
-- Do not use the project to bypass access controls, solve CAPTCHAs, or automate high-risk external actions.
-- A local workflow can still send selected content to the LLM endpoint configured by the operator. Use the narrowest credentials possible.
-- Never commit API keys, cookies, private reports, runtime databases, or prompt traces.
-- Use `job export --dry-run --redact` before sharing. It previews the local package, recognizes common secret formats, and writes nothing or sends nothing unless you explicitly choose an output file.
-- Direct source acquisition checks configured domain boundaries, resolves hostnames and rejects private or reserved DNS answers, applies public `robots.txt` rules when available, paces repeated domains, caps requests per domain, and quarantines unsafe redirect targets or configured review domains; it never bypasses access controls.
-
-Read [PRIVACY.md](PRIVACY.md), [SECURITY.md](SECURITY.md), and [SUPPORT.md](SUPPORT.md) before running sensitive work or reporting a vulnerability.
-
-For evidence that the receipt helps a reviewer rather than merely looking impressive, run the [local-only Reviewer Evidence Lab](https://othmaneblial.github.io/web-task-agent/study.html) or use its counterbalanced [`studies/reviewer-value/`](studies/reviewer-value/) kit. It ships synthetic parallel cases, controlled tampering, strict consent-aware validation, and descriptive aggregation; the current real participant baseline is explicitly zero.
-
-## Develop and verify
+Requires Node.js 22.12 or later. This sample uses saved data; it needs no API key, browser, or live research request.
 
 ```bash
 npm ci
-npm run typecheck
-npm test
-npm run generate:workflows
-npm run audit:secrets
-npm run release:check
-npm run build
+npm run start -- demo export browser-agent-landscape
+npm run start -- receipt verify reports/demos/browser-agent-landscape
+open reports/demos/browser-agent-landscape/receipt.html
 ```
 
-`npm test` runs deterministic fixtures for the standard CI path: it does not require an API key or live Play Store/AppBrain pages. `npm run audit:secrets` checks files Git could publish and reports only file, line, and credential type—never a suspected value. Live research remains an operator-invoked command, never a hidden test dependency.
+The folder contains a readable report, source snapshots, a decision receipt, and an integrity manifest. Verification checks that the package matches its manifest. It does not prove the sources or decision are correct.
 
-`npm run release:check` adds the production dependency audit and a dry-run of the npm package. Follow [RELEASE_CHECKLIST.md](RELEASE_CHECKLIST.md) before any public release or visibility change.
+## Run live research
 
-## Contribute
+Live research needs a local browser and a configured AI service. Set its key in `.env`, then preview and run a workflow:
 
-Start with [CONTRIBUTING.md](CONTRIBUTING.md) and the [maintainer/change policy](MAINTAINERS.md), then read the [workflow catalog](examples/workflows/CATALOG.md). Breaking receipt changes require the [public RFC process](docs/rfcs/README.md) before implementation. Run `web-task-agent workflow validate <proposal/workflow.json>` after scaffolding: it checks the contribution contract without registering or launching it, including explicit freshness and bounded-cost fields. A useful workflow contribution has a repeated decision, a distinct source strategy, a stable evidence-backed output, a safety boundary, and a test/fixture — not just a renamed prompt.
+```bash
+cp .env.example .env
+# Add your AI service key to .env.
+npm run start -- workflow preview article-research --topic "browser automation"
+npm run start -- workflow run article-research --topic "browser automation" --preset focused
+```
 
-Use [Discussions](https://github.com/OthmaneBlial/web-task-agent/discussions/1) for workflow ideas, reviewable receipts, and first-run questions. Use Issues for reproducible bugs and focused implementation changes.
+A live run visits selected public websites and may send selected evidence to your configured AI service. Reports and job data stay on your computer.
 
-## Documentation
+## Check or compare a package
 
-- [Platform](docs/content/platform.md)
-- [Getting started](docs/content/getting-started.md)
-- [CLI reference](docs/content/cli-reference.md)
+```bash
+npm run start -- receipt verify reports/demos/browser-agent-landscape
+npm run start -- receipt compare earlier-package later-package
+```
+
+The verifier works offline. Integrity checks show whether files changed after export; they do not prove a source is true, complete, authorized, or fresh.
+
+## Local checks
+
+GitHub Actions are disabled for this repository. Run the checks locally before pushing:
+
+```bash
+npm ci
+npm run test:ci
+npm run security:review
+```
+
+## Guides
+
+- [Quick start and workflow guide](https://othmaneblial.github.io/web-task-agent/docs.html#page=getting-started)
+- [Try the 60-second tamper challenge](https://othmaneblial.github.io/web-task-agent/challenge.html)
+- [Browse example receipts](examples/receipts/)
+- [Browse golden paths](examples/golden-paths/)
 - [Workflow catalog](examples/workflows/CATALOG.md)
-- [Example research receipts](examples/receipts/)
-- [Research receipts guide](RESEARCH_RECEIPTS.md)
-- [Roadmap](ROADMAP.md)
-- [Release checklist](RELEASE_CHECKLIST.md)
-- [Security policy](SECURITY.md)
-- [Independent security review brief](SECURITY_REVIEW.md)
-- [External validation protocol](EXTERNAL_VALIDATION.md)
-- [Opt-in public receipt gallery](gallery/README.md)
+- [Privacy](PRIVACY.md) · [Security](SECURITY.md) · [Support](SUPPORT.md)
+- [Contributing](CONTRIBUTING.md) · [Release checklist](RELEASE_CHECKLIST.md)
