@@ -9,12 +9,16 @@ import { fail } from "./diagnostics.js";
 
 export const LIMITS = Object.freeze({ sourceLength: 16_384, lines: 200, repetition: 1_000 });
 
-/** @param {number} length */
-export function validateSourceLength(length) {
-  if (length > LIMITS.sourceLength) {
+/** @param {string} source */
+export function validateSourceLength(source) {
+  if (source.length > LIMITS.sourceLength) {
+    const prefix = source.slice(0, LIMITS.sourceLength);
+    const locationSource =
+      prefix.endsWith("\r") && source[LIMITS.sourceLength] === "\n" ? prefix.slice(0, -1) : prefix;
+    const lines = locationSource.split(/\r?\n/u);
     fail("SOURCE_LIMIT", `Rules cannot exceed ${LIMITS.sourceLength} UTF-16 code units.`, {
-      line: 1,
-      column: 1,
+      line: lines.length,
+      column: lines[lines.length - 1].length + 1,
     });
   }
 }
@@ -46,17 +50,24 @@ function parseRepetition(text, location) {
   if (normalized === "any number of times") return { kind: "zeroOrMore" };
   if (normalized === "at least one time") return { kind: "oneOrMore" };
   if (normalized === "at most one time") return { kind: "optional" };
-  const numbers = [...normalized.matchAll(/[0-9]+/g)].map((match) => Number(match[0]));
-  if (numbers.some((number) => !Number.isSafeInteger(number) || number > LIMITS.repetition)) {
-    fail("REPETITION_LIMIT", `Repetition counts must be at most ${LIMITS.repetition}.`, location);
+  const numberMatches = [...normalized.matchAll(/[0-9]+/g)];
+  const numbers = numberMatches.map((match) => Number(match[0]));
+  const invalidCount = numberMatches.find((match) => {
+    const number = Number(match[0]);
+    return !Number.isSafeInteger(number) || number > LIMITS.repetition;
+  });
+  if (invalidCount) {
+    fail("REPETITION_LIMIT", `Repetition counts must be at most ${LIMITS.repetition}.`, {
+      line: location.line,
+      column: location.column + (invalidCount.index ?? 0),
+    });
   }
   if (normalized.startsWith("between ")) {
     if (numbers[0] > numbers[1]) {
-      fail(
-        "INVALID_RANGE",
-        "The lower repetition bound must not exceed the upper bound.",
-        location,
-      );
+      fail("INVALID_RANGE", "The lower repetition bound must not exceed the upper bound.", {
+        line: location.line,
+        column: location.column + (numberMatches[1]?.index ?? 0),
+      });
     }
     return { kind: "range", min: numbers[0], max: numbers[1] };
   }
@@ -67,22 +78,36 @@ function parseRepetition(text, location) {
 /** @param {string} text @param {Location} location @returns {{value: string, length: number}} */
 function readQuoted(text, location) {
   if (!text.startsWith('"')) fail("INVALID_QUOTE", "Expected a double-quoted value.", location);
-  let escaped = false;
+  /** @param {string} message @param {number} index @returns {never} */
+  const failAt = (message, index) =>
+    fail("INVALID_QUOTE", message, { line: location.line, column: location.column + index });
+  let escapeStart = -1;
   for (let index = 1; index < text.length; index += 1) {
     const character = text[index];
-    if (escaped) {
-      escaped = false;
+    if (escapeStart >= 0) {
+      if (character === "u") {
+        if (!/^[0-9a-f]{4}$/iu.test(text.slice(index + 1, index + 5))) {
+          failAt("Use four hexadecimal digits after \\u.", escapeStart);
+        }
+        index += 4;
+      } else if (!'"\\/bfnrt'.includes(character)) {
+        failAt("Invalid JSON escape.", escapeStart);
+      }
+      escapeStart = -1;
     } else if (character === "\\") {
-      escaped = true;
+      escapeStart = index;
     } else if (character === '"') {
       try {
         return { value: JSON.parse(text.slice(0, index + 1)), length: index + 1 };
       } catch {
-        fail("INVALID_QUOTE", "Use JSON-style escapes inside quoted values.", location);
+        failAt("Invalid quoted value.", index);
       }
+    } else if (character.charCodeAt(0) < 0x20) {
+      failAt("Escape control characters inside quoted values.", index);
     }
   }
-  fail("INVALID_QUOTE", "Missing closing double quote.", location);
+  if (escapeStart >= 0) failAt("Incomplete JSON escape.", escapeStart);
+  return failAt("Missing closing double quote.", text.length);
 }
 
 /** @param {string} text @param {Location} location @returns {string[]} */
@@ -92,6 +117,7 @@ function readCharacterList(text, location) {
   while (index < text.length) {
     while (/\s/u.test(text[index] ?? "")) index += 1;
     if (index >= text.length) break;
+    const itemStart = index;
     let value;
     if (text[index] === '"') {
       const quoted = readQuoted(text.slice(index), {
@@ -109,7 +135,7 @@ function readCharacterList(text, location) {
     if ([...value].length !== 1) {
       fail("INVALID_CHARACTER", "Each character-list item must be one Unicode code point.", {
         line: location.line,
-        column: location.column + index,
+        column: location.column + itemStart,
       });
     }
     items.push(value);
@@ -202,7 +228,12 @@ function parseAtom(text, location, originalText) {
       column: location.column + offset,
     });
     if (offset + quoted.length !== remaining.length) {
-      fail("TRAILING_TEXT", "Unexpected text after the quoted literal.", location);
+      const trailing = remaining.slice(offset + quoted.length);
+      const leadingWhitespace = trailing.length - trailing.trimStart().length;
+      fail("TRAILING_TEXT", "Unexpected text after the quoted literal.", {
+        line: location.line,
+        column: location.column + offset + quoted.length + leadingWhitespace,
+      });
     }
     if (!quoted.value) fail("EMPTY_LITERAL", "A literal cannot be empty.", location);
     return atom("literal", quoted.value, repetition, location, originalText);
@@ -238,9 +269,9 @@ function parseAtom(text, location, originalText) {
 /** @param {string} source @returns {ParsedRules} */
 export function parse(source) {
   if (typeof source !== "string") throw new TypeError("Rules must be a string.");
-  validateSourceLength(source.length);
+  validateSourceLength(source);
   const lines = source.split(/\r?\n/u);
-  if (lines.length > LIMITS.lines) {
+  if (lines.length - Number(source.endsWith("\n")) > LIMITS.lines) {
     fail("LINE_LIMIT", `Rules cannot exceed ${LIMITS.lines} lines.`, {
       line: LIMITS.lines + 1,
       column: 1,

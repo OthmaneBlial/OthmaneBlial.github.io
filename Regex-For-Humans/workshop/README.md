@@ -58,7 +58,7 @@ Put one rule on each line. `start` can prefix the first rule. Quote exact text; 
 | Exact text | `"ABC"` | `ABC` |
 | Character set | `one of: a, b` | `[ab]` |
 
-Long forms remain valid. Unknown rules and duplicate repetition modifiers show where to fix the input. The [language guide](docs/LANGUAGE.md) covers syntax, escaping, flags, and limits.
+Long forms remain valid. Rule errors include line and column. The [language guide](docs/LANGUAGE.md) covers syntax, flags, and limits.
 
 ## Use it from JavaScript
 
@@ -74,7 +74,7 @@ Import `./index.js` from the repository checkout.
 
 ## CLI options
 
-Read rules from a file or standard input. Use `--explain` for rule-by-rule output, `--json` for structured results and diagnostics, `--ignore-case` for the `i` flag, or `--dot-all` for `s`. Run `node bin/regex-for-humans.js --help` for usage.
+Read rules from a file or standard input. Use `--` before a filename beginning with `-`. `--explain` prints each rule's output. `--json` prints structured results to stdout and structured errors to stderr; file and runtime errors use `CLI_ERROR`. `--ignore-case` adds `i`, and `--dot-all` adds `s`. Run `node bin/regex-for-humans.js --help` for usage.
 
 ## Scope
 
