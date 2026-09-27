@@ -1,4 +1,4 @@
-/** @param {import('./ast.js?v=c5584df8342f').Repetition|null} repetition */
+/** @param {import('./ast.js?v=f2ec5fa8cba5').Repetition|null} repetition */
 function repetitionText(repetition) {
   if (!repetition) return "";
   switch (repetition.kind) {
@@ -9,13 +9,11 @@ function repetitionText(repetition) {
   }
 }
 
-/** @param {import('./ast.js?v=c5584df8342f').RuleNode} node @param {string} flags @param {boolean} [hasFollowingRule] */
+/** @param {import('./ast.js?v=f2ec5fa8cba5').RuleNode} node @param {string} flags @param {boolean} [hasFollowingRule] */
 export function explainNode(node, flags, hasFollowingRule = false) {
   if (node.kind === "anchor") {
     if (node.mode === "line") {
-      return node.edge === "start"
-        ? "Line start; m lets ^ match after line breaks."
-        : "Line end; m lets $ match before line breaks.";
+      return node.edge === "start" ? "Start of each line (m)." : "End of each line (m).";
     }
     return node.edge === "start" ? "Input start." : "Input end.";
   }
@@ -28,20 +26,20 @@ export function explainNode(node, flags, hasFollowingRule = false) {
     if (node.atomType === "wildcard") {
       const context = hasFollowingRule ? " up to the next rule" : "";
       return flags.includes("s")
-        ? `Any text${context}, greedily; line breaks included.`
-        : `Any text${context}, greedily; line breaks stop it.`;
+        ? `Longest text${context}, including line breaks.`
+        : `Longest text${context}, excluding line breaks.`;
     }
     if (node.atomType === "charSet") {
       const characters = node.value.map((value) => JSON.stringify(value)).join(", ");
-      return `Any text without ${characters}${caseNote} (greedy).`;
+      return `Longest text without ${characters}${caseNote}.`;
     }
   }
 
   if (node.atomType === "shorthand" && node.value === "\\d") {
-    if (node.repetition?.kind === "oneOrMore") return "One or more ASCII digits (0–9).";
+    if (node.repetition?.kind === "oneOrMore") return "One or more digits (0–9).";
     if (node.repetition?.kind === "exact") {
       const digits = node.repetition.min === 1 ? "digit" : "digits";
-      return `Exactly ${node.repetition.min} ASCII ${digits} (0–9).`;
+      return `Exactly ${node.repetition.min} ${digits} (0–9).`;
     }
   }
 
@@ -60,7 +58,7 @@ export function explainNode(node, flags, hasFollowingRule = false) {
         "\\W": flags.includes("i")
           ? "One character outside JavaScript's word class. With i and u, a few Unicode case-folding equivalents count as word characters."
           : "One character outside JavaScript's word class.",
-        "\\d": "One ASCII digit (0–9).",
+        "\\d": "One digit (0–9).",
         "\\D": "One character other than an ASCII digit.",
         "\\s": "One JavaScript whitespace character, including line breaks.",
         "\\S": "One character outside JavaScript's whitespace class.",
