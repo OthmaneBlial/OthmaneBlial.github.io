@@ -1,11 +1,11 @@
-import { anchor, atom } from "./ast.js?v=afb026e3b4ee";
-import { fail } from "./diagnostics.js?v=afb026e3b4ee";
+import { anchor, atom } from "./ast.js?v=ce0e91d25493";
+import { fail } from "./diagnostics.js?v=ce0e91d25493";
 
-/** @typedef {import('./ast.js?v=afb026e3b4ee').Location} Location */
-/** @typedef {import('./ast.js?v=afb026e3b4ee').Repetition} Repetition */
-/** @typedef {import('./ast.js?v=afb026e3b4ee').AtomNode} AtomNode */
-/** @typedef {import('./ast.js?v=afb026e3b4ee').RuleNode} RuleNode */
-/** @typedef {import('./ast.js?v=afb026e3b4ee').ParsedRules} ParsedRules */
+/** @typedef {import('./ast.js?v=ce0e91d25493').Location} Location */
+/** @typedef {import('./ast.js?v=ce0e91d25493').Repetition} Repetition */
+/** @typedef {import('./ast.js?v=ce0e91d25493').AtomNode} AtomNode */
+/** @typedef {import('./ast.js?v=ce0e91d25493').RuleNode} RuleNode */
+/** @typedef {import('./ast.js?v=ce0e91d25493').ParsedRules} ParsedRules */
 
 const MAX_SOURCE_LENGTH = 16_384;
 export const LIMITS = Object.freeze({
@@ -235,11 +235,6 @@ function parseAtom(text, location, originalText) {
     }
     repetition = parseRepetition(suffix[1], suffixLocation);
     remaining = remaining.slice(0, suffix.index).trimEnd();
-  }
-
-  const article = /^(?:a|an)\s+/i.exec(remaining);
-  if (article && remaining[article[0].length] !== '"') {
-    remaining = remaining.slice(article[0].length);
   }
 
   const textWithout = /^text without:\s*/i.exec(remaining);
