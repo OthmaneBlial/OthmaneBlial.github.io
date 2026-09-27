@@ -4,12 +4,12 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#163f4b">
-  <meta name="description" content="Turn controlled-English rules into an explained JavaScript regex, then check positive and negative examples locally.">
+  <meta name="description" content="Write clear rules. Inspect the JavaScript regex and test examples locally.">
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; connect-src 'self'; object-src 'none'; base-uri 'self'">
   <title>Regex For Humans — Workshop</title>
-  <link rel="icon" type="image/svg+xml" href="./favicon.svg?v=7888f057d710">
-  <link rel="stylesheet" href="./styles.css?v=7888f057d710">
-  <script type="module" src="./app.js?v=7888f057d710"></script>
+  <link rel="icon" type="image/svg+xml" href="./favicon.svg?v=0cf68f8bd725">
+  <link rel="stylesheet" href="./styles.css?v=0cf68f8bd725">
+  <script type="module" src="./app.js?v=0cf68f8bd725"></script>
 </head>
 <body>
   <a class="skip-link" href="#main">Skip to workshop</a>
@@ -41,7 +41,7 @@
         <div class="hero-copy">
           <span class="eyebrow">A CLEARER WAY TO COMPILE PATTERNS</span>
           <h1 id="page-title">Write the rule.<br><em>Read the regex.</em></h1>
-          <p>Describe a pattern with a small, predictable English vocabulary. See exactly what JavaScript will match, and check the strings that matter.</p>
+          <p>Write clear rules. Inspect the regex. Test real examples.</p>
         </div>
         <div class="hero-symbol" aria-hidden="true">{<span>3</span>}</div>
       </section>
@@ -51,7 +51,7 @@
           <div class="panel-heading"><span class="step-number">01</span><div><p class="kicker">THE INPUT</p><h2 id="rules-title">Write your rules</h2></div></div>
           <label for="rules-input" class="field-label">Write your rules</label>
           <textarea id="rules-input" spellcheck="false" autocomplete="off" autocapitalize="off" aria-invalid="false" aria-describedby="rules-help diagnostic" placeholder="start &quot;ABC&quot;&#10;3 digits&#10;end"></textarea>
-          <div class="editor-footer"><p id="rules-help">A controlled language, not a free-form prompt. <a href="./language.html?v=7888f057d710" target="_blank" rel="noopener noreferrer">Read the syntax ↗</a></p><span id="rule-count">0 rules</span></div>
+          <div class="editor-footer"><p id="rules-help">A controlled language, not a free-form prompt. <a href="./language.html?v=0cf68f8bd725" target="_blank" rel="noopener noreferrer">Read the syntax ↗</a></p><span id="rule-count">0 rules</span></div>
           <fieldset class="flag-controls" aria-label="Regex options">
             <label class="flag-toggle"><input id="ignore-case" type="checkbox"><span class="toggle-track" aria-hidden="true"></span><span>Ignore case <code>i</code></span></label>
             <label class="flag-toggle"><input id="dot-all" type="checkbox"><span class="toggle-track" aria-hidden="true"></span><span>Dot matches newlines <code>s</code></span></label>
