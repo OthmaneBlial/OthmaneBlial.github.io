@@ -323,6 +323,19 @@
     const reasons = element("ul", "comparison-reasons");
     comparison.changedBecause.forEach((reason) => reasons.append(element("li", "", reason)));
     const detailsList = element("ul", "comparison-reasons");
+    const sourceFields = ["title", "publisher", "role", "collectedAt", "captureType", "snapshotPath", "snapshotSha256"];
+    const sourceValues = (sources, field) => [...sources]
+      .sort((left, right) => left.id < right.id ? -1 : left.id > right.id ? 1 : 0)
+      .map((source) => ({ id: source.id, value: source[field] }));
+    comparison.changedSources.forEach(({ url, earlier, later }) => {
+      detailsList.append(element("li", "", `Source ${previewText(url, 300)}`));
+      sourceFields.forEach((field) => {
+        const previous = sourceValues(earlier, field);
+        const current = sourceValues(later, field);
+        if (JSON.stringify(previous) === JSON.stringify(current)) return;
+        detailsList.append(element("li", "", `${field}: ${JSON.stringify(previous)} → ${JSON.stringify(current)}`));
+      });
+    });
     if (comparison.nextValidationChange) {
       detailsList.append(element("li", "", `Next validation: ${previewText(comparison.nextValidationChange.earlier)} → ${previewText(comparison.nextValidationChange.later)}`));
     }
