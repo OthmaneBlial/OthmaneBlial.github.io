@@ -1,4 +1,4 @@
-import { LIMITS } from "../src/parser.js?v=28f41bc158f9";
+import { LIMITS } from "../src/parser.js?v=10ffd8ebc3e8";
 
 const MAX_CASES = 100;
 const MAX_TEXT_LENGTH = 2048;
