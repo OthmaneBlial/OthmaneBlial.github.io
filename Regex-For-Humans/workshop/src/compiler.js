@@ -1,9 +1,9 @@
-import { fail } from "./diagnostics.js?v=0cf68f8bd725";
-import { explainNode } from "./explain.js?v=0cf68f8bd725";
+import { fail } from "./diagnostics.js?v=d12efdef53f1";
+import { explainNode } from "./explain.js?v=d12efdef53f1";
 
-/** @typedef {import('./ast.js?v=0cf68f8bd725').AtomNode} AtomNode */
-/** @typedef {import('./ast.js?v=0cf68f8bd725').Repetition} Repetition */
-/** @typedef {import('./ast.js?v=0cf68f8bd725').ParsedRules} ParsedRules */
+/** @typedef {import('./ast.js?v=d12efdef53f1').AtomNode} AtomNode */
+/** @typedef {import('./ast.js?v=d12efdef53f1').Repetition} Repetition */
+/** @typedef {import('./ast.js?v=d12efdef53f1').ParsedRules} ParsedRules */
 
 const locationOfOptions = { line: 1, column: 1 };
 
@@ -36,14 +36,8 @@ function repetitionSource(repetition) {
       return "*";
     case "oneOrMore":
       return "+";
-    case "optional":
-      return "?";
     case "exact":
       return `{${repetition.min}}`;
-    case "range":
-      return `{${repetition.min},${repetition.max}}`;
-    case "minimum":
-      return `{${repetition.min},}`;
     default:
       throw new TypeError(`Unknown repetition kind: ${repetition.kind}`);
   }
