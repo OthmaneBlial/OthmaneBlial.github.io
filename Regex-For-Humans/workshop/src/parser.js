@@ -204,6 +204,21 @@ function parseAtom(text, location, originalText) {
     remaining = remaining.slice(article[0].length);
   }
 
+  const textWithout = /^text without:\s*/i.exec(remaining);
+  if (textWithout || /^any text$/i.test(remaining)) {
+    if (repetition) {
+      fail("DUPLICATE_REPETITION", "This short form already repeats its atom.", location);
+    }
+    if (textWithout) {
+      const values = readCharacterList(remaining.slice(textWithout[0].length), {
+        line: location.line,
+        column: location.column + textWithout[0].length,
+      });
+      return atom("charSet", values, { kind: "zeroOrMore" }, location, originalText, true);
+    }
+    return atom("wildcard", ".", { kind: "zeroOrMore" }, location, originalText);
+  }
+
   if (/^any character$/i.test(remaining))
     return atom("wildcard", ".", repetition, location, originalText);
   for (const [phrase, token] of SHORTHANDS) {
@@ -272,7 +287,7 @@ export function parse(source) {
   validateSourceLength(source);
   const lines = source.split(/\r?\n/u);
   if (lines.length - Number(source.endsWith("\n")) > LIMITS.lines) {
-    fail("LINE_LIMIT", `Rules cannot exceed ${LIMITS.lines} lines.`, {
+    fail("LINE_LIMIT", `Input cannot exceed ${LIMITS.lines} lines.`, {
       line: LIMITS.lines + 1,
       column: 1,
     });
