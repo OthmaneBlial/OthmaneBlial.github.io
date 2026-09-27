@@ -2,11 +2,11 @@
 
 [![CI](https://github.com/OthmaneBlial/Regex-For-Humans/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/OthmaneBlial/Regex-For-Humans/actions/workflows/ci.yml)
 
-**Write clear rules. Get a JavaScript regex you can read, explain, and test.**
+**Write clear rules. Get a JavaScript regex you can inspect and test.**
 
 Regex For Humans turns a small, explicit English vocabulary into JavaScript `RegExp`. The same compiler powers a CLI, a library, and a browser workshop. Each rule has a defined meaning and predictable output.
 
-> **Development preview:** Node.js 22 or newer required. The package is not on npm, and the workshop is not hosted yet.
+> **Development preview:** [Project site](https://othmaneblial.github.io/Regex-For-Humans/) · [Open the workshop](https://othmaneblial.github.io/Regex-For-Humans/workshop/). Local use requires Node.js 22+; the package is not yet on npm.
 
 ## See it work
 
@@ -22,7 +22,9 @@ printf 'start "ABC"\n3 digits\nend\n' | node bin/regex-for-humans.js
 
 This matches `ABC123`; it rejects `ABC12`, `ABC1234`, and `abc123`.
 
-## Try the workshop
+## Run the workshop locally
+
+The [hosted workshop](https://othmaneblial.github.io/Regex-For-Humans/workshop/) is ready to use. To run it from a checkout:
 
 ```sh
 npm ci
@@ -84,7 +86,7 @@ Output targets JavaScript `RegExp`. The fixed grammar includes anchors, characte
 npm ci
 npm run check
 npm test
-npm run build
+npm run build:pages
 npm run test:package
 ```
 
