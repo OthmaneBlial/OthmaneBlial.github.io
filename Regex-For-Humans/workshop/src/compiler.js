@@ -1,9 +1,9 @@
-import { fail } from "./diagnostics.js?v=ce0e91d25493";
-import { explainNode } from "./explain.js?v=ce0e91d25493";
+import { fail } from "./diagnostics.js?v=c2893f3e1af6";
+import { explainNode } from "./explain.js?v=c2893f3e1af6";
 
-/** @typedef {import('./ast.js?v=ce0e91d25493').AtomNode} AtomNode */
-/** @typedef {import('./ast.js?v=ce0e91d25493').Repetition} Repetition */
-/** @typedef {import('./ast.js?v=ce0e91d25493').ParsedRules} ParsedRules */
+/** @typedef {import('./ast.js?v=c2893f3e1af6').AtomNode} AtomNode */
+/** @typedef {import('./ast.js?v=c2893f3e1af6').Repetition} Repetition */
+/** @typedef {import('./ast.js?v=c2893f3e1af6').ParsedRules} ParsedRules */
 
 const locationOfOptions = { line: 1, column: 1 };
 
@@ -97,7 +97,7 @@ export function compileAst(parsed, options = {}) {
   let source = "";
   const segments = [];
 
-  for (const node of parsed.nodes) {
+  for (const [index, node] of parsed.nodes.entries()) {
     const fragment =
       node.kind === "anchor" ? (node.edge === "start" ? "^" : "$") : atomSource(node);
     const sourceStart = source.length;
@@ -107,7 +107,7 @@ export function compileAst(parsed, options = {}) {
       sourceEnd: source.length,
       source: fragment,
       text: node.text,
-      explanation: explainNode(node, flags),
+      explanation: explainNode(node, flags, index + 1 < parsed.nodes.length),
       line: node.location.line,
       column: node.location.column,
       kind: node.kind,
