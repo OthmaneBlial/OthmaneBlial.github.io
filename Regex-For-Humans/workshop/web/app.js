@@ -1,5 +1,5 @@
-import { CompileError, compile } from "../index.js?v=fb7b0f13f732";
-import { TestRunner } from "./test-runner.js?v=fb7b0f13f732";
+import { CompileError, compile } from "../index.js?v=4d06dd62ae71";
+import { TestRunner } from "./test-runner.js?v=4d06dd62ae71";
 
 const ui = {
   examples: document.querySelector("#example-list"),
@@ -25,7 +25,7 @@ let testCases = [];
 let nextTestId = 1;
 let compiled = null;
 const testRunner = new TestRunner(
-  () => new Worker(new URL("./match-worker.js?v=fb7b0f13f732", import.meta.url), { type: "module" }),
+  () => new Worker(new URL("./match-worker.js?v=4d06dd62ae71", import.meta.url), { type: "module" }),
 );
 
 function make(tag, className, text) {
@@ -40,9 +40,10 @@ function setCompileState(label, state) {
   ui.compileState.dataset.state = state;
 }
 
-function setDiagnostic(message) {
+function setDiagnostic(message, invalidRules = false) {
   ui.diagnostic.hidden = !message;
   ui.diagnostic.textContent = message || "";
+  ui.rules.setAttribute("aria-invalid", String(invalidRules));
 }
 
 function selectLine(number) {
@@ -217,6 +218,7 @@ function compileRules() {
         error instanceof CompileError
           ? `Line ${error.line}, column ${error.column}: ${error.message}${error.hint ? `\n${error.hint}` : ""}`
           : `Unexpected compiler error: ${error.message}`,
+        true,
       );
     }
     renderTrace(null);
@@ -314,7 +316,7 @@ ui.copy.addEventListener("click", async () => {
 });
 
 try {
-  const response = await fetch(new URL("../test/fixtures/product-scenarios.json?v=fb7b0f13f732", import.meta.url));
+  const response = await fetch(new URL("../test/fixtures/product-scenarios.json?v=4d06dd62ae71", import.meta.url));
   if (!response.ok) throw new Error(`HTTP ${response.status}`);
   scenarios = await response.json();
   renderScenarioButtons();

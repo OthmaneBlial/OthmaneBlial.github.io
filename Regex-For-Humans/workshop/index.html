@@ -7,9 +7,9 @@
   <meta name="description" content="Turn controlled-English rules into an explained JavaScript regex, then check positive and negative examples locally.">
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; connect-src 'self'; object-src 'none'; base-uri 'self'">
   <title>Regex For Humans — Workshop</title>
-  <link rel="icon" type="image/svg+xml" href="./web/favicon.svg?v=fb7b0f13f732">
-  <link rel="stylesheet" href="./web/styles.css?v=fb7b0f13f732">
-  <script type="module" src="./web/app.js?v=fb7b0f13f732"></script>
+  <link rel="icon" type="image/svg+xml" href="./web/favicon.svg?v=4d06dd62ae71">
+  <link rel="stylesheet" href="./web/styles.css?v=4d06dd62ae71">
+  <script type="module" src="./web/app.js?v=4d06dd62ae71"></script>
 </head>
 <body>
   <a class="skip-link" href="#main">Skip to workshop</a>
@@ -50,8 +50,8 @@
         <section class="panel editor-panel" aria-labelledby="rules-title">
           <div class="panel-heading"><span class="step-number">01</span><div><p class="kicker">THE INPUT</p><h2 id="rules-title">Write your rules</h2></div></div>
           <label for="rules-input" class="field-label">Write your rules</label>
-          <textarea id="rules-input" spellcheck="false" autocomplete="off" autocapitalize="off" aria-describedby="rules-help" placeholder="start &quot;ABC&quot;&#10;3 digits&#10;end"></textarea>
-          <div class="editor-footer"><p id="rules-help">A controlled language, not a free-form prompt. <a href="./web/language.html?v=fb7b0f13f732" target="_blank" rel="noopener noreferrer">Read the syntax ↗</a></p><span id="rule-count">0 rules</span></div>
+          <textarea id="rules-input" spellcheck="false" autocomplete="off" autocapitalize="off" aria-invalid="false" aria-describedby="rules-help diagnostic" placeholder="start &quot;ABC&quot;&#10;3 digits&#10;end"></textarea>
+          <div class="editor-footer"><p id="rules-help">A controlled language, not a free-form prompt. <a href="./web/language.html?v=4d06dd62ae71" target="_blank" rel="noopener noreferrer">Read the syntax ↗</a></p><span id="rule-count">0 rules</span></div>
           <fieldset class="flag-controls" aria-label="Regex options">
             <label class="flag-toggle"><input id="ignore-case" type="checkbox"><span class="toggle-track" aria-hidden="true"></span><span>Ignore case <code>i</code></span></label>
             <label class="flag-toggle"><input id="dot-all" type="checkbox"><span class="toggle-track" aria-hidden="true"></span><span>Dot matches newlines <code>s</code></span></label>
