@@ -648,6 +648,54 @@ a {
   font-size: 0.94rem;
 }
 
+.home-preview {
+  align-self: center;
+  padding: 28px;
+}
+
+.home-preview .proof-sequence {
+  margin-top: 8px;
+}
+
+.home-preview .panel-note {
+  margin: 18px 0 0;
+}
+
+.home-step {
+  display: inline-block;
+  margin-bottom: 18px;
+  color: var(--teal);
+  font: 700 0.78rem var(--mono-font);
+}
+
+.home-last {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  margin-bottom: 24px;
+  padding: 28px 32px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-xl);
+  background: linear-gradient(120deg, rgba(15, 118, 110, 0.1), rgba(255, 250, 242, 0.9));
+}
+
+.home-last .eyebrow {
+  margin-bottom: 10px;
+}
+
+.home-last h2 {
+  margin: 0;
+  font: 2rem/1.05 var(--display-font);
+  letter-spacing: -0.03em;
+}
+
+.home-limit {
+  margin: 18px 0 0;
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
 pre {
   position: relative;
   margin: 14px 0 0;
@@ -927,6 +975,7 @@ li code,
   }
 
   .cta-section,
+  .home-last,
   .docs-meta,
   .example-head {
     align-items: start;
@@ -950,6 +999,7 @@ li code,
   .product-proof,
   .challenge-callout,
   .section,
+  .home-last,
   .workflow-card,
   .feature-card,
   .example-card,

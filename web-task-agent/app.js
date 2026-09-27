@@ -1,149 +1,149 @@
 const DOC_PAGES = [
   {
     slug: "platform",
-    section: "Guides",
+    section: "Start here",
     title: "Platform",
-    summary: "The finished local research system in one concise page.",
+    summary: "What it does and how to begin.",
     path: "content/platform.md"
   },
   {
     slug: "overview",
-    section: "Guides",
+    section: "Start here",
     title: "Overview",
-    summary: "What the project is, what it does today, and who it is for.",
+    summary: "A short introduction to the project.",
     path: "content/overview.md"
   },
   {
     slug: "getting-started",
-    section: "Guides",
+    section: "Start here",
     title: "Getting Started",
-    summary: "Environment, install, first run, and where outputs land.",
+    summary: "Install the CLI and run a demo.",
     path: "content/getting-started.md"
   },
   {
     slug: "pipeline-and-storage",
-    section: "Guides",
+    section: "Run research",
     title: "Pipeline And Storage",
-    summary: "Search, fetch, extract, synthesize, evidence storage, and reuse.",
+    summary: "How research moves from search to report.",
     path: "content/pipeline-and-storage.md"
   },
   {
     slug: "workflows",
-    section: "Guides",
+    section: "Run research",
     title: "Workflow Templates",
-    summary: "How the built-in workflow templates and presets are shaped.",
+    summary: "Choose and preview a workflow.",
     path: "content/workflows.md"
   },
   {
     slug: "cli-reference",
     section: "Reference",
     title: "CLI Reference",
-    summary: "Top-level command families, common commands, and output conventions.",
+    summary: "Commands, options, and examples.",
     path: "content/cli-reference.md"
   },
   {
     slug: "test-suite-map",
     section: "Reference",
     title: "Test Suite Map",
-    summary: "Product surfaces and the tests that cover them.",
+    summary: "Where automated checks cover the project.",
     path: "content/test-suite-map.md"
   },
   {
     slug: "privacy",
-    section: "Operations",
+    section: "Run research",
     title: "Privacy And Source Acquisition",
-    summary: "What stays local, what a live job can send, and the source boundaries enforced before browser work.",
+    summary: "What stays local and what live runs send.",
     path: "content/privacy.md"
   },
   {
     slug: "trust-model",
-    section: "Operations",
+    section: "Reference",
     title: "Trust Model",
-    summary: "What a receipt verifies, what the web and model can still get wrong, and the operator checklist.",
+    summary: "What verification checks and cannot prove.",
     path: "content/trust-model.md"
   },
   {
     slug: "decision-receipt-spec",
     section: "Reference",
     title: "Decision Receipt Specification",
-    summary: "Versioning, canonical bytes, profiles, integrity boundary, and the language-neutral schema.",
+    summary: "The receipt format and integrity rules.",
     path: "content/decision-receipt-spec.md"
   },
   {
     slug: "project-charter",
     section: "Reference",
     title: "Project Charter",
-    summary: "North star, vocabulary, architecture map, maintenance rules, and quality gate.",
+    summary: "Project goals and architecture.",
     path: "content/project-charter.md"
   },
   {
     slug: "queue-worker-controls",
-    section: "Operations",
+    section: "Run research",
     title: "Queue, Worker, And Controls",
-    summary: "Queued execution, worker mode, pause, cancel, resume, retry, rerun, and logs.",
+    summary: "Queue jobs and manage a worker.",
     path: "content/queue-worker-controls.md"
   },
   {
     slug: "api-dashboard",
-    section: "Operations",
+    section: "Run research",
     title: "API And Dashboard",
-    summary: "Management server endpoints, control room behavior, and live event streams.",
+    summary: "Dashboard and API details.",
     path: "content/api-dashboard.md"
   },
   {
     slug: "examples",
-    section: "Use Cases",
+    section: "Examples",
     title: "Examples",
-    summary: "Concrete operator scenarios built from the current repo commands and workflows.",
+    summary: "Common tasks with commands.",
     path: "content/examples.md"
   },
   {
     slug: "case-studies",
-    section: "Use Cases",
+    section: "Examples",
     title: "Case Studies",
-    summary: "Three deterministic studies showing decision change, competitor mapping, and launch-risk review.",
+    summary: "Three sample research decisions.",
     path: "content/case-studies.md"
   },
   {
     slug: "project-layout",
     section: "Reference",
     title: "Project Layout",
-    summary: "Key source files and where responsibilities live in the codebase.",
+    summary: "Where the main code lives.",
     path: "content/project-layout.md"
   },
   {
     slug: "testing-and-hardening",
     section: "Reference",
     title: "Testing And Hardening",
-    summary: "Current automated coverage and what remains to harden the platform.",
+    summary: "Test commands and coverage.",
     path: "content/testing-and-hardening.md"
   },
   {
     slug: "repo-readme",
-    section: "Repo Sources",
+    section: "Project files",
     title: "Repo README",
-    summary: "Copied repository README for offline use inside the site.",
+    summary: "Project README.",
     path: "content/repo-readme.md"
   },
   {
     slug: "repo-roadmap",
-    section: "Repo Sources",
+    section: "Project files",
     title: "Repo Roadmap",
-    summary: "Copied macro roadmap from the repository.",
+    summary: "Project roadmap.",
     path: "content/repo-roadmap.md"
   },
   {
     slug: "example-android-opportunity",
-    section: "Repo Sources",
+    section: "Project files",
     title: "Android Workflow Example",
-    summary: "Copied workflow example from the repository.",
+    summary: "Android opportunity example.",
     path: "content/example-android-opportunity.md"
   },
   {
     slug: "example-article-research",
-    section: "Repo Sources",
+    section: "Project files",
     title: "Article Workflow Example",
-    summary: "Copied workflow example from the repository.",
+    summary: "Article research example.",
     path: "content/example-article-research.md"
   }
 ];
@@ -416,7 +416,6 @@ function renderNav(filter = "") {
           const activeClass = page.slug === activeSlug ? "is-active" : "";
           return `<a class="${activeClass}" href="docs.html#page=${page.slug}">
             <span>${page.title}</span>
-            <small>${page.summary}</small>
           </a>`;
         })
         .join("");
