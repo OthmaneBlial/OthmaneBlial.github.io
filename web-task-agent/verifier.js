@@ -313,6 +313,7 @@
       ["Contradictions", comparison.changes.contradictions],
       ["Limitations", comparison.changes.limitations],
       ["Next validation", comparison.changes.nextValidation],
+      ["Run provenance", comparison.changes.provenance],
       ["Decision", comparison.changes.decision]
     ];
     for (const [label, changed] of signalItems) {
@@ -336,6 +337,10 @@
         detailsList.append(element("li", "", `${field}: ${JSON.stringify(previous)} → ${JSON.stringify(current)}`));
       });
     });
+    if (comparison.provenanceChange) {
+      detailsList.append(element("li", "", `Run provenance earlier: ${previewText(JSON.stringify(comparison.provenanceChange.earlier), 500)}`));
+      detailsList.append(element("li", "", `Run provenance later: ${previewText(JSON.stringify(comparison.provenanceChange.later), 500)}`));
+    }
     if (comparison.nextValidationChange) {
       detailsList.append(element("li", "", `Next validation: ${previewText(comparison.nextValidationChange.earlier)} → ${previewText(comparison.nextValidationChange.later)}`));
     }

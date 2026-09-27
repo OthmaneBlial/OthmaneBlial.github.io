@@ -39,7 +39,7 @@ npm run start -- receipt verify reports/demos/browser-agent-landscape
 npm run start -- receipt compare earlier-package later-package
 ```
 
-The diff shows changed evidence, contradictions, limitations, and next validation. Reordering evidence alone does not count as a change.
+The diff shows changed sources, run provenance, claims, contradictions, limitations, and next validation. Reordering sources or evidence alone does not count as a change.
 
 The verifier works offline. Integrity checks show whether files changed after export; they do not prove a source is true, complete, authorized, or fresh.
 
