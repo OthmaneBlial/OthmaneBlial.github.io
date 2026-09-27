@@ -17,7 +17,7 @@ The script builds `dist/`, packs the current version with `npm pack`, creates a 
 First-success passed: clean tarball install, demo export, and offline receipt verification.
 ```
 
-The evidence directory is temporary and contains `receipt.html`, `receipt.json`, `integrity-manifest.json`, the report, source metadata, and the handoff package. The release workflow repeats this check on Ubuntu with Node 22 before attaching the tarball and `SHA256SUMS` to a version-matched GitHub Release.
+The evidence directory is temporary and contains `receipt.html`, `receipt.json`, `integrity-manifest.json`, the report, source metadata, and the handoff package. The release workflow repeats this check on Ubuntu with Node 22.12 or later before attaching the tarball and `SHA256SUMS` to a version-matched GitHub Release.
 
 ## Limits
 

@@ -1,35 +1,35 @@
 const DOC_PAGES = [
   {
-    slug: "platform",
+    slug: "getting-started",
     section: "Start here",
-    title: "Platform",
-    summary: "What it does and how to begin.",
-    path: "content/platform.md"
+    title: "Quick start",
+    summary: "Run a sample, then start local research.",
+    path: "content/getting-started.md"
   },
   {
     slug: "overview",
     section: "Start here",
-    title: "Overview",
-    summary: "A short introduction to the project.",
+    title: "The output",
+    summary: "What a finished research package contains.",
     path: "content/overview.md"
   },
   {
-    slug: "getting-started",
+    slug: "platform",
     section: "Start here",
-    title: "Getting Started",
-    summary: "Install the CLI and run a demo.",
-    path: "content/getting-started.md"
+    title: "How it works",
+    summary: "The main parts of a local research run.",
+    path: "content/platform.md"
   },
   {
     slug: "pipeline-and-storage",
-    section: "Run research",
-    title: "Pipeline And Storage",
+    section: "Use the tool",
+    title: "Research pipeline",
     summary: "How research moves from search to report.",
     path: "content/pipeline-and-storage.md"
   },
   {
     slug: "workflows",
-    section: "Run research",
+    section: "Use the tool",
     title: "Workflow Templates",
     summary: "Choose and preview a workflow.",
     path: "content/workflows.md"
@@ -50,7 +50,7 @@ const DOC_PAGES = [
   },
   {
     slug: "privacy",
-    section: "Run research",
+    section: "Use the tool",
     title: "Privacy And Source Acquisition",
     summary: "What stays local and what live runs send.",
     path: "content/privacy.md"
@@ -78,15 +78,15 @@ const DOC_PAGES = [
   },
   {
     slug: "queue-worker-controls",
-    section: "Run research",
+    section: "Use the tool",
     title: "Queue, Worker, And Controls",
     summary: "Queue jobs and manage a worker.",
     path: "content/queue-worker-controls.md"
   },
   {
     slug: "api-dashboard",
-    section: "Run research",
-    title: "API And Dashboard",
+    section: "Use the tool",
+    title: "Local dashboard",
     summary: "Dashboard and API details.",
     path: "content/api-dashboard.md"
   },
@@ -120,28 +120,28 @@ const DOC_PAGES = [
   },
   {
     slug: "repo-readme",
-    section: "Project files",
-    title: "Repo README",
+    section: "More references",
+    title: "Project README",
     summary: "Project README.",
     path: "content/repo-readme.md"
   },
   {
     slug: "repo-roadmap",
-    section: "Project files",
-    title: "Repo Roadmap",
+    section: "More references",
+    title: "Project roadmap",
     summary: "Project roadmap.",
     path: "content/repo-roadmap.md"
   },
   {
     slug: "example-android-opportunity",
-    section: "Project files",
+    section: "More references",
     title: "Android Workflow Example",
     summary: "Android opportunity example.",
     path: "content/example-android-opportunity.md"
   },
   {
     slug: "example-article-research",
-    section: "Project files",
+    section: "More references",
     title: "Article Workflow Example",
     summary: "Article research example.",
     path: "content/example-article-research.md"
@@ -392,7 +392,7 @@ function groupedPages(filter = "") {
 function currentDocSlug() {
   const hash = window.location.hash.replace(/^#/, "");
   const params = new URLSearchParams(hash);
-  return params.get("page") || "overview";
+  return params.get("page") || "getting-started";
 }
 
 function setCurrentDocSlug(slug) {
@@ -411,6 +411,7 @@ function renderNav(filter = "") {
   const groups = groupedPages(filter);
   nav.innerHTML = Object.entries(groups)
     .map(([section, pages]) => {
+      const isOpen = Boolean(filter.trim()) || section === "Start here" || pages.some((page) => page.slug === activeSlug);
       const items = pages
         .map((page) => {
           const activeClass = page.slug === activeSlug ? "is-active" : "";
@@ -419,10 +420,10 @@ function renderNav(filter = "") {
           </a>`;
         })
         .join("");
-      return `<div class="docs-nav-section">
-        <p class="docs-nav-label">${section}</p>
-        ${items}
-      </div>`;
+      return `<details class="docs-nav-section"${isOpen ? " open" : ""}>
+        <summary>${section}<span class="docs-nav-count">${pages.length}</span></summary>
+        <div class="docs-nav-links">${items}</div>
+      </details>`;
     })
     .join("");
 }
@@ -476,7 +477,7 @@ function initDocsPage() {
   });
 
   if (!window.location.hash) {
-    setCurrentDocSlug("overview");
+    setCurrentDocSlug("getting-started");
   }
 }
 

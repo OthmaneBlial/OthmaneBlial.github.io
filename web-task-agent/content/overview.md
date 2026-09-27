@@ -1,22 +1,12 @@
-# Web Task Agent
+# The output
 
-Run web research, keep the sources with the results, and review the evidence before you act.
+Web Task Agent turns a research run into a folder you can review and share.
 
-## Try the bundled example
+Each package keeps together:
 
-```bash
-npm ci
-npm run start -- demo export browser-agent-landscape
-```
+- a short report with findings and open questions;
+- source links and cited evidence;
+- a decision receipt that another tool can read;
+- an integrity manifest to check that saved files have not changed.
 
-Open `reports/demos/browser-agent-landscape/receipt.html`. This demo uses saved sample data and makes no live research request.
-
-## Run live research
-
-Follow the [quick start](#page=getting-started) to preview a workflow and configure a browser and AI service. Live runs contact the sources you select and may send extracted evidence to your configured AI service. Reports and saved research data stay on your computer.
-
-## Review a result
-
-Open a report, follow its source links, and check the package integrity. A matching file hash does not prove that a source or conclusion is true.
-
-For details, see [privacy and source access](#page=privacy), the [CLI guide](#page=cli-reference), and the [receipt specification](#page=decision-receipt-spec).
+The bundled sample uses saved data. Live runs save reports and job data on your computer, while selected evidence may go to the AI service you configure.

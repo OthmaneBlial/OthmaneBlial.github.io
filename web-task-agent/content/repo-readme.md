@@ -11,6 +11,8 @@
 [![Local-first](https://img.shields.io/badge/privacy-local--first-164e63)](PRIVACY.md)
 [![Project site](https://img.shields.io/badge/site-live-0f766e)](https://othmaneblial.github.io/web-task-agent/)
 
+GitHub Actions are disabled for this repository. The workflow files remain checked in, but GitHub does not run them. Run `npm ci && npm run test:ci && npm run audit:secrets && npm run audit:prod` to execute the local CI checks.
+
 Browser agents and deep-research tools produce answers. Web Task Agent preserves the review contract after the run: claims, source excerpts, contradictions, freshness, integrity, recovery state, and the smallest next validation. The result is a handoff that survives a browser closing, a challenged recommendation, or an interrupted run.
 
 **Proof before setup:** take the [60-second tamper challenge](https://othmaneblial.github.io/web-task-agent/challenge.html), [verify a Decision Receipt locally](https://othmaneblial.github.io/web-task-agent/verify.html), or [open the featured deterministic receipt](https://othmaneblial.github.io/web-task-agent/receipt.html). Both interactive paths use embedded synthetic fixtures and have no upload path, backend, account, cookie, analytics, telemetry, or persistent storage.

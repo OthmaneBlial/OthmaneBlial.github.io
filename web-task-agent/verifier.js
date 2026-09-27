@@ -48,7 +48,7 @@
 
   async function readFileEntries(entries) {
     if (entries.length > MAX_FILES) throw new Error(`Folder exceeds the ${MAX_FILES}-file limit.`);
-    const bundle = {};
+    const bundle = Object.create(null);
     let total = 0;
     for (const entry of entries) {
       const relative = String(entry.path || entry.file.webkitRelativePath || entry.file.name).replace(/^\.\//, "");
