@@ -1,15 +1,15 @@
-/** @param {import('./ast.js?v=d12efdef53f1').Repetition|null} repetition */
+/** @param {import('./ast.js?v=c5584df8342f').Repetition|null} repetition */
 function repetitionText(repetition) {
   if (!repetition) return "";
   switch (repetition.kind) {
     case "exact":
       return ` Exactly ${repetition.min} times.`;
     default:
-      throw new TypeError(`Unknown repetition kind: ${repetition.kind}`);
+      throw new TypeError("Unexpected repetition kind.");
   }
 }
 
-/** @param {import('./ast.js?v=d12efdef53f1').RuleNode} node @param {string} flags @param {boolean} [hasFollowingRule] */
+/** @param {import('./ast.js?v=c5584df8342f').RuleNode} node @param {string} flags @param {boolean} [hasFollowingRule] */
 export function explainNode(node, flags, hasFollowingRule = false) {
   if (node.kind === "anchor") {
     if (node.mode === "line") {
@@ -37,8 +37,12 @@ export function explainNode(node, flags, hasFollowingRule = false) {
     }
   }
 
-  if (node.value === "\\d" && node.repetition?.kind === "oneOrMore") {
-    return "One or more ASCII digits (0–9).";
+  if (node.atomType === "shorthand" && node.value === "\\d") {
+    if (node.repetition?.kind === "oneOrMore") return "One or more ASCII digits (0–9).";
+    if (node.repetition?.kind === "exact") {
+      const digits = node.repetition.min === 1 ? "digit" : "digits";
+      return `Exactly ${node.repetition.min} ASCII ${digits} (0–9).`;
+    }
   }
 
   let meaning;
