@@ -46,9 +46,9 @@ This page maps the main product surfaces to the current automated coverage.
 - If a new surface appears, add a short test file and map it here immediately.
 - Keep the map short enough that an operator can scan it before merging a risky change.
 
-## CI Contract
+## Local Checks
 
-`npm test` runs strict TypeScript type checking, builds the project, runs unit and integration tests, regenerates the workflow catalog, verifies that `site/` mirrors the canonical `docs/` tree, and checks local Markdown links. GitHub Actions then audits publishable files for secrets and production dependencies. The test fixtures do not depend on live Play Store/AppBrain content or an LLM API key.
+`npm test` runs `npm run test:ci` locally: type checks, build, unit and integration tests, MCP checks, receipt and schema conformance, generated-file checks, and Markdown links. GitHub Actions are disabled. Run `npm run security:review` for local secret and production-dependency audits. Fixtures use no live Play Store/AppBrain data or LLM key.
 
 ## Coverage Gaps To Watch
 
