@@ -1,12 +1,9 @@
-# The output
+# Your results
 
-Web Task Agent turns a research run into a folder you can review and share.
+Each run saves a folder you can review and share. It contains:
 
-Each package keeps together:
+- A report with findings, source links, and open questions.
+- A decision receipt: a short summary another tool can read.
+- A file manifest: a check for changes to the saved files.
 
-- a short report with findings and open questions;
-- source links and cited evidence;
-- a decision receipt that another tool can read;
-- an integrity manifest to check that saved files have not changed.
-
-The bundled sample uses saved data. Live runs save reports and job data on your computer, while selected evidence may go to the AI service you configure.
+The sample report uses saved data. Live runs keep reports and job data on your computer. They may send source text to the AI service you choose.

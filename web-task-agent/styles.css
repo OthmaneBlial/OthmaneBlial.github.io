@@ -1096,10 +1096,10 @@ body.site-home::before {
 }
 
 .site-home .home-hero h1 {
-  max-width: 16ch;
+  max-width: 18ch;
   margin-bottom: 20px;
-  font-size: clamp(3.2rem, 6vw, 5.2rem);
-  line-height: 0.94;
+  font-size: clamp(3rem, 5.4vw, 4.65rem);
+  line-height: 0.98;
   letter-spacing: -0.065em;
 }
 
@@ -1197,35 +1197,57 @@ body.site-home::before {
 }
 
 .home-summary {
-  display: grid;
-  grid-template-columns: 1fr minmax(260px, 0.75fr);
-  align-items: center;
-  gap: 28px;
-  padding: 20px 0;
+  padding: 10px 0 18px;
   border-top: 1px solid var(--line);
-  border-bottom: 1px solid var(--line);
 }
 
-.home-summary > p:first-child {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 9px 20px;
+.home-steps {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   margin: 0;
+  padding: 0;
+  list-style: none;
 }
 
-.home-summary > p:first-child strong {
-  margin-right: 8px;
-  font-family: var(--display-font);
+.home-steps li {
+  display: grid;
+  grid-template-columns: 28px minmax(0, 1fr);
+  gap: 12px;
+  padding: 22px 20px;
+  border-right: 1px solid var(--line);
 }
 
-.home-summary > p:first-child span {
+.home-steps li:first-child {
+  padding-left: 0;
+}
+
+.home-steps li:last-child {
+  padding-right: 0;
+  border-right: 0;
+}
+
+.home-step-index {
+  padding-top: 3px;
+  color: var(--teal-deep);
+  font: 0.75rem var(--mono-font);
+}
+
+.home-steps h2 {
+  margin: 0 0 5px;
+  font: 700 1.05rem var(--display-font);
+}
+
+.home-steps p {
+  margin: 0;
   color: var(--muted);
   font-size: 0.9rem;
+  line-height: 1.5;
 }
 
 .home-privacy {
   margin: 0;
+  padding: 16px 0 0;
+  border-top: 1px solid var(--line);
   color: var(--muted);
   font-size: 0.82rem;
   line-height: 1.55;
@@ -1315,8 +1337,23 @@ body.site-home::before {
   }
 
   .home-summary {
+    padding-top: 0;
+  }
+
+  .home-steps {
     grid-template-columns: minmax(0, 1fr);
-    gap: 14px;
+  }
+
+  .home-steps li,
+  .home-steps li:first-child,
+  .home-steps li:last-child {
+    padding: 16px 0;
+    border-right: 0;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .home-steps li:last-child {
+    border-bottom: 0;
   }
 
   .site-home .footer {

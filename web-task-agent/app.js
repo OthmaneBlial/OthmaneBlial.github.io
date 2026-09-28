@@ -1,11 +1,11 @@
-const DOC_CONTENT_VERSION = "plain-docs-20260928-v3";
+const DOC_CONTENT_VERSION = "clear-copy-20260928-v4";
 
 const DOC_PAGES = [
   {
     slug: "getting-started",
     section: "Start",
-    title: "Quick start",
-    summary: "Try a sample, then run research.",
+    title: "Get started",
+    summary: "Read an example, then run live research.",
     path: "content/getting-started.md"
   },
   {

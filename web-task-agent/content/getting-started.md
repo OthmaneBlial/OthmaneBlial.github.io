@@ -1,10 +1,10 @@
-# Quick start
+# Get started
 
-## Try the sample
+## Read a saved example
 
-Open the [sample receipt](https://othmaneblial.github.io/web-task-agent/receipt.html). No install, account, or API key needed.
+Open the [sample report](https://othmaneblial.github.io/web-task-agent/receipt.html). It uses saved data and does not start a search.
 
-## Run your own research
+## Run live research
 
 You need Node.js 22.12 or later, a local browser, and an AI service key.
 
@@ -18,7 +18,9 @@ npm run start -- workflow preview article-research --topic "browser automation"
 npm run start -- workflow run article-research --topic "browser automation" --preset focused
 ```
 
-Review the preview before running. Research visits public websites and may send selected evidence to your AI service. Reports and job data stay on your computer.
+Run the preview first. Check the plan, then start the research run.
+
+Live research visits public websites. It may send source text to your AI service. Reports and job data stay on your computer.
 
 ## Next
 
