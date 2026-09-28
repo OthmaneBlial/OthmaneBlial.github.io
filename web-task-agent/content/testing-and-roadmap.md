@@ -12,7 +12,7 @@ The repo currently includes automated tests for:
 - workflow output packaging
 - interrupted agent checkpoints
 
-The standard test command currently runs 115 unit tests and 4 integration tests. It also regenerates workflow/docs outputs and rejects drift before a change can merge.
+Run `npm run test:ci` locally before pushing. It checks types, tests, receipt conformance, and generated files.
 
 ## Working Quality Bar
 

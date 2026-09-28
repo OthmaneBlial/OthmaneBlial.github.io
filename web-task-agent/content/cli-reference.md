@@ -51,13 +51,14 @@ web-task-agent server run --port 4317
 - `receipt verify` when you want to validate a package offline. It checks schema, claim-to-source references, excerpts, snapshot hashes, and exported file hashes. It does not prove that a source is true, complete, authorized, or fresh.
 - `receipt compare` when you have two verified packages for the same decision. It shows source, claim, contradiction, limitation, and next-validation changes, while ignoring irrelevant evidence ordering.
 - `receipt import <result.json>` when you have a provider-neutral result from another research tool. It applies the local source policy, writes snapshots, and verifies the imported package without importing a browser session or provider runtime.
-- `receipt sign <directory> --private-key <pem> --key-id <id>` when an operator needs a detached Ed25519 attestation. The signature proves control of the key and package bytes, not the truth of the decision.
+- `receipt sign <directory> --private-key <pem> --key-id <id>` when an operator needs a detached Ed25519 attestation. Key files are read locally and capped at 2 MB. The signature proves control of the key and package bytes, not the truth of the decision.
 - `browser status` when you want to confirm the local CDP backend without starting, restarting, or attaching to a browser.
 - `workflow list --category` or `--search` when you want to find one of the 240 catalog workflows. Start with the three curated paths in `examples/golden-paths/` when you need a decision-shaped entry point.
 - `workflow preview` when you need to inspect one workflow's source strategy, queries, outputs, and budgets before doing work.
 - `pack plan --dry-run` when you need the full ordered plan and its aggregate run bounds without writing a file.
 - `pack plan` writes under `reports/packs/` by default or to `--output`. Existing files are preserved unless you pass `--force`.
 - `workflow validate` when you want to check a proposal's required decision, source-policy, query, deliverable, freshness, invalidation, bounded-cost, and risk fields before review.
+- `--memory <path>` to add local Markdown or text product context to agent prompts. The agent also checks `agent-memory.md` and `agent-memory.txt` by default; memory files are capped at 16 KB.
 - `workflow run` when you want a full research package immediately.
 - `agent run` when you want a free-form instruction without a template.
 - `queue list` and `job logs` when you are already operating a long run.
@@ -151,7 +152,7 @@ web-task-agent job export <job-id> --format csv --output ./sources.csv
 web-task-agent job compare <earlier-job-id> <later-job-id> --redact --dry-run
 ```
 
-`--dry-run` previews the destination, source count, format, and redaction setting without writing a file. A comparison identifies new, disappeared, and changed cached sources, including metadata changes at an existing URL, plus report and decision-excerpt changes. CSV text that could start a spreadsheet formula gets a leading tab; that tab is part of the exported value. Redaction recognizes common API, GitHub, AWS, and bearer-token patterns; it is a safety aid, not a license to share data the operator has not reviewed.
+`--dry-run` previews the destination, source count, format, and redaction setting without writing a file. A comparison identifies new, disappeared, and changed cached sources, including metadata changes at an existing URL, plus report and decision-excerpt changes. CSV text that could start a spreadsheet formula gets a leading tab; that tab is part of the exported value. Redaction masks recognizable credentials, configured secret environment values, emails, and local paths. Review every export; detection is not complete.
 
 ## Failure Messages
 

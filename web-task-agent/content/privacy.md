@@ -4,6 +4,8 @@ Web Task Agent is local-first, not offline-by-magic. Its durable state and dashb
 
 Read the full [privacy and local-data contract](../../PRIVACY.md) before putting sensitive material into an instruction.
 
+Agent runs read `agent-memory.md` or `agent-memory.txt` from the working directory by default, or the file passed with `--memory`. That content is included in LLM prompts. Memory files are limited to 16 KB and checked before the job database or browser starts.
+
 ## Default Boundaries
 
 - SQLite state, artifacts, reports, caches, prompt traces, and exports are local files.
@@ -30,10 +32,13 @@ Set the domain request cap to `0` only to deliberately disable it. Domains on `W
 
 Use a redacted preview before writing an export:
 
+On POSIX systems, imported receipts, resumable cache files, prompt traces, and structured logs use owner-only permissions (`0600`).
+SQLite databases and WAL/SHM files also use `0600`; the default database directory and newly created database directories use `0700`.
+
 ```bash
 web-task-agent job export <job-id> --format markdown --redact --dry-run
 ```
 
-The redactor recognizes common secret formats but cannot decide whether the surrounding content is safe to share. Review every export. Bound local prompt traces with `storage cleanup --prompt-traces <path> --max-traces <count>`. Use `storage backup --output <path>` before a risky local change; `storage restore --input <path> --force` creates a safety copy before replacing the active database. Delete local databases, caches, and reports through your normal retention process.
+The redactor masks recognizable credentials, configured secret environment values, email addresses, local home paths in text, and absolute paths in path fields. It cannot detect every secret or decide whether surrounding content is safe to share. Review every export. Bound local prompt traces with `storage cleanup --prompt-traces <path> --max-traces <count>`. Use `storage backup --output <path>` before a risky local change; `storage restore --input <path> --force` creates a safety copy before replacing the active database. Delete local databases, caches, and reports through your normal retention process.
 
 Before making the repository public or cutting a release, run `npm run audit:secrets`. It scans tracked and non-ignored candidate files, confirms that `.env`, `.data/`, and `reports/` remain ignored, and reports only locations and credential categories. It cannot prove that a secret never existed in Git history; rotate anything that may previously have been committed.
