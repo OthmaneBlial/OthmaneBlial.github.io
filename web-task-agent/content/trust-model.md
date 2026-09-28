@@ -6,7 +6,7 @@ Web Task Agent is designed to make a research decision inspectable. It does not 
 
 | Layer | Evidence produced | What it does not prove |
 | --- | --- | --- |
-| Acquisition policy | HTTPS-only targets, public-address checks, robots signals, redirect quarantine, domain pacing, and prompt-injection flags | That a publisher is honest or that a page is complete |
+| Acquisition policy | HTTPS-only targets, public-address checks, robots requests pinned to validated addresses, redirect quarantine, domain pacing, and prompt-injection flags | That a publisher is honest or that a page is complete |
 | Evidence linkage | Claims point to source IDs and excerpts; source records include canonical URL, role, and collection time | That the claim follows logically from the source |
 | Artifact integrity | `integrity-manifest.json` stores SHA-256 hashes for exported files and snapshots | That the source content was correct before collection |
 | Decision receipt | Decision summary, claim statuses, limitations, contradictions, and next validation are versioned in `receipt.json` | A standardized overall confidence value or suitability for every operator or context |
@@ -17,7 +17,7 @@ Run `web-task-agent receipt verify <directory>` before sharing a package. Verifi
 ## Data flow and boundaries
 
 1. An operator supplies a topic, policy, and optional model endpoint. The local process writes job state and evidence to the configured state directory.
-2. Search and browser fetches are constrained by the source-acquisition policy before navigation. Private or reserved network targets are denied; redirects are re-checked.
+2. Search and browser fetches are constrained by the source-acquisition policy before navigation. Private or reserved network targets are denied; redirects are re-checked. Lightpanda servers started by the bundled launcher also block private/internal addresses after DNS resolution and the shared CGNAT range. Already-running or externally managed browser processes do not inherit those launch flags.
 3. Pages can contain hostile instructions. Extracted text is evidence, never executable configuration. Injection indicators are recorded for review and are not passed through as operator commands.
 4. A compatible model may receive the bounded instruction and selected evidence. The model endpoint, key, prompt trace, and request payload are operator-controlled; the project does not provide a hosted control plane or telemetry service.
 5. The synthesised report and receipt are written locally. Redaction is available for exports, but operators must still inspect the package before sharing sensitive material.

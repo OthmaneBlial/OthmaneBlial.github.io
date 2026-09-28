@@ -42,6 +42,8 @@ Selected jobs expose live event logs through:
 - stored run events
 - an SSE stream on `/api/jobs/:id/events/stream`
 
+Use `afterId=<event.id>` to fetch later events without missing events that share the same timestamp. `after=<timestamp>` remains available for time based filtering.
+
 ## Why This Matters
 
 For long-running local research, visibility is as important as prompt quality. The dashboard makes it much easier to answer:

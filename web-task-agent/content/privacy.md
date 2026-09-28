@@ -15,7 +15,7 @@ Agent runs read `agent-memory.md` or `agent-memory.txt` from the working directo
 
 ## Live Research Boundaries
 
-Before opening a source, the runtime refuses malformed, credential-bearing, local, private-network, and configured blocked URLs. It resolves the hostname first and fails closed if DNS returns a private/reserved address or cannot be resolved safely. It checks public `robots.txt`; its rules apply to the original site, even when the file redirects. Up to five redirects are followed only after URL and DNS checks, the first 512 KiB are parsed, and cached rules refresh within 24 hours. Other 4xx responses are recorded as unavailable and may proceed; 401, 403, 429, 5xx, network/body failures, and unsafe or excessive redirects deny acquisition. A per-domain delay applies, and browser requests are capped at 12 per domain by default.
+Before opening a source, the runtime refuses malformed, credential-bearing, local, private-network, and configured blocked URLs. It resolves the hostname first and fails closed if any DNS answer is private/reserved or cannot be resolved safely. Each `robots.txt` request connects to a validated address while preserving the hostname for HTTP and TLS; redirects repeat URL and DNS checks. Robots rules apply to the original site, the first 512 KiB are parsed, and cached rules refresh within 24 hours. Other 4xx responses are recorded as unavailable and may proceed; 401, 403, 429, 5xx, network/body failures, and unsafe or excessive redirects deny acquisition. A per-domain delay applies, and browser requests are capped at 12 per domain by default.
 
 ```env
 WEB_TASK_AGENT_ALLOWED_DOMAINS=docs.example.com,github.com
