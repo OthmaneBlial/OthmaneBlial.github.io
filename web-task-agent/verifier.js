@@ -5,6 +5,8 @@
   const fixtures = globalThis.WEB_VERIFIER_FIXTURES || {};
   const decoder = new TextDecoder();
   const state = { primary: null, comparison: null };
+  const MAX_ARCHIVE_BYTES = Core?.receiptInputLimits?.maxArchiveBytes ?? 25 * 1024 * 1024;
+  const MAX_ARCHIVE_MB = MAX_ARCHIVE_BYTES / 1024 / 1024;
   const MAX_ENTRIES = Core?.receiptInputLimits?.maxEntries ?? 2_000;
   const MAX_FILES = 500;
   const MAX_FILE_BYTES = 10 * 1024 * 1024;
@@ -102,8 +104,12 @@
 
   async function bundleFromFiles(entries) {
     if (entries.length === 1 && entries[0].file.name.toLowerCase().endsWith(".zip")) {
+      const file = entries[0].file;
+      if (file.size > MAX_ARCHIVE_BYTES) {
+        throw new Error(`ZIP exceeds the ${MAX_ARCHIVE_MB} MB compressed limit.`);
+      }
       announce("Reading ZIP locally…");
-      return Core.unpackReceiptZip(await entries[0].file.arrayBuffer());
+      return Core.unpackReceiptZip(await file.arrayBuffer());
     }
     announce("Reading receipt folder locally…");
     return readFileEntries(entries);
