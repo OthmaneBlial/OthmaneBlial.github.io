@@ -130,8 +130,8 @@ const DOC_PAGES = [
   {
     slug: "repo-roadmap",
     section: "Reference",
-    title: "Project roadmap",
-    summary: "Project roadmap.",
+    title: "Project status",
+    summary: "What works now and what still needs outside validation.",
     path: "content/repo-roadmap.md"
   },
   {
