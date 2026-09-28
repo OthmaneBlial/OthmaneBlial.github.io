@@ -1,5 +1,5 @@
-import { CompileError, compile } from "../index.js?v=34fac290c458";
-import { TestRunError, TestRunner } from "./test-runner.js?v=34fac290c458";
+import { CompileError, compile } from "../index.js?v=27776987e570";
+import { TestRunError, TestRunner } from "./test-runner.js?v=27776987e570";
 
 /** @typedef {import("./worker-protocol.d.ts").TestCase} TestCase */
 /** @typedef {{id: string, title: string, rules: string, source: string, flags: string, matchMode: "full" | "search", positive: string[], negative: string[]}} ProductScenario */
@@ -45,7 +45,7 @@ let nextTestId = 1;
 /** @type {ReturnType<typeof compile> | null} */
 let compiled = null;
 const testRunner = new TestRunner(
-  () => new Worker(new URL("./match-worker.js?v=34fac290c458", import.meta.url), { type: "module" }),
+  () => new Worker(new URL("./match-worker.js?v=27776987e570", import.meta.url), { type: "module" }),
 );
 
 /**
@@ -370,7 +370,7 @@ ui.copy.addEventListener("click", async () => {
 });
 
 try {
-  const response = await fetch(new URL("../test/fixtures/product-scenarios.json?v=34fac290c458", import.meta.url));
+  const response = await fetch(new URL("../test/fixtures/product-scenarios.json?v=27776987e570", import.meta.url));
   if (!response.ok) throw new Error(`HTTP ${response.status}`);
   scenarios = await response.json();
   renderScenarioButtons();
