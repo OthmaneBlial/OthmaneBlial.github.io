@@ -91,7 +91,9 @@
   }
 
   async function droppedFileEntries(dataTransfer) {
-    const items = Array.from(dataTransfer.items || []);
+    const itemList = dataTransfer.items || [];
+    if (itemList.length > MAX_ENTRIES) throw new Error(`Folder drop exceeds the ${MAX_ENTRIES}-entry limit.`);
+    const items = Array.from(itemList);
     const webkitEntries = items.map((item) => item.webkitGetAsEntry?.()).filter(Boolean);
     if (webkitEntries.length > 0) {
       const output = [];
@@ -99,7 +101,9 @@
       for (const entry of webkitEntries) output.push(...await walkDroppedEntry(entry, "", budget));
       return output;
     }
-    return Array.from(dataTransfer.files || []).map((file) => ({ file, path: file.webkitRelativePath || file.name }));
+    const files = dataTransfer.files || [];
+    if (files.length > MAX_FILES) throw new Error(`Folder exceeds the ${MAX_FILES}-file limit.`);
+    return Array.from(files).map((file) => ({ file, path: file.webkitRelativePath || file.name }));
   }
 
   async function bundleFromFiles(entries) {
@@ -400,7 +404,13 @@
   }
 
   async function handleInput(input, slot) {
-    const files = Array.from(input.files || []);
+    const fileList = input.files || [];
+    if (fileList.length > MAX_FILES) {
+      announce(`Folder exceeds the ${MAX_FILES}-file limit.`);
+      input.value = "";
+      return;
+    }
+    const files = Array.from(fileList);
     if (files.length === 0) return;
     const entries = files.map((file) => ({ file, path: file.webkitRelativePath || file.name }));
     try {
