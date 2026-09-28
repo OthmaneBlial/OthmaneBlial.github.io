@@ -1,4 +1,4 @@
-const DOC_CONTENT_VERSION = "plain-docs-20260928-v2";
+const DOC_CONTENT_VERSION = "plain-docs-20260928-v3";
 
 const DOC_PAGES = [
   {
