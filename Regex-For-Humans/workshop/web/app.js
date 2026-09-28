@@ -1,5 +1,5 @@
-import { CompileError, compile } from "../index.js?v=a53efce55edd";
-import { TestRunError, TestRunner } from "./test-runner.js?v=a53efce55edd";
+import { CompileError, compile } from "../index.js?v=25f88d34c9bc";
+import { TestRunError, TestRunner } from "./test-runner.js?v=25f88d34c9bc";
 
 /** @typedef {import("./worker-protocol.d.ts").TestCase} TestCase */
 /** @typedef {{id: string, title: string, rules: string, source: string, flags: string, matchMode: "full" | "search", positive: string[], negative: string[]}} ProductScenario */
@@ -45,7 +45,7 @@ let nextTestId = 1;
 /** @type {ReturnType<typeof compile> | null} */
 let compiled = null;
 const testRunner = new TestRunner(
-  () => new Worker(new URL("./match-worker.js?v=a53efce55edd", import.meta.url), { type: "module" }),
+  () => new Worker(new URL("./match-worker.js?v=25f88d34c9bc", import.meta.url), { type: "module" }),
 );
 
 /**
@@ -309,7 +309,13 @@ function renderScenarioButtons() {
   });
 }
 
-ui.rules.addEventListener("input", compileRules);
+ui.rules.addEventListener("input", () => {
+  activeScenario = scenarios.find(({ rules }) => rules === ui.rules.value)?.id ?? null;
+  for (const button of ui.examples.querySelectorAll("button")) {
+    button.setAttribute("aria-current", String(button.dataset.scenario === activeScenario));
+  }
+  compileRules();
+});
 ui.ignoreCase.addEventListener("change", compileRules);
 ui.dotAll.addEventListener("change", compileRules);
 ui.matchMode.addEventListener("change", updateTestResults);
@@ -370,7 +376,7 @@ ui.copy.addEventListener("click", async () => {
 });
 
 try {
-  const response = await fetch(new URL("../test/fixtures/product-scenarios.json?v=a53efce55edd", import.meta.url));
+  const response = await fetch(new URL("../test/fixtures/product-scenarios.json?v=25f88d34c9bc", import.meta.url));
   if (!response.ok) throw new Error(`HTTP ${response.status}`);
   scenarios = await response.json();
   renderScenarioButtons();

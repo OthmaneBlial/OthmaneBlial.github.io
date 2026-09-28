@@ -1,11 +1,11 @@
-import { anchor, atom } from "./ast.js?v=a53efce55edd";
-import { fail } from "./diagnostics.js?v=a53efce55edd";
+import { anchor, atom } from "./ast.js?v=25f88d34c9bc";
+import { fail } from "./diagnostics.js?v=25f88d34c9bc";
 
-/** @typedef {import('./ast.js?v=a53efce55edd').Location} Location */
-/** @typedef {import('./ast.js?v=a53efce55edd').Repetition} Repetition */
-/** @typedef {import('./ast.js?v=a53efce55edd').AtomNode} AtomNode */
-/** @typedef {import('./ast.js?v=a53efce55edd').RuleNode} RuleNode */
-/** @typedef {import('./ast.js?v=a53efce55edd').ParsedRules} ParsedRules */
+/** @typedef {import('./ast.js?v=25f88d34c9bc').Location} Location */
+/** @typedef {import('./ast.js?v=25f88d34c9bc').Repetition} Repetition */
+/** @typedef {import('./ast.js?v=25f88d34c9bc').AtomNode} AtomNode */
+/** @typedef {import('./ast.js?v=25f88d34c9bc').RuleNode} RuleNode */
+/** @typedef {import('./ast.js?v=25f88d34c9bc').ParsedRules} ParsedRules */
 
 const MAX_SOURCE_LENGTH = 16_384;
 export const LIMITS = Object.freeze({
@@ -190,6 +190,14 @@ function parseAtom(text, location, originalText) {
       column: location.column + offset,
     });
   }
+  if (repetition && /^(?:start|end|line start|line end)$/iu.test(remaining)) {
+    fail(
+      "ANCHOR_REPETITION",
+      "Counts apply to items, not anchors.",
+      { line: location.line, column: location.column + offset },
+      "Remove the count or apply it to an item, such as `3 digits`.",
+    );
+  }
 
   const textWithout = /^text without:\s*/i.exec(remaining);
   if (textWithout || /^any text$/i.test(remaining)) {
@@ -220,20 +228,24 @@ function parseAtom(text, location, originalText) {
 
   const literal = remaining.startsWith('"') ? remaining : null;
   if (literal !== null) {
-    const offset = remaining.length - literal.length;
     const quoted = readQuoted(literal, {
       line: location.line,
       column: location.column + offset,
     });
-    if (offset + quoted.length !== remaining.length) {
-      const trailing = remaining.slice(offset + quoted.length);
+    if (quoted.length !== remaining.length) {
+      const trailing = remaining.slice(quoted.length);
       const leadingWhitespace = trailing.length - trailing.trimStart().length;
       fail("TRAILING_TEXT", "Unexpected text after the quoted literal.", {
         line: location.line,
         column: location.column + offset + quoted.length + leadingWhitespace,
       });
     }
-    if (!quoted.value) fail("EMPTY_LITERAL", "A literal cannot be empty.", location);
+    if (!quoted.value) {
+      fail("EMPTY_LITERAL", "A literal cannot be empty.", {
+        line: location.line,
+        column: location.column + offset,
+      });
+    }
     return atom("literal", quoted.value, repetition, location, originalText);
   }
 
@@ -241,7 +253,7 @@ function parseAtom(text, location, originalText) {
   if (classPrefix) {
     const values = readCharacterList(remaining.slice(classPrefix[0].length), {
       line: location.line,
-      column: location.column + classPrefix[0].length,
+      column: location.column + offset + classPrefix[0].length,
     });
     return atom(
       "charSet",
@@ -256,7 +268,7 @@ function parseAtom(text, location, originalText) {
   fail(
     "UNKNOWN_RULE",
     `Unsupported rule: ${JSON.stringify(originalText)}.`,
-    location,
+    { line: location.line, column: location.column + offset },
     "Try `line start`, `any text` or `3 digits`.",
   );
 }
