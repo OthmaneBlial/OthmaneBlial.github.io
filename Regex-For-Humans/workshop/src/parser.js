@@ -1,11 +1,11 @@
-import { anchor, atom } from "./ast.js?v=f2ec5fa8cba5";
-import { fail } from "./diagnostics.js?v=f2ec5fa8cba5";
+import { anchor, atom } from "./ast.js?v=34fac290c458";
+import { fail } from "./diagnostics.js?v=34fac290c458";
 
-/** @typedef {import('./ast.js?v=f2ec5fa8cba5').Location} Location */
-/** @typedef {import('./ast.js?v=f2ec5fa8cba5').Repetition} Repetition */
-/** @typedef {import('./ast.js?v=f2ec5fa8cba5').AtomNode} AtomNode */
-/** @typedef {import('./ast.js?v=f2ec5fa8cba5').RuleNode} RuleNode */
-/** @typedef {import('./ast.js?v=f2ec5fa8cba5').ParsedRules} ParsedRules */
+/** @typedef {import('./ast.js?v=34fac290c458').Location} Location */
+/** @typedef {import('./ast.js?v=34fac290c458').Repetition} Repetition */
+/** @typedef {import('./ast.js?v=34fac290c458').AtomNode} AtomNode */
+/** @typedef {import('./ast.js?v=34fac290c458').RuleNode} RuleNode */
+/** @typedef {import('./ast.js?v=34fac290c458').ParsedRules} ParsedRules */
 
 const MAX_SOURCE_LENGTH = 16_384;
 export const LIMITS = Object.freeze({
@@ -72,7 +72,7 @@ const SHORTHANDS = new Map([
 ]);
 
 const START_ANCHOR = /^(line start|start)(?:,\s*|\s+|$)/i;
-const DUPLICATE_START_ANCHOR_MESSAGE = "Only one beginning anchor is allowed.";
+const DUPLICATE_START_ANCHOR_MESSAGE = "Use only one start anchor.";
 
 /** @param {string} count @param {Location} location @returns {Repetition} */
 function parseRepetition(count, location) {
@@ -255,9 +255,9 @@ function parseAtom(text, location, originalText) {
 
   fail(
     "UNKNOWN_RULE",
-    `Unsupported instruction: ${JSON.stringify(originalText)}.`,
+    `Unsupported rule: ${JSON.stringify(originalText)}.`,
     location,
-    "Use concise rules such as `line start`, `any text` and `3 digits`.",
+    "Try `line start`, `any text` or `3 digits`.",
   );
 }
 
@@ -294,7 +294,7 @@ export function parse(source) {
         fail("DUPLICATE_ANCHOR", DUPLICATE_START_ANCHOR_MESSAGE, location());
       }
       if (nodes.length !== 0) {
-        fail("MISPLACED_ANCHOR", "A beginning anchor must be the first instruction.", location());
+        fail("MISPLACED_ANCHOR", "Start anchor must be the first rule.", location());
       }
       anchorMode = mode;
       nodes.push(anchor("start", mode, location(), phrase));
@@ -309,16 +309,16 @@ export function parse(source) {
     const end = /^(line end|end)$/i.exec(text);
     if (end) {
       const mode = end[1].toLowerCase() === "line end" ? "line" : "input";
-      if (sawEnd) fail("DUPLICATE_ANCHOR", "Only one ending anchor is allowed.", location());
+      if (sawEnd) fail("DUPLICATE_ANCHOR", "Use only one end anchor.", location());
       if (anchorMode && anchorMode !== mode) {
-        fail("MIXED_ANCHORS", "Input and line anchors cannot be mixed.", location());
+        fail("MIXED_ANCHORS", "Do not mix input and line anchors.", location());
       }
       anchorMode = mode;
       nodes.push(anchor("end", mode, location(), text));
       sawEnd = true;
       continue;
     }
-    if (sawEnd) fail("MISPLACED_ANCHOR", "No instruction may follow an ending anchor.", location());
+    if (sawEnd) fail("MISPLACED_ANCHOR", "End anchor must be the last rule.", location());
 
     nodes.push(parseAtom(text, location(), text));
   }
