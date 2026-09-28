@@ -1,149 +1,149 @@
 const DOC_PAGES = [
   {
     slug: "getting-started",
-    section: "Start here",
+    section: "Start",
     title: "Quick start",
-    summary: "Run a sample, then start local research.",
+    summary: "Try a sample, then run research.",
     path: "content/getting-started.md"
   },
   {
     slug: "overview",
-    section: "Start here",
-    title: "The output",
-    summary: "What a finished research package contains.",
+    section: "Start",
+    title: "Your results",
+    summary: "See what a finished run creates.",
     path: "content/overview.md"
   },
   {
     slug: "platform",
-    section: "Start here",
+    section: "Start",
     title: "How it works",
     summary: "The main parts of a local research run.",
     path: "content/platform.md"
   },
   {
     slug: "pipeline-and-storage",
-    section: "Use the tool",
-    title: "Research pipeline",
+    section: "Guides",
+    title: "A research run",
     summary: "How research moves from search to report.",
     path: "content/pipeline-and-storage.md"
   },
   {
     slug: "workflows",
-    section: "Use the tool",
-    title: "Workflow Templates",
-    summary: "Choose and preview a workflow.",
+    section: "Guides",
+    title: "Choose a workflow",
+    summary: "Find and preview a starting point.",
     path: "content/workflows.md"
   },
   {
     slug: "cli-reference",
     section: "Reference",
-    title: "CLI Reference",
-    summary: "Commands, options, and examples.",
+    title: "Commands",
+    summary: "Terminal commands and options.",
     path: "content/cli-reference.md"
   },
   {
     slug: "test-suite-map",
     section: "Reference",
-    title: "Test Suite Map",
-    summary: "Where automated checks cover the project.",
+    title: "Test coverage",
+    summary: "What the local checks cover.",
     path: "content/test-suite-map.md"
   },
   {
     slug: "privacy",
-    section: "Use the tool",
-    title: "Privacy And Source Acquisition",
-    summary: "What stays local and what live runs send.",
+    section: "Guides",
+    title: "Privacy",
+    summary: "What stays local and what a live run sends.",
     path: "content/privacy.md"
   },
   {
     slug: "trust-model",
     section: "Reference",
-    title: "Trust Model",
+    title: "What checks prove",
     summary: "What verification checks and cannot prove.",
     path: "content/trust-model.md"
   },
   {
     slug: "decision-receipt-spec",
     section: "Reference",
-    title: "Decision Receipt Specification",
-    summary: "The receipt format and integrity rules.",
+    title: "Receipt format",
+    summary: "Receipt fields and integrity rules.",
     path: "content/decision-receipt-spec.md"
   },
   {
     slug: "project-charter",
     section: "Reference",
-    title: "Project Charter",
+    title: "Project overview",
     summary: "Project goals and architecture.",
     path: "content/project-charter.md"
   },
   {
     slug: "queue-worker-controls",
-    section: "Use the tool",
-    title: "Queue, Worker, And Controls",
-    summary: "Queue jobs and manage a worker.",
+    section: "Guides",
+    title: "Background jobs",
+    summary: "Queue, pause, resume, and retry work.",
     path: "content/queue-worker-controls.md"
   },
   {
     slug: "api-dashboard",
-    section: "Use the tool",
+    section: "Guides",
     title: "Local dashboard",
     summary: "Dashboard and API details.",
     path: "content/api-dashboard.md"
   },
   {
     slug: "examples",
-    section: "Examples",
+    section: "Guides",
     title: "Examples",
     summary: "Common tasks with commands.",
     path: "content/examples.md"
   },
   {
     slug: "case-studies",
-    section: "Examples",
-    title: "Case Studies",
+    section: "Guides",
+    title: "Worked examples",
     summary: "Three sample research decisions.",
     path: "content/case-studies.md"
   },
   {
     slug: "project-layout",
     section: "Reference",
-    title: "Project Layout",
+    title: "Code layout",
     summary: "Where the main code lives.",
     path: "content/project-layout.md"
   },
   {
     slug: "testing-and-hardening",
     section: "Reference",
-    title: "Testing And Hardening",
-    summary: "Test commands and coverage.",
+    title: "Local checks",
+    summary: "Run tests and security checks.",
     path: "content/testing-and-hardening.md"
   },
   {
     slug: "repo-readme",
-    section: "More references",
+    section: "Reference",
     title: "Project README",
     summary: "Project README.",
     path: "content/repo-readme.md"
   },
   {
     slug: "repo-roadmap",
-    section: "More references",
+    section: "Reference",
     title: "Project roadmap",
     summary: "Project roadmap.",
     path: "content/repo-roadmap.md"
   },
   {
     slug: "example-android-opportunity",
-    section: "More references",
-    title: "Android Workflow Example",
-    summary: "Android opportunity example.",
+    section: "Reference",
+    title: "Android example",
+    summary: "An Android app research workflow.",
     path: "content/example-android-opportunity.md"
   },
   {
     slug: "example-article-research",
-    section: "More references",
-    title: "Article Workflow Example",
-    summary: "Article research example.",
+    section: "Reference",
+    title: "Article example",
+    summary: "An article research workflow.",
     path: "content/example-article-research.md"
   }
 ];
@@ -411,7 +411,7 @@ function renderNav(filter = "") {
   const groups = groupedPages(filter);
   nav.innerHTML = Object.entries(groups)
     .map(([section, pages]) => {
-      const isOpen = Boolean(filter.trim()) || section === "Start here" || pages.some((page) => page.slug === activeSlug);
+      const isOpen = Boolean(filter.trim()) || section === "Start" || pages.some((page) => page.slug === activeSlug);
       const items = pages
         .map((page) => {
           const activeClass = page.slug === activeSlug ? "is-active" : "";
@@ -421,7 +421,7 @@ function renderNav(filter = "") {
         })
         .join("");
       return `<details class="docs-nav-section"${isOpen ? " open" : ""}>
-        <summary>${section}<span class="docs-nav-count">${pages.length}</span></summary>
+        <summary>${section}</summary>
         <div class="docs-nav-links">${items}</div>
       </details>`;
     })
@@ -448,7 +448,7 @@ async function loadDoc(slug) {
       throw new Error(`Failed to load ${page.path}`);
     }
     const markdown = await response.text();
-    article.innerHTML = renderMarkdown(markdown);
+    article.innerHTML = renderMarkdown(markdown.replace(/^# .+\r?\n+/, ""));
     enhanceCodeBlocks(article);
     renderNav(document.querySelector("#docs-search")?.value || "");
   } catch (error) {

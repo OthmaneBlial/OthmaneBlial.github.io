@@ -32,7 +32,7 @@ Set the domain request cap to `0` only to deliberately disable it. Domains on `W
 
 Use a redacted preview before writing an export:
 
-On POSIX systems, imported receipts, resumable cache files, prompt traces, and structured logs use owner-only permissions (`0600`).
+On POSIX systems, atomic local outputs, imported receipts, resumable cache files, prompt traces, structured logs, and exports created at a new path use owner-only permissions (`0600`). Newly created output directories use `0700`. A forced overwrite of an existing CLI export keeps that file's existing permissions.
 SQLite databases and WAL/SHM files also use `0600`; the default database directory and newly created database directories use `0700`.
 
 ```bash

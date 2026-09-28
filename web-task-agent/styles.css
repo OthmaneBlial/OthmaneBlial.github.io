@@ -1293,13 +1293,6 @@ body.site-home::before {
   content: "−";
 }
 
-.docs-nav-count {
-  margin-left: auto;
-  color: var(--muted);
-  font-size: 0.75rem;
-  font-weight: 500;
-}
-
 .docs-nav-links {
   padding: 0 0 8px 8px;
 }
