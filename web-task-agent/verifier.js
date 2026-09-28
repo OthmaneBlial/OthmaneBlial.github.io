@@ -5,6 +5,7 @@
   const fixtures = globalThis.WEB_VERIFIER_FIXTURES || {};
   const decoder = new TextDecoder();
   const state = { primary: null, comparison: null };
+  const MAX_ENTRIES = Core?.receiptInputLimits?.maxEntries ?? 2_000;
   const MAX_FILES = 500;
   const MAX_FILE_BYTES = 10 * 1024 * 1024;
   const MAX_TOTAL_BYTES = 50 * 1024 * 1024;
@@ -69,7 +70,9 @@
     return new Promise((resolve, reject) => entry.file(resolve, reject));
   }
 
-  async function walkDroppedEntry(entry, parent = "") {
+  async function walkDroppedEntry(entry, parent = "", budget = { entries: 0 }) {
+    budget.entries += 1;
+    if (budget.entries > MAX_ENTRIES) throw new Error(`Folder drop exceeds the ${MAX_ENTRIES}-entry limit.`);
     const relative = parent ? `${parent}/${entry.name}` : entry.name;
     if (entry.isFile) return [{ file: await readEntryFile(entry), path: relative }];
     if (!entry.isDirectory) return [];
@@ -78,7 +81,7 @@
     while (true) {
       const batch = await readDirectoryBatch(reader);
       if (batch.length === 0) break;
-      for (const child of batch) children.push(...await walkDroppedEntry(child, relative));
+      for (const child of batch) children.push(...await walkDroppedEntry(child, relative, budget));
       if (children.length > MAX_FILES) throw new Error(`Folder exceeds the ${MAX_FILES}-file limit.`);
     }
     return children;
@@ -89,7 +92,8 @@
     const webkitEntries = items.map((item) => item.webkitGetAsEntry?.()).filter(Boolean);
     if (webkitEntries.length > 0) {
       const output = [];
-      for (const entry of webkitEntries) output.push(...await walkDroppedEntry(entry));
+      const budget = { entries: 0 };
+      for (const entry of webkitEntries) output.push(...await walkDroppedEntry(entry, "", budget));
       return output;
     }
     return Array.from(dataTransfer.files || []).map((file) => ({ file, path: file.webkitRelativePath || file.name }));
