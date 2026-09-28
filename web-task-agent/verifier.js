@@ -54,6 +54,7 @@
     for (const entry of entries) {
       const relative = String(entry.path || entry.file.webkitRelativePath || entry.file.name).replace(/^\.\//, "");
       if (!safePath(relative)) throw new Error(`Folder contains an unsafe path: ${relative}.`);
+      if (Object.hasOwn(bundle, relative)) throw new Error(`Folder contains a duplicate path: ${relative}.`);
       if (entry.file.size > MAX_FILE_BYTES) throw new Error(`File exceeds the 10 MB limit: ${relative}.`);
       total += entry.file.size;
       if (total > MAX_TOTAL_BYTES) throw new Error("Folder exceeds the 50 MB total limit.");
