@@ -1,3 +1,5 @@
+const DOC_CONTENT_VERSION = "plain-docs-20260928-v2";
+
 const DOC_PAGES = [
   {
     slug: "getting-started",
@@ -443,7 +445,7 @@ async function loadDoc(slug) {
   article.innerHTML = "<p>Loading documentation…</p>";
 
   try {
-    const response = await fetch(page.path);
+    const response = await fetch(`${page.path}?v=${DOC_CONTENT_VERSION}`);
     if (!response.ok) {
       throw new Error(`Failed to load ${page.path}`);
     }
