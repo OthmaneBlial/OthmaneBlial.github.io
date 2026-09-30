@@ -1,6 +1,6 @@
-import { CompileError, compile } from "../index.js?v=e4bc180e0aec";
-import { splitLines } from "../src/parser.js?v=e4bc180e0aec";
-import { TestRunError, TestRunner } from "./test-runner.js?v=e4bc180e0aec";
+import { CompileError, compile } from "../index.js?v=78f6f6f9664a";
+import { splitLines } from "../src/parser.js?v=78f6f6f9664a";
+import { TestRunError, TestRunner } from "./test-runner.js?v=78f6f6f9664a";
 
 /** @typedef {import("./worker-protocol.d.ts").TestCase} TestCase */
 /** @typedef {{id: string, title: string, rules: string, source: string, flags: string, matchMode: "full" | "search", positive: string[], negative: string[]}} ProductScenario */
@@ -47,7 +47,7 @@ let compiled = null;
 let hasEdits = false;
 let copyFeedbackTimer = 0;
 const testRunner = new TestRunner(
-  () => new Worker(new URL("./match-worker.js?v=e4bc180e0aec", import.meta.url), { type: "module" }),
+  () => new Worker(new URL("./match-worker.js?v=78f6f6f9664a", import.meta.url), { type: "module" }),
 );
 
 /**
@@ -143,18 +143,20 @@ async function updateTestResults() {
     (row) => row instanceof HTMLDivElement,
   );
   if (!compiled || testCases.length === 0) {
+    const invalidRules = ui.rules.getAttribute("aria-invalid") === "true";
+    const rulePrompt = invalidRules ? "Fix the rules" : "Write rules";
     testRunner.cancel();
     rows.forEach((row) => {
       row.dataset.result = "pending";
       setTestResult(
         row,
-        compiled ? "Add an example to check the pattern" : "Fix the rules to run this example",
+        compiled ? "Add an example to check the pattern" : `${rulePrompt} to run this example`,
       );
     });
     ui.testSummary.textContent = compiled
       ? "Add a positive or negative example to check the pattern."
-      : "Fix the rules to run the examples.";
-    ui.testSummary.dataset.state = compiled ? "neutral" : "error";
+      : `${rulePrompt} to run the examples.`;
+    ui.testSummary.dataset.state = !compiled && invalidRules ? "error" : "neutral";
     return;
   }
 
@@ -407,7 +409,7 @@ ui.copy.addEventListener("click", async () => {
 });
 
 try {
-  const response = await fetch(new URL("../test/fixtures/product-scenarios.json?v=e4bc180e0aec", import.meta.url));
+  const response = await fetch(new URL("../test/fixtures/product-scenarios.json?v=78f6f6f9664a", import.meta.url));
   if (!response.ok) throw new Error(`HTTP ${response.status}`);
   scenarios = await response.json();
   renderScenarioButtons();
