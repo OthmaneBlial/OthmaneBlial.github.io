@@ -1,12 +1,12 @@
-import { anchor, atom } from "./ast.js?v=0b5d4c8b19dc";
-import { fail } from "./diagnostics.js?v=0b5d4c8b19dc";
-import { quoteText } from "./display.js?v=0b5d4c8b19dc";
+import { anchor, atom } from "./ast.js?v=655f52461a0a";
+import { fail } from "./diagnostics.js?v=655f52461a0a";
+import { quoteText } from "./display.js?v=655f52461a0a";
 
-/** @typedef {import('./ast.js?v=0b5d4c8b19dc').Location} Location */
-/** @typedef {import('./ast.js?v=0b5d4c8b19dc').Repetition} Repetition */
-/** @typedef {import('./ast.js?v=0b5d4c8b19dc').AtomNode} AtomNode */
-/** @typedef {import('./ast.js?v=0b5d4c8b19dc').RuleNode} RuleNode */
-/** @typedef {import('./ast.js?v=0b5d4c8b19dc').ParsedRules} ParsedRules */
+/** @typedef {import('./ast.js?v=655f52461a0a').Location} Location */
+/** @typedef {import('./ast.js?v=655f52461a0a').Repetition} Repetition */
+/** @typedef {import('./ast.js?v=655f52461a0a').AtomNode} AtomNode */
+/** @typedef {import('./ast.js?v=655f52461a0a').RuleNode} RuleNode */
+/** @typedef {import('./ast.js?v=655f52461a0a').ParsedRules} ParsedRules */
 
 const MAX_SOURCE_LENGTH = 16_384;
 export const LIMITS = Object.freeze({
@@ -259,10 +259,14 @@ function parseAtom(text, location, rawLine) {
   const textWithout = /^text without:\s*/i.exec(remaining);
   if (textWithout || /^any text$/i.test(remaining)) {
     if (repetition) {
-      fail("DUPLICATE_REPETITION", "This rule already matches a sequence.", {
-        line: location.line,
-        column: location.column + offset,
-      });
+      fail(
+        "DUPLICATE_REPETITION",
+        "This rule already matches a sequence.",
+        { line: location.line, column: location.column + offset },
+        textWithout
+          ? "Use counts with `none of:`, such as `3 none of: a, b`."
+          : "Use counts with `any character`, such as `3 any character`.",
+      );
     }
     if (textWithout) {
       const values = readCharacterList(
