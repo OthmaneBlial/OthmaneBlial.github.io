@@ -15,12 +15,13 @@ long-term. This repository ships working stages and labels the remaining work.
 | Commands / buffers / shader VM | Owned typed buffers, validated commands, SIR shader cube |
 | Capture / replay / inspection / pixel trace | Embedded resources/programs, byte-exact roundtrip and CLI |
 | SIMD / tiled parallel rendering | Scalar reference, NEON/AVX2 coverage4, disjoint bands, equivalence tests |
+| SPIR-V / ordinary GLSL | Strict binary parser + typed SIR lowering, textured cube and arithmetic fixtures |
 | Regression images | Approved SIR cube PNG; cross-platform tolerance <=1 channel step |
 
 Next: strengthen stencil/transparency integration demos; profile and optimize
-interpolation and shader costs; introduce a validated SPIR-V parser followed by
-a precisely documented translation subset and externally compiled GLSL fixture;
-then shadow mapping and a more advanced scene.
+interpolation and shader costs; extend the [current SPIR-V subset](spirv.md)
+with local variables, extended math and bounded control flow driven by ordinary
+shader fixtures; then shadow mapping and a more advanced scene.
 
 Future research: multiple targets, full tile binning, shader lanes/divergence,
 compute/storage/shared-memory/atomics, cubemaps, PBR/normal maps, MSAA, JIT,
@@ -28,5 +29,5 @@ pipeline caches, C API, a tiny real API compatibility layer, third-party demo,
 DOOM geometry through SILICON and possibly a software ray-tracing unit.
 
 None of those future items are advertised as implemented. Vulkan/OpenGL,
-SPIR-V, WGSL and games are currently **unsupported**. No existing rasterizer,
+general SPIR-V compatibility, WGSL and games are currently **unsupported**. No existing rasterizer,
 Mesa, LLVMpipe, SwiftShader, ANGLE or wgpu backend is used.

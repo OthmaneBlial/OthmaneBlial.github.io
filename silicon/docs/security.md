@@ -9,7 +9,8 @@ specific error rather than reporting success.
 Current limits: 16M framebuffer/texture pixels, 1M OBJ/vertex-buffer vertices,
 3M indices, 64 uniform vec4s, 65536 commands, 4096 SIR instructions. External
 captures are limited to 64 MiB before JSON deserialization; OBJ text is limited
-to 32 MiB; CLI scene descriptors to 1 MiB. JSON nesting also obeys serde_json's
+to 32 MiB; CLI scene descriptors and SPIR-V binaries to 1 MiB. SPIR-V has an ID
+bound of at most 65536 and shares the 64-register lowered-program limit. JSON nesting also obeys serde_json's
 recursion limit. These are validation bounds, not a process-wide allocation
 budget. Captures can duplicate resources, and the software GPU is not a hardened
 sandbox for hostile shader workloads.
@@ -19,7 +20,10 @@ NEON uses fixed two-lane loads/stores; AVX2 has a runtime feature check and no
 caller-controlled memory loads. Framebuffer bands belong to separate workers.
 Tests compare SIMD and parallel framebuffer bytes to the scalar reference. A
 deterministic mutation check exercises 500 clipped triangles and invalid SIR
-register operands; this is bounded stress coverage, not exhaustive fuzzing.
+register operands. SPIR-V tests exercise 1500 deterministic binary mutations,
+truncation, endian handling and targeted ID/type/storage/block errors; these are
+bounded stress checks, not exhaustive fuzzing. Unsupported shader operations
+are rejected with binary word offsets rather than delegated to another runtime.
 
 Avoid panicking on external inputs. Constructors return errors for invalid
 sizes/storage, invalid model indices and nonfinite positions. Never substitute

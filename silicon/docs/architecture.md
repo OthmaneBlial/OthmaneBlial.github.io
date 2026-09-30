@@ -27,13 +27,15 @@ flowchart TD
 The workspace groups real responsibilities rather than one crate for each GPU
 noun: `silicon-math` holds the math needed by graphics; `silicon-core` implements
 resources, command submission and graphics; `silicon-shader` implements the SIR
-machine; `silicon-cli` is the presentation/headless frontend. The root library
+machine and strict SPIR-V parser/translator; `silicon-cli` is the presentation/headless frontend. The root library
 reexports the Rust API and owns examples and integration tests.
 
 Two shader paths exist. Native Rust closures power the lit OBJ showcase. The
 `shader_cube` scene submits a recorded command stream and executes *both* stages
-through SIR. Captures currently support that SIR path. Native closure scenes
-cannot be serialized. SIR does not imply GLSL or SPIR-V compatibility.
+through SIR. `spirv_cube` translates externally compiled GLSL vertex/fragment
+SPIR-V into SIR. Captures embed lowered programs and support both command scenes.
+Native closure scenes cannot be serialized. The [SPIR-V subset](spirv.md) has
+explicit type, control-flow, binding and sampling restrictions.
 
 Resources use typed, reference-counted owned buffers. Commands keep their data
 alive independently of the creating code. Mapping exposes a read-only slice.
