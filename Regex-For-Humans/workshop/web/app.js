@@ -1,7 +1,7 @@
-import { CompileError, compile } from "../index.js?v=7b1413f875e8";
-import { escapeDirectionControls } from "../src/display.js?v=7b1413f875e8";
-import { splitLines } from "../src/parser.js?v=7b1413f875e8";
-import { TestRunError, TestRunner } from "./test-runner.js?v=7b1413f875e8";
+import { CompileError, compile } from "../index.js?v=ffcaee680140";
+import { escapeDirectionControls } from "../src/display.js?v=ffcaee680140";
+import { splitLines } from "../src/parser.js?v=ffcaee680140";
+import { TestRunError, TestRunner } from "./test-runner.js?v=ffcaee680140";
 
 /** @typedef {import("./worker-protocol.d.ts").TestCase} TestCase */
 /** @typedef {{id: string, title: string, note: string, rules: string, source: string, flags: string, matchMode: "full" | "search", positive: string[], negative: string[]}} ProductScenario */
@@ -54,7 +54,7 @@ let hasEdits =
 let copyFeedbackTimer = 0;
 let copySequence = 0;
 const testRunner = new TestRunner(
-  () => new Worker(new URL("./match-worker.js?v=7b1413f875e8", import.meta.url), { type: "module" }),
+  () => new Worker(new URL("./match-worker.js?v=ffcaee680140", import.meta.url), { type: "module" }),
 );
 
 /**
@@ -112,7 +112,7 @@ function renderTrace(segments) {
     button.type = "button";
     button.setAttribute(
       "aria-label",
-      `Rule on line ${segment.line}: ${segment.explanation}. Select source line.`,
+      `Rule on line ${segment.line}: ${segment.explanation} Select source line.`,
     );
     button.append(make("code", "trace-fragment", segment.source));
     const detail = make("span");
@@ -441,7 +441,7 @@ ui.copy.addEventListener("click", async () => {
 if (hasEdits) compileRules();
 
 try {
-  const response = await fetch(new URL("../test/fixtures/product-scenarios.json?v=7b1413f875e8", import.meta.url));
+  const response = await fetch(new URL("../test/fixtures/product-scenarios.json?v=ffcaee680140", import.meta.url));
   if (!response.ok) throw new Error(`HTTP ${response.status}`);
   scenarios = await response.json();
   renderScenarioButtons();
