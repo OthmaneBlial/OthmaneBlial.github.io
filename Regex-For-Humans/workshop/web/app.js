@@ -1,7 +1,7 @@
-import { CompileError, compile } from "../index.js?v=a671f17cb68b";
-import { escapeControls } from "../src/display.js?v=a671f17cb68b";
-import { splitLines } from "../src/parser.js?v=a671f17cb68b";
-import { TestRunError, TestRunner } from "./test-runner.js?v=a671f17cb68b";
+import { CompileError, compile } from "../index.js?v=d0f680dc6fcb";
+import { escapeControls } from "../src/display.js?v=d0f680dc6fcb";
+import { splitLines } from "../src/parser.js?v=d0f680dc6fcb";
+import { TestRunError, TestRunner } from "./test-runner.js?v=d0f680dc6fcb";
 
 /** @typedef {import("./worker-protocol.d.ts").TestCase} TestCase */
 /** @typedef {{id: string, title: string, note: string, rules: string, source: string, flags: string, matchMode: "full" | "search", positive: string[], negative: string[]}} ProductScenario */
@@ -54,7 +54,7 @@ let hasEdits =
 let copyFeedbackTimer = 0;
 let copySequence = 0;
 const testRunner = new TestRunner(
-  () => new Worker(new URL("./match-worker.js?v=a671f17cb68b", import.meta.url), { type: "module" }),
+  () => new Worker(new URL("./match-worker.js?v=d0f680dc6fcb", import.meta.url), { type: "module" }),
 );
 
 /**
@@ -281,8 +281,9 @@ function renderTests() {
     input.autocomplete = "off";
     input.autocapitalize = "off";
     input.setAttribute("autocorrect", "off");
-    input.rows = sample.text.split("\n", 3).length;
     input.value = sample.text;
+    sample.text = input.value;
+    input.rows = sample.text.split("\n", 3).length;
     input.style.height = heights.get(`example-result-${sample.id}`) ?? "";
     input.placeholder = "Empty string";
     input.setAttribute("aria-label", `Example ${number} string`);
@@ -511,7 +512,7 @@ ui.copy.addEventListener("click", async () => {
 if (hasEdits) compileRules();
 
 try {
-  const response = await fetch(new URL("../test/fixtures/product-scenarios.json?v=a671f17cb68b", import.meta.url));
+  const response = await fetch(new URL("../test/fixtures/product-scenarios.json?v=d0f680dc6fcb", import.meta.url));
   if (!response.ok) throw new Error(`HTTP ${response.status}`);
   scenarios = await response.json();
   renderScenarioButtons();
