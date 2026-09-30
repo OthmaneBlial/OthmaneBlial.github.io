@@ -1,7 +1,7 @@
-import { CompileError, compile } from "../index.js?v=bdfe8af55e38";
-import { escapeControls } from "../src/display.js?v=bdfe8af55e38";
-import { splitLines } from "../src/parser.js?v=bdfe8af55e38";
-import { TestRunError, TestRunner } from "./test-runner.js?v=bdfe8af55e38";
+import { CompileError, compile } from "../index.js?v=62d483613311";
+import { escapeControls } from "../src/display.js?v=62d483613311";
+import { splitLines } from "../src/parser.js?v=62d483613311";
+import { TestRunError, TestRunner } from "./test-runner.js?v=62d483613311";
 
 /** @typedef {import("./worker-protocol.d.ts").TestCase} TestCase */
 /** @typedef {{id: string, title: string, note: string, rules: string, source: string, flags: string, matchMode: "full" | "search", positive: string[], negative: string[]}} ProductScenario */
@@ -54,7 +54,7 @@ let hasEdits =
 let copyFeedbackTimer = 0;
 let copySequence = 0;
 const testRunner = new TestRunner(
-  () => new Worker(new URL("./match-worker.js?v=bdfe8af55e38", import.meta.url), { type: "module" }),
+  () => new Worker(new URL("./match-worker.js?v=62d483613311", import.meta.url), { type: "module" }),
 );
 
 /**
@@ -92,6 +92,29 @@ function selectLine(number, column) {
   const position = column === undefined ? start : Math.min(start + column - 1, end);
   ui.rules.focus();
   ui.rules.setSelectionRange(position, column === undefined ? end : Math.min(position + 1, end));
+  // Measure native wrapping so long literals before the selection count too.
+  const style = getComputedStyle(ui.rules);
+  const measure = make("textarea");
+  measure.setAttribute("aria-hidden", "true");
+  measure.tabIndex = -1;
+  Object.assign(measure.style, {
+    position: "fixed",
+    visibility: "hidden",
+    height: "0",
+    minHeight: "0",
+    overflow: "hidden",
+    border: "0",
+    width: `${ui.rules.clientWidth}px`,
+    padding: style.padding,
+    font: style.font,
+    tabSize: style.tabSize,
+  });
+  measure.value = `${ui.rules.value.slice(0, position)}\u200b`;
+  document.body.append(measure);
+  const lineHeight = Number.parseFloat(style.lineHeight);
+  const top = measure.scrollHeight - Number.parseFloat(style.paddingBottom) - lineHeight;
+  measure.remove();
+  ui.rules.scrollTop = top - (ui.rules.clientHeight - lineHeight) / 2;
 }
 
 /** @param {ReturnType<typeof compile>["segments"] | null} segments */
@@ -471,7 +494,7 @@ ui.copy.addEventListener("click", async () => {
 if (hasEdits) compileRules();
 
 try {
-  const response = await fetch(new URL("../test/fixtures/product-scenarios.json?v=bdfe8af55e38", import.meta.url));
+  const response = await fetch(new URL("../test/fixtures/product-scenarios.json?v=62d483613311", import.meta.url));
   if (!response.ok) throw new Error(`HTTP ${response.status}`);
   scenarios = await response.json();
   renderScenarioButtons();
