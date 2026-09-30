@@ -1,6 +1,6 @@
-import { CompileError, compile } from "../index.js?v=6625015106ec";
-import { splitLines } from "../src/parser.js?v=6625015106ec";
-import { TestRunError, TestRunner } from "./test-runner.js?v=6625015106ec";
+import { CompileError, compile } from "../index.js?v=aeffb5b1067b";
+import { splitLines } from "../src/parser.js?v=aeffb5b1067b";
+import { TestRunError, TestRunner } from "./test-runner.js?v=aeffb5b1067b";
 
 /** @typedef {import("./worker-protocol.d.ts").TestCase} TestCase */
 /** @typedef {{id: string, title: string, note: string, rules: string, source: string, flags: string, matchMode: "full" | "search", positive: string[], negative: string[]}} ProductScenario */
@@ -53,7 +53,7 @@ let hasEdits =
 let copyFeedbackTimer = 0;
 let copySequence = 0;
 const testRunner = new TestRunner(
-  () => new Worker(new URL("./match-worker.js?v=6625015106ec", import.meta.url), { type: "module" }),
+  () => new Worker(new URL("./match-worker.js?v=aeffb5b1067b", import.meta.url), { type: "module" }),
 );
 
 /**
@@ -208,6 +208,10 @@ function renderTests() {
     const number = index + 1;
     const row = make("div", "test-row");
     const input = make("textarea");
+    input.spellcheck = false;
+    input.autocomplete = "off";
+    input.autocapitalize = "off";
+    input.setAttribute("autocorrect", "off");
     input.rows = Math.min(3, Math.max(1, sample.text.split("\n").length));
     input.value = sample.text;
     input.placeholder = "Empty string";
@@ -429,7 +433,7 @@ ui.copy.addEventListener("click", async () => {
 if (hasEdits) compileRules();
 
 try {
-  const response = await fetch(new URL("../test/fixtures/product-scenarios.json?v=6625015106ec", import.meta.url));
+  const response = await fetch(new URL("../test/fixtures/product-scenarios.json?v=aeffb5b1067b", import.meta.url));
   if (!response.ok) throw new Error(`HTTP ${response.status}`);
   scenarios = await response.json();
   renderScenarioButtons();
