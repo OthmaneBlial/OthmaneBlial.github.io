@@ -1,15 +1,17 @@
-/** @param {import('./ast.js?v=63a290f9605b').Repetition|null} repetition */
+/** @param {import('./ast.js?v=6fc96d5e9b76').Repetition|null} repetition */
 function repetitionText(repetition) {
   if (!repetition) return "";
   switch (repetition.kind) {
     case "exact":
       return ` Exactly ${repetition.min} times.`;
+    case "range":
+      return ` Between ${repetition.min} and ${repetition.max} times (inclusive).`;
     default:
       throw new TypeError("Unexpected repetition kind.");
   }
 }
 
-/** @param {import('./ast.js?v=63a290f9605b').RuleNode} node @param {string} flags @param {boolean} [hasFollowingRule] */
+/** @param {import('./ast.js?v=6fc96d5e9b76').RuleNode} node @param {string} flags @param {boolean} [hasFollowingRule] */
 export function explainNode(node, flags, hasFollowingRule = false) {
   if (node.kind === "anchor") {
     if (node.mode === "line") {
@@ -40,6 +42,9 @@ export function explainNode(node, flags, hasFollowingRule = false) {
     if (node.repetition?.kind === "exact") {
       const digits = node.repetition.min === 1 ? digit : `${digit}s`;
       return `Exactly ${node.repetition.min} ${digits} (${range}).`;
+    }
+    if (node.repetition?.kind === "range") {
+      return `Between ${node.repetition.min} and ${node.repetition.max} ${digit}s (${range}), inclusive.`;
     }
     return `One ${digit} (${range}).`;
   }
