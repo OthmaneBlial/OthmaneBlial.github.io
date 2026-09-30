@@ -15,15 +15,15 @@ long-term. This repository ships working stages and labels the remaining work.
 | Commands / buffers / shader VM | Owned typed buffers, validated commands, SIR shader cube |
 | Capture / replay / inspection / pixel trace | Embedded resources/programs, byte-exact roundtrip and CLI |
 | SIMD / tiled parallel rendering | Scalar reference, NEON/AVX2 coverage4, NEON/SSE masked four-fragment SIR, disjoint bands, bitwise equivalence tests |
-| SPIR-V / ordinary GLSL | Strict binary parser + typed SIR lowering, textured cube, lit OBJ showcase, local/uniform and arithmetic fixtures |
+| SPIR-V / ordinary GLSL | Strict binary parser + typed SIR lowering, textured cube, lit OBJ showcase, local/uniform, arithmetic, and float-negation fixtures |
 | Divergent shader control flow | Nested GLSL selections, local/Phi merges, early return/discard; all-mask VM and attachment tests |
 | Shadow maps / explicit-LOD sampling | Two SILICON CPU raster passes; 512×512 `Depth32Float` texture sampled by ordinary GLSL/SPIR-V; scalar and SIMD replay match |
 | Stencil / transparency integration | Circular stencil portal constrains a textured cube and translucent overlay; scalar and SIMD four-band color/depth/stencil match |
 | Regression images | Approved SIR cube PNG; cross-platform tolerance <=1 channel step |
 
-Next: profile and optimize interpolation and shader costs; expand the
-[current SPIR-V subset](spirv.md) beyond the explicit-LOD shadow sample, then
-build a more advanced scene.
+Next: profile shader costs; continue expanding the [current SPIR-V
+subset](spirv.md) beyond the explicit-LOD shadow sample, then build a more
+advanced scene.
 
 Future research: multiple targets, full tile binning, loops and broader control flow,
 compute/storage/shared-memory/atomics, cubemaps, PBR/normal maps, MSAA, JIT,

@@ -14,7 +14,7 @@ The committed original GLSL sources and their `.spv` fixtures are in
 recompile fixtures, not to build, test or run SILICON:
 
 ```sh
-for shader in textured.vert textured.frag arithmetic.frag lit.vert lit.frag shadow.frag locals.frag control.frag; do
+for shader in textured.vert textured.frag arithmetic.frag negate.frag lit.vert lit.frag shadow.frag locals.frag control.frag; do
   glslangValidator -V --target-env vulkan1.0 -o "assets/shaders/$shader.spv" "assets/shaders/$shader"
   spirv-val --target-env vulkan1.0 "assets/shaders/$shader.spv"
 done
@@ -65,7 +65,7 @@ surfaces. Both passes use SILICON's rasterizer; no external renderer contributes
 - `OpConstant`, `OpConstantTrue/False`, vector `OpConstantComposite`, `OpVariable`, `OpLoad`, `OpStore`,
   constant-index uniform-member and input/uniform/local vector-component `OpAccessChain`, vector `OpCompositeConstruct`,
   `OpCompositeExtract`, `OpVectorShuffle`, float/vector/matrix/sampler `OpCopyObject`.
-- `OpFAdd`, `OpFSub`, `OpFMul`, `OpFDiv`, `OpVectorTimesScalar`,
+- `OpFNegate`, `OpFAdd`, `OpFSub`, `OpFMul`, `OpFDiv`, `OpVectorTimesScalar`,
   uniform `OpMatrixTimesVector`, `OpDot`, combined sampler2D
   `OpImageSampleImplicitLod`, and `OpImageSampleExplicitLod` with a scalar LOD and
   the Lod-only image operand mask.
