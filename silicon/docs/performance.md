@@ -1,5 +1,35 @@
 # Performance measurements
 
+## 0.7 perspective interpolation
+
+The [alternating raw record](../benchmarks/apple-m2-interpolation-2026-10-01.json)
+compares the released 0.7.0 executable with commit `f097e9ed8b90c68a63d6752d5869c7961ac1cedb`
+and candidate binary SHA-256 `3185558349ae15d3c37563c140c3e7a1e7285e5d1c3289e2259f1934987ef4d4`.
+On the shared Apple M2 (macOS 26.6), each configuration used 3 warmups,
+60 timed frames, 960×640, fixed scene time 0, and two rounds with reversed
+order. The scene was `spirv_showcase`; the compared path was four-worker NEON.
+
+| Build | Round 1 median / p95 ms | Round 2 median / p95 ms |
+| --- | ---: | ---: |
+| 0.7.0 baseline | 275.90 / 284.51 | 256.77 / 266.15 |
+| Interpolation candidate | 254.85 / 266.03 | 252.22 / 268.75 |
+
+Across the two run medians, the candidate was 4.8% lower (266.34 → 253.54 ms);
+the average p95 was 2.9% lower. The baseline drifted 7% between rounds, so treat
+this as a modest result for this host and scene, not a general performance claim.
+Both executables performed exactly 23,297,700 shaded fragments, 755,280
+submitted triangles, and 3,184,437,960 shader instructions. Five scenes also
+produced byte-identical 320×200 PNGs between builds in each of scalar and SIMD
+modes.
+
+The change interpolates all varyings at the fragment position, but only the UV
+varying at the two derivative probes used for implicit texture LOD. An
+instrumented four-worker profile measured 300.20 ms of accumulated fragment
+shader time inside 377.76 ms accumulated raster-stage time, against 183.05 ms
+wall time. These worker sums overlap and the per-packet timing is instrumented;
+they are not exclusive stage shares. Native sampling still points to shader
+execution as the next optimization target.
+
 ## 0.5 control-flow checkpoint
 
 The [pre-optimization alternating record](../benchmarks/apple-m2-control-before-counters-2026-10-01.json)
@@ -191,6 +221,7 @@ and PNG encoding, and do not demonstrate a speedup over the earlier noisy run.
 ```sh
 python3 benchmarks/run.py --frames 30 --output output/benchmarks.json
 cargo run --release -p silicon-cli -- profile showcase --threads 4
+python3 benchmarks/compare.py --baseline /path/to/silicon-baseline --scene spirv_showcase --workers 4 --frames 60 --output output/comparison.json
 ```
 
 The benchmark excludes PNG export, window creation, pixel-buffer conversion
