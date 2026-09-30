@@ -7,22 +7,22 @@
   <meta name="description" content="Write clear rules. Inspect the JavaScript regex and test examples locally.">
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; connect-src 'self'; object-src 'none'; base-uri 'self'">
   <title>Regex For Humans — Workshop</title>
-  <link rel="icon" type="image/svg+xml" href="./favicon.svg?v=1ccee3c7d51c">
-  <link rel="stylesheet" href="./styles.css?v=1ccee3c7d51c">
-  <script type="module" src="./app.js?v=1ccee3c7d51c"></script>
+  <link rel="icon" type="image/svg+xml" href="./favicon.svg?v=e4bc180e0aec">
+  <link rel="stylesheet" href="./styles.css?v=e4bc180e0aec">
+  <script type="module" src="./app.js?v=e4bc180e0aec"></script>
 </head>
 <body>
   <a class="skip-link" href="#main">Skip to workshop</a>
   <div class="app-shell">
     <aside class="sidebar" aria-label="Workshop navigation">
       <div class="brand">
-        <div class="brand-mark" aria-hidden="true"><span>^</span><span>.*</span></div>
+        <div class="brand-mark" aria-hidden="true">^_^</div>
         <div class="brand-name">regex<br><strong>for humans</strong></div>
       </div>
 
       <p class="sidebar-intro">Small English rules.<br>Readable regex.<br>Fewer surprises.</p>
 
-      <div class="sidebar-section-label"><span>START WITH A RECIPE</span><span class="sidebar-count">01—04</span><span class="mobile-scroll-hint">SCROLL FOR MORE →</span></div>
+      <div class="sidebar-section-label"><span>START WITH A RECIPE</span><span id="recipe-count" class="sidebar-count"></span><span class="mobile-scroll-hint">SCROLL FOR MORE →</span></div>
       <nav id="example-list" class="example-list" aria-label="Example recipes"></nav>
 
       <div class="sidebar-bottom">
@@ -48,10 +48,10 @@
 
       <div class="workbench">
         <section class="panel editor-panel" aria-labelledby="rules-title">
-          <div class="panel-heading"><span class="step-number">01</span><div><p class="kicker">THE INPUT</p><h2 id="rules-title">Write your rules</h2></div></div>
+          <div class="panel-heading"><span class="step-number">01</span><div><p class="kicker">THE INPUT ✍️</p><h2 id="rules-title">Write your rules</h2></div></div>
           <label for="rules-input" class="field-label">Write your rules</label>
           <textarea id="rules-input" spellcheck="false" autocomplete="off" autocapitalize="off" aria-invalid="false" aria-describedby="rules-help diagnostic" placeholder="start &quot;ABC&quot;&#10;3 digits&#10;end"></textarea>
-          <div class="editor-footer"><p id="rules-help">A controlled language, not a free-form prompt. <a href="./language.html?v=1ccee3c7d51c" target="_blank" rel="noopener noreferrer">Read the syntax ↗</a></p><span id="rule-count">0 rules</span></div>
+          <div class="editor-footer"><p id="rules-help">A controlled language, not a free-form prompt. <a href="./language.html?v=e4bc180e0aec" target="_blank" rel="noopener noreferrer">Read the syntax ↗</a></p><span id="rule-count">0 rules</span></div>
           <fieldset class="flag-controls" aria-label="Regex options">
             <label class="flag-toggle"><input id="ignore-case" type="checkbox"><span class="toggle-track" aria-hidden="true"></span><span>Ignore case <code>i</code></span></label>
             <label class="flag-toggle"><input id="dot-all" type="checkbox"><span class="toggle-track" aria-hidden="true"></span><span>Dot matches newlines <code>s</code></span></label>
@@ -59,7 +59,7 @@
         </section>
 
         <section class="panel result-panel" aria-labelledby="result-title">
-          <div class="panel-heading"><span class="step-number">02</span><div><p class="kicker">THE OUTPUT</p><h2 id="result-title">Understand the pattern</h2></div></div>
+          <div class="panel-heading"><span class="step-number">02</span><div><p class="kicker">THE OUTPUT 🔎</p><h2 id="result-title">Understand the pattern</h2></div></div>
           <div class="result-label-row"><span>JAVASCRIPT REGEXP</span><span id="compile-state" class="state-pill" role="status">Ready</span></div>
           <div class="pattern-box"><code id="regex-output">Select a recipe or write a rule</code></div>
           <div class="result-actions"><span id="flags-summary">Unicode mode always on</span><button id="copy-button" class="copy-button" type="button" disabled>Copy regex <span aria-hidden="true">↗</span></button></div>
@@ -70,7 +70,7 @@
       </div>
 
       <section class="panel examples-panel" aria-labelledby="examples-title">
-        <div class="examples-heading"><div class="panel-heading"><span class="step-number">03</span><div><p class="kicker">THE PROOF</p><h2 id="examples-title">Check the edge cases</h2></div></div><div class="test-controls"><label for="match-mode">Match mode</label><select id="match-mode"><option value="full">Entire string</option><option value="search">Search anywhere</option></select><button id="add-example" class="secondary-button" type="button">+ Add example</button></div></div>
+        <div class="examples-heading"><div class="panel-heading"><span class="step-number">03</span><div><p class="kicker">THE PROOF 🧪</p><h2 id="examples-title">Check the edge cases</h2></div></div><div class="test-controls"><label for="match-mode">Match mode</label><select id="match-mode"><option value="full">Entire string</option><option value="search">Search anywhere</option></select><button id="add-example" class="secondary-button" type="button">+ Add example</button></div></div>
         <p class="examples-intro">Mark what should match. The workshop shows where the pattern agrees or surprises you.</p>
         <div id="test-summary" class="test-summary" role="status">Choose a recipe to load example strings.</div>
         <div id="test-list" class="test-list"></div>

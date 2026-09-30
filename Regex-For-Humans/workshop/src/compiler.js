@@ -1,9 +1,9 @@
-import { fail } from "./diagnostics.js?v=1ccee3c7d51c";
-import { explainNode } from "./explain.js?v=1ccee3c7d51c";
+import { fail } from "./diagnostics.js?v=e4bc180e0aec";
+import { explainNode } from "./explain.js?v=e4bc180e0aec";
 
-/** @typedef {import('./ast.js?v=1ccee3c7d51c').AtomNode} AtomNode */
-/** @typedef {import('./ast.js?v=1ccee3c7d51c').Repetition} Repetition */
-/** @typedef {import('./ast.js?v=1ccee3c7d51c').ParsedRules} ParsedRules */
+/** @typedef {import('./ast.js?v=e4bc180e0aec').AtomNode} AtomNode */
+/** @typedef {import('./ast.js?v=e4bc180e0aec').Repetition} Repetition */
+/** @typedef {import('./ast.js?v=e4bc180e0aec').ParsedRules} ParsedRules */
 
 const locationOfOptions = { line: 1, column: 1 };
 
@@ -11,7 +11,13 @@ const locationOfOptions = { line: 1, column: 1 };
 function escapeCharacter(character, inClass) {
   const codePoint = character.codePointAt(0);
   if (codePoint === undefined) throw new TypeError("Cannot escape an empty character.");
-  if (codePoint < 0x20 || codePoint === 0x7f || codePoint === 0x2028 || codePoint === 0x2029) {
+  if (
+    codePoint < 0x20 ||
+    codePoint === 0x7f ||
+    codePoint === 0x2028 ||
+    codePoint === 0x2029 ||
+    (codePoint >= 0xd800 && codePoint <= 0xdfff)
+  ) {
     return `\\u{${codePoint.toString(16)}}`;
   }
   const special = inClass ? /[\\[\]\-^/]/u : /[\\.*+?^${}()|[\]/]/u;
@@ -69,7 +75,8 @@ function normalizeOptions(options) {
   if (options === null || typeof options !== "object" || Array.isArray(options)) {
     throw new TypeError("Options must be an object.");
   }
-  const requested = "flags" in options ? (options.flags ?? "") : "";
+  let requested = "flags" in options ? options.flags : "";
+  if (requested === undefined) requested = "";
   if (
     typeof requested !== "string" ||
     /[^is]/u.test(requested) ||

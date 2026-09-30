@@ -1,5 +1,6 @@
-import { CompileError, compile } from "../index.js?v=1ccee3c7d51c";
-import { TestRunError, TestRunner } from "./test-runner.js?v=1ccee3c7d51c";
+import { CompileError, compile } from "../index.js?v=e4bc180e0aec";
+import { splitLines } from "../src/parser.js?v=e4bc180e0aec";
+import { TestRunError, TestRunner } from "./test-runner.js?v=e4bc180e0aec";
 
 /** @typedef {import("./worker-protocol.d.ts").TestCase} TestCase */
 /** @typedef {{id: string, title: string, rules: string, source: string, flags: string, matchMode: "full" | "search", positive: string[], negative: string[]}} ProductScenario */
@@ -19,6 +20,7 @@ function requiredElement(id, type) {
 
 const ui = {
   examples: requiredElement("example-list", HTMLElement),
+  recipeCount: requiredElement("recipe-count", HTMLSpanElement),
   rules: requiredElement("rules-input", HTMLTextAreaElement),
   ruleCount: requiredElement("rule-count", HTMLSpanElement),
   ignoreCase: requiredElement("ignore-case", HTMLInputElement),
@@ -42,8 +44,10 @@ let testCases = [];
 let nextTestId = 1;
 /** @type {ReturnType<typeof compile> | null} */
 let compiled = null;
+let hasEdits = false;
+let copyFeedbackTimer = 0;
 const testRunner = new TestRunner(
-  () => new Worker(new URL("./match-worker.js?v=1ccee3c7d51c", import.meta.url), { type: "module" }),
+  () => new Worker(new URL("./match-worker.js?v=e4bc180e0aec", import.meta.url), { type: "module" }),
 );
 
 /**
@@ -73,12 +77,14 @@ function setDiagnostic(message, invalidRules = false) {
   ui.rules.setAttribute("aria-invalid", String(invalidRules));
 }
 
-/** @param {number} number */
-function selectLine(number) {
-  const lines = ui.rules.value.split("\n");
+/** @param {number} number @param {number} [column] */
+function selectLine(number, column) {
+  const lines = splitLines(ui.rules.value);
   const start = lines.slice(0, number - 1).reduce((sum, line) => sum + line.length + 1, 0);
+  const end = start + (lines[number - 1]?.length ?? 0);
+  const position = column === undefined ? start : Math.min(start + column - 1, end);
   ui.rules.focus();
-  ui.rules.setSelectionRange(start, start + (lines[number - 1]?.length ?? 0));
+  ui.rules.setSelectionRange(position, column === undefined ? end : Math.min(position + 1, end));
 }
 
 /** @param {ReturnType<typeof compile>["segments"] | null} segments */
@@ -228,15 +234,21 @@ function renderTests() {
     remove.addEventListener("click", () => {
       testCases = testCases.filter((item) => item.id !== sample.id);
       renderTests();
+      updateTestResults();
+      (
+        ui.testList.querySelectorAll("textarea")[Math.min(index, testCases.length - 1)] ??
+        ui.addExample
+      ).focus();
     });
     row.append(input, expected, result, remove);
     ui.testList.append(row);
   }
-  updateTestResults();
 }
 
 function compileRules() {
-  const ruleCount = ui.rules.value.split("\n").filter((line) => line.trim()).length;
+  window.clearTimeout(copyFeedbackTimer);
+  ui.copy.textContent = "Copy regex ↗";
+  const ruleCount = splitLines(ui.rules.value).filter((line) => line.trim()).length;
   ui.ruleCount.textContent = `${ruleCount} ${ruleCount === 1 ? "rule" : "rules"}`;
   try {
     const flags = `${ui.ignoreCase.checked ? "i" : ""}${ui.dotAll.checked ? "s" : ""}`;
@@ -265,6 +277,12 @@ function compileRules() {
           : `Unexpected compiler error: ${error instanceof Error ? error.message : String(error)}`,
         true,
       );
+      if (error instanceof CompileError) {
+        const jump = make("button", "secondary-button", "Go to error");
+        jump.type = "button";
+        jump.addEventListener("click", () => selectLine(error.line, error.column));
+        ui.diagnostic.append(jump);
+      }
     }
     renderTrace(null);
   }
@@ -298,6 +316,9 @@ function useScenario(scenario) {
 
 function renderScenarioButtons() {
   ui.examples.replaceChildren();
+  ui.recipeCount.textContent = scenarios.length
+    ? `01—${String(scenarios.length).padStart(2, "0")}`
+    : "";
   scenarios.forEach((scenario, index) => {
     const button = make("button", "example-button");
     button.type = "button";
@@ -311,6 +332,9 @@ function renderScenarioButtons() {
   });
 }
 
+document.addEventListener("input", () => {
+  hasEdits = true;
+});
 ui.rules.addEventListener("input", () => {
   setScenarioSelection(scenarios.find(({ rules }) => rules === ui.rules.value)?.id ?? null);
   compileRules();
@@ -319,13 +343,16 @@ ui.ignoreCase.addEventListener("change", compileRules);
 ui.dotAll.addEventListener("change", compileRules);
 ui.matchMode.addEventListener("change", updateTestResults);
 ui.addExample.addEventListener("click", () => {
+  hasEdits = true;
   testCases.push({ id: nextTestId++, text: "", expected: true });
   renderTests();
+  updateTestResults();
   ui.testList.lastElementChild?.querySelector("textarea")?.focus();
 });
 ui.copy.addEventListener("click", async () => {
   if (!compiled) return;
-  const text = `/${compiled.source}/${compiled.flags}`;
+  const result = compiled;
+  const text = `/${result.source}/${result.flags}`;
   try {
     if (!navigator.clipboard?.writeText) throw new Error("Clipboard API unavailable");
     await Promise.race([
@@ -335,6 +362,8 @@ ui.copy.addEventListener("click", async () => {
       ),
     ]);
   } catch {
+    if (compiled !== result) return;
+    const focused = document.activeElement;
     const helper = make("textarea");
     helper.value = text;
     helper.setAttribute("aria-hidden", "true");
@@ -349,6 +378,7 @@ ui.copy.addEventListener("click", async () => {
       /* select for manual copy below */
     }
     helper.remove();
+    if (focused instanceof HTMLElement) focused.focus();
     if (!copied) {
       const selection = window.getSelection();
       if (selection) {
@@ -367,25 +397,31 @@ ui.copy.addEventListener("click", async () => {
       return;
     }
   }
+  if (compiled !== result) return;
   setDiagnostic("");
   ui.copy.textContent = "Copied ✓";
-  window.setTimeout(() => {
+  window.clearTimeout(copyFeedbackTimer);
+  copyFeedbackTimer = window.setTimeout(() => {
     ui.copy.textContent = "Copy regex ↗";
   }, 1800);
 });
 
 try {
-  const response = await fetch(new URL("../test/fixtures/product-scenarios.json?v=1ccee3c7d51c", import.meta.url));
+  const response = await fetch(new URL("../test/fixtures/product-scenarios.json?v=e4bc180e0aec", import.meta.url));
   if (!response.ok) throw new Error(`HTTP ${response.status}`);
   scenarios = await response.json();
   renderScenarioButtons();
   const requested = new URLSearchParams(window.location.search).get("example");
   const scenario = scenarios.find((item) => item.id === requested) ?? scenarios[0];
   if (!scenario) throw new Error("No example recipes are available.");
-  useScenario(scenario);
+  if (!hasEdits) useScenario(scenario);
 } catch (error) {
-  setDiagnostic(
+  const notice = make(
+    "p",
+    "empty-trace",
     `Example recipes could not load (${error instanceof Error ? error.message : String(error)}). You can still write rules manually.`,
   );
-  setCompileState("Examples unavailable", "error");
+  notice.setAttribute("role", "status");
+  ui.examples.replaceChildren(notice);
+  if (!hasEdits) ui.testSummary.textContent = "Write rules and add an example to test them.";
 }

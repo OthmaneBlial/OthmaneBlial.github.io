@@ -1,4 +1,4 @@
-import { LIMITS } from "../src/parser.js?v=1ccee3c7d51c";
+import { LIMITS } from "../src/parser.js?v=e4bc180e0aec";
 
 /** @typedef {import("./worker-protocol.d.ts").TestRequest} TestRequest */
 /** @typedef {import("./worker-protocol.d.ts").WorkerReply} WorkerReply */
@@ -13,6 +13,7 @@ self.onmessage = (event) => {
     if (
       typeof source !== "string" ||
       source.length > LIMITS.regexSourceLength ||
+      typeof flags !== "string" ||
       !/^[ims]*u$/u.test(flags)
     ) {
       throw new Error("Invalid regex test request.");

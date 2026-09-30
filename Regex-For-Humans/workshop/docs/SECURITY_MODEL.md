@@ -8,7 +8,7 @@ The browser allows compiled regex sources up to 131,072 UTF-16 code units. This 
 
 ## Browser execution
 
-The static workshop compiles rules locally. It loads its code and the four public recipe fixtures from the same origin; it does not submit typed rules or examples to an application backend, add telemetry or require an account. The hosting provider can still see ordinary requests for the static files and may keep access logs.
+The static workshop compiles rules locally. It loads its code and public recipe fixtures from the same origin; it does not submit typed rules or examples to an application backend, add telemetry or require an account. The hosting provider can still see ordinary requests for the static files and may keep access logs.
 
 Matching examples runs in a dedicated Web Worker, not on the UI thread. Each edit cancels the previous worker. The controller terminates a worker and reports an error if it has not responded within 1,200 ms. This limit protects the workshop interaction; it does not change the behavior of a regex copied into another program. Browser tests exercise an intentionally pathological expression, confirm timeout and then confirm that a normal expression still runs.
 
@@ -16,4 +16,4 @@ The UI writes rules, examples, diagnostics and explanations through `textContent
 
 ## Verification and limits
 
-Run `npm test`, `npm run build` and `npm run test:browser`. Automated accessibility and security tests cover the documented cases, while broader browser/security review and real-user tests remain separate release gates in [ROADMAP.md](../ROADMAP.md). Groups, alternation, lookaround, arbitrary regex injection and other engines are outside the version 1 language; adding any of them requires a new complexity and compatibility review.
+Run `npm test`, `npm run build` and `npm run test:browser`. Automated accessibility and security tests cover the documented cases, while broader browser/security review and real-user tests remain separate release gates in [ROADMAP.md](https://github.com/OthmaneBlial/Regex-For-Humans/blob/main/ROADMAP.md). Groups, alternation, lookaround, arbitrary regex injection and other engines are outside the version 1 language; adding any of them requires a new complexity and compatibility review.

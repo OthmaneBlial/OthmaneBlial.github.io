@@ -1,11 +1,11 @@
-import { anchor, atom } from "./ast.js?v=1ccee3c7d51c";
-import { fail } from "./diagnostics.js?v=1ccee3c7d51c";
+import { anchor, atom } from "./ast.js?v=e4bc180e0aec";
+import { fail } from "./diagnostics.js?v=e4bc180e0aec";
 
-/** @typedef {import('./ast.js?v=1ccee3c7d51c').Location} Location */
-/** @typedef {import('./ast.js?v=1ccee3c7d51c').Repetition} Repetition */
-/** @typedef {import('./ast.js?v=1ccee3c7d51c').AtomNode} AtomNode */
-/** @typedef {import('./ast.js?v=1ccee3c7d51c').RuleNode} RuleNode */
-/** @typedef {import('./ast.js?v=1ccee3c7d51c').ParsedRules} ParsedRules */
+/** @typedef {import('./ast.js?v=e4bc180e0aec').Location} Location */
+/** @typedef {import('./ast.js?v=e4bc180e0aec').Repetition} Repetition */
+/** @typedef {import('./ast.js?v=e4bc180e0aec').AtomNode} AtomNode */
+/** @typedef {import('./ast.js?v=e4bc180e0aec').RuleNode} RuleNode */
+/** @typedef {import('./ast.js?v=e4bc180e0aec').ParsedRules} ParsedRules */
 
 const MAX_SOURCE_LENGTH = 16_384;
 export const LIMITS = Object.freeze({
@@ -66,6 +66,8 @@ const SHORTHANDS = new Map([
   ["not word", "\\W"],
   ["not digit", "\\D"],
   ["digit", "\\d"],
+  ["hex digit", "[0-9A-Fa-f]"],
+  ["hex digits", "[0-9A-Fa-f]"],
   ["not space", "\\S"],
   ["space", "\\s"],
   ["digits", "\\d"],
@@ -221,7 +223,8 @@ function parseAtom(text, location, originalText) {
     return atom("wildcard", ".", repetition, location, originalText);
   for (const [phrase, token] of SHORTHANDS) {
     if (remaining.toLowerCase() === phrase) {
-      if (phrase === "digits" && !repetition) repetition = { kind: "oneOrMore" };
+      if ((phrase === "digits" || phrase === "hex digits") && !repetition)
+        repetition = { kind: "oneOrMore" };
       return atom("shorthand", token, repetition, location, originalText);
     }
   }
@@ -269,7 +272,9 @@ function parseAtom(text, location, originalText) {
     "UNKNOWN_RULE",
     `Unsupported rule: ${JSON.stringify(originalText)}.`,
     { line: location.line, column: location.column + offset },
-    "Try `line start`, `any text` or `3 digits`.",
+    /^hex(?:\s|$)/i.test(remaining)
+      ? "Use `hex digit` for one character or `hex digits` for one or more."
+      : "Try `line start`, `any text` or `3 digits`.",
   );
 }
 

@@ -20,6 +20,8 @@ Separate rules with LF, CRLF, CR, U+2028 or U+2029.
 | `not word` | `\W` | `-`, `é` | `A`, `_` |
 | `digit` | `\d` | `3` | `A`, `٣` |
 | `not digit` | `\D` | `A`, `٣` | `3` |
+| `hex digit` | `[0-9A-Fa-f]` | `0`, `9`, `a`, `F` | `g`, `٣`, `Ｆ` |
+| `hex digits` | `[0-9A-Fa-f]+` | `09aF` | empty string, `0xFF` with `start` and `end` |
 | `space` | `\s` | a space, tab or newline | `A` |
 | `not space` | `\S` | `A` | a space |
 | `digits` | `\d+` | `3`, `123` | `A` |
@@ -30,13 +32,17 @@ Separate rules with LF, CRLF, CR, U+2028 or U+2029.
 
 `word`/`not word` use JavaScript's `\w`/`\W`; `digit`/`not digit` use `\d`/`\D`. These classes are ASCII-oriented with `u`; `i` plus `u` adds a few Unicode case-folding matches to `\w`. `\w` includes `_` but excludes `é`. The misleading `alphanumeric character` aliases are rejected.
 
+`hex digit` matches one ASCII hexadecimal digit in either letter case. `hex digits` matches one or more; an exact count replaces that default, as in `6 hex digits`. They do not include a `0x` prefix, separators or non-ASCII digits. Add quoted literals for a required prefix, and anchors to validate the whole string.
+
 A literal is a JSON-style double-quoted string. Escape `"` and `\\`; the compiler escapes regex metacharacters. Character-list items must each be one Unicode code point. Quote punctuation, commas, spaces and backslashes, as in `"]", "-", ",", "\\"`. Empty literals and lists are errors.
+
+JSON strings may contain lone UTF-16 surrogates, such as `"\ud800"`. The compiler emits them as `\u{d800}` so copying a pattern or writing it as UTF-8 preserves the value. Separate surrogate items in a character list remain separate; a paired surrogate inside one quoted item represents one astral character.
 
 `start` and `line start` may prefix the first atom on the same line, with or without a comma: `start 3 digits`.
 
 ## Repetition
 
-A count applies to the next item. Put it first (`3 digits`). The compiler keeps a multi-character literal together. `digits` means one or more digits; `any text` and `text without` already match sequences. Other repetition wording is not supported.
+A count applies to the next item. Put it first (`3 digits`). The compiler keeps a multi-character literal together. `digits` and `hex digits` mean one or more of their respective characters; `any text` and `text without` already match sequences. Other repetition wording is not supported.
 
 | Form | Generated source | Matches | Does not match |
 | --- | --- | --- | --- |
@@ -47,6 +53,8 @@ Numeric counts are nonnegative integers no greater than 1,000. Anchors cannot ha
 ## Anchors and flags
 
 The compiler emits `u` by default for Unicode code-point behavior. It adds `m` when a line anchor is used. It allows `i` (ignore case) and `s` (dot matches newline) as explicit options. It rejects a mix of input anchors and line anchors in one document because JavaScript's `m` flag would change the meaning of `^` and `$` for both. Global and sticky flags (`g`, `y`) are outside version 1 because repeated `.test()` calls with them are stateful.
+
+In the JavaScript API, `options.flags` must be a string containing unique `i` and/or `s` flags. Omitting it, passing `undefined` or using an empty string keeps the defaults. Other values, including `null`, report `UNSUPPORTED_FLAGS`.
 
 Without `m`, JavaScript `^` and `$` match only the true start and end of input. For example, `start "A"` / `end` rejects `A` followed by a line break. With `m`, line anchors match line boundaries. Other regex engines may behave differently.
 
