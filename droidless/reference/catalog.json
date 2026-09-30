@@ -12,6 +12,7 @@
       "native_ui": true,
       "native_mouse": true,
       "native_keyboard_verified": false,
+      "native_close_exit_zero": true,
       "headless_scenarios": 10,
       "notes": "Basic arithmetic/native clicks. Menus/gestures/full numerical behavior unverified."
     },
@@ -26,9 +27,14 @@
     {
       "package": "org.droidless.counter",
       "origin": "droidless-fixture",
-      "status": "headless-interactive",
+      "status": "interactive-fixture",
+      "native_ui": true,
+      "native_mouse": true,
+      "native_text_verified": true,
+      "native_keyboard_verified": true,
+      "native_close_exit_zero": true,
       "source": "examples/counter",
-      "notes": "Counter/text-copy and VM conformance; not independent compatibility evidence."
+      "notes": "Native text-copy/key listener and clean close; headless VM conformance. Authored fixture, not independent APK compatibility evidence."
     }
   ]
 }

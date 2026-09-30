@@ -1,6 +1,6 @@
 # First interactive milestone evidence
 
-Host: Apple Silicon macOS. Date: 2026-09-30. Runtime: DROIDLESS Rust interpreter
+Host: Apple Silicon macOS 26.6. Date: 2026-09-30. Runtime: DROIDLESS Rust interpreter
 plus AppKit controls. Native observations and headless tests are separated below.
 
 ## Independent artifact
@@ -30,10 +30,15 @@ It is a screenshot, not a generated image; gradients/ripple rendering is partial
 process inspection found no emulator/QEMU/Waydroid/Anbox/app_process/dalvikvm.
 Runtime source contains no subprocess fallback to Android.
 
-Subsequent native Counter automation could not reattach (`cgWindowNotFound`),
-although process sampling and native tracing confirmed its live event loop/window.
-Counter native text input/close are therefore not independently verified yet.
-Headless tests prove the runtime semantics, not macOS keyboard delivery.
+The current native build was also checked with Counter. Setting the NSTextField
+value to Bonjour and clicking Copy input displayed Bonjour via the APK callback.
+A native letter key produced `key 45` through its OnKeyListener (the host's French
+keyboard layout supplied q); the handled key did not enter the text field.
+Closing its native window emitted onPause/onStop/onDestroy and process exit 0.
+KasCalc was rechecked through native 7 + 5 = 12.0, followed by the same lifecycle
+and process exit 0. Earlier reattachment/tool timeouts were resolved with the
+current executable; clipboard paste automation still timed out, so this text
+evidence covers accessibility value editing and ordinary key delivery, not paste/IME.
 
 ## Automated checks
 
@@ -41,8 +46,11 @@ Headless tests prove the runtime semantics, not macOS keyboard delivery.
 Counter APK is built from visible Java/XML using aapt/javac/D8; normal test runs
 need neither SDK nor emulator. Tests cover malformed/truncated inputs, ZIP safety,
 third-party Activity execution, arithmetic/wide values, fields/static initialization,
-arrays, inheritance/interface dispatch, explicit exceptions, GC reachability,
+arrays/covariance, inherited interface dispatch, explicit/implicit exceptions,
+17 fault paths and catch-all/finally, GC reachability,
 lifecycle, DEX clicks and EditText copy.
+Failed class-initialization tests verify wrapping versus Error propagation,
+subsequent NoClassDefFoundError and cause retention across collection.
 Local CI also runs 4,096 seeded APK/DEX/XML/resource mutations without panics.
 This is deterministic smoke coverage, not a coverage-guided fuzz campaign.
 
@@ -52,3 +60,8 @@ KeyEvent replay additionally produced 2.0 for 7 minus 5 equals from its own list
 Generated reports stay under ignored artifacts. No Android reference differential
 run, Linux build/UI test, broad compatibility or external adoption is claimed.
 No GitHub source CI was used.
+
+The macOS ARM64 release archive is extracted into a clean temporary directory;
+its bundled CLI launches the Counter APK and its DEX Increment callback returns
+the expected 1. The archive excludes the third-party calculator. The package
+check is part of `python3 tools/package-macos.py`.
