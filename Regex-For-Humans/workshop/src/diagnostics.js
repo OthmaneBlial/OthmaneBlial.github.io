@@ -1,4 +1,4 @@
-/** @typedef {import('./ast.js?v=80b704ff10b9').Location} Location */
+/** @typedef {import('./ast.js?v=6d5c1fd6b45d').Location} Location */
 
 export class CompileError extends Error {
   /** @param {string} code @param {string} message @param {Location} location @param {string=} hint */

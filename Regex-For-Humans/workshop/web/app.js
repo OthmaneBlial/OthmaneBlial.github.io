@@ -1,6 +1,6 @@
-import { CompileError, compile } from "../index.js?v=80b704ff10b9";
-import { splitLines } from "../src/parser.js?v=80b704ff10b9";
-import { TestRunError, TestRunner } from "./test-runner.js?v=80b704ff10b9";
+import { CompileError, compile } from "../index.js?v=6d5c1fd6b45d";
+import { splitLines } from "../src/parser.js?v=6d5c1fd6b45d";
+import { TestRunError, TestRunner } from "./test-runner.js?v=6d5c1fd6b45d";
 
 /** @typedef {import("./worker-protocol.d.ts").TestCase} TestCase */
 /** @typedef {{id: string, title: string, note: string, rules: string, source: string, flags: string, matchMode: "full" | "search", positive: string[], negative: string[]}} ProductScenario */
@@ -53,7 +53,7 @@ let hasEdits =
 let copyFeedbackTimer = 0;
 let copySequence = 0;
 const testRunner = new TestRunner(
-  () => new Worker(new URL("./match-worker.js?v=80b704ff10b9", import.meta.url), { type: "module" }),
+  () => new Worker(new URL("./match-worker.js?v=6d5c1fd6b45d", import.meta.url), { type: "module" }),
 );
 
 /**
@@ -217,6 +217,7 @@ function renderTests() {
     input.placeholder = "Empty string";
     input.maxLength = 2048;
     input.setAttribute("aria-label", `Example ${number} string`);
+    input.setAttribute("aria-describedby", "example-limits");
     input.addEventListener("input", () => {
       sample.text = input.value;
       input.rows = Math.min(3, Math.max(1, sample.text.split("\n").length));
@@ -433,7 +434,7 @@ ui.copy.addEventListener("click", async () => {
 if (hasEdits) compileRules();
 
 try {
-  const response = await fetch(new URL("../test/fixtures/product-scenarios.json?v=80b704ff10b9", import.meta.url));
+  const response = await fetch(new URL("../test/fixtures/product-scenarios.json?v=6d5c1fd6b45d", import.meta.url));
   if (!response.ok) throw new Error(`HTTP ${response.status}`);
   scenarios = await response.json();
   renderScenarioButtons();

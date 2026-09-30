@@ -1,4 +1,4 @@
-/** @param {import('./ast.js?v=80b704ff10b9').Repetition|null} repetition */
+/** @param {import('./ast.js?v=6d5c1fd6b45d').Repetition|null} repetition */
 function repetitionText(repetition) {
   if (!repetition) return "";
   switch (repetition.kind) {
@@ -11,7 +11,7 @@ function repetitionText(repetition) {
   }
 }
 
-/** @param {import('./ast.js?v=80b704ff10b9').RuleNode} node @param {string} flags @param {boolean} [hasFollowingRule] */
+/** @param {import('./ast.js?v=6d5c1fd6b45d').RuleNode} node @param {string} flags @param {boolean} [hasFollowingRule] */
 export function explainNode(node, flags, hasFollowingRule = false) {
   if (node.kind === "anchor") {
     if (node.mode === "line") {
