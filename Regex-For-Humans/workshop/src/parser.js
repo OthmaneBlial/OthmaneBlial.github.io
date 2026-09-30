@@ -1,12 +1,12 @@
-import { anchor, atom } from "./ast.js?v=6ec11eb41e55";
-import { fail } from "./diagnostics.js?v=6ec11eb41e55";
-import { quoteText } from "./display.js?v=6ec11eb41e55";
+import { anchor, atom } from "./ast.js?v=9852920edc06";
+import { fail } from "./diagnostics.js?v=9852920edc06";
+import { quoteText } from "./display.js?v=9852920edc06";
 
-/** @typedef {import('./ast.js?v=6ec11eb41e55').Location} Location */
-/** @typedef {import('./ast.js?v=6ec11eb41e55').Repetition} Repetition */
-/** @typedef {import('./ast.js?v=6ec11eb41e55').AtomNode} AtomNode */
-/** @typedef {import('./ast.js?v=6ec11eb41e55').RuleNode} RuleNode */
-/** @typedef {import('./ast.js?v=6ec11eb41e55').ParsedRules} ParsedRules */
+/** @typedef {import('./ast.js?v=9852920edc06').Location} Location */
+/** @typedef {import('./ast.js?v=9852920edc06').Repetition} Repetition */
+/** @typedef {import('./ast.js?v=9852920edc06').AtomNode} AtomNode */
+/** @typedef {import('./ast.js?v=9852920edc06').RuleNode} RuleNode */
+/** @typedef {import('./ast.js?v=9852920edc06').ParsedRules} ParsedRules */
 
 const MAX_SOURCE_LENGTH = 16_384;
 export const LIMITS = Object.freeze({
