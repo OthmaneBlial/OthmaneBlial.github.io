@@ -1,19 +1,20 @@
-import { quoteText } from "./display.js?v=a84d595f6e86";
+import { quoteText } from "./display.js?v=75205a6533e7";
 
-/** @param {import('./ast.js?v=a84d595f6e86').Repetition|null} repetition */
-function repetitionText(repetition) {
+/** @param {import('./ast.js?v=75205a6533e7').Repetition|null} repetition @param {boolean} optional */
+function repetitionText(repetition, optional) {
   if (!repetition) return "";
   switch (repetition.kind) {
     case "exact":
       return ` Exactly ${repetition.min} times.`;
     case "range":
+      if (optional && repetition.min === 0 && repetition.max === 1) return " Optional.";
       return ` Between ${repetition.min} and ${repetition.max} times (inclusive).`;
     default:
       throw new TypeError("Unexpected repetition kind.");
   }
 }
 
-/** @param {import('./ast.js?v=a84d595f6e86').RuleNode} node @param {string} flags @param {boolean} [hasFollowingRule] */
+/** @param {import('./ast.js?v=75205a6533e7').RuleNode} node @param {string} flags @param {boolean} [hasFollowingRule] */
 export function explainNode(node, flags, hasFollowingRule = false) {
   if (node.kind === "anchor") {
     if (node.mode === "line") {
@@ -23,6 +24,7 @@ export function explainNode(node, flags, hasFollowingRule = false) {
   }
 
   const caseNote = flags.includes("i") ? ", ignoring case (i)" : "";
+  const optional = /^optional\s/iu.test(node.text);
 
   if (
     node.atomType === "shorthand" &&
@@ -64,6 +66,8 @@ export function explainNode(node, flags, hasFollowingRule = false) {
       return `Exactly ${node.repetition.min} ${items} (${range}).${caseFoldingNote}`;
     }
     if (node.repetition?.kind === "range") {
+      if (optional && node.repetition.min === 0 && node.repetition.max === 1)
+        return `Zero or one ${item} (${range}).${caseFoldingNote}`;
       return `Between ${node.repetition.min} and ${node.repetition.max} ${item}s (${range}), inclusive.${caseFoldingNote}`;
     }
     return `One ${item} (${range}).${caseFoldingNote}`;
@@ -102,5 +106,5 @@ export function explainNode(node, flags, hasFollowingRule = false) {
     default:
       throw new TypeError("Unknown atom type.");
   }
-  return meaning + repetitionText(node.repetition);
+  return meaning + repetitionText(node.repetition, optional);
 }
