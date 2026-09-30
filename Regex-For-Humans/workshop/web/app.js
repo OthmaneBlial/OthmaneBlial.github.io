@@ -1,9 +1,9 @@
-import { CompileError, compile } from "../index.js?v=78f6f6f9664a";
-import { splitLines } from "../src/parser.js?v=78f6f6f9664a";
-import { TestRunError, TestRunner } from "./test-runner.js?v=78f6f6f9664a";
+import { CompileError, compile } from "../index.js?v=63a290f9605b";
+import { splitLines } from "../src/parser.js?v=63a290f9605b";
+import { TestRunError, TestRunner } from "./test-runner.js?v=63a290f9605b";
 
 /** @typedef {import("./worker-protocol.d.ts").TestCase} TestCase */
-/** @typedef {{id: string, title: string, rules: string, source: string, flags: string, matchMode: "full" | "search", positive: string[], negative: string[]}} ProductScenario */
+/** @typedef {{id: string, title: string, note: string, rules: string, source: string, flags: string, matchMode: "full" | "search", positive: string[], negative: string[]}} ProductScenario */
 /** @typedef {"success" | "neutral" | "error"} CompileState */
 
 /**
@@ -21,6 +21,7 @@ function requiredElement(id, type) {
 const ui = {
   examples: requiredElement("example-list", HTMLElement),
   recipeCount: requiredElement("recipe-count", HTMLSpanElement),
+  recipeNote: requiredElement("recipe-note", HTMLParagraphElement),
   rules: requiredElement("rules-input", HTMLTextAreaElement),
   ruleCount: requiredElement("rule-count", HTMLSpanElement),
   ignoreCase: requiredElement("ignore-case", HTMLInputElement),
@@ -47,7 +48,7 @@ let compiled = null;
 let hasEdits = false;
 let copyFeedbackTimer = 0;
 const testRunner = new TestRunner(
-  () => new Worker(new URL("./match-worker.js?v=78f6f6f9664a", import.meta.url), { type: "module" }),
+  () => new Worker(new URL("./match-worker.js?v=63a290f9605b", import.meta.url), { type: "module" }),
 );
 
 /**
@@ -293,6 +294,8 @@ function compileRules() {
 
 /** @param {string|null} id */
 function setScenarioSelection(id) {
+  ui.recipeNote.textContent = scenarios.find((scenario) => scenario.id === id)?.note ?? "";
+  ui.recipeNote.hidden = !ui.recipeNote.textContent;
   for (const button of ui.examples.querySelectorAll("button")) {
     button.setAttribute("aria-current", String(button.dataset.scenario === id));
   }
@@ -409,7 +412,7 @@ ui.copy.addEventListener("click", async () => {
 });
 
 try {
-  const response = await fetch(new URL("../test/fixtures/product-scenarios.json?v=78f6f6f9664a", import.meta.url));
+  const response = await fetch(new URL("../test/fixtures/product-scenarios.json?v=63a290f9605b", import.meta.url));
   if (!response.ok) throw new Error(`HTTP ${response.status}`);
   scenarios = await response.json();
   renderScenarioButtons();
