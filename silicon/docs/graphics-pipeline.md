@@ -38,8 +38,10 @@ color space; sRGB texture decoding, anisotropy, multiple color attachments and
 MSAA are future work.
 
 The scalar reference and optional NEON/AVX2 coverage paths both process four
-adjacent pixel masks with identical i64 arithmetic. Shader execution still runs
-one fragment at a time. Parallel rendering assigns disjoint horizontal bands to
+adjacent pixel masks with identical i64 arithmetic. With the SIMD backend,
+recorded SIR fragment shaders execute surviving lanes as a masked group of four;
+vertex shaders and native closures retain scalar execution. See [SIMD masks](simd.md).
+Parallel rendering assigns disjoint horizontal bands to
 Rust scoped threads, each using local 16x16 coverage tiles. Draw order is preserved
 within every band, including depth, stencil and blending. Geometry setup repeats
 per band; full primitive binning and persistent workers remain optimization work.

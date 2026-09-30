@@ -5,7 +5,9 @@ instructions, 64 vec4 registers, 16 input slots, 64 uniform slots, 16 texture
 slots and 8 outputs. Validation rejects undefined/out-of-range register reads,
 invalid swizzles, nonfinite constants and missing output 0. Deserialization calls
 the same validation. Execution checks resource bindings and rejects nonfinite
-arithmetic results with the instruction number.
+arithmetic results with the instruction number. The independent scalar executor
+is the reference. `Program::execute4` executes masked four-fragment packets with
+component registers spanning fragments; see [SIMD execution](simd.md).
 
 Operations: input/uniform/constant loads; component add/subtract/multiply/divide
 and power; min/max/mix; dot3/dot4; length/normalization of 1..4 components;

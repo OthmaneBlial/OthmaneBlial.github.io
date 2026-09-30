@@ -1,4 +1,50 @@
-# Performance snapshot
+# Performance measurements
+
+## 0.4 masked shader packets
+
+The [alternating raw record](../benchmarks/apple-m2-packets-2026-09-30.json)
+compares the released 0.3 executable with 0.4 scalar/SIMD, with one/four workers.
+Each configuration ran twice in reversed order, with 3 warmups, 20 timed frames,
+960×640 and scene time 0. No build or other SILICON test/render ran concurrently.
+The host remains a shared Apple M2 desktop, macOS 26.6; these are observations for
+this scene, not general hardware or x86 performance claims.
+
+Both rounds are shown as first / second; FPS uses total timed rendering duration.
+
+| Backend | Workers | Median ms | p95 ms | Render FPS |
+| --- | ---: | ---: | ---: | ---: |
+| 0.3 coverage SIMD | 1 | 441.68 / 442.52 | 442.44 / 443.01 | 2.26 / 2.26 |
+| 0.4 scalar | 1 | 457.48 / 456.45 | 458.63 / 457.48 | 2.19 / 2.19 |
+| 0.4 coverage + shader SIMD | 1 | 285.01 / 283.41 | 285.84 / 284.24 | 3.51 / 3.53 |
+| 0.3 coverage SIMD | 4 | 224.95 / 224.94 | 225.28 / 225.45 | 4.44 / 4.44 |
+| 0.4 scalar | 4 | 230.96 / 231.16 | 231.68 / 232.31 | 4.33 / 4.32 |
+| 0.4 coverage + shader SIMD | 4 | 142.05 / 141.40 | 142.32 / 142.85 | 7.04 / 7.06 |
+
+On this run, the combined SIMD backend's median render time was about 38–39% lower
+than 0.4 scalar, and about 35–37% lower than the released 0.3 coverage-only SIMD.
+The comparison includes rendering, command creation/validation and packet setup;
+it is not a shader-only microbenchmark. Scalar remains the default and SIMD opt-in.
+
+The 0.4 record identifies clean source commit
+`87836287eb8dff700618b0e807e8f325ff97f95d` and executable SHA-256
+`83862ae62f119a901ee258c4f3c8e833753df63fd1091637843028043b3fa2fe`.
+It also retains chronological per-frame samples for 0.4, commands, CLI metadata,
+logical work counters and both instrumented profiles. The older CLI exposes
+aggregate timings only; per-frame baseline samples are unavailable.
+
+At one worker, the scene executes 388,295 active fragments in 113,864 shader
+packets: 85.3% occupancy. Logical SIR work remains 50,716,583 instructions and
+388,295 texture samples, including vertex-stage work. Both executables reproduce
+the approved 960×640 lit-scene PNG byte-for-byte. Profile clocks differ between
+one call per fragment and one call per packet; use the uninstrumented timings
+above for comparisons. See [SIMD implementation and mask checks](simd.md).
+
+```sh
+cargo build --release -p silicon-cli
+python3 benchmarks/compare.py --baseline /path/to/silicon-0.3.0/silicon --frames 20 --output output/comparison.json
+```
+
+## 0.3 historical snapshot
 
 Collected 2026-09-30T22:25:48+0200 on Apple M2, macOS-26.6-arm64-arm-64bit-Mach-O; rustc 1.95.0 (59807616e 2026-04-14).
 
@@ -60,7 +106,7 @@ and scalar coverage/one worker. Render throughput was 3.44/3.66 FPS followed by
 4.01/4.00 FPS. The old executable also showed substantial timing variation.
 These samples do not establish either a regression or a speedup.
 
-## Final executable check
+## 0.3 packaged executable check
 
 The [packaged 0.3 CLI record](../benchmarks/apple-m2-release-0.3-2026-09-30.json) was measured after the
 capture-directory correction, from clean commit `88aa3b781df9fab4dfebe2f936b4a784ec3ff75b`. At 960×640,

@@ -15,9 +15,12 @@ recursion limit. These are validation bounds, not a process-wide allocation
 budget. Captures can duplicate resources, and the software GPU is not a hardened
 sandbox for hostile shader workloads.
 
-The only project unsafe code is the architecture-specific coverage helper:
-NEON uses fixed two-lane loads/stores; AVX2 has a runtime feature check and no
-caller-controlled memory loads. Framebuffer bands belong to separate workers.
+Project unsafe code is isolated to architecture-specific coverage and shader
+lane helpers. NEON/SSE2 shader arithmetic loads/stores fixed four-element host
+arrays; neither exposes guest pointers. NEON is mandatory on ARM64 and SSE2 on
+x86-64. The separate AVX2 coverage path has a runtime feature check. Packet
+execution validates masks, checks only active input/LOD resources, and rejects
+nonfinite active values after every instruction. Framebuffer bands belong to separate workers.
 Tests compare SIMD and parallel framebuffer bytes to the scalar reference. A
 deterministic mutation check exercises 500 clipped triangles and invalid SIR
 register operands. SPIR-V tests exercise 1500 deterministic binary mutations,

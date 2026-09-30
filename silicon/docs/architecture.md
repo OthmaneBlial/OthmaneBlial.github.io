@@ -45,4 +45,8 @@ Upload means constructing an owned resource; dynamic subrange updates, device
 memory budgets, resource deletion and GPU asynchronous fences are not implemented.
 Submission is synchronous. The first command model deliberately permits one
 complete render pass; malformed streams are rejected before the framebuffer is
-cleared. Per-shader runtime errors include command and instruction context.
+cleared. Per-shader runtime errors include command and instruction context. With the
+opt-in SIMD backend, the rasterizer prepares up to four adjacent surviving
+fragments, executes their SIR program once as a masked packet, and applies
+attachment operations separately in lane order. Native closures and vertex
+shaders retain scalar execution. See [SIMD and masks](simd.md).
