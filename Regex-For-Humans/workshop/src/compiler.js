@@ -1,9 +1,10 @@
-import { fail } from "./diagnostics.js?v=6d5c1fd6b45d";
-import { explainNode } from "./explain.js?v=6d5c1fd6b45d";
+import { fail } from "./diagnostics.js?v=7b1413f875e8";
+import { escapeDirectionControls } from "./display.js?v=7b1413f875e8";
+import { explainNode } from "./explain.js?v=7b1413f875e8";
 
-/** @typedef {import('./ast.js?v=6d5c1fd6b45d').AtomNode} AtomNode */
-/** @typedef {import('./ast.js?v=6d5c1fd6b45d').Repetition} Repetition */
-/** @typedef {import('./ast.js?v=6d5c1fd6b45d').ParsedRules} ParsedRules */
+/** @typedef {import('./ast.js?v=7b1413f875e8').AtomNode} AtomNode */
+/** @typedef {import('./ast.js?v=7b1413f875e8').Repetition} Repetition */
+/** @typedef {import('./ast.js?v=7b1413f875e8').ParsedRules} ParsedRules */
 
 const locationOfOptions = { line: 1, column: 1 };
 
@@ -69,7 +70,7 @@ function atomSource(node) {
     default:
       throw new TypeError("Unknown atom type.");
   }
-  return source + repetitionSource(node.repetition);
+  return escapeDirectionControls(source + repetitionSource(node.repetition));
 }
 
 /** @param {unknown} options */

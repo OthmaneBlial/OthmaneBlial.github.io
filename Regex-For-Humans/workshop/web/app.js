@@ -1,6 +1,7 @@
-import { CompileError, compile } from "../index.js?v=6d5c1fd6b45d";
-import { splitLines } from "../src/parser.js?v=6d5c1fd6b45d";
-import { TestRunError, TestRunner } from "./test-runner.js?v=6d5c1fd6b45d";
+import { CompileError, compile } from "../index.js?v=7b1413f875e8";
+import { escapeDirectionControls } from "../src/display.js?v=7b1413f875e8";
+import { splitLines } from "../src/parser.js?v=7b1413f875e8";
+import { TestRunError, TestRunner } from "./test-runner.js?v=7b1413f875e8";
 
 /** @typedef {import("./worker-protocol.d.ts").TestCase} TestCase */
 /** @typedef {{id: string, title: string, note: string, rules: string, source: string, flags: string, matchMode: "full" | "search", positive: string[], negative: string[]}} ProductScenario */
@@ -53,7 +54,7 @@ let hasEdits =
 let copyFeedbackTimer = 0;
 let copySequence = 0;
 const testRunner = new TestRunner(
-  () => new Worker(new URL("./match-worker.js?v=6d5c1fd6b45d", import.meta.url), { type: "module" }),
+  () => new Worker(new URL("./match-worker.js?v=7b1413f875e8", import.meta.url), { type: "module" }),
 );
 
 /**
@@ -115,7 +116,13 @@ function renderTrace(segments) {
     );
     button.append(make("code", "trace-fragment", segment.source));
     const detail = make("span");
-    detail.append(make("span", "trace-text", `${segment.line}:${segment.column} ${segment.text}`));
+    detail.append(
+      make(
+        "span",
+        "trace-text",
+        `${segment.line}:${segment.column} ${escapeDirectionControls(segment.text)}`,
+      ),
+    );
     detail.append(make("span", "trace-meaning", segment.explanation));
     button.append(detail);
     button.addEventListener("click", () => selectLine(segment.line));
@@ -434,7 +441,7 @@ ui.copy.addEventListener("click", async () => {
 if (hasEdits) compileRules();
 
 try {
-  const response = await fetch(new URL("../test/fixtures/product-scenarios.json?v=6d5c1fd6b45d", import.meta.url));
+  const response = await fetch(new URL("../test/fixtures/product-scenarios.json?v=7b1413f875e8", import.meta.url));
   if (!response.ok) throw new Error(`HTTP ${response.status}`);
   scenarios = await response.json();
   renderScenarioButtons();

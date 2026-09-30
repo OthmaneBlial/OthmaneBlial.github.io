@@ -1,11 +1,12 @@
-import { anchor, atom } from "./ast.js?v=6d5c1fd6b45d";
-import { fail } from "./diagnostics.js?v=6d5c1fd6b45d";
+import { anchor, atom } from "./ast.js?v=7b1413f875e8";
+import { fail } from "./diagnostics.js?v=7b1413f875e8";
+import { quoteText } from "./display.js?v=7b1413f875e8";
 
-/** @typedef {import('./ast.js?v=6d5c1fd6b45d').Location} Location */
-/** @typedef {import('./ast.js?v=6d5c1fd6b45d').Repetition} Repetition */
-/** @typedef {import('./ast.js?v=6d5c1fd6b45d').AtomNode} AtomNode */
-/** @typedef {import('./ast.js?v=6d5c1fd6b45d').RuleNode} RuleNode */
-/** @typedef {import('./ast.js?v=6d5c1fd6b45d').ParsedRules} ParsedRules */
+/** @typedef {import('./ast.js?v=7b1413f875e8').Location} Location */
+/** @typedef {import('./ast.js?v=7b1413f875e8').Repetition} Repetition */
+/** @typedef {import('./ast.js?v=7b1413f875e8').AtomNode} AtomNode */
+/** @typedef {import('./ast.js?v=7b1413f875e8').RuleNode} RuleNode */
+/** @typedef {import('./ast.js?v=7b1413f875e8').ParsedRules} ParsedRules */
 
 const MAX_SOURCE_LENGTH = 16_384;
 export const LIMITS = Object.freeze({
@@ -319,7 +320,7 @@ function parseAtom(text, location, originalText) {
 
   fail(
     "UNKNOWN_RULE",
-    `Unsupported rule: ${JSON.stringify(originalText)}.`,
+    `Unsupported rule: ${quoteText(originalText)}.`,
     { line: location.line, column: location.column + offset },
     /^hex(?:\s|$)/i.test(remaining)
       ? "Use `hex digit` for one character or `hex digits` for one or more."
