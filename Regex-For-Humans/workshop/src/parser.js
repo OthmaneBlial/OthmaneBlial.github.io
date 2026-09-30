@@ -1,11 +1,11 @@
-import { anchor, atom } from "./ast.js?v=40ec881b7e08";
-import { fail } from "./diagnostics.js?v=40ec881b7e08";
+import { anchor, atom } from "./ast.js?v=5dde987c6d90";
+import { fail } from "./diagnostics.js?v=5dde987c6d90";
 
-/** @typedef {import('./ast.js?v=40ec881b7e08').Location} Location */
-/** @typedef {import('./ast.js?v=40ec881b7e08').Repetition} Repetition */
-/** @typedef {import('./ast.js?v=40ec881b7e08').AtomNode} AtomNode */
-/** @typedef {import('./ast.js?v=40ec881b7e08').RuleNode} RuleNode */
-/** @typedef {import('./ast.js?v=40ec881b7e08').ParsedRules} ParsedRules */
+/** @typedef {import('./ast.js?v=5dde987c6d90').Location} Location */
+/** @typedef {import('./ast.js?v=5dde987c6d90').Repetition} Repetition */
+/** @typedef {import('./ast.js?v=5dde987c6d90').AtomNode} AtomNode */
+/** @typedef {import('./ast.js?v=5dde987c6d90').RuleNode} RuleNode */
+/** @typedef {import('./ast.js?v=5dde987c6d90').ParsedRules} ParsedRules */
 
 const MAX_SOURCE_LENGTH = 16_384;
 export const LIMITS = Object.freeze({
@@ -75,11 +75,18 @@ const SHORTHANDS = new Map([
 
 const START_ANCHOR = /^(line start|start)(?:,\s*|\s+|$)/i;
 const DUPLICATE_START_ANCHOR_MESSAGE = "Use only one start anchor.";
+// Recognize malformed numeric tokens so parseCount owns their diagnostics.
+const COUNT_PREFIX = /^([+-]?(?:\p{Nd}|\.\p{Nd})\S*)(?:\s+|$)/u;
 
 /** @param {string} count @param {Location} location @returns {number} */
 function parseCount(count, location) {
   if (!/^[0-9]+$/u.test(count)) {
-    fail("INVALID_REPETITION", "Counts must be nonnegative integers.", location);
+    fail(
+      "INVALID_REPETITION",
+      "Counts must be nonnegative integers.",
+      location,
+      "Write counts with digits 0–9 only, such as `3`.",
+    );
   }
   const number = Number(count);
   if (!Number.isSafeInteger(number) || number > LIMITS.repetition) {
@@ -180,7 +187,7 @@ function parseAtom(text, location, originalText) {
   /** @type {Repetition|null} */
   let repetition = null;
   let offset = 0;
-  const count = /^([0-9]+)\s+/u.exec(remaining);
+  const count = COUNT_PREFIX.exec(remaining);
   const range = /^(between\s+)(\S+)(\s+and\s+)(\S+)\s+/iu.exec(remaining);
   if (range) {
     const min = parseCount(range[2], {
@@ -214,8 +221,16 @@ function parseAtom(text, location, originalText) {
     );
   }
   remaining = remaining.slice(offset);
+  if (!remaining) {
+    fail(
+      "INVALID_REPETITION",
+      "A count needs an item.",
+      location,
+      "Use `3 digits`, with the count before the item.",
+    );
+  }
   const anotherRange = /^between(?:\s|$)/iu.test(remaining);
-  if (/^[0-9]+\s+/u.test(remaining) || anotherRange) {
+  if (COUNT_PREFIX.test(remaining) || anotherRange) {
     fail(
       "DUPLICATE_REPETITION",
       range || anotherRange
