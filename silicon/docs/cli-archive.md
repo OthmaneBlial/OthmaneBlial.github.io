@@ -1,4 +1,4 @@
-# SILICON 0.5.0 — macOS ARM64 CLI
+# SILICON 0.6.0 — macOS ARM64 CLI
 
 A GPU built entirely in software. This experimental pre-1.0 CLI generates every
 scene pixel through SILICON's Rust CPU pipeline. The window presents the finished
@@ -14,6 +14,7 @@ From the extracted directory:
 ./silicon info
 ./silicon render spirv_showcase --backend simd --threads 4 --output output/scene.png
 ./silicon render spirv_cutout --backend simd --threads 4 --output output/cutout.png --capture output/frame.silicon
+./silicon render shadow_showcase --backend simd --threads 4 --output output/shadows.png --capture output/shadows.silicon
 ./silicon replay output/frame.silicon --output output/replay.png
 ./silicon debug-pixel spirv_cutout --pixel 320,200
 ./silicon run spirv_showcase --backend simd --threads 4
@@ -32,9 +33,10 @@ External shader fixtures are included for inspection and headless cube rendering
 ```
 
 The SPIR-V 1.0 subset supports acyclic structured selections, Phi/local merges,
-scalar bool, early return and fragment discard. General GLSL/SPIR-V conformance,
-loops, switches, Vulkan/OpenGL drivers, compute, JIT, MSAA, shadow maps and games
-remain unsupported. Captures embed lowered SIR and owned resources; newer SIR
+scalar bool, early return, fragment discard and scalar explicit-LOD texture
+sampling. `shadow_showcase` samples a SILICON-generated CPU depth map. General
+GLSL/SPIR-V conformance, loops, switches, Vulkan/OpenGL drivers, compute, JIT,
+MSAA and games remain unsupported. Captures embed lowered SIR and owned resources; newer SIR
 instructions require this CLI or newer. Older version-1 captures remain readable.
 
 Documentation and benchmark records are included in `docs/` and `benchmarks/`.

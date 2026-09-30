@@ -14,7 +14,7 @@ The committed original GLSL sources and their `.spv` fixtures are in
 recompile fixtures, not to build, test or run SILICON:
 
 ```sh
-for shader in textured.vert textured.frag arithmetic.frag lit.vert lit.frag locals.frag control.frag; do
+for shader in textured.vert textured.frag arithmetic.frag lit.vert lit.frag shadow.frag locals.frag control.frag; do
   glslangValidator -V --target-env vulkan1.0 -o "assets/shaders/$shader.spv" "assets/shaders/$shader"
   spirv-val --target-env vulkan1.0 "assets/shaders/$shader.spv"
 done
@@ -27,6 +27,7 @@ spirv-val --target-env vulkan1.0 assets/shaders/boolean.locals.frag.spv
 cargo run --release -p silicon-cli -- inspect-shader assets/shaders/textured.vert.spv
 cargo run --release -p silicon-cli -- render-shaders assets/shaders/textured.vert.spv assets/shaders/textured.frag.spv --output output/glsl.png
 cargo run --release -p silicon-cli -- run spirv_showcase
+cargo run --release -p silicon-cli -- render shadow_showcase --backend simd --threads 4 --output output/shadows.png --capture output/shadows.silicon
 cargo run --release -p silicon-cli -- run spirv_cutout --backend simd
 cargo run --release -p silicon-cli -- run spirv_cube
 cargo run --release -p silicon-cli -- render spirv_cube --capture output/glsl.silicon
@@ -45,6 +46,11 @@ commands; replay does not need the original SPIR-V files.
 
 ![CPU cutout: discarded region, sampled checks and constant-color branch](../assets/screenshots/spirv_cutout.png)
 
+`shadow_showcase` runs the same 30-draw OBJ scene twice: SILICON first writes a
+512×512 CPU depth attachment from a fixed directional light, then the GLSL
+fragment shader samples that serialized `Depth32Float` texture to shade visible
+surfaces. Both passes use SILICON's rasterizer; no external renderer contributes pixels.
+
 ## Accepted subset
 
 - One `main` entry point: Vertex or Fragment, one `void()` function, acyclic structured
@@ -61,7 +67,8 @@ commands; replay does not need the original SPIR-V files.
   `OpCompositeExtract`, `OpVectorShuffle`, float/vector/matrix/sampler `OpCopyObject`.
 - `OpFAdd`, `OpFSub`, `OpFMul`, `OpFDiv`, `OpVectorTimesScalar`,
   uniform `OpMatrixTimesVector`, `OpDot`, combined sampler2D
-  `OpImageSampleImplicitLod`.
+  `OpImageSampleImplicitLod`, and `OpImageSampleExplicitLod` with a scalar LOD and
+  the Lod-only image operand mask.
 - `OpBranch`, scalar-bool `OpBranchConditional`, `OpSelectionMerge None`,
   float/vector/bool `OpPhi`, fragment `OpKill`, and early `OpReturn`.
   Scalar float ordered comparisons (equal, unequal, less/greater, inclusive forms),
@@ -97,6 +104,9 @@ approximation even in divergent branches, not hardware derivative conformance.
 | Set 0, binding B | One float/vector/mat4 member at offset 0; float/vector uses SIR uniform 4B, col-major mat4 with stride 16 uses rows 4B..4B+3 |
 | Set 1, binding B | Combined sampler2D at texture slot B |
 
+The shadow shader binds the single-level 32-bit float depth texture at set 1,
+binding 1, and supplies its light matrix and bias at uniform bindings 6 and 7.
+
 Bindings are 0..15. This adapter maps mathematical matrices to SIR's row-major
 vectors; it does **not** interpret raw Vulkan descriptor memory. The cube binds
 MVP at 0, model matrix at 1, normal matrix at 2, material color at 3,
@@ -111,13 +121,18 @@ hardware quad derivative/conformance claim. Vector padding is zeroed; vec2/3
 division uses safe unused lanes and preserves the actual components. Scalar
 results are splatted into SIR registers.
 
+Explicit-LOD sampling accepts vec2 coordinates (including transformed
+coordinates) and one scalar LOD; offsets, gradients, and other image operands
+remain unsupported.
+
 ## Limits and evidence
 
 At most 1 MiB per module, ID bound 65536, 256 virtual SSA temporaries, 64
 simultaneously live runtime registers and 4096 SIR instructions. Dead temporaries
 are recycled after their last use, without increasing VM storage. Selection nesting is bounded to 64 and main to 4096 SPIR-V instructions. There are no
 loops, switches, function calls, integer arithmetic, specialization constants,
-SSBOs, storage images, explicit LOD, transformed sample coordinates, compute,
+SSBOs, storage images, implicit samples from transformed coordinates,
+explicit sample offsets/gradients, compute,
 WGSL or GLSL compiler. Unreachable blocks are accepted only as isolated `OpUnreachable` merge blocks.
 Conditional targets must be distinct; overlapping regions, back edges and branches
 outside their structured region fail. Phi pairs must match all predecessors,
@@ -132,7 +147,9 @@ and implicit sampling against numeric expectations. The lit scene matches native
 coverage/depth exactly and colors within one RGBA8 quantization unit; captures
 and scalar/SIMD/four-band replays match exactly. A local-variable fixture checks
 snapshot aliases, component stores and padded scalar/vec2/vec3 uniform resources.
-The cutout GLSL fixture and its SPIRV-Tools SSA version check nested discard,
+The shadow fixture verifies explicit-LOD sampling of a serialized depth pass and
+pixel/depth/stencil identity across scalar and SIMD four-band replay. The cutout
+GLSL fixture and its SPIRV-Tools SSA version check nested discard,
 conditional texture calls, local/Phi reconvergence and early returns against
 an independent numeric reference for every lane mask. Boolean fixtures cover
 logical math and selection. Captured cutout color/depth/stencil match exactly

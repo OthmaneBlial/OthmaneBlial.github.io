@@ -17,11 +17,12 @@ long-term. This repository ships working stages and labels the remaining work.
 | SIMD / tiled parallel rendering | Scalar reference, NEON/AVX2 coverage4, NEON/SSE masked four-fragment SIR, disjoint bands, bitwise equivalence tests |
 | SPIR-V / ordinary GLSL | Strict binary parser + typed SIR lowering, textured cube, lit OBJ showcase, local/uniform and arithmetic fixtures |
 | Divergent shader control flow | Nested GLSL selections, local/Phi merges, early return/discard; all-mask VM and attachment tests |
+| Shadow maps / explicit-LOD sampling | Two SILICON CPU raster passes; 512×512 `Depth32Float` texture sampled by ordinary GLSL/SPIR-V; scalar and SIMD replay match |
 | Regression images | Approved SIR cube PNG; cross-platform tolerance <=1 channel step |
 
 Next: strengthen stencil/transparency integration demos; profile and optimize
-interpolation and shader costs; extend the [current SPIR-V subset](spirv.md)
-using ordinary shader fixtures; then shadow mapping and a more advanced scene.
+interpolation and shader costs; expand the [current SPIR-V subset](spirv.md)
+beyond the explicit-LOD shadow sample, then build a more advanced scene.
 
 Future research: multiple targets, full tile binning, loops and broader control flow,
 compute/storage/shared-memory/atomics, cubemaps, PBR/normal maps, MSAA, JIT,

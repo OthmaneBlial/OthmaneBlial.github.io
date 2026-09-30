@@ -35,7 +35,9 @@ Two shader paths exist. Native Rust closures power the lit OBJ showcase. The
 through SIR. `spirv_cube` translates externally compiled GLSL vertex/fragment
 SPIR-V into SIR. `spirv_showcase` uses the same scene geometry and materials as
 the native reference, with both lit GLSL stages running in SIR. Captures embed
-lowered programs and support all three command scenes.
+lowered programs and support the recorded command scenes. `shadow_showcase` first
+rasterizes the OBJ scene from a light into a CPU depth texture, then samples it in
+a second ordinary GLSL/SIR color pass.
 Native closure scenes cannot be serialized. The [SPIR-V subset](spirv.md) has
 explicit type, control-flow, binding and sampling restrictions.
 
