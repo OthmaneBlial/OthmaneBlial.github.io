@@ -14,13 +14,20 @@ The committed original GLSL sources and their `.spv` fixtures are in
 recompile fixtures, not to build, test or run SILICON:
 
 ```sh
-for shader in textured.vert textured.frag arithmetic.frag lit.vert lit.frag locals.frag; do
+for shader in textured.vert textured.frag arithmetic.frag lit.vert lit.frag locals.frag control.frag; do
   glslangValidator -V --target-env vulkan1.0 -o "assets/shaders/$shader.spv" "assets/shaders/$shader"
   spirv-val --target-env vulkan1.0 "assets/shaders/$shader.spv"
 done
+spirv-opt --ssa-rewrite assets/shaders/control.frag.spv -o assets/shaders/control.ssa.frag.spv
+spirv-val --target-env vulkan1.0 assets/shaders/control.ssa.frag.spv
+glslangValidator -V --target-env vulkan1.0 -Os assets/shaders/boolean.frag -o assets/shaders/boolean.frag.spv
+glslangValidator -V --target-env vulkan1.0 assets/shaders/boolean.frag -o assets/shaders/boolean.locals.frag.spv
+spirv-val --target-env vulkan1.0 assets/shaders/boolean.frag.spv
+spirv-val --target-env vulkan1.0 assets/shaders/boolean.locals.frag.spv
 cargo run --release -p silicon-cli -- inspect-shader assets/shaders/textured.vert.spv
 cargo run --release -p silicon-cli -- render-shaders assets/shaders/textured.vert.spv assets/shaders/textured.frag.spv --output output/glsl.png
 cargo run --release -p silicon-cli -- run spirv_showcase
+cargo run --release -p silicon-cli -- run spirv_cutout --backend simd
 cargo run --release -p silicon-cli -- run spirv_cube
 cargo run --release -p silicon-cli -- render spirv_cube --capture output/glsl.silicon
 cargo run --release -p silicon-cli -- replay output/glsl.silicon
@@ -36,23 +43,30 @@ triangles as the native lit OBJ reference: normal transforms, Lambert/Blinn-Phon
 directional/point lights, fog and display transfer execute in the VM. Captures embed the **lowered SIR**, resources and
 commands; replay does not need the original SPIR-V files.
 
+![CPU cutout: discarded region, sampled checks and constant-color branch](../assets/screenshots/spirv_cutout.png)
+
 ## Accepted subset
 
-- One `main` entry point: Vertex or Fragment, one `void()` function, one basic
-  block, `OpReturn`, Logical/GLSL450 memory model, Shader capability. Fragment
+- One `main` entry point: Vertex or Fragment, one `void()` function, acyclic structured
+  selection blocks, `OpReturn`, Logical/GLSL450 memory model, Shader capability. Fragment
   requires OriginUpperLeft. GLSL.std.450 supports `Pow`, `FMin`, `FMax`,
   `FClamp`, `FMix`, `Length` and `Normalize` with checked operand counts/types.
-- Float32 scalars, vec2/3/4, mat4; int32 constants only for member indices;
+- Float32 scalars, vec2/3/4, mat4 and scalar bool; int32 constants only for member indices;
   logical input/output/uniform/sampler/Function pointers; one-member structs.
-  Float/vector locals must be declared first in the block and initialized before
-  loading. Stores preserve previous SSA snapshots; component stores require an
+  Float/vector/bool locals must be declared first in the entry block and initialized
+  on every live path before loading. Stores preserve previous SSA snapshots; component stores require an
   initialized vector. Local matrices and guest pointer memory are unsupported.
-- `OpConstant`, vector `OpConstantComposite`, `OpVariable`, `OpLoad`, `OpStore`,
-  constant-index uniform-member and uniform/local vector-component `OpAccessChain`, vector `OpCompositeConstruct`,
+- `OpConstant`, `OpConstantTrue/False`, vector `OpConstantComposite`, `OpVariable`, `OpLoad`, `OpStore`,
+  constant-index uniform-member and input/uniform/local vector-component `OpAccessChain`, vector `OpCompositeConstruct`,
   `OpCompositeExtract`, `OpVectorShuffle`, float/vector/matrix/sampler `OpCopyObject`.
 - `OpFAdd`, `OpFSub`, `OpFMul`, `OpFDiv`, `OpVectorTimesScalar`,
   uniform `OpMatrixTimesVector`, `OpDot`, combined sampler2D
   `OpImageSampleImplicitLod`.
+- `OpBranch`, scalar-bool `OpBranchConditional`, `OpSelectionMerge None`,
+  float/vector/bool `OpPhi`, fragment `OpKill`, and early `OpReturn`.
+  Scalar float ordered comparisons (equal, unequal, less/greater, inclusive forms),
+  `OpFUnordNotEqual`, scalar bool logical equal/unequal/and/or/not, and `OpSelect`
+  with a scalar bool and matching scalar float/bool alternatives.
 - Location, Binding, DescriptorSet, Block, BuiltIn Position, ColMajor,
   MatrixStride and Offset decorations, checked against the binding contract.
   Debug names and source-language metadata are read without executing them.
@@ -63,6 +77,13 @@ operand types, pointer storage/pointees, decorations, functions, blocks and
 interfaces. It rejects unsupported instructions with file (CLI), binary word
 offset, opcode name/number and reason. This deliberately is not a replacement
 for `spirv-val`'s complete SPIR-V/Vulkan validation rules.
+
+`spirv_cutout` uses the SSA fixture directly. No optimization tool runs at runtime.
+Branch lowering preserves per-path SSA availability and definite local/output
+initialization, then uses SIR masks and reconvergence. Float comparisons retain
+SIR's finite-value policy; NaN/infinity are rejected rather than assigned general
+GLSL unordered-comparison behavior. Implicit LOD remains SILICON's analytic UV
+approximation even in divergent branches, not hardware derivative conformance.
 
 ## Binding contract
 
@@ -94,10 +115,14 @@ results are splatted into SIR registers.
 
 At most 1 MiB per module, ID bound 65536, 256 virtual SSA temporaries, 64
 simultaneously live runtime registers and 4096 SIR instructions. Dead temporaries
-are recycled after their last use, without increasing VM storage. There are no
-branches, phi, loops, function calls, integer arithmetic, specialization constants,
+are recycled after their last use, without increasing VM storage. Selection nesting is bounded to 64 and main to 4096 SPIR-V instructions. There are no
+loops, switches, function calls, integer arithmetic, specialization constants,
 SSBOs, storage images, explicit LOD, transformed sample coordinates, compute,
-WGSL or GLSL compiler. Unsupported cases return errors. Zero-length normalization
+WGSL or GLSL compiler. Unreachable blocks are accepted only as isolated `OpUnreachable` merge blocks.
+Conditional targets must be distinct; overlapping regions, back edges and branches
+outside their structured region fail. Phi pairs must match all predecessors,
+with values available on the named paths. General arbitrary CFGs and vector bool
+are unsupported. Unsupported cases return errors. Zero-length normalization
 returns zero; undefined GLSL inputs do not establish a conformance guarantee.
 
 Tests compare compiled GLSL with an independent hand-written SIR reference at
@@ -106,7 +131,13 @@ A second GLSL fixture checks vector shuffle, add/sub/divide, dot, scalar multipl
 and implicit sampling against numeric expectations. The lit scene matches native
 coverage/depth exactly and colors within one RGBA8 quantization unit; captures
 and scalar/SIMD/four-band replays match exactly. A local-variable fixture checks
-snapshot aliases, component stores and padded scalar/vec2/vec3 uniform resources. Header/ID/type/storage/
+snapshot aliases, component stores and padded scalar/vec2/vec3 uniform resources.
+The cutout GLSL fixture and its SPIRV-Tools SSA version check nested discard,
+conditional texture calls, local/Phi reconvergence and early returns against
+an independent numeric reference for every lane mask. Boolean fixtures cover
+logical math and selection. Captured cutout color/depth/stencil match exactly
+across scalar, packet and four-band execution. Targeted CFG/Phi/path mutations
+and another 1000 binary mutations exercise control-flow rejection. Header/ID/type/storage/
 decoration/block errors, truncated inputs, byte-swapped modules and 1500 bounded
 deterministic binary mutations are checked. Mutation coverage is not exhaustive
 fuzzing or a hostile-shader sandbox guarantee.

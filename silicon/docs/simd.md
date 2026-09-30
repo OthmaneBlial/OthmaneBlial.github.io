@@ -11,7 +11,7 @@ framebuffer edges, worker band boundaries, stencil and early depth rejection for
 a four-bit mask. Only surviving lanes run a shader. These are horizontal packets,
 not 2×2 derivative quads: implicit texture LOD still uses the renderer's existing
 analytic neighboring interpolation. Fragments own distinct pixels; triangle and
-draw order are preserved. Blend, depth, stencil and native discard run per pixel.
+draw order are preserved. Blend, depth, stencil and shader discard run per pixel.
 Rejected debug pixels retain their rejection trace without executing a shader.
 
 `Program::execute4` stores 64 component registers in structure-of-arrays form:
@@ -20,7 +20,9 @@ shared; add/subtract/multiply/divide, dots, matrix transforms, lengths and
 normalization use four-float arithmetic. Full division/square root and the scalar
 operation order are retained. Power, min/max, clamp and texture callbacks use
 scalar operations. Vertex shaders and native Rust shader closures remain scalar.
-There are no branches or divergent shader execution yet.
+Structured selections carry true/false lane masks and reconverge at `EndIf`.
+Nested branches preserve masked register writes; returned/discarded lanes stay
+terminated. See [SIR control flow](sir.md).
 
 Masks outside 0..15 fail. A zero mask accesses no resources. Inactive inputs,
 LODs, samples, outputs and traces are never consumed. Finite-value checks run
@@ -36,7 +38,9 @@ counts and sample coordinates for every mask, including zero normals and scalar
 normalization. It tests infinity/NaN in every component/lane, finite extremes and
 subnormals, missing resources and inactive lanes. Recorded SIR/GLSL cube and lit
 showcase replay compare exact color, depth and stencil with one/four workers at
-an odd framebuffer size. CI runs these checks on ARM64 and x86-64.
+an odd framebuffer size. The control-flow tests also compare nested divergence, Phi/local merges, early
+return, discard, skipped resources, mutable registers and attachment preservation.
+CI runs these checks on ARM64 and x86-64.
 
 ```sh
 cargo run --release -p silicon-cli -- render spirv_showcase --backend simd
@@ -45,8 +49,10 @@ cargo run --release -p silicon-cli -- benchmark spirv_showcase --backend simd --
 ```
 
 Packet count and active-lane count measure actual fragment VM work. Occupancy is
-`active / (4 × packets)`; logical SIR instruction/sample counters still count
-individual shader invocations, not dispatches. Native scenes report no SIR
+`active / (4 × packets)`; SIR instruction/sample counters count actual
+per-lane executions, excluding skipped branches. They include vertex work repeated
+by each band; submitted geometry counts remain logical, counted once.
+`discarded` counts shaded invocations that produce no attachment writes. Native scenes report no SIR
 packets. Profile clocks instrument packet calls and can change timing overhead;
 use uninstrumented benchmarks for performance comparisons. Reports preserve
 chronological frame times, scene dimensions/time, backend, warmups and workers.

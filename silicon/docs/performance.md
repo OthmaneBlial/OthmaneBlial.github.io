@@ -1,5 +1,75 @@
 # Performance measurements
 
+## 0.5 control-flow checkpoint
+
+The [pre-optimization alternating record](../benchmarks/apple-m2-control-before-counters-2026-10-01.json)
+uses the released 0.4 executable and control-flow source commit
+`204361fbf8f53e7a534c3fa8342020f2870abb72`, each with 3 warmups,
+20 timed frames, 960×640, scene time 0, and reversed configuration order.
+It retains per-frame reports from both executables. No other SILICON build,
+test or render ran during this comparison; the Mac remained a shared desktop.
+
+Large drift occurred in both executables: baseline SIMD/one-worker median
+changed from 1390.28 to 795.06 ms; the initial control-flow SIMD median changed
+from 2480.51 to 1038.73 ms. These runs do not establish a regression or speedup,
+and are not the final packaged executable's measurements.
+
+A subsequent three-second native CPU sample of the initial 0.5 executable
+(SHA-256 `764fb7b5f10c214d35252e636cc280c0cd502a50cad0342869c3b83c28775f9d`)
+and ARM64 disassembly located repeated result-counter loads/adds/stores in the
+fragment VM. The counter update now groups consecutive instructions with the same execution
+mask and applies each run's count to its active fragments, while traces use a
+combined mask to bypass the per-lane tracing loop when disabled.
+All-mask scalar/packet tests retain identical instruction totals and traces.
+A [histogram-counter trial](../benchmarks/apple-m2-control-histogram-2026-10-01.json)
+did not demonstrate a gain on the cutout scene and was replaced by this run
+counter; the raw unsuccessful measurement is retained.
+
+The [final run-counter cutout record](../benchmarks/apple-m2-control-runs-2026-10-01.json)
+uses clean source commit `4233bfc7b259a2af16e5a09f55a9be0255ee2bd5`
+and executable SHA-256 `e2ea05675672264772ff8364c3bf76a351da8dc5538ee601646c1b55085e2a9f`.
+With 30 timed frames, 3 warmups, 960×640 and time 0, scalar/four-worker median
+was 40.38 / 44.32 ms and SIMD/four-worker median was 32.69 / 35.71 ms;
+render throughput was 22.92 / 21.21 and 27.55 / 25.99 FPS respectively.
+The pre-counter SIMD baseline moved from 50.35 to 30.42 ms, so these samples
+do not establish a reliable optimization gain. This small 12-triangle cube is
+not a performance result for the 12,588-triangle lit scene or window presentation.
+Each timed cutout frame shades 75,726 invocations, discards
+8,970 and performs 39,344 texture lookups. Reports retain actual dynamic work counts and per-frame samples.
+
+## 0.5 packaged executable check
+
+The [final lit-scene alternating record](../benchmarks/apple-m2-release-0.5-2026-10-01.json)
+uses that exact packaged executable and the released 0.4 baseline. Each
+configuration ran twice in reversed order, with 3 warmups, 20 timed frames,
+960×640 and time 0. The working tree contained only the preceding benchmark
+record and documentation updates; rendering/compiler code and the binary
+were unchanged from `4233bfc7b259a2af16e5a09f55a9be0255ee2bd5`.
+No other SILICON build, test or render ran concurrently.
+
+Both rounds are shown as first / second; FPS uses total timed rendering duration.
+
+| Backend | Workers | Median ms | p95 ms | Render FPS |
+| --- | ---: | ---: | ---: | ---: |
+| 0.4 SIMD | 1 | 1392.58 / 337.62 | 1789.04 / 497.79 | 0.75 / 2.78 |
+| 0.5 scalar | 1 | 1163.89 / 829.79 | 1592.69 / 925.21 | 0.82 / 1.23 |
+| 0.5 SIMD | 1 | 752.52 / 1790.48 | 920.86 / 3250.68 | 1.33 / 0.51 |
+| 0.4 SIMD | 4 | 335.95 / 943.32 | 464.95 / 1388.05 | 2.89 / 1.10 |
+| 0.5 scalar | 4 | 583.26 / 552.63 | 771.12 / 1815.28 | 1.68 / 1.21 |
+| 0.5 SIMD | 4 | 367.94 / 552.64 | 517.59 / 1014.78 | 2.62 / 1.64 |
+
+The baseline itself varies by several times between rounds. These shared-host
+samples establish neither a reliable speedup nor a regression. They exclude
+presentation and image export. The earlier 0.4 results below are historical
+measurements from a different run, not a current 0.5 performance promise.
+
+Each frame submits 12,588 triangles, shades 388,295 fragments, performs
+388,295 texture lookups and discards none. Actual SIR instructions total
+51,127,254 with one worker or 53,073,966 with four: worker bands repeat vertex
+execution, while submitted geometry is counted once. SIMD uses 113,864 packets
+at 85.3% active-lane occupancy. Scalar/SIMD output remains byte-identical to
+the approved lit-scene PNG.
+
 ## 0.4 masked shader packets
 
 The [alternating raw record](../benchmarks/apple-m2-packets-2026-09-30.json)

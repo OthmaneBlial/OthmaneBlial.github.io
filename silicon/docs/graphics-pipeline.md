@@ -22,7 +22,7 @@ of the larger texel-space derivative length. Unlike hardware derivative quads,
 these neighbors do not depend on other shader invocations.
 
 Depth and stencil comparisons precede fragment shading. This is valid because
-shader interfaces cannot write depth or produce side effects. A discarded Rust
+shader interfaces cannot write depth or produce side effects. A discarded Rust or SIR
 fragment does not write depth or stencil-pass results. Failed stencil/depth
 comparisons execute their respective stencil operations. All eight depth compare
 modes, stencil masks, saturation/invert operations and replace/alpha/add/multiply
