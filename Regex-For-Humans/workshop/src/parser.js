@@ -1,12 +1,12 @@
-import { anchor, atom } from "./ast.js?v=ff82c00d9561";
-import { fail } from "./diagnostics.js?v=ff82c00d9561";
-import { quoteText } from "./display.js?v=ff82c00d9561";
+import { anchor, atom } from "./ast.js?v=6ec11eb41e55";
+import { fail } from "./diagnostics.js?v=6ec11eb41e55";
+import { quoteText } from "./display.js?v=6ec11eb41e55";
 
-/** @typedef {import('./ast.js?v=ff82c00d9561').Location} Location */
-/** @typedef {import('./ast.js?v=ff82c00d9561').Repetition} Repetition */
-/** @typedef {import('./ast.js?v=ff82c00d9561').AtomNode} AtomNode */
-/** @typedef {import('./ast.js?v=ff82c00d9561').RuleNode} RuleNode */
-/** @typedef {import('./ast.js?v=ff82c00d9561').ParsedRules} ParsedRules */
+/** @typedef {import('./ast.js?v=6ec11eb41e55').Location} Location */
+/** @typedef {import('./ast.js?v=6ec11eb41e55').Repetition} Repetition */
+/** @typedef {import('./ast.js?v=6ec11eb41e55').AtomNode} AtomNode */
+/** @typedef {import('./ast.js?v=6ec11eb41e55').RuleNode} RuleNode */
+/** @typedef {import('./ast.js?v=6ec11eb41e55').ParsedRules} ParsedRules */
 
 const MAX_SOURCE_LENGTH = 16_384;
 export const LIMITS = Object.freeze({
@@ -300,10 +300,12 @@ function parseAtom(text, location, rawLine) {
       });
     }
     if (!quoted.value) {
-      fail("EMPTY_LITERAL", "A literal cannot be empty.", {
-        line: location.line,
-        column: location.column + offset,
-      });
+      fail(
+        "EMPTY_LITERAL",
+        "A literal cannot be empty.",
+        { line: location.line, column: location.column + offset },
+        "Use `start` and `end` on separate lines to match an empty string.",
+      );
     }
     return atom("literal", quoted.value, repetition, location, text);
   }
