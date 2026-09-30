@@ -1,6 +1,6 @@
-import { CompileError, compile } from "../index.js?v=c2cae36392e4";
-import { splitLines } from "../src/parser.js?v=c2cae36392e4";
-import { TestRunError, TestRunner } from "./test-runner.js?v=c2cae36392e4";
+import { CompileError, compile } from "../index.js?v=97b9777419b3";
+import { splitLines } from "../src/parser.js?v=97b9777419b3";
+import { TestRunError, TestRunner } from "./test-runner.js?v=97b9777419b3";
 
 /** @typedef {import("./worker-protocol.d.ts").TestCase} TestCase */
 /** @typedef {{id: string, title: string, note: string, rules: string, source: string, flags: string, matchMode: "full" | "search", positive: string[], negative: string[]}} ProductScenario */
@@ -45,11 +45,15 @@ let testCases = [];
 let nextTestId = 1;
 /** @type {ReturnType<typeof compile> | null} */
 let compiled = null;
-let hasEdits = false;
+let hasEdits =
+  ui.rules.value !== "" ||
+  ui.ignoreCase.checked ||
+  ui.dotAll.checked ||
+  ui.matchMode.value !== "full";
 let copyFeedbackTimer = 0;
 let copySequence = 0;
 const testRunner = new TestRunner(
-  () => new Worker(new URL("./match-worker.js?v=c2cae36392e4", import.meta.url), { type: "module" }),
+  () => new Worker(new URL("./match-worker.js?v=97b9777419b3", import.meta.url), { type: "module" }),
 );
 
 /**
@@ -355,6 +359,7 @@ ui.addExample.addEventListener("click", () => {
   updateTestResults();
   ui.testList.lastElementChild?.querySelector("textarea")?.focus();
 });
+ui.addExample.disabled = false;
 ui.copy.addEventListener("click", async () => {
   if (!compiled) return;
   const result = compiled;
@@ -421,8 +426,10 @@ ui.copy.addEventListener("click", async () => {
   }, 1800);
 });
 
+if (hasEdits) compileRules();
+
 try {
-  const response = await fetch(new URL("../test/fixtures/product-scenarios.json?v=c2cae36392e4", import.meta.url));
+  const response = await fetch(new URL("../test/fixtures/product-scenarios.json?v=97b9777419b3", import.meta.url));
   if (!response.ok) throw new Error(`HTTP ${response.status}`);
   scenarios = await response.json();
   renderScenarioButtons();
