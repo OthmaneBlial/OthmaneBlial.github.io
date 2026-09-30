@@ -1,12 +1,12 @@
-import { anchor, atom } from "./ast.js?v=20b652d53e71";
-import { fail } from "./diagnostics.js?v=20b652d53e71";
-import { quoteText } from "./display.js?v=20b652d53e71";
+import { anchor, atom } from "./ast.js?v=da3c45a4d138";
+import { fail } from "./diagnostics.js?v=da3c45a4d138";
+import { quoteText } from "./display.js?v=da3c45a4d138";
 
-/** @typedef {import('./ast.js?v=20b652d53e71').Location} Location */
-/** @typedef {import('./ast.js?v=20b652d53e71').Repetition} Repetition */
-/** @typedef {import('./ast.js?v=20b652d53e71').AtomNode} AtomNode */
-/** @typedef {import('./ast.js?v=20b652d53e71').RuleNode} RuleNode */
-/** @typedef {import('./ast.js?v=20b652d53e71').ParsedRules} ParsedRules */
+/** @typedef {import('./ast.js?v=da3c45a4d138').Location} Location */
+/** @typedef {import('./ast.js?v=da3c45a4d138').Repetition} Repetition */
+/** @typedef {import('./ast.js?v=da3c45a4d138').AtomNode} AtomNode */
+/** @typedef {import('./ast.js?v=da3c45a4d138').RuleNode} RuleNode */
+/** @typedef {import('./ast.js?v=da3c45a4d138').ParsedRules} ParsedRules */
 
 const MAX_SOURCE_LENGTH = 16_384;
 export const LIMITS = Object.freeze({
@@ -175,12 +175,13 @@ function readCharacterList(text, location, rawLine) {
         column: location.column + index,
       });
     }
+    const commaIndex = index;
     index += 1;
     while (/\s/u.test(text[index] ?? "")) index += 1;
     if (index === text.length) {
       fail("INVALID_CHARACTER_LIST", "A character list cannot end with a comma.", {
         line: location.line,
-        column: location.column + index,
+        column: location.column + commaIndex,
       });
     }
   }
