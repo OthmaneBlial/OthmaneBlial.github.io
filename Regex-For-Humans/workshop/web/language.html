@@ -7,9 +7,9 @@
   <meta name="description" content="A quick reference for the controlled-English rules supported by Regex For Humans.">
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self'; img-src 'self' data:; object-src 'none'; base-uri 'self'">
   <title>Language guide — Regex For Humans</title>
-  <link rel="icon" type="image/svg+xml" href="./favicon.svg?v=655f52461a0a">
-  <link rel="stylesheet" href="./styles.css?v=655f52461a0a">
-  <link rel="stylesheet" href="./language.css?v=655f52461a0a">
+  <link rel="icon" type="image/svg+xml" href="./favicon.svg?v=20b652d53e71">
+  <link rel="stylesheet" href="./styles.css?v=20b652d53e71">
+  <link rel="stylesheet" href="./language.css?v=20b652d53e71">
 </head>
 <body>
   <a class="skip-link" href="#main">Skip to syntax</a>
@@ -86,6 +86,7 @@ end</code></pre><div><span>GENERATES</span><code>/^ABC\d{3}$/u</code><p><strong>
         </tbody></table></div>
         <p>Both counts must be integers from 0 to 1,000, with the upper count at least the lower. <code>between 0 and 1 "-"</code> allows an optional hyphen. A multi-character literal stays together: <code>between 2 and 4 "AB"</code> generates <code>(?:AB){2,4}</code>.</p>
         <p>Write counts with digits <code>0</code>–<code>9</code>; leading zeros are allowed. A sign, fraction, scientific notation or localized digit produces a count error. Every count needs an item: use <code>3 digits</code>, rather than <code>3</code> alone.</p>
+        <p>The workshop’s Entire string mode requires a complete match; Search anywhere shows the first match, including an empty one if the pattern permits it. Search positions start at 0 and count UTF-16 code units: a match after <code>😀</code> starts at 2. These modes do not change the copied regex.</p>
         <p>Ranges try the largest count first, then backtrack if the next rule needs it. Add <code>start</code> and <code>end</code> to validate the entire string; an unanchored range can find part of a longer string.</p>
       </section>
 
