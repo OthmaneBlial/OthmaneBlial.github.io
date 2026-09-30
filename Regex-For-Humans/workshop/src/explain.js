@@ -1,6 +1,6 @@
-import { quoteText } from "./display.js?v=1c9eb40fef93";
+import { quoteText } from "./display.js?v=599a41fe15de";
 
-/** @param {import('./ast.js?v=1c9eb40fef93').Repetition|null} repetition */
+/** @param {import('./ast.js?v=599a41fe15de').Repetition|null} repetition */
 function repetitionText(repetition) {
   if (!repetition) return "";
   switch (repetition.kind) {
@@ -13,7 +13,7 @@ function repetitionText(repetition) {
   }
 }
 
-/** @param {import('./ast.js?v=1c9eb40fef93').RuleNode} node @param {string} flags @param {boolean} [hasFollowingRule] */
+/** @param {import('./ast.js?v=599a41fe15de').RuleNode} node @param {string} flags @param {boolean} [hasFollowingRule] */
 export function explainNode(node, flags, hasFollowingRule = false) {
   if (node.kind === "anchor") {
     if (node.mode === "line") {
