@@ -1,12 +1,12 @@
-import { anchor, atom } from "./ast.js?v=9852920edc06";
-import { fail } from "./diagnostics.js?v=9852920edc06";
-import { quoteText } from "./display.js?v=9852920edc06";
+import { anchor, atom } from "./ast.js?v=a671f17cb68b";
+import { fail } from "./diagnostics.js?v=a671f17cb68b";
+import { quoteText } from "./display.js?v=a671f17cb68b";
 
-/** @typedef {import('./ast.js?v=9852920edc06').Location} Location */
-/** @typedef {import('./ast.js?v=9852920edc06').Repetition} Repetition */
-/** @typedef {import('./ast.js?v=9852920edc06').AtomNode} AtomNode */
-/** @typedef {import('./ast.js?v=9852920edc06').RuleNode} RuleNode */
-/** @typedef {import('./ast.js?v=9852920edc06').ParsedRules} ParsedRules */
+/** @typedef {import('./ast.js?v=a671f17cb68b').Location} Location */
+/** @typedef {import('./ast.js?v=a671f17cb68b').Repetition} Repetition */
+/** @typedef {import('./ast.js?v=a671f17cb68b').AtomNode} AtomNode */
+/** @typedef {import('./ast.js?v=a671f17cb68b').RuleNode} RuleNode */
+/** @typedef {import('./ast.js?v=a671f17cb68b').ParsedRules} ParsedRules */
 
 const MAX_SOURCE_LENGTH = 16_384;
 export const LIMITS = Object.freeze({
@@ -73,6 +73,7 @@ const SHORTHANDS = new Map([
   ["hex digits", "[0-9A-Fa-f]"],
   ["not space", "\\S"],
   ["space", "\\s"],
+  ["spaces", "\\s"],
   ["digits", "\\d"],
 ]);
 
@@ -280,7 +281,7 @@ function parseAtom(text, location, rawLine) {
   if (/^any character$/i.test(remaining)) return atom("wildcard", ".", repetition, location, text);
   for (const [phrase, token] of SHORTHANDS) {
     if (remaining.toLowerCase() === phrase) {
-      if (["digits", "hex digits", "letters"].includes(phrase) && !repetition)
+      if (["digits", "hex digits", "letters", "spaces"].includes(phrase) && !repetition)
         repetition = { kind: "oneOrMore" };
       return atom("shorthand", token, repetition, location, text);
     }
@@ -340,7 +341,9 @@ function parseAtom(text, location, rawLine) {
         ? "Use `hex digit` for one character or `hex digits` for one or more."
         : /^letters?(?:\s|$)/i.test(remaining)
           ? "Use `letter` for one ASCII letter or `letters` for one or more."
-          : "Try `line start`, `any text` or `3 digits`.",
+          : /^spaces?(?:\s|$)/i.test(remaining)
+            ? "Use `space` for one whitespace character or `spaces` for one or more, including line breaks."
+            : "Try `line start`, `any text` or `3 digits`.",
   );
 }
 
