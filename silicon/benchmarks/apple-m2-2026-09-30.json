@@ -1,0 +1,266 @@
+{
+  "timestamp": "2026-09-30T20:59:48+0200",
+  "binary_sha256": "4f72c8a351ee3cbf69d7ffdc2fdb411c28023a682d687b17834b2bbcc08c3d35",
+  "git_head": "84a33f672ab31c72fa2b472e0b63d01cae3f2f2d",
+  "worktree_dirty": true,
+  "platform": "macOS-26.6-arm64-arm-64bit-Mach-O",
+  "cpu": "arm",
+  "rustc": "rustc 1.95.0 (59807616e 2026-04-14)",
+  "samples": [
+    {
+      "scene": "textured_cube",
+      "backend": "scalar",
+      "threads": 1,
+      "command": [
+        "target/release/silicon",
+        "benchmark",
+        "textured_cube",
+        "--frames",
+        "20",
+        "--backend",
+        "scalar",
+        "--threads",
+        "1"
+      ],
+      "stdout": "SILICON benchmark | scene textured_cube | 960x640 | 20 frames | 3 warmups\nmedian_ms,p95_ms,render_fps,shaded_pixels_per_s,triangles_per_s\n49.2965,74.7541,20.37,1542733,244\n"
+    },
+    {
+      "scene": "textured_cube",
+      "backend": "simd",
+      "threads": 1,
+      "command": [
+        "target/release/silicon",
+        "benchmark",
+        "textured_cube",
+        "--frames",
+        "20",
+        "--backend",
+        "simd",
+        "--threads",
+        "1"
+      ],
+      "stdout": "SILICON benchmark | scene textured_cube | 960x640 | 20 frames | 3 warmups\nmedian_ms,p95_ms,render_fps,shaded_pixels_per_s,triangles_per_s\n43.9793,69.8523,20.61,1560987,247\n"
+    },
+    {
+      "scene": "textured_cube",
+      "backend": "scalar",
+      "threads": 2,
+      "command": [
+        "target/release/silicon",
+        "benchmark",
+        "textured_cube",
+        "--frames",
+        "20",
+        "--backend",
+        "scalar",
+        "--threads",
+        "2"
+      ],
+      "stdout": "SILICON benchmark | scene textured_cube | 960x640 | 20 frames | 3 warmups\nmedian_ms,p95_ms,render_fps,shaded_pixels_per_s,triangles_per_s\n22.5887,48.4757,39.41,2984292,473\n"
+    },
+    {
+      "scene": "textured_cube",
+      "backend": "scalar",
+      "threads": 4,
+      "command": [
+        "target/release/silicon",
+        "benchmark",
+        "textured_cube",
+        "--frames",
+        "20",
+        "--backend",
+        "scalar",
+        "--threads",
+        "4"
+      ],
+      "stdout": "SILICON benchmark | scene textured_cube | 960x640 | 20 frames | 3 warmups\nmedian_ms,p95_ms,render_fps,shaded_pixels_per_s,triangles_per_s\n22.4569,26.9256,45.75,3464694,549\n"
+    },
+    {
+      "scene": "textured_cube",
+      "backend": "simd",
+      "threads": 4,
+      "command": [
+        "target/release/silicon",
+        "benchmark",
+        "textured_cube",
+        "--frames",
+        "20",
+        "--backend",
+        "simd",
+        "--threads",
+        "4"
+      ],
+      "stdout": "SILICON benchmark | scene textured_cube | 960x640 | 20 frames | 3 warmups\nmedian_ms,p95_ms,render_fps,shaded_pixels_per_s,triangles_per_s\n22.8580,27.0263,44.30,3354361,532\n"
+    },
+    {
+      "scene": "shader_cube",
+      "backend": "scalar",
+      "threads": 1,
+      "command": [
+        "target/release/silicon",
+        "benchmark",
+        "shader_cube",
+        "--frames",
+        "20",
+        "--backend",
+        "scalar",
+        "--threads",
+        "1"
+      ],
+      "stdout": "SILICON benchmark | scene shader_cube | 960x640 | 20 frames | 3 warmups\nmedian_ms,p95_ms,render_fps,shaded_pixels_per_s,triangles_per_s\n53.1550,115.5639,16.90,1279500,203\n"
+    },
+    {
+      "scene": "shader_cube",
+      "backend": "simd",
+      "threads": 1,
+      "command": [
+        "target/release/silicon",
+        "benchmark",
+        "shader_cube",
+        "--frames",
+        "20",
+        "--backend",
+        "simd",
+        "--threads",
+        "1"
+      ],
+      "stdout": "SILICON benchmark | scene shader_cube | 960x640 | 20 frames | 3 warmups\nmedian_ms,p95_ms,render_fps,shaded_pixels_per_s,triangles_per_s\n55.2054,122.5557,14.92,1130042,179\n"
+    },
+    {
+      "scene": "shader_cube",
+      "backend": "scalar",
+      "threads": 2,
+      "command": [
+        "target/release/silicon",
+        "benchmark",
+        "shader_cube",
+        "--frames",
+        "20",
+        "--backend",
+        "scalar",
+        "--threads",
+        "2"
+      ],
+      "stdout": "SILICON benchmark | scene shader_cube | 960x640 | 20 frames | 3 warmups\nmedian_ms,p95_ms,render_fps,shaded_pixels_per_s,triangles_per_s\n24.2961,34.0831,38.44,2910802,461\n"
+    },
+    {
+      "scene": "shader_cube",
+      "backend": "scalar",
+      "threads": 4,
+      "command": [
+        "target/release/silicon",
+        "benchmark",
+        "shader_cube",
+        "--frames",
+        "20",
+        "--backend",
+        "scalar",
+        "--threads",
+        "4"
+      ],
+      "stdout": "SILICON benchmark | scene shader_cube | 960x640 | 20 frames | 3 warmups\nmedian_ms,p95_ms,render_fps,shaded_pixels_per_s,triangles_per_s\n34.1409,56.7236,28.22,2137334,339\n"
+    },
+    {
+      "scene": "shader_cube",
+      "backend": "simd",
+      "threads": 4,
+      "command": [
+        "target/release/silicon",
+        "benchmark",
+        "shader_cube",
+        "--frames",
+        "20",
+        "--backend",
+        "simd",
+        "--threads",
+        "4"
+      ],
+      "stdout": "SILICON benchmark | scene shader_cube | 960x640 | 20 frames | 3 warmups\nmedian_ms,p95_ms,render_fps,shaded_pixels_per_s,triangles_per_s\n24.7005,44.0852,36.38,2754827,437\n"
+    },
+    {
+      "scene": "showcase",
+      "backend": "scalar",
+      "threads": 1,
+      "command": [
+        "target/release/silicon",
+        "benchmark",
+        "showcase",
+        "--frames",
+        "20",
+        "--backend",
+        "scalar",
+        "--threads",
+        "1"
+      ],
+      "stdout": "SILICON benchmark | scene showcase | 960x640 | 20 frames | 3 warmups\nmedian_ms,p95_ms,render_fps,shaded_pixels_per_s,triangles_per_s\n273.5383,389.3506,3.59,1394832,45219\n"
+    },
+    {
+      "scene": "showcase",
+      "backend": "simd",
+      "threads": 1,
+      "command": [
+        "target/release/silicon",
+        "benchmark",
+        "showcase",
+        "--frames",
+        "20",
+        "--backend",
+        "simd",
+        "--threads",
+        "1"
+      ],
+      "stdout": "SILICON benchmark | scene showcase | 960x640 | 20 frames | 3 warmups\nmedian_ms,p95_ms,render_fps,shaded_pixels_per_s,triangles_per_s\n177.7756,185.8388,5.63,2186514,70884\n"
+    },
+    {
+      "scene": "showcase",
+      "backend": "scalar",
+      "threads": 2,
+      "command": [
+        "target/release/silicon",
+        "benchmark",
+        "showcase",
+        "--frames",
+        "20",
+        "--backend",
+        "scalar",
+        "--threads",
+        "2"
+      ],
+      "stdout": "SILICON benchmark | scene showcase | 960x640 | 20 frames | 3 warmups\nmedian_ms,p95_ms,render_fps,shaded_pixels_per_s,triangles_per_s\n166.7940,252.8583,5.68,2204668,71472\n"
+    },
+    {
+      "scene": "showcase",
+      "backend": "scalar",
+      "threads": 4,
+      "command": [
+        "target/release/silicon",
+        "benchmark",
+        "showcase",
+        "--frames",
+        "20",
+        "--backend",
+        "scalar",
+        "--threads",
+        "4"
+      ],
+      "stdout": "SILICON benchmark | scene showcase | 960x640 | 20 frames | 3 warmups\nmedian_ms,p95_ms,render_fps,shaded_pixels_per_s,triangles_per_s\n226.6528,448.4498,4.03,1563171,50676\n"
+    },
+    {
+      "scene": "showcase",
+      "backend": "simd",
+      "threads": 4,
+      "command": [
+        "target/release/silicon",
+        "benchmark",
+        "showcase",
+        "--frames",
+        "20",
+        "--backend",
+        "simd",
+        "--threads",
+        "4"
+      ],
+      "stdout": "SILICON benchmark | scene showcase | 960x640 | 20 frames | 3 warmups\nmedian_ms,p95_ms,render_fps,shaded_pixels_per_s,triangles_per_s\n119.4767,226.1342,6.68,2592940,84060\n"
+    }
+  ]
+}
