@@ -1,4 +1,4 @@
-import { LIMITS } from "../src/parser.js?v=5dde987c6d90";
+import { LIMITS } from "../src/parser.js?v=2b326a32434e";
 
 /** @typedef {import("./worker-protocol.d.ts").TestRequest} TestRequest */
 /** @typedef {import("./worker-protocol.d.ts").WorkerReply} WorkerReply */
