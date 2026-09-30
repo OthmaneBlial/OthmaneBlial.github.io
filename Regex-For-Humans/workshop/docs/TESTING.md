@@ -2,6 +2,8 @@
 
 GitHub Actions is disabled for this repository. All current quality checks run locally with `npm run verify`; pushes and pull requests do not trigger CI. The compatibility evidence below is historical, not a check of the latest commit.
 
+The latest full local verification passed on 1 October 2026 under Node 22.0.0/npm 10.9.9 and Node 25.9.0/npm 11.12.1. It covers the declared Node 22 minimum on macOS; the older hosted multi-platform results below remain historical. See [DISTRIBUTION.md](DISTRIBUTION.md) for the current counts and deployment evidence.
+
 The package declares Node.js `>=22`. These results passed on 28 September 2026:
 
 | Node version | Verification |
@@ -23,10 +25,22 @@ npm ci
 npm run verify
 ```
 
+The full gate also runs one editor-and-matching smoke test in Firefox and WebKit. Install those engines first:
+
+```sh
+npm exec -- playwright install firefox webkit
+```
+
+To repeat the full verification at the declared Node 22.0 minimum on macOS:
+
+```sh
+npm exec --yes --package=node@22.0.0 --package=npm@10 -- sh -c 'node --version && npm --version && npm run verify'
+```
+
 For bundled Playwright Chromium, install and select it explicitly:
 
 ```sh
-npx playwright install chromium
+npm exec -- playwright install chromium firefox webkit
 CI=1 npm run verify
 ```
 
