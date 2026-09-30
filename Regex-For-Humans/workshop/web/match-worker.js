@@ -1,5 +1,5 @@
-import { escapeDirectionControls, quoteText } from "../src/display.js?v=ffcaee680140";
-import { LIMITS } from "../src/parser.js?v=ffcaee680140";
+import { escapeControls, quoteText } from "../src/display.js?v=ca314ceb730f";
+import { LIMITS } from "../src/parser.js?v=ca314ceb730f";
 
 /** @typedef {import("./worker-protocol.d.ts").TestRequest} TestRequest */
 /** @typedef {import("./worker-protocol.d.ts").WorkerReply} WorkerReply */
@@ -53,7 +53,7 @@ self.onmessage = (event) => {
     /** @type {WorkerReply} */
     const reply = {
       id,
-      error: escapeDirectionControls(error instanceof Error ? error.message : String(error)),
+      error: escapeControls(error instanceof Error ? error.message : String(error)),
     };
     self.postMessage(reply);
   }

@@ -1,10 +1,10 @@
-import { fail } from "./diagnostics.js?v=ffcaee680140";
-import { escapeDirectionControls } from "./display.js?v=ffcaee680140";
-import { explainNode } from "./explain.js?v=ffcaee680140";
+import { fail } from "./diagnostics.js?v=ca314ceb730f";
+import { escapeControls } from "./display.js?v=ca314ceb730f";
+import { explainNode } from "./explain.js?v=ca314ceb730f";
 
-/** @typedef {import('./ast.js?v=ffcaee680140').AtomNode} AtomNode */
-/** @typedef {import('./ast.js?v=ffcaee680140').Repetition} Repetition */
-/** @typedef {import('./ast.js?v=ffcaee680140').ParsedRules} ParsedRules */
+/** @typedef {import('./ast.js?v=ca314ceb730f').AtomNode} AtomNode */
+/** @typedef {import('./ast.js?v=ca314ceb730f').Repetition} Repetition */
+/** @typedef {import('./ast.js?v=ca314ceb730f').ParsedRules} ParsedRules */
 
 const locationOfOptions = { line: 1, column: 1 };
 
@@ -70,7 +70,7 @@ function atomSource(node) {
     default:
       throw new TypeError("Unknown atom type.");
   }
-  return escapeDirectionControls(source + repetitionSource(node.repetition));
+  return escapeControls(source + repetitionSource(node.repetition));
 }
 
 /** @param {unknown} options */
