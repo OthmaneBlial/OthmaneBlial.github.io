@@ -1,7 +1,7 @@
-import { CompileError, compile } from "../index.js?v=50c88e350892";
-import { escapeControls } from "../src/display.js?v=50c88e350892";
-import { splitLines } from "../src/parser.js?v=50c88e350892";
-import { TestRunError, TestRunner } from "./test-runner.js?v=50c88e350892";
+import { CompileError, compile } from "../index.js?v=d7da54bd9156";
+import { escapeControls } from "../src/display.js?v=d7da54bd9156";
+import { splitLines } from "../src/parser.js?v=d7da54bd9156";
+import { TestRunError, TestRunner } from "./test-runner.js?v=d7da54bd9156";
 
 /** @typedef {import("./worker-protocol.d.ts").TestCase} TestCase */
 /** @typedef {{id: string, title: string, note: string, rules: string, source: string, flags: string, matchMode: "full" | "search", positive: string[], negative: string[]}} ProductScenario */
@@ -54,7 +54,7 @@ let hasEdits =
 let copyFeedbackTimer = 0;
 let copySequence = 0;
 const testRunner = new TestRunner(
-  () => new Worker(new URL("./match-worker.js?v=50c88e350892", import.meta.url), { type: "module" }),
+  () => new Worker(new URL("./match-worker.js?v=d7da54bd9156", import.meta.url), { type: "module" }),
 );
 
 /**
@@ -90,7 +90,7 @@ function selectLine(number, column) {
   const start = lines.slice(0, number - 1).reduce((sum, line) => sum + line.length + 1, 0);
   const end = start + (lines[number - 1]?.length ?? 0);
   const position = column === undefined ? start : Math.min(start + column - 1, end);
-  ui.rules.focus();
+  ui.rules.focus({ preventScroll: true });
   ui.rules.setSelectionRange(position, column === undefined ? end : Math.min(position + 1, end));
   // Measure native wrapping so long literals before the selection count too.
   const style = getComputedStyle(ui.rules);
@@ -115,6 +115,19 @@ function selectLine(number, column) {
   const top = measure.scrollHeight - Number.parseFloat(style.paddingBottom) - lineHeight;
   measure.remove();
   ui.rules.scrollTop = top - (ui.rules.clientHeight - lineHeight) / 2;
+  const viewportTop =
+    ui.rules.getBoundingClientRect().top +
+    Number.parseFloat(style.borderTopWidth) +
+    top -
+    ui.rules.scrollTop;
+  // Stop pending focus scrolling, and reveal the selected row when outside the viewport.
+  window.scrollBy({
+    top:
+      viewportTop < 0 || viewportTop + lineHeight > window.innerHeight
+        ? viewportTop - (window.innerHeight - lineHeight) / 2
+        : 0,
+    behavior: "instant",
+  });
 }
 
 /** @param {ReturnType<typeof compile>["segments"] | null} segments */
@@ -494,7 +507,7 @@ ui.copy.addEventListener("click", async () => {
 if (hasEdits) compileRules();
 
 try {
-  const response = await fetch(new URL("../test/fixtures/product-scenarios.json?v=50c88e350892", import.meta.url));
+  const response = await fetch(new URL("../test/fixtures/product-scenarios.json?v=d7da54bd9156", import.meta.url));
   if (!response.ok) throw new Error(`HTTP ${response.status}`);
   scenarios = await response.json();
   renderScenarioButtons();
