@@ -1,0 +1,25 @@
+{
+  "timestamp": "2026-09-30T22:31:15.659934+02:00",
+  "git_head": "88aa3b781df9fab4dfebe2f936b4a784ec3ff75b",
+  "worktree_dirty": false,
+  "binary_sha256": "a586469ce1ff05f773d59caca396631dbb51114d73764f90c92ee1e68945d3f6",
+  "samples": [
+    {
+      "scene": "spirv_showcase",
+      "backend": "simd",
+      "threads": 4,
+      "command": [
+        "target/release/silicon",
+        "benchmark",
+        "spirv_showcase",
+        "--frames",
+        "20",
+        "--backend",
+        "simd",
+        "--threads",
+        "4"
+      ],
+      "stdout": "SILICON benchmark | scene spirv_showcase | 960x640 | 20 frames | 3 warmups\nmedian_ms,p95_ms,render_fps,shaded_pixels_per_s,triangles_per_s\n307.5993,357.7266,3.10,1203620,39020\n"
+    }
+  ]
+}

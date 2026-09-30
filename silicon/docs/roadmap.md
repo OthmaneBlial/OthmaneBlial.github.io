@@ -15,13 +15,12 @@ long-term. This repository ships working stages and labels the remaining work.
 | Commands / buffers / shader VM | Owned typed buffers, validated commands, SIR shader cube |
 | Capture / replay / inspection / pixel trace | Embedded resources/programs, byte-exact roundtrip and CLI |
 | SIMD / tiled parallel rendering | Scalar reference, NEON/AVX2 coverage4, disjoint bands, equivalence tests |
-| SPIR-V / ordinary GLSL | Strict binary parser + typed SIR lowering, textured cube and arithmetic fixtures |
+| SPIR-V / ordinary GLSL | Strict binary parser + typed SIR lowering, textured cube, lit OBJ showcase, local/uniform and arithmetic fixtures |
 | Regression images | Approved SIR cube PNG; cross-platform tolerance <=1 channel step |
 
 Next: strengthen stencil/transparency integration demos; profile and optimize
 interpolation and shader costs; extend the [current SPIR-V subset](spirv.md)
-with local variables, extended math and bounded control flow driven by ordinary
-shader fixtures; then shadow mapping and a more advanced scene.
+with bounded control flow driven by ordinary shader fixtures; then shadow mapping and a more advanced scene.
 
 Future research: multiple targets, full tile binning, shader lanes/divergence,
 compute/storage/shared-memory/atomics, cubemaps, PBR/normal maps, MSAA, JIT,

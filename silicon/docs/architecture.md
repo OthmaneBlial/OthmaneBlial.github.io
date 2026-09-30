@@ -33,7 +33,9 @@ reexports the Rust API and owns examples and integration tests.
 Two shader paths exist. Native Rust closures power the lit OBJ showcase. The
 `shader_cube` scene submits a recorded command stream and executes *both* stages
 through SIR. `spirv_cube` translates externally compiled GLSL vertex/fragment
-SPIR-V into SIR. Captures embed lowered programs and support both command scenes.
+SPIR-V into SIR. `spirv_showcase` uses the same scene geometry and materials as
+the native reference, with both lit GLSL stages running in SIR. Captures embed
+lowered programs and support all three command scenes.
 Native closure scenes cannot be serialized. The [SPIR-V subset](spirv.md) has
 explicit type, control-flow, binding and sampling restrictions.
 

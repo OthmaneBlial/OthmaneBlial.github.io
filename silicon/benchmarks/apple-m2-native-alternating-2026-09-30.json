@@ -1,0 +1,72 @@
+{
+  "purpose": "Investigate noisy native scene timing; same host, sequential alternating released and current binaries",
+  "samples": [
+    {
+      "version": "0.2.0",
+      "binary_sha256": "f6ba16034520a2d0f48aa24c2a7c048a4ea3b73ca0eedf450fb0eeadd30c2cd4",
+      "command": [
+        "/Users/othmane/Projects/GITHUB_PROJECTS/SILICON/output/release/v0.2.0/silicon",
+        "benchmark",
+        "showcase",
+        "--frames",
+        "10",
+        "--threads",
+        "1",
+        "--backend",
+        "scalar"
+      ],
+      "stdout": "SILICON benchmark | scene showcase | 960x640 | 10 frames | 3 warmups\nmedian_ms,p95_ms,render_fps,shaded_pixels_per_s,triangles_per_s\n238.0398,572.7050,3.44,1335810,43305\n"
+    },
+    {
+      "version": "0.3.0",
+      "binary_sha256": "9db01b7cc74b3cc9391efa06ee77f1b7d3f2c07af556689f27e46105ca63aec4",
+      "command": [
+        "/Users/othmane/Projects/GITHUB_PROJECTS/SILICON/target/release/silicon",
+        "benchmark",
+        "showcase",
+        "--frames",
+        "10",
+        "--threads",
+        "1",
+        "--backend",
+        "scalar"
+      ],
+      "stdout": "SILICON benchmark | scene showcase | 960x640 | 10 frames | 3 warmups\nmedian_ms,p95_ms,render_fps,shaded_pixels_per_s,triangles_per_s\n292.7321,415.1901,3.66,1421026,46068\n"
+    },
+    {
+      "version": "0.2.0",
+      "binary_sha256": "f6ba16034520a2d0f48aa24c2a7c048a4ea3b73ca0eedf450fb0eeadd30c2cd4",
+      "command": [
+        "/Users/othmane/Projects/GITHUB_PROJECTS/SILICON/output/release/v0.2.0/silicon",
+        "benchmark",
+        "showcase",
+        "--frames",
+        "10",
+        "--threads",
+        "1",
+        "--backend",
+        "scalar"
+      ],
+      "stdout": "SILICON benchmark | scene showcase | 960x640 | 10 frames | 3 warmups\nmedian_ms,p95_ms,render_fps,shaded_pixels_per_s,triangles_per_s\n212.5545,434.0283,4.01,1558197,50515\n"
+    },
+    {
+      "version": "0.3.0",
+      "binary_sha256": "9db01b7cc74b3cc9391efa06ee77f1b7d3f2c07af556689f27e46105ca63aec4",
+      "command": [
+        "/Users/othmane/Projects/GITHUB_PROJECTS/SILICON/target/release/silicon",
+        "benchmark",
+        "showcase",
+        "--frames",
+        "10",
+        "--threads",
+        "1",
+        "--backend",
+        "scalar"
+      ],
+      "stdout": "SILICON benchmark | scene showcase | 960x640 | 10 frames | 3 warmups\nmedian_ms,p95_ms,render_fps,shaded_pixels_per_s,triangles_per_s\n235.7061,460.4277,4.00,1554183,50385\n"
+    }
+  ],
+  "completed_at": "2026-09-30T20:26:37.265490+00:00",
+  "current_source_head": "a742e4531622f20d4f86a3f492e0a062adb1c467",
+  "released_source_tag": "v0.2.0"
+}

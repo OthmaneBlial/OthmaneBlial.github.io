@@ -10,7 +10,7 @@ Current limits: 16M framebuffer/texture pixels, 1M OBJ/vertex-buffer vertices,
 3M indices, 64 uniform vec4s, 65536 commands, 4096 SIR instructions. External
 captures are limited to 64 MiB before JSON deserialization; OBJ text is limited
 to 32 MiB; CLI scene descriptors and SPIR-V binaries to 1 MiB. SPIR-V has an ID
-bound of at most 65536 and shares the 64-register lowered-program limit. JSON nesting also obeys serde_json's
+bound of at most 65536 and at most 256 virtual temporaries, lowered to 64 simultaneously live registers. JSON nesting also obeys serde_json's
 recursion limit. These are validation bounds, not a process-wide allocation
 budget. Captures can duplicate resources, and the software GPU is not a hardened
 sandbox for hostile shader workloads.
