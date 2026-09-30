@@ -1,7 +1,7 @@
-import { CompileError, compile } from "../index.js?v=e3a7997a7772";
-import { escapeControls } from "../src/display.js?v=e3a7997a7772";
-import { splitLines } from "../src/parser.js?v=e3a7997a7772";
-import { TestRunError, TestRunner } from "./test-runner.js?v=e3a7997a7772";
+import { CompileError, compile } from "../index.js?v=1c9eb40fef93";
+import { escapeControls } from "../src/display.js?v=1c9eb40fef93";
+import { splitLines } from "../src/parser.js?v=1c9eb40fef93";
+import { TestRunError, TestRunner } from "./test-runner.js?v=1c9eb40fef93";
 
 /** @typedef {import("./worker-protocol.d.ts").TestCase} TestCase */
 /** @typedef {{id: string, title: string, note: string, rules: string, source: string, flags: string, matchMode: "full" | "search", positive: string[], negative: string[]}} ProductScenario */
@@ -54,7 +54,7 @@ let hasEdits =
 let copyFeedbackTimer = 0;
 let copySequence = 0;
 const testRunner = new TestRunner(
-  () => new Worker(new URL("./match-worker.js?v=e3a7997a7772", import.meta.url), { type: "module" }),
+  () => new Worker(new URL("./match-worker.js?v=1c9eb40fef93", import.meta.url), { type: "module" }),
 );
 
 /**
@@ -269,6 +269,12 @@ async function updateTestResults() {
 }
 
 function renderTests() {
+  const heights = new Map(
+    [...ui.testList.querySelectorAll(".test-row")].map((row) => [
+      row.querySelector(".test-result")?.id,
+      row.querySelector("textarea")?.style.height ?? "",
+    ]),
+  );
   ui.testList.replaceChildren();
   ui.addExample.disabled = testCases.length >= 100;
   for (const [index, sample] of testCases.entries()) {
@@ -281,6 +287,7 @@ function renderTests() {
     input.setAttribute("autocorrect", "off");
     input.rows = sample.text.split("\n", 3).length;
     input.value = sample.text;
+    input.style.height = heights.get(`example-result-${sample.id}`) ?? "";
     input.placeholder = "Empty string";
     input.setAttribute("aria-label", `Example ${number} string`);
     input.setAttribute("aria-describedby", "example-limits");
@@ -507,7 +514,7 @@ ui.copy.addEventListener("click", async () => {
 if (hasEdits) compileRules();
 
 try {
-  const response = await fetch(new URL("../test/fixtures/product-scenarios.json?v=e3a7997a7772", import.meta.url));
+  const response = await fetch(new URL("../test/fixtures/product-scenarios.json?v=1c9eb40fef93", import.meta.url));
   if (!response.ok) throw new Error(`HTTP ${response.status}`);
   scenarios = await response.json();
   renderScenarioButtons();
