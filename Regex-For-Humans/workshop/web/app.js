@@ -1,7 +1,7 @@
-import { CompileError, compile } from "../index.js?v=f267a2fb43d0";
-import { escapeControls } from "../src/display.js?v=f267a2fb43d0";
-import { splitLines } from "../src/parser.js?v=f267a2fb43d0";
-import { TestRunError, TestRunner } from "./test-runner.js?v=f267a2fb43d0";
+import { CompileError, compile } from "../index.js?v=ff82c00d9561";
+import { escapeControls } from "../src/display.js?v=ff82c00d9561";
+import { splitLines } from "../src/parser.js?v=ff82c00d9561";
+import { TestRunError, TestRunner } from "./test-runner.js?v=ff82c00d9561";
 
 /** @typedef {import("./worker-protocol.d.ts").TestCase} TestCase */
 /** @typedef {{id: string, title: string, note: string, rules: string, source: string, flags: string, matchMode: "full" | "search", positive: string[], negative: string[]}} ProductScenario */
@@ -54,7 +54,7 @@ let hasEdits =
 let copyFeedbackTimer = 0;
 let copySequence = 0;
 const testRunner = new TestRunner(
-  () => new Worker(new URL("./match-worker.js?v=f267a2fb43d0", import.meta.url), { type: "module" }),
+  () => new Worker(new URL("./match-worker.js?v=ff82c00d9561", import.meta.url), { type: "module" }),
 );
 
 /**
@@ -295,6 +295,7 @@ function renderTests() {
 
     const expected = make("select");
     expected.setAttribute("aria-label", `Expected match result for example ${number}`);
+    expected.setAttribute("aria-describedby", `example-result-${sample.id}`);
     for (const [value, label] of [
       ["true", "Should match"],
       ["false", "Should not match"],
@@ -510,7 +511,7 @@ ui.copy.addEventListener("click", async () => {
 if (hasEdits) compileRules();
 
 try {
-  const response = await fetch(new URL("../test/fixtures/product-scenarios.json?v=f267a2fb43d0", import.meta.url));
+  const response = await fetch(new URL("../test/fixtures/product-scenarios.json?v=ff82c00d9561", import.meta.url));
   if (!response.ok) throw new Error(`HTTP ${response.status}`);
   scenarios = await response.json();
   renderScenarioButtons();
