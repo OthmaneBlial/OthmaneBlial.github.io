@@ -1,12 +1,12 @@
-import { anchor, atom } from "./ast.js?v=d0f680dc6fcb";
-import { fail } from "./diagnostics.js?v=d0f680dc6fcb";
-import { quoteText } from "./display.js?v=d0f680dc6fcb";
+import { anchor, atom } from "./ast.js?v=0b5d4c8b19dc";
+import { fail } from "./diagnostics.js?v=0b5d4c8b19dc";
+import { quoteText } from "./display.js?v=0b5d4c8b19dc";
 
-/** @typedef {import('./ast.js?v=d0f680dc6fcb').Location} Location */
-/** @typedef {import('./ast.js?v=d0f680dc6fcb').Repetition} Repetition */
-/** @typedef {import('./ast.js?v=d0f680dc6fcb').AtomNode} AtomNode */
-/** @typedef {import('./ast.js?v=d0f680dc6fcb').RuleNode} RuleNode */
-/** @typedef {import('./ast.js?v=d0f680dc6fcb').ParsedRules} ParsedRules */
+/** @typedef {import('./ast.js?v=0b5d4c8b19dc').Location} Location */
+/** @typedef {import('./ast.js?v=0b5d4c8b19dc').Repetition} Repetition */
+/** @typedef {import('./ast.js?v=0b5d4c8b19dc').AtomNode} AtomNode */
+/** @typedef {import('./ast.js?v=0b5d4c8b19dc').RuleNode} RuleNode */
+/** @typedef {import('./ast.js?v=0b5d4c8b19dc').ParsedRules} ParsedRules */
 
 const MAX_SOURCE_LENGTH = 16_384;
 export const LIMITS = Object.freeze({
@@ -397,7 +397,12 @@ export function parse(source) {
       const mode = end[1].toLowerCase() === "line end" ? "line" : "input";
       if (sawEnd) fail("DUPLICATE_ANCHOR", "Use only one end anchor.", location());
       if (anchorMode && anchorMode !== mode) {
-        fail("MIXED_ANCHORS", "Do not mix input and line anchors.", location());
+        fail(
+          "MIXED_ANCHORS",
+          "Do not mix input and line anchors.",
+          location(),
+          "Pair `start` with `end`, or `line start` with `line end`.",
+        );
       }
       anchorMode = mode;
       nodes.push(anchor("end", mode, location(), text));
