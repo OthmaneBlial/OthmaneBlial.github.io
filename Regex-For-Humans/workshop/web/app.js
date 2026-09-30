@@ -1,7 +1,7 @@
-import { CompileError, compile } from "../index.js?v=53d04f0cbc5d";
-import { escapeControls } from "../src/display.js?v=53d04f0cbc5d";
-import { splitLines } from "../src/parser.js?v=53d04f0cbc5d";
-import { TestRunError, TestRunner } from "./test-runner.js?v=53d04f0cbc5d";
+import { CompileError, compile } from "../index.js?v=f8e45fed5058";
+import { escapeControls } from "../src/display.js?v=f8e45fed5058";
+import { splitLines } from "../src/parser.js?v=f8e45fed5058";
+import { TestRunError, TestRunner } from "./test-runner.js?v=f8e45fed5058";
 
 /** @typedef {import("./worker-protocol.d.ts").TestCase} TestCase */
 /** @typedef {{id: string, title: string, note: string, rules: string, source: string, flags: string, matchMode: "full" | "search", positive: string[], negative: string[]}} ProductScenario */
@@ -54,7 +54,7 @@ let hasEdits =
 let copyFeedbackTimer = 0;
 let copySequence = 0;
 const testRunner = new TestRunner(
-  () => new Worker(new URL("./match-worker.js?v=53d04f0cbc5d", import.meta.url), { type: "module" }),
+  () => new Worker(new URL("./match-worker.js?v=f8e45fed5058", import.meta.url), { type: "module" }),
 );
 
 /**
@@ -401,6 +401,7 @@ ui.copy.addEventListener("click", async () => {
   const result = compiled;
   const text = `/${result.source}/${result.flags}`;
   const request = ++copySequence;
+  const focused = document.activeElement;
   window.clearTimeout(copyFeedbackTimer);
   ui.copy.textContent = "Copy regex ↗";
   setDiagnostic("");
@@ -418,7 +419,12 @@ ui.copy.addEventListener("click", async () => {
     ]);
   } catch {
     if (compiled !== result || request !== copySequence) return;
-    const focused = document.activeElement;
+    if (document.activeElement !== focused) {
+      setDiagnostic(
+        "Clipboard access was blocked. Select the pattern and press your copy shortcut.",
+      );
+      return;
+    }
     const helper = make("textarea");
     helper.value = text;
     helper.setAttribute("aria-hidden", "true");
@@ -465,7 +471,7 @@ ui.copy.addEventListener("click", async () => {
 if (hasEdits) compileRules();
 
 try {
-  const response = await fetch(new URL("../test/fixtures/product-scenarios.json?v=53d04f0cbc5d", import.meta.url));
+  const response = await fetch(new URL("../test/fixtures/product-scenarios.json?v=f8e45fed5058", import.meta.url));
   if (!response.ok) throw new Error(`HTTP ${response.status}`);
   scenarios = await response.json();
   renderScenarioButtons();
