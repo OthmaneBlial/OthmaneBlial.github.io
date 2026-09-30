@@ -1,6 +1,6 @@
-import { CompileError, compile } from "../index.js?v=6fc96d5e9b76";
-import { splitLines } from "../src/parser.js?v=6fc96d5e9b76";
-import { TestRunError, TestRunner } from "./test-runner.js?v=6fc96d5e9b76";
+import { CompileError, compile } from "../index.js?v=ddf21013587c";
+import { splitLines } from "../src/parser.js?v=ddf21013587c";
+import { TestRunError, TestRunner } from "./test-runner.js?v=ddf21013587c";
 
 /** @typedef {import("./worker-protocol.d.ts").TestCase} TestCase */
 /** @typedef {{id: string, title: string, note: string, rules: string, source: string, flags: string, matchMode: "full" | "search", positive: string[], negative: string[]}} ProductScenario */
@@ -48,7 +48,7 @@ let compiled = null;
 let hasEdits = false;
 let copyFeedbackTimer = 0;
 const testRunner = new TestRunner(
-  () => new Worker(new URL("./match-worker.js?v=6fc96d5e9b76", import.meta.url), { type: "module" }),
+  () => new Worker(new URL("./match-worker.js?v=ddf21013587c", import.meta.url), { type: "module" }),
 );
 
 /**
@@ -412,7 +412,7 @@ ui.copy.addEventListener("click", async () => {
 });
 
 try {
-  const response = await fetch(new URL("../test/fixtures/product-scenarios.json?v=6fc96d5e9b76", import.meta.url));
+  const response = await fetch(new URL("../test/fixtures/product-scenarios.json?v=ddf21013587c", import.meta.url));
   if (!response.ok) throw new Error(`HTTP ${response.status}`);
   scenarios = await response.json();
   renderScenarioButtons();
