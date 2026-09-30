@@ -28,6 +28,11 @@ comparisons execute their respective stencil operations. All eight depth compare
 modes, stencil masks, saturation/invert operations and replace/alpha/add/multiply
 color blending are implemented. Alpha blending uses unpremultiplied source RGB.
 Transparency requires caller-provided draw ordering and disabled depth writes.
+The `stencil` scene uses a circular mask to limit both a textured cube and an
+alpha-blended triangle to a portal. The overlay keeps depth writes disabled and
+also tests the mask; its fragments outside the portal leave the clear color
+untouched. `tests/stencil.rs` checks that boundary and exact framebuffer, depth,
+and stencil results between scalar and four-band SIMD rendering.
 
 Textures own RGBA-expanded texels from RGBA8, RGB8 or R8 input. Nearest and
 bilinear filters support clamp, repeat and mirror addressing. Bilinear samples
