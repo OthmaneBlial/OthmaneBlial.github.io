@@ -14,7 +14,7 @@ The committed original GLSL sources and their `.spv` fixtures are in
 recompile fixtures, not to build, test or run SILICON:
 
 ```sh
-for shader in textured.vert textured.frag arithmetic.frag negate.frag lit.vert lit.frag shadow.frag locals.frag control.frag; do
+for shader in textured.vert textured.frag arithmetic.frag negate.frag lit.vert lit.frag shadow.frag pbr.frag locals.frag control.frag; do
   glslangValidator -V --target-env vulkan1.0 -o "assets/shaders/$shader.spv" "assets/shaders/$shader"
   spirv-val --target-env vulkan1.0 "assets/shaders/$shader.spv"
 done
@@ -27,6 +27,7 @@ spirv-val --target-env vulkan1.0 assets/shaders/boolean.locals.frag.spv
 cargo run --release -p silicon-cli -- inspect-shader assets/shaders/textured.vert.spv
 cargo run --release -p silicon-cli -- render-shaders assets/shaders/textured.vert.spv assets/shaders/textured.frag.spv --output output/glsl.png
 cargo run --release -p silicon-cli -- run spirv_showcase
+cargo run --release -p silicon-cli -- render assets/scenes/pbr_showcase.json --backend simd --threads 4 --output output/pbr.png
 cargo run --release -p silicon-cli -- render shadow_showcase --backend simd --threads 4 --output output/shadows.png --capture output/shadows.silicon
 cargo run --release -p silicon-cli -- run spirv_cutout --backend simd
 cargo run --release -p silicon-cli -- run spirv_cube
@@ -50,6 +51,11 @@ commands; replay does not need the original SPIR-V files.
 512×512 CPU depth attachment from a fixed directional light, then the GLSL
 fragment shader samples that serialized `Depth32Float` texture to shade visible
 surfaces. Both passes use SILICON's rasterizer; no external renderer contributes pixels.
+
+`pbr_showcase` uses the same recorded geometry and vertex shader with a
+Cook-Torrance GGX fragment shader. Its material vector stores texture weight,
+metallic, emission, and roughness. It uses direct lighting and a display tone
+curve; image-based lighting and tangent-space normal maps are not implemented.
 
 ## Accepted subset
 

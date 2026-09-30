@@ -18,15 +18,15 @@ long-term. This repository ships working stages and labels the remaining work.
 | SPIR-V / ordinary GLSL | Strict binary parser + typed SIR lowering, textured cube, lit OBJ showcase, local/uniform, arithmetic, and float-negation fixtures |
 | Divergent shader control flow | Nested GLSL selections, local/Phi merges, early return/discard; all-mask VM and attachment tests |
 | Shadow maps / explicit-LOD sampling | Two SILICON CPU raster passes; 512×512 `Depth32Float` texture sampled by ordinary GLSL/SPIR-V; scalar and SIMD replay match |
+| PBR material shading | Cook-Torrance GGX direct lighting with per-material metallic and roughness, compiled GLSL/SPIR-V, CPU SIR scene and capture replay |
 | Stencil / transparency integration | Circular stencil portal constrains a textured cube and translucent overlay; scalar and SIMD four-band color/depth/stencil match |
 | Regression images | Approved SIR cube PNG; cross-platform tolerance <=1 channel step |
 
-Next: profile shader costs; continue expanding the [current SPIR-V
-subset](spirv.md) beyond the explicit-LOD shadow sample, then build a more
-advanced scene.
+Next: add tangent-space normal maps and environment lighting to the PBR scene;
+profile shader costs before performance changes.
 
 Future research: multiple targets, full tile binning, loops and broader control flow,
-compute/storage/shared-memory/atomics, cubemaps, PBR/normal maps, MSAA, JIT,
+compute/storage/shared-memory/atomics, cubemaps, normal maps, MSAA, JIT,
 pipeline caches, C API, a tiny real API compatibility layer, third-party demo,
 DOOM geometry through SILICON and possibly a software ray-tracing unit.
 
