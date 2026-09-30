@@ -9,7 +9,7 @@ a Vulkan driver, or general GLSL support.
 ## Reproduce with ordinary GLSL
 
 The committed original GLSL sources and their `.spv` fixtures are in
-[`assets/shaders`](../assets/shaders/). They were compiled with Khronos glslang
+[`assets/shaders`](https://github.com/OthmaneBlial/silicon/tree/main/assets/shaders). They were compiled with Khronos glslang
 16.6.0 and checked with SPIRV-Tools 1.4.357.0. These tools are needed only to
 recompile fixtures, not to build, test or run SILICON:
 

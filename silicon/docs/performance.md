@@ -41,7 +41,7 @@ work is summed. Tile visits can increase at band boundaries.
 The executable SHA-256 and all commands/outputs are in
 [the raw 0.2 benchmark record](../benchmarks/apple-m2-spirv-2026-09-30.json).
 It was collected from clean source commit `6f9e1fce76ad9cfeb5ceff5bece9bc11c9da7e9a`; subsequent release
-preparation only changes measurement documentation. The packaged CLI contains
+preparation only changes documentation. The packaged CLI contains
 the same measured executable. The earlier, noisier
 [0.1 record](../benchmarks/apple-m2-2026-09-30.json) is retained for provenance;
 it is not a controlled before/after comparison.
