@@ -1,12 +1,12 @@
-import { anchor, atom } from "./ast.js?v=f3c3837bebcc";
-import { fail } from "./diagnostics.js?v=f3c3837bebcc";
-import { quoteText } from "./display.js?v=f3c3837bebcc";
+import { anchor, atom } from "./ast.js?v=96ace6ea0ef1";
+import { fail } from "./diagnostics.js?v=96ace6ea0ef1";
+import { quoteText } from "./display.js?v=96ace6ea0ef1";
 
-/** @typedef {import('./ast.js?v=f3c3837bebcc').Location} Location */
-/** @typedef {import('./ast.js?v=f3c3837bebcc').Repetition} Repetition */
-/** @typedef {import('./ast.js?v=f3c3837bebcc').AtomNode} AtomNode */
-/** @typedef {import('./ast.js?v=f3c3837bebcc').RuleNode} RuleNode */
-/** @typedef {import('./ast.js?v=f3c3837bebcc').ParsedRules} ParsedRules */
+/** @typedef {import('./ast.js?v=96ace6ea0ef1').Location} Location */
+/** @typedef {import('./ast.js?v=96ace6ea0ef1').Repetition} Repetition */
+/** @typedef {import('./ast.js?v=96ace6ea0ef1').AtomNode} AtomNode */
+/** @typedef {import('./ast.js?v=96ace6ea0ef1').RuleNode} RuleNode */
+/** @typedef {import('./ast.js?v=96ace6ea0ef1').ParsedRules} ParsedRules */
 
 const MAX_SOURCE_LENGTH = 16_384;
 export const LIMITS = Object.freeze({
@@ -87,7 +87,8 @@ const QUOTE_STYLES = /^['`“”‘’]/u;
 const QUOTE_HINT = 'Use JSON double quotes for quoted text, such as `"A"`.';
 const OPTIONAL_PREFIX = /^optional(?=\s|$)\s*/iu;
 const SEQUENCE_PREFIX = /^(zero or more|one or more)(?=\s|$)\s*/iu;
-const AT_LEAST_PREFIX = /^(at least\s+)(\S+)(?:\s+|$)/iu;
+const AT_LEAST_PREFIX = /^(at least(?:\s+|$))(?:(\S+)(?:\s+|$))?/iu;
+const AT_LEAST_HINT = "Use `at least 3 digits`, with the minimum count before the item.";
 // Recognize malformed numeric tokens so parseCount owns their diagnostics.
 const COUNT_PREFIX = /^([+-]?(?:\p{Nd}|\.\p{Nd})\S*)(?:\s+|$)/u;
 
@@ -225,9 +226,22 @@ function parseAtom(text, location, rawLine) {
     };
     offset = sequence[0].length;
     if (offset === remaining.length) {
-      fail("INVALID_REPETITION", "A repetition modifier needs an item.", location);
+      fail(
+        "INVALID_REPETITION",
+        "A repetition modifier needs an item.",
+        location,
+        `Use \`${sequence[1].toLowerCase()} digit\`, with the modifier before the item.`,
+      );
     }
   } else if (atLeast) {
+    if (atLeast[2] === undefined) {
+      fail(
+        "INVALID_REPETITION",
+        "A minimum repetition needs a count and an item.",
+        location,
+        AT_LEAST_HINT,
+      );
+    }
     repetition = {
       kind: "atLeast",
       min: parseCount(atLeast[2], {
@@ -237,7 +251,7 @@ function parseAtom(text, location, rawLine) {
     };
     offset = atLeast[0].length;
     if (offset === remaining.length) {
-      fail("INVALID_REPETITION", "A repetition modifier needs an item.", location);
+      fail("INVALID_REPETITION", "A repetition modifier needs an item.", location, AT_LEAST_HINT);
     }
   } else if (range) {
     const min = parseCount(range[2], {
@@ -296,7 +310,7 @@ function parseAtom(text, location, rawLine) {
         "DUPLICATE_REPETITION",
         "Use only one repetition modifier.",
         duplicateLocation,
-        "Put one count, range or optional modifier before the item.",
+        "Put one repetition modifier before the item.",
       );
     }
     fail(
