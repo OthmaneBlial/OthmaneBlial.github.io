@@ -38,9 +38,14 @@ Textures own RGBA-expanded texels from RGBA8, RGB8 or R8 input. Nearest and
 bilinear filters support clamp, repeat and mirror addressing. Bilinear samples
 texel centers and wraps each neighbor, including at seams. Mips average source
 regions and include all texels for odd dimensions; dimensions use floor halving.
-Nearest-mip and trilinear filtering are available. Filtering is in stored numeric
-color space; sRGB texture decoding, anisotropy, multiple color attachments and
-MSAA are future work.
+Nearest-mip and trilinear filtering are available. `Texture::sample_anisotropic`
+uses both UV derivatives, samples along the larger texel-space direction, and
+chooses its mip level from the smaller footprint. Its explicit tap cap is 1×–16×;
+`anisotropy_showcase` compares 16× filtering against ordinary trilinear sampling
+on a steeply viewed stripe plane. Filtering is in stored numeric color space;
+sRGB decoding and multiple color attachments remain future work. Anisotropy is
+currently exposed to native Rust fragment shaders; the SIR/SPIR-V sampling path
+continues to use isotropic LOD.
 
 `CubeMap` owns six square color textures in +X, -X, +Y, -Y, +Z, -Z order. A
 direction selects the face with the largest absolute component; the other two

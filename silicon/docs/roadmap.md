@@ -21,12 +21,13 @@ long-term. This repository ships working stages and labels the remaining work.
 | PBR material shading | Cook-Torrance GGX direct lighting, per-material metallic/roughness, tangent-space normal mapping, compiled GLSL/SPIR-V and capture replay |
 | Cube-map sampling and visual reflections | Six-face `CubeMap` sampler, mip-selected roughness approximation, native Rust skybox/reflection scene, scalar/SIMD pixel equivalence |
 | MSAA | Deterministic 2×/4× coverage with separate color/depth/stencil samples, resolved framebuffer, CLI control, scalar/SIMD band equivalence |
+| Anisotropic texture filtering | Derivative-aware 1×–16× sampling, minor-axis mip selection, focused unit test and side-by-side steep-angle scene |
 | Stencil / transparency integration | Circular stencil portal constrains a textured cube and translucent overlay; scalar and SIMD four-band color/depth/stencil match |
 | Regression images | Approved SIR cube PNG; cross-platform tolerance <=1 channel step |
 
-Next: implement anisotropic texture filtering and continue toward cube-map
-environment lighting in the PBR shader. The current cube-map demo uses native
-Rust closures; SPIR-V `samplerCube` binding remains future work.
+Next: continue toward cube-map environment lighting in the PBR shader. The
+current cube-map demo and anisotropic sampler use native Rust closures; SPIR-V
+`samplerCube` binding and anisotropic implicit sampling remain future work.
 
 Future research: multiple targets, full tile binning, loops and broader control flow,
 compute/storage/shared-memory/atomics, JIT,
