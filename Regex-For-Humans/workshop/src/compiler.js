@@ -1,10 +1,10 @@
-import { fail } from "./diagnostics.js?v=067cc763dfe3";
-import { escapeControls } from "./display.js?v=067cc763dfe3";
-import { explainNode } from "./explain.js?v=067cc763dfe3";
+import { fail } from "./diagnostics.js?v=bb9dca2564b9";
+import { escapeControls } from "./display.js?v=bb9dca2564b9";
+import { explainNode } from "./explain.js?v=bb9dca2564b9";
 
-/** @typedef {import('./ast.js?v=067cc763dfe3').AtomNode} AtomNode */
-/** @typedef {import('./ast.js?v=067cc763dfe3').Repetition} Repetition */
-/** @typedef {import('./ast.js?v=067cc763dfe3').ParsedRules} ParsedRules */
+/** @typedef {import('./ast.js?v=bb9dca2564b9').AtomNode} AtomNode */
+/** @typedef {import('./ast.js?v=bb9dca2564b9').Repetition} Repetition */
+/** @typedef {import('./ast.js?v=bb9dca2564b9').ParsedRules} ParsedRules */
 
 const locationOfOptions = { line: 1, column: 1 };
 
@@ -82,11 +82,7 @@ function normalizeOptions(options) {
   }
   let requested = "flags" in options ? options.flags : "";
   if (requested === undefined) requested = "";
-  if (
-    typeof requested !== "string" ||
-    /[^is]/u.test(requested) ||
-    new Set(requested).size !== requested.length
-  ) {
+  if (typeof requested !== "string" || !["", "i", "s", "is", "si"].includes(requested)) {
     fail(
       "UNSUPPORTED_FLAGS",
       "Version 1 accepts only unique i and s option flags; u is always enabled and m is controlled by line anchors.",

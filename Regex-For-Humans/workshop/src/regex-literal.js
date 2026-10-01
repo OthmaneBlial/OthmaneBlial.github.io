@@ -1,4 +1,4 @@
-import { LIMITS } from "./parser.js?v=067cc763dfe3";
+import { LIMITS } from "./parser.js?v=bb9dca2564b9";
 
 export const REGEX_LITERAL_INPUT_LIMIT = LIMITS.sourceLength + 8;
 
