@@ -1,7 +1,7 @@
-import { PATH_SEGMENT_SOURCE } from "./ast.js?v=ec733cb4b786";
-import { quoteText } from "./display.js?v=ec733cb4b786";
+import { PATH_SEGMENT_SOURCE } from "./ast.js?v=9e90f5af9309";
+import { quoteText } from "./display.js?v=9e90f5af9309";
 
-/** @param {import('./ast.js?v=ec733cb4b786').Repetition|null} repetition @param {boolean} optional */
+/** @param {import('./ast.js?v=9e90f5af9309').Repetition|null} repetition @param {boolean} optional */
 function repetitionText(repetition, optional) {
   if (!repetition) return "";
   switch (repetition.kind) {
@@ -21,7 +21,7 @@ function repetitionText(repetition, optional) {
   }
 }
 
-/** @param {import('./ast.js?v=ec733cb4b786').RuleNode} node @param {string} flags @param {boolean} [hasFollowingRule] */
+/** @param {import('./ast.js?v=9e90f5af9309').RuleNode} node @param {string} flags @param {boolean} [hasFollowingRule] */
 export function explainNode(node, flags, hasFollowingRule = false) {
   if (node.kind === "anchor") {
     if (node.mode === "line") {

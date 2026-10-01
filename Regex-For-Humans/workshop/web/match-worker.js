@@ -1,5 +1,5 @@
-import { escapeControls, quoteText } from "../src/display.js?v=ec733cb4b786";
-import { LIMITS } from "../src/parser.js?v=ec733cb4b786";
+import { escapeControls, quoteText } from "../src/display.js?v=9e90f5af9309";
+import { LIMITS } from "../src/parser.js?v=9e90f5af9309";
 
 /** @typedef {import("./worker-protocol.d.ts").TestRequest} TestRequest */
 /** @typedef {import("./worker-protocol.d.ts").WorkerReply} WorkerReply */
@@ -22,11 +22,9 @@ self.onmessage = (event) => {
     if (!Array.isArray(cases) || cases.length > MAX_CASES || !["full", "search"].includes(mode)) {
       throw new Error("Invalid example test request.");
     }
-    const expression = new RegExp(source, flags);
-    // A strict input end still applies when line mode enables the m flag.
-    const fullExpression = mode === "full" ? new RegExp(`^(?:${source})(?![\\s\\S])`, flags) : null;
+    // Reject the whole batch before an earlier example can start expensive matching.
     const ids = new Set();
-    const results = cases.map((sample) => {
+    for (const sample of cases) {
       if (
         sample === null ||
         typeof sample !== "object" ||
@@ -40,6 +38,11 @@ self.onmessage = (event) => {
         throw new Error("An example is too long or invalid.");
       }
       ids.add(sample.id);
+    }
+    const expression = new RegExp(source, flags);
+    // A strict input end still applies when line mode enables the m flag.
+    const fullExpression = mode === "full" ? new RegExp(`^(?:${source})(?![\\s\\S])`, flags) : null;
+    const results = cases.map((sample) => {
       let match = expression.exec(sample.text);
       if (fullExpression && match?.index === 0 && match[0].length !== sample.text.length) {
         const complete = fullExpression.exec(sample.text);
