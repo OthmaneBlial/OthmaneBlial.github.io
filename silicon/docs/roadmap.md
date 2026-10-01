@@ -13,7 +13,9 @@ long-term. This repository ships working stages and labels the remaining work.
 | Lit OBJ scene / normals | Original sculpture OBJ, normal matrix, Lambert/Blinn-Phong and point light |
 | Window / loop / measured statistics | CLI `run`, finite frame mode, render time in title |
 | Commands / buffers / shader VM | Owned typed buffers, validated commands, SIR shader cube |
-| Capture / replay / inspection / pixel trace | Embedded resources/programs, byte-exact roundtrip and CLI |
+| Frame capture and replay | Versioned capture owns buffers, textures, pipeline state, SIR modules and commands; byte-exact replay; MSAA state is not captured |
+| Frame inspector | `silicon inspect` reports render passes, draw/triangle totals, resources, pipeline state and SIR module instruction counts; no GUI |
+| Headless mode | `render` and `replay` write PNGs without opening a window |
 | SIMD / tiled parallel rendering | Scalar reference, NEON/AVX2 coverage4, NEON/SSE masked four-fragment SIR, disjoint bands, bitwise equivalence tests |
 | SPIR-V / ordinary GLSL | Strict binary parser + typed SIR lowering, textured cube, lit OBJ showcase, local/uniform, arithmetic, and float-negation fixtures |
 | Divergent shader control flow | Nested GLSL selections, local/Phi merges, early return/discard; all-mask VM and attachment tests |
@@ -24,9 +26,13 @@ long-term. This repository ships working stages and labels the remaining work.
 | Anisotropic texture filtering | Derivative-aware 1×–16× sampling, minor-axis mip selection, focused unit test and side-by-side steep-angle scene |
 | GPU profiler | Command, vertex, primitive setup, coverage/depth, shader, and blend/write timing with render counters; headless presentation is marked unmeasured |
 | Stencil / transparency integration | Circular stencil portal constrains a textured cube and translucent overlay; scalar and SIMD four-band color/depth/stencil match |
-| Regression images | Approved SIR cube PNG; cross-platform tolerance <=1 channel step |
+| Image regression tests | Approved SIR cube PNG, exact backend comparisons and <=1 channel-step tolerance; failures save `output/shader_cube.diff.png` |
+| Fuzzing | cargo-fuzz targets cover SPIR-V parsing/lowering, capture/resource validation and bounded replay, plus triangle setup and texture sampling; see `docs/security.md` |
+| Safety review | Explicit input/resource bounds and targeted malformed-input tests; this is not a hostile-workload sandbox or process-wide memory budget |
+| CPU backends | Scalar and four-lane SIMD paths; runtime selects NEON on ARM64 or AVX2 coverage on x86-64, with SSE2 shader arithmetic; no SIMD8, AVX-512 or JIT |
+| Simple Rust graphics API | `Device`, typed buffers, `CommandBuffer`, pipeline binding, draw and submit are public; shader creation and pipeline cache remain manual/future work |
 
-Next: continue toward cube-map environment lighting in the PBR shader. The
+Next: continue toward a measured pipeline cache, then cube-map environment lighting in the PBR shader. The
 current cube-map demo and anisotropic sampler use native Rust closures; SPIR-V
 `samplerCube` binding and anisotropic implicit sampling remain future work.
 

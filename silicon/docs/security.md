@@ -17,6 +17,22 @@ recursion limit. These are validation bounds, not a process-wide allocation
 budget. Captures can duplicate resources, and the software GPU is not a hardened
 sandbox for hostile shader workloads.
 
+The `fuzz/` package provides cargo-fuzz targets for SPIR-V parse/lower, capture
+JSON validation and replay (only at dimensions up to 64x64), and bounded
+triangle setup plus texture/anisotropic sampling. Seed runs are useful checks,
+not exhaustive fuzz coverage; no hostile-workload sandbox or process-wide
+allocation budget is promised.
+
+With `cargo-fuzz` installed, run a target for 60 seconds with:
+
+```sh
+cargo +nightly fuzz run spirv fuzz/seeds/spirv -- -max_total_time=60
+cargo +nightly fuzz run capture fuzz/seeds/capture -- -max_total_time=60
+cargo +nightly fuzz run geometry_texture -- -max_total_time=60
+```
+
+The saved seeds cover a control-flow shader and a small captured resource set.
+
 Project unsafe code is isolated to architecture-specific coverage and shader
 lane helpers. NEON/SSE2 shader arithmetic loads/stores fixed four-element host
 arrays; neither exposes guest pointers. NEON is mandatory on ARM64 and SSE2 on
