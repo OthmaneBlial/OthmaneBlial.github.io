@@ -1,4 +1,4 @@
-import { LIMITS } from "./parser.js?v=c1199e5ed176";
+import { LIMITS } from "./parser.js?v=b7557b1c7e07";
 
 export const REGEX_LITERAL_INPUT_LIMIT = LIMITS.sourceLength + 8;
 
@@ -6,7 +6,7 @@ export const REGEX_LITERAL_INPUT_LIMIT = LIMITS.sourceLength + 8;
 export function validateRegexLiteralLength(input) {
   if (input.length > REGEX_LITERAL_INPUT_LIMIT) {
     throw new Error(
-      `Regex input cannot exceed ${LIMITS.sourceLength} code units, plus its delimiters and flags.`,
+      `Regex input cannot exceed ${REGEX_LITERAL_INPUT_LIMIT} UTF-16 code units, including delimiters, flags and outer whitespace.`,
     );
   }
 }
