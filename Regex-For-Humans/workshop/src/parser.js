@@ -1,12 +1,12 @@
-import { anchor, atom } from "./ast.js?v=0e9ca56dffc8";
-import { fail } from "./diagnostics.js?v=0e9ca56dffc8";
-import { quoteText } from "./display.js?v=0e9ca56dffc8";
+import { anchor, atom } from "./ast.js?v=4fe37acf79d3";
+import { fail } from "./diagnostics.js?v=4fe37acf79d3";
+import { quoteText } from "./display.js?v=4fe37acf79d3";
 
-/** @typedef {import('./ast.js?v=0e9ca56dffc8').Location} Location */
-/** @typedef {import('./ast.js?v=0e9ca56dffc8').Repetition} Repetition */
-/** @typedef {import('./ast.js?v=0e9ca56dffc8').AtomNode} AtomNode */
-/** @typedef {import('./ast.js?v=0e9ca56dffc8').RuleNode} RuleNode */
-/** @typedef {import('./ast.js?v=0e9ca56dffc8').ParsedRules} ParsedRules */
+/** @typedef {import('./ast.js?v=4fe37acf79d3').Location} Location */
+/** @typedef {import('./ast.js?v=4fe37acf79d3').Repetition} Repetition */
+/** @typedef {import('./ast.js?v=4fe37acf79d3').AtomNode} AtomNode */
+/** @typedef {import('./ast.js?v=4fe37acf79d3').RuleNode} RuleNode */
+/** @typedef {import('./ast.js?v=4fe37acf79d3').ParsedRules} ParsedRules */
 
 const MAX_SOURCE_LENGTH = 16_384;
 export const LIMITS = Object.freeze({
@@ -69,6 +69,10 @@ const SHORTHANDS = new Map([
   ["digit", "\\d"],
   ["letter", "[A-Za-z]"],
   ["letters", "[A-Za-z]"],
+  ["lowercase letter", "[a-z]"],
+  ["lowercase letters", "[a-z]"],
+  ["uppercase letter", "[A-Z]"],
+  ["uppercase letters", "[A-Z]"],
   ["hex digit", "[0-9A-Fa-f]"],
   ["hex digits", "[0-9A-Fa-f]"],
   ["not space", "\\S"],
@@ -309,7 +313,17 @@ function parseAtom(text, location, rawLine) {
   if (/^any character$/i.test(remaining)) return atom("wildcard", ".", repetition, location, text);
   for (const [phrase, token] of SHORTHANDS) {
     if (remaining.toLowerCase() === phrase) {
-      if (["digits", "hex digits", "letters", "spaces"].includes(phrase) && !repetition)
+      if (
+        [
+          "digits",
+          "hex digits",
+          "letters",
+          "lowercase letters",
+          "uppercase letters",
+          "spaces",
+        ].includes(phrase) &&
+        !repetition
+      )
         repetition = { kind: "oneOrMore" };
       return atom("shorthand", token, repetition, location, text);
     }
@@ -367,11 +381,15 @@ function parseAtom(text, location, rawLine) {
       ? QUOTE_HINT
       : /^hex(?:\s|$)/i.test(remaining)
         ? "Use `hex digit` for one character or `hex digits` for one or more."
-        : /^letters?(?:\s|$)/i.test(remaining)
-          ? "Use `letter` for one ASCII letter or `letters` for one or more."
-          : /^spaces?(?:\s|$)/i.test(remaining)
-            ? "Use `space` for one whitespace character or `spaces` for one or more, including line breaks."
-            : "Try `line start`, `any text` or `3 digits`.",
+        : /^lowercase(?:\s|$)/i.test(remaining)
+          ? "Use `lowercase letter` for one ASCII lowercase letter or `lowercase letters` for one or more."
+          : /^uppercase(?:\s|$)/i.test(remaining)
+            ? "Use `uppercase letter` for one ASCII uppercase letter or `uppercase letters` for one or more."
+            : /^letters?(?:\s|$)/i.test(remaining)
+              ? "Use `letter` for one ASCII letter or `letters` for one or more."
+              : /^spaces?(?:\s|$)/i.test(remaining)
+                ? "Use `space` for one whitespace character or `spaces` for one or more, including line breaks."
+                : "Try `line start`, `any text` or `3 digits`.",
   );
 }
 

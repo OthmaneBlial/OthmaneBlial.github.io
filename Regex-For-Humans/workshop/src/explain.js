@@ -1,6 +1,6 @@
-import { quoteText } from "./display.js?v=0e9ca56dffc8";
+import { quoteText } from "./display.js?v=4fe37acf79d3";
 
-/** @param {import('./ast.js?v=0e9ca56dffc8').Repetition|null} repetition @param {boolean} optional */
+/** @param {import('./ast.js?v=4fe37acf79d3').Repetition|null} repetition @param {boolean} optional */
 function repetitionText(repetition, optional) {
   if (!repetition) return "";
   switch (repetition.kind) {
@@ -14,7 +14,7 @@ function repetitionText(repetition, optional) {
   }
 }
 
-/** @param {import('./ast.js?v=0e9ca56dffc8').RuleNode} node @param {string} flags @param {boolean} [hasFollowingRule] */
+/** @param {import('./ast.js?v=4fe37acf79d3').RuleNode} node @param {string} flags @param {boolean} [hasFollowingRule] */
 export function explainNode(node, flags, hasFollowingRule = false) {
   if (node.kind === "anchor") {
     if (node.mode === "line") {
@@ -46,19 +46,38 @@ export function explainNode(node, flags, hasFollowingRule = false) {
     }
   }
 
-  if (node.atomType === "shorthand" && ["\\d", "[0-9A-Fa-f]", "[A-Za-z]"].includes(node.value)) {
+  if (
+    node.atomType === "shorthand" &&
+    ["\\d", "[0-9A-Fa-f]", "[A-Za-z]", "[a-z]", "[A-Z]"].includes(node.value)
+  ) {
     const item =
       node.value === "\\d"
         ? "digit"
         : node.value === "[A-Za-z]"
           ? "ASCII letter"
-          : "hexadecimal digit";
+          : node.value === "[a-z]"
+            ? "lowercase ASCII letter"
+            : node.value === "[A-Z]"
+              ? "uppercase ASCII letter"
+              : "hexadecimal digit";
     const range =
-      node.value === "\\d" ? "0–9" : node.value === "[A-Za-z]" ? "A–Z, a–z" : "0–9, A–F, a–f";
+      node.value === "\\d"
+        ? "0–9"
+        : node.value === "[A-Za-z]"
+          ? "A–Z, a–z"
+          : node.value === "[a-z]"
+            ? "a–z"
+            : node.value === "[A-Z]"
+              ? "A–Z"
+              : "0–9, A–F, a–f";
     const caseFoldingNote =
-      node.value === "[A-Za-z]" && flags.includes("i")
+      flags.includes("i") && node.value === "[A-Za-z]"
         ? " With i, a few Unicode equivalents also match."
-        : "";
+        : flags.includes("i") && node.value === "[a-z]"
+          ? " With i, uppercase ASCII letters and a few Unicode equivalents also match."
+          : flags.includes("i") && node.value === "[A-Z]"
+            ? " With i, lowercase ASCII letters and a few Unicode equivalents also match."
+            : "";
     if (node.repetition?.kind === "oneOrMore")
       return `One or more ${item}s (${range}).${caseFoldingNote}`;
     if (node.repetition?.kind === "exact") {
