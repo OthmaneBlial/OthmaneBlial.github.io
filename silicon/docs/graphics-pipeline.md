@@ -51,6 +51,16 @@ shader scene. Material roughness selects a box-filtered mip level, which blurs
 reflections without implementing split-sum image-based lighting. The SPIR-V
 command interface does not yet expose a cube sampler.
 
+`Renderer::set_sample_count` selects 1×, 2× or 4× rendering. The 2×/4× modes use
+fixed deterministic subpixel positions and track color, depth and stencil for
+each sample. Fragment varyings are shaded once per primitive/pixel using the
+first covered sample; depth tests and attachment writes remain per sample.
+Resolve averages the stored color bytes, reports the
+nearest sample depth, and exposes sample zero's stencil value through the
+single-sample framebuffer. Multisample attachments are capped at 512 MiB.
+The CLI accepts `--samples 2` or `--samples 4`; captures do not currently store
+multisample state.
+
 The scalar reference and optional NEON/AVX2 coverage paths both process four
 adjacent pixel masks with identical i64 arithmetic. With the SIMD backend,
 recorded SIR fragment shaders execute surviving lanes as a masked group of four;

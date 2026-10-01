@@ -20,15 +20,16 @@ long-term. This repository ships working stages and labels the remaining work.
 | Shadow maps / explicit-LOD sampling | Two SILICON CPU raster passes; 512×512 `Depth32Float` texture sampled by ordinary GLSL/SPIR-V; scalar and SIMD replay match |
 | PBR material shading | Cook-Torrance GGX direct lighting, per-material metallic/roughness, tangent-space normal mapping, compiled GLSL/SPIR-V and capture replay |
 | Cube-map sampling and visual reflections | Six-face `CubeMap` sampler, mip-selected roughness approximation, native Rust skybox/reflection scene, scalar/SIMD pixel equivalence |
+| MSAA | Deterministic 2×/4× coverage with separate color/depth/stencil samples, resolved framebuffer, CLI control, scalar/SIMD band equivalence |
 | Stencil / transparency integration | Circular stencil portal constrains a textured cube and translucent overlay; scalar and SIMD four-band color/depth/stencil match |
 | Regression images | Approved SIR cube PNG; cross-platform tolerance <=1 channel step |
 
-Next: add cube-map environment lighting to the PBR shader and profile shader
-costs before performance changes. The current cube-map demo uses native Rust
-closures; SPIR-V `samplerCube` binding remains future work.
+Next: implement anisotropic texture filtering and continue toward cube-map
+environment lighting in the PBR shader. The current cube-map demo uses native
+Rust closures; SPIR-V `samplerCube` binding remains future work.
 
 Future research: multiple targets, full tile binning, loops and broader control flow,
-compute/storage/shared-memory/atomics, MSAA, JIT,
+compute/storage/shared-memory/atomics, JIT,
 pipeline caches, C API, a tiny real API compatibility layer, third-party demo,
 DOOM geometry through SILICON and possibly a software ray-tracing unit.
 
