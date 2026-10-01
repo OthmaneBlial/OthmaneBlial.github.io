@@ -1,11 +1,14 @@
-# Freedoom E1M1 geometry checkpoint
+# Freedoom E1M1 textures through SILICON
 
 The Phase 70 sample reads `E1M1` from an external Freedoom Phase 1 IWAD. It
 builds BSP-leaf floor and ceiling polygons, one-sided walls, and two-sided upper
-and lower wall tiers from the WAD's classic map lumps. Sector light levels tint
-the solid-color surfaces. The resulting triangles, transform uniform, and GLSL
-SPIR-V shaders are submitted to SILICON's CPU renderer; no game framebuffer or
-other renderer is copied.
+and lower wall tiers from the WAD's classic map lumps. It palette-decodes the
+64×64 floor and ceiling flats and composes opaque wall textures from
+`TEXTURE1`/`TEXTURE2`, `PNAMES`, and classic patch columns, using `PLAYPAL` for
+both. Sector light levels tint the sampled pixels. Sidedef offsets and the
+linedef upper/lower pegging flags set wall UVs. The geometry, textures,
+transform uniform, and GLSL SPIR-V shaders are submitted to SILICON's CPU
+renderer; no game framebuffer or other renderer is copied.
 
 Download [Freedoom 0.13.0](https://github.com/freedoom/freedoom/releases/tag/v0.13.0)
 at upstream commit
@@ -21,12 +24,14 @@ The sample writes `output/freedoom_map.png`. The checked-in
 that release's WAD. The WAD itself is not included. The release archive checksum
 is SHA-256 `3f9b264f3e3ce503b4fb7f6bdcb1f419d93c7b546f4df3e874dd878db9688f59`.
 
-This is a static geometry render, not a playable Doom engine. It does not yet
-compose wall textures from `TEXTURE1`/`PNAMES`, render flats, masked middle
-textures or sprites, traverse BSP nodes for visibility, or implement movement,
-collision, weapons, enemies, sound, or game rules. The camera's starting floor
-currently comes from the nearest BSP-leaf centroid; use actual `NODES`
-traversal before relying on it for arbitrary maps.
+The checked-in capture contains 4,812 submitted triangles across 141 SILICON
+draws for this WAD version. It is a static scene render, not a playable Doom
+engine. Masked two-sided middle textures and sprites are not drawn; visibility
+still includes all BSP leaves, and the sample does not implement movement,
+collision, weapons, enemies, sound, or game rules. `F_SKY1` ceilings show the
+clear color. The camera's starting floor currently comes from the nearest
+BSP-leaf centroid, so use actual `NODES` traversal before relying on it for
+arbitrary maps.
 
 Freedoom's three-clause BSD notice and contributor list accompany this derived
 sample in [`assets/licenses/FREEDOOM-COPYING.txt`](../assets/licenses/FREEDOOM-COPYING.txt)

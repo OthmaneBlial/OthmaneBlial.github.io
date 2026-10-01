@@ -36,15 +36,15 @@ long-term. This repository ships working stages and labels the remaining work.
 | C API (phase 67) | Version-1 shared library and header expose opaque device/resource/command handles, synchronous draw submission and RGBA8 readback; standalone C client renders a SPIR-V triangle |
 | Vulkan-like compatibility subset (phase 68) | Rust-only instance/device, typed buffers, RGBA8 images, SPIR-V pipelines, descriptor-like bindings, one offscreen render pass and synchronous queue; indexed textured triangle example. This is not Vulkan ABI, loader, or conformance support |
 | Third-party demo (phase 69) | Khronos Vulkan-Samples `hello_triangle` at a pinned upstream commit; adapted vertex layout, upstream SPIR-V fragment shader, CPU framebuffer output and a color-interpolation integration test |
-| DOOM (phase 70, in progress) | Reads Freedoom 0.13.0 E1M1, builds solid-color BSP-leaf floors/ceilings and wall tiers, and submits 5,088 triangles through SILICON shaders into a CPU-rendered screenshot. No textures or gameplay yet; see [Freedoom checkpoint](freedoom.md) |
+| DOOM (phase 70, in progress) | Reads Freedoom 0.13.0 E1M1, palette-decodes flats, composes opaque wall textures from WAD patches, and submits 4,812 BSP-leaf/wall triangles across 141 SILICON draws. Masked mid-textures, visibility traversal, and gameplay remain. See [Freedoom checkpoint](freedoom.md) |
 
 Next: JIT remains an advanced experiment; only consider it after more interpreter evidence. The
 current cube-map demo and anisotropic sampler use native Rust closures; SPIR-V
 `samplerCube` binding and anisotropic implicit sampling remain future work.
 
 Future research: multiple targets, full tile binning, loops and broader control flow,
-compute/storage/shared-memory/atomics, JIT, DOOM textures and gameplay, and possibly
-a software ray-tracing unit.
+compute/storage/shared-memory/atomics, JIT, DOOM masked textures and gameplay, and
+possibly a software ray-tracing unit.
 
 None of those future items are advertised as implemented. Conformant Vulkan/OpenGL
 drivers, general SPIR-V compatibility, WGSL and games are **unsupported**. The
