@@ -1,7 +1,7 @@
-import { CompileError, compile, regexToRules } from "../index.js?v=ef1c0fc79ebf";
-import { escapeControls } from "../src/display.js?v=ef1c0fc79ebf";
-import { LIMITS, splitLines } from "../src/parser.js?v=ef1c0fc79ebf";
-import { TestRunError, TestRunner } from "./test-runner.js?v=ef1c0fc79ebf";
+import { CompileError, compile, regexToRules } from "../index.js?v=750aa1a1c147";
+import { escapeControls } from "../src/display.js?v=750aa1a1c147";
+import { LIMITS, splitLines } from "../src/parser.js?v=750aa1a1c147";
+import { TestRunError, TestRunner } from "./test-runner.js?v=750aa1a1c147";
 
 /** @typedef {import("./worker-protocol.d.ts").TestCase} TestCase */
 /** @typedef {{id: string, title: string, note: string, rules: string, source: string, flags: string, matchMode: "full" | "search", positive: string[], negative: string[]}} ProductScenario */
@@ -60,7 +60,7 @@ let hasEdits =
 let copyFeedbackTimer = 0;
 let copySequence = 0;
 const testRunner = new TestRunner(
-  () => new Worker(new URL("./match-worker.js?v=ef1c0fc79ebf", import.meta.url), { type: "module" }),
+  () => new Worker(new URL("./match-worker.js?v=750aa1a1c147", import.meta.url), { type: "module" }),
 );
 
 /**
@@ -388,6 +388,10 @@ function renderTests() {
 }
 
 function compileRules() {
+  if (ui.reverseFeedback.dataset.state === "success") {
+    ui.reverseFeedback.hidden = true;
+    ui.reverseFeedback.textContent = "";
+  }
   window.clearTimeout(copyFeedbackTimer);
   ui.copy.textContent = "Copy regex ↗";
   const ruleCount = splitLines(ui.rules.value).filter((line) => line.trim()).length;
@@ -625,7 +629,7 @@ ui.copy.addEventListener("click", async () => {
 if (hasEdits) compileRules();
 
 try {
-  const response = await fetch(new URL("../test/fixtures/product-scenarios.json?v=ef1c0fc79ebf", import.meta.url));
+  const response = await fetch(new URL("../test/fixtures/product-scenarios.json?v=750aa1a1c147", import.meta.url));
   if (!response.ok) throw new Error(`HTTP ${response.status}`);
   scenarios = await response.json();
   renderScenarioButtons();
