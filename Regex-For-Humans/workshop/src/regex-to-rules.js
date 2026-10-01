@@ -1,6 +1,6 @@
-import { fail } from "./diagnostics.js?v=96ace6ea0ef1";
-import { quoteText } from "./display.js?v=96ace6ea0ef1";
-import { LIMITS, parse } from "./parser.js?v=96ace6ea0ef1";
+import { CompileError, fail } from "./diagnostics.js?v=69ccfb4e7d48";
+import { quoteText } from "./display.js?v=69ccfb4e7d48";
+import { LIMITS, parse } from "./parser.js?v=69ccfb4e7d48";
 
 const ESCAPED_ATOMS = new Map([
   ["d", "digit"],
@@ -392,7 +392,23 @@ export function regexToRules(regex) {
   flushLiteral();
 
   const translated = rules.join("\n");
-  parse(translated);
+  try {
+    parse(translated);
+  } catch (error) {
+    if (error instanceof CompileError && ["SOURCE_LIMIT", "LINE_LIMIT"].includes(error.code)) {
+      const limit =
+        error.code === "LINE_LIMIT"
+          ? `${LIMITS.lines} lines`
+          : `${LIMITS.sourceLength} UTF-16 code units`;
+      fail(
+        error.code,
+        `Translated rules cannot exceed ${limit}.`,
+        { line: 1, column: 1 },
+        "Simplify the regex so its translated rules fit these limits.",
+      );
+    }
+    throw error;
+  }
   return {
     rules: translated,
     flags: `${regex.ignoreCase ? "i" : ""}${regex.dotAll ? "s" : ""}`,
