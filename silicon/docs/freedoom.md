@@ -32,10 +32,14 @@ classic `A1` sprite patches: former humans (20 health), shotgunners (30), imps
 (60), and demons (150). Cutout billboards use a SILICON fragment shader. Space
 fires a 20-damage hitscan with a 0.35-second cooldown and 200 shots. Enemies
 chase within 640 map units and deal 8 melee damage within 48 units, at most once
-every 0.85 seconds. The window title reports health, ammunition, kills, draw
-calls, and submitted triangles. The WAD pistol's PISGA0 patch is the idle
-camera-aligned billboard; firing briefly uses its PISGC0 patch for 0.16 seconds.
-Both weapon poses use SILICON's cutout shader and draw pipeline.
+every 0.85 seconds. Former humans fire 3-damage hitscan attacks and shotgunners
+fire 6-damage hitscan attacks within 512 units, at most once every 1.4 seconds
+and only with clear sight past blocking lines. This is a fixed prototype rule;
+enemy windups, aim spread, and imp projectiles are not modeled. The window title
+reports health, ammunition, kills, draw calls, and submitted triangles. The WAD
+pistol's PISGA0 patch is the idle camera-aligned billboard; firing briefly uses
+its PISGC0 patch for 0.16 seconds. Both weapon poses use SILICON's cutout shader
+and draw pipeline.
 
 Freedoom 0.13.0 E1M1 has 29 normal-skill enemy placements. The sample parses
 the WAD node partition tree and follows its child references to locate each
@@ -49,7 +53,7 @@ view; that test fixture is not included.
 This is a limited gameplay prototype, not Doom's complete player physics or
 game rules. Every BSP leaf is drawn; view-frustum traversal and BSP visibility
 culling, masked two-sided middle textures, animated or rotated enemy sprites,
-ranged attacks, pickups, keys, exits, full weapon animation beyond the brief
+imp projectiles, pickups, keys, exits, full weapon animation beyond the brief
 idle/fire pose, and sound remain unimplemented.
 `F_SKY1` ceilings show the clear color. The checked-in
 [`E1M1 screenshot`](../assets/screenshots/freedoom_e1m1.png) was rendered from
