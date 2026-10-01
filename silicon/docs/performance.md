@@ -30,6 +30,23 @@ wall time. These worker sums overlap and the per-packet timing is instrumented;
 they are not exclusive stage shares. Native sampling still points to shader
 execution as the next optimization target.
 
+## 0.7 PBR baseline
+
+The [raw PBR record](../benchmarks/apple-m2-pbr-2026-10-01.json) measures clean
+source commit `3288feddd24bd26d2c1213641da9f2d94523af73` and its recorded binary
+hash on the shared Apple M2 / macOS 26.6. The `pbr_showcase` scene ran at
+640×400 with SIMD coverage, four workers, three warmups, and 30 timed frames.
+The median was 91.74 ms, p95 was 92.88 ms, and throughput was 10.88 FPS.
+The run executed 871,258,590 SIR instructions across 4,586,070 shaded
+fragments (about 190 instructions per fragment). This is a single-scene
+baseline, not a performance comparison or a general throughput claim.
+
+An instrumented profile at the same size and worker count reported 106.43 ms
+wall time, 164.81 ms accumulated fragment-shader time, and 222.22 ms summed
+worker-stage time. These worker sums overlap; the instrumentation adds clock
+overhead, so they identify shader work as a profiling target without defining
+exclusive stage shares.
+
 ## 0.5 control-flow checkpoint
 
 The [pre-optimization alternating record](../benchmarks/apple-m2-control-before-counters-2026-10-01.json)
