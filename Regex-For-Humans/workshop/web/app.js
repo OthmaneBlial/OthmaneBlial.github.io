@@ -1,7 +1,7 @@
-import { CompileError, compile, regexToRules } from "../index.js?v=e43d3581f23b";
-import { escapeControls } from "../src/display.js?v=e43d3581f23b";
-import { LIMITS, splitLines } from "../src/parser.js?v=e43d3581f23b";
-import { TestRunError, TestRunner } from "./test-runner.js?v=e43d3581f23b";
+import { CompileError, compile, regexToRules } from "../index.js?v=35a65173f9d6";
+import { escapeControls } from "../src/display.js?v=35a65173f9d6";
+import { LIMITS, splitLines } from "../src/parser.js?v=35a65173f9d6";
+import { TestRunError, TestRunner } from "./test-runner.js?v=35a65173f9d6";
 
 /** @typedef {import("./worker-protocol.d.ts").TestCase} TestCase */
 /** @typedef {{id: string, title: string, note: string, rules: string, source: string, flags: string, matchMode: "full" | "search", positive: string[], negative: string[]}} ProductScenario */
@@ -60,7 +60,7 @@ let hasEdits =
 let copyFeedbackTimer = 0;
 let copySequence = 0;
 const testRunner = new TestRunner(
-  () => new Worker(new URL("./match-worker.js?v=e43d3581f23b", import.meta.url), { type: "module" }),
+  () => new Worker(new URL("./match-worker.js?v=35a65173f9d6", import.meta.url), { type: "module" }),
 );
 
 /**
@@ -463,6 +463,7 @@ function useScenario(scenario) {
   renderTests();
   compileRules();
   ui.trace.scrollTop = 0;
+  ui.output.parentElement?.scrollTo({ left: 0, behavior: "instant" });
 }
 
 function renderScenarioButtons() {
@@ -527,6 +528,7 @@ ui.reverseButton.addEventListener("click", () => {
     hasEdits = true;
     compileRules();
     ui.trace.scrollTop = 0;
+    ui.output.parentElement?.scrollTo({ left: 0, behavior: "instant" });
     ui.reverseRegex.setAttribute("aria-invalid", "false");
     ui.reverseFeedback.dataset.state = "success";
     ui.reverseFeedback.textContent = "Translated. Review the rules and test your examples.";
@@ -631,7 +633,7 @@ ui.copy.addEventListener("click", async () => {
 if (hasEdits) compileRules();
 
 try {
-  const response = await fetch(new URL("../test/fixtures/product-scenarios.json?v=e43d3581f23b", import.meta.url));
+  const response = await fetch(new URL("../test/fixtures/product-scenarios.json?v=35a65173f9d6", import.meta.url));
   if (!response.ok) throw new Error(`HTTP ${response.status}`);
   scenarios = await response.json();
   renderScenarioButtons();

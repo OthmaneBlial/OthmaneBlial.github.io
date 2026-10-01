@@ -2,6 +2,10 @@
 
 GitHub Actions is disabled for this repository. All current quality checks run locally with `npm run verify`; pushes and pull requests do not trigger CI. The archived CI compatibility matrix below is historical.
 
+The first npm preview was published on 1 October 2026 from source commit `0b94f9c`. Preparation passed `npm run check`, all 187 Node tests and a clean installation of the retained 80,466-byte candidate, including execution of the installed README library example. Public-registry verification then passed CLI, library and TypeScript checks, all 17 recipes and 163 exact inputs in both translation directions on Node 25.9.0 and Node 22.23.3, and fresh npm/npx installation. See [DISTRIBUTION.md](DISTRIBUTION.md) for the registry version and hash. All 60 homepage checks passed for the npm installation link at source commit `a1b07bc`.
+
+The latest full `npm run verify` attempt at `88747ea` passed its Node, package and all 242 desktop/mobile workshop checks, then stopped on two WebKit example-worker timeouts. An unchanged compatibility rerun passed all ten Firefox/WebKit checks; the subsequent homepage rebuild passed all 58 checks and the separate dependency audit found zero vulnerabilities. The completed full-run snapshot below remains distinct from those component reruns.
+
 Full local verification passed on 1 October 2026 at source commit `0ab10aa` with Node 25.9.0/npm 11.12.1: 187 Node tests, 242 desktop/mobile Chromium workshop tests, 10 Firefox/WebKit compatibility checks, 58 homepage tests, a clean consumer package install (79,380-byte tarball), and `npm audit` with zero vulnerabilities. This includes explanation scroll reset after recipe loading and successful reverse translation, retained reading position during valid rule/option edits and failed translation, keyboard focus and matching for all three complex records, enlarged/wrapped error navigation and serial browser checks with existing deadlines. All eight complex-example tests also passed separately on Node 22.23.3. It verifies local automation on macOS; external reader, physical keyboard and assistive-technology evidence remain separate.
 
 Earlier full local verification passed on 1 October 2026 at source commit `c0cfbc2` with Node 25.9.0/npm 11.12.1: 187 Node tests, 230 desktop/mobile Chromium workshop tests, 4 Firefox/WebKit compatibility checks, 58 homepage tests, a clean consumer package install (77,492-byte tarball), and `npm audit` with zero vulnerabilities. This includes the first-rule view after recipe loading and reverse translation, button/editor focus and preserved example outcomes, plus the complete manifest recipe and existing workshop flows. All eight complex-example tests also passed separately on Node 22.23.3. It verifies local automation on macOS; external reader, physical keyboard and assistive-technology evidence remain separate.
@@ -50,7 +54,7 @@ npm exec -- playwright install firefox webkit
 npm run verify
 ```
 
-The full gate runs the desktop/mobile suites in installed Chrome and one editor-and-matching smoke test in each of Firefox and WebKit.
+The full gate runs the desktop/mobile suites in installed Chrome and five compatibility checks in each of Firefox and WebKit. Browser checks run through one worker in each suite.
 
 To repeat the full verification with Node 22 on macOS, clear the package-selection settings inherited from `npm exec` before starting npm. The clean-consumer package check runs a nested offline `npm exec`:
 
@@ -65,7 +69,7 @@ npm exec -- playwright install chromium firefox webkit
 CI=1 npm run verify
 ```
 
-Run `npm ci` first on a fresh checkout. `CI=1` selects Chromium and one worker for the desktop/mobile suites; the Firefox/WebKit smoke tests retain their two-worker limit. This environment variable does not enable GitHub Actions. Use the same prefix for individual browser commands: `CI=1 npm run test:browser` and `CI=1 npm run test:site`.
+Run `npm ci` first on a fresh checkout. `CI=1` selects Chromium for the desktop/mobile suites; all browser configurations use one worker. This environment variable does not enable GitHub Actions. Use the same prefix for individual browser commands: `CI=1 npm run test:browser` and `CI=1 npm run test:site`.
 
 Setup regressions compare the README, contributing guide and testing instructions with all three Playwright configurations. The installed-Chrome and bundled-Chromium examples must install their required engines before starting `npm run verify`.
 
@@ -97,6 +101,8 @@ Ctrl/Cmd + Enter regressions use the existing translation action, preserve rules
 Loading long rules starts the editor at the first rule instead of retaining the previous scroll position or moving to the end. Desktop/mobile Chrome and Firefox/WebKit checks seed a scrolled selection, reload the manifest recipe through its keyboard action, and translate it back. Recipe loading retains button focus; successful translation focuses the beginning of the rules, with all nine example outcomes preserved.
 
 The explanation list also starts at the first rule when a recipe loads or a regex translates successfully. Regression checks seed its old scroll position for the manifest, access-log and telemetry recipes before both actions, preserving focus and all example outcomes. Valid rule edits and option changes retain the explanation scroll; failed translation retains the current rules, regex and explanation position. These flows run in desktop/mobile Chrome, with loading, translation and edit coverage in Firefox/WebKit.
+
+The generated regex starts at its left edge after recipe loading or successful reverse translation. The same complex-record regressions first scroll the regex output to its end and then require both loading actions to restore the beginning, alongside correct editor/explanation positions, focus and matching. Valid rule edits, option changes and failed translation retain the horizontal reading position. Desktop/mobile Chrome and Firefox/WebKit checks exercise the reset and edit flows.
 
 Firefox/WebKit checks run compilation/diagnostics, counts/Unicode/options, path/native-RegExp behavior and long recipes as independent flows through one worker. Each keeps Playwright's default 30-second test deadline; separating them avoids charging unrelated interactions to a single cumulative timeout. One worker reduces concurrent browser load: during a heavily loaded local run, three Firefox flows exceeded the deadline with two workers, while all ten engine checks passed when rerun with one. The product's 1,200-millisecond matching limit is unchanged.
 
