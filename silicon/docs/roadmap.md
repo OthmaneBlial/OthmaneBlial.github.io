@@ -34,16 +34,17 @@ long-term. This repository ships working stages and labels the remaining work.
 | Pipeline cache (phase 65) | Caller-owned 16-entry cache keyed by exact SPIR-V pairs and pipeline state; built-in cube scenes also retain linked pipeline `Arc`s across frames; reports hit/miss/eviction plus compile/lookup time and has a 100-hit CLI probe |
 | Simple Rust graphics API (phase 66) | Versioned `silicon::api` facade, bounded SPIR-V shader/pipeline creation, owned typed buffers, command submission to an explicit renderer, and a runnable direct-triangle example |
 | C API (phase 67) | Version-1 shared library and header expose opaque device/resource/command handles, synchronous draw submission and RGBA8 readback; standalone C client renders a SPIR-V triangle |
+| Vulkan-like compatibility subset (phase 68) | Rust-only instance/device, typed buffers, RGBA8 images, SPIR-V pipelines, descriptor-like bindings, one offscreen render pass and synchronous queue; indexed textured triangle example. This is not Vulkan ABI, loader, or conformance support |
 
 Next: JIT remains an advanced experiment; only consider it after more interpreter evidence. The
 current cube-map demo and anisotropic sampler use native Rust closures; SPIR-V
 `samplerCube` binding and anisotropic implicit sampling remain future work.
 
 Future research: multiple targets, full tile binning, loops and broader control flow,
-compute/storage/shared-memory/atomics, JIT,
-a tiny real API compatibility layer, third-party demo,
+compute/storage/shared-memory/atomics, JIT, third-party demo,
 DOOM geometry through SILICON and possibly a software ray-tracing unit.
 
-None of those future items are advertised as implemented. Vulkan/OpenGL,
-general SPIR-V compatibility, WGSL and games are currently **unsupported**. No existing rasterizer,
-Mesa, LLVMpipe, SwiftShader, ANGLE or wgpu backend is used.
+None of those future items are advertised as implemented. Conformant Vulkan/OpenGL
+drivers, general SPIR-V compatibility, WGSL and games are **unsupported**. The
+small Rust-only subset does not provide Vulkan loader or binary compatibility.
+No existing rasterizer, Mesa, LLVMpipe, SwiftShader, ANGLE or wgpu backend is used.
