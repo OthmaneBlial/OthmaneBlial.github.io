@@ -1,6 +1,6 @@
-import { CompileError, fail } from "./diagnostics.js?v=887ad34aab97";
-import { quoteText } from "./display.js?v=887ad34aab97";
-import { LIMITS, parse } from "./parser.js?v=887ad34aab97";
+import { CompileError, fail } from "./diagnostics.js?v=975b8a247097";
+import { quoteText } from "./display.js?v=975b8a247097";
+import { LIMITS, parse } from "./parser.js?v=975b8a247097";
 
 const ESCAPED_ATOMS = new Map([
   ["d", "digit"],
@@ -100,6 +100,9 @@ function readEscape(source, index, inClass = false) {
     return { end: index + 4, literal: String.fromCharCode(Number.parseInt(digits, 16)) };
   }
 
+  if (escaped === "c" && /^[A-Za-z]$/u.test(source[index + 2] ?? "")) {
+    return { end: index + 3, literal: String.fromCharCode(source.charCodeAt(index + 2) % 32) };
+  }
   const control = CONTROL_ESCAPES.get(escaped);
   if (control !== undefined) return { end: index + 2, literal: control };
   if (escaped === "0") {
