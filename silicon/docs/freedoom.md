@@ -25,19 +25,22 @@ WASD to move and strafe, arrow keys to turn, Shift to run, Space to fire, and
 Escape to exit. Each frame submits the scene again through SILICON. Movement
 stays inside a BSP-leaf floor, keeps a 16-unit margin from one-sided or
 explicitly blocking lines, limits steps to 24 units, and requires 56 units of
-ceiling clearance.
+ceiling clearance. In interactive mode, the WAD's stim packs, medikits, clips,
+and ammo boxes render as cutout billboards and can be collected within 24 units
+when health or pistol ammo is below its 100 or 200 cap. The player starts with
+50 pistol rounds.
 
 The combat slice loads four normal-skill enemy types from WAD things and their
 classic `A1` sprite patches: former humans (20 health), shotgunners (30), imps
 (60), and demons (150). Cutout billboards use a SILICON fragment shader. Space
-fires a 20-damage hitscan with a 0.35-second cooldown and 200 shots. Enemies
-chase within 640 map units and deal 8 melee damage within 48 units, at most once
-every 0.85 seconds. Former humans fire 3-damage hitscan attacks and shotgunners
-fire 6-damage hitscan attacks within 512 units, at most once every 1.4 seconds
-and only with clear sight past blocking lines. This is a fixed prototype rule;
-enemy windups and aim spread are not modeled. The window title
-reports health, ammunition, kills, draw calls, and submitted triangles. Imps
-launch a straight BAL1A0 fireball within 512 units when they have clear sight;
+fires a 20-damage hitscan with a 0.35-second cooldown; pistol ammo caps at 200.
+Enemies chase within 640 map units and deal 8 melee damage within 48 units, at
+most once every 0.85 seconds. Former humans fire 3-damage hitscan attacks and
+shotgunners fire 6-damage hitscan attacks within 512 units, at most once every
+1.4 seconds and only with clear sight past blocking lines. This is a fixed
+prototype rule; enemy windups and aim spread are not modeled. The window title
+reports health, ammo, pickups, kills, draw calls, and triangles. Imps launch a
+straight BAL1A0 fireball within 512 units when they have clear sight;
 it travels at 180 units per second, lasts up to 3 seconds, and deals 8 damage
 on contact, with a 2-second launch cooldown. This is a simple prototype attack,
 without Doom's vertical aiming, explosion frames, or projectile physics. The WAD
@@ -47,18 +50,20 @@ and draw pipeline.
 
 Freedoom 0.13.0 E1M1 has 29 normal-skill enemy placements. The sample parses
 the WAD node partition tree and follows its child references to locate each
-thing in a subsector and sector. The checked-in static capture contains 4,872
-submitted triangles across 171 SILICON draws: 4,812 map triangles, 29
-two-triangle enemy billboards, and a two-triangle pistol billboard. It shows
-the player start and pistol; enemies are outside that camera view. A temporary
-WAD with only its player start moved was used to capture an enemy sprite in
-view; that test fixture is not included.
+thing in a subsector and sector. The checked-in static capture contains 4,890
+submitted triangles across 180 SILICON draws: 4,812 map triangles, 29
+two-triangle enemy billboards, nine two-triangle pickup billboards, and a
+two-triangle pistol billboard. It shows the player start, pistol, and a
+medikit; enemies are outside that camera view. A temporary WAD with only its
+player start moved was used to capture an enemy sprite in view; that test
+fixture is not included.
 
 This is a limited gameplay prototype, not Doom's complete player physics or
 game rules. Every BSP leaf is drawn; view-frustum traversal and BSP visibility
 culling, masked two-sided middle textures, animated or rotated enemy sprites,
-projectile explosion frames and vertical motion, pickups, keys, exits, full
-weapon animation beyond the brief idle/fire pose, and sound remain unimplemented.
+projectile explosion frames and vertical motion, keys, exits, other weapons and
+their ammunition, full weapon animation beyond the brief idle/fire pose, and
+sound remain unimplemented.
 `F_SKY1` ceilings show the clear color. The checked-in
 [`E1M1 screenshot`](../assets/screenshots/freedoom_e1m1.png) was rendered from
 the unmodified release WAD. The WAD itself is not included. The release archive
@@ -74,6 +79,7 @@ and [`assets/licenses/FREEDOOM-CREDITS.txt`](../assets/licenses/FREEDOOM-CREDITS
 The upstream project and contributors do not endorse SILICON. See the
 [Freedoom 0.13.0 release](https://github.com/freedoom/freedoom/releases/tag/v0.13.0),
 [license source](https://raw.githubusercontent.com/freedoom/freedoom/v0.13.0/COPYING.adoc),
+[id Software's item and ammo handling](https://github.com/id-Software/DOOM/blob/master/linuxdoom-1.10/p_inter.c),
 and id Software's [WAD](https://github.com/id-Software/DOOM/blob/master/linuxdoom-1.10/w_wad.h),
 [map and BSP record](https://github.com/id-Software/DOOM/blob/master/linuxdoom-1.10/doomdata.h),
 [BSP point traversal](https://github.com/id-Software/DOOM/blob/master/linuxdoom-1.10/r_main.c),
