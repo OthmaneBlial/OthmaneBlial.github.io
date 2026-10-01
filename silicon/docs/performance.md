@@ -248,7 +248,7 @@ and PNG encoding, and do not demonstrate a speedup over the earlier noisy run.
 
 ```sh
 python3 benchmarks/run.py --frames 30 --output output/benchmarks.json
-cargo run --release -p silicon-cli -- profile showcase --threads 4
+cargo run --release -p silicon-cli -- profile spirv_showcase --threads 4
 python3 benchmarks/compare.py --baseline /path/to/silicon-baseline --scene spirv_showcase --workers 4 --frames 60 --output output/comparison.json
 ```
 
@@ -256,9 +256,11 @@ The benchmark excludes PNG export, window creation, pixel-buffer conversion
 and presentation. Cached built-in mesh/texture construction is amortized by
 warmups. SIR scene command creation and validation are included. All allocations,
 clipping, shader execution, depth/stencil and blending during rendering are
-included. The profile command additionally times each fragment shader call;
-clock instrumentation adds overhead. Accumulated worker stage times can exceed
-wall time and must not be summed as if they were exclusive stages.
+included. `silicon profile` reports command processing, vertex processing,
+primitive setup, coverage/depth rasterization, fragment shading, and blend/write
+time, plus the triangle, fragment, early-Z, shader, and texture counters. Stage
+timers are instrumented; parallel worker sums can overlap and exceed wall time.
+Presentation is not measured by the headless profile command.
 
 ## Next measurements
 

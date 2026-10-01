@@ -53,8 +53,9 @@ Packet count and active-lane count measure actual fragment VM work. Occupancy is
 per-lane executions, excluding skipped branches. They include vertex work repeated
 by each band; submitted geometry counts remain logical, counted once.
 `discarded` counts shaded invocations that produce no attachment writes. Native scenes report no SIR
-packets. Profile clocks instrument packet calls and can change timing overhead;
-use uninstrumented benchmarks for performance comparisons. Reports preserve
+packets. Profile clocks instrument shader packets and pipeline stages, adding
+timing overhead; parallel worker-stage sums may overlap. Use uninstrumented
+benchmarks for performance comparisons. Reports preserve
 chronological frame times, scene dimensions/time, backend, warmups and workers.
 SIMD remains opt-in; a SIMD implementation alone does not establish a speedup.
 See [measured performance](performance.md).
