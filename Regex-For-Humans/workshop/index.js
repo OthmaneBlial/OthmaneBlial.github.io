@@ -1,6 +1,6 @@
-import { compileAst } from "./src/compiler.js?v=b7557b1c7e07";
-import { parse } from "./src/parser.js?v=b7557b1c7e07";
-import { regexToRules } from "./src/regex-to-rules.js?v=b7557b1c7e07";
+import { compileAst } from "./src/compiler.js?v=6da8f4354c4e";
+import { parse } from "./src/parser.js?v=6da8f4354c4e";
+import { regexToRules } from "./src/regex-to-rules.js?v=6da8f4354c4e";
 
 /** Compile controlled-English rules into JavaScript regex source, flags and source mapping.
  * @param {string} source @param {{flags?: string}} [options]
@@ -20,11 +20,13 @@ export function regexMatchingThroughLines(lines) {
  * @param {ReturnType<typeof compile>} result
  */
 export function toRegExp(result) {
-  if (!result || typeof result.source !== "string" || typeof result.flags !== "string") {
+  const source = result ? result.source : undefined;
+  const flags = typeof source === "string" ? result.flags : undefined;
+  if (typeof source !== "string" || typeof flags !== "string") {
     throw new TypeError("Expected a compile result with source and flags.");
   }
-  return new RegExp(result.source, result.flags);
+  return new RegExp(source, flags);
 }
 
-export { CompileError } from "./src/diagnostics.js?v=b7557b1c7e07";
+export { CompileError } from "./src/diagnostics.js?v=6da8f4354c4e";
 export { regexToRules };
