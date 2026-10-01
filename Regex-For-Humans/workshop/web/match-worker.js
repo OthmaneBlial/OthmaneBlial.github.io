@@ -1,5 +1,5 @@
-import { escapeControls, quoteText } from "../src/display.js?v=471ca3ba46f8";
-import { LIMITS } from "../src/parser.js?v=471ca3ba46f8";
+import { escapeControls, quoteText } from "../src/display.js?v=f54603b66dfe";
+import { LIMITS } from "../src/parser.js?v=f54603b66dfe";
 
 /** @typedef {import("./worker-protocol.d.ts").TestRequest} TestRequest */
 /** @typedef {import("./worker-protocol.d.ts").WorkerReply} WorkerReply */
