@@ -1,6 +1,6 @@
-import { CompileError, fail } from "./diagnostics.js?v=a059a6b1e976";
-import { quoteText } from "./display.js?v=a059a6b1e976";
-import { LIMITS, parse } from "./parser.js?v=a059a6b1e976";
+import { CompileError, fail } from "./diagnostics.js?v=09cf23e74994";
+import { quoteText } from "./display.js?v=09cf23e74994";
+import { LIMITS, parse } from "./parser.js?v=09cf23e74994";
 
 const ESCAPED_ATOMS = new Map([
   ["d", "digit"],
@@ -281,7 +281,12 @@ function readQuantifier(source, index) {
  * @param {RegExp} regex
  */
 export function regexToRules(regex) {
-  if (!(regex instanceof RegExp)) throw new TypeError("Expected a JavaScript RegExp.");
+  try {
+    // The native getter checks the RegExp brand across contexts without running the pattern.
+    if (typeof Reflect.get(RegExp.prototype, "global", regex) !== "boolean") throw new TypeError();
+  } catch {
+    throw new TypeError("Expected a JavaScript RegExp.");
+  }
   if (/[^imsu]/u.test(regex.flags)) {
     fail("UNSUPPORTED_REGEX_FLAGS", "Only the i, s, m and u flags can be translated.", {
       line: 1,
