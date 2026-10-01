@@ -1,6 +1,6 @@
-import { CompileError, fail } from "./diagnostics.js?v=975b8a247097";
-import { quoteText } from "./display.js?v=975b8a247097";
-import { LIMITS, parse } from "./parser.js?v=975b8a247097";
+import { CompileError, fail } from "./diagnostics.js?v=f16ae26c154a";
+import { quoteText } from "./display.js?v=f16ae26c154a";
+import { LIMITS, parse } from "./parser.js?v=f16ae26c154a";
 
 const ESCAPED_ATOMS = new Map([
   ["d", "digit"],
@@ -150,7 +150,7 @@ function readCharacterClass(source, start) {
   /** @type {string[]} */
   const values = [];
   for (let index = contentStart; index < end; ) {
-    if (source[index] === "-") {
+    if (source[index] === "-" && index !== contentStart && index !== end - 1) {
       unsupported("Character ranges are supported only for digit, letter and hex classes.", index);
     }
     if (source[index] === "\\") {
