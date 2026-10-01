@@ -1,6 +1,6 @@
-import { quoteText } from "./display.js?v=5accdaf8677b";
+import { quoteText } from "./display.js?v=d7e554b2cfa9";
 
-/** @param {import('./ast.js?v=5accdaf8677b').Repetition|null} repetition @param {boolean} optional */
+/** @param {import('./ast.js?v=d7e554b2cfa9').Repetition|null} repetition @param {boolean} optional */
 function repetitionText(repetition, optional) {
   if (!repetition) return "";
   switch (repetition.kind) {
@@ -20,7 +20,7 @@ function repetitionText(repetition, optional) {
   }
 }
 
-/** @param {import('./ast.js?v=5accdaf8677b').RuleNode} node @param {string} flags @param {boolean} [hasFollowingRule] */
+/** @param {import('./ast.js?v=d7e554b2cfa9').RuleNode} node @param {string} flags @param {boolean} [hasFollowingRule] */
 export function explainNode(node, flags, hasFollowingRule = false) {
   if (node.kind === "anchor") {
     if (node.mode === "line") {
@@ -46,7 +46,7 @@ export function explainNode(node, flags, hasFollowingRule = false) {
         ? `Longest text${context}, including line breaks.`
         : `Longest text${context}, excluding line breaks.`;
     }
-    if (node.atomType === "charSet") {
+    if (node.atomType === "charSet" && node.negative) {
       const characters = node.value.map(quoteText).join(", ");
       return `Longest text without ${characters}${caseNote}.`;
     }
