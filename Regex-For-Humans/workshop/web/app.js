@@ -1,7 +1,7 @@
-import { CompileError, compile } from "../index.js?v=c3ba95364088";
-import { escapeControls } from "../src/display.js?v=c3ba95364088";
-import { splitLines } from "../src/parser.js?v=c3ba95364088";
-import { TestRunError, TestRunner } from "./test-runner.js?v=c3ba95364088";
+import { CompileError, compile } from "../index.js?v=b502b4dcfba2";
+import { escapeControls } from "../src/display.js?v=b502b4dcfba2";
+import { splitLines } from "../src/parser.js?v=b502b4dcfba2";
+import { TestRunError, TestRunner } from "./test-runner.js?v=b502b4dcfba2";
 
 /** @typedef {import("./worker-protocol.d.ts").TestCase} TestCase */
 /** @typedef {{id: string, title: string, note: string, rules: string, source: string, flags: string, matchMode: "full" | "search", positive: string[], negative: string[]}} ProductScenario */
@@ -54,7 +54,7 @@ let hasEdits =
 let copyFeedbackTimer = 0;
 let copySequence = 0;
 const testRunner = new TestRunner(
-  () => new Worker(new URL("./match-worker.js?v=c3ba95364088", import.meta.url), { type: "module" }),
+  () => new Worker(new URL("./match-worker.js?v=b502b4dcfba2", import.meta.url), { type: "module" }),
 );
 
 /**
@@ -251,7 +251,12 @@ async function updateTestResults() {
       row.dataset.result = evaluation.pass ? "pass" : "fail";
       setTestResult(row, `${evaluation.pass ? "✓" : "!"} ${evaluation.detail}`);
     });
-    ui.testSummary.textContent = `${passed} of ${testCases.length} examples behave as expected`;
+    const focusedRowIndex = rows.findIndex((row) => row.contains(document.activeElement));
+    const focusedResult = focusedRowIndex < 0 ? null : byId.get(testCases[focusedRowIndex].id);
+    const focusedFeedback = focusedResult
+      ? `. Example ${focusedRowIndex + 1} ${focusedResult.pass ? "matches" : "does not match"} the expected result.`
+      : "";
+    ui.testSummary.textContent = `${passed} of ${testCases.length} examples behave as expected${focusedFeedback}`;
     ui.testSummary.dataset.state = passed === testCases.length ? "success" : "error";
   } catch (error) {
     if (error instanceof TestRunError && error.code === "CANCELLED") return;
@@ -512,7 +517,7 @@ ui.copy.addEventListener("click", async () => {
 if (hasEdits) compileRules();
 
 try {
-  const response = await fetch(new URL("../test/fixtures/product-scenarios.json?v=c3ba95364088", import.meta.url));
+  const response = await fetch(new URL("../test/fixtures/product-scenarios.json?v=b502b4dcfba2", import.meta.url));
   if (!response.ok) throw new Error(`HTTP ${response.status}`);
   scenarios = await response.json();
   renderScenarioButtons();
