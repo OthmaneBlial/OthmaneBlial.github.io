@@ -2,7 +2,7 @@
 
 ## Local verification
 
-**Latest full local verification (1 October 2026):** `npm run verify` passed at source commit `4a1547c` on Node 25.9.0/npm 11.12.1, with Biome 2.5.15: 187 Node tests, 228 desktop/mobile Chromium workshop tests, 4 Firefox/WebKit compatibility checks, 58 homepage tests, a clean consumer package installation (77,065-byte tarball), and `npm audit` with zero vulnerabilities. This includes the complete manifest recipe, its nine inputs and 19 explanations, guide agreement and homepage navigation. All eight complex-example tests also passed on Node 22.23.3. Earlier full runs passed at `957c21a`, `0e77c45`, `19c3b25`, `55be6da` and `a2dfe34` on Node 25.9.0/npm 11.12.1, at `4d35165` on Node 22.23.3/npm 11.12.1 and at `f4febbe` and `d91edbd` on Node 25.9.0/npm 11.12.1. These runs verify macOS only; see [TESTING.md](TESTING.md) for historical compatibility evidence.
+**Latest full local verification (1 October 2026):** `npm run verify` passed at source commit `c0cfbc2` on Node 25.9.0/npm 11.12.1, with Biome 2.5.15: 187 Node tests, 230 desktop/mobile Chromium workshop tests, 4 Firefox/WebKit compatibility checks, 58 homepage tests, a clean consumer package installation (77,492-byte tarball), and `npm audit` with zero vulnerabilities. This includes the first-rule editor view after recipe loading and reverse translation, preserved focus and matching, and the complete manifest recipe. All eight complex-example tests also passed on Node 22.23.3. Earlier full runs passed at `4a1547c`, `957c21a`, `0e77c45`, `19c3b25`, `55be6da` and `a2dfe34` on Node 25.9.0/npm 11.12.1, at `4d35165` on Node 22.23.3/npm 11.12.1 and at `f4febbe` and `d91edbd` on Node 25.9.0/npm 11.12.1. These runs verify macOS only; see [TESTING.md](TESTING.md) for historical compatibility evidence.
 
 ### Preview server
 
@@ -17,6 +17,10 @@ The earlier local preview server fix at `5a9772c` passed `npm run check`, all 16
 ## Hosted development preview
 
 The development site and workshop are live at [othmaneblial.github.io/Regex-For-Humans](https://othmaneblial.github.io/Regex-For-Humans/).
+
+### Complete artifact-manifest recipe
+
+The manifest recipe was synchronized into the existing project folder at Pages commit `e793735`, whose build completed on 1 October 2026. Live desktop/mobile checks followed its homepage card and verified the exact 19 rules, all explanation fragments and all nine preloaded inputs and outcomes. The path explanation selected its source line, the actual clipboard contained the generated regex, and Ctrl + Enter translated it back with correct focus and matching. A project name of 32 emoji matched; 33 did not. Reselecting the recipe restored the original rules and cases. There was no overflow at 320px or page error. Thirteen served website, workshop, fixture and documentation files returned HTTP 200 and matched local SHA-256 values.
 
 ### Explicit word-character names
 

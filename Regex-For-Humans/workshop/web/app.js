@@ -1,7 +1,7 @@
-import { CompileError, compile, regexToRules } from "../index.js?v=f54603b66dfe";
-import { escapeControls } from "../src/display.js?v=f54603b66dfe";
-import { LIMITS, splitLines } from "../src/parser.js?v=f54603b66dfe";
-import { TestRunError, TestRunner } from "./test-runner.js?v=f54603b66dfe";
+import { CompileError, compile, regexToRules } from "../index.js?v=ef1c0fc79ebf";
+import { escapeControls } from "../src/display.js?v=ef1c0fc79ebf";
+import { LIMITS, splitLines } from "../src/parser.js?v=ef1c0fc79ebf";
+import { TestRunError, TestRunner } from "./test-runner.js?v=ef1c0fc79ebf";
 
 /** @typedef {import("./worker-protocol.d.ts").TestCase} TestCase */
 /** @typedef {{id: string, title: string, note: string, rules: string, source: string, flags: string, matchMode: "full" | "search", positive: string[], negative: string[]}} ProductScenario */
@@ -60,7 +60,7 @@ let hasEdits =
 let copyFeedbackTimer = 0;
 let copySequence = 0;
 const testRunner = new TestRunner(
-  () => new Worker(new URL("./match-worker.js?v=f54603b66dfe", import.meta.url), { type: "module" }),
+  () => new Worker(new URL("./match-worker.js?v=ef1c0fc79ebf", import.meta.url), { type: "module" }),
 );
 
 /**
@@ -444,6 +444,8 @@ function setScenarioSelection(id) {
 function useScenario(scenario) {
   setScenarioSelection(scenario.id);
   ui.rules.value = scenario.rules;
+  ui.rules.setSelectionRange(0, 0);
+  ui.rules.scrollTop = 0;
   ui.ignoreCase.checked = false;
   ui.dotAll.checked = false;
   ui.matchMode.value = scenario.matchMode;
@@ -523,7 +525,7 @@ ui.reverseButton.addEventListener("click", () => {
     ui.reverseFeedback.dataset.state = "success";
     ui.reverseFeedback.textContent = "Translated. Review the rules and test your examples.";
     ui.reverseFeedback.hidden = false;
-    ui.rules.focus();
+    selectText(ui.rules, 0, 0);
   } catch (error) {
     const location = error instanceof CompileError ? `Column ${error.column}: ` : "";
     const hint = error instanceof CompileError && error.hint ? ` ${error.hint}` : "";
@@ -623,7 +625,7 @@ ui.copy.addEventListener("click", async () => {
 if (hasEdits) compileRules();
 
 try {
-  const response = await fetch(new URL("../test/fixtures/product-scenarios.json?v=f54603b66dfe", import.meta.url));
+  const response = await fetch(new URL("../test/fixtures/product-scenarios.json?v=ef1c0fc79ebf", import.meta.url));
   if (!response.ok) throw new Error(`HTTP ${response.status}`);
   scenarios = await response.json();
   renderScenarioButtons();
