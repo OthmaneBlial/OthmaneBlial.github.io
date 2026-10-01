@@ -14,7 +14,7 @@ The committed original GLSL sources and their `.spv` fixtures are in
 recompile fixtures, not to build, test or run SILICON:
 
 ```sh
-for shader in textured.vert textured.frag arithmetic.frag negate.frag lit.vert lit.frag shadow.frag pbr.frag locals.frag control.frag; do
+for shader in textured.vert textured.frag arithmetic.frag negate.frag lit.vert lit.frag shadow.frag pbr.vert pbr.frag locals.frag control.frag; do
   glslangValidator -V --target-env vulkan1.0 -o "assets/shaders/$shader.spv" "assets/shaders/$shader"
   spirv-val --target-env vulkan1.0 "assets/shaders/$shader.spv"
 done
@@ -52,10 +52,11 @@ commands; replay does not need the original SPIR-V files.
 fragment shader samples that serialized `Depth32Float` texture to shade visible
 surfaces. Both passes use SILICON's rasterizer; no external renderer contributes pixels.
 
-`pbr_showcase` uses the same recorded geometry and vertex shader with a
-Cook-Torrance GGX fragment shader. Its material vector stores texture weight,
-metallic, emission, and roughness. It uses direct lighting and a display tone
-curve; image-based lighting and tangent-space normal maps are not implemented.
+`pbr_showcase` uses the same recorded geometry with Cook-Torrance GGX direct
+lighting, per-material metallic/roughness, a display tone curve, and a
+procedural tangent-space normal map on the sculpture. Captures record its
+tangent-bearing vertex buffer and normal texture. Image-based lighting is not
+implemented.
 
 ## Accepted subset
 
@@ -117,8 +118,10 @@ Bindings are 0..15. This adapter maps mathematical matrices to SIR's row-major
 vectors; it does **not** interpret raw Vulkan descriptor memory. The cube binds
 MVP at 0, model matrix at 1, normal matrix at 2, material color at 3,
 texture/metallic/emission parameters at 4, camera position at 5 and texture 0.
-The lit showcase uses the same bindings per draw. The vertex GLSL explicitly redeclares
-`gl_PerVertex` with only `gl_Position`; other built-ins/arrays are unsupported.
+The lit showcase uses the same bindings per draw. PBR additionally stores
+normal-map strength at binding 8 and binds the tangent-space map at texture 1.
+The vertex GLSL explicitly redeclares `gl_PerVertex` with only `gl_Position`;
+other built-ins/arrays are unsupported.
 
 Implicit sampling currently requires the **unmodified vec2 fragment input at
 location 1**. Its LOD uses SILICON's neighboring-center perspective UV derivative
