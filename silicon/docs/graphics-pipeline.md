@@ -42,6 +42,15 @@ Nearest-mip and trilinear filtering are available. Filtering is in stored numeri
 color space; sRGB texture decoding, anisotropy, multiple color attachments and
 MSAA are future work.
 
+`CubeMap` owns six square color textures in +X, -X, +Y, -Y, +Z, -Z order. A
+direction selects the face with the largest absolute component; the other two
+components map to face UVs and use the ordinary texture sampler with clamped
+addressing. Faces must have matching mip dimensions. `cubemap_showcase` uses this
+sampler for an environment skybox and reflected directions on the native Rust
+shader scene. Material roughness selects a box-filtered mip level, which blurs
+reflections without implementing split-sum image-based lighting. The SPIR-V
+command interface does not yet expose a cube sampler.
+
 The scalar reference and optional NEON/AVX2 coverage paths both process four
 adjacent pixel masks with identical i64 arithmetic. With the SIMD backend,
 recorded SIR fragment shaders execute surviving lanes as a masked group of four;

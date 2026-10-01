@@ -19,11 +19,13 @@ long-term. This repository ships working stages and labels the remaining work.
 | Divergent shader control flow | Nested GLSL selections, local/Phi merges, early return/discard; all-mask VM and attachment tests |
 | Shadow maps / explicit-LOD sampling | Two SILICON CPU raster passes; 512×512 `Depth32Float` texture sampled by ordinary GLSL/SPIR-V; scalar and SIMD replay match |
 | PBR material shading | Cook-Torrance GGX direct lighting, per-material metallic/roughness, tangent-space normal mapping, compiled GLSL/SPIR-V and capture replay |
+| Cube-map sampling and visual reflections | Six-face `CubeMap` sampler, mip-selected roughness approximation, native Rust skybox/reflection scene, scalar/SIMD pixel equivalence |
 | Stencil / transparency integration | Circular stencil portal constrains a textured cube and translucent overlay; scalar and SIMD four-band color/depth/stencil match |
 | Regression images | Approved SIR cube PNG; cross-platform tolerance <=1 channel step |
 
-Next: add cube-map textures and a reflection demo, then use them for PBR
-environment lighting; profile shader costs before performance changes.
+Next: add cube-map environment lighting to the PBR shader and profile shader
+costs before performance changes. The current cube-map demo uses native Rust
+closures; SPIR-V `samplerCube` binding remains future work.
 
 Future research: multiple targets, full tile binning, loops and broader control flow,
 compute/storage/shared-memory/atomics, MSAA, JIT,
