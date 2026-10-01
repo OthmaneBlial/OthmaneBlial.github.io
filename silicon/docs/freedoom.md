@@ -35,23 +35,26 @@ chase within 640 map units and deal 8 melee damage within 48 units, at most once
 every 0.85 seconds. The window title reports health, ammunition, kills, draw
 calls, and submitted triangles.
 
-Freedoom 0.13.0 E1M1 has 29 normal-skill enemy placements. The current convex
-sector lookup maps and renders 24; five placements without a containing
-approximated BSP region are skipped until point lookup traverses the WAD's
-`NODES`. The checked-in static capture contains 4,860 submitted triangles across
-165 SILICON draws: 4,812 map triangles plus 24 two-triangle billboards. It shows
-the player start; enemies are outside that camera view. The sprite shader was
-visually checked at an enemy placement using a temporary WAD with only its
-player start moved; that test fixture is not included.
+Freedoom 0.13.0 E1M1 has 29 normal-skill enemy placements. The sample parses
+the WAD node partition tree and follows its child references to locate each
+thing in a subsector and sector. The checked-in static capture contains 4,870
+submitted triangles across 170 SILICON draws: 4,812 map triangles plus 29
+two-triangle billboards. It shows the player start; enemies are outside that
+camera view. A temporary WAD with only its player start moved was used to
+visually check an enemy sprite; that test fixture is not included.
 
 This is a limited gameplay prototype, not Doom's complete player physics or
-game rules. Every BSP leaf is drawn; `NODES` visibility traversal, masked
-two-sided middle textures, animated or rotated sprites, ranged attacks,
-pickups, keys, exits, weapon animation, and sound remain unimplemented.
+game rules. Every BSP leaf is drawn; view-frustum traversal and BSP visibility
+culling, masked two-sided middle textures, animated or rotated sprites, ranged
+attacks, pickups, keys, exits, weapon animation, and sound remain unimplemented.
 `F_SKY1` ceilings show the clear color. The checked-in
 [`E1M1 screenshot`](../assets/screenshots/freedoom_e1m1.png) was rendered from
 the unmodified release WAD. The WAD itself is not included. The release archive
 checksum is SHA-256 `3f9b264f3e3ce503b4fb7f6bdcb1f419d93c7b546f4df3e874dd878db9688f59`.
+
+![Freedoom former-human enemy billboard rendered through SILICON](../assets/screenshots/freedoom_e1m1_enemy.png)
+
+*Sprite verification view from the same WAD with only the player start moved into the enemy corridor; the temporary WAD is not included.*
 
 Freedoom's three-clause BSD notice and contributor list accompany this derived
 sample in [`assets/licenses/FREEDOOM-COPYING.txt`](../assets/licenses/FREEDOOM-COPYING.txt)
@@ -60,6 +63,7 @@ The upstream project and contributors do not endorse SILICON. See the
 [Freedoom 0.13.0 release](https://github.com/freedoom/freedoom/releases/tag/v0.13.0),
 [license source](https://raw.githubusercontent.com/freedoom/freedoom/v0.13.0/COPYING.adoc),
 and id Software's [WAD](https://github.com/id-Software/DOOM/blob/master/linuxdoom-1.10/w_wad.h),
-[map record](https://github.com/id-Software/DOOM/blob/master/linuxdoom-1.10/doomdata.h),
+[map and BSP record](https://github.com/id-Software/DOOM/blob/master/linuxdoom-1.10/doomdata.h),
+[BSP point traversal](https://github.com/id-Software/DOOM/blob/master/linuxdoom-1.10/r_main.c),
 and [wall rendering](https://github.com/id-Software/DOOM/blob/master/linuxdoom-1.10/r_segs.c)
 references.
