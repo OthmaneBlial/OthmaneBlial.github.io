@@ -17,21 +17,25 @@ extract `freedoom1.wad`, then run:
 
 ```sh
 cargo run --release --example freedoom_map -- /path/to/freedoom1.wad
+cargo run --release --example freedoom_map -- /path/to/freedoom1.wad --interactive
 ```
 
-The sample writes `output/freedoom_map.png`. The checked-in
+The first command writes `output/freedoom_map.png`. The interactive view uses
+WASD to move, arrow keys to turn, Shift to run, and Escape to exit. Each frame
+submits the scene again through SILICON. Movement stays inside a BSP-leaf floor,
+keeps a 16-unit margin from one-sided or explicitly blocking lines, limits steps
+to 24 units, and requires 56 units of ceiling clearance. This is a basic
+walk-through, not Doom's complete player physics. The checked-in
 [`E1M1 screenshot`](../assets/screenshots/freedoom_e1m1.png) was rendered from
 that release's WAD. The WAD itself is not included. The release archive checksum
 is SHA-256 `3f9b264f3e3ce503b4fb7f6bdcb1f419d93c7b546f4df3e874dd878db9688f59`.
 
 The checked-in capture contains 4,812 submitted triangles across 141 SILICON
-draws for this WAD version. It is a static scene render, not a playable Doom
-engine. Masked two-sided middle textures and sprites are not drawn; visibility
-still includes all BSP leaves, and the sample does not implement movement,
-collision, weapons, enemies, sound, or game rules. `F_SKY1` ceilings show the
-clear color. The camera's starting floor currently comes from the nearest
-BSP-leaf centroid, so use actual `NODES` traversal before relying on it for
-arbitrary maps.
+draws for this WAD version. It shows the player start as a static image. The
+interactive mode adds basic movement and wall collision, but still draws every
+BSP leaf and does not traverse `NODES` for visibility. Masked two-sided middle
+textures, sprites, weapons, enemies, sound, and game rules are not implemented.
+`F_SKY1` ceilings show the clear color.
 
 Freedoom's three-clause BSD notice and contributor list accompany this derived
 sample in [`assets/licenses/FREEDOOM-COPYING.txt`](../assets/licenses/FREEDOOM-COPYING.txt)
