@@ -1,7 +1,7 @@
-import { CompileError, compile } from "../index.js?v=b502b4dcfba2";
-import { escapeControls } from "../src/display.js?v=b502b4dcfba2";
-import { splitLines } from "../src/parser.js?v=b502b4dcfba2";
-import { TestRunError, TestRunner } from "./test-runner.js?v=b502b4dcfba2";
+import { CompileError, compile, regexToRules } from "../index.js?v=77337dc3838b";
+import { escapeControls } from "../src/display.js?v=77337dc3838b";
+import { LIMITS, splitLines } from "../src/parser.js?v=77337dc3838b";
+import { TestRunError, TestRunner } from "./test-runner.js?v=77337dc3838b";
 
 /** @typedef {import("./worker-protocol.d.ts").TestCase} TestCase */
 /** @typedef {{id: string, title: string, note: string, rules: string, source: string, flags: string, matchMode: "full" | "search", positive: string[], negative: string[]}} ProductScenario */
@@ -27,6 +27,9 @@ const ui = {
   ruleCount: requiredElement("rule-count", HTMLSpanElement),
   ignoreCase: requiredElement("ignore-case", HTMLInputElement),
   dotAll: requiredElement("dot-all", HTMLInputElement),
+  reverseRegex: requiredElement("reverse-regex", HTMLTextAreaElement),
+  reverseButton: requiredElement("reverse-button", HTMLButtonElement),
+  reverseFeedback: requiredElement("reverse-feedback", HTMLParagraphElement),
   output: requiredElement("regex-output", HTMLElement),
   compileState: requiredElement("compile-state", HTMLSpanElement),
   flagsSummary: requiredElement("flags-summary", HTMLSpanElement),
@@ -54,7 +57,7 @@ let hasEdits =
 let copyFeedbackTimer = 0;
 let copySequence = 0;
 const testRunner = new TestRunner(
-  () => new Worker(new URL("./match-worker.js?v=b502b4dcfba2", import.meta.url), { type: "module" }),
+  () => new Worker(new URL("./match-worker.js?v=77337dc3838b", import.meta.url), { type: "module" }),
 );
 
 /**
@@ -69,6 +72,44 @@ function make(tag, className = "", text) {
   if (className) node.className = className;
   if (text !== undefined) node.textContent = text;
   return node;
+}
+
+/** @param {string} input */
+function parseRegexLiteral(input) {
+  const literal = input.trim();
+  if (literal.length > LIMITS.sourceLength + 8) {
+    throw new Error(
+      `Regex input cannot exceed ${LIMITS.sourceLength} code units, plus its delimiters and flags.`,
+    );
+  }
+  if (!literal.startsWith("/")) {
+    throw new Error("Paste a slash-delimited JavaScript regex literal, such as `/\\d+/u`.");
+  }
+  let inClass = false;
+  let escaped = false;
+  let closingSlash = -1;
+  for (let index = 1; index < literal.length; index += 1) {
+    const character = literal[index];
+    if (escaped) escaped = false;
+    else if (character === "\\") escaped = true;
+    else if (character === "[" && !inClass) inClass = true;
+    else if (character === "]" && inClass) inClass = false;
+    else if (character === "/" && !inClass) {
+      closingSlash = index;
+      break;
+    }
+  }
+  if (closingSlash < 0) throw new Error("Add the closing `/` and any regex flags.");
+  const source = literal.slice(1, closingSlash);
+  const flags = literal.slice(closingSlash + 1);
+  if (!/^[dgimsuvy]*$/u.test(flags)) {
+    throw new Error("Put only JavaScript regex flags after the closing `/`.");
+  }
+  try {
+    return new RegExp(source, flags);
+  } catch {
+    throw new Error("That is not a valid JavaScript regex literal.");
+  }
 }
 
 /** @param {string} label @param {CompileState} state */
@@ -433,6 +474,31 @@ ui.rules.addEventListener("input", () => {
 });
 ui.ignoreCase.addEventListener("change", compileRules);
 ui.dotAll.addEventListener("change", compileRules);
+ui.reverseRegex.addEventListener("input", () => {
+  ui.reverseFeedback.hidden = true;
+  ui.reverseFeedback.textContent = "";
+});
+ui.reverseButton.addEventListener("click", () => {
+  try {
+    const translated = regexToRules(parseRegexLiteral(ui.reverseRegex.value));
+    ui.rules.value = translated.rules;
+    ui.ignoreCase.checked = translated.flags.includes("i");
+    ui.dotAll.checked = translated.flags.includes("s");
+    setScenarioSelection(null);
+    hasEdits = true;
+    compileRules();
+    ui.reverseFeedback.dataset.state = "success";
+    ui.reverseFeedback.textContent = "Translated. Review the rules and test your examples.";
+    ui.reverseFeedback.hidden = false;
+    ui.rules.focus();
+  } catch (error) {
+    const location = error instanceof CompileError ? `Column ${error.column}: ` : "";
+    const hint = error instanceof CompileError && error.hint ? ` ${error.hint}` : "";
+    ui.reverseFeedback.dataset.state = "error";
+    ui.reverseFeedback.textContent = `${location}${error instanceof Error ? error.message : String(error)}${hint}`;
+    ui.reverseFeedback.hidden = false;
+  }
+});
 ui.matchMode.addEventListener("change", updateTestResults);
 ui.addExample.addEventListener("click", () => {
   hasEdits = true;
@@ -517,7 +583,7 @@ ui.copy.addEventListener("click", async () => {
 if (hasEdits) compileRules();
 
 try {
-  const response = await fetch(new URL("../test/fixtures/product-scenarios.json?v=b502b4dcfba2", import.meta.url));
+  const response = await fetch(new URL("../test/fixtures/product-scenarios.json?v=77337dc3838b", import.meta.url));
   if (!response.ok) throw new Error(`HTTP ${response.status}`);
   scenarios = await response.json();
   renderScenarioButtons();

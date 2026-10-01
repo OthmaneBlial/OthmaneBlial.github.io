@@ -1,6 +1,6 @@
-import { quoteText } from "./display.js?v=b502b4dcfba2";
+import { quoteText } from "./display.js?v=77337dc3838b";
 
-/** @param {import('./ast.js?v=b502b4dcfba2').Repetition|null} repetition @param {boolean} optional */
+/** @param {import('./ast.js?v=77337dc3838b').Repetition|null} repetition @param {boolean} optional */
 function repetitionText(repetition, optional) {
   if (!repetition) return "";
   switch (repetition.kind) {
@@ -9,12 +9,18 @@ function repetitionText(repetition, optional) {
     case "range":
       if (optional && repetition.min === 0 && repetition.max === 1) return " Optional.";
       return ` Between ${repetition.min} and ${repetition.max} times (inclusive).`;
+    case "atLeast":
+      return ` At least ${repetition.min} times.`;
+    case "zeroOrMore":
+      return " Zero or more times.";
+    case "oneOrMore":
+      return " One or more times.";
     default:
       throw new TypeError("Unexpected repetition kind.");
   }
 }
 
-/** @param {import('./ast.js?v=b502b4dcfba2').RuleNode} node @param {string} flags @param {boolean} [hasFollowingRule] */
+/** @param {import('./ast.js?v=77337dc3838b').RuleNode} node @param {string} flags @param {boolean} [hasFollowingRule] */
 export function explainNode(node, flags, hasFollowingRule = false) {
   if (node.kind === "anchor") {
     if (node.mode === "line") {
@@ -80,6 +86,10 @@ export function explainNode(node, flags, hasFollowingRule = false) {
             : "";
     if (node.repetition?.kind === "oneOrMore")
       return `One or more ${item}s (${range}).${caseFoldingNote}`;
+    if (node.repetition?.kind === "zeroOrMore")
+      return `Zero or more ${item}s (${range}).${caseFoldingNote}`;
+    if (node.repetition?.kind === "atLeast")
+      return `At least ${node.repetition.min} ${item}s (${range}).${caseFoldingNote}`;
     if (node.repetition?.kind === "exact") {
       const items = node.repetition.min === 1 ? item : `${item}s`;
       return `Exactly ${node.repetition.min} ${items} (${range}).${caseFoldingNote}`;
