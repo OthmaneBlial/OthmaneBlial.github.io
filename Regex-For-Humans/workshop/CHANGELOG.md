@@ -2,6 +2,12 @@
 
 ## Unreleased
 
+- Add countable `path segment character(s)` rules to replace long separator/control exclusion lists, with the same Unicode matching, friendly explanations and canonical reverse translation.
+
+- Add four substantial executable format examples, two complete README patterns, and website links to their complete explanations and accepted/rejected cases. Document capture and nesting limits with real diagnostics.
+
+- Translate a pasted workshop regex with Ctrl/Cmd + Enter, reusing the existing action while preserving normal Enter, extra modifiers and IME composition.
+
 - Return `404` for local preview URLs that try to enter a file as a directory, while retaining `400` for malformed URL escapes and normal asset serving after an error.
 
 - Translate valid Unicode code-point escapes with extra leading zeros in literals, character lists and literal groups while preserving the existing source-size limit.

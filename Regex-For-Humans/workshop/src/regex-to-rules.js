@@ -1,6 +1,7 @@
-import { CompileError, fail } from "./diagnostics.js?v=cb8ba1d7ac07";
-import { quoteText } from "./display.js?v=cb8ba1d7ac07";
-import { LIMITS, parse } from "./parser.js?v=cb8ba1d7ac07";
+import { PATH_SEGMENT_SOURCE } from "./ast.js?v=4cfd4c3f0155";
+import { CompileError, fail } from "./diagnostics.js?v=4cfd4c3f0155";
+import { quoteText } from "./display.js?v=4cfd4c3f0155";
+import { LIMITS, parse } from "./parser.js?v=4cfd4c3f0155";
 
 const ESCAPED_ATOMS = new Map([
   ["d", "digit"],
@@ -12,6 +13,7 @@ const ESCAPED_ATOMS = new Map([
 ]);
 
 const CLASS_ATOMS = new Map([
+  [PATH_SEGMENT_SOURCE.slice(1, -1), "path segment character"],
   ["0-9", "digit"],
   ["^0-9", "not digit"],
   ["A-Z", "uppercase letter"],

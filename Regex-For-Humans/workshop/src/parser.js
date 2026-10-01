@@ -1,12 +1,12 @@
-import { anchor, atom } from "./ast.js?v=cb8ba1d7ac07";
-import { fail } from "./diagnostics.js?v=cb8ba1d7ac07";
-import { quoteText } from "./display.js?v=cb8ba1d7ac07";
+import { anchor, atom, PATH_SEGMENT_SOURCE } from "./ast.js?v=4cfd4c3f0155";
+import { fail } from "./diagnostics.js?v=4cfd4c3f0155";
+import { quoteText } from "./display.js?v=4cfd4c3f0155";
 
-/** @typedef {import('./ast.js?v=cb8ba1d7ac07').Location} Location */
-/** @typedef {import('./ast.js?v=cb8ba1d7ac07').Repetition} Repetition */
-/** @typedef {import('./ast.js?v=cb8ba1d7ac07').AtomNode} AtomNode */
-/** @typedef {import('./ast.js?v=cb8ba1d7ac07').RuleNode} RuleNode */
-/** @typedef {import('./ast.js?v=cb8ba1d7ac07').ParsedRules} ParsedRules */
+/** @typedef {import('./ast.js?v=4cfd4c3f0155').Location} Location */
+/** @typedef {import('./ast.js?v=4cfd4c3f0155').Repetition} Repetition */
+/** @typedef {import('./ast.js?v=4cfd4c3f0155').AtomNode} AtomNode */
+/** @typedef {import('./ast.js?v=4cfd4c3f0155').RuleNode} RuleNode */
+/** @typedef {import('./ast.js?v=4cfd4c3f0155').ParsedRules} ParsedRules */
 
 const MAX_SOURCE_LENGTH = 16_384;
 export const LIMITS = Object.freeze({
@@ -79,6 +79,8 @@ const SHORTHANDS = new Map([
   ["space", "\\s"],
   ["spaces", "\\s"],
   ["digits", "\\d"],
+  ["path segment character", PATH_SEGMENT_SOURCE],
+  ["path segment characters", PATH_SEGMENT_SOURCE],
 ]);
 
 const START_ANCHOR = /^(line start|start)(?:,\s*|\s+|$)/i;
@@ -367,6 +369,7 @@ function parseAtom(text, location, rawLine) {
           "lowercase letters",
           "uppercase letters",
           "spaces",
+          "path segment characters",
         ].includes(phrase) &&
         !repetition
       )
@@ -433,9 +436,11 @@ function parseAtom(text, location, rawLine) {
             ? "Use `uppercase letter` for one ASCII uppercase letter or `uppercase letters` for one or more."
             : /^letters?(?:\s|$)/i.test(remaining)
               ? "Use `letter` for one ASCII letter or `letters` for one or more."
-              : /^spaces?(?:\s|$)/i.test(remaining)
-                ? "Use `space` for one whitespace character or `spaces` for one or more, including line breaks."
-                : "Try `line start`, `any text` or `3 digits`.",
+              : /^path(?:\s|$)/i.test(remaining)
+                ? "Use `path segment character` for one character or `path segment characters` for one or more."
+                : /^spaces?(?:\s|$)/i.test(remaining)
+                  ? "Use `space` for one whitespace character or `spaces` for one or more, including line breaks."
+                  : "Try `line start`, `any text` or `3 digits`.",
   );
 }
 

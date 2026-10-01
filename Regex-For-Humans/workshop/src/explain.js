@@ -1,6 +1,7 @@
-import { quoteText } from "./display.js?v=cb8ba1d7ac07";
+import { PATH_SEGMENT_SOURCE } from "./ast.js?v=4cfd4c3f0155";
+import { quoteText } from "./display.js?v=4cfd4c3f0155";
 
-/** @param {import('./ast.js?v=cb8ba1d7ac07').Repetition|null} repetition @param {boolean} optional */
+/** @param {import('./ast.js?v=4cfd4c3f0155').Repetition|null} repetition @param {boolean} optional */
 function repetitionText(repetition, optional) {
   if (!repetition) return "";
   switch (repetition.kind) {
@@ -20,7 +21,7 @@ function repetitionText(repetition, optional) {
   }
 }
 
-/** @param {import('./ast.js?v=cb8ba1d7ac07').RuleNode} node @param {string} flags @param {boolean} [hasFollowingRule] */
+/** @param {import('./ast.js?v=4cfd4c3f0155').RuleNode} node @param {string} flags @param {boolean} [hasFollowingRule] */
 export function explainNode(node, flags, hasFollowingRule = false) {
   if (node.kind === "anchor") {
     if (node.mode === "line") {
@@ -112,6 +113,8 @@ export function explainNode(node, flags, hasFollowingRule = false) {
     case "shorthand": {
       /** @type {Record<string, string>} */
       const shorthandMeanings = {
+        [PATH_SEGMENT_SOURCE]:
+          "Path segment character: excludes slash, backslash, NUL and line breaks.",
         "\\w":
           "Word character: ASCII letter, digit or underscore. With i, a few Unicode equivalents match.",
         "\\W": flags.includes("i")

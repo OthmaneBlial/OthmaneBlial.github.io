@@ -24,9 +24,9 @@
   <meta name="twitter:image:alt" content="A colorful Regex For Humans card showing clear English rules turning into an explained JavaScript regex.">
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self'; img-src 'self' data:; object-src 'none'; base-uri 'self'">
   <title>Language guide — Regex For Humans</title>
-  <link rel="icon" type="image/svg+xml" href="./favicon.svg?v=cb8ba1d7ac07">
-  <link rel="stylesheet" href="./styles.css?v=cb8ba1d7ac07">
-  <link rel="stylesheet" href="./language.css?v=cb8ba1d7ac07">
+  <link rel="icon" type="image/svg+xml" href="./favicon.svg?v=4cfd4c3f0155">
+  <link rel="stylesheet" href="./styles.css?v=4cfd4c3f0155">
+  <link rel="stylesheet" href="./language.css?v=4cfd4c3f0155">
 </head>
 <body>
   <a class="skip-link" href="#main">Skip to syntax</a>
@@ -65,6 +65,7 @@
 end</code></pre><div><span>GENERATES</span><code>/^ABC\d{3}$/u</code><p><strong>Matches</strong> ABC123<br><strong>Rejects</strong> ABC12, ABC1234</p></div></div>
         <p>Use <code>line start</code> and <code>line end</code> for line-based matching. Line anchors add JavaScript's <code>m</code> flag. Input and line anchors cannot be mixed. When both edges are present, pair <code>start</code> with <code>end</code>, or <code>line start</code> with <code>line end</code>; the error suggests these repairs at the end anchor. A single anchor can still be used alone.</p>
         <p>Without <code>m</code>, <code>start</code> and <code>end</code> match only the true input edges. They reject a final line break; <code>m</code> makes line anchors match each line.</p>
+        <p>🏗️ Put the atoms together: <a href="https://github.com/OthmaneBlial/Regex-For-Humans/blob/main/docs/COMPLEX-EXAMPLES.md" target="_blank" rel="noopener noreferrer">four complex examples with complete explanations ↗</a> cover access logs, telemetry, artifact manifests and multiline documents. The <a href="../docs/COMPLEX-EXAMPLES.md">Markdown guide</a> is included for offline reading.</p>
       </section>
 
       <section id="atoms" class="panel guide-panel" aria-labelledby="atoms-title">
@@ -79,6 +80,7 @@ end</code></pre><div><span>GENERATES</span><code>/^ABC\d{3}$/u</code><p><strong>
           <tr><td><code>hex digit</code></td><td><code>[0-9A-Fa-f]</code></td><td>One ASCII hexadecimal digit, in either letter case</td></tr>
           <tr><td><code>hex digits</code></td><td><code>[0-9A-Fa-f]+</code></td><td>One or more hexadecimal digits; no prefix or separators</td></tr>
           <tr><td><code>space</code> / <code>not space</code></td><td><code>\s</code> / <code>\S</code></td><td>JavaScript whitespace / anything else</td></tr>
+          <tr><td><code>path segment character(s)</code></td><td><code>[^\/\\\u{0}\u{a}\u{d}\u{2028}\u{2029}]</code> / same class with <code>+</code></td><td>Unicode characters excluding slash, backslash, NUL and line breaks</td></tr>
           <tr><td><code>spaces</code></td><td><code>\s+</code></td><td>One or more JavaScript whitespace characters, including tabs and line breaks</td></tr>
           <tr><td><code>digits</code></td><td><code>\d+</code></td><td>One or more digits</td></tr>
           <tr><td><code>"ABC"</code></td><td><code>ABC</code></td><td>Exact quoted text; regex punctuation is escaped</td></tr>
@@ -86,6 +88,7 @@ end</code></pre><div><span>GENERATES</span><code>/^ABC\d{3}$/u</code><p><strong>
           <tr><td><code>none of: a, b</code></td><td><code>[^ab]</code></td><td>One character outside the list</td></tr>
         </tbody></table></div>
         <p><code>space</code> matches one whitespace character; <code>spaces</code> matches one or more, including tabs, nonbreaking spaces and line breaks. Counts replace that default: <code>3 spaces</code> is exactly three whitespace characters, and <code>between 0 and 2 spaces</code> permits empty input. Use <code>3 " "</code> for three ordinary spaces only. Write counts before the item; <code>spaces 3 times</code> and <code>not spaces</code> are unsupported.</p>
+        <p><code>between 1 and 32 path segment characters</code> gives a component length without a long escape list. Spaces, Unicode and dots are allowed; reserved names, path traversal and other filesystem rules need separate checks.</p>
         <p><code>letter</code> and <code>letters</code> are not Unicode alphabetic classes: they exclude <code>é</code> by default. With <code>i</code>, JavaScript case folding also matches equivalents such as <code>K</code> and <code>ſ</code>; the explanation reports this. Use <code>3 letters</code> or a range to limit the count.</p>
         <p><code>text without: a, b</code> matches zero or more characters outside that list. Add <code>start</code> and <code>end</code> to check the whole string. Quote punctuation and spaces in lists, for example <code>one of: "]", "-", " "</code>. Each item must be one Unicode code point. A literal can contain multiple characters. A trailing list comma is an error; Go to error selects that comma so you can remove it.</p>
         <p>Use straight JSON double quotes, such as <code>"A"</code>. Single quotes, backticks and smart quotes are not string delimiters; unsupported quoted literals and list entries offer a repair hint. Quote characters remain valid matching data inside JSON strings or as individual list items.</p>
@@ -115,7 +118,7 @@ end</code></pre><div><span>GENERATES</span><code>/^ABC\d{3}$/u</code><p><strong>
 
       <section id="reverse" class="panel guide-panel" aria-labelledby="reverse-title">
         <div class="panel-heading"><span class="step-number">04</span><div><p class="kicker">THE OTHER WAY 🔄</p><h2 id="reverse-title">Translate an existing regex</h2></div></div>
-        <div class="guide-example"><div><span>TRANSLATE FROM</span><code>/^[A-Z]{2}-\d{4}$/u</code><p>Open <strong>Already have a regex?</strong> in the <a href="../">workshop</a>, paste the literal, then choose <strong>Translate to rules</strong>.</p></div><pre><code>start
+        <div class="guide-example"><div><span>TRANSLATE FROM</span><code>/^[A-Z]{2}-\d{4}$/u</code><p>Open <strong>Already have a regex?</strong> in the <a href="../">workshop</a>, paste the literal, then press <strong>Ctrl/Cmd + Enter</strong> or choose <strong>Translate to rules</strong>.</p></div><pre><code>start
 2 uppercase letter
 "-"
 4 digit
