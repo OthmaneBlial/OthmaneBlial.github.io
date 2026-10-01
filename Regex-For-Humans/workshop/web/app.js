@@ -1,7 +1,7 @@
-import { CompileError, compile, regexToRules } from "../index.js?v=c7035d733977";
-import { escapeControls } from "../src/display.js?v=c7035d733977";
-import { LIMITS, splitLines } from "../src/parser.js?v=c7035d733977";
-import { TestRunError, TestRunner } from "./test-runner.js?v=c7035d733977";
+import { CompileError, compile, regexToRules } from "../index.js?v=a059a6b1e976";
+import { escapeControls } from "../src/display.js?v=a059a6b1e976";
+import { LIMITS, splitLines } from "../src/parser.js?v=a059a6b1e976";
+import { TestRunError, TestRunner } from "./test-runner.js?v=a059a6b1e976";
 
 /** @typedef {import("./worker-protocol.d.ts").TestCase} TestCase */
 /** @typedef {{id: string, title: string, note: string, rules: string, source: string, flags: string, matchMode: "full" | "search", positive: string[], negative: string[]}} ProductScenario */
@@ -30,6 +30,7 @@ const ui = {
   reverseRegex: requiredElement("reverse-regex", HTMLTextAreaElement),
   reverseButton: requiredElement("reverse-button", HTMLButtonElement),
   reverseFeedback: requiredElement("reverse-feedback", HTMLParagraphElement),
+  reverseError: requiredElement("reverse-error", HTMLButtonElement),
   output: requiredElement("regex-output", HTMLElement),
   compileState: requiredElement("compile-state", HTMLSpanElement),
   flagsSummary: requiredElement("flags-summary", HTMLSpanElement),
@@ -47,6 +48,8 @@ let scenarios = [];
 /** @type {TestCase[]} */
 let testCases = [];
 let nextTestId = 1;
+/** @type {number | null} */
+let reverseErrorPosition = null;
 /** @type {ReturnType<typeof compile> | null} */
 let compiled = null;
 let hasEdits =
@@ -57,7 +60,7 @@ let hasEdits =
 let copyFeedbackTimer = 0;
 let copySequence = 0;
 const testRunner = new TestRunner(
-  () => new Worker(new URL("./match-worker.js?v=c7035d733977", import.meta.url), { type: "module" }),
+  () => new Worker(new URL("./match-worker.js?v=a059a6b1e976", import.meta.url), { type: "module" }),
 );
 
 /**
@@ -134,10 +137,15 @@ function selectLine(number, column) {
   const start = lines.slice(0, number - 1).reduce((sum, line) => sum + line.length + 1, 0);
   const end = start + (lines[number - 1]?.length ?? 0);
   const position = column === undefined ? start : Math.min(start + column - 1, end);
-  ui.rules.focus({ preventScroll: true });
-  ui.rules.setSelectionRange(position, column === undefined ? end : Math.min(position + 1, end));
+  selectText(ui.rules, position, column === undefined ? end : Math.min(position + 1, end));
+}
+
+/** @param {HTMLTextAreaElement} field @param {number} start @param {number} end */
+function selectText(field, start, end) {
+  field.focus({ preventScroll: true });
+  field.setSelectionRange(start, end);
   // Measure native wrapping so long literals before the selection count too.
-  const style = getComputedStyle(ui.rules);
+  const style = getComputedStyle(field);
   const measure = make("textarea");
   measure.setAttribute("aria-hidden", "true");
   measure.tabIndex = -1;
@@ -148,22 +156,22 @@ function selectLine(number, column) {
     minHeight: "0",
     overflow: "hidden",
     border: "0",
-    width: `${ui.rules.clientWidth}px`,
+    width: `${field.clientWidth}px`,
     padding: style.padding,
     font: style.font,
     tabSize: style.tabSize,
   });
-  measure.value = `${ui.rules.value.slice(0, position)}\u200b`;
+  measure.value = `${field.value.slice(0, start)}\u200b`;
   document.body.append(measure);
   const lineHeight = Number.parseFloat(style.lineHeight);
   const top = measure.scrollHeight - Number.parseFloat(style.paddingBottom) - lineHeight;
   measure.remove();
-  ui.rules.scrollTop = top - (ui.rules.clientHeight - lineHeight) / 2;
+  field.scrollTop = top - (field.clientHeight - lineHeight) / 2;
   const viewportTop =
-    ui.rules.getBoundingClientRect().top +
+    field.getBoundingClientRect().top +
     Number.parseFloat(style.borderTopWidth) +
     top -
-    ui.rules.scrollTop;
+    field.scrollTop;
   // Stop pending focus scrolling, and reveal the selected row when outside the viewport.
   window.scrollBy({
     top:
@@ -481,8 +489,16 @@ ui.reverseRegex.addEventListener("input", () => {
   ui.reverseRegex.setAttribute("aria-invalid", "false");
   ui.reverseFeedback.hidden = true;
   ui.reverseFeedback.textContent = "";
+  ui.reverseError.hidden = true;
+  reverseErrorPosition = null;
+});
+ui.reverseError.addEventListener("click", () => {
+  if (reverseErrorPosition !== null)
+    selectText(ui.reverseRegex, reverseErrorPosition, reverseErrorPosition + 1);
 });
 ui.reverseButton.addEventListener("click", () => {
+  ui.reverseError.hidden = true;
+  reverseErrorPosition = null;
   try {
     const translated = regexToRules(parseRegexLiteral(ui.reverseRegex.value));
     ui.rules.value = translated.rules;
@@ -503,6 +519,11 @@ ui.reverseButton.addEventListener("click", () => {
     ui.reverseFeedback.dataset.state = "error";
     ui.reverseFeedback.textContent = `${location}${error instanceof Error ? error.message : String(error)}${hint}`;
     ui.reverseFeedback.hidden = false;
+    if (error instanceof CompileError && error.code === "UNSUPPORTED_REGEX") {
+      const input = ui.reverseRegex.value;
+      reverseErrorPosition = input.length - input.trimStart().length + error.column;
+      ui.reverseError.hidden = false;
+    }
   }
 });
 ui.reverseButton.disabled = false;
@@ -590,7 +611,7 @@ ui.copy.addEventListener("click", async () => {
 if (hasEdits) compileRules();
 
 try {
-  const response = await fetch(new URL("../test/fixtures/product-scenarios.json?v=c7035d733977", import.meta.url));
+  const response = await fetch(new URL("../test/fixtures/product-scenarios.json?v=a059a6b1e976", import.meta.url));
   if (!response.ok) throw new Error(`HTTP ${response.status}`);
   scenarios = await response.json();
   renderScenarioButtons();
