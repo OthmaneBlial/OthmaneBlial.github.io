@@ -1,5 +1,5 @@
-import { escapeControls, quoteText } from "../src/display.js?v=7a0ba7bd0454";
-import { LIMITS } from "../src/parser.js?v=7a0ba7bd0454";
+import { escapeControls, quoteText } from "../src/display.js?v=533c46101822";
+import { LIMITS } from "../src/parser.js?v=533c46101822";
 
 /** @typedef {import("./worker-protocol.d.ts").TestRequest} TestRequest */
 /** @typedef {import("./worker-protocol.d.ts").WorkerReply} WorkerReply */
@@ -25,14 +25,21 @@ self.onmessage = (event) => {
     const expression = new RegExp(source, flags);
     // A strict input end still applies when line mode enables the m flag.
     const fullExpression = mode === "full" ? new RegExp(`^(?:${source})(?![\\s\\S])`, flags) : null;
+    const ids = new Set();
     const results = cases.map((sample) => {
       if (
+        sample === null ||
+        typeof sample !== "object" ||
+        Array.isArray(sample) ||
+        !Number.isSafeInteger(sample.id) ||
+        ids.has(sample.id) ||
         typeof sample.text !== "string" ||
         sample.text.length > MAX_TEXT_LENGTH ||
         typeof sample.expected !== "boolean"
       ) {
         throw new Error("An example is too long or invalid.");
       }
+      ids.add(sample.id);
       let match = expression.exec(sample.text);
       if (fullExpression && match?.index === 0 && match[0].length !== sample.text.length) {
         const complete = fullExpression.exec(sample.text);
