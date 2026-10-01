@@ -32,7 +32,7 @@ long-term. This repository ships working stages and labels the remaining work.
 | JIT shaders | Not implemented; execution stays in the validated SIR interpreter |
 | CPU backends | Scalar and four-lane SIMD paths; runtime selects NEON on ARM64 or AVX2 coverage on x86-64, with SSE2 shader arithmetic; no SIMD8, AVX-512 or JIT |
 | Pipeline cache (phase 65) | Caller-owned 16-entry cache keyed by exact SPIR-V pairs and pipeline state; built-in cube scenes also retain linked pipeline `Arc`s across frames; reports hit/miss/eviction plus compile/lookup time and has a 100-hit CLI probe |
-| Simple Rust graphics API | `Device`, typed buffers, `CommandBuffer`, pipeline binding, `PipelineCache`, draw and submit are public |
+| Simple Rust graphics API (phase 66) | `Device::new` plus `create_shader` translate bounded SPIR-V modules and link public pipelines; typed buffers, command buffers and submission to an explicit renderer; runnable example at `examples/rust_api.rs` |
 
 Next: JIT remains an advanced experiment; only consider it after more interpreter evidence. The
 current cube-map demo and anisotropic sampler use native Rust closures; SPIR-V
