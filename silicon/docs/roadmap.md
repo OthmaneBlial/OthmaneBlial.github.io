@@ -22,11 +22,11 @@ long-term. This repository ships working stages and labels the remaining work.
 | Stencil / transparency integration | Circular stencil portal constrains a textured cube and translucent overlay; scalar and SIMD four-band color/depth/stencil match |
 | Regression images | Approved SIR cube PNG; cross-platform tolerance <=1 channel step |
 
-Next: add environment lighting to the PBR scene; profile shader costs before
-performance changes.
+Next: add cube-map textures and a reflection demo, then use them for PBR
+environment lighting; profile shader costs before performance changes.
 
 Future research: multiple targets, full tile binning, loops and broader control flow,
-compute/storage/shared-memory/atomics, cubemaps, MSAA, JIT,
+compute/storage/shared-memory/atomics, MSAA, JIT,
 pipeline caches, C API, a tiny real API compatibility layer, third-party demo,
 DOOM geometry through SILICON and possibly a software ray-tracing unit.
 
