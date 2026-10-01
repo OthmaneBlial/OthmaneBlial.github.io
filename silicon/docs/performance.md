@@ -1,5 +1,17 @@
 # Performance measurements
 
+## Pipeline-cache probe
+
+`silicon pipeline-cache vertex.spv fragment.spv` compiles and links one cold
+pipeline, then records 100 warm cache hits. It reports the cold wall time, mean
+warm lookup time, and accumulated compile/key-lookup timings. This is a local
+single-pair probe, not a multi-scene or repeated-run speedup claim.
+
+Five sequential release runs on 2026-10-01 for the textured shader pair measured
+a median 0.147 ms cold miss and 1.345 µs per warm hit. Warm-hit samples ranged
+from 1.320 to 29.708 µs, showing shared-host timing noise. The probe excludes
+rendering and covers only this shader pair; it is not a general speedup claim.
+
 ## 0.7 perspective interpolation
 
 The [alternating raw record](../benchmarks/apple-m2-interpolation-2026-10-01.json)

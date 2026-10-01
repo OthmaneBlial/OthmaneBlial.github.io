@@ -23,6 +23,11 @@ triangle setup plus texture/anisotropic sampling. Seed runs are useful checks,
 not exhaustive fuzz coverage; no hostile-workload sandbox or process-wide
 allocation budget is promised.
 
+`PipelineCache` is caller-owned, stores at most 16 exact shader-pair/pipeline
+state keys, and rejects either SPIR-V module above 1 MiB. That bounds cached
+source binaries to 32 MiB per cache; translated programs add memory, so this is
+not a process-wide allocation budget. Eviction is arbitrary rather than LRU.
+
 With `cargo-fuzz` installed, run a target for 60 seconds with:
 
 ```sh

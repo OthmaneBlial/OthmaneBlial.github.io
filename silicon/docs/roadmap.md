@@ -29,16 +29,18 @@ long-term. This repository ships working stages and labels the remaining work.
 | Image regression tests | Approved SIR cube PNG, exact backend comparisons and <=1 channel-step tolerance; failures save `output/shader_cube.diff.png` |
 | Fuzzing | cargo-fuzz targets cover SPIR-V parsing/lowering, capture/resource validation and bounded replay, plus triangle setup and texture sampling; see `docs/security.md` |
 | Safety review | Explicit input/resource bounds and targeted malformed-input tests; this is not a hostile-workload sandbox or process-wide memory budget |
+| JIT shaders | Not implemented; execution stays in the validated SIR interpreter |
 | CPU backends | Scalar and four-lane SIMD paths; runtime selects NEON on ARM64 or AVX2 coverage on x86-64, with SSE2 shader arithmetic; no SIMD8, AVX-512 or JIT |
-| Simple Rust graphics API | `Device`, typed buffers, `CommandBuffer`, pipeline binding, draw and submit are public; shader creation and pipeline cache remain manual/future work |
+| Pipeline cache (phase 65) | Caller-owned 16-entry cache keyed by exact SPIR-V pairs and pipeline state; built-in cube scenes also retain linked pipeline `Arc`s across frames; reports hit/miss/eviction plus compile/lookup time and has a 100-hit CLI probe |
+| Simple Rust graphics API | `Device`, typed buffers, `CommandBuffer`, pipeline binding, `PipelineCache`, draw and submit are public |
 
-Next: continue toward a measured pipeline cache, then cube-map environment lighting in the PBR shader. The
+Next: JIT remains an advanced experiment; only consider it after more interpreter evidence. The
 current cube-map demo and anisotropic sampler use native Rust closures; SPIR-V
 `samplerCube` binding and anisotropic implicit sampling remain future work.
 
 Future research: multiple targets, full tile binning, loops and broader control flow,
 compute/storage/shared-memory/atomics, JIT,
-pipeline caches, C API, a tiny real API compatibility layer, third-party demo,
+C API, a tiny real API compatibility layer, third-party demo,
 DOOM geometry through SILICON and possibly a software ray-tracing unit.
 
 None of those future items are advertised as implemented. Vulkan/OpenGL,
