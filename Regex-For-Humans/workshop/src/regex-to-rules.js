@@ -1,6 +1,6 @@
-import { CompileError, fail } from "./diagnostics.js?v=59dff25446cd";
-import { quoteText } from "./display.js?v=59dff25446cd";
-import { LIMITS, parse } from "./parser.js?v=59dff25446cd";
+import { CompileError, fail } from "./diagnostics.js?v=887ad34aab97";
+import { quoteText } from "./display.js?v=887ad34aab97";
+import { LIMITS, parse } from "./parser.js?v=887ad34aab97";
 
 const ESCAPED_ATOMS = new Map([
   ["d", "digit"],
@@ -17,7 +17,13 @@ const CLASS_ATOMS = new Map([
   ["A-Z", "uppercase letter"],
   ["a-z", "lowercase letter"],
   ["A-Za-z", "letter"],
+  ["a-zA-Z", "letter"],
   ["0-9A-Fa-f", "hex digit"],
+  ["0-9a-fA-F", "hex digit"],
+  ["A-F0-9a-f", "hex digit"],
+  ["A-Fa-f0-9", "hex digit"],
+  ["a-f0-9A-F", "hex digit"],
+  ["a-fA-F0-9", "hex digit"],
 ]);
 
 const CONTROL_ESCAPES = new Map([
