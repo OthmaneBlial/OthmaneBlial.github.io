@@ -36,17 +36,19 @@ long-term. This repository ships working stages and labels the remaining work.
 | C API (phase 67) | Version-1 shared library and header expose opaque device/resource/command handles, synchronous draw submission and RGBA8 readback; standalone C client renders a SPIR-V triangle |
 | Vulkan-like compatibility subset (phase 68) | Rust-only instance/device, typed buffers, RGBA8 images, SPIR-V pipelines, descriptor-like bindings, one offscreen render pass and synchronous queue; indexed textured triangle example. This is not Vulkan ABI, loader, or conformance support |
 | Third-party demo (phase 69) | Khronos Vulkan-Samples `hello_triangle` at a pinned upstream commit; adapted vertex layout, upstream SPIR-V fragment shader, CPU framebuffer output and a color-interpolation integration test |
-| DOOM (phase 70, in progress) | Reads Freedoom 0.13.0 E1M1, palette-decodes flats, composes opaque wall textures, and submits 4,812 triangles across 141 SILICON draws. An interactive first-person walk-through adds basic wall/step collision; masked mid-textures, visibility traversal, actors, and game rules remain. See [Freedoom checkpoint](freedoom.md) |
+| DOOM (phase 70, in progress) | Reads Freedoom 0.13.0 E1M1 and submits textured map geometry plus 24 cutout enemy billboards through SILICON (4,860 triangles, 165 draws in the checked-in capture). The interactive prototype adds movement, basic collision, hitscan, health/ammo, and pursuing melee enemies. Five placements, BSP visibility, masked textures, and full Doom rules remain. See [Freedoom checkpoint](freedoom.md) |
 
 Next: JIT remains an advanced experiment; only consider it after more interpreter evidence. The
 current cube-map demo and anisotropic sampler use native Rust closures; SPIR-V
 `samplerCube` binding and anisotropic implicit sampling remain future work.
 
 Future research: multiple targets, full tile binning, loops and broader control flow,
-compute/storage/shared-memory/atomics, JIT, DOOM masked textures and gameplay, and
+compute/storage/shared-memory/atomics, JIT, DOOM BSP traversal, masked textures,
+remaining enemies and gameplay rules, and
 possibly a software ray-tracing unit.
 
 None of those future items are advertised as implemented. Conformant Vulkan/OpenGL
-drivers, general SPIR-V compatibility, WGSL and games are **unsupported**. The
+drivers, general SPIR-V compatibility, WGSL and full-game compatibility are
+**unsupported**. Phase 70 is an experimental E1M1 gameplay slice. The
 small Rust-only subset does not provide Vulkan loader or binary compatibility.
 No existing rasterizer, Mesa, LLVMpipe, SwiftShader, ANGLE or wgpu backend is used.

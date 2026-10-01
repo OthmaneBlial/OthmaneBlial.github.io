@@ -1,4 +1,4 @@
-# Freedoom E1M1 textures through SILICON
+# Freedoom E1M1 gameplay through SILICON
 
 The Phase 70 sample reads `E1M1` from an external Freedoom Phase 1 IWAD. It
 builds BSP-leaf floor and ceiling polygons, one-sided walls, and two-sided upper
@@ -6,8 +6,8 @@ and lower wall tiers from the WAD's classic map lumps. It palette-decodes the
 64×64 floor and ceiling flats and composes opaque wall textures from
 `TEXTURE1`/`TEXTURE2`, `PNAMES`, and classic patch columns, using `PLAYPAL` for
 both. Sector light levels tint the sampled pixels. Sidedef offsets and the
-linedef upper/lower pegging flags set wall UVs. The geometry, textures,
-transform uniform, and GLSL SPIR-V shaders are submitted to SILICON's CPU
+linedef upper/lower pegging flags set wall UVs. Geometry, textures, billboards,
+transform uniforms, and GLSL SPIR-V shaders are submitted to SILICON's CPU
 renderer; no game framebuffer or other renderer is copied.
 
 Download [Freedoom 0.13.0](https://github.com/freedoom/freedoom/releases/tag/v0.13.0)
@@ -21,21 +21,37 @@ cargo run --release --example freedoom_map -- /path/to/freedoom1.wad --interacti
 ```
 
 The first command writes `output/freedoom_map.png`. The interactive view uses
-WASD to move, arrow keys to turn, Shift to run, and Escape to exit. Each frame
-submits the scene again through SILICON. Movement stays inside a BSP-leaf floor,
-keeps a 16-unit margin from one-sided or explicitly blocking lines, limits steps
-to 24 units, and requires 56 units of ceiling clearance. This is a basic
-walk-through, not Doom's complete player physics. The checked-in
-[`E1M1 screenshot`](../assets/screenshots/freedoom_e1m1.png) was rendered from
-that release's WAD. The WAD itself is not included. The release archive checksum
-is SHA-256 `3f9b264f3e3ce503b4fb7f6bdcb1f419d93c7b546f4df3e874dd878db9688f59`.
+WASD to move and strafe, arrow keys to turn, Shift to run, Space to fire, and
+Escape to exit. Each frame submits the scene again through SILICON. Movement
+stays inside a BSP-leaf floor, keeps a 16-unit margin from one-sided or
+explicitly blocking lines, limits steps to 24 units, and requires 56 units of
+ceiling clearance.
 
-The checked-in capture contains 4,812 submitted triangles across 141 SILICON
-draws for this WAD version. It shows the player start as a static image. The
-interactive mode adds basic movement and wall collision, but still draws every
-BSP leaf and does not traverse `NODES` for visibility. Masked two-sided middle
-textures, sprites, weapons, enemies, sound, and game rules are not implemented.
-`F_SKY1` ceilings show the clear color.
+The combat slice loads four normal-skill enemy types from WAD things and their
+classic `A1` sprite patches: former humans (20 health), shotgunners (30), imps
+(60), and demons (150). Cutout billboards use a SILICON fragment shader. Space
+fires a 20-damage hitscan with a 0.35-second cooldown and 200 shots. Enemies
+chase within 640 map units and deal 8 melee damage within 48 units, at most once
+every 0.85 seconds. The window title reports health, ammunition, kills, draw
+calls, and submitted triangles.
+
+Freedoom 0.13.0 E1M1 has 29 normal-skill enemy placements. The current convex
+sector lookup maps and renders 24; five placements without a containing
+approximated BSP region are skipped until point lookup traverses the WAD's
+`NODES`. The checked-in static capture contains 4,860 submitted triangles across
+165 SILICON draws: 4,812 map triangles plus 24 two-triangle billboards. It shows
+the player start; enemies are outside that camera view. The sprite shader was
+visually checked at an enemy placement using a temporary WAD with only its
+player start moved; that test fixture is not included.
+
+This is a limited gameplay prototype, not Doom's complete player physics or
+game rules. Every BSP leaf is drawn; `NODES` visibility traversal, masked
+two-sided middle textures, animated or rotated sprites, ranged attacks,
+pickups, keys, exits, weapon animation, and sound remain unimplemented.
+`F_SKY1` ceilings show the clear color. The checked-in
+[`E1M1 screenshot`](../assets/screenshots/freedoom_e1m1.png) was rendered from
+the unmodified release WAD. The WAD itself is not included. The release archive
+checksum is SHA-256 `3f9b264f3e3ce503b4fb7f6bdcb1f419d93c7b546f4df3e874dd878db9688f59`.
 
 Freedoom's three-clause BSD notice and contributor list accompany this derived
 sample in [`assets/licenses/FREEDOOM-COPYING.txt`](../assets/licenses/FREEDOOM-COPYING.txt)
