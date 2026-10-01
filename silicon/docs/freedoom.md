@@ -35,8 +35,12 @@ chase within 640 map units and deal 8 melee damage within 48 units, at most once
 every 0.85 seconds. Former humans fire 3-damage hitscan attacks and shotgunners
 fire 6-damage hitscan attacks within 512 units, at most once every 1.4 seconds
 and only with clear sight past blocking lines. This is a fixed prototype rule;
-enemy windups, aim spread, and imp projectiles are not modeled. The window title
-reports health, ammunition, kills, draw calls, and submitted triangles. The WAD
+enemy windups and aim spread are not modeled. The window title
+reports health, ammunition, kills, draw calls, and submitted triangles. Imps
+launch a straight BAL1A0 fireball within 512 units when they have clear sight;
+it travels at 180 units per second, lasts up to 3 seconds, and deals 8 damage
+on contact, with a 2-second launch cooldown. This is a simple prototype attack,
+without Doom's vertical aiming, explosion frames, or projectile physics. The WAD
 pistol's PISGA0 patch is the idle camera-aligned billboard; firing briefly uses
 its PISGC0 patch for 0.16 seconds. Both weapon poses use SILICON's cutout shader
 and draw pipeline.
@@ -53,8 +57,8 @@ view; that test fixture is not included.
 This is a limited gameplay prototype, not Doom's complete player physics or
 game rules. Every BSP leaf is drawn; view-frustum traversal and BSP visibility
 culling, masked two-sided middle textures, animated or rotated enemy sprites,
-imp projectiles, pickups, keys, exits, full weapon animation beyond the brief
-idle/fire pose, and sound remain unimplemented.
+projectile explosion frames and vertical motion, pickups, keys, exits, full
+weapon animation beyond the brief idle/fire pose, and sound remain unimplemented.
 `F_SKY1` ceilings show the clear color. The checked-in
 [`E1M1 screenshot`](../assets/screenshots/freedoom_e1m1.png) was rendered from
 the unmodified release WAD. The WAD itself is not included. The release archive
