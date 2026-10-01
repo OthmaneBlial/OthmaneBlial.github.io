@@ -1,6 +1,6 @@
-import { CompileError, fail } from "./diagnostics.js?v=09cf23e74994";
-import { quoteText } from "./display.js?v=09cf23e74994";
-import { LIMITS, parse } from "./parser.js?v=09cf23e74994";
+import { CompileError, fail } from "./diagnostics.js?v=7b9809253ee2";
+import { quoteText } from "./display.js?v=7b9809253ee2";
+import { LIMITS, parse } from "./parser.js?v=7b9809253ee2";
 
 const ESCAPED_ATOMS = new Map([
   ["d", "digit"],
@@ -287,6 +287,8 @@ export function regexToRules(regex) {
   } catch {
     throw new TypeError("Expected a JavaScript RegExp.");
   }
+  // A native copy reads the stored pattern and flags, including for subclasses.
+  regex = new RegExp(regex);
   if (/[^imsu]/u.test(regex.flags)) {
     fail("UNSUPPORTED_REGEX_FLAGS", "Only the i, s, m and u flags can be translated.", {
       line: 1,
