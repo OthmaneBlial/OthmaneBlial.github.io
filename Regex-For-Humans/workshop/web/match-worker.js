@@ -1,5 +1,5 @@
-import { escapeControls, quoteText } from "../src/display.js?v=062127309ddc";
-import { LIMITS } from "../src/parser.js?v=062127309ddc";
+import { escapeControls, quoteText } from "../src/display.js?v=7a0ba7bd0454";
+import { LIMITS } from "../src/parser.js?v=7a0ba7bd0454";
 
 /** @typedef {import("./worker-protocol.d.ts").TestRequest} TestRequest */
 /** @typedef {import("./worker-protocol.d.ts").WorkerReply} WorkerReply */
@@ -15,7 +15,7 @@ self.onmessage = (event) => {
       typeof source !== "string" ||
       source.length > LIMITS.regexSourceLength ||
       typeof flags !== "string" ||
-      !/^[ims]*u$/u.test(flags)
+      !/^(?:i)?(?:m)?(?:s)?u$/u.test(flags)
     ) {
       throw new Error("Invalid regex test request.");
     }
