@@ -1,12 +1,12 @@
-import { anchor, atom, PATH_SEGMENT_SOURCE } from "./ast.js?v=cc4544bc3662";
-import { fail } from "./diagnostics.js?v=cc4544bc3662";
-import { quoteText } from "./display.js?v=cc4544bc3662";
+import { anchor, atom, PATH_SEGMENT_SOURCE } from "./ast.js?v=471ca3ba46f8";
+import { fail } from "./diagnostics.js?v=471ca3ba46f8";
+import { quoteText } from "./display.js?v=471ca3ba46f8";
 
-/** @typedef {import('./ast.js?v=cc4544bc3662').Location} Location */
-/** @typedef {import('./ast.js?v=cc4544bc3662').Repetition} Repetition */
-/** @typedef {import('./ast.js?v=cc4544bc3662').AtomNode} AtomNode */
-/** @typedef {import('./ast.js?v=cc4544bc3662').RuleNode} RuleNode */
-/** @typedef {import('./ast.js?v=cc4544bc3662').ParsedRules} ParsedRules */
+/** @typedef {import('./ast.js?v=471ca3ba46f8').Location} Location */
+/** @typedef {import('./ast.js?v=471ca3ba46f8').Repetition} Repetition */
+/** @typedef {import('./ast.js?v=471ca3ba46f8').AtomNode} AtomNode */
+/** @typedef {import('./ast.js?v=471ca3ba46f8').RuleNode} RuleNode */
+/** @typedef {import('./ast.js?v=471ca3ba46f8').ParsedRules} ParsedRules */
 
 const MAX_SOURCE_LENGTH = 16_384;
 export const LIMITS = Object.freeze({
@@ -64,6 +64,8 @@ export function validateSourceLength(source) {
 
 const SHORTHANDS = new Map([
   ["word", "\\w"],
+  ["word character", "\\w"],
+  ["word characters", "\\w"],
   ["not word", "\\W"],
   ["not digit", "\\D"],
   ["digit", "\\d"],
@@ -369,6 +371,7 @@ function parseAtom(text, location, rawLine) {
           "lowercase letters",
           "uppercase letters",
           "spaces",
+          "word characters",
           "path segment characters",
         ].includes(phrase) &&
         !repetition
@@ -440,7 +443,9 @@ function parseAtom(text, location, rawLine) {
                 ? "Use `path segment character` for one character or `path segment characters` for one or more."
                 : /^spaces?(?:\s|$)/i.test(remaining)
                   ? "Use `space` for one whitespace character or `spaces` for one or more, including line breaks."
-                  : "Try `line start`, `any text` or `3 digits`.",
+                  : /^words?(?:\s|$)/i.test(remaining)
+                    ? "Use `word character` for one ASCII letter, digit or underscore, or `word characters` for one or more."
+                    : "Try `line start`, `any text` or `3 digits`.",
   );
 }
 
