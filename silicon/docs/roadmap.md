@@ -35,13 +35,14 @@ long-term. This repository ships working stages and labels the remaining work.
 | Simple Rust graphics API (phase 66) | Versioned `silicon::api` facade, bounded SPIR-V shader/pipeline creation, owned typed buffers, command submission to an explicit renderer, and a runnable direct-triangle example |
 | C API (phase 67) | Version-1 shared library and header expose opaque device/resource/command handles, synchronous draw submission and RGBA8 readback; standalone C client renders a SPIR-V triangle |
 | Vulkan-like compatibility subset (phase 68) | Rust-only instance/device, typed buffers, RGBA8 images, SPIR-V pipelines, descriptor-like bindings, one offscreen render pass and synchronous queue; indexed textured triangle example. This is not Vulkan ABI, loader, or conformance support |
+| Third-party demo (phase 69) | Khronos Vulkan-Samples `hello_triangle` at a pinned upstream commit; adapted vertex layout, upstream SPIR-V fragment shader, CPU framebuffer output and a color-interpolation integration test |
 
 Next: JIT remains an advanced experiment; only consider it after more interpreter evidence. The
 current cube-map demo and anisotropic sampler use native Rust closures; SPIR-V
 `samplerCube` binding and anisotropic implicit sampling remain future work.
 
 Future research: multiple targets, full tile binning, loops and broader control flow,
-compute/storage/shared-memory/atomics, JIT, third-party demo,
+compute/storage/shared-memory/atomics, JIT,
 DOOM geometry through SILICON and possibly a software ray-tracing unit.
 
 None of those future items are advertised as implemented. Conformant Vulkan/OpenGL
