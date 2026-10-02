@@ -1,8 +1,8 @@
-import { CompileError, compile, regexToRules } from "../index.js?v=88b4557b31ca";
-import { escapeControls } from "../src/display.js?v=88b4557b31ca";
-import { LIMITS, splitLines } from "../src/parser.js?v=88b4557b31ca";
-import { parseRegexLiteral } from "../src/regex-literal.js?v=88b4557b31ca";
-import { TestRunError, TestRunner } from "./test-runner.js?v=88b4557b31ca";
+import { CompileError, compile, regexToRules } from "../index.js?v=5f9ee34780ee";
+import { escapeControls } from "../src/display.js?v=5f9ee34780ee";
+import { LIMITS, splitLines } from "../src/parser.js?v=5f9ee34780ee";
+import { parseRegexLiteral } from "../src/regex-literal.js?v=5f9ee34780ee";
+import { TestRunError, TestRunner } from "./test-runner.js?v=5f9ee34780ee";
 
 /** @typedef {import("./worker-protocol.d.ts").TestCase} TestCase */
 /** @typedef {{id: string, title: string, note: string, rules: string, source: string, flags: string, matchMode: "full" | "search", positive: string[], negative: string[]}} ProductScenario */
@@ -61,7 +61,7 @@ let hasEdits =
 let copyFeedbackTimer = 0;
 let copySequence = 0;
 const testRunner = new TestRunner(
-  () => new Worker(new URL("./match-worker.js?v=88b4557b31ca", import.meta.url), { type: "module" }),
+  () => new Worker(new URL("./match-worker.js?v=5f9ee34780ee", import.meta.url), { type: "module" }),
 );
 
 /**
@@ -352,10 +352,11 @@ function renderTests() {
       testCases = testCases.filter((item) => item.id !== sample.id);
       renderTests();
       updateTestResults();
-      (
+      const next =
         ui.testList.querySelectorAll("textarea")[Math.min(index, testCases.length - 1)] ??
-        ui.addExample
-      ).focus();
+        ui.addExample;
+      next.focus({ preventScroll: true });
+      next.scrollIntoView({ block: "nearest", inline: "nearest", behavior: "instant" });
     });
     row.append(input, expected, result, remove);
     ui.testList.append(row);
@@ -616,7 +617,7 @@ ui.copy.addEventListener("click", async () => {
 if (hasEdits) compileRules();
 
 try {
-  const response = await fetch(new URL("../test/fixtures/product-scenarios.json?v=88b4557b31ca", import.meta.url));
+  const response = await fetch(new URL("../test/fixtures/product-scenarios.json?v=5f9ee34780ee", import.meta.url));
   if (!response.ok) throw new Error(`HTTP ${response.status}`);
   const loaded = await response.json();
   if (!Array.isArray(loaded)) throw new Error("Invalid example recipe data");
