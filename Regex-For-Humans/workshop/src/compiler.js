@@ -1,10 +1,10 @@
-import { fail } from "./diagnostics.js?v=db7eddf9100c";
-import { escapeControls } from "./display.js?v=db7eddf9100c";
-import { explainNode } from "./explain.js?v=db7eddf9100c";
+import { fail } from "./diagnostics.js?v=784f18debc2a";
+import { escapeControls } from "./display.js?v=784f18debc2a";
+import { explainNode } from "./explain.js?v=784f18debc2a";
 
-/** @typedef {import('./ast.js?v=db7eddf9100c').AtomNode} AtomNode */
-/** @typedef {import('./ast.js?v=db7eddf9100c').Repetition} Repetition */
-/** @typedef {import('./ast.js?v=db7eddf9100c').ParsedRules} ParsedRules */
+/** @typedef {import('./ast.js?v=784f18debc2a').AtomNode} AtomNode */
+/** @typedef {import('./ast.js?v=784f18debc2a').Repetition} Repetition */
+/** @typedef {import('./ast.js?v=784f18debc2a').ParsedRules} ParsedRules */
 
 const locationOfOptions = { line: 1, column: 1 };
 

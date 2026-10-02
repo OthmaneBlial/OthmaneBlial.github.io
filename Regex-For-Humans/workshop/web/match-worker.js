@@ -1,5 +1,5 @@
-import { escapeControls, quoteText } from "../src/display.js?v=db7eddf9100c";
-import { LIMITS } from "../src/parser.js?v=db7eddf9100c";
+import { escapeControls, quoteText } from "../src/display.js?v=784f18debc2a";
+import { LIMITS } from "../src/parser.js?v=784f18debc2a";
 
 /** @typedef {import("./worker-protocol.d.ts").TestRequest} TestRequest */
 /** @typedef {import("./worker-protocol.d.ts").WorkerReply} WorkerReply */
@@ -55,7 +55,13 @@ self.onmessage = (event) => {
       let detail = match ? `Matched ${quoteText(match[0])} at ${match.index}` : "No match";
       if (match && !actual)
         detail = `Found ${quoteText(match[0])} at ${match.index}, not the entire string`;
-      return { id: sample.id, actual, pass: actual === sample.expected, detail };
+      return {
+        id: sample.id,
+        actual,
+        pass: actual === sample.expected,
+        detail,
+        matchRange: match ? { start: match.index, end: match.index + match[0].length } : null,
+      };
     });
     /** @type {WorkerReply} */
     const reply = { id, results };
