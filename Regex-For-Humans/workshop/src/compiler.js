@@ -1,10 +1,10 @@
-import { fail } from "./diagnostics.js?v=a32fdaabc9e5";
-import { escapeControls } from "./display.js?v=a32fdaabc9e5";
-import { explainNode } from "./explain.js?v=a32fdaabc9e5";
+import { fail } from "./diagnostics.js?v=83a3a0430d1c";
+import { escapeControls } from "./display.js?v=83a3a0430d1c";
+import { explainNode } from "./explain.js?v=83a3a0430d1c";
 
-/** @typedef {import('./ast.js?v=a32fdaabc9e5').AtomNode} AtomNode */
-/** @typedef {import('./ast.js?v=a32fdaabc9e5').Repetition} Repetition */
-/** @typedef {import('./ast.js?v=a32fdaabc9e5').ParsedRules} ParsedRules */
+/** @typedef {import('./ast.js?v=83a3a0430d1c').AtomNode} AtomNode */
+/** @typedef {import('./ast.js?v=83a3a0430d1c').Repetition} Repetition */
+/** @typedef {import('./ast.js?v=83a3a0430d1c').ParsedRules} ParsedRules */
 
 const locationOfOptions = { line: 1, column: 1 };
 
@@ -92,7 +92,7 @@ function normalizeOptions(options) {
   return requested;
 }
 
-/** @param {ParsedRules} parsed @param {{flags?: string}} [options] */
+/** @param {ParsedRules} parsed @param {{flags?: string | undefined}} [options] */
 export function compileAst(parsed, options = {}) {
   const requested = normalizeOptions(options);
   const flags = `${requested.includes("i") ? "i" : ""}${parsed.anchorMode === "line" ? "m" : ""}${requested.includes("s") ? "s" : ""}u`;
