@@ -1,6 +1,6 @@
-import { compileAst } from "./src/compiler.js?v=058e513548d6";
-import { parse } from "./src/parser.js?v=058e513548d6";
-import { regexToRules } from "./src/regex-to-rules.js?v=058e513548d6";
+import { compileAst } from "./src/compiler.js?v=4cf3bce0cfb1";
+import { parse } from "./src/parser.js?v=4cf3bce0cfb1";
+import { regexToRules } from "./src/regex-to-rules.js?v=4cf3bce0cfb1";
 
 /** Compile controlled-English rules into JavaScript regex source, flags and source mapping.
  * @param {string} source @param {{flags?: string | undefined}} [options]
@@ -28,5 +28,5 @@ export function toRegExp(result) {
   return new RegExp(source, flags);
 }
 
-export { CompileError } from "./src/diagnostics.js?v=058e513548d6";
+export { CompileError } from "./src/diagnostics.js?v=4cf3bce0cfb1";
 export { regexToRules };

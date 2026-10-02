@@ -8,7 +8,7 @@
 
 A few clear English rules become a JavaScript regex you can actually follow.
 
-### [🚀 Open the playground](https://othmaneblial.github.io/Regex-For-Humans/workshop/) · [🎨 Visit the site](https://othmaneblial.github.io/Regex-For-Humans/) · [📖 Learn the syntax](docs/LANGUAGE.md) · [📦 npm preview](https://www.npmjs.com/package/regex-for-humans/v/0.1.0-dev)
+### [🚀 Open the playground](https://othmaneblial.github.io/Regex-For-Humans/workshop/) · [🎨 Visit the site](https://othmaneblial.github.io/Regex-For-Humans/) · [📖 Learn the syntax](docs/LANGUAGE.md) · [📦 npm preview](https://www.npmjs.com/package/regex-for-humans/v/0.1.0-dev.1)
 
 🔒 **Runs locally** &nbsp; 🧩 **No runtime dependencies** &nbsp; ⚡ **One compiler, three ways to use it**
 
@@ -44,7 +44,7 @@ end
 
 A small, **fixed vocabulary**, with an exact meaning for every instruction. The library, CLI, and workshop use the same deterministic compiler. Unknown phrases get a line, column, and helpful diagnostic.
 
-> 🌱 **Development preview (`0.1.0-dev`):** the library and CLI need **Node.js 22+**. The [hosted workshop](https://othmaneblial.github.io/Regex-For-Humans/workshop/) works without installation. Human usability and screen reader reviews are still pending.
+> 🌱 **Development preview (`0.1.0-dev.1`):** the library and CLI need **Node.js 22+**. The [hosted workshop](https://othmaneblial.github.io/Regex-For-Humans/workshop/) works without installation. Human usability and screen reader reviews are still pending.
 
 ## 📦 Install the preview
 
@@ -58,7 +58,7 @@ Use the CLI without a global install:
 printf 'start "ABC"\n3 digits\nend\n' | npx --yes --package=regex-for-humans@preview regex-for-humans
 ```
 
-This prints `/^ABC\d{3}$/u`. To pin the exact preview, use `regex-for-humans@0.1.0-dev`. There are no runtime dependencies or standalone OS executables.
+This prints `/^ABC\d{3}$/u`. To pin the exact preview, use `regex-for-humans@0.1.0-dev.1`. There are no runtime dependencies or standalone OS executables.
 
 ## 🎮 Play with a pattern
 
@@ -117,6 +117,7 @@ Empty non-capturing groups translate too: `/(?:)/u` becomes `0 any character`. S
 | [👤 Username shape](https://othmaneblial.github.io/Regex-For-Humans/workshop/?example=username-shape) | `Alice_7` | ASCII letter first, then word characters; 3–16 total |
 | [🎨 Hex color](https://othmaneblial.github.io/Regex-For-Humans/workshop/?example=hex-color) | `#12aBcF` | Six hexadecimal digits after `#`, either letter case |
 | [🔌 MAC address shape](https://othmaneblial.github.io/Regex-For-Humans/workshop/?example=mac-address-shape) | `00:1A:2B:3C:4D:5E` | Six colon-separated pairs of ASCII hexadecimal digits |
+| [🪪 UUID shape](https://othmaneblial.github.io/Regex-For-Humans/workshop/?example=uuid-shape) | `f81d4fae-7dec-11d0-a765-00a0c91e6bf6` | Five ASCII hex groups of 8–4–4–4–12 characters, either letter case |
 | [🔡 Product-code shape](https://othmaneblial.github.io/Regex-For-Humans/workshop/?example=product-code-shape) | `AB-rgb-0420` | Two uppercase, three lowercase ASCII letters, and four digits |
 | [📅 Date shape](https://othmaneblial.github.io/Regex-For-Humans/workshop/?example=date-shape) | `2026-09-30` | The `YYYY-MM-DD` shape |
 | [⏰ Time shape](https://othmaneblial.github.io/Regex-For-Humans/workshop/?example=time-shape) | `09:30` | The `HH:MM` shape with ASCII digits |
@@ -130,7 +131,7 @@ Empty non-capturing groups translate too: `/(?:)/u` becomes `0 any character`. S
 | [🚧 Excluded characters](https://othmaneblial.github.io/Regex-For-Humans/workshop/?example=excluded-characters) | `xyz` | Text without a chosen set of characters |
 | [📝 Line rule](https://othmaneblial.github.io/Regex-For-Humans/workshop/?example=line-rule) | `item 123` | A line ending in at least three digits |
 
-**Shapes have limits:** text filename shape allows spaces, dots and punctuation; check filesystem rules and file existence separately. phone-number shape allows leading zeros and excludes spaces and punctuation; check country rules and number validity separately. invoice IDs allow leading zeros; verify invoice records separately. Username shape does not check availability or a service's account rules. Date shape accepts impossible dates such as `2026-02-31`; validate calendar values separately. Time shape accepts `25:99`; validate hour and minute ranges separately. Version shape allows leading zeros and rejects prerelease suffixes; it isn't full SemVer. Hex color accepts `#RRGGBB`, not shorthand, alpha, or every CSS color form. Product-code shape accepts only its stated ASCII letter case and counts; adding `i` ignores case, and the pattern does not verify catalog records.
+**Shapes have limits:** UUID shape follows the bare hex-and-dash layout in [RFC 9562 section 4](https://www.rfc-editor.org/rfc/rfc9562.html#section-4); version, variant and uniqueness require separate checks. Braces and a `urn:uuid:` prefix are excluded. text filename shape allows spaces, dots and punctuation; check filesystem rules and file existence separately. phone-number shape allows leading zeros and excludes spaces and punctuation; check country rules and number validity separately. invoice IDs allow leading zeros; verify invoice records separately. Username shape does not check availability or a service's account rules. Date shape accepts impossible dates such as `2026-02-31`; validate calendar values separately. Time shape accepts `25:99`; validate hour and minute ranges separately. Version shape allows leading zeros and rejects prerelease suffixes; it isn't full SemVer. Hex color accepts `#RRGGBB`, not shorthand, alpha, or every CSS color form. Product-code shape accepts only its stated ASCII letter case and counts; adding `i` ignores case, and the pattern does not verify catalog records.
 
 ## 🏗️ Bigger patterns, same readable rules
 
@@ -299,12 +300,12 @@ Control characters and Unicode line separators from rules, arguments and filenam
 
 </details>
 
-### 🔄 Reverse from a source checkout (unreleased)
+### 🔄 Translate a regex back into rules
 
-`--reverse` is available on `main`, and is not included in the published npm `0.1.0-dev` preview. From a clone, translate a slash-delimited JavaScript regex with the required `u` flag:
+The `0.1.0-dev.1` preview includes `--reverse`. Translate a slash-delimited JavaScript regex with the required `u` flag:
 
 ```sh
-printf '%s\n' '/^[A-Z]{2}-[0-9]{4}$/u' | node bin/regex-for-humans.js --reverse
+printf '%s\n' '/^[A-Z]{2}-[0-9]{4}$/u' | npx --yes --package=regex-for-humans@preview regex-for-humans --reverse
 ```
 
 ```text
@@ -334,9 +335,9 @@ console.log(reverse.rules);                 // start\n2 uppercase letter\n"-"\n4
 console.log(reverse.flags);                 // Flags to pass back to compile()
 ```
 
-On `main` (unreleased), TypeScript also accepts cached compile metadata: `toRegExp({ source, flags })`. Both fields must be strings; explanation segments are not needed or read. Complete compile results remain accepted. The published npm preview still requires `CompileResult` in its TypeScript declaration.
+TypeScript accepts cached compile metadata: `toRegExp({ source, flags })`. Both fields must be strings; explanation segments are not needed or read. Complete compile results remain accepted.
 
-`compile("digit", { flags: undefined })` uses the default `u` flag, just like omitting `flags`. On `main`, its TypeScript option type also accepts this with `exactOptionalPropertyTypes` enabled; the published preview's declaration does not yet allow explicit `undefined` in that mode. `toRegExp()` metadata still requires string flags.
+`compile("digit", { flags: undefined })` uses the default `u` flag, just like omitting `flags`. Its TypeScript option type accepts this with `exactOptionalPropertyTypes` enabled. `toRegExp()` metadata still requires string flags.
 
 `regexToRules()` also accepts genuine regexes from other JavaScript contexts, such as iframes or Node's `vm`, and leaves their `lastIndex` unchanged. It translates the stored native pattern and flags; subclass or own-property metadata overrides do not change the translation. Matching methods and custom `Symbol.match` getters are not called.
 
