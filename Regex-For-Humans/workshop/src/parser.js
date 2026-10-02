@@ -1,12 +1,12 @@
-import { anchor, atom, PATH_SEGMENT_SOURCE } from "./ast.js?v=2cd9758cfb64";
-import { fail } from "./diagnostics.js?v=2cd9758cfb64";
-import { quoteText } from "./display.js?v=2cd9758cfb64";
+import { anchor, atom, PATH_SEGMENT_SOURCE } from "./ast.js?v=a32fdaabc9e5";
+import { fail } from "./diagnostics.js?v=a32fdaabc9e5";
+import { quoteText } from "./display.js?v=a32fdaabc9e5";
 
-/** @typedef {import('./ast.js?v=2cd9758cfb64').Location} Location */
-/** @typedef {import('./ast.js?v=2cd9758cfb64').Repetition} Repetition */
-/** @typedef {import('./ast.js?v=2cd9758cfb64').AtomNode} AtomNode */
-/** @typedef {import('./ast.js?v=2cd9758cfb64').RuleNode} RuleNode */
-/** @typedef {import('./ast.js?v=2cd9758cfb64').ParsedRules} ParsedRules */
+/** @typedef {import('./ast.js?v=a32fdaabc9e5').Location} Location */
+/** @typedef {import('./ast.js?v=a32fdaabc9e5').Repetition} Repetition */
+/** @typedef {import('./ast.js?v=a32fdaabc9e5').AtomNode} AtomNode */
+/** @typedef {import('./ast.js?v=a32fdaabc9e5').RuleNode} RuleNode */
+/** @typedef {import('./ast.js?v=a32fdaabc9e5').ParsedRules} ParsedRules */
 
 const MAX_SOURCE_LENGTH = 16_384;
 export const LIMITS = Object.freeze({

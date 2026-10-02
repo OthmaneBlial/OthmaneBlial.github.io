@@ -1,6 +1,6 @@
-import { compileAst } from "./src/compiler.js?v=2cd9758cfb64";
-import { parse } from "./src/parser.js?v=2cd9758cfb64";
-import { regexToRules } from "./src/regex-to-rules.js?v=2cd9758cfb64";
+import { compileAst } from "./src/compiler.js?v=a32fdaabc9e5";
+import { parse } from "./src/parser.js?v=a32fdaabc9e5";
+import { regexToRules } from "./src/regex-to-rules.js?v=a32fdaabc9e5";
 
 /** Compile controlled-English rules into JavaScript regex source, flags and source mapping.
  * @param {string} source @param {{flags?: string}} [options]
@@ -16,8 +16,8 @@ export function regexMatchingThroughLines(lines) {
   return compile(lines).source;
 }
 
-/** Create a native RegExp from a successful compile result.
- * @param {ReturnType<typeof compile>} result
+/** Create a native RegExp from a compile result or its source/flags metadata.
+ * @param {ReturnType<typeof compile> | Pick<ReturnType<typeof compile>, "source" | "flags">} result
  */
 export function toRegExp(result) {
   const source = result ? result.source : undefined;
@@ -28,5 +28,5 @@ export function toRegExp(result) {
   return new RegExp(source, flags);
 }
 
-export { CompileError } from "./src/diagnostics.js?v=2cd9758cfb64";
+export { CompileError } from "./src/diagnostics.js?v=a32fdaabc9e5";
 export { regexToRules };
