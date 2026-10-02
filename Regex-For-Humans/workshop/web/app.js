@@ -1,8 +1,8 @@
-import { CompileError, compile, regexToRules } from "../index.js?v=6da8f4354c4e";
-import { escapeControls } from "../src/display.js?v=6da8f4354c4e";
-import { splitLines } from "../src/parser.js?v=6da8f4354c4e";
-import { parseRegexLiteral } from "../src/regex-literal.js?v=6da8f4354c4e";
-import { TestRunError, TestRunner } from "./test-runner.js?v=6da8f4354c4e";
+import { CompileError, compile, regexToRules } from "../index.js?v=5a88ee26a0a2";
+import { escapeControls } from "../src/display.js?v=5a88ee26a0a2";
+import { LIMITS, splitLines } from "../src/parser.js?v=5a88ee26a0a2";
+import { parseRegexLiteral } from "../src/regex-literal.js?v=5a88ee26a0a2";
+import { TestRunError, TestRunner } from "./test-runner.js?v=5a88ee26a0a2";
 
 /** @typedef {import("./worker-protocol.d.ts").TestCase} TestCase */
 /** @typedef {{id: string, title: string, note: string, rules: string, source: string, flags: string, matchMode: "full" | "search", positive: string[], negative: string[]}} ProductScenario */
@@ -61,7 +61,7 @@ let hasEdits =
 let copyFeedbackTimer = 0;
 let copySequence = 0;
 const testRunner = new TestRunner(
-  () => new Worker(new URL("./match-worker.js?v=6da8f4354c4e", import.meta.url), { type: "module" }),
+  () => new Worker(new URL("./match-worker.js?v=5a88ee26a0a2", import.meta.url), { type: "module" }),
 );
 
 /**
@@ -93,7 +93,8 @@ function setDiagnostic(message, invalidRules = false) {
 
 /** @param {number} number @param {number} [column] */
 function selectLine(number, column) {
-  const lines = splitLines(ui.rules.value);
+  // Include the first excess code unit so source-limit errors can still select it.
+  const lines = splitLines(ui.rules.value.slice(0, LIMITS.sourceLength + 1));
   const start = lines.slice(0, number - 1).reduce((sum, line) => sum + line.length + 1, 0);
   const end = start + (lines[number - 1]?.length ?? 0);
   const position = column === undefined ? start : Math.min(start + column - 1, end);
@@ -354,11 +355,15 @@ function compileRules() {
   }
   window.clearTimeout(copyFeedbackTimer);
   ui.copy.textContent = "Copy regex ↗";
-  const ruleCount = splitLines(ui.rules.value).filter((line) => line.trim()).length;
-  ui.ruleCount.textContent = `${ruleCount} ${ruleCount === 1 ? "rule" : "rules"}`;
+  const rules = ui.rules.value;
+  if (rules.length > LIMITS.sourceLength) ui.ruleCount.textContent = "Over limit";
+  else {
+    const ruleCount = splitLines(rules).filter((line) => line.trim()).length;
+    ui.ruleCount.textContent = `${ruleCount} ${ruleCount === 1 ? "rule" : "rules"}`;
+  }
   try {
     const flags = `${ui.ignoreCase.checked ? "i" : ""}${ui.dotAll.checked ? "s" : ""}`;
-    compiled = compile(ui.rules.value, { flags });
+    compiled = compile(rules, { flags });
     ui.output.textContent = `/${compiled.source}/${compiled.flags}`;
     ui.flagsSummary.textContent = flagsDescription(compiled.flags);
     ui.copy.disabled = false;
@@ -593,7 +598,7 @@ ui.copy.addEventListener("click", async () => {
 if (hasEdits) compileRules();
 
 try {
-  const response = await fetch(new URL("../test/fixtures/product-scenarios.json?v=6da8f4354c4e", import.meta.url));
+  const response = await fetch(new URL("../test/fixtures/product-scenarios.json?v=5a88ee26a0a2", import.meta.url));
   if (!response.ok) throw new Error(`HTTP ${response.status}`);
   scenarios = await response.json();
   renderScenarioButtons();
