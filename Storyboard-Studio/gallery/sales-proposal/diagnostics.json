@@ -1,0 +1,16 @@
+{
+  "diagnostics_version": "rust-1",
+  "findings": [
+    {
+      "code": "evidence.unreviewed",
+      "severity": "info",
+      "slide": "slide-003",
+      "message": "Synthetic gallery input is present but not author-confirmed.",
+      "action": "Review the excerpt and record an owner and checked date."
+    }
+  ],
+  "claims": 1,
+  "linked_claims": 1,
+  "author_confirmed_claims": 0,
+  "disclaimer": "Evidence presence and author confirmation do not establish factual truth. No network link checks were performed."
+}

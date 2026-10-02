@@ -1,0 +1,43 @@
+{
+  "schema_version": "3",
+  "build_version": "0.3.0",
+  "renderer_version": "openxml-rust-1",
+  "theme": {
+    "name": "editorial",
+    "background": "F4EDE0",
+    "foreground": "30251D",
+    "muted": "68594A",
+    "accent": "A84729",
+    "surface": "E9DFCE",
+    "font": "Carlito",
+    "title_size": 44.0,
+    "body_size": 24.0,
+    "margin": 56.0,
+    "gap": 18.0
+  },
+  "story": {
+    "path": "deck.story.json",
+    "sha256": "4eacb995569831f38aca3c7ab4244ec56183932b31845b1ecba11855726bf422"
+  },
+  "presentation": {
+    "path": "deck.pptx",
+    "sha256": "3e13aba710001ce31de55015bfe1515502037cbdf205a1ae96c0a43dad8c06cd"
+  },
+  "diagnostics": {
+    "diagnostics_version": "rust-1",
+    "findings": [
+      {
+        "code": "evidence.unreviewed",
+        "severity": "info",
+        "slide": "slide-003",
+        "message": "Synthetic gallery input is present but not author-confirmed.",
+        "action": "Review the excerpt and record an owner and checked date."
+      }
+    ],
+    "claims": 1,
+    "linked_claims": 1,
+    "author_confirmed_claims": 0,
+    "disclaimer": "Evidence presence and author confirmation do not establish factual truth. No network link checks were performed."
+  },
+  "disclaimer": "Hashes establish internal integrity, not authorship, factual truth or viewer compatibility."
+}

@@ -1,0 +1,51 @@
+{
+  "scope": "Per-slide visible authored token preservation after office PDF import. Does not prove editability or exact geometric parity.",
+  "slides": [
+    {
+      "slide": 1,
+      "expected_tokens": 26,
+      "missing_tokens": [],
+      "passed": true
+    },
+    {
+      "slide": 2,
+      "expected_tokens": 16,
+      "missing_tokens": [],
+      "passed": true
+    },
+    {
+      "slide": 3,
+      "expected_tokens": 22,
+      "missing_tokens": [],
+      "passed": true
+    },
+    {
+      "slide": 4,
+      "expected_tokens": 33,
+      "missing_tokens": [],
+      "passed": true
+    },
+    {
+      "slide": 5,
+      "expected_tokens": 13,
+      "missing_tokens": [],
+      "passed": true
+    },
+    {
+      "slide": 6,
+      "expected_tokens": 33,
+      "missing_tokens": [],
+      "passed": true
+    },
+    {
+      "slide": 7,
+      "expected_tokens": 29,
+      "missing_tokens": [],
+      "passed": true
+    }
+  ],
+  "viewer": "LibreOffice 26.8.0.3 bce0998afefdbc355585ca324285661a2170ba77",
+  "os": "darwin",
+  "architecture": "arm64",
+  "deck_sha256": "53a84fb4f3270f6bdc29971ed54fbc32ab37b4f80e03fba6270818099c4af7ce"
+}

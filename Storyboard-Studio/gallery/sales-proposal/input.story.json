@@ -1,0 +1,268 @@
+{
+  "schema_version": "3",
+  "presentation": {
+    "title": "A proposal built around one customer outcome",
+    "subtitle": "",
+    "theme": "editorial",
+    "slides": [
+      {
+        "id": "slide-001",
+        "title": "The context for solution delivery",
+        "purpose": "The context for solution delivery",
+        "role": "context",
+        "layout": "stack",
+        "blocks": [
+          {
+            "type": "text",
+            "text": {
+              "paragraphs": [
+                {
+                  "runs": [
+                    {
+                      "text": "This fictional team needs a decision it can explain, execute, and revisit. The proposal lists features without explaining the delivery trade-off.",
+                      "bold": false,
+                      "italic": false,
+                      "hyperlink": null
+                    }
+                  ],
+                  "bullet": false
+                }
+              ]
+            }
+          }
+        ],
+        "claims": [],
+        "evidence": [],
+        "notes": "Synthetic scenario. Figures, roles and organizations are invented to demonstrate the renderer.\n",
+        "transition": ""
+      },
+      {
+        "id": "slide-002",
+        "title": "The problem is the missing decision boundary",
+        "purpose": "The problem is the missing decision boundary",
+        "role": "recommendation",
+        "layout": "stack",
+        "blocks": [
+          {
+            "type": "text",
+            "text": {
+              "paragraphs": [
+                {
+                  "runs": [
+                    {
+                      "text": "The proposal lists features without explaining the delivery trade-off.",
+                      "bold": false,
+                      "italic": false,
+                      "hyperlink": null
+                    }
+                  ],
+                  "bullet": false
+                }
+              ]
+            }
+          }
+        ],
+        "claims": [],
+        "evidence": [],
+        "notes": "",
+        "transition": "The preceding slide establishes why this recommendation matters for the decision."
+      },
+      {
+        "id": "slide-003",
+        "title": "Evidence to gather before committing",
+        "purpose": "Evidence to gather before committing",
+        "role": "evidence",
+        "layout": "stack",
+        "blocks": [
+          {
+            "type": "chart",
+            "chart": {
+              "title": "Illustrative pilot checkpoints",
+              "categories": [
+                "Baseline",
+                "Pilot",
+                "Review"
+              ],
+              "series": [
+                {
+                  "name": "Synthetic score",
+                  "values": [
+                    12,
+                    24,
+                    24
+                  ]
+                }
+              ],
+              "kind": "bar",
+              "source_note": "Invented values for layout demonstration; not observed results."
+            }
+          }
+        ],
+        "claims": [
+          {
+            "id": "scope",
+            "text": "The example uses synthetic content and illustrative review checkpoints.",
+            "assumption": true
+          }
+        ],
+        "evidence": [
+          {
+            "id": "synthetic-source",
+            "citation": {
+              "label": "Synthetic gallery input",
+              "locator": "brief.md",
+              "author": "Storyboard Studio"
+            },
+            "kind": "note",
+            "reference": "Authored fixture",
+            "excerpt": "No real customer, market or investment results are claimed.",
+            "owner": "Account owner",
+            "claim_ids": [
+              "scope"
+            ],
+            "author_confirmed": false,
+            "checked_date": null
+          }
+        ],
+        "notes": "",
+        "transition": "The preceding slide establishes why this evidence matters for the decision."
+      },
+      {
+        "id": "slide-004",
+        "title": "Two paths make the trade-off explicit",
+        "purpose": "Two paths make the trade-off explicit",
+        "role": "options",
+        "layout": "stack",
+        "blocks": [
+          {
+            "type": "card",
+            "title": "Sell the full platform",
+            "body": "Faster to start, with the current operating limitations."
+          },
+          {
+            "type": "card",
+            "title": "Scope one outcome first",
+            "body": "More focused initial work, with a clearer review boundary."
+          }
+        ],
+        "claims": [],
+        "evidence": [],
+        "notes": "",
+        "transition": "The preceding slide establishes why this options matters for the decision."
+      },
+      {
+        "id": "slide-005",
+        "title": "Recommend the bounded path",
+        "purpose": "Recommend the bounded path",
+        "role": "recommendation",
+        "layout": "stack",
+        "blocks": [
+          {
+            "type": "text",
+            "text": {
+              "paragraphs": [
+                {
+                  "runs": [
+                    {
+                      "text": "Start with a fixed-scope implementation and a shared review checkpoint.",
+                      "bold": false,
+                      "italic": false,
+                      "hyperlink": null
+                    }
+                  ],
+                  "bullet": false
+                }
+              ]
+            }
+          }
+        ],
+        "claims": [],
+        "evidence": [],
+        "notes": "",
+        "transition": "The preceding slide establishes why this recommendation matters for the decision."
+      },
+      {
+        "id": "quote-12",
+        "title": "Keep the reasoning inspectable",
+        "purpose": "State the operating principle",
+        "role": "implications",
+        "layout": "stack",
+        "blocks": [
+          {
+            "type": "quote",
+            "text": "A decision should keep its supporting evidence and unresolved assumptions in view.",
+            "attribution": "Authored synthetic principle — not a customer quotation"
+          }
+        ],
+        "claims": [],
+        "evidence": [],
+        "notes": "Synthetic authored principle.",
+        "transition": "The recommendation needs a reviewable evidence boundary."
+      },
+      {
+        "id": "slide-006",
+        "title": "Risks to review before expansion",
+        "purpose": "Risks to review before expansion",
+        "role": "implications",
+        "layout": "stack",
+        "blocks": [
+          {
+            "type": "text",
+            "text": {
+              "paragraphs": [
+                {
+                  "runs": [
+                    {
+                      "text": "Keep the scope narrow. Check whether the new workflow adds manual effort or moves risk elsewhere. Record the unresolved question instead of treating an assumption as a finding.",
+                      "bold": false,
+                      "italic": false,
+                      "hyperlink": null
+                    }
+                  ],
+                  "bullet": false
+                }
+              ]
+            }
+          }
+        ],
+        "claims": [],
+        "evidence": [],
+        "notes": "",
+        "transition": "The preceding slide establishes why this implications matters for the decision."
+      },
+      {
+        "id": "slide-007",
+        "title": "Next action: approve the pilot and own the review",
+        "purpose": "Next action: approve the pilot and own the review",
+        "role": "action",
+        "layout": "stack",
+        "blocks": [
+          {
+            "type": "card",
+            "title": "Owner",
+            "body": "Account owner owns the first milestone and its evidence."
+          },
+          {
+            "type": "card",
+            "title": "Review",
+            "body": "Inspect the pilot evidence before approving the next stage."
+          }
+        ],
+        "claims": [],
+        "evidence": [],
+        "notes": "",
+        "transition": "The preceding slide establishes why this action matters for the decision."
+      }
+    ]
+  },
+  "audience": "Buyer and delivery team",
+  "objective": "Approve a bounded next step for solution delivery",
+  "owner": "Account owner",
+  "next_action": "Approve the pilot and inspect the review evidence",
+  "metadata": {
+    "author": "",
+    "description": "",
+    "synthetic": true,
+    "keywords": []
+  }
+}

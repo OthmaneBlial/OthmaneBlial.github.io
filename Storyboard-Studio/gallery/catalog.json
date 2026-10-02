@@ -1,0 +1,166 @@
+{
+  "synthetic": true,
+  "renderer": "openxml-rust-1",
+  "examples": [
+    {
+      "id": "startup-pitch",
+      "title": "Fieldwork — the research workspace",
+      "theme": "midnight",
+      "slides": 9,
+      "preview": "startup-pitch/slide-01.svg",
+      "pptx": "startup-pitch/deck.pptx"
+    },
+    {
+      "id": "product-roadmap",
+      "title": "A roadmap with room to learn",
+      "theme": "product",
+      "slides": 7,
+      "preview": "product-roadmap/slide-01.svg",
+      "pptx": "product-roadmap/deck.pptx"
+    },
+    {
+      "id": "ai-strategy",
+      "title": "Where AI earns a place in the workflow",
+      "theme": "technical",
+      "slides": 7,
+      "preview": "ai-strategy/slide-01.svg",
+      "pptx": "ai-strategy/deck.pptx"
+    },
+    {
+      "id": "engineering-architecture",
+      "title": "Make the runtime boundary explicit",
+      "theme": "technical",
+      "slides": 7,
+      "preview": "engineering-architecture/slide-01.svg",
+      "pptx": "engineering-architecture/deck.pptx"
+    },
+    {
+      "id": "quarterly-business-review",
+      "title": "A quarter of focus, not a list of activities",
+      "theme": "consulting",
+      "slides": 8,
+      "preview": "quarterly-business-review/slide-01.svg",
+      "pptx": "quarterly-business-review/deck.pptx"
+    },
+    {
+      "id": "consulting-recommendation",
+      "title": "Choose the operating model the team can sustain",
+      "theme": "consulting",
+      "slides": 8,
+      "preview": "consulting-recommendation/slide-01.svg",
+      "pptx": "consulting-recommendation/deck.pptx"
+    },
+    {
+      "id": "market-analysis",
+      "title": "Find the reachable first market",
+      "theme": "research",
+      "slides": 7,
+      "preview": "market-analysis/slide-01.svg",
+      "pptx": "market-analysis/deck.pptx"
+    },
+    {
+      "id": "launch-plan",
+      "title": "A launch that earns the next release",
+      "theme": "modern",
+      "slides": 7,
+      "preview": "launch-plan/slide-01.svg",
+      "pptx": "launch-plan/deck.pptx"
+    },
+    {
+      "id": "incident-postmortem",
+      "title": "Turn a recovery into a reliability decision",
+      "theme": "terminal",
+      "slides": 8,
+      "preview": "incident-postmortem/slide-01.svg",
+      "pptx": "incident-postmortem/deck.pptx"
+    },
+    {
+      "id": "design-review",
+      "title": "Make the next step visible",
+      "theme": "swiss",
+      "slides": 7,
+      "preview": "design-review/slide-01.svg",
+      "pptx": "design-review/deck.pptx"
+    },
+    {
+      "id": "research-report",
+      "title": "What the pilot can and cannot tell us",
+      "theme": "research",
+      "slides": 8,
+      "preview": "research-report/slide-01.svg",
+      "pptx": "research-report/deck.pptx"
+    },
+    {
+      "id": "investment-memo",
+      "title": "Evaluate the pilot before funding scale",
+      "theme": "investor",
+      "slides": 7,
+      "preview": "investment-memo/slide-01.svg",
+      "pptx": "investment-memo/deck.pptx"
+    },
+    {
+      "id": "sales-proposal",
+      "title": "A proposal built around one customer outcome",
+      "theme": "editorial",
+      "slides": 8,
+      "preview": "sales-proposal/slide-01.svg",
+      "pptx": "sales-proposal/deck.pptx"
+    },
+    {
+      "id": "technical-rfc",
+      "title": "A migration boundary the team can test",
+      "theme": "mono",
+      "slides": 7,
+      "preview": "technical-rfc/slide-01.svg",
+      "pptx": "technical-rfc/deck.pptx"
+    },
+    {
+      "id": "project-kickoff",
+      "title": "Start with an owned decision",
+      "theme": "minimal",
+      "slides": 7,
+      "preview": "project-kickoff/slide-01.svg",
+      "pptx": "project-kickoff/deck.pptx"
+    },
+    {
+      "id": "executive-briefing",
+      "title": "The decision behind the update",
+      "theme": "midnight",
+      "slides": 8,
+      "preview": "executive-briefing/slide-01.svg",
+      "pptx": "executive-briefing/deck.pptx"
+    },
+    {
+      "id": "company-strategy",
+      "title": "Choose where the company will say no",
+      "theme": "investor",
+      "slides": 8,
+      "preview": "company-strategy/slide-01.svg",
+      "pptx": "company-strategy/deck.pptx"
+    },
+    {
+      "id": "competitive-analysis",
+      "title": "Compare mechanisms, not marketing claims",
+      "theme": "consulting",
+      "slides": 7,
+      "preview": "competitive-analysis/slide-01.svg",
+      "pptx": "competitive-analysis/deck.pptx"
+    },
+    {
+      "id": "security-review",
+      "title": "Reduce the paths that can expose a project",
+      "theme": "technical",
+      "slides": 7,
+      "preview": "security-review/slide-01.svg",
+      "pptx": "security-review/deck.pptx"
+    },
+    {
+      "id": "open-source-overview",
+      "title": "Storyboard Studio — an inspectable presentation compiler",
+      "theme": "swiss",
+      "slides": 7,
+      "preview": "open-source-overview/slide-01.svg",
+      "pptx": "open-source-overview/deck.pptx"
+    }
+  ]
+}

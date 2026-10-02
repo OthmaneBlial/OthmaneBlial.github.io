@@ -1,0 +1,87 @@
+{
+  "architecture": "aarch64",
+  "binary_bytes": 8246608,
+  "measurements": [
+    {
+      "compile_ms": 0.123283,
+      "iterations": 5,
+      "layout_ms": 5.874016599999999,
+      "pptx_bytes": 32792,
+      "pptx_ms": 4.7309415999999995,
+      "slides": 10
+    },
+    {
+      "compile_ms": 0.1278668,
+      "iterations": 5,
+      "layout_ms": 0.9729334,
+      "pptx_bytes": 73158,
+      "pptx_ms": 9.743058399999999,
+      "slides": 25
+    },
+    {
+      "compile_ms": 0.2543084,
+      "iterations": 5,
+      "layout_ms": 1.7429248000000002,
+      "pptx_bytes": 140040,
+      "pptx_ms": 17.8440168,
+      "slides": 50
+    },
+    {
+      "compile_ms": 0.472875,
+      "iterations": 5,
+      "layout_ms": 3.4181004,
+      "pptx_bytes": 274567,
+      "pptx_ms": 34.442100200000006,
+      "slides": 100
+    },
+    {
+      "compile_ms": 1.0892502,
+      "iterations": 5,
+      "layout_ms": 8.1277086,
+      "pptx_bytes": 679079,
+      "pptx_ms": 83.561142,
+      "slides": 250
+    }
+  ],
+  "method": "Arithmetic mean of complete runs; PPTX includes layout, compression and semantic package validation. Process startup and peak RSS require external measurement.",
+  "os": "macos",
+  "profile": "release",
+  "version": "0.3.0",
+  "measured_at": "2026-10-02T17:06:31.288Z",
+  "source_commit": "34fc9459161f2b7fbfce7ebf18077bbeb18b90c9",
+  "rustc": "rustc 1.95.0 (59807616e 2026-04-14)",
+  "hardware": "Apple M2",
+  "memory_bytes": 17179869184,
+  "os_version": "26.6",
+  "binary_sha256": "14ad415fb443add40faecb3b0fd84c022ddaf08e5f02bfb9a2c3030bce3d0696",
+  "process_startup": {
+    "first_observed_ms": 495.682042,
+    "warm_median_ms": 5.331604000000027,
+    "samples_ms": [
+      495.682042,
+      6.277250000000095,
+      5.626582999999982,
+      5.361375000000066,
+      5.431541000000038,
+      5.283500000000004,
+      5.319958000000042,
+      5.213124999999991,
+      5.152124999999955,
+      5.178999999999974,
+      6.147625000000062,
+      5.188499999999976,
+      5.239416000000006,
+      5.343250000000012,
+      5.590915999999993,
+      5.370834000000059,
+      5.477499999999964,
+      5.487333000000035,
+      5.291499999999928,
+      5.2742920000000595,
+      5.2472080000000005
+    ],
+    "method": "Node spawnSync --version wall time, OS launch included; first observed is not a cache-flushed cold boot."
+  },
+  "peak_rss_bytes": 50315264,
+  "rss_method": "macOS /usr/bin/time -l for all five benchmark sizes in one process. Not desktop RSS."
+}

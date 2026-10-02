@@ -1,0 +1,296 @@
+{
+  "schema_version": "3",
+  "presentation": {
+    "title": "Fieldwork — the research workspace",
+    "subtitle": "",
+    "theme": "midnight",
+    "slides": [
+      {
+        "id": "slide-001",
+        "title": "The context for research handoffs",
+        "purpose": "The context for research handoffs",
+        "role": "context",
+        "layout": "stack",
+        "blocks": [
+          {
+            "type": "text",
+            "text": {
+              "paragraphs": [
+                {
+                  "runs": [
+                    {
+                      "text": "This fictional team needs a decision it can explain, execute, and revisit. Documents lose the connection between excerpts and decisions.",
+                      "bold": false,
+                      "italic": false,
+                      "hyperlink": null
+                    }
+                  ],
+                  "bullet": false
+                }
+              ]
+            }
+          }
+        ],
+        "claims": [],
+        "evidence": [],
+        "notes": "Synthetic scenario. Figures, roles and organizations are invented to demonstrate the renderer.\n",
+        "transition": ""
+      },
+      {
+        "id": "slide-002",
+        "title": "The problem is the missing decision boundary",
+        "purpose": "The problem is the missing decision boundary",
+        "role": "recommendation",
+        "layout": "stack",
+        "blocks": [
+          {
+            "type": "text",
+            "text": {
+              "paragraphs": [
+                {
+                  "runs": [
+                    {
+                      "text": "Documents lose the connection between excerpts and decisions.",
+                      "bold": false,
+                      "italic": false,
+                      "hyperlink": null
+                    }
+                  ],
+                  "bullet": false
+                }
+              ]
+            }
+          }
+        ],
+        "claims": [],
+        "evidence": [],
+        "notes": "",
+        "transition": "The preceding slide establishes why this recommendation matters for the decision."
+      },
+      {
+        "id": "mechanism-0",
+        "title": "A smaller boundary makes the work reviewable",
+        "purpose": "Explain the mechanism",
+        "role": "problem",
+        "layout": "columns",
+        "blocks": [
+          {
+            "type": "card",
+            "title": "Observe",
+            "body": "Start with one actual task."
+          },
+          {
+            "type": "card",
+            "title": "Decide",
+            "body": "Name the trade-off and owner."
+          },
+          {
+            "type": "card",
+            "title": "Review",
+            "body": "Inspect the outcome before expanding."
+          }
+        ],
+        "claims": [],
+        "evidence": [],
+        "notes": "Synthetic process diagram represented by editable native cards.",
+        "transition": "The context calls for a bounded operating mechanism."
+      },
+      {
+        "id": "slide-003",
+        "title": "Evidence to gather before committing",
+        "purpose": "Evidence to gather before committing",
+        "role": "evidence",
+        "layout": "stack",
+        "blocks": [
+          {
+            "type": "chart",
+            "chart": {
+              "title": "Illustrative pilot checkpoints",
+              "categories": [
+                "Baseline",
+                "Pilot",
+                "Review"
+              ],
+              "series": [
+                {
+                  "name": "Synthetic score",
+                  "values": [
+                    12,
+                    18,
+                    24
+                  ]
+                }
+              ],
+              "kind": "bar",
+              "source_note": "Invented values for layout demonstration; not observed results."
+            }
+          }
+        ],
+        "claims": [
+          {
+            "id": "scope",
+            "text": "The example uses synthetic content and illustrative review checkpoints.",
+            "assumption": true
+          }
+        ],
+        "evidence": [
+          {
+            "id": "synthetic-source",
+            "citation": {
+              "label": "Synthetic gallery input",
+              "locator": "brief.md",
+              "author": "Storyboard Studio"
+            },
+            "kind": "note",
+            "reference": "Authored fixture",
+            "excerpt": "No real customer, market or investment results are claimed.",
+            "owner": "Research lead",
+            "claim_ids": [
+              "scope"
+            ],
+            "author_confirmed": false,
+            "checked_date": null
+          }
+        ],
+        "notes": "",
+        "transition": "The preceding slide establishes why this evidence matters for the decision."
+      },
+      {
+        "id": "slide-004",
+        "title": "Two paths make the trade-off explicit",
+        "purpose": "Two paths make the trade-off explicit",
+        "role": "options",
+        "layout": "stack",
+        "blocks": [
+          {
+            "type": "card",
+            "title": "Improve document templates",
+            "body": "Faster to start, with the current operating limitations."
+          },
+          {
+            "type": "card",
+            "title": "Build a focused research workspace",
+            "body": "More focused initial work, with a clearer review boundary."
+          }
+        ],
+        "claims": [],
+        "evidence": [],
+        "notes": "",
+        "transition": "The preceding slide establishes why this options matters for the decision."
+      },
+      {
+        "id": "slide-005",
+        "title": "Recommend the bounded path",
+        "purpose": "Recommend the bounded path",
+        "role": "recommendation",
+        "layout": "stack",
+        "blocks": [
+          {
+            "type": "text",
+            "text": {
+              "paragraphs": [
+                {
+                  "runs": [
+                    {
+                      "text": "Pilot one handoff workflow before expanding integrations.",
+                      "bold": false,
+                      "italic": false,
+                      "hyperlink": null
+                    }
+                  ],
+                  "bullet": false
+                }
+              ]
+            }
+          }
+        ],
+        "claims": [],
+        "evidence": [],
+        "notes": "",
+        "transition": "The preceding slide establishes why this recommendation matters for the decision."
+      },
+      {
+        "id": "quote-0",
+        "title": "Keep the reasoning inspectable",
+        "purpose": "State the operating principle",
+        "role": "implications",
+        "layout": "stack",
+        "blocks": [
+          {
+            "type": "quote",
+            "text": "A decision should keep its supporting evidence and unresolved assumptions in view.",
+            "attribution": "Authored synthetic principle — not a customer quotation"
+          }
+        ],
+        "claims": [],
+        "evidence": [],
+        "notes": "Synthetic authored principle.",
+        "transition": "The recommendation needs a reviewable evidence boundary."
+      },
+      {
+        "id": "slide-006",
+        "title": "Risks to review before expansion",
+        "purpose": "Risks to review before expansion",
+        "role": "implications",
+        "layout": "stack",
+        "blocks": [
+          {
+            "type": "text",
+            "text": {
+              "paragraphs": [
+                {
+                  "runs": [
+                    {
+                      "text": "Keep the scope narrow. Check whether the new workflow adds manual effort or moves risk elsewhere. Record the unresolved question instead of treating an assumption as a finding.",
+                      "bold": false,
+                      "italic": false,
+                      "hyperlink": null
+                    }
+                  ],
+                  "bullet": false
+                }
+              ]
+            }
+          }
+        ],
+        "claims": [],
+        "evidence": [],
+        "notes": "",
+        "transition": "The preceding slide establishes why this implications matters for the decision."
+      },
+      {
+        "id": "slide-007",
+        "title": "Next action: approve the pilot and own the review",
+        "purpose": "Next action: approve the pilot and own the review",
+        "role": "action",
+        "layout": "stack",
+        "blocks": [
+          {
+            "type": "card",
+            "title": "Owner",
+            "body": "Research lead owns the first milestone and its evidence."
+          },
+          {
+            "type": "card",
+            "title": "Review",
+            "body": "Inspect the pilot evidence before approving the next stage."
+          }
+        ],
+        "claims": [],
+        "evidence": [],
+        "notes": "",
+        "transition": "The preceding slide establishes why this action matters for the decision."
+      }
+    ]
+  },
+  "audience": "Seed investment committee",
+  "objective": "Approve a bounded next step for research handoffs",
+  "owner": "Research lead",
+  "next_action": "Approve the pilot and inspect the review evidence",
+  "metadata": {
+    "author": "",
+    "description": "",
+    "synthetic": true,
+    "keywords": []
+  }
+}

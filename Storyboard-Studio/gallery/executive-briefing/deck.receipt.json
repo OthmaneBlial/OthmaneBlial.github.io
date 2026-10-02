@@ -1,0 +1,50 @@
+{
+  "schema_version": "3",
+  "build_version": "0.3.0",
+  "renderer_version": "openxml-rust-1",
+  "theme": {
+    "name": "midnight",
+    "background": "141C26",
+    "foreground": "EFF3F5",
+    "muted": "A6B4C2",
+    "accent": "9DD8C0",
+    "surface": "202D3C",
+    "font": "Carlito",
+    "title_size": 40.0,
+    "body_size": 22.0,
+    "margin": 48.0,
+    "gap": 18.0
+  },
+  "story": {
+    "path": "deck.story.json",
+    "sha256": "cfe5b4b69fc68e1c16e8f6e5e68fcd27a6472778c512775aed94129c0bf93924"
+  },
+  "presentation": {
+    "path": "deck.pptx",
+    "sha256": "491f22b3120f5b6d97bee53ee1ed4acbbef91f778ca66f08b6df49b75455035a"
+  },
+  "diagnostics": {
+    "diagnostics_version": "rust-1",
+    "findings": [
+      {
+        "code": "opening.weak",
+        "severity": "warning",
+        "slide": "slide-001",
+        "message": "The opening jumps into a later story role.",
+        "action": "Establish context or tension before the proposed answer."
+      },
+      {
+        "code": "evidence.unreviewed",
+        "severity": "info",
+        "slide": "slide-003",
+        "message": "Synthetic gallery input is present but not author-confirmed.",
+        "action": "Review the excerpt and record an owner and checked date."
+      }
+    ],
+    "claims": 1,
+    "linked_claims": 1,
+    "author_confirmed_claims": 0,
+    "disclaimer": "Evidence presence and author confirmation do not establish factual truth. No network link checks were performed."
+  },
+  "disclaimer": "Hashes establish internal integrity, not authorship, factual truth or viewer compatibility."
+}
