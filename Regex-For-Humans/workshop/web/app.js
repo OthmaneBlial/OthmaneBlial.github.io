@@ -1,8 +1,8 @@
-import { CompileError, compile, regexToRules } from "../index.js?v=9ed5d67199e0";
-import { escapeControls } from "../src/display.js?v=9ed5d67199e0";
-import { LIMITS, splitLines } from "../src/parser.js?v=9ed5d67199e0";
-import { parseRegexLiteral } from "../src/regex-literal.js?v=9ed5d67199e0";
-import { TestRunError, TestRunner } from "./test-runner.js?v=9ed5d67199e0";
+import { CompileError, compile, regexToRules } from "../index.js?v=88b4557b31ca";
+import { escapeControls } from "../src/display.js?v=88b4557b31ca";
+import { LIMITS, splitLines } from "../src/parser.js?v=88b4557b31ca";
+import { parseRegexLiteral } from "../src/regex-literal.js?v=88b4557b31ca";
+import { TestRunError, TestRunner } from "./test-runner.js?v=88b4557b31ca";
 
 /** @typedef {import("./worker-protocol.d.ts").TestCase} TestCase */
 /** @typedef {{id: string, title: string, note: string, rules: string, source: string, flags: string, matchMode: "full" | "search", positive: string[], negative: string[]}} ProductScenario */
@@ -61,7 +61,7 @@ let hasEdits =
 let copyFeedbackTimer = 0;
 let copySequence = 0;
 const testRunner = new TestRunner(
-  () => new Worker(new URL("./match-worker.js?v=9ed5d67199e0", import.meta.url), { type: "module" }),
+  () => new Worker(new URL("./match-worker.js?v=88b4557b31ca", import.meta.url), { type: "module" }),
 );
 
 /**
@@ -283,11 +283,23 @@ async function updateTestResults() {
 }
 
 function renderTests() {
-  const heights = new Map(
-    [...ui.testList.querySelectorAll(".test-row")].map((row) => [
-      row.querySelector(".test-result")?.id,
-      row.querySelector("textarea")?.style.height ?? "",
-    ]),
+  const views = new Map(
+    [...ui.testList.querySelectorAll(".test-row")].map((row) => {
+      const input = row.querySelector("textarea");
+      return [
+        row.querySelector(".test-result")?.id,
+        input
+          ? {
+              height: input.style.height,
+              start: input.selectionStart,
+              end: input.selectionEnd,
+              direction: input.selectionDirection,
+              top: input.scrollTop,
+              left: input.scrollLeft,
+            }
+          : null,
+      ];
+    }),
   );
   ui.testList.replaceChildren();
   ui.addExample.disabled = testCases.length >= 100;
@@ -302,7 +314,9 @@ function renderTests() {
     input.value = sample.text;
     sample.text = input.value;
     input.rows = sample.text.split("\n", 3).length;
-    input.style.height = heights.get(`example-result-${sample.id}`) ?? "";
+    const view = views.get(`example-result-${sample.id}`);
+    input.style.height = view?.height ?? "";
+    if (view) input.setSelectionRange(view.start, view.end, view.direction);
     input.placeholder = "Empty string";
     input.setAttribute("aria-label", `Example ${number} string`);
     input.setAttribute("aria-describedby", `example-limits example-result-${sample.id}`);
@@ -345,6 +359,10 @@ function renderTests() {
     });
     row.append(input, expected, result, remove);
     ui.testList.append(row);
+    if (view) {
+      input.scrollTop = view.top;
+      input.scrollLeft = view.left;
+    }
   }
 }
 
@@ -598,7 +616,7 @@ ui.copy.addEventListener("click", async () => {
 if (hasEdits) compileRules();
 
 try {
-  const response = await fetch(new URL("../test/fixtures/product-scenarios.json?v=9ed5d67199e0", import.meta.url));
+  const response = await fetch(new URL("../test/fixtures/product-scenarios.json?v=88b4557b31ca", import.meta.url));
   if (!response.ok) throw new Error(`HTTP ${response.status}`);
   const loaded = await response.json();
   if (!Array.isArray(loaded)) throw new Error("Invalid example recipe data");
