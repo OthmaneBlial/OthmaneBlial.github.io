@@ -1,5 +1,5 @@
-import { escapeControls, quoteText } from "../src/display.js?v=a99aa1410456";
-import { LIMITS } from "../src/parser.js?v=a99aa1410456";
+import { escapeControls, quoteText } from "../src/display.js?v=6cab738898c0";
+import { LIMITS } from "../src/parser.js?v=6cab738898c0";
 
 /** @typedef {import("./worker-protocol.d.ts").TestRequest} TestRequest */
 /** @typedef {import("./worker-protocol.d.ts").WorkerReply} WorkerReply */
@@ -9,7 +9,7 @@ const MAX_TEXT_LENGTH = 2048;
 
 /** @param {MessageEvent<TestRequest>} event */
 self.onmessage = (event) => {
-  const { id, source, flags, mode, cases } = event.data;
+  const { id, source, flags, mode, cases } = event.data ?? {};
   try {
     if (
       typeof source !== "string" ||

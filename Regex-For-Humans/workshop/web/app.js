@@ -1,8 +1,8 @@
-import { CompileError, compile, regexToRules } from "../index.js?v=a99aa1410456";
-import { escapeControls } from "../src/display.js?v=a99aa1410456";
-import { LIMITS, splitLines } from "../src/parser.js?v=a99aa1410456";
-import { parseRegexLiteral } from "../src/regex-literal.js?v=a99aa1410456";
-import { TestRunError, TestRunner } from "./test-runner.js?v=a99aa1410456";
+import { CompileError, compile, regexToRules } from "../index.js?v=6cab738898c0";
+import { escapeControls } from "../src/display.js?v=6cab738898c0";
+import { LIMITS, splitLines } from "../src/parser.js?v=6cab738898c0";
+import { parseRegexLiteral } from "../src/regex-literal.js?v=6cab738898c0";
+import { TestRunError, TestRunner } from "./test-runner.js?v=6cab738898c0";
 
 /** @typedef {import("./worker-protocol.d.ts").TestCase} TestCase */
 /** @typedef {{id: string, title: string, note: string, rules: string, source: string, flags: string, matchMode: "full" | "search", positive: string[], negative: string[]}} ProductScenario */
@@ -61,7 +61,7 @@ let hasEdits =
 let copyFeedbackTimer = 0;
 let copySequence = 0;
 const testRunner = new TestRunner(
-  () => new Worker(new URL("./match-worker.js?v=a99aa1410456", import.meta.url), { type: "module" }),
+  () => new Worker(new URL("./match-worker.js?v=6cab738898c0", import.meta.url), { type: "module" }),
 );
 
 /**
@@ -598,7 +598,7 @@ ui.copy.addEventListener("click", async () => {
 if (hasEdits) compileRules();
 
 try {
-  const response = await fetch(new URL("../test/fixtures/product-scenarios.json?v=a99aa1410456", import.meta.url));
+  const response = await fetch(new URL("../test/fixtures/product-scenarios.json?v=6cab738898c0", import.meta.url));
   if (!response.ok) throw new Error(`HTTP ${response.status}`);
   scenarios = await response.json();
   renderScenarioButtons();
