@@ -10,7 +10,7 @@
 
 حوّل تعليمات إنجليزية واضحة إلى تعبير منتظم في JavaScript يمكنك تتبّع كل جزء منه.
 
-[🚀 ورشة التجربة](https://othmaneblial.github.io/Regex-For-Humans/workshop/) · [🎨 الموقع](https://othmaneblial.github.io/Regex-For-Humans/) · [📖 دليل الصياغة](../LANGUAGE.md) · [📦 النسخة التجريبية على npm](https://www.npmjs.com/package/regex-for-humans/v/0.1.0-dev.4)
+[🚀 ورشة التجربة](https://othmaneblial.github.io/Regex-For-Humans/workshop/) · [🎨 الموقع](https://othmaneblial.github.io/Regex-For-Humans/) · [📖 دليل الصياغة](../LANGUAGE.md) · [📦 النسخة التجريبية على npm](https://www.npmjs.com/package/regex-for-humans/v/0.1.0-dev.5)
 
 🔒 تنفيذ محلي · 🧩 دون اعتماديات وقت التشغيل · ⚡ مترجم واحد، ثلاث واجهات
 
@@ -52,23 +52,70 @@ end
 
 المفردات **محددة مسبقًا**: لكل تعليمة معنى دقيق. تستخدم المكتبة وأداة سطر الأوامر والورشة المترجم الحتمي نفسه. تؤدي التعليمة غير المعروفة إلى رسالة توضّح السطر والعمود وتقترح طريقة للإصلاح. تبقى صياغة القواعد بالإنجليزية في جميع الترجمات.
 
-> 🌱 تتطلب النسخة التجريبية <code dir="ltr">0.1.0-dev.4</code> إصدار **Node.js 22 أو أحدث** للمكتبة وسطر الأوامر. تعمل الورشة المنشورة دون تثبيت. لم تُنجز بعد المراجعات البشرية لقابلية الاستخدام وقارئ الشاشة.
+> 🌱 تتطلب النسخة التجريبية <code dir="ltr">0.1.0-dev.5</code> إصدار **Node.js 22 أو أحدث** للمكتبة وسطر الأوامر. تعمل الورشة المنشورة دون تثبيت. لم تُنجز بعد المراجعات البشرية لقابلية الاستخدام وقارئ الشاشة.
 
 ## 🧰 ما الذي يمكنك إنشاؤه اليوم؟
 
-| الإمكانية | النسخة المنشورة <code dir="ltr">0.1.0-dev.4</code> | المصدر الحالي |
-| ---: | ---: | ---: |
-| قواعد مقروءة → تعبير منتظم في JavaScript | ✅ | ✅ |
-| تعبير مدعوم → قواعد قابلة للتعديل | ✅ | ✅ المجموعات والمراجع المدعومة |
-| شرح الأجزاء والانتقال إلى القواعد | ✅ | ✅ يشمل حدود المجموعات والمراجع |
-| سطر الأوامر وواجهة ESM وتعريفات TypeScript | ✅ | ✅ |
-| مجموعات التقاط مسماة ومرقمة ومتداخلة | ✅ | ✅ |
-| تكرار الكتل والرجوع إلى التقاط سابق | ✅ | ✅ |
-| بدائل مرتبة باستخدام <code dir="ltr">either { … }</code> | ✅ | ✅ خيارات متداخلة وترجمة عكسية |
-| عمليات النظر أمامًا وخلفًا والمكمّمات الكسولة | — | مخطط لها؛ تُرفض حاليًا |
-| محركات أخرى والإنجليزية الحرة | — | خارج اللغة الحالية |
+| الإمكانية | النسخة المنشورة <code dir="ltr">0.1.0-dev.5</code> |
+| ---: | ---: |
+| قواعد مقروءة → تعبير منتظم في JavaScript | ✅ |
+| تعبير مدعوم → قواعد قابلة للتعديل | ✅ |
+| شرح الأجزاء والانتقال إلى القواعد | ✅ |
+| سطر الأوامر وواجهة ESM وتعريفات TypeScript | ✅ |
+| مجموعات التقاط مسماة ومرقمة ومتداخلة | ✅ |
+| تكرار الكتل والرجوع إلى التقاط سابق | ✅ |
+| بدائل مرتبة باستخدام <code dir="ltr">either { … }</code> | ✅ |
+| التكرار الكسول باستخدام <code dir="ltr">lazy</code> | ✅ |
+| عمليات النظر أمامًا وخلفًا | ✅ |
+| حدود الكلمات | ✅ |
+| [خصائص Unicode](../LANGUAGE.md#unicode-properties) | ✅ |
+| [فئات المحارف المركبة](../LANGUAGE.md#composable-character-classes) | ✅ |
+| [سلاسل Unicode والمجموعات المتداخلة](../LANGUAGE.md#nested-unicode-set-operations) | ✅ |
+| رايات JavaScript الثماني | ✅ |
+| محركات أخرى والإنجليزية الحرة | — |
 
-تتضمن حزمة npm <code dir="ltr">0.1.0-dev.4</code> المجموعات والالتقاطات والمراجع السابقة والبدائل المرتبة في المكتبة وسطر الأوامر. تضيف الورشة فحص الالتقاطات ومطابقات البحث المتعددة. راجع [التوافق](../COMPATIBILITY.md) و[سجل النشر](../DISTRIBUTION.md).
+في المصدر الحالي، تنتج <code dir="ltr">lazy digits</code> التعبير <code dir="ltr">\d+?</code>: تُجرّب رقمًا واحدًا أولًا، ثم تزيد التكرار إذا احتاجت القواعد التالية إلى المزيد. متاح في npm <code dir="ltr">0.1.0-dev.5</code>. راجع [قواعد التكرار](../LANGUAGE.md#repetition).
+
+يدعم المصدر أيضًا الصيغ التالية:
+
+<div dir="ltr" align="left">
+
+- <code dir="ltr">followed by { … }</code>
+- <code dir="ltr">not followed by { … }</code>
+- <code dir="ltr">preceded by { … }</code>
+- <code dir="ltr">not preceded by { … }</code>
+
+</div>
+
+تختبر هذه الشروط النص المحيط دون استهلاكه. تحتفظ الالتقاطات بالقيم والمواضع الأصلية للمحرك، حتى إن كانت خارج النص المطابق؛ ويتطلب النظر خلفًا دعم المحرك. متاح في npm <code dir="ltr">0.1.0-dev.5</code>. راجع [شروط النظر أمامًا وخلفًا](../LANGUAGE.md#lookaround-assertions).
+
+يدعم المصدر أيضًا شروط حدود الكلمات:
+
+<div dir="ltr" align="left">
+
+- <code dir="ltr">word boundary</code> → <code dir="ltr">\b</code>
+- <code dir="ltr">not word boundary</code> → <code dir="ltr">\B</code>
+
+</div>
+
+لا تستهلك هذه الشروط أي حرف. يعدّ JavaScript حروف ASCII والأرقام والشرطة السفلية أحرف كلمات، ويضيف مكافئات طيّ حالة الأحرف مع <code dir="ltr">i</code>. ليست هذه تجزئة لغوية للكلمات. متاح في npm <code dir="ltr">0.1.0-dev.5</code>. راجع [حدود الكلمات](../LANGUAGE.md#word-boundaries).
+
+يدعم المصدر أيضًا هذين الأمرين:
+
+- <code dir="ltr">unicode property "L"</code>
+- <code dir="ltr">not unicode property "L"</code>
+
+ينتج الأول <code dir="ltr">\p{L}</code> والثاني <code dir="ltr">\P{L}</code>. يعني الاسم <code dir="ltr">L</code> فئة الحروف. الأسماء حساسة لحالة الأحرف، ويعتمد التصنيف على بيانات Unicode للمحرك. تعمل أعداد التكرار والمعدّل <code dir="ltr">lazy</code> كالمعتاد. مع <code dir="ltr">i</code>، قد يشمل المتمّم الأصلي بوضع <code dir="ltr">u</code> حروفًا متكافئة في حالة الأحرف. متاح في npm <code dir="ltr">0.1.0-dev.5</code>. راجع [خصائص Unicode](../LANGUAGE.md#unicode-properties).
+
+يدعم المصدر هذه الصيغ أيضًا:
+
+<p dir="ltr" align="left"><code dir="ltr">range "α" to "ω"</code></p>
+<p dir="ltr" align="left"><code dir="ltr">character class: digit, "_"</code></p>
+<p dir="ltr" align="left"><code dir="ltr">not character class: digit</code></p>
+
+تجمع الفئة محارف مفردة من نقطة Unicode واحدة ونطاقات واختصارات مفردة وخصائص Unicode. تنفي الصيغة الثالثة الاتحاد كله. تنطبق أعداد التكرار والمعدّل <code dir="ltr">lazy</code> على الفئة، مع الحفاظ على سلوك متمّمات الخصائص الأصلي مع <code dir="ltr">u</code>/<code dir="ltr">i</code>. متاح في npm <code dir="ltr">0.1.0-dev.5</code>؛ راجع [فئات المحارف](../LANGUAGE.md#composable-character-classes).
+
+تتضمن حزمة npm <code dir="ltr">0.1.0-dev.5</code> المجموعات والالتقاطات والمراجع السابقة والبدائل المرتبة في المكتبة وسطر الأوامر. تضيف الورشة فحص الالتقاطات ومطابقات البحث المتعددة. راجع [التوافق](../COMPATIBILITY.md) و[سجل النشر](../DISTRIBUTION.md).
 
 ## 📦 تثبيت النسخة التجريبية
 
@@ -90,7 +137,7 @@ printf 'start "ABC"\n3 digits\nend\n' | npx --yes --package=regex-for-humans@pre
 
 </div>
 
-النتيجة: <code dir="ltr">/^ABC\d{3}$/u</code>. لتثبيت إصدار بعينه، استخدم <code dir="ltr">regex-for-humans@0.1.0-dev.4</code>. لا توجد اعتماديات وقت التشغيل أو ملفات تنفيذية مستقلة لكل نظام.
+النتيجة: <code dir="ltr">/^ABC\d{3}$/u</code>. لتثبيت إصدار بعينه، استخدم <code dir="ltr">regex-for-humans@0.1.0-dev.5</code>. لا توجد اعتماديات وقت التشغيل أو ملفات تنفيذية مستقلة لكل نظام.
 
 ## 🎮 تجربة نمط
 
@@ -123,7 +170,7 @@ end
 
 </div>
 
-يجب أن يُحاط التعبير بعلامتي <code dir="ltr">/</code> وأن يتضمن <code dir="ltr">u</code>. اكتب فواصل الأسطر بصيغة مهروبة مثل <code dir="ltr">\n</code>. تحافظ الترجمة على سلوك الرايات المدعومة <code dir="ltr">i</code> و<code dir="ltr">s</code> و<code dir="ltr">m</code> و<code dir="ltr">u</code>. يستورد المصدر الحالي أيضًا مجموعات الالتقاط المسماة والمرقمة والمتداخلة والمراجع السابقة، مع الحفاظ على أرقامها وقيمها.
+يجب أن يُحاط التعبير بعلامتي <code dir="ltr">/</code> وأن يتضمن <code dir="ltr">u</code> أو <code dir="ltr">v</code>. اكتب فواصل الأسطر بصيغة مهروبة مثل <code dir="ltr">\n</code>. تحافظ الترجمة على سلوك الرايات المدعومة <code dir="ltr">i</code> و<code dir="ltr">s</code> و<code dir="ltr">m</code> و<code dir="ltr">u</code>. يستورد المصدر الحالي أيضًا مجموعات الالتقاط المسماة والمرقمة والمتداخلة والمراجع السابقة، مع الحفاظ على أرقامها وقيمها.
 
 تتحول <code dir="ltr">[^]</code> إلى أي محرف مع <code dir="ltr">s</code>. وتستثني النقاط العادية المجاورة فواصل الأسطر صراحةً للحفاظ على معناها. تقبل فئات الحروف ومحارف الكلمات والأرقام الست عشرية المكتملة ترتيبات متكافئة؛ وتُحفظ استثناءات المسارات ومحارف التحكم المهروبة. تبقى الشرطة في طرف القائمة حرفًا عاديًا.
 
@@ -244,7 +291,7 @@ end
 
 ## 🧲 استخراج حقول بالتقاطات مسماة
 
-يعمل هذا المثال مع حزمة npm <code dir="ltr">0.1.0-dev.4</code> وفي الورشة المنشورة.
+يعمل هذا المثال مع حزمة npm <code dir="ltr">0.1.0-dev.5</code> وفي الورشة المنشورة.
 
 <div dir="ltr" align="left">
 
@@ -317,7 +364,7 @@ console.log(match?.groups); // { year: '2026', month: '10', day: '10' }
 | <code dir="ltr">text without: a, b</code> | <code dir="ltr">[^ab]*</code> | صفر أو أكثر من المحارف غير المدرجة |
 | <code dir="ltr">any text</code> | <code dir="ltr">.*</code> | تشمل <code dir="ltr">s</code> فواصل الأسطر |
 
-تتبع <code dir="ltr">word character</code> و<code dir="ltr">word characters</code> و<code dir="ltr">word</code> و<code dir="ltr">not word</code> دلالات <code dir="ltr">\w</code> و<code dir="ltr">\W</code>. تشمل <code dir="ltr">\w</code> الشرطة السفلية <code dir="ltr">_</code>، لكنها لا تشمل <code dir="ltr">é</code>. تستثني <code dir="ltr">letter</code> الأرقام والشرطة السفلية. قد تشمل مقارنات JavaScript الأصلية مع <code dir="ltr">i</code> المحرفين <code dir="ltr">K</code> و<code dir="ltr">ſ</code>. تكون <code dir="ltr">u</code> مفعلة دائمًا، لكنها لا تجعل فئات ASCII فئات Unicode شاملة.
+تتبع <code dir="ltr">word character</code> و<code dir="ltr">word characters</code> و<code dir="ltr">word</code> و<code dir="ltr">not word</code> دلالات <code dir="ltr">\w</code> و<code dir="ltr">\W</code>. تشمل <code dir="ltr">\w</code> الشرطة السفلية <code dir="ltr">_</code>، لكنها لا تشمل <code dir="ltr">é</code>. تستثني <code dir="ltr">letter</code> الأرقام والشرطة السفلية. قد تشمل مقارنات JavaScript الأصلية مع <code dir="ltr">i</code> المحرفين <code dir="ltr">K</code> و<code dir="ltr">ſ</code>. يكون <code dir="ltr">u</code> الافتراضي وتقبل الشفرة المصدرية أيضًا <code dir="ltr">v</code>؛ ولا يحوّل أيّ منهما فئات ASCII إلى فئات Unicode شاملة.
 
 ## 💻 الاستخدام في الطرفية
 
@@ -358,6 +405,7 @@ printf 'start "ABC"\n3 digits\nend\n' | node bin/regex-for-humans.js
 | <code dir="ltr">--json</code> | نتائج منظمة على stdout وأخطاء على stderr |
 | <code dir="ltr">--ignore-case</code> | يفعّل <code dir="ltr">i</code> |
 | <code dir="ltr">--dot-all</code> | يفعّل <code dir="ltr">s</code> |
+| <code dir="ltr">--flags</code> | اختيار رايات JavaScript الأصلية؛ لا يمكن الجمع بين u/v |
 | <code dir="ltr">--help</code> | المساعدة |
 | <code dir="ltr">--version</code> | إصدار الحزمة |
 
@@ -416,12 +464,33 @@ console.log(reverse.flags);                 // Flags to pass back to compile()
 
 | الراية | طريقة التفعيل | التأثير |
 | ---: | ---: | ---: |
-| <code dir="ltr">u</code> | دائمًا | المطابقة بنقاط Unicode |
+| <code dir="ltr">u</code> | افتراضيًا | المطابقة بنقاط Unicode |
 | <code dir="ltr">i</code> | <code dir="ltr">{ flags: 'i' }</code> أو <code dir="ltr">--ignore-case</code> | مقارنة دون تمييز حالة الأحرف وفق JavaScript |
 | <code dir="ltr">s</code> | <code dir="ltr">{ flags: 's' }</code> أو <code dir="ltr">--dot-all</code> | يسمح للنقطة بمطابقة فواصل الأسطر |
 | <code dir="ltr">m</code> | <code dir="ltr">line start</code> / <code dir="ltr">line end</code> | مراسي لكل سطر |
+| <code dir="ltr">d</code> | <code dir="ltr">{ flags: 'd' }</code> | مواقع المطابقات والالتقاطات الأصلية |
+| <code dir="ltr">g</code> | <code dir="ltr">{ flags: 'g' }</code> | تحرّك الاستدعاءات المتكررة <code dir="ltr">lastIndex</code> |
+| <code dir="ltr">y</code> | <code dir="ltr">{ flags: 'y' }</code> | مطابقة عند <code dir="ltr">lastIndex</code> والتوقف عند أول فجوة |
+| <code dir="ltr">v</code> | <code dir="ltr">{ flags: 'v' }</code> | فئات Unicode ومتمماتها الأصلية في نمط v |
 
-تجمع <code dir="ltr">flags: 'is'</code> الخيارين. ليست <code dir="ltr">g</code> و<code dir="ltr">y</code> و<code dir="ltr">d</code> و<code dir="ltr">v</code> خيارات للمترجم. يستطيع التطبيق إنشاء تعبير أصلي من المصدر واختيار رايات التنفيذ التي يحتاجها.
+**في الإصدار التجريبي:** تُقبل الرايات الثماني <code dir="ltr">d</code> و<code dir="ltr">g</code> و<code dir="ltr">i</code> و<code dir="ltr">m</code> و<code dir="ltr">s</code> و<code dir="ltr">u</code> و<code dir="ltr">v</code> و<code dir="ltr">y</code>. ترتيب الناتج <code dir="ltr">dgimsuvy</code>؛ تُرفض التكرارات والجمع بين u/v، ويبقى u الافتراضي. يمكن تفعيل m مباشرة أو بمراسي الأسطر؛ وتبقى مراسي الإدخال مطلقة حتى عند خلط النمطين. يحافظ التحويل العكسي على الخيارات دون تعديل <code dir="ltr">lastIndex</code>. يبدأ كل مثال في الورشة عند 0 وتُعرض حتى 100 مطابقة؛ وتحتفظ تعبيرات g/y المنسوخة بحالتها. تُبلَّغ القدرات الأصلية المفقودة بوضوح. متاح في npm <code dir="ltr">0.1.0-dev.5</code>.
+
+<p dir="rtl"><strong>في الإصدار التجريبي:</strong> اختر <code dir="ltr">v</code> لاستخدام مجموعات السلاسل وخصائص Unicode للسلاسل. يجرّب المحرك الأعضاء الأطول أولًا، بغض النظر عن ترتيب القائمة؛ وقد تتطلب القواعد التالية الرجوع إلى عضو أقصر. السلاسل الفارغة مسموحة. استخدم الصيغة الثالثة داخل فئة محارف. لا يمكن أخذ متمّم لخاصية سلاسل أو لفئة تحتوي سلسلة فارغة أو عضوًا متعدد نقاط Unicode. هذه الإضافات متاحة في إصدار npm التالي:</p>
+<p dir="ltr" align="left"><code dir="ltr">0.1.0-dev.5</code></p>
+
+<p dir="ltr" align="left"><code dir="ltr">one of strings: "a", "ab", ""</code></p>
+<p dir="ltr" align="left"><code dir="ltr">unicode property "RGI_Emoji"</code></p>
+<p dir="ltr" align="left"><code dir="ltr">string "ab"</code></p>
+
+<p dir="rtl"><strong>في الإصدار التجريبي:</strong> تتيح الصيغ التالية مجموعات متداخلة تُغلق بقوس <code dir="ltr">}</code>. كل سطر محرف أو نطاق أو فئة أو خاصية أو مجموعة سلاسل أو مجموعة متداخلة. يحتفظ التقاطع بالأعضاء المشتركة؛ ويزيل الطرح أعضاء اليمين من المعامل الأول. تنطبق أعداد التكرار و<code dir="ltr">lazy</code> على الكتلة كاملة. يخضع <code dir="ltr">not</code> لقيود المحرك البنيوية على السلاسل؛ ولا تطابق المجموعة الفارغة أي نص. اختر وضع <code dir="ltr">v</code>؛ هذه المزايا متاحة في إصدار npm المذكور أعلاه. راجع <a href="../LANGUAGE.md#nested-unicode-set-operations">الصيغ والأمثلة</a>.</p>
+
+<p dir="ltr" align="left"><code dir="ltr">character set union {</code></p>
+<p dir="ltr" align="left"><code dir="ltr">character set intersection {</code></p>
+<p dir="ltr" align="left"><code dir="ltr">character set subtraction {</code></p>
+
+<p dir="ltr" align="left"><code dir="ltr">{ flags: 'dgiv' }</code></p>
+
+<p dir="ltr" align="left"><code dir="ltr">--flags dgiv</code></p>
 
 ## 🛠️ التطوير محليًا
 
@@ -466,7 +535,7 @@ CI=1 npm run verify
 
 تتحول البدائل إلى كتل قابلة للتعديل من نوع <code dir="ltr">either { … }</code>؛ كل عنصر مباشر يمثل خيارًا يُجرَّب بالترتيب. استخدم <code dir="ltr">group { … }</code> لخيار يتألف من عدة قواعد أو لخيار فارغ.
 
-المحرك المستهدف هو **JavaScript <code dir="ltr">RegExp</code>**. لا تقبل لغة القواعد تعبيرًا خامًا أو إنجليزية حرة. تتعامل الترجمة العكسية مع المجموعة الفرعية الموثقة فقط. تظل عمليات النظر والمراجع المستقبلية أو المفتوحة مرفوضة. تستخدم الورشة عامل تنفيذ بمهلة؛ أما التعبير المنسوخ فيحتاج إلى حماية تنفيذ في تطبيقه. راجع [نموذج الأمان](../SECURITY_MODEL.md).
+المحرك المستهدف هو **JavaScript <code dir="ltr">RegExp</code>**. لا تقبل لغة القواعد تعبيرًا خامًا أو إنجليزية حرة. تتعامل الترجمة العكسية مع المجموعة الفرعية الموثقة فقط. لا تدعم اللغة الإنجليزية الحرة أو فئات المحارف الفارغة في وضع <code dir="ltr">u</code> أو المراجع إلى مجموعات لم تُعرّف بعد أو ما زالت مفتوحة. تستخدم الورشة عامل تنفيذ بمهلة؛ أما التعبير المنسوخ فيحتاج إلى حماية تنفيذ في تطبيقه. راجع [نموذج الأمان](../SECURITY_MODEL.md).
 
 ## 💬 أسئلة شائعة
 
@@ -499,7 +568,7 @@ CI=1 npm run verify
 | [المقارنة](../COMPETITOR_GAPS.md) | المصادر والإمكانات الناقصة |
 | [المساهمة](https://github.com/OthmaneBlial/Regex-For-Humans/blob/main/CONTRIBUTING.md) | الإعداد واتفاقيات المشروع |
 
-**تم التحقق محليًا في 10 أكتوبر 2026:** نجحت 251 تجربة Node، و296 فحصًا لورشة Chromium على الحاسوب والهاتف، و66 فحص Firefox/WebKit، و64 فحصًا للموقع، وتثبيت الحزمة؛ دون ثغرات معلنة في التدقيق. نجح أيضًا 16 اختبارًا للمجموعات والمراجع والترجمة العكسية على Node 22.23.3. تصف الأعداد هذه اللقطة فقط، وليست ضمانًا لكل المتصفحات أو الإصدارات المقبلة. تبقى المراجعات البشرية مفتوحة.
+**تم التحقق محليًا في 10 أكتوبر 2026:** نجحت 301 تجربة Node، و378 فحصًا لورشة Chromium على الحاسوب والهاتف، و148 فحص Firefox/WebKit، و64 فحصًا للموقع، وتثبيت الحزمة؛ دون ثغرات معلنة في التدقيق. نجح أيضًا 16 اختبارًا للمجموعات والمراجع والترجمة العكسية على Node 22.23.3. تصف الأعداد هذه اللقطة فقط، وليست ضمانًا لكل المتصفحات أو الإصدارات المقبلة. تبقى المراجعات البشرية مفتوحة.
 
 رخصة [MIT](../../LICENSE) · [سجل التغييرات](../../CHANGELOG.md) · [العودة إلى الإنجليزية](../../README.md).
 

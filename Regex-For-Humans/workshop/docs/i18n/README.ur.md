@@ -10,7 +10,7 @@
 
 چند واضح انگریزی ہدایات کو JavaScript کے ایسے ریگولر ایکسپریشن میں بدلیں جس کے ہر حصے کو آپ سمجھ سکیں۔
 
-[🚀 ورکشاپ کھولیں](https://othmaneblial.github.io/Regex-For-Humans/workshop/) · [🎨 ویب سائٹ](https://othmaneblial.github.io/Regex-For-Humans/) · [📖 قواعد کا طریقہ](../LANGUAGE.md) · [📦 npm کا آزمائشی نسخہ](https://www.npmjs.com/package/regex-for-humans/v/0.1.0-dev.4)
+[🚀 ورکشاپ کھولیں](https://othmaneblial.github.io/Regex-For-Humans/workshop/) · [🎨 ویب سائٹ](https://othmaneblial.github.io/Regex-For-Humans/) · [📖 قواعد کا طریقہ](../LANGUAGE.md) · [📦 npm کا آزمائشی نسخہ](https://www.npmjs.com/package/regex-for-humans/v/0.1.0-dev.5)
 
 🔒 مقامی طور پر چلتا ہے · 🧩 رن ٹائم کی کوئی اضافی dependency نہیں · ⚡ ایک کمپائلر، تین انٹرفیس
 
@@ -52,23 +52,70 @@ end
 
 الفاظ کا مجموعہ **مقرر ہے**: ہر ہدایت کا ایک واضح مطلب ہے۔ لائبریری، کمانڈ لائن اور ورکشاپ ایک ہی deterministic کمپائلر استعمال کرتے ہیں۔ نامعلوم ہدایت پر سطر، کالم اور اصلاح کی تجویز ملتی ہے۔ تمام ترجموں میں قواعد لکھنے کی زبان انگریزی ہی رہتی ہے۔
 
-> 🌱 لائبریری اور کمانڈ لائن کے آزمائشی نسخے <code dir="ltr">0.1.0-dev.4</code> کے لیے **Node.js 22 یا جدید تر** درکار ہے۔ آن لائن ورکشاپ بغیر انسٹال کیے چلتی ہے۔ استعمال میں آسانی اور اسکرین ریڈر کے انسانی جائزے ابھی باقی ہیں۔
+> 🌱 لائبریری اور کمانڈ لائن کے آزمائشی نسخے <code dir="ltr">0.1.0-dev.5</code> کے لیے **Node.js 22 یا جدید تر** درکار ہے۔ آن لائن ورکشاپ بغیر انسٹال کیے چلتی ہے۔ استعمال میں آسانی اور اسکرین ریڈر کے انسانی جائزے ابھی باقی ہیں۔
 
 ## 🧰 آج کیا بنایا جا سکتا ہے؟
 
-| صلاحیت | شائع شدہ npm <code dir="ltr">0.1.0-dev.4</code> | موجودہ سورس |
-| ---: | ---: | ---: |
-| قابلِ مطالعہ قواعد → JavaScript regex | ✅ | ✅ |
-| معاونت یافتہ regex → قابلِ ترمیم قواعد | ✅ | ✅ معاونت یافتہ گروپ اور references |
-| حصوں کی وضاحت اور متعلقہ قاعدے تک رسائی | ✅ | ✅ گروپ کے آغاز، اختتام اور references سمیت |
-| CLI، ESM API اور TypeScript کی تعریفیں | ✅ | ✅ |
-| نام والے، نمبر والے اور اندرونی capture گروپ | ✅ | ✅ |
-| پورے بلاک کی تکرار اور پچھلے capture کا حوالہ | ✅ | ✅ |
-| ترتیب وار متبادل بذریعہ <code dir="ltr">either { … }</code> | ✅ | ✅ اندرونی انتخاب اور reverse translation |
-| آگے یا پیچھے دیکھنے کی assertions اور lazy quantifiers | — | منصوبے میں ہیں؛ ابھی مسترد ہوتے ہیں |
-| دوسرے regex انجن اور آزاد انگریزی | — | موجودہ زبان کا حصہ نہیں |
+| صلاحیت | شائع شدہ npm <code dir="ltr">0.1.0-dev.5</code> |
+| ---: | ---: |
+| قابلِ مطالعہ قواعد → JavaScript regex | ✅ |
+| معاونت یافتہ regex → قابلِ ترمیم قواعد | ✅ |
+| حصوں کی وضاحت اور متعلقہ قاعدے تک رسائی | ✅ |
+| CLI، ESM API اور TypeScript کی تعریفیں | ✅ |
+| نام والے، نمبر والے اور اندرونی capture گروپ | ✅ |
+| پورے بلاک کی تکرار اور پچھلے capture کا حوالہ | ✅ |
+| ترتیب وار متبادل بذریعہ <code dir="ltr">either { … }</code> | ✅ |
+| کم سے کم تکرار کو پہلے آزمانا، بذریعہ <code dir="ltr">lazy</code> | ✅ |
+| آگے یا پیچھے دیکھنے کی assertions | ✅ |
+| لفظ کی حدود | ✅ |
+| [Unicode properties](../LANGUAGE.md#unicode-properties) | ✅ |
+| [مرکب character classes](../LANGUAGE.md#composable-character-classes) | ✅ |
+| [Unicode strings اور nested sets](../LANGUAGE.md#nested-unicode-set-operations) | ✅ |
+| تمام آٹھ JavaScript flags | ✅ |
+| دوسرے regex انجن اور آزاد انگریزی | — |
 
-لائبریری اور CLI کے npm نسخے <code dir="ltr">0.1.0-dev.4</code> میں گروپس، captures، پہلے کے references اور ترتیب وار alternatives شامل ہیں۔ ورکشاپ میں captures کی جانچ اور متعدد search matches بھی دستیاب ہیں۔ تفصیل [مطابقت](../COMPATIBILITY.md) اور [اشاعت کے ریکارڈ](../DISTRIBUTION.md) میں ہے۔
+موجودہ سورس میں <code dir="ltr">lazy digits</code> سے <code dir="ltr">\d+?</code> بنتا ہے: پہلے ایک ہندسہ آزمائیں، پھر اگلے قواعد کی ضرورت کے مطابق تکرار بڑھائیں۔npm <code dir="ltr">0.1.0-dev.5</code> میں دستیاب ہے۔ [تکرار کے قواعد](../LANGUAGE.md#repetition) دیکھیں۔
+
+سورس میں یہ چار صورتیں بھی دستیاب ہیں:
+
+<div dir="ltr" align="left">
+
+- <code dir="ltr">followed by { … }</code>
+- <code dir="ltr">not followed by { … }</code>
+- <code dir="ltr">preceded by { … }</code>
+- <code dir="ltr">not preceded by { … }</code>
+
+</div>
+
+یہ اردگرد کے متن کو جانچتے ہیں، اسے match میں شامل نہیں کرتے۔ Captures کی اصل values اور positions برقرار رہتی ہیں، چاہے وہ match کے باہر ہوں؛ lookbehind کے لیے انجن کی معاونت ضروری ہے۔npm <code dir="ltr">0.1.0-dev.5</code> میں دستیاب ہے۔ [Lookaround assertions](../LANGUAGE.md#lookaround-assertions) دیکھیں۔
+
+سورس میں لفظ کی حدود کے لیے یہ صورتیں بھی دستیاب ہیں:
+
+<div dir="ltr" align="left">
+
+- <code dir="ltr">word boundary</code> → <code dir="ltr">\b</code>
+- <code dir="ltr">not word boundary</code> → <code dir="ltr">\B</code>
+
+</div>
+
+یہ assertions کوئی حرف consume نہیں کرتیں۔ JavaScript میں word characters سے مراد ASCII حروف، ہندسے اور underscore ہیں؛ <code dir="ltr">i</code> کے ساتھ case folding کے مساوی حروف بھی شامل ہوتے ہیں۔ یہ قدرتی زبان کے الفاظ کی تقسیم نہیں ہے۔npm <code dir="ltr">0.1.0-dev.5</code> میں دستیاب ہے۔ [لفظ کی حدود](../LANGUAGE.md#word-boundaries) دیکھیں۔
+
+سورس میں یہ دو قواعد بھی دستیاب ہیں:
+
+- <code dir="ltr">unicode property "L"</code>
+- <code dir="ltr">not unicode property "L"</code>
+
+پہلے سے <code dir="ltr">\p{L}</code> اور دوسرے سے <code dir="ltr">\P{L}</code> بنتا ہے۔ نام <code dir="ltr">L</code> حروف کی category ہے۔ Aliases میں بڑے اور چھوٹے حروف کا فرق اہم ہے؛ classification انجن کے Unicode data پر منحصر ہے۔ Counts اور <code dir="ltr">lazy</code> معمول کے مطابق کام کرتے ہیں۔ فلیگ <code dir="ltr">i</code> کے ساتھ native <code dir="ltr">u</code> complement میں case folding کے مساوی حروف بھی آ سکتے ہیں۔npm <code dir="ltr">0.1.0-dev.5</code> میں دستیاب ہے۔ [Unicode properties](../LANGUAGE.md#unicode-properties) دیکھیں۔
+
+سورس میں یہ صورتیں بھی دستیاب ہیں:
+
+<p dir="ltr" align="left"><code dir="ltr">range "α" to "ω"</code></p>
+<p dir="ltr" align="left"><code dir="ltr">character class: digit, "_"</code></p>
+<p dir="ltr" align="left"><code dir="ltr">not character class: digit</code></p>
+
+ایک class میں ایک Unicode code point کے literals، ranges، singular shorthands اور Unicode properties جمع کیے جا سکتے ہیں۔ تیسری صورت پوری union کو negate کرتی ہے۔ Counts اور <code dir="ltr">lazy</code> پوری class پر لاگو ہوتے ہیں؛ property complements کا native <code dir="ltr">u</code>/<code dir="ltr">i</code> رویہ برقرار رہتا ہے۔npm <code dir="ltr">0.1.0-dev.5</code> میں دستیاب ہے؛ [character classes](../LANGUAGE.md#composable-character-classes) دیکھیں۔
+
+لائبریری اور CLI کے npm نسخے <code dir="ltr">0.1.0-dev.5</code> میں گروپس، captures، پہلے کے references اور ترتیب وار alternatives شامل ہیں۔ ورکشاپ میں captures کی جانچ اور متعدد search matches بھی دستیاب ہیں۔ تفصیل [مطابقت](../COMPATIBILITY.md) اور [اشاعت کے ریکارڈ](../DISTRIBUTION.md) میں ہے۔
 
 ## 📦 آزمائشی نسخہ انسٹال کریں
 
@@ -90,7 +137,7 @@ printf 'start "ABC"\n3 digits\nend\n' | npx --yes --package=regex-for-humans@pre
 
 </div>
 
-نتیجہ: <code dir="ltr">/^ABC\d{3}$/u</code>۔ کسی خاص ورژن کے لیے <code dir="ltr">regex-for-humans@0.1.0-dev.4</code> استعمال کریں۔ رن ٹائم کی اضافی dependencies یا ہر نظام کے لیے الگ executable فراہم نہیں کیا گیا۔
+نتیجہ: <code dir="ltr">/^ABC\d{3}$/u</code>۔ کسی خاص ورژن کے لیے <code dir="ltr">regex-for-humans@0.1.0-dev.5</code> استعمال کریں۔ رن ٹائم کی اضافی dependencies یا ہر نظام کے لیے الگ executable فراہم نہیں کیا گیا۔
 
 ## 🎮 کوئی pattern آزمائیں
 
@@ -123,7 +170,7 @@ end
 
 </div>
 
-Literal کے دونوں طرف <code dir="ltr">/</code> اور اس میں <code dir="ltr">u</code> ہونا ضروری ہے۔ نئی سطر کو <code dir="ltr">\n</code> جیسے escape سے لکھیں۔ ترجمہ معاونت یافتہ <code dir="ltr">i</code>، <code dir="ltr">s</code>، <code dir="ltr">m</code> اور <code dir="ltr">u</code> کا رویہ برقرار رکھتا ہے۔ موجودہ سورس نام والے، نمبر والے، nested capture گروپ اور پچھلے references بھی درآمد کرتا ہے، ان کے نمبر اور قدریں بدلے بغیر۔
+Literal کے دونوں طرف <code dir="ltr">/</code> اور اس میں <code dir="ltr">u</code> یا <code dir="ltr">v</code> ہونا ضروری ہے۔ نئی سطر کو <code dir="ltr">\n</code> جیسے escape سے لکھیں۔ ترجمہ معاونت یافتہ <code dir="ltr">i</code>، <code dir="ltr">s</code>، <code dir="ltr">m</code> اور <code dir="ltr">u</code> کا رویہ برقرار رکھتا ہے۔ موجودہ سورس نام والے، نمبر والے، nested capture گروپ اور پچھلے references بھی درآمد کرتا ہے، ان کے نمبر اور قدریں بدلے بغیر۔
 
 فہرست <code dir="ltr">[^]</code> کسی بھی محرف کے قاعدے اور <code dir="ltr">s</code> میں بدلتی ہے۔ ساتھ موجود عام dots سے line terminators واضح طور پر خارج کیے جاتے ہیں تاکہ معنی نہ بدلیں۔ حروف، word characters اور hex digits کی مکمل classes کے مساوی ترتیب والے انداز بھی قبول ہوتے ہیں۔ Path exclusions اور control escapes محفوظ رہتے ہیں؛ فہرست کے کنارے والا hyphen عام محرف رہتا ہے۔
 
@@ -244,7 +291,7 @@ end
 
 ## 🧲 نام والے captures سے fields نکالیں
 
-یہ مثال npm نسخے <code dir="ltr">0.1.0-dev.4</code> اور شائع شدہ ورکشاپ میں کام کرتی ہے۔
+یہ مثال npm نسخے <code dir="ltr">0.1.0-dev.5</code> اور شائع شدہ ورکشاپ میں کام کرتی ہے۔
 
 <div dir="ltr" align="left">
 
@@ -317,7 +364,7 @@ console.log(match?.groups); // { year: '2026', month: '10', day: '10' }
 | <code dir="ltr">text without: a, b</code> | <code dir="ltr">[^ab]*</code> | فہرست سے باہر صفر یا زیادہ محارف |
 | <code dir="ltr">any text</code> | <code dir="ltr">.*</code> | <code dir="ltr">s</code> کے ساتھ نئی سطریں بھی |
 
-قواعد <code dir="ltr">word character</code>، <code dir="ltr">word characters</code>، <code dir="ltr">word</code> اور <code dir="ltr">not word</code> میں <code dir="ltr">\w</code> اور <code dir="ltr">\W</code> کا مطلب استعمال ہوتا ہے۔ فہرست <code dir="ltr">\w</code> میں <code dir="ltr">_</code> ہے، مگر <code dir="ltr">é</code> نہیں۔ <code dir="ltr">letter</code> ہندسے اور underscore شامل نہیں کرتا۔ JavaScript کی native case matching میں <code dir="ltr">i</code> کے ساتھ <code dir="ltr">K</code> اور <code dir="ltr">ſ</code> بھی آ سکتے ہیں۔ فلیگ <code dir="ltr">u</code> ہمیشہ فعال ہے، مگر اس سے ASCII classes تمام Unicode categories نہیں بن جاتیں۔
+قواعد <code dir="ltr">word character</code>، <code dir="ltr">word characters</code>، <code dir="ltr">word</code> اور <code dir="ltr">not word</code> میں <code dir="ltr">\w</code> اور <code dir="ltr">\W</code> کا مطلب استعمال ہوتا ہے۔ فہرست <code dir="ltr">\w</code> میں <code dir="ltr">_</code> ہے، مگر <code dir="ltr">é</code> نہیں۔ <code dir="ltr">letter</code> ہندسے اور underscore شامل نہیں کرتا۔ JavaScript کی native case matching میں <code dir="ltr">i</code> کے ساتھ <code dir="ltr">K</code> اور <code dir="ltr">ſ</code> بھی آ سکتے ہیں۔ فلیگ <code dir="ltr">u</code> ڈیفالٹ ہے اور سورس میں <code dir="ltr">v</code> بھی دستیاب ہے؛ دونوں ASCII classes کو تمام Unicode categories نہیں بناتے۔
 
 ## 💻 ٹرمینل میں استعمال
 
@@ -358,6 +405,7 @@ printf 'start "ABC"\n3 digits\nend\n' | node bin/regex-for-humans.js
 | <code dir="ltr">--json</code> | stdout پر منظم نتیجہ، stderr پر errors |
 | <code dir="ltr">--ignore-case</code> | <code dir="ltr">i</code> فعال کرتا ہے |
 | <code dir="ltr">--dot-all</code> | <code dir="ltr">s</code> فعال کرتا ہے |
+| <code dir="ltr">--flags</code> | Native JavaScript flags منتخب کریں؛ u/v ساتھ نہیں دیے جا سکتے |
 | <code dir="ltr">--help</code> | مدد |
 | <code dir="ltr">--version</code> | پیکیج کا ورژن |
 
@@ -416,12 +464,33 @@ console.log(reverse.flags);                 // Flags to pass back to compile()
 
 | Flag | کیسے فعال ہوتا ہے | اثر |
 | ---: | ---: | ---: |
-| <code dir="ltr">u</code> | ہمیشہ | Unicode code points کے مطابق match |
+| <code dir="ltr">u</code> | بطور ڈیفالٹ | Unicode code points کے مطابق match |
 | <code dir="ltr">i</code> | <code dir="ltr">{ flags: 'i' }</code> یا <code dir="ltr">--ignore-case</code> | JavaScript کے مطابق case کے فرق کے بغیر موازنہ |
 | <code dir="ltr">s</code> | <code dir="ltr">{ flags: 's' }</code> یا <code dir="ltr">--dot-all</code> | Dot نئی سطر بھی match کر سکتا ہے |
 | <code dir="ltr">m</code> | <code dir="ltr">line start</code> / <code dir="ltr">line end</code> | ہر سطر کے anchors |
+| <code dir="ltr">d</code> | <code dir="ltr">{ flags: 'd' }</code> | Native match اور capture indices |
+| <code dir="ltr">g</code> | <code dir="ltr">{ flags: 'g' }</code> | بار بار کال سے <code dir="ltr">lastIndex</code> آگے بڑھتا ہے |
+| <code dir="ltr">y</code> | <code dir="ltr">{ flags: 'y' }</code> | <code dir="ltr">lastIndex</code> پر match، پہلی رکاوٹ پر رکنا |
+| <code dir="ltr">v</code> | <code dir="ltr">{ flags: 'v' }</code> | Native v-mode Unicode classes اور complements |
 
-دونوں options کے لیے <code dir="ltr">flags: 'is'</code> ہے۔ <code dir="ltr">g</code>، <code dir="ltr">y</code>، <code dir="ltr">d</code> اور <code dir="ltr">v</code> کمپائلر کے options نہیں۔ Application سورس سے native regex بنا کر اپنی execution flags منتخب کر سکتی ہے۔
+**npm preview میں:** آٹھوں flags <code dir="ltr">d</code>، <code dir="ltr">g</code>، <code dir="ltr">i</code>، <code dir="ltr">m</code>، <code dir="ltr">s</code>، <code dir="ltr">u</code>، <code dir="ltr">v</code>، <code dir="ltr">y</code> دستیاب ہیں۔ نتیجے کی ترتیب <code dir="ltr">dgimsuvy</code> ہے؛ duplicates اور u/v ساتھ دینے پر خرابی آتی ہے، u ڈیفالٹ ہے۔ m الگ option یا line anchors سے فعال ہوتا ہے؛ دونوں انداز ملانے پر input anchors مکمل حدود برقرار رکھتے ہیں۔ Reverse translation options محفوظ رکھتی ہے اور <code dir="ltr">lastIndex</code> نہیں بدلتی۔ Workshop ہر مثال 0 سے شروع کرتا ہے اور زیادہ سے زیادہ 100 matches دکھاتا ہے؛ copied g/y regex کی state برقرار رہتی ہے۔ غیر موجود native صلاحیتوں کے واضح diagnostics ملتے ہیں۔npm <code dir="ltr">0.1.0-dev.5</code> میں دستیاب ہے۔
+
+<p dir="rtl"><strong>npm preview میں:</strong> strings کے sets اور Unicode string properties کے لیے <code dir="ltr">v</code> منتخب کریں۔ Native انجن فہرست کی ترتیب سے قطع نظر لمبے ارکان پہلے آزماتا ہے؛ بعد کے قواعد چھوٹے رکن پر واپس جانے کا تقاضا کر سکتے ہیں۔ خالی strings بھی درست ہیں۔ تیسری صورت class کے اندر استعمال کریں۔ String property یا ایسی class کا complement نہیں بنایا جا سکتا جس میں خالی string یا کئی Unicode code points والا رکن ہو۔ یہ سہولتیں npm کے اس ورژن میں دستیاب ہیں:</p>
+<p dir="ltr" align="left"><code dir="ltr">0.1.0-dev.5</code></p>
+
+<p dir="ltr" align="left"><code dir="ltr">one of strings: "a", "ab", ""</code></p>
+<p dir="ltr" align="left"><code dir="ltr">unicode property "RGI_Emoji"</code></p>
+<p dir="ltr" align="left"><code dir="ltr">string "ab"</code></p>
+
+<p dir="rtl"><strong>npm preview میں:</strong> نیچے دی گئی صورتیں nested sets بناتی ہیں؛ block کو <code dir="ltr">}</code> سے بند کریں۔ ہر سطر ایک حرف، range، class، property، strings کا set یا nested set ہے۔ Intersection مشترک ارکان رکھتا ہے؛ subtraction پہلے operand سے دائیں طرف کے ارکان ہٹاتا ہے۔ تکرار کی تعداد اور <code dir="ltr">lazy</code> پورے block پر لاگو ہوتے ہیں۔ <code dir="ltr">not</code> strings کے native ساختی اصولوں کی پابندی کرتا ہے؛ خالی union کسی متن سے match نہیں کرتا۔ <code dir="ltr">v</code> منتخب کریں؛ یہ سہولتیں اوپر درج npm ورژن میں دستیاب ہیں۔ <a href="../LANGUAGE.md#nested-unicode-set-operations">Syntax اور مثالیں</a> دیکھیں۔</p>
+
+<p dir="ltr" align="left"><code dir="ltr">character set union {</code></p>
+<p dir="ltr" align="left"><code dir="ltr">character set intersection {</code></p>
+<p dir="ltr" align="left"><code dir="ltr">character set subtraction {</code></p>
+
+<p dir="ltr" align="left"><code dir="ltr">{ flags: 'dgiv' }</code></p>
+
+<p dir="ltr" align="left"><code dir="ltr">--flags dgiv</code></p>
 
 ## 🛠️ مقامی development
 
@@ -466,7 +535,7 @@ CI=1 npm run verify
 
 متبادل قابلِ تدوین <code dir="ltr">either { … }</code> بلاک بنتے ہیں؛ ہر براہِ راست entry ایک انتخاب ہے جو ترتیب سے آزمایا جاتا ہے۔ کئی قواعد والے یا خالی انتخاب کے لیے <code dir="ltr">group { … }</code> استعمال کریں۔
 
-ہدف **JavaScript <code dir="ltr">RegExp</code>** ہے۔ قواعد کی زبان raw regex یا آزاد انگریزی قبول نہیں کرتی۔ Reverse translation صرف دستاویز میں درج subset پر کام کرتی ہے۔ Lookaround اور future/open references ابھی مسترد ہوتے ہیں۔ ورکشاپ میں worker کے لیے deadline ہے؛ کاپی کیا ہوا regex اپنی application میں execution safeguards مانگتا ہے۔ [حفاظتی ماڈل](../SECURITY_MODEL.md) دیکھیں۔
+ہدف **JavaScript <code dir="ltr">RegExp</code>** ہے۔ قواعد کی زبان raw regex یا آزاد انگریزی قبول نہیں کرتی۔ Reverse translation صرف دستاویز میں درج subset پر کام کرتی ہے۔ آزاد انگریزی، <code dir="ltr">u</code> موڈ کی خالی character classes اور future/open references ابھی مسترد ہوتے ہیں۔ ورکشاپ میں worker کے لیے deadline ہے؛ کاپی کیا ہوا regex اپنی application میں execution safeguards مانگتا ہے۔ [حفاظتی ماڈل](../SECURITY_MODEL.md) دیکھیں۔
 
 ## 💬 عام سوالات
 
@@ -499,7 +568,7 @@ CI=1 npm run verify
 | [موازنہ](../COMPETITOR_GAPS.md) | Sources اور باقی صلاحیتیں |
 | [حصہ ڈالیں](https://github.com/OthmaneBlial/Regex-For-Humans/blob/main/CONTRIBUTING.md) | Setup اور conventions |
 
-**10 اکتوبر 2026 کو مقامی جانچ:** 251 Node tests، 296 desktop/mobile Chromium workshop checks، 66 Firefox/WebKit checks، 64 site checks اور صاف package installation کامیاب ہوئے؛ audit میں کوئی vulnerability رپورٹ نہیں ہوئی۔ گروپ، reference اور reverse translation کے 16 مخصوص tests Node 22.23.3 پر بھی کامیاب ہوئے۔ یہ اعداد اسی snapshot کے ہیں؛ ہر browser یا آئندہ version کی ضمانت نہیں۔ انسانی جائزے ابھی باقی ہیں۔
+**10 اکتوبر 2026 کو مقامی جانچ:** 301 Node tests، 378 desktop/mobile Chromium workshop checks، 148 Firefox/WebKit checks، 64 site checks اور صاف package installation کامیاب ہوئے؛ audit میں کوئی vulnerability رپورٹ نہیں ہوئی۔ گروپ، reference اور reverse translation کے 16 مخصوص tests Node 22.23.3 پر بھی کامیاب ہوئے۔ یہ اعداد اسی snapshot کے ہیں؛ ہر browser یا آئندہ version کی ضمانت نہیں۔ انسانی جائزے ابھی باقی ہیں۔
 
 لائسنس [MIT](../../LICENSE) · [تبدیلیوں کا ریکارڈ](../../CHANGELOG.md) · [انگریزی میں واپس جائیں](../../README.md)۔
 

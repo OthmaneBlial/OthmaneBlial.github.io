@@ -24,9 +24,9 @@
   <meta name="twitter:image:alt" content="A colorful Regex For Humans card showing clear English rules turning into an explained JavaScript regex.">
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; connect-src 'self'; object-src 'none'; base-uri 'self'">
   <title>Regex For Humans — Workshop</title>
-  <link rel="icon" type="image/svg+xml" href="./web/favicon.svg?v=72a21407c9f2">
-  <link rel="stylesheet" href="./web/styles.css?v=72a21407c9f2">
-  <script type="module" src="./web/app.js?v=72a21407c9f2"></script>
+  <link rel="icon" type="image/svg+xml" href="./web/favicon.svg?v=89d227d97b70">
+  <link rel="stylesheet" href="./web/styles.css?v=89d227d97b70">
+  <script type="module" src="./web/app.js?v=89d227d97b70"></script>
 </head>
 <body>
   <a class="skip-link" href="#main">Skip to workshop</a>
@@ -51,7 +51,7 @@
     <main id="main" class="main-content" tabindex="-1">
       <header class="topbar">
         <span>THE WORKSHOP <span class="topbar-slash">/</span> REGEX FOR HUMANS</span>
-        <span class="build-label">DEV · 0.1.0-dev.4</span>
+        <span class="build-label">DEV · 0.1.0-dev.5</span>
       </header>
 
       <section class="hero" aria-labelledby="page-title">
@@ -67,17 +67,23 @@
         <section class="panel editor-panel" aria-labelledby="rules-title">
           <div class="panel-heading"><span class="step-number">01</span><div><p class="kicker">THE INPUT ✍️</p><h2 id="rules-title">Write your rules</h2></div></div>
           <p id="recipe-note" class="recipe-note" hidden></p>
-          <noscript><p class="recipe-note">This workshop needs JavaScript to compile rules and test examples. <a href="./web/language.html?v=72a21407c9f2">Read the syntax guide</a> without JavaScript.</p></noscript>
+          <noscript><p class="recipe-note">This workshop needs JavaScript to compile rules and test examples. <a href="./web/language.html?v=89d227d97b70">Read the syntax guide</a> without JavaScript.</p></noscript>
           <label for="rules-input" class="field-label">Write your rules</label>
           <textarea id="rules-input" spellcheck="false" autocomplete="off" autocapitalize="off" autocorrect="off" aria-invalid="false" aria-describedby="rules-help recipe-note diagnostic" placeholder="start &quot;ABC&quot;&#10;3 digits&#10;end"></textarea>
-          <div class="editor-footer"><p id="rules-help">A controlled language, not a free-form prompt. <a href="./web/language.html?v=72a21407c9f2" target="_blank" rel="noopener noreferrer">Read the syntax ↗</a> · <a href="https://github.com/OthmaneBlial/Regex-For-Humans/blob/main/docs/COMPLEX-EXAMPLES.md" target="_blank" rel="noopener noreferrer">Complex examples ↗</a></p><span id="rule-count">0 rules</span></div>
-          <fieldset class="flag-controls" aria-label="Regex options">
+          <div class="editor-footer"><p id="rules-help">A controlled language, not a free-form prompt. <a href="./web/language.html?v=89d227d97b70" target="_blank" rel="noopener noreferrer">Read the syntax ↗</a> · <a href="https://github.com/OthmaneBlial/Regex-For-Humans/blob/main/docs/COMPLEX-EXAMPLES.md" target="_blank" rel="noopener noreferrer">Complex examples ↗</a></p><span id="rule-count">0 rules</span></div>
+          <fieldset class="flag-controls" aria-label="Regex options" aria-describedby="flags-help">
             <label class="flag-toggle"><input id="ignore-case" type="checkbox"><span class="toggle-track" aria-hidden="true"></span><span>Ignore case <code>i</code></span></label>
             <label class="flag-toggle"><input id="dot-all" type="checkbox"><span class="toggle-track" aria-hidden="true"></span><span>Dot matches newlines <code>s</code></span></label>
+            <label class="flag-toggle"><input id="global-flag" type="checkbox"><span class="toggle-track" aria-hidden="true"></span><span>Global <code>g</code></span></label>
+            <label class="flag-toggle"><input id="multiline-flag" type="checkbox"><span class="toggle-track" aria-hidden="true"></span><span>Multiline <code>m</code></span></label>
+            <label class="flag-toggle"><input id="sticky-flag" type="checkbox"><span class="toggle-track" aria-hidden="true"></span><span>Sticky <code>y</code></span></label>
+            <label class="flag-toggle"><input id="indices-flag" type="checkbox"><span class="toggle-track" aria-hidden="true"></span><span>Match indices <code>d</code></span></label>
+            <label class="flag-toggle" for="unicode-mode">Unicode mode <select id="unicode-mode"><option value="u">Unicode u</option><option value="v">Unicode sets v</option></select></label>
           </fieldset>
+          <p id="flags-help" class="field-hint">Each example starts at position 0. Sticky matching starts there and stops at the first gap. Search lists up to 100 matches; global and sticky flags make repeated calls to the copied regex stateful. Input anchors remain absolute with multiline mode. Finite strings, Unicode string properties and nested set union/intersection/subtraction require v. Set complements follow native structural string restrictions.</p>
           <details id="reverse-translator" class="reverse-translator">
             <summary>Already have a regex? Translate it ↙</summary>
-            <p id="reverse-help">Paste a JavaScript regex literal with <code>u</code>, such as <code>/^[A-Z]{2}-\d{4}$/u</code>. Supported patterns become editable rules; unsupported syntax is explained. Limit: 16,392 UTF-16 code units, including outer whitespace. Press Ctrl/Cmd + Enter in this field to translate.</p>
+            <p id="reverse-help">Paste a JavaScript regex literal with <code>u</code> or <code>v</code>, such as <code>/^[A-Z]{2}-\d{4}$/u</code>. Supported patterns become editable rules with their flags; unsupported syntax is explained. Limit: 16,392 UTF-16 code units, including outer whitespace. Press Ctrl/Cmd + Enter in this field to translate.</p>
             <label for="reverse-regex" class="field-label">JavaScript regex literal</label>
             <textarea id="reverse-regex" rows="2" spellcheck="false" autocomplete="off" autocapitalize="off" autocorrect="off" aria-invalid="false" aria-describedby="reverse-help reverse-feedback" placeholder="/^#[0-9A-Fa-f]{6}$/u"></textarea>
             <button id="reverse-button" class="secondary-button" type="button" aria-keyshortcuts="Control+Enter Meta+Enter" disabled>Translate to rules</button>

@@ -1,7 +1,32 @@
-import { PATH_SEGMENT_SOURCE } from "./ast.js?v=72a21407c9f2";
-import { quoteText } from "./display.js?v=72a21407c9f2";
+import { classMayContainStrings, classMayMatchEmpty, PATH_SEGMENT_SOURCE } from "./ast.js?v=89d227d97b70";
+import { quoteText } from "./display.js?v=89d227d97b70";
 
-/** @param {import('./ast.js?v=72a21407c9f2').Repetition|null} repetition @param {boolean} optional */
+/** @param {import('./ast.js?v=89d227d97b70').ClassMember} member @returns {string} */
+function describeClassMember(member) {
+  if (member.kind === "range")
+    return `code points ${quoteText(member.from)} through ${quoteText(member.to)} (inclusive)`;
+  if (member.kind === "strings") return `finite strings ${member.values.map(quoteText).join(", ")}`;
+  if (member.kind === "stringCodePoints")
+    return `native code-point sequence ${member.codePoints.map(quoteText).join(" + ")}`;
+  if (member.kind === "unicodeProperty")
+    return `${member.negative ? "the Unicode complement of" : "Unicode property"} ${quoteText(member.value)}`;
+  if (member.kind === "set")
+    return `${member.negative ? "the Unicode complement of " : ""}${member.members.length ? `${member.operation} (${member.members.map(describeClassMember).join("; ")})` : "the empty set"}`;
+  if (member.kind === "shorthand")
+    return (
+      {
+        "\\d": "ASCII digits 0–9",
+        "\\D": "non-ASCII-digit characters",
+        "\\w": "ASCII word characters",
+        "\\W": "non-word characters",
+        "\\s": "whitespace including line breaks",
+        "\\S": "non-whitespace characters",
+      }[member.value] ?? `native shorthand ${quoteText(member.value)}`
+    );
+  return quoteText(member.value);
+}
+
+/** @param {import('./ast.js?v=89d227d97b70').Repetition|null} repetition @param {boolean} optional */
 function repetitionText(repetition, optional) {
   if (!repetition) return "";
   switch (repetition.kind) {
@@ -21,8 +46,25 @@ function repetitionText(repetition, optional) {
   }
 }
 
-/** @param {import('./ast.js?v=72a21407c9f2').RuleNode} node @param {string} flags @param {boolean} [hasFollowingRule] */
+/** @param {import('./ast.js?v=89d227d97b70').RuleNode} node @param {string} flags @param {boolean} [hasFollowingRule] */
 export function explainNode(node, flags, hasFollowingRule = false) {
+  const meaning = describeNode(node, flags, hasFollowingRule);
+  if (node.kind === "anchor" || !node.repetition?.lazy) return meaning;
+  return (
+    meaning +
+    (node.repetition.kind === "exact" ||
+    (node.repetition.kind === "range" && node.repetition.min === node.repetition.max)
+      ? " Lazy repetition has a fixed count here."
+      : " Lazy: try the fewest repetitions first, then expand if following rules require it.")
+  );
+}
+
+/** @param {import('./ast.js?v=89d227d97b70').RuleNode} node @param {string} flags @param {boolean} hasFollowingRule */
+function describeNode(node, flags, hasFollowingRule) {
+  if (node.kind === "boundary")
+    return `${node.negative ? "Require the same" : "Require different"} word/non-word status on either side of the current position, without consuming characters. Word characters are ASCII letters, digits and underscore; input edges are non-word.${flags.includes("i") ? " With i, Unicode characters folding to ASCII word characters also count." : ""} This is not natural-language word segmentation.`;
+  if (node.kind === "assertion")
+    return `${node.negative ? "Require no match" : "Require a match"} ${node.direction === "ahead" ? "starting" : "ending"} at the current position, without consuming characters.${node.direction === "behind" ? " JavaScript tests this subpattern backwards." : ""}`;
   if (node.kind === "anchor") {
     if (node.mode === "line") {
       return node.edge === "start" ? "Start of each line (m)." : "End of each line (m).";
@@ -31,7 +73,7 @@ export function explainNode(node, flags, hasFollowingRule = false) {
   }
 
   const caseNote = flags.includes("i") ? ", ignoring case (i)" : "";
-  const optional = /^optional\s/iu.test(node.text);
+  const optional = /^(?:lazy\s+)?optional\s/iu.test(node.text);
 
   if (node.kind === "backreference") {
     return (
@@ -60,7 +102,7 @@ export function explainNode(node, flags, hasFollowingRule = false) {
   )
     return "One or more whitespace characters, including line breaks.";
 
-  if (node.repetition?.kind === "zeroOrMore") {
+  if (node.repetition?.kind === "zeroOrMore" && !node.repetition.lazy) {
     if (node.atomType === "wildcard") {
       const context = hasFollowingRule ? " up to the next rule" : "";
       return flags.includes("s")
@@ -150,11 +192,43 @@ export function explainNode(node, flags, hasFollowingRule = false) {
     case "literal":
       meaning = `Literal text ${quoteText(node.value)}${caseNote}.`;
       break;
+    case "unicodeProperty":
+      meaning =
+        node.propertyType === "string"
+          ? `Unicode string selected by property ${quoteText(node.value)} (v). One match can contain multiple code points; native longer members are tried first.`
+          : node.negative
+            ? `Unicode complement of property ${quoteText(node.value)} (${flags.includes("v") ? "v" : "u"}).${flags.includes("i") ? (flags.includes("v") ? " With i in v mode, case folding happens before complementing." : " With i, case folding happens after complementing and can admit characters with this property.") : ""}`
+            : `Unicode code point selected by property ${quoteText(node.value)} (${flags.includes("v") ? "v" : "u"}).${flags.includes("i") ? " With i, case-folded equivalents may also match." : ""}`;
+      meaning += " Classification uses this runtime's Unicode data.";
+      break;
     case "charSet":
       meaning = node.negative
         ? `Any character except ${node.value.map(quoteText).join(", ")}${caseNote}.`
         : `One of ${node.value.map(quoteText).join(", ")}${caseNote}.`;
       break;
+    case "characterClass": {
+      const members = node.members.map(describeClassMember).join("; ");
+      const containsStrings = classMayContainStrings(node.members, node.operation);
+      const operation = node.operation ?? "union";
+      meaning = node.members.length
+        ? `${node.negative ? "One Unicode code point outside" : containsStrings ? "One native string or Unicode code point in" : "One Unicode code point in"} the ${operation} of: ${members}.`
+        : node.negative
+          ? "Any Unicode code point: the complement of the empty set."
+          : "An empty set: no member can match.";
+      if (operation === "intersection") meaning += " A member must satisfy every operand.";
+      if (operation === "subtraction")
+        meaning += " Start with the left operand and remove members of each following operand.";
+      if (containsStrings && !node.negative)
+        meaning +=
+          " Native v sets try longer members first; later rules can require a shorter member.";
+      if (!node.negative && classMayMatchEmpty(node.members, node.operation))
+        meaning += " An empty member can match without consuming input.";
+      if (flags.includes("i"))
+        meaning += ` Native ${flags.includes("v") ? "v" : "u"}-mode case folding applies; property complements and outer-class negation remain distinct.`;
+      if (node.operation || node.members.some((member) => member.kind === "unicodeProperty"))
+        meaning += " Property classification uses this runtime's Unicode data.";
+      break;
+    }
     default:
       throw new TypeError("Unknown atom type.");
   }

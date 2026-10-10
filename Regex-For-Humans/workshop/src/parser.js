@@ -1,15 +1,25 @@
-import { anchor, atom, PATH_SEGMENT_SOURCE } from "./ast.js?v=72a21407c9f2";
-import { fail } from "./diagnostics.js?v=72a21407c9f2";
-import { quoteText } from "./display.js?v=72a21407c9f2";
+import {
+  anchor,
+  atom,
+  PATH_SEGMENT_EXCLUDED,
+  PATH_SEGMENT_SOURCE,
+  UNICODE_STRING_PROPERTIES,
+} from "./ast.js?v=89d227d97b70";
+import { fail } from "./diagnostics.js?v=89d227d97b70";
+import { quoteText } from "./display.js?v=89d227d97b70";
 
-/** @typedef {import('./ast.js?v=72a21407c9f2').Location} Location */
-/** @typedef {import('./ast.js?v=72a21407c9f2').Repetition} Repetition */
-/** @typedef {import('./ast.js?v=72a21407c9f2').AtomNode} AtomNode */
-/** @typedef {import('./ast.js?v=72a21407c9f2').GroupNode} GroupNode */
-/** @typedef {import('./ast.js?v=72a21407c9f2').AlternationNode} AlternationNode */
-/** @typedef {import('./ast.js?v=72a21407c9f2').BackreferenceNode} BackreferenceNode */
-/** @typedef {import('./ast.js?v=72a21407c9f2').RuleNode} RuleNode */
-/** @typedef {import('./ast.js?v=72a21407c9f2').ParsedRules} ParsedRules */
+/** @typedef {import('./ast.js?v=89d227d97b70').Location} Location */
+/** @typedef {import('./ast.js?v=89d227d97b70').Repetition} Repetition */
+/** @typedef {import('./ast.js?v=89d227d97b70').AtomNode} AtomNode */
+/** @typedef {import('./ast.js?v=89d227d97b70').ClassMember} ClassMember */
+/** @typedef {import('./ast.js?v=89d227d97b70').ClassAtomNode} ClassAtomNode */
+/** @typedef {import('./ast.js?v=89d227d97b70').GroupNode} GroupNode */
+/** @typedef {import('./ast.js?v=89d227d97b70').AlternationNode} AlternationNode */
+/** @typedef {import('./ast.js?v=89d227d97b70').AssertionNode} AssertionNode */
+/** @typedef {import('./ast.js?v=89d227d97b70').BoundaryNode} BoundaryNode */
+/** @typedef {import('./ast.js?v=89d227d97b70').BackreferenceNode} BackreferenceNode */
+/** @typedef {import('./ast.js?v=89d227d97b70').RuleNode} RuleNode */
+/** @typedef {import('./ast.js?v=89d227d97b70').ParsedRules} ParsedRules */
 
 const MAX_SOURCE_LENGTH = 16_384;
 export const LIMITS = Object.freeze({
@@ -153,8 +163,8 @@ function readQuoted(text, location) {
   return failAt("Missing closing double quote.", text.length);
 }
 
-/** @param {string} text @param {Location} location @param {string} rawLine @returns {string[]} */
-function readCharacterList(text, location, rawLine) {
+/** @param {string} text @param {Location} location @param {string} rawLine @param {boolean} [strings] @returns {string[]} */
+function readCharacterList(text, location, rawLine, strings = false) {
   const items = [];
   let index = 0;
   while (index < text.length) {
@@ -162,6 +172,16 @@ function readCharacterList(text, location, rawLine) {
     if (index >= text.length) break;
     const itemStart = index;
     let value;
+    if (strings && text[index] !== '"')
+      fail(
+        "INVALID_STRING_LIST",
+        "String-set items must use JSON double quotes.",
+        {
+          line: location.line,
+          column: location.column + itemStart,
+        },
+        QUOTE_HINT,
+      );
     if (text[index] === '"') {
       const quoted = readQuoted(rawLine.slice(location.column - 1 + index), {
         line: location.line,
@@ -175,7 +195,7 @@ function readCharacterList(text, location, rawLine) {
       value = text.slice(index, end).trim();
       index = end;
     }
-    if ([...value].length !== 1) {
+    if (!strings && [...value].length !== 1) {
       fail(
         "INVALID_CHARACTER",
         "Each character-list item must be one Unicode code point.",
@@ -187,28 +207,110 @@ function readCharacterList(text, location, rawLine) {
     while (/\s/u.test(text[index] ?? "")) index += 1;
     if (index === text.length) break;
     if (text[index] !== ",") {
-      fail("INVALID_CHARACTER_LIST", "Separate character-list items with commas.", {
-        line: location.line,
-        column: location.column + index,
-      });
+      fail(
+        strings ? "INVALID_STRING_LIST" : "INVALID_CHARACTER_LIST",
+        strings
+          ? "Separate string-set items with commas."
+          : "Separate character-list items with commas.",
+        {
+          line: location.line,
+          column: location.column + index,
+        },
+      );
     }
     const commaIndex = index;
     index += 1;
     while (/\s/u.test(text[index] ?? "")) index += 1;
     if (index === text.length) {
-      fail("INVALID_CHARACTER_LIST", "A character list cannot end with a comma.", {
-        line: location.line,
-        column: location.column + commaIndex,
-      });
+      fail(
+        strings ? "INVALID_STRING_LIST" : "INVALID_CHARACTER_LIST",
+        strings
+          ? "A string list cannot end with a comma."
+          : "A character list cannot end with a comma.",
+        {
+          line: location.line,
+          column: location.column + commaIndex,
+        },
+      );
     }
   }
   if (items.length === 0)
-    fail("EMPTY_CHARACTER_LIST", "A character list needs at least one item.", location);
+    fail(
+      strings ? "EMPTY_STRING_LIST" : "EMPTY_CHARACTER_LIST",
+      strings
+        ? "A string list needs at least one item."
+        : "A character list needs at least one item.",
+      location,
+    );
   return items;
 }
 
-/** @param {string} text @param {Location} location @param {string} rawLine @returns {AtomNode|GroupNode|AlternationNode|BackreferenceNode} */
+/** @param {string} text @param {Location} location @param {string} rawLine @returns {string[]} */
+function readStringCodePoints(text, location, rawLine) {
+  const points = [];
+  let cursor = 0;
+  while (cursor < text.length) {
+    const pointLocation = { line: location.line, column: location.column + cursor };
+    const quoted = readQuoted(rawLine.slice(pointLocation.column - 1), pointLocation);
+    if ([...quoted.value].length !== 1)
+      fail(
+        "INVALID_STRING_SEQUENCE",
+        "Each sequence item must be one Unicode code point.",
+        pointLocation,
+      );
+    points.push(quoted.value);
+    cursor += quoted.length;
+    while (/\s/u.test(text[cursor] ?? "")) cursor += 1;
+    if (cursor === text.length) break;
+    if (text[cursor] !== "+")
+      fail("INVALID_STRING_SEQUENCE", "Separate quoted sequence code points with `+`.", {
+        line: location.line,
+        column: location.column + cursor,
+      });
+    const separator = cursor++;
+    while (/\s/u.test(text[cursor] ?? "")) cursor += 1;
+    if (cursor === text.length)
+      fail("INVALID_STRING_SEQUENCE", "A code-point sequence cannot end with `+`.", {
+        line: location.line,
+        column: location.column + separator,
+      });
+  }
+  if (!points.length)
+    fail("EMPTY_STRING_SEQUENCE", "A string sequence needs at least one code point.", location);
+  return points;
+}
+
+/** @param {string} text @param {Location} location @param {string} rawLine @returns {AtomNode|GroupNode|AlternationNode|AssertionNode|BoundaryNode|BackreferenceNode} */
 function parseAtom(text, location, rawLine) {
+  const lazy = /^lazy(?:\s+|$)/iu.exec(text);
+  if (!lazy) return parseItem(text, location, rawLine);
+  if (!text.slice(lazy[0].length) || /^lazy(?:\s|$)/iu.test(text.slice(lazy[0].length)))
+    fail(
+      "INVALID_LAZY_REPETITION",
+      "Write one lazy modifier before a repeated item.",
+      location,
+      'Use `lazy digits`, `lazy optional "-"` or `lazy one or more group {`.',
+    );
+  const node = parseItem(
+    text.slice(lazy[0].length),
+    { line: location.line, column: location.column + lazy[0].length },
+    rawLine,
+  );
+  if (!node.repetition)
+    fail(
+      "INVALID_LAZY_REPETITION",
+      "Lazy needs an explicit repetition or a rule that already matches a sequence.",
+      location,
+      "Use `lazy digits` or `lazy one or more digit` instead of `lazy digit`.",
+    );
+  node.repetition = { ...node.repetition, lazy: true };
+  node.location = location;
+  node.text = text;
+  return node;
+}
+
+/** @param {string} text @param {Location} location @param {string} rawLine @returns {AtomNode|GroupNode|AlternationNode|AssertionNode|BoundaryNode|BackreferenceNode} */
+function parseItem(text, location, rawLine, inClass = false) {
   let remaining = text;
   /** @type {Repetition|null} */
   let repetition = null;
@@ -339,6 +441,80 @@ function parseAtom(text, location, rawLine) {
     );
   }
 
+  const setBlock = /^(not\s+)?character\s+set\s+(union|intersection|subtraction)\s*\{$/iu.exec(
+    remaining,
+  );
+  if (setBlock)
+    return {
+      kind: "atom",
+      atomType: "characterClass",
+      operation:
+        setBlock[2].toLowerCase() === "union"
+          ? "union"
+          : setBlock[2].toLowerCase() === "intersection"
+            ? "intersection"
+            : "subtraction",
+      negative: setBlock[1] !== undefined,
+      members: [],
+      repetition,
+      location,
+      text,
+      endLocation: location,
+    };
+  if (/^(?:not\s+)?character\s+set(?:\s|$)/iu.test(remaining))
+    fail(
+      "INVALID_SET_BLOCK",
+      "Open a character-set operation with `{` and close it with `}` on its own line.",
+      { line: location.line, column: location.column + offset },
+      "Use `character set union {`, `character set intersection {` or `character set subtraction {`, optionally prefixed by `not`.",
+    );
+
+  const boundary = /^(not\s+)?word\s+boundary$/iu.exec(remaining);
+  if (boundary) {
+    if (repetition)
+      fail(
+        "BOUNDARY_REPETITION",
+        "Word boundaries do not consume characters and cannot be repeated directly.",
+        { line: location.line, column: location.column + offset },
+        "Repeat a group containing the boundary and consuming items instead.",
+      );
+    return {
+      kind: "boundary",
+      negative: boundary[1] !== undefined,
+      repetition: null,
+      location,
+      text,
+    };
+  }
+
+  const assertion = /^(not\s+)?(followed\s+by|preceded\s+by)(?=\s|\{|$)\s*/iu.exec(remaining);
+  if (assertion) {
+    if (repetition)
+      fail(
+        "ASSERTION_REPETITION",
+        "Lookaround assertions do not consume characters and cannot be repeated directly.",
+        { line: location.line, column: location.column + offset },
+        "Repeat the consuming items inside the assertion, or a group containing it.",
+      );
+    if (remaining.slice(assertion[0].length) !== "{")
+      fail(
+        "INVALID_ASSERTION",
+        "Open an assertion with `{` and close it with `}` on its own line.",
+        { line: location.line, column: location.column + offset + assertion[0].length },
+        "Use `followed by {`, `not followed by {`, `preceded by {` or `not preceded by {`.",
+      );
+    return {
+      kind: "assertion",
+      direction: assertion[2].toLowerCase().startsWith("followed") ? "ahead" : "behind",
+      negative: assertion[1] !== undefined,
+      nodes: [],
+      repetition: null,
+      location,
+      text,
+      endLocation: location,
+    };
+  }
+
   const group = /^(group|capture|either)(?=\s|\{|$)\s*/iu.exec(remaining);
   if (group) {
     const capturing = group[1].toLowerCase() === "capture";
@@ -429,6 +605,189 @@ function parseAtom(text, location, rawLine) {
     };
   }
 
+  const pointSequence = /^string\s+code\s+points:\s*/iu.exec(remaining);
+  if (pointSequence) {
+    const pointLocation = {
+      line: location.line,
+      column: location.column + offset + pointSequence[0].length,
+    };
+    return {
+      kind: "atom",
+      atomType: "characterClass",
+      negative: false,
+      repetition,
+      location,
+      text,
+      members: [
+        {
+          kind: "stringCodePoints",
+          codePoints: readStringCodePoints(
+            remaining.slice(pointSequence[0].length),
+            pointLocation,
+            rawLine,
+          ),
+          location: pointLocation,
+          text: remaining.slice(pointSequence[0].length),
+        },
+      ],
+    };
+  }
+  const stringList = /^one\s+of\s+strings:\s*/iu.exec(remaining);
+  const stringPrefix = /^string(?:\s+|$)/iu.exec(remaining);
+  const stringsPrefix = stringList ?? stringPrefix;
+  if (stringsPrefix) {
+    const prefixLength = stringsPrefix[0].length;
+    const memberLocation = { line: location.line, column: location.column + offset + prefixLength };
+    const values = readCharacterList(remaining.slice(prefixLength), memberLocation, rawLine, true);
+    if (stringPrefix && values.length !== 1)
+      fail(
+        "INVALID_STRING_LIST",
+        "Use one quoted value after `string`, or use `one of strings:`.",
+        memberLocation,
+      );
+    return {
+      kind: "atom",
+      atomType: "characterClass",
+      negative: false,
+      members: [
+        { kind: "strings", values, location: memberLocation, text: remaining.slice(prefixLength) },
+      ],
+      repetition,
+      location,
+      text,
+    };
+  }
+
+  const classPrefix = /^(not\s+)?character\s+class:\s*/iu.exec(remaining);
+  if (classPrefix) {
+    if (inClass)
+      fail(
+        "INVALID_CLASS_MEMBER",
+        "A u-mode character class cannot contain another class.",
+        location,
+      );
+    const members = readClassMembers(
+      remaining.slice(classPrefix[0].length),
+      { line: location.line, column: location.column + offset + classPrefix[0].length },
+      rawLine,
+    );
+    return {
+      kind: "atom",
+      atomType: "characterClass",
+      members,
+      negative: classPrefix[1] !== undefined,
+      repetition,
+      location,
+      text,
+    };
+  }
+
+  const rangePrefix = /^range(?:\s+|$)/iu.exec(remaining);
+  if (rangePrefix) {
+    const fromLocation = {
+      line: location.line,
+      column: location.column + offset + rangePrefix[0].length,
+    };
+    const from = readQuoted(rawLine.slice(fromLocation.column - 1), fromLocation);
+    const tail = remaining.slice(rangePrefix[0].length + from.length);
+    const separator = /^\s+to\s+/iu.exec(tail);
+    if (!separator)
+      fail("INVALID_CHARACTER_RANGE", "Separate the two quoted endpoints with `to`.", {
+        line: location.line,
+        column: fromLocation.column + from.length,
+      });
+    const toLocation = {
+      line: location.line,
+      column: fromLocation.column + from.length + separator[0].length,
+    };
+    const to = readQuoted(rawLine.slice(toLocation.column - 1), toLocation);
+    if (rangePrefix[0].length + from.length + separator[0].length + to.length !== remaining.length)
+      fail("TRAILING_TEXT", "Unexpected text after the character range.", {
+        line: location.line,
+        column: toLocation.column + to.length,
+      });
+    /** @type {[string, Location][]} */
+    const endpoints = [
+      [from.value, fromLocation],
+      [to.value, toLocation],
+    ];
+    for (const [value, endpointLocation] of endpoints) {
+      if ([...value].length !== 1)
+        fail(
+          "INVALID_CHARACTER_RANGE",
+          "Each range endpoint must be one Unicode code point.",
+          endpointLocation,
+        );
+    }
+    if ((from.value.codePointAt(0) ?? 0) > (to.value.codePointAt(0) ?? 0))
+      fail(
+        "INVALID_CHARACTER_RANGE",
+        "The upper endpoint cannot precede the lower Unicode code point.",
+        toLocation,
+      );
+    return {
+      kind: "atom",
+      atomType: "characterClass",
+      negative: false,
+      repetition,
+      location,
+      text,
+      members: [
+        {
+          kind: "range",
+          from: from.value,
+          to: to.value,
+          location: { line: location.line, column: location.column + offset },
+          text: remaining,
+        },
+      ],
+    };
+  }
+
+  const property = /^(not\s+)?unicode\s+property(?:\s+|$)/iu.exec(remaining);
+  if (property) {
+    const suffix = remaining.slice(property[0].length);
+    const quoteLocation = {
+      line: location.line,
+      column: location.column + offset + property[0].length,
+    };
+    if (!suffix.startsWith('"'))
+      fail(
+        "INVALID_UNICODE_PROPERTY",
+        "A Unicode property needs one JSON-quoted name or name=value pair.",
+        quoteLocation,
+        'Use `unicode property "Letter"` or `not unicode property "Script=Greek"`.',
+      );
+    const quoted = readQuoted(rawLine.slice(quoteLocation.column - 1), quoteLocation);
+    if (quoted.length !== suffix.length) {
+      const trailing = suffix.slice(quoted.length);
+      fail("TRAILING_TEXT", "Unexpected text after the Unicode property.", {
+        line: location.line,
+        column:
+          quoteLocation.column + quoted.length + trailing.length - trailing.trimStart().length,
+      });
+    }
+    const propertyLocation = { line: location.line, column: quoteLocation.column + 1 };
+    if (!/^(?:[A-Za-z0-9_]+|[A-Za-z_]+=[A-Za-z0-9_]+)$/u.test(quoted.value))
+      fail(
+        "INVALID_UNICODE_PROPERTY",
+        "Use an ASCII Unicode property alias or a property=value pair, without spaces.",
+        propertyLocation,
+        "Use `Letter`, `General_Category=Letter` or `Script_Extensions=Greek`; aliases are case-sensitive.",
+      );
+    return {
+      kind: "atom",
+      atomType: "unicodeProperty",
+      value: quoted.value,
+      propertyType: UNICODE_STRING_PROPERTIES.includes(quoted.value) ? "string" : "character",
+      negative: property[1] !== undefined,
+      repetition,
+      location,
+      propertyLocation,
+      text,
+    };
+  }
+
   const textWithout = /^text without:\s*/i.exec(remaining);
   if (textWithout || /^any text$/i.test(remaining)) {
     if (repetition) {
@@ -500,13 +859,13 @@ function parseAtom(text, location, rawLine) {
     return atom("literal", quoted.value, repetition, location, text);
   }
 
-  const classPrefix = /^(one of:|none of:)\s*/i.exec(remaining);
-  if (classPrefix) {
+  const listPrefix = /^(one of:|none of:)\s*/i.exec(remaining);
+  if (listPrefix) {
     const values = readCharacterList(
-      remaining.slice(classPrefix[0].length),
+      remaining.slice(listPrefix[0].length),
       {
         line: location.line,
-        column: location.column + offset + classPrefix[0].length,
+        column: location.column + offset + listPrefix[0].length,
       },
       rawLine,
     );
@@ -516,7 +875,7 @@ function parseAtom(text, location, rawLine) {
       repetition,
       location,
       text,
-      classPrefix[1].toLowerCase() === "none of:",
+      listPrefix[1].toLowerCase() === "none of:",
     );
   }
 
@@ -544,6 +903,185 @@ function parseAtom(text, location, rawLine) {
   );
 }
 
+/** @param {string} text @param {Location} location @param {string} rawLine @returns {ClassMember[]} */
+function readClassMembers(text, location, rawLine) {
+  /** @type {ClassMember[]} */
+  const members = [];
+  let cursor = 0;
+  while (cursor < text.length) {
+    while (/\s/u.test(text[cursor] ?? "")) cursor += 1;
+    const start = cursor;
+    while (cursor < text.length && text[cursor] !== ",") {
+      if (text[cursor] === '"') {
+        cursor += readQuoted(rawLine.slice(location.column - 1 + cursor), {
+          line: location.line,
+          column: location.column + cursor,
+        }).length;
+      } else cursor += 1;
+    }
+    const memberText = text.slice(start, cursor).trimEnd();
+    const memberLocation = { line: location.line, column: location.column + start };
+    if (!memberText)
+      fail(
+        "INVALID_CLASS_MEMBER",
+        "A character class cannot contain an empty member.",
+        memberLocation,
+      );
+    const node = parseItem(memberText, memberLocation, rawLine, true);
+    if (node.kind !== "atom" || node.repetition)
+      fail(
+        "INVALID_CLASS_MEMBER",
+        "Class members must be single characters, ranges, singular shorthands or Unicode properties, without repetition.",
+        memberLocation,
+      );
+    const base = { location: memberLocation, text: memberText };
+    if (node.atomType === "literal" && [...node.value].length === 1)
+      members.push({ ...base, kind: "literal", value: node.value });
+    else if (node.atomType === "shorthand" && /^\\[dDwWsS]$/u.test(node.value))
+      members.push({ ...base, kind: "shorthand", value: node.value });
+    else if (node.atomType === "unicodeProperty")
+      members.push({
+        ...base,
+        kind: "unicodeProperty",
+        value: node.value,
+        propertyType: node.propertyType,
+        negative: node.negative,
+        propertyLocation: node.propertyLocation,
+      });
+    else if (node.atomType === "characterClass" && node.members.length === 1)
+      members.push(node.members[0]);
+    else
+      fail(
+        "INVALID_CLASS_MEMBER",
+        'Use a one-code-point literal, `range "a" to "z"`, `digit`, `not digit`, `word`, `not word`, `space`, `not space` or a Unicode property.',
+        memberLocation,
+      );
+    if (cursor === text.length) break;
+    const comma = cursor++;
+    if (!text.slice(cursor).trim())
+      fail("INVALID_CLASS_MEMBER", "A character class cannot end with a comma.", {
+        line: location.line,
+        column: location.column + comma,
+      });
+  }
+  if (!members.length)
+    fail("EMPTY_CHARACTER_CLASS", "A character class needs at least one member.", location);
+  return members;
+}
+
+/** @param {ReturnType<typeof parseAtom>} node @returns {ClassMember} */
+function setOperand(node) {
+  const base = { location: node.location, text: node.text };
+  if (node.kind === "atom" && !node.repetition) {
+    if (node.atomType === "literal" && [...node.value].length === 1)
+      return { ...base, kind: "literal", value: node.value };
+    if (node.atomType === "unicodeProperty")
+      return {
+        ...base,
+        kind: "unicodeProperty",
+        value: node.value,
+        propertyType: node.propertyType,
+        negative: node.negative,
+        propertyLocation: node.propertyLocation,
+      };
+    if (node.atomType === "characterClass") {
+      if (!node.operation && !node.negative && node.members.length === 1) return node.members[0];
+      return {
+        ...base,
+        kind: "set",
+        operation: node.operation ?? "union",
+        negative: node.negative,
+        members: node.members,
+        endLocation: node.endLocation ?? node.location,
+      };
+    }
+    if (node.atomType === "charSet")
+      return {
+        ...base,
+        kind: "set",
+        operation: "union",
+        negative: node.negative,
+        members: node.value.map((value) => ({ ...base, kind: "literal", value })),
+        endLocation: node.location,
+      };
+    if (node.atomType === "shorthand") {
+      if (/^\\[dDwWsS]$/u.test(node.value))
+        return { ...base, kind: "shorthand", value: node.value };
+      if (node.value === PATH_SEGMENT_SOURCE)
+        return {
+          ...base,
+          kind: "set",
+          operation: "union",
+          negative: true,
+          members: PATH_SEGMENT_EXCLUDED.map((value) => ({ ...base, kind: "literal", value })),
+          endLocation: node.location,
+        };
+      if (/^\[[A-Za-z0-9-]+\]$/u.test(node.value)) {
+        /** @type {ClassMember[]} */
+        const members = [];
+        for (let index = 1; index < node.value.length - 1; ) {
+          if (node.value[index + 1] === "-") {
+            members.push({
+              ...base,
+              kind: "range",
+              from: node.value[index],
+              to: node.value[index + 2],
+            });
+            index += 3;
+          } else members.push({ ...base, kind: "literal", value: node.value[index++] });
+        }
+        return {
+          ...base,
+          kind: "set",
+          operation: "union",
+          negative: false,
+          members,
+          endLocation: node.location,
+        };
+      }
+    }
+  }
+  return fail(
+    "INVALID_SET_OPERAND",
+    "A set operand must be a character, range, singular class, property, finite string set or nested set, without repetition.",
+    node.location,
+    'Use `"a"`, `digit`, `range "a" to "z"`, `string "ab"`, a class/property or another character-set block.',
+  );
+}
+
+/** @param {ClassAtomNode} node @param {string[]} lines @param {number} start @param {number} depth @returns {number} */
+function readSetBlock(node, lines, start, depth) {
+  if (depth >= LIMITS.groupDepth)
+    fail(
+      "SET_DEPTH_LIMIT",
+      `Groups and sets cannot nest more than ${LIMITS.groupDepth} levels.`,
+      node.location,
+    );
+  for (let index = start + 1; index < lines.length; index += 1) {
+    const raw = lines[index];
+    const text = raw.trim();
+    if (!text) continue;
+    const location = { line: index + 1, column: raw.indexOf(text) + 1 };
+    if (text === "}") {
+      if (node.operation !== "union" && node.members.length < 2)
+        fail(
+          "SET_OPERAND_COUNT",
+          "Intersection and subtraction need at least two operands.",
+          node.location,
+        );
+      node.endLocation = location;
+      return index;
+    }
+    const operand = parseAtom(text, location, raw);
+    if (operand.kind === "atom" && operand.atomType === "characterClass" && operand.operation) {
+      if (operand.repetition) setOperand(operand);
+      index = readSetBlock(operand, lines, index, depth + 1);
+    }
+    node.members.push(setOperand(operand));
+  }
+  return fail("UNCLOSED_SET", "Close this character set with `}` on its own line.", node.location);
+}
+
 /** @param {string} source @returns {ParsedRules} */
 export function parse(source) {
   if (typeof source !== "string") throw new TypeError("Rules must be a string.");
@@ -559,16 +1097,16 @@ export function parse(source) {
   /** @type {RuleNode[]} */
   const rootNodes = [];
   let nodes = rootNodes;
-  /** @type {{node: GroupNode|AlternationNode, parent: RuleNode[], sawEnd: boolean}[]} */
+  /** @type {{node: GroupNode|AlternationNode|AssertionNode, parent: RuleNode[], sawEnd: boolean}[]} */
   const groups = [];
   /** @type {Map<string, GroupNode>} */
   const names = new Map();
   /** @type {GroupNode[]} */
   const captures = [];
-  /** @type {{node: BackreferenceNode, openGroups: (GroupNode|AlternationNode)[]}[]} */
+  /** @type {{node: BackreferenceNode, openGroups: (GroupNode|AlternationNode|AssertionNode)[]}[]} */
   const references = [];
   let captureCount = 0;
-  /** @type {'input'|'line'|null} */
+  /** @type {'input'|'line'|'mixed'|null} */
   let anchorMode = null;
   let sawEnd = false;
   for (let index = 0; index < lines.length; index += 1) {
@@ -612,14 +1150,7 @@ export function parse(source) {
       if (nodes.length !== 0) {
         fail("MISPLACED_ANCHOR", "Start anchor must be the first rule.", location());
       }
-      if (anchorMode && anchorMode !== mode)
-        fail(
-          "MIXED_ANCHORS",
-          "Do not mix input and line anchors.",
-          location(),
-          "Pair `start` with `end`, or `line start` with `line end`.",
-        );
-      anchorMode = mode;
+      anchorMode = anchorMode && anchorMode !== mode ? "mixed" : mode;
       nodes.push(anchor("start", mode, location(), phrase));
       text = text.slice(start[0].length);
       column += start[0].length;
@@ -633,15 +1164,7 @@ export function parse(source) {
     if (end) {
       const mode = end[1].toLowerCase() === "line end" ? "line" : "input";
       if (sawEnd) fail("DUPLICATE_ANCHOR", "Use only one end anchor.", location());
-      if (anchorMode && anchorMode !== mode) {
-        fail(
-          "MIXED_ANCHORS",
-          "Do not mix input and line anchors.",
-          location(),
-          "Pair `start` with `end`, or `line start` with `line end`.",
-        );
-      }
-      anchorMode = mode;
+      anchorMode = anchorMode && anchorMode !== mode ? "mixed" : mode;
       nodes.push(anchor("end", mode, location(), text));
       sawEnd = true;
       continue;
@@ -649,7 +1172,9 @@ export function parse(source) {
     if (sawEnd) fail("MISPLACED_ANCHOR", "End anchor must be the last rule.", location());
 
     const node = parseAtom(text, location(), raw);
-    if (node.kind === "group" || node.kind === "alternation") {
+    if (node.kind === "atom" && node.atomType === "characterClass" && node.operation)
+      index = readSetBlock(node, lines, index, groups.length);
+    if (node.kind === "group" || node.kind === "alternation" || node.kind === "assertion") {
       if (groups.length >= LIMITS.groupDepth) {
         fail(
           "GROUP_DEPTH_LIMIT",
@@ -672,7 +1197,7 @@ export function parse(source) {
       }
       nodes.push(node);
       groups.push({ node, parent: nodes, sawEnd });
-      nodes = node.kind === "group" ? node.nodes : [];
+      nodes = node.kind === "alternation" ? [] : node.nodes;
       sawEnd = false;
     } else {
       nodes.push(node);
