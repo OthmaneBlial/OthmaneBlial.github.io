@@ -1,8 +1,8 @@
-import { CompileError, compile, regexToRules } from "../index.js?v=673e16932415";
-import { escapeControls, quoteText } from "../src/display.js?v=673e16932415";
-import { LIMITS, splitLines } from "../src/parser.js?v=673e16932415";
-import { parseRegexLiteral } from "../src/regex-literal.js?v=673e16932415";
-import { TestRunError, TestRunner } from "./test-runner.js?v=673e16932415";
+import { CompileError, compile, regexToRules } from "../index.js?v=72a21407c9f2";
+import { escapeControls, quoteText } from "../src/display.js?v=72a21407c9f2";
+import { LIMITS, splitLines } from "../src/parser.js?v=72a21407c9f2";
+import { parseRegexLiteral } from "../src/regex-literal.js?v=72a21407c9f2";
+import { TestRunError, TestRunner } from "./test-runner.js?v=72a21407c9f2";
 
 /** @typedef {import("./worker-protocol.d.ts").TestCase} TestCase */
 /** @typedef {{id: string, title: string, note: string, rules: string, source: string, flags: string, matchMode: "full" | "search", positive: string[], negative: string[]}} ProductScenario */
@@ -61,7 +61,7 @@ let hasEdits =
 let copyFeedbackTimer = 0;
 let copySequence = 0;
 const testRunner = new TestRunner(
-  () => new Worker(new URL("./match-worker.js?v=673e16932415", import.meta.url), { type: "module" }),
+  () => new Worker(new URL("./match-worker.js?v=72a21407c9f2", import.meta.url), { type: "module" }),
 );
 
 /**
@@ -784,7 +784,7 @@ ui.copy.addEventListener("click", async () => {
 if (hasEdits) compileRules();
 
 try {
-  const response = await fetch(new URL("../test/fixtures/product-scenarios.json?v=673e16932415", import.meta.url));
+  const response = await fetch(new URL("../test/fixtures/product-scenarios.json?v=72a21407c9f2", import.meta.url));
   if (!response.ok) throw new Error(`HTTP ${response.status}`);
   const loaded = await response.json();
   if (!Array.isArray(loaded)) throw new Error("Invalid example recipe data");

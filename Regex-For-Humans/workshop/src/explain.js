@@ -1,7 +1,7 @@
-import { PATH_SEGMENT_SOURCE } from "./ast.js?v=673e16932415";
-import { quoteText } from "./display.js?v=673e16932415";
+import { PATH_SEGMENT_SOURCE } from "./ast.js?v=72a21407c9f2";
+import { quoteText } from "./display.js?v=72a21407c9f2";
 
-/** @param {import('./ast.js?v=673e16932415').Repetition|null} repetition @param {boolean} optional */
+/** @param {import('./ast.js?v=72a21407c9f2').Repetition|null} repetition @param {boolean} optional */
 function repetitionText(repetition, optional) {
   if (!repetition) return "";
   switch (repetition.kind) {
@@ -21,7 +21,7 @@ function repetitionText(repetition, optional) {
   }
 }
 
-/** @param {import('./ast.js?v=673e16932415').RuleNode} node @param {string} flags @param {boolean} [hasFollowingRule] */
+/** @param {import('./ast.js?v=72a21407c9f2').RuleNode} node @param {string} flags @param {boolean} [hasFollowingRule] */
 export function explainNode(node, flags, hasFollowingRule = false) {
   if (node.kind === "anchor") {
     if (node.mode === "line") {
@@ -46,6 +46,12 @@ export function explainNode(node, flags, hasFollowingRule = false) {
       : "Group without capturing.";
     return label + repetitionText(node.repetition, optional);
   }
+
+  if (node.kind === "alternation")
+    return (
+      `Choose one of ${node.branches.length} alternatives, tried in order.` +
+      repetitionText(node.repetition, optional)
+    );
 
   if (
     node.atomType === "shorthand" &&
