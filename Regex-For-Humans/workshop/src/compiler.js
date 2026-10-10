@@ -1,10 +1,10 @@
-import { fail } from "./diagnostics.js?v=784f18debc2a";
-import { escapeControls } from "./display.js?v=784f18debc2a";
-import { explainNode } from "./explain.js?v=784f18debc2a";
+import { fail } from "./diagnostics.js?v=dbdc9242dc3a";
+import { escapeControls } from "./display.js?v=dbdc9242dc3a";
+import { explainNode } from "./explain.js?v=dbdc9242dc3a";
 
-/** @typedef {import('./ast.js?v=784f18debc2a').AtomNode} AtomNode */
-/** @typedef {import('./ast.js?v=784f18debc2a').Repetition} Repetition */
-/** @typedef {import('./ast.js?v=784f18debc2a').ParsedRules} ParsedRules */
+/** @typedef {import('./ast.js?v=dbdc9242dc3a').AtomNode} AtomNode */
+/** @typedef {import('./ast.js?v=dbdc9242dc3a').Repetition} Repetition */
+/** @typedef {import('./ast.js?v=dbdc9242dc3a').ParsedRules} ParsedRules */
 
 const locationOfOptions = { line: 1, column: 1 };
 
@@ -97,31 +97,97 @@ export function compileAst(parsed, options = {}) {
   const requested = normalizeOptions(options);
   const flags = `${requested.includes("i") ? "i" : ""}${parsed.anchorMode === "line" ? "m" : ""}${requested.includes("s") ? "s" : ""}u`;
   let source = "";
+  /** @type {import('../index.d.ts').RegexSegment[]} */
   const segments = [];
 
-  for (const [index, node] of parsed.nodes.entries()) {
-    const fragment =
-      node.kind === "anchor" ? (node.edge === "start" ? "^" : "$") : atomSource(node);
-    const sourceStart = source.length;
-    source += fragment;
-    segments.push({
-      sourceStart,
-      sourceEnd: source.length,
-      source: fragment,
-      text: node.text,
-      explanation: explainNode(node, flags, index + 1 < parsed.nodes.length),
-      line: node.location.line,
-      column: node.location.column,
-      kind: node.kind,
-      ...(node.kind === "anchor"
-        ? { edge: node.edge, mode: node.mode }
-        : {
-            atomType: node.atomType,
-            repetition: node.repetition,
-            ...(node.atomType === "charSet" ? { negative: node.negative } : {}),
-          }),
-    });
+  /** @param {import('./ast.js?v=dbdc9242dc3a').RuleNode[]} nodes */
+  function emit(nodes) {
+    for (const [index, node] of nodes.entries()) {
+      if (node.kind === "group") {
+        const sourceStart = source.length;
+        const fragment = node.capturing ? (node.name === null ? "(" : `(?<${node.name}>`) : "(?:";
+        source += fragment;
+        const details = {
+          kind: "group",
+          capturing: node.capturing,
+          name: node.name,
+          captureIndex: node.captureIndex,
+          repetition: node.repetition,
+        };
+        segments.push({
+          ...details,
+          kind: "group",
+          edge: "start",
+          sourceStart,
+          sourceEnd: source.length,
+          source: fragment,
+          text: node.text,
+          explanation: explainNode(node, flags),
+          ...node.location,
+        });
+        emit(node.nodes);
+        const endStart = source.length;
+        const close = `)${repetitionSource(node.repetition)}`;
+        source += close;
+        segments.push({
+          ...details,
+          kind: "group",
+          edge: "end",
+          sourceStart: endStart,
+          sourceEnd: source.length,
+          source: close,
+          text: "}",
+          explanation: `End group.${node.repetition ? " Repetition applies to the entire group." : ""}`,
+          ...node.endLocation,
+        });
+        continue;
+      }
+      // A numeric reference needs a boundary so a following digit cannot change its number.
+      const fragment =
+        node.kind === "anchor"
+          ? node.edge === "start"
+            ? "^"
+            : "$"
+          : node.kind === "backreference"
+            ? (typeof node.reference === "string"
+                ? `\\k<${node.reference}>`
+                : `(?:\\${node.captureIndex})`) + repetitionSource(node.repetition)
+            : atomSource(node);
+      const sourceStart = source.length;
+      source += fragment;
+      segments.push({
+        sourceStart,
+        sourceEnd: source.length,
+        source: fragment,
+        text: node.text,
+        explanation: explainNode(node, flags, index + 1 < nodes.length),
+        line: node.location.line,
+        column: node.location.column,
+        ...(node.kind === "backreference"
+          ? {
+              kind: "backreference",
+              reference: node.reference,
+              captureIndex: node.captureIndex,
+              repetition: node.repetition,
+            }
+          : node.kind === "anchor"
+            ? { kind: "anchor", edge: node.edge, mode: node.mode }
+            : node.atomType === "charSet"
+              ? {
+                  kind: "atom",
+                  atomType: "charSet",
+                  repetition: node.repetition,
+                  negative: node.negative,
+                }
+              : {
+                  kind: "atom",
+                  atomType: node.atomType,
+                  repetition: node.repetition,
+                }),
+      });
+    }
   }
+  emit(parsed.nodes);
 
   try {
     new RegExp(source, flags);

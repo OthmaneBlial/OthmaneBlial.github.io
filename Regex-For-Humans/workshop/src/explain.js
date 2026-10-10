@@ -1,7 +1,7 @@
-import { PATH_SEGMENT_SOURCE } from "./ast.js?v=784f18debc2a";
-import { quoteText } from "./display.js?v=784f18debc2a";
+import { PATH_SEGMENT_SOURCE } from "./ast.js?v=dbdc9242dc3a";
+import { quoteText } from "./display.js?v=dbdc9242dc3a";
 
-/** @param {import('./ast.js?v=784f18debc2a').Repetition|null} repetition @param {boolean} optional */
+/** @param {import('./ast.js?v=dbdc9242dc3a').Repetition|null} repetition @param {boolean} optional */
 function repetitionText(repetition, optional) {
   if (!repetition) return "";
   switch (repetition.kind) {
@@ -21,7 +21,7 @@ function repetitionText(repetition, optional) {
   }
 }
 
-/** @param {import('./ast.js?v=784f18debc2a').RuleNode} node @param {string} flags @param {boolean} [hasFollowingRule] */
+/** @param {import('./ast.js?v=dbdc9242dc3a').RuleNode} node @param {string} flags @param {boolean} [hasFollowingRule] */
 export function explainNode(node, flags, hasFollowingRule = false) {
   if (node.kind === "anchor") {
     if (node.mode === "line") {
@@ -32,6 +32,20 @@ export function explainNode(node, flags, hasFollowingRule = false) {
 
   const caseNote = flags.includes("i") ? ", ignoring case (i)" : "";
   const optional = /^optional\s/iu.test(node.text);
+
+  if (node.kind === "backreference") {
+    return (
+      `Same text as capture #${node.captureIndex}${typeof node.reference === "string" ? ` named ${quoteText(node.reference)}` : ""}. A nonparticipating capture matches empty text.` +
+      repetitionText(node.repetition, optional)
+    );
+  }
+
+  if (node.kind === "group") {
+    const label = node.capturing
+      ? `Capture #${node.captureIndex}${node.name === null ? "" : ` named ${quoteText(node.name)}`}.`
+      : "Group without capturing.";
+    return label + repetitionText(node.repetition, optional);
+  }
 
   if (
     node.atomType === "shorthand" &&

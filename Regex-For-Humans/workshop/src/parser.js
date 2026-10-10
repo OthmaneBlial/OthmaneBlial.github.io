@@ -1,12 +1,14 @@
-import { anchor, atom, PATH_SEGMENT_SOURCE } from "./ast.js?v=784f18debc2a";
-import { fail } from "./diagnostics.js?v=784f18debc2a";
-import { quoteText } from "./display.js?v=784f18debc2a";
+import { anchor, atom, PATH_SEGMENT_SOURCE } from "./ast.js?v=dbdc9242dc3a";
+import { fail } from "./diagnostics.js?v=dbdc9242dc3a";
+import { quoteText } from "./display.js?v=dbdc9242dc3a";
 
-/** @typedef {import('./ast.js?v=784f18debc2a').Location} Location */
-/** @typedef {import('./ast.js?v=784f18debc2a').Repetition} Repetition */
-/** @typedef {import('./ast.js?v=784f18debc2a').AtomNode} AtomNode */
-/** @typedef {import('./ast.js?v=784f18debc2a').RuleNode} RuleNode */
-/** @typedef {import('./ast.js?v=784f18debc2a').ParsedRules} ParsedRules */
+/** @typedef {import('./ast.js?v=dbdc9242dc3a').Location} Location */
+/** @typedef {import('./ast.js?v=dbdc9242dc3a').Repetition} Repetition */
+/** @typedef {import('./ast.js?v=dbdc9242dc3a').AtomNode} AtomNode */
+/** @typedef {import('./ast.js?v=dbdc9242dc3a').GroupNode} GroupNode */
+/** @typedef {import('./ast.js?v=dbdc9242dc3a').BackreferenceNode} BackreferenceNode */
+/** @typedef {import('./ast.js?v=dbdc9242dc3a').RuleNode} RuleNode */
+/** @typedef {import('./ast.js?v=dbdc9242dc3a').ParsedRules} ParsedRules */
 
 const MAX_SOURCE_LENGTH = 16_384;
 export const LIMITS = Object.freeze({
@@ -14,6 +16,7 @@ export const LIMITS = Object.freeze({
   regexSourceLength: MAX_SOURCE_LENGTH * 8, // U+2028 and U+2029 each escape to eight code units.
   lines: 200,
   repetition: 1_000,
+  groupDepth: 64,
 });
 
 /** @param {string} source @returns {string[]} */
@@ -93,6 +96,7 @@ const OPTIONAL_PREFIX = /^optional(?=\s|$)\s*/iu;
 const SEQUENCE_PREFIX = /^(zero or more|one or more)(?=\s|$)\s*/iu;
 const AT_LEAST_PREFIX = /^(at least(?:\s+|$))(?:(\S+)(?:\s+|$))?/iu;
 const AT_LEAST_HINT = "Use `at least 3 digits`, with the minimum count before the item.";
+const CAPTURE_NAME = /^[$_\p{ID_Start}](?:[$\p{ID_Continue}]|\u200c|\u200d)*$/u;
 // Recognize malformed numeric tokens so parseCount owns their diagnostics.
 const COUNT_PREFIX = /^([+-]?(?:\p{Nd}|\.\p{Nd})\S*)(?:\s+|$)/u;
 
@@ -202,7 +206,7 @@ function readCharacterList(text, location, rawLine) {
   return items;
 }
 
-/** @param {string} text @param {Location} location @param {string} rawLine @returns {AtomNode} */
+/** @param {string} text @param {Location} location @param {string} rawLine @returns {AtomNode|GroupNode|BackreferenceNode} */
 function parseAtom(text, location, rawLine) {
   let remaining = text;
   /** @type {Repetition|null} */
@@ -334,6 +338,87 @@ function parseAtom(text, location, rawLine) {
     );
   }
 
+  const group = /^(group|capture)(?=\s|\{|$)\s*/iu.exec(remaining);
+  if (group) {
+    const capturing = group[1].toLowerCase() === "capture";
+    let suffix = remaining.slice(group[0].length);
+    let name = null;
+    const nameLocation = {
+      line: location.line,
+      column: location.column + offset + group[0].length,
+    };
+    if (capturing && suffix.startsWith('"')) {
+      const quoted = readQuoted(suffix, nameLocation);
+      name = quoted.value;
+      if (!CAPTURE_NAME.test(name)) {
+        fail(
+          "INVALID_CAPTURE_NAME",
+          "A capture name must be a JavaScript identifier.",
+          nameLocation,
+        );
+      }
+      suffix = suffix.slice(quoted.length).trim();
+    }
+    if (suffix !== "{") {
+      fail(
+        "INVALID_GROUP",
+        "Open a group with `{` and close it with `}` on its own line.",
+        nameLocation,
+        'Use `group {`, `capture {` or `capture "name" {`.',
+      );
+    }
+    return {
+      kind: "group",
+      capturing,
+      name,
+      captureIndex: null,
+      nodes: [],
+      repetition,
+      location,
+      text,
+      endLocation: location,
+    };
+  }
+
+  const backreference = /^same as capture(?:\s+|$)/iu.exec(remaining);
+  if (backreference) {
+    const suffix = remaining.slice(backreference[0].length);
+    const referenceLocation = {
+      line: location.line,
+      column: location.column + offset + backreference[0].length,
+    };
+    let reference;
+    if (suffix.startsWith('"')) {
+      const quoted = readQuoted(suffix, referenceLocation);
+      if (quoted.length !== suffix.length || !CAPTURE_NAME.test(quoted.value)) {
+        fail(
+          "INVALID_CAPTURE_REFERENCE",
+          "Use one quoted capture name or a positive capture number.",
+          referenceLocation,
+        );
+      }
+      reference = quoted.value;
+    } else {
+      reference = Number(suffix);
+      if (!/^[0-9]+$/u.test(suffix) || !Number.isSafeInteger(reference) || reference < 1) {
+        fail(
+          "INVALID_CAPTURE_REFERENCE",
+          "Use one quoted capture name or a positive capture number.",
+          referenceLocation,
+        );
+      }
+    }
+    return {
+      kind: "backreference",
+      reference,
+      captureIndex: 0,
+      referenceLocation,
+      repetition,
+      location,
+      text,
+    };
+  }
+
   const textWithout = /^text without:\s*/i.exec(remaining);
   if (textWithout || /^any text$/i.test(remaining)) {
     if (repetition) {
@@ -462,7 +547,17 @@ export function parse(source) {
   }
 
   /** @type {RuleNode[]} */
-  const nodes = [];
+  const rootNodes = [];
+  let nodes = rootNodes;
+  /** @type {{node: GroupNode, parent: RuleNode[], sawEnd: boolean}[]} */
+  const groups = [];
+  /** @type {Map<string, GroupNode>} */
+  const names = new Map();
+  /** @type {GroupNode[]} */
+  const captures = [];
+  /** @type {{node: BackreferenceNode, openGroups: GroupNode[]}[]} */
+  const references = [];
+  let captureCount = 0;
   /** @type {'input'|'line'|null} */
   let anchorMode = null;
   let sawEnd = false;
@@ -473,6 +568,15 @@ export function parse(source) {
     let text = line;
     let column = raw.indexOf(line) + 1;
     const location = () => ({ line: index + 1, column });
+
+    if (text === "}") {
+      const frame = groups.pop();
+      if (!frame) fail("UNEXPECTED_GROUP_END", "There is no open group to close.", location());
+      frame.node.endLocation = location();
+      nodes = frame.parent;
+      sawEnd = frame.sawEnd;
+      continue;
+    }
 
     const start = START_ANCHOR.exec(text);
     if (start) {
@@ -513,10 +617,69 @@ export function parse(source) {
     }
     if (sawEnd) fail("MISPLACED_ANCHOR", "End anchor must be the last rule.", location());
 
-    nodes.push(parseAtom(text, location(), raw));
+    const node = parseAtom(text, location(), raw);
+    if (node.kind === "group") {
+      if (groups.length >= LIMITS.groupDepth) {
+        fail(
+          "GROUP_DEPTH_LIMIT",
+          `Groups cannot nest more than ${LIMITS.groupDepth} levels.`,
+          location(),
+        );
+      }
+      if (node.capturing) {
+        node.captureIndex = ++captureCount;
+        captures.push(node);
+        if (node.name !== null) {
+          if (names.has(node.name))
+            fail(
+              "DUPLICATE_CAPTURE_NAME",
+              `Capture ${quoteText(node.name)} is already defined.`,
+              location(),
+            );
+          names.set(node.name, node);
+        }
+      }
+      nodes.push(node);
+      groups.push({ node, parent: nodes, sawEnd });
+      nodes = node.nodes;
+      sawEnd = false;
+    } else {
+      nodes.push(node);
+      if (node.kind === "backreference")
+        references.push({ node, openGroups: groups.map((frame) => frame.node) });
+    }
   }
 
-  if (nodes.length === 0)
+  if (groups.length)
+    fail(
+      "UNCLOSED_GROUP",
+      "Close this group with `}` on its own line.",
+      groups.at(-1)?.node.location ?? { line: 1, column: 1 },
+    );
+  if (rootNodes.length === 0)
     fail("EMPTY_SOURCE", "Enter at least one instruction.", { line: 1, column: 1 });
-  return { nodes, anchorMode };
+  for (const { node, openGroups } of references) {
+    const target =
+      typeof node.reference === "string" ? names.get(node.reference) : captures[node.reference - 1];
+    if (!target)
+      fail(
+        "MISSING_CAPTURE_REFERENCE",
+        `Capture ${typeof node.reference === "string" ? quoteText(node.reference) : node.reference} is not defined.`,
+        node.referenceLocation,
+      );
+    if (target.location.line > node.location.line)
+      fail(
+        "FORWARD_CAPTURE_REFERENCE",
+        "A capture reference must follow its capture.",
+        node.referenceLocation,
+      );
+    if (openGroups.includes(target))
+      fail(
+        "SELF_CAPTURE_REFERENCE",
+        "A capture reference must follow the capture's closing brace.",
+        node.referenceLocation,
+      );
+    node.captureIndex = target.captureIndex ?? 0;
+  }
+  return { nodes: rootNodes, anchorMode };
 }
