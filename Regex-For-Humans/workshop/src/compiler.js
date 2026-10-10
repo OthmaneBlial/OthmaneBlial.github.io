@@ -1,10 +1,10 @@
-import { fail } from "./diagnostics.js?v=dbdc9242dc3a";
-import { escapeControls } from "./display.js?v=dbdc9242dc3a";
-import { explainNode } from "./explain.js?v=dbdc9242dc3a";
+import { fail } from "./diagnostics.js?v=673e16932415";
+import { escapeControls } from "./display.js?v=673e16932415";
+import { explainNode } from "./explain.js?v=673e16932415";
 
-/** @typedef {import('./ast.js?v=dbdc9242dc3a').AtomNode} AtomNode */
-/** @typedef {import('./ast.js?v=dbdc9242dc3a').Repetition} Repetition */
-/** @typedef {import('./ast.js?v=dbdc9242dc3a').ParsedRules} ParsedRules */
+/** @typedef {import('./ast.js?v=673e16932415').AtomNode} AtomNode */
+/** @typedef {import('./ast.js?v=673e16932415').Repetition} Repetition */
+/** @typedef {import('./ast.js?v=673e16932415').ParsedRules} ParsedRules */
 
 const locationOfOptions = { line: 1, column: 1 };
 
@@ -100,7 +100,7 @@ export function compileAst(parsed, options = {}) {
   /** @type {import('../index.d.ts').RegexSegment[]} */
   const segments = [];
 
-  /** @param {import('./ast.js?v=dbdc9242dc3a').RuleNode[]} nodes */
+  /** @param {import('./ast.js?v=673e16932415').RuleNode[]} nodes */
   function emit(nodes) {
     for (const [index, node] of nodes.entries()) {
       if (node.kind === "group") {

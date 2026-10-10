@@ -1,7 +1,7 @@
-import { PATH_SEGMENT_EXCLUDED } from "./ast.js?v=dbdc9242dc3a";
-import { CompileError, fail } from "./diagnostics.js?v=dbdc9242dc3a";
-import { quoteText } from "./display.js?v=dbdc9242dc3a";
-import { LIMITS, parse } from "./parser.js?v=dbdc9242dc3a";
+import { PATH_SEGMENT_EXCLUDED } from "./ast.js?v=673e16932415";
+import { CompileError, fail } from "./diagnostics.js?v=673e16932415";
+import { quoteText } from "./display.js?v=673e16932415";
+import { LIMITS, parse } from "./parser.js?v=673e16932415";
 
 const ESCAPED_ATOMS = new Map([
   ["d", "digit"],
