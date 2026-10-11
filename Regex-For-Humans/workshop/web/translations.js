@@ -1,6 +1,262 @@
 // Each entry contains Simplified Chinese, Spanish and French; English is the key.
 /** @type {Record<string, [string, string, string]>} */
 export const translations = {
+  "Explanation level": ["解释级别", "Nivel de explicación", "Niveau d’explication"],
+  "Read the meaning first; short notes explain regex terms. The compiler's rules and meanings stay in English.":
+    [
+      "先阅读含义；简短注释解释正则术语。编译器的规则和含义保持英文。",
+      "Lee primero el significado; las notas breves explican los términos regex. Las reglas y los significados del compilador siguen en inglés.",
+      "Lisez d’abord le sens ; des notes expliquent les termes regex. Les règles et les explications du compilateur restent en anglais.",
+    ],
+  "Each rule maps to its generated fragment and compiler explanation.": [
+    "每条规则对应生成的片段和编译器解释。",
+    "Cada regla corresponde a su fragmento generado y a la explicación del compilador.",
+    "Chaque règle correspond au fragment produit et à l’explication du compilateur.",
+  ],
+  "Ranges refer to the generated regex, in UTF-16 units. Flags: {flags}. Engine export lists compatibility requirements; this is structure, not an execution trace.":
+    [
+      "范围指生成正则中的 UTF-16 单元。标志：{flags}。引擎导出列出兼容要求；这里展示结构，并非执行轨迹。",
+      "Los rangos corresponden al regex generado, en unidades UTF-16. Indicadores: {flags}. La exportación indica los requisitos de compatibilidad; esto muestra la estructura, no la ejecución.",
+      "Les plages concernent le regex généré, en unités UTF-16. Options : {flags}. L’export détaille les exigences de compatibilité ; ceci montre la structure, sans tracer l’exécution.",
+    ],
+  "Source line {line}, column {column}; regex UTF-16 range [{start}, {end}).": [
+    "源代码第 {line} 行，第 {column} 列；正则 UTF-16 范围 [{start}, {end})。",
+    "Línea {line}, columna {column} del código; rango UTF-16 del regex [{start}, {end}).",
+    "Source : ligne {line}, colonne {column} ; plage UTF-16 du regex [{start}, {end}).",
+  ],
+  "Capture #{index}; name: {name}.": [
+    "捕获 #{index}；名称：{name}。",
+    "Captura #{index}; nombre: {name}.",
+    "Capture n° {index} ; nom : {name}.",
+  ],
+  "Resolved reference: capture #{index}.": [
+    "已解析的引用：捕获 #{index}。",
+    "Referencia resuelta: captura #{index}.",
+    "Référence résolue : capture n° {index}.",
+  ],
+  "This closes the nested rules above; it does not itself match a closing brace.": [
+    "这会关闭上面的嵌套规则；它本身不匹配右花括号。",
+    "Esto cierra las reglas anidadas anteriores; no coincide por sí mismo con una llave de cierre.",
+    "Ceci ferme les règles imbriquées précédentes ; la règle ne recherche pas une accolade fermante.",
+  ],
+  "A capture remembers the text matched by its inner rules. Its number or name lets you read that text later.":
+    [
+      "捕获保存其内部规则匹配的文本。之后可通过编号或名称读取该文本。",
+      "Una captura guarda el texto que coincida con sus reglas internas. Su número o nombre permite leerlo después.",
+      "Une capture mémorise le texte reconnu par ses règles internes. Son numéro ou son nom permet de le lire ensuite.",
+    ],
+  "A noncapturing group keeps inner rules together without storing a separate captured value.": [
+    "非捕获组把内部规则组合在一起，但不保存独立的捕获值。",
+    "Un grupo sin captura mantiene unidas sus reglas internas sin guardar un valor capturado aparte.",
+    "Un groupe non capturant réunit ses règles internes sans mémoriser une valeur de capture distincte.",
+  ],
+  "An assertion checks a condition at the current position without advancing the match. Lookahead checks forward; lookbehind checks backward.":
+    [
+      "断言在当前位置检查条件，不推进匹配位置。先行断言向前检查，后行断言向后检查。",
+      "Una aserción comprueba una condición en la posición actual sin avanzar la coincidencia. Lookahead comprueba hacia delante; lookbehind, hacia atrás.",
+      "Une assertion vérifie une condition à la position courante sans avancer la correspondance. Lookahead vérifie vers l’avant ; lookbehind vers l’arrière.",
+    ],
+  "An alternative is one possible path. The engine tries paths in their written order; later rules can make it try another path.":
+    [
+      "备选分支是一条可能的路径。引擎按书写顺序尝试；后续规则可能使它改试其他路径。",
+      "Una alternativa es un camino posible. El motor los prueba en el orden escrito; las reglas posteriores pueden llevarlo a probar otro camino.",
+      "Une alternative est un chemin possible. Le moteur les essaie dans l’ordre écrit ; les règles suivantes peuvent l’amener à essayer un autre chemin.",
+    ],
+  "An anchor checks a position at an edge of the input or a line. It adds no text to the match.": [
+    "锚点检查输入或行的边缘位置，不向匹配中添加文本。",
+    "Un ancla comprueba una posición en un extremo de la entrada o de una línea. No añade texto a la coincidencia.",
+    "Une ancre vérifie une position au début ou à la fin de l’entrée ou d’une ligne. Elle n’ajoute aucun texte à la correspondance.",
+  ],
+  "A word boundary compares word-character status on either side of a position. It does not identify natural-language words.":
+    [
+      "单词边界比较一个位置两侧是否为单词字符，并不识别自然语言词语。",
+      "Un límite de palabra compara si hay caracteres de palabra a ambos lados de una posición. No identifica palabras de lenguaje natural.",
+      "Une frontière de mot compare le statut de caractère de mot des deux côtés d’une position. Elle ne reconnaît pas les mots d’une langue naturelle.",
+    ],
+  "A backreference matches text from an earlier capture, not the spelling of that capture's name.":
+    [
+      "反向引用匹配先前捕获的文本，而不是捕获名称本身。",
+      "Una referencia inversa coincide con el texto de una captura anterior, no con las letras de su nombre.",
+      "Une référence arrière reconnaît le texte d’une capture précédente, sans rechercher son nom dans l’entrée.",
+    ],
+  "A literal matches the written text. Punctuation in that text is escaped by the compiler.": [
+    "字面文本匹配所写的内容。编译器会转义其中的标点符号。",
+    "Un literal coincide con el texto escrito. El compilador escapa la puntuación de ese texto.",
+    "Un texte littéral recherche le contenu écrit. Le compilateur échappe sa ponctuation.",
+  ],
+  "A Unicode property selects characters or strings from the runtime's Unicode data; it does not normalize text.":
+    [
+      "Unicode 属性从运行时的 Unicode 数据中选择字符或字符串，不会规范化文本。",
+      "Una propiedad Unicode selecciona caracteres o cadenas de los datos Unicode del entorno; no normaliza el texto.",
+      "Une propriété Unicode sélectionne des caractères ou des chaînes dans les données Unicode du moteur ; elle ne normalise pas le texte.",
+    ],
+  "A character set lists possible matching values. In Unicode sets mode it can also contain strings.":
+    [
+      "字符集列出可能匹配的值。在 Unicode 集合模式下，它也可包含字符串。",
+      "Un conjunto de caracteres enumera los valores posibles. En el modo de conjuntos Unicode también puede contener cadenas.",
+      "Un ensemble de caractères liste les valeurs possibles. En mode ensembles Unicode, il peut aussi contenir des chaînes.",
+    ],
+  "A shorthand or wildcard is a regex abbreviation for permitted characters. The meaning above describes its actual scope.":
+    [
+      "简写或通配符是允许字符的正则缩写。上面的含义说明其实际范围。",
+      "Una abreviatura o comodín representa los caracteres permitidos. El significado anterior describe su alcance real.",
+      "Une classe abrégée ou un caractère générique représente les caractères autorisés. L’explication précédente décrit sa portée réelle.",
+    ],
+  "A quantifier says how often this unit may repeat. Greedy tries more repetitions first; lazy tries fewer first, subject to the rest of the pattern.":
+    [
+      "量词说明该单元可重复多少次。贪婪模式先尝试较多次数，懒惰模式先尝试较少次数，均受后续模式约束。",
+      "Un cuantificador indica cuántas veces puede repetirse esta unidad. Greedy prueba primero más repeticiones; lazy, menos, según lo permita el resto del patrón.",
+      "Un quantificateur indique combien de fois cette unité peut se répéter. Greedy essaie d’abord davantage de répétitions ; lazy en essaie moins, selon la suite du motif.",
+    ],
+  "Any match needs at least {minimum} UTF-16 units; this input has {length}.": [
+    "任何匹配至少需要 {minimum} 个 UTF-16 单元；此输入有 {length} 个。",
+    "Toda coincidencia necesita al menos {minimum} unidades UTF-16; esta entrada tiene {length}.",
+    "Toute correspondance nécessite au moins {minimum} unités UTF-16 ; cette entrée en contient {length}.",
+  ],
+  "Required literal {literal} is absent from the input.": [
+    "输入中缺少必需的字面文本 {literal}。",
+    "El texto literal obligatorio {literal} no aparece en la entrada.",
+    "Le texte littéral obligatoire {literal} est absent de l’entrée.",
+  ],
+  "The native match covers [{start}, {end}); full-input mode requires [0, {length}).": [
+    "原生匹配覆盖 [{start}, {end})；完整输入模式要求 [0, {length})。",
+    "La coincidencia nativa cubre [{start}, {end}); el modo de entrada completa exige [0, {length}).",
+    "La correspondance native couvre [{start}, {end}) ; le mode entrée complète exige [0, {length}).",
+  ],
+  "The native engine matched [{start}, {end}); this example expects no match.": [
+    "原生引擎匹配了 [{start}, {end})；此示例预期不匹配。",
+    "El motor nativo encontró una coincidencia en [{start}, {end}); este ejemplo espera ninguna.",
+    "Le moteur natif a trouvé une correspondance sur [{start}, {end}) ; cet exemple n’en attend aucune.",
+  ],
+  "The native engine found no match. A precise failing step is unavailable.": [
+    "原生引擎未找到匹配。无法提供确切的失败步骤。",
+    "El motor nativo no encontró coincidencias. No se dispone del paso exacto del fallo.",
+    "Le moteur natif n’a trouvé aucune correspondance. L’étape précise de l’échec est inconnue.",
+  ],
+  "Test fixtures": ["测试用例文件", "Fixtures de pruebas", "Fixtures de tests"],
+  "Keep rules, flags, examples and exact expectations in a versioned JSON file. Saving and restoring locally are manual; storage belongs to this browser and can be cleared.":
+    [
+      "在带版本的 JSON 文件中保留规则、标志、示例和精确预期。需手动保存和恢复；本地存储仅属于当前浏览器，可能被清除。",
+      "Guarda reglas, indicadores, ejemplos y expectativas exactas en un archivo JSON versionado. Guardar y restaurar localmente es manual; el almacenamiento pertenece a este navegador y puede borrarse.",
+      "Conservez règles, options, exemples et attentes exactes dans un fichier JSON versionné. La sauvegarde et la restauration locales sont manuelles ; le stockage appartient à ce navigateur et peut être effacé.",
+    ],
+  "Import JSON": ["导入 JSON", "Importar JSON", "Importer un JSON"],
+  "Export tests": ["导出测试", "Exportar pruebas", "Exporter les tests"],
+  "Save locally": ["本地保存", "Guardar localmente", "Sauvegarder localement"],
+  "Restore saved tests": [
+    "恢复已保存的测试",
+    "Restaurar pruebas guardadas",
+    "Restaurer les tests sauvegardés",
+  ],
+  "No fixture loaded. Import limit: 4 MiB.": [
+    "尚未加载测试文件。导入上限：4 MiB。",
+    "Ningún fixture cargado. Límite de importación: 4 MiB.",
+    "Aucune fixture chargée. Limite d’import : 4 MiB.",
+  ],
+  "Exact expectations": ["精确预期", "Expectativas exactas", "Attentes exactes"],
+  "Expected details (JSON)": [
+    "预期详情（JSON）",
+    "Detalles esperados (JSON)",
+    "Détails attendus (JSON)",
+  ],
+  "Expected details for example {index}": [
+    "示例 {index} 的预期详情",
+    "Detalles esperados del ejemplo {index}",
+    "Détails attendus pour l’exemple {index}",
+  ],
+  "Optional JSON: spans are [start,end] pairs; captures are arrays in group-number order for each match. Use null for absence and an empty string for participation. Limit: 8,192 UTF-16 units.":
+    [
+      "可选 JSON：spans 为 [起点,终点] 对；captures 为每次匹配按组号排列的数组。null 表示未参与，空字符串表示参与了空匹配。上限：8,192 个 UTF-16 单元。",
+      "JSON opcional: spans contiene pares [inicio,fin]; captures contiene un array por coincidencia, en orden de número de grupo. Usa null para ausencia y una cadena vacía para participación. Límite: 8.192 unidades UTF-16.",
+      "JSON facultatif : spans contient des paires [début,fin] ; captures contient un tableau par correspondance, dans l’ordre des numéros de groupe. null signifie absent, une chaîne vide signifie une capture participante. Limite : 8 192 unités UTF-16.",
+    ],
+  "Replacement uses the original flags and JavaScript string replacement tokens. Search lists all matches even without g; replacement without g changes only the first match.":
+    [
+      "替换使用原始标志和 JavaScript 字符串替换符号。搜索即使没有 g 也列出所有匹配；没有 g 的替换只修改第一次匹配。",
+      "El reemplazo usa los indicadores originales y los tokens de reemplazo de JavaScript. La búsqueda lista todas las coincidencias incluso sin g; el reemplazo sin g cambia solo la primera.",
+      "Le remplacement utilise les options d’origine et les jetons de remplacement JavaScript. La recherche liste toutes les correspondances même sans g ; le remplacement sans g modifie seulement la première.",
+    ],
+  "Imported line endings are preserved for testing and export. Editing the example field converts them to LF.":
+    [
+      "导入的换行符在测试和导出时保持原样。编辑示例输入框会将其转换为 LF。",
+      "Los saltos de línea importados se conservan en pruebas y exportaciones. Editar el campo del ejemplo los convierte en LF.",
+      "Les fins de ligne importées sont conservées pour les tests et l’export. Modifier le champ de l’exemple les convertit en LF.",
+    ],
+  "Fix the expectation JSON to run the examples.": [
+    "请修复预期 JSON 以运行示例。",
+    "Corrige el JSON de expectativas para ejecutar los ejemplos.",
+    "Corrigez le JSON des attentes pour lancer les exemples.",
+  ],
+  "Exact spans": ["精确范围", "Rangos exactos", "Positions exactes"],
+  "Capture values": ["捕获值", "Valores de captura", "Valeurs des captures"],
+  "Replacement result": ["替换结果", "Resultado del reemplazo", "Résultat du remplacement"],
+  "✓ {check} agrees": ["✓ {check} 符合预期", "✓ {check} coincide", "✓ {check} conforme"],
+  "! {check} differs": ["! {check} 与预期不同", "! {check} difiere", "! {check} différent"],
+  "More than 100 matches: exact match expectations cannot pass.": [
+    "超过 100 次匹配：无法通过精确匹配预期。",
+    "Más de 100 coincidencias: las expectativas exactas no pueden aprobarse.",
+    "Plus de 100 correspondances : les attentes exactes ne peuvent pas être validées.",
+  ],
+  "Actual replacement ({count} UTF-16 units):": [
+    "实际替换结果（{count} 个 UTF-16 单元）：",
+    "Reemplazo real ({count} unidades UTF-16):",
+    "Remplacement obtenu ({count} unités UTF-16) :",
+  ],
+  "Fixture unavailable: {error}": [
+    "测试文件不可用：{error}",
+    "Fixture no disponible: {error}",
+    "Fixture indisponible : {error}",
+  ],
+  "Import cancelled because the workshop changed. Choose the file again.": [
+    "工作区已更改，导入已取消。请重新选择文件。",
+    "Importación cancelada porque cambió el taller. Elige el archivo de nuevo.",
+    "Import annulé car l’atelier a changé. Sélectionnez à nouveau le fichier.",
+  ],
+  "Imported {count} examples. Review the rules and test results.": [
+    "已导入 {count} 个示例。请检查规则和测试结果。",
+    "Importados {count} ejemplos. Revisa las reglas y los resultados.",
+    "{count} exemples importés. Vérifiez les règles et les résultats des tests.",
+  ],
+  "Test fixture download started.": [
+    "已开始下载测试文件。",
+    "Descarga del fixture iniciada.",
+    "Téléchargement de la fixture lancé.",
+  ],
+  "Tests saved in this browser. Export JSON for a durable copy.": [
+    "测试已保存在此浏览器中。请导出 JSON 以保留持久副本。",
+    "Pruebas guardadas en este navegador. Exporta JSON para conservar una copia duradera.",
+    "Tests sauvegardés dans ce navigateur. Exportez un JSON pour conserver une copie durable.",
+  ],
+  "No saved test fixture in this browser.": [
+    "此浏览器中没有已保存的测试文件。",
+    "No hay ningún fixture guardado en este navegador.",
+    "Aucune fixture de tests sauvegardée dans ce navigateur.",
+  ],
+  "Restored {count} saved examples.": [
+    "已恢复 {count} 个保存的示例。",
+    "Restaurados {count} ejemplos guardados.",
+    "{count} exemples sauvegardés restaurés.",
+  ],
+  "Build a rule": ["构建规则", "Construir una regla", "Construire une règle"],
+  "Rule to add": ["要添加的规则", "Regla que añadir", "Règle à ajouter"],
+  "Capture group": ["捕获组", "Grupo de captura", "Groupe de capture"],
+  "Optional section": ["可选部分", "Sección opcional", "Section facultative"],
+  Alternative: ["分支", "Alternativa", "Alternative"],
+  Repetition: ["重复", "Repetición", "Répétition"],
+  "Character class": ["字符类", "Clase de caracteres", "Classe de caractères"],
+  Assertion: ["断言", "Aserción", "Assertion"],
+  "Insert rule": ["插入规则", "Insertar regla", "Insérer la règle"],
+  "Insert a template before the current line or selection, between the outer anchors. Edit it freely in the rule field.":
+    [
+      "在当前行或选区之前插入模板，并保留外层锚点。可在规则输入框中自由编辑。",
+      "Inserta una plantilla antes de la línea o selección actual, entre los anclajes exteriores. Edítala libremente en el campo de reglas.",
+      "Insérez un modèle avant la ligne ou la sélection actuelle, entre les ancres extérieures. Modifiez-le librement dans le champ des règles.",
+    ],
+  "Rule inserted on line {line}. Edit the template in the rule field.": [
+    "已在第 {line} 行插入规则。可在规则输入框中编辑模板。",
+    "Regla insertada en la línea {line}. Edita la plantilla en el campo de reglas.",
+    "Règle insérée à la ligne {line}. Modifiez le modèle dans le champ des règles.",
+  ],
   Theme: ["主题", "Tema", "Thème"],
   System: ["跟随系统", "Sistema", "Système"],
   Light: ["浅色", "Claro", "Clair"],
@@ -844,4 +1100,207 @@ export const translations = {
     "Escribe reglas y añade un ejemplo para probarlas.",
     "Écrivez des règles et ajoutez un exemple pour les tester.",
   ],
+  "Search example recipes": [
+    "搜索示例配方",
+    "Buscar recetas de ejemplo",
+    "Rechercher des recettes",
+  ],
+  "Search recipes": ["搜索配方", "Buscar recetas", "Rechercher des recettes"],
+  Category: ["类别", "Categoría", "Catégorie"],
+  Difficulty: ["难度", "Dificultad", "Difficulté"],
+  "All categories": ["所有类别", "Todas las categorías", "Toutes les catégories"],
+  "All levels": ["所有级别", "Todos los niveles", "Tous les niveaux"],
+  "Clear filters": ["清除筛选", "Borrar filtros", "Effacer les filtres"],
+  "{count} of {total} recipes": [
+    "{count} / {total} 个配方",
+    "{count} de {total} recetas",
+    "Recettes : {count} sur {total}",
+  ],
+  "No recipes match. Try fewer filters.": [
+    "没有匹配的配方。请减少筛选条件。",
+    "Ninguna receta coincide. Prueba con menos filtros.",
+    "Aucune recette ne correspond. Essayez moins de filtres.",
+  ],
+  Beginner: ["初级", "Principiante", "Débutant"],
+  Intermediate: ["中级", "Intermedio", "Intermédiaire"],
+  Expert: ["专家", "Experto", "Expert"],
+  Usernames: ["用户名", "Nombres de usuario", "Noms d’utilisateur"],
+  "IDs and identifiers": ["ID 与标识符", "IDs e identificadores", "ID et identifiants"],
+  Slugs: ["路径短名", "Slugs", "Slugs"],
+  Filenames: ["文件名", "Nombres de archivo", "Noms de fichiers"],
+  "File extensions": ["文件扩展名", "Extensiones de archivo", "Extensions de fichiers"],
+  "Hexadecimal colors": ["十六进制颜色", "Colores hexadecimales", "Couleurs hexadécimales"],
+  Dates: ["日期", "Fechas", "Dates"],
+  Times: ["时间", "Horas", "Heures"],
+  "ISO 8601-shaped strings": [
+    "ISO 8601 格式字符串",
+    "Cadenas con forma ISO 8601",
+    "Chaînes de forme ISO 8601",
+  ],
+  URLs: ["网址", "URLs", "URL"],
+  IPv4: ["IPv4 地址", "Direcciones IPv4", "Adresses IPv4"],
+  "Log extraction": ["日志提取", "Extracción de registros", "Extraction de journaux"],
+  "HTTP headers": ["HTTP 标头", "Cabeceras HTTP", "En-têtes HTTP"],
+  "Markdown fragments": ["Markdown 片段", "Fragmentos Markdown", "Fragments Markdown"],
+  "Version numbers": ["版本号", "Números de versión", "Numéros de version"],
+  "Semantic versions": ["语义化版本", "Versiones semánticas", "Versions sémantiques"],
+  "Git commit hashes": ["Git 提交哈希", "Hashes de commits Git", "Empreintes de commits Git"],
+  UUIDs: ["UUID 标识符", "Identificadores UUID", "Identifiants UUID"],
+  "Named fields": ["命名字段", "Campos con nombre", "Champs nommés"],
+  "Repeated words": ["重复单词", "Palabras repetidas", "Mots répétés"],
+  "Duplicate detection": ["重复项检测", "Detección de duplicados", "Détection de doublons"],
+  "Structured text extraction": [
+    "结构化文本提取",
+    "Extracción de texto estructurado",
+    "Extraction de texte structuré",
+  ],
+  "International Unicode text": [
+    "多语言 Unicode 文本",
+    "Texto Unicode internacional",
+    "Texte Unicode international",
+  ],
+  "Search and replacement": ["搜索与替换", "Búsqueda y reemplazo", "Recherche et remplacement"],
+  "Match a lowercase slug": [
+    "匹配小写路径短名",
+    "Comparar un slug en minúsculas",
+    "Reconnaître un slug en minuscules",
+  ],
+  "ASCII letters and digits separated by single hyphens; no leading, trailing or repeated hyphen. Ignore case broadens the letter set.":
+    [
+      "ASCII 字母和数字以单个连字符分隔；不允许首尾或连续连字符。忽略大小写会扩大字母集合。",
+      "Letras y dígitos ASCII separados por un solo guion; sin guiones iniciales, finales ni repetidos. Ignorar mayúsculas amplía las letras permitidas.",
+      "Lettres et chiffres ASCII séparés par un seul tiret, sans tiret initial, final ou consécutif. Ignorer la casse élargit les lettres acceptées.",
+    ],
+  "Find a file extension": [
+    "查找文件扩展名",
+    "Buscar una extensión de archivo",
+    "Trouver une extension de fichier",
+  ],
+  "Searches for a case-sensitive txt, md or json suffix, including a bare extension. Does not validate the filename or filesystem.":
+    [
+      "搜索区分大小写的 txt、md 或 json 后缀，也接受单独的扩展名。不验证文件名或文件系统。",
+      "Busca un sufijo txt, md o json distinguiendo mayúsculas; también acepta una extensión sola. No valida el nombre ni el sistema de archivos.",
+      "Recherche un suffixe txt, md ou json sensible à la casse, y compris une extension seule. Ne valide ni le nom de fichier ni le système de fichiers.",
+    ],
+  "Match a UTC timestamp shape": [
+    "匹配 UTC 时间戳格式",
+    "Comparar una forma de fecha UTC",
+    "Reconnaître une forme d’horodatage UTC",
+  ],
+  "YYYY-MM-DDTHH:MM:SS with optional 1–9 fractional digits and Z. Impossible dates and times can match; offsets and calendar validation are outside this recipe.":
+    [
+      "YYYY-MM-DDTHH:MM:SS，可选 1–9 位小数和 Z。无效日期和时间也可能匹配；不验证时区偏移或日历。",
+      "YYYY-MM-DDTHH:MM:SS con 1–9 decimales opcionales y Z. Pueden coincidir fechas y horas imposibles; no valida desfases ni el calendario.",
+      "YYYY-MM-DDTHH:MM:SS avec 1 à 9 décimales facultatives et Z. Des dates et heures impossibles peuvent correspondre ; décalages et validation du calendrier sont hors périmètre.",
+    ],
+  "Match a simple HTTPS URL shape": [
+    "匹配简单 HTTPS 网址格式",
+    "Comparar una forma de URL HTTPS sencilla",
+    "Reconnaître une forme d’URL HTTPS simple",
+  ],
+  "A lowercase https scheme, ASCII hostname components and an optional slash path without whitespace. Not a standards-complete URL or DNS validator; no ports, userinfo or IPv6.":
+    [
+      "小写 https 协议、ASCII 主机名部分及可选的不含空白的斜线路径。不是完整 URL 或 DNS 验证器；不支持端口、用户信息或 IPv6。",
+      "Esquema https en minúsculas, componentes ASCII del host y ruta opcional con barra sin espacios. No es un validador completo de URL o DNS; no admite puertos, credenciales ni IPv6.",
+      "Schéma https en minuscules, composants d’hôte ASCII et chemin facultatif après une barre sans espace. Validation URL ou DNS incomplète ; sans ports, informations utilisateur ni IPv6.",
+    ],
+  "Extract a simple header field": [
+    "提取简单标头字段",
+    "Extraer un campo de cabecera sencillo",
+    "Extraire un champ d’en-tête simple",
+  ],
+  "One ASCII letter/hyphen field name, colon, one space and a nonempty single-line value. A small header fragment, not the complete HTTP field grammar or a message parser.":
+    [
+      "字段名由 ASCII 字母或连字符组成，后接冒号、一个空格和非空单行值。仅是标头片段，不是完整 HTTP 字段语法或消息解析器。",
+      "Nombre con letras ASCII o guiones, dos puntos, un espacio y valor no vacío en una línea. Es un fragmento, no la gramática completa de campos HTTP ni un analizador de mensajes.",
+      "Nom en lettres ASCII ou tirets, deux-points, un espace et valeur non vide sur une ligne. Fragment d’en-tête, sans grammaire HTTP complète ni analyse des messages.",
+    ],
+  "Match a Markdown heading fragment": [
+    "匹配 Markdown 标题片段",
+    "Comparar un fragmento de encabezado Markdown",
+    "Reconnaître un fragment de titre Markdown",
+  ],
+  "One to six # characters, a space and a nonempty single-line heading. Does not parse Markdown block context, optional closing markers or escaping.":
+    [
+      "1–6 个 #、一个空格和非空单行标题。不解析 Markdown 块上下文、可选结束标记或转义。",
+      "De uno a seis #, un espacio y un título no vacío en una línea. No analiza el contexto de bloques Markdown, los marcadores finales opcionales ni escapes.",
+      "Un à six #, un espace et un titre non vide sur une ligne. N’analyse pas le contexte des blocs Markdown, les marqueurs de fin facultatifs ni les échappements.",
+    ],
+  "Validate SemVer 2.0 syntax": [
+    "验证 SemVer 2.0 语法",
+    "Validar la sintaxis SemVer 2.0",
+    "Valider la syntaxe SemVer 2.0",
+  ],
+  "Checks core numbers, prerelease identifiers and build metadata under SemVer 2.0. Numeric prerelease identifiers cannot have leading zeros; build identifiers can. Does not compare precedence or verify releases.":
+    [
+      "按 SemVer 2.0 检查核心数字、预发布标识符和构建元数据。纯数字预发布标识符不允许前导零；构建标识符允许。不比较版本优先级或验证发布。",
+      "Comprueba números principales, identificadores de prelanzamiento y metadatos de compilación según SemVer 2.0. Los identificadores numéricos de prelanzamiento no admiten ceros iniciales; los de compilación sí. No compara precedencia ni verifica publicaciones.",
+      "Vérifie les nombres principaux, identifiants de préversion et métadonnées de construction de SemVer 2.0. Les identifiants numériques de préversion refusent les zéros initiaux ; ceux de construction les acceptent. Ne compare pas la priorité et ne vérifie pas les releases.",
+    ],
+  "Match a Git object hash shape": [
+    "匹配 Git 对象哈希格式",
+    "Comparar una forma de hash de objeto Git",
+    "Reconnaître une forme d’empreinte d’objet Git",
+  ],
+  "Exactly 40 or 64 ASCII hexadecimal characters for SHA-1 or SHA-256 object-name shapes. Does not check the algorithm, repository object existence or abbreviated names.":
+    [
+      "恰好 40 或 64 个 ASCII 十六进制字符，对应 SHA-1 或 SHA-256 对象名称格式。不检查算法、对象是否存在或缩写名称。",
+      "Exactamente 40 o 64 caracteres hexadecimales ASCII para formas de nombres SHA-1 o SHA-256. No comprueba el algoritmo, la existencia del objeto ni nombres abreviados.",
+      "Exactement 40 ou 64 caractères hexadécimaux ASCII pour les formes de noms d’objets SHA-1 ou SHA-256. Ne vérifie pas l’algorithme, l’existence de l’objet ni les noms abrégés.",
+    ],
+  "Match two repeated words": [
+    "匹配两个重复单词",
+    "Comparar dos palabras repetidas",
+    "Reconnaître deux mots répétés",
+  ],
+  "Two identical case-sensitive ASCII letter sequences separated by one space. A backward named reference; not language-aware word segmentation or arbitrary duplicate detection.":
+    [
+      "两个完全相同、区分大小写的 ASCII 字母序列，以一个空格分隔。使用向后命名引用；不是语言感知分词或任意重复检测。",
+      "Dos secuencias idénticas de letras ASCII, distinguiendo mayúsculas, separadas por un espacio. Usa una referencia con nombre anterior; no segmenta palabras según el idioma ni detecta cualquier duplicado.",
+      "Deux suites identiques de lettres ASCII sensibles à la casse, séparées par un espace. Référence arrière nommée ; sans segmentation linguistique ni détection générale des doublons.",
+    ],
+  "Detect adjacent duplicate tokens": [
+    "检测相邻重复标记",
+    "Detectar tokens duplicados adyacentes",
+    "Détecter deux jetons identiques adjacents",
+  ],
+  "Two identical 1–16 ASCII word-character tokens separated by a comma. Checks one adjacent pair, not an entire list or non-adjacent duplicates.":
+    [
+      "两个相同的 1–16 个 ASCII 单词字符标记，以逗号分隔。只检查一对相邻标记，不检查完整列表或非相邻重复。",
+      "Dos tokens idénticos de 1–16 caracteres de palabra ASCII separados por una coma. Comprueba una pareja adyacente, no una lista completa ni duplicados separados.",
+      "Deux jetons identiques de 1 à 16 caractères de mot ASCII, séparés par une virgule. Vérifie une paire adjacente, sans dédupliquer une liste ni détecter les doublons éloignés.",
+    ],
+  "Match Unicode letters and marks": [
+    "匹配 Unicode 字母和组合标记",
+    "Comparar letras y marcas Unicode",
+    "Reconnaître des lettres et marques Unicode",
+  ],
+  "A Unicode letter followed by letters or combining marks, including Arabic and Urdu. Uses native L/M properties; no normalization, grapheme counting or complete identifier validation.":
+    [
+      "首位 Unicode 字母后接字母或组合标记，包括阿拉伯语和乌尔都语。使用原生 L/M 属性；不做规范化、字素计数或完整标识符验证。",
+      "Una letra Unicode seguida de letras o marcas combinantes, incluido árabe y urdu. Usa propiedades nativas L/M; sin normalización, recuento de grafemas ni validación completa de identificadores.",
+      "Une lettre Unicode suivie de lettres ou marques combinatoires, dont l’arabe et l’ourdou. Propriétés natives L/M ; sans normalisation, comptage des graphèmes ni validation complète des identifiants.",
+    ],
+  "Extract named fields from a log fragment": [
+    "从日志片段提取命名字段",
+    "Extraer campos con nombre de un registro",
+    "Extraire des champs nommés d’un journal",
+  ],
+  "Searches for INFO, WARN or ERROR followed by code= and three ASCII digits. Extracts level and code; does not parse a complete log format or validate HTTP status semantics.":
+    [
+      "搜索 INFO、WARN 或 ERROR，后接 code= 和三位 ASCII 数字。提取 level 和 code；不解析完整日志格式或验证 HTTP 状态含义。",
+      "Busca INFO, WARN o ERROR seguido de code= y tres dígitos ASCII. Extrae level y code; no analiza un formato de registro completo ni valida estados HTTP.",
+      "Recherche INFO, WARN ou ERROR suivi de code= et de trois chiffres ASCII. Extrait level et code ; sans analyse complète du journal ni validation du sens des statuts HTTP.",
+    ],
+  "Search and replace a typo": [
+    "搜索并替换拼写错误",
+    "Buscar y reemplazar una errata",
+    "Rechercher et remplacer une faute",
+  ],
+  "Finds case-sensitive teh at native ASCII word boundaries. Displays every search match, but the non-global replacement changes only the first occurrence; enabling g changes the expectation.":
+    [
+      "在原生 ASCII 单词边界处查找区分大小写的 teh。显示每个搜索匹配，但非全局替换只更改第一处；启用 g 会改变预期结果。",
+      "Busca teh distinguiendo mayúsculas en límites nativos de palabra ASCII. Muestra todas las coincidencias, pero el reemplazo sin g cambia solo la primera; activar g cambia la expectativa.",
+      "Recherche teh sensible à la casse aux limites de mot ASCII natives. Affiche chaque occurrence, mais le remplacement sans g ne change que la première ; activer g change le résultat attendu.",
+    ],
 };

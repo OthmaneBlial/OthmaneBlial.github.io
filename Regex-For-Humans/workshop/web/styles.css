@@ -38,6 +38,14 @@
   --display: "Bricolage Grotesque", "Trebuchet MS", sans-serif;
   --body: "Bricolage Grotesque", "Trebuchet MS", sans-serif;
   --mono: "SFMono-Regular", Menlo, Consolas, "Liberation Mono", monospace;
+  --syntax-keyword: #254e80;
+  --syntax-string: #285b37;
+  --syntax-capture: #66318e;
+  --syntax-quantifier: #705000;
+  --syntax-assertion: #94364f;
+  --syntax-alternation: #853c20;
+  --syntax-comment: #505d56;
+  --syntax-invalid: #a12435;
 }
 
 :root[data-theme="dark"] {
@@ -68,6 +76,14 @@
   --toggle-on: #467095;
   --hero-blue: #2b455d;
   --hero-orange: #493849;
+  --syntax-keyword: #a0caff;
+  --syntax-string: #a9dfb3;
+  --syntax-capture: #ddbaff;
+  --syntax-quantifier: #ffdb91;
+  --syntax-assertion: #ffc0d3;
+  --syntax-alternation: #ffc09e;
+  --syntax-comment: #c0cad7;
+  --syntax-invalid: #ffb5bd;
 }
 
 * {
@@ -152,6 +168,8 @@ a {
   flex-direction: column;
   align-self: start;
   min-height: 100vh;
+  height: 100dvh;
+  overflow-y: auto;
   padding: 30px 21px 25px;
   background: var(--shell);
   color: #f5f0df;
@@ -207,6 +225,62 @@ a {
   display: grid;
   gap: 8px;
 }
+.recipe-filters {
+  display: grid;
+  gap: 8px;
+  margin: 0 5px 14px;
+  min-width: 0;
+  color: #eaf0e8;
+}
+.recipe-filters label {
+  display: block;
+  margin-bottom: 4px;
+  font-size: 11px;
+  font-weight: 700;
+}
+.recipe-filters input,
+.recipe-filters select {
+  width: 100%;
+  min-width: 0;
+  min-height: 36px;
+  padding: 6px;
+  border: 1px solid #b4c9c7;
+  border-radius: 5px;
+  background: #173c3a;
+  color: #eaf0e8;
+  font-size: 12px;
+  color-scheme: dark;
+}
+.recipe-filter-row {
+  display: grid;
+  grid-template-columns: minmax(0, 3fr) minmax(0, 2fr);
+  gap: 8px;
+}
+.recipe-filter-summary {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 6px;
+  font-size: 11px;
+}
+.recipe-filter-summary button {
+  min-height: 32px;
+  padding: 4px 6px;
+  border: 1px solid #b4c9c7;
+  border-radius: 5px;
+  background: transparent;
+  color: #eaf0e8;
+  font-size: 11px;
+}
+.recipe-filter-summary button:disabled {
+  opacity: 0.55;
+}
+.recipe-empty {
+  color: #eaf0e8;
+  font-size: 13px;
+  line-height: 1.5;
+}
 .example-button {
   display: grid;
   grid-template-columns: 22px 1fr 16px;
@@ -245,6 +319,13 @@ a {
 .example-arrow {
   color: var(--gold);
   font: 18px var(--display);
+}
+.example-level {
+  display: block;
+  margin-top: 3px;
+  color: #b4c9c7;
+  font-size: 10px;
+  font-weight: 400;
 }
 .sidebar-bottom {
   margin-top: auto;
@@ -405,6 +486,12 @@ a {
   text-transform: uppercase;
   letter-spacing: 0.06em;
 }
+.rules-editor {
+  position: relative;
+  display: flex;
+  flex: 1 0 auto;
+  min-width: 0;
+}
 #rules-input {
   width: 100%;
   flex: 1 0 auto;
@@ -432,11 +519,103 @@ a {
     transparent var(--rule-highlight-bottom)
   );
 }
+.syntax-viewport {
+  position: absolute;
+  max-height: calc(100% - 2px);
+  overflow: hidden;
+  pointer-events: none;
+  border-radius: 4px;
+  background: var(--input-paper);
+}
+.syntax-source {
+  width: 100%;
+  margin: 0;
+  white-space: pre-wrap;
+  overflow-wrap: break-word;
+  color: var(--ink-deep);
+}
+.syntax-source::after {
+  content: "\200b";
+}
+.rules-editor[data-colorized] #rules-input {
+  position: relative;
+  z-index: 1;
+  background: transparent;
+  color: transparent;
+  caret-color: var(--ink-deep);
+}
+.rules-editor[data-colorized] #rules-input[data-highlight] {
+  background-image: none;
+}
+.rules-editor:has(#rules-input[data-highlight]) .syntax-viewport {
+  background-image: linear-gradient(
+    to bottom,
+    transparent var(--rule-highlight-top),
+    var(--rule-mark) var(--rule-highlight-top),
+    var(--rule-mark) var(--rule-highlight-bottom),
+    transparent var(--rule-highlight-bottom)
+  );
+}
+#rules-input::selection {
+  color: var(--ink-deep);
+  background: var(--rule-mark);
+}
+.syntax-keyword {
+  color: var(--syntax-keyword);
+}
+.syntax-string {
+  color: var(--syntax-string);
+}
+.syntax-capture {
+  color: var(--syntax-capture);
+}
+.syntax-quantifier {
+  color: var(--syntax-quantifier);
+}
+.syntax-assertion {
+  color: var(--syntax-assertion);
+}
+.syntax-alternation {
+  color: var(--syntax-alternation);
+}
+.syntax-comment {
+  color: var(--syntax-comment);
+}
+.syntax-invalid {
+  position: relative;
+  color: var(--syntax-invalid);
+  text-decoration: underline wavy;
+  text-decoration-thickness: 1.5px;
+  text-underline-offset: 3px;
+}
+.syntax-invalid:empty::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  height: 1em;
+  border-left: 2px solid var(--syntax-invalid);
+}
+@media (forced-colors: active) {
+  .rules-editor[data-colorized] #rules-input {
+    color: CanvasText;
+    caret-color: CanvasText;
+  }
+  .syntax-viewport {
+    visibility: hidden;
+  }
+}
+.rule-focus-slot {
+  height: 25px;
+  padding-top: 8px;
+  min-width: 0;
+}
 .rule-focus {
-  margin: 8px 0 0;
+  margin: 0;
   color: var(--ink-deep);
   font: 11px / 1.5 var(--mono);
-  overflow-wrap: anywhere;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 .regex-focus {
   background: #ffe49a;
@@ -524,6 +703,44 @@ a {
 }
 #reverse-feedback[data-state="error"] {
   color: #a23b2a;
+}
+.rule-builder {
+  margin: 0 0 16px;
+  padding-top: 12px;
+}
+.rule-builder .field-hint,
+#builder-feedback {
+  margin: 12px 0 0;
+  color: var(--ink-soft);
+  font-size: 12px;
+  line-height: 1.5;
+  overflow-wrap: anywhere;
+}
+.builder-form {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  margin-top: 12px;
+  font-size: 12px;
+  font-weight: 700;
+}
+.builder-form select {
+  min-width: 0;
+  max-width: 100%;
+  min-height: 37px;
+  padding: 0 10px;
+  border: 1px solid var(--control-line);
+  border-radius: 6px;
+  background: var(--control-paper);
+  color: var(--ink);
+  font: inherit;
+}
+#builder-feedback:empty {
+  display: none;
+}
+#builder-feedback[data-state="error"] {
+  color: var(--red);
 }
 .flag-controls {
   display: flex;
@@ -722,6 +939,37 @@ a {
   max-height: 270px;
   overflow-y: auto;
   padding-right: 3px;
+}
+.explanation-controls {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 12px;
+  color: #eff5eb;
+  font-size: 12px;
+}
+.explanation-controls select {
+  max-width: 100%;
+  padding: 6px 8px;
+  border: 1px solid #9cbbb7;
+  border-radius: 4px;
+  background: #303b50;
+  color: #eff5eb;
+  font-size: 16px;
+}
+.explanation-help,
+.trace-note {
+  display: block;
+  color: #c2d7d0;
+  font-size: 11px;
+  line-height: 1.45;
+  overflow-wrap: anywhere;
+}
+.explanation-help {
+  margin: 8px 0 12px;
+}
+.trace-note {
+  margin-top: 6px;
 }
 .empty-trace {
   margin: 0;
@@ -955,7 +1203,8 @@ a {
   border-left-color: var(--red);
 }
 .test-row textarea,
-.test-row select {
+.test-row select,
+.test-row .expectation-input {
   min-width: 0;
   width: 100%;
   min-height: 35px;
@@ -975,6 +1224,12 @@ a {
 .test-result {
   color: var(--ink-soft);
   font: 11px / 1.35 var(--mono);
+  overflow-wrap: anywhere;
+}
+.failure-reason {
+  margin: 6px 0 0;
+  color: var(--ink-soft);
+  font: 11px / 1.45 var(--mono);
   overflow-wrap: anywhere;
 }
 .match-preview {
@@ -1139,6 +1394,42 @@ a {
   color: var(--ink);
   font: 12px / 1.5 var(--mono);
 }
+.test-fixtures {
+  margin-bottom: 16px;
+}
+.expectation-editor {
+  grid-column: 1 / -1;
+  min-width: 0;
+  border-top: 1px solid var(--line);
+  padding: 8px 4px 2px;
+  font: 12px / 1.5 var(--body);
+}
+.expectation-editor summary {
+  cursor: pointer;
+}
+.expectation-editor label {
+  display: block;
+  margin: 8px 0 4px;
+}
+.expectation-checks,
+.expectation-error {
+  overflow-wrap: anywhere;
+}
+.expectation-error,
+#fixture-status[data-state="error"] {
+  color: var(--red);
+}
+.expectation-checks p {
+  margin: 6px 0;
+}
+.replacement-result {
+  display: block;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  max-height: 160px;
+  overflow-y: auto;
+  font: 11px / 1.5 var(--mono);
+}
 .capture-explorer[hidden] {
   display: none;
 }
@@ -1243,6 +1534,8 @@ a {
   .sidebar {
     position: static;
     min-height: 0;
+    height: auto;
+    overflow: visible;
     padding: 18px 20px;
   }
   .brand {
@@ -1262,6 +1555,9 @@ a {
   }
   .sidebar-section-label {
     margin: 12px 0 0;
+  }
+  .recipe-filters {
+    margin: 14px 0 0;
   }
   .sidebar-count {
     display: none;

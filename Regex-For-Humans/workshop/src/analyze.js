@@ -1,8 +1,8 @@
-import { PATH_SEGMENT_SOURCE } from "./ast.js?v=049b4eaff903";
-import { compileAst } from "./compiler.js?v=049b4eaff903";
-import { parse } from "./parser.js?v=049b4eaff903";
+import { PATH_SEGMENT_SOURCE } from "./ast.js?v=86e14234de32";
+import { compileAst } from "./compiler.js?v=86e14234de32";
+import { parse } from "./parser.js?v=86e14234de32";
 
-/** @typedef {import("./ast.js?v=049b4eaff903").RuleNode} RuleNode */
+/** @typedef {import("./ast.js?v=86e14234de32").RuleNode} RuleNode */
 /** @typedef {import("../index.d.ts").AnalysisFinding} Finding */
 /** @typedef {Array<[number, number]>} Ranges */
 
@@ -106,7 +106,7 @@ function pointWitness(value, flags) {
   return point === undefined ? [] : foldAscii([[point, point]], flags);
 }
 
-/** @param {import("./ast.js?v=049b4eaff903").ClassMember} member @param {string} flags @returns {Ranges} */
+/** @param {import("./ast.js?v=86e14234de32").ClassMember} member @param {string} flags @returns {Ranges} */
 function memberWitness(member, flags) {
   switch (member.kind) {
     case "literal":
@@ -129,7 +129,7 @@ function memberWitness(member, flags) {
   }
 }
 
-/** @param {{members: import("./ast.js?v=049b4eaff903").ClassMember[], negative: boolean, operation?: import("./ast.js?v=049b4eaff903").ClassSetOperation}} set @param {string} flags @returns {Ranges} */
+/** @param {{members: import("./ast.js?v=86e14234de32").ClassMember[], negative: boolean, operation?: import("./ast.js?v=86e14234de32").ClassSetOperation}} set @param {string} flags @returns {Ranges} */
 function setWitness(set, flags) {
   if (set.negative || set.operation === "subtraction") return [];
   const operands = set.members.map((member) => memberWitness(member, flags));

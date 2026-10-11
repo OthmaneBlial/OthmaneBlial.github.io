@@ -51,17 +51,35 @@ The parser uses a stack for brace-delimited groups, sharing existing atom parsin
 
 References are resolved against the completed capture table after parsing. A reference carries its target token's location and the enclosing groups at that point; this distinguishes missing, forward and open/self targets. The language rejects forward/open references explicitly, while preserving native empty behavior for nonparticipating optional captures. Numeric references have a noncapturing emission boundary to prevent a following literal digit from extending the reference number. CLI, declarations, explanations and workshop compilation share the resolved metadata.
 
+## Exact expectations and fixtures
+
+`web/expectations.js` validates and snapshots optional span, capture and replacement expectations before matching. The worker compares them with its native results; the controller recomputes these comparisons against its own immutable snapshot and rejects inconsistent result/check fields. Exact match lists use one additional native probe at the 100-record boundary, so truncated results cannot pass. `web/replacement.js` streams native matches and JavaScript string substitution within the original flags, input/template/output/match budgets and existing worker deadline; it does not evaluate callbacks or implement a regex engine.
+
+`web/fixtures.js` validates the complete versioned JSON file before the UI changes. Imports regenerate private IDs, preserve example CR/CRLF until actual editing, and reject pending reads after newer edits. Rules remain an editable compiler input. Per-row draft/error maps keep malformed JSON intact through rerenders and block testing/export/save until repaired. Export reuses the existing text download helper. Explicit local save/restore catches denied storage, quotas and corrupt JSON without changing the current workspace; no auto-restore, backend or additional dependency is introduced. Controls use native details/forms, four-language bindings and text nodes. See the [fixture contract and limits](TEST_FIXTURES.md).
+
 ## Workshop localization
 
 `web/translations.js` supplies Simplified Chinese, Spanish and French messages with English keys. `web/i18n.js` binds trusted initial UI text and explicit dynamic messages to text nodes, and accessible names to attributes. Language changes update those bindings in place without compiling, posting worker messages, rebuilding test inputs or resetting open panels. Weak maps let removed rows and their closures be collected. Substitution runs once and assigns text, never HTML; code, capture names, captured values and user inputs are not scanned for translations.
 
-The four-language selector updates the document language and remembers its choice in local storage when available; denied storage and unknown saved languages keep the workshop usable. Controlled English grammar remains independent of interface translation. Compiler explanations, diagnostic detail, exported engine requirements and diagram labels remain English and are called out beside the selector. This source feature is not yet in the hosted dev.5 workshop. Native-speaker and real screen-reader review remain separate gates.
+The four-language selector updates the document language and remembers its choice in local storage when available; denied storage and unknown saved languages keep the workshop usable. Controlled English grammar remains independent of interface translation. Compiler explanations, diagnostic detail, exported engine requirements and diagram labels remain English and are called out beside the selector. The interface uses all four supported languages. Native-speaker and real screen-reader review remain separate gates.
 
 ## Theme preference
 
 The dependency-free `web/theme.js` module loads before the compiler entry point and applies a validated local theme preference. The native selector follows the system color scheme by default, reacts to media changes in system mode, and remembers explicit light/dark choices when storage is available. Invalid saved values fall back to system mode; denied storage does not prevent selection or compilation. Its handler is attached before the selector is enabled.
 
 Theme changes update only the root data attribute and CSS palette. They do not rebuild nodes, compile rules or post worker requests; fields, selections, scrolling and open panels stay intact. Appearance choices during recipe loading are excluded from user rule edits, so initial examples still load. Theme labels use the existing four-language catalog. Semantic colors distinguish ordinary text, accent-button ink and persistent dark code/navigation surfaces; standalone SVG diagrams retain their own readable export palette.
+
+## Editor highlighting
+
+The source workshop retains its native textarea for keyboard input, selection, undo, copy and accessibility. `web/syntax.js` renders a decorative, hidden-from-accessibility text layer using text nodes and a bounded lexical scanner. Tokens distinguish keywords, JSON strings, capture names/references, repetition, assertions, alternatives and whole-line comments. The compiler remains the validator: its first positioned diagnostic underlines the corresponding token; the existing error action selects the precise native source position. Coloring does not simulate regex execution.
+
+The mirror shares the textarea's font, padding, width, tab stops, scrolling and wrapping. Row navigation paints its background behind the colored text. Both palettes keep token contrast against the ordinary and focused-row surfaces. Forced colors expose the native text, and inputs over source/line budgets fall back to plain native editing without allocating a large mirror. Language and theme changes do not edit rules or recompile. Whole-line comments use the shared parser and still consume both source and line budgets.
+
+## Rule construction
+
+The source workshop's native **Build a rule** form offers capture, optional section, alternative, repetition, character class and assertion templates. `web/insert-rule.js` validates the original AST and candidate with the shared parser/compiler before the editor changes. Insertion is before the logical line containing the selection start, bounded by leading/trailing root anchors; same-line anchors can be split safely. Existing rules, indentation, logical line separators and selected text are retained; numbered references are updated when adding a capture changes their targets' indices. The generated rules stay editable by hand.
+
+A capture starts as a noncapturing prototype and is converted through the existing `editGroup` implementation, preserving the targets of numbered references. The application recompiles and focuses the inserted rule only after validation succeeds; rejected edits retain source and selection. Flags and existing examples stay in place, and feedback is rendered as text. Choosing a template during recipe loading does not suppress defaults, while an actual insertion is treated as an edit and survives delayed loading. Controls use the existing four-language catalog and both palettes. This is a workshop feature, with no new npm API or dependency.
 
 ## Structural visualization
 
@@ -71,7 +89,7 @@ The public `toSVG` result is a self-contained static image. Labels use shared ex
 
 ## Group editing
 
-`src/edit-group.js` edits group definitions using the parser's resolved capture table and the same compiler. It validates the original document, traverses group/assertion/alternative nodes in opening order, computes retained capture numbers and patches only the selected header and affected reference tokens. Quote-aware line splitting preserves exact UTF-16 locations across supported line separators. A referenced capture cannot become noncapturing; all other proposals are parsed and compiled again before a string is returned. The source-only `editGroup` export and local workshop form share this behavior; no second grammar or matcher is introduced.
+`src/edit-group.js` edits group definitions using the parser's resolved capture table and the same compiler. It validates the original document, traverses group/assertion/alternative nodes in opening order, computes retained capture numbers and patches only the selected header and affected reference tokens. Quote-aware line splitting preserves exact UTF-16 locations across supported line separators. A referenced capture cannot become noncapturing; all other proposals are parsed and compiled again before a string is returned. The public `editGroup` export and workshop form share this behavior; no second grammar or matcher is introduced.
 
 Workshop capture highlighting reuses the native ranges already validated by the worker controller. It can show empty captures and lookaround values outside the consumed match, but never guesses spans for absent captures or runtimes without native indices. Matching retains the existing worker cancellation, result validation and deadline. These additions are not in the published dev.5 package/site.
 

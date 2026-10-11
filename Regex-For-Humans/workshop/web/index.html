@@ -24,10 +24,10 @@
   <meta name="twitter:image:alt" content="A colorful Regex For Humans card showing clear English rules turning into an explained JavaScript regex.">
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; connect-src 'self'; object-src 'none'; base-uri 'self'">
   <title>Regex For Humans — Workshop</title>
-  <link rel="icon" type="image/svg+xml" href="./favicon.svg?v=049b4eaff903">
-  <link rel="stylesheet" href="./styles.css?v=049b4eaff903">
-  <script type="module" src="./theme.js?v=049b4eaff903"></script>
-  <script type="module" src="./app.js?v=049b4eaff903"></script>
+  <link rel="icon" type="image/svg+xml" href="./favicon.svg?v=86e14234de32">
+  <link rel="stylesheet" href="./styles.css?v=86e14234de32">
+  <script type="module" src="./theme.js?v=86e14234de32"></script>
+  <script type="module" src="./app.js?v=86e14234de32"></script>
 </head>
 <body>
   <a class="skip-link" href="#main">Skip to workshop</a>
@@ -41,6 +41,15 @@
       <p class="sidebar-intro">Small English rules.<br>Readable regex.<br>Fewer surprises.</p>
 
       <div class="sidebar-section-label"><span>START WITH A RECIPE</span><span id="recipe-count" class="sidebar-count"></span><span class="mobile-scroll-hint">SCROLL FOR MORE →</span></div>
+      <search aria-label="Search example recipes"><form id="recipe-filters" class="recipe-filters">
+        <label for="recipe-search">Search recipes</label>
+        <input id="recipe-search" type="search" maxlength="128" autocomplete="off" disabled>
+        <div class="recipe-filter-row">
+          <div><label for="recipe-category">Category</label><select id="recipe-category" disabled><option value="">All categories</option></select></div>
+          <div><label for="recipe-level">Difficulty</label><select id="recipe-level" disabled><option value="">All levels</option></select></div>
+        </div>
+        <div class="recipe-filter-summary"><span id="recipe-results" role="status" aria-live="polite" aria-atomic="true"></span><button id="recipe-clear" type="button" disabled>Clear filters</button></div>
+      </form></search>
       <nav id="example-list" class="example-list" aria-label="Example recipes"></nav>
 
       <div class="sidebar-bottom">
@@ -52,7 +61,7 @@
     <main id="main" class="main-content" tabindex="-1">
       <header class="topbar">
         <span>THE WORKSHOP <span class="topbar-slash">/</span> REGEX FOR HUMANS</span>
-        <div class="topbar-tools"><div class="topbar-setting"><label for="interface-language">Interface language</label><select id="interface-language" aria-describedby="interface-language-help" disabled><option value="en" lang="en">English</option><option value="zh-CN" lang="zh-CN">简体中文</option><option value="es" lang="es">Español</option><option value="fr" lang="fr">Français</option></select></div><div class="topbar-setting"><label for="interface-theme">Theme</label><select id="interface-theme" disabled><option value="system">System</option><option value="light">Light</option><option value="dark">Dark</option></select></div><span class="build-label">DEV · 0.1.0-dev.6</span></div>
+        <div class="topbar-tools"><div class="topbar-setting"><label for="interface-language">Interface language</label><select id="interface-language" aria-describedby="interface-language-help" disabled><option value="en" lang="en">English</option><option value="zh-CN" lang="zh-CN">简体中文</option><option value="es" lang="es">Español</option><option value="fr" lang="fr">Français</option></select></div><div class="topbar-setting"><label for="interface-theme">Theme</label><select id="interface-theme" disabled><option value="system">System</option><option value="light">Light</option><option value="dark">Dark</option></select></div><span class="build-label">DEV · 0.1.0-dev.7</span></div>
       </header>
       <p id="interface-language-help" class="interface-language-help">Interface labels are translated. Rules use controlled English; compiler explanations, diagram labels and exported technical requirements stay in English.</p>
 
@@ -69,11 +78,28 @@
         <section class="panel editor-panel" aria-labelledby="rules-title">
           <div class="panel-heading"><span class="step-number">01</span><div><p class="kicker">THE INPUT ✍️</p><h2 id="rules-title">Write your rules</h2></div></div>
           <p id="recipe-note" class="recipe-note" hidden></p>
-          <noscript><p class="recipe-note">This workshop needs JavaScript to compile rules and test examples. <a href="./language.html?v=049b4eaff903">Read the syntax guide</a> without JavaScript.</p></noscript>
+          <noscript><p class="recipe-note">This workshop needs JavaScript to compile rules and test examples. <a href="./language.html?v=86e14234de32">Read the syntax guide</a> without JavaScript.</p></noscript>
+          <details id="rule-builder" class="reverse-translator rule-builder">
+            <summary>Build a rule</summary>
+            <p id="builder-help" class="field-hint">Insert a template before the current line or selection, between the outer anchors. Edit it freely in the rule field.</p>
+            <form id="builder-form" class="builder-form" aria-label="Build a rule">
+              <label for="builder-kind">Rule to add</label>
+              <select id="builder-kind" aria-describedby="builder-help builder-feedback" disabled>
+                <option value="capture">Capture group</option><option value="optional">Optional section</option>
+                <option value="alternative">Alternative</option><option value="repetition">Repetition</option>
+                <option value="class">Character class</option><option value="assertion">Assertion</option>
+              </select>
+              <button id="builder-insert" class="secondary-button" type="submit" aria-controls="rules-input" disabled>Insert rule</button>
+            </form>
+            <p id="builder-feedback" role="status"></p>
+          </details>
           <label for="rules-input" class="field-label">Write your rules</label>
-          <textarea id="rules-input" spellcheck="false" autocomplete="off" autocapitalize="off" autocorrect="off" aria-invalid="false" aria-describedby="rules-help recipe-note diagnostic" placeholder="start &quot;ABC&quot;&#10;3 digits&#10;end"></textarea>
-          <p id="rule-focus" class="rule-focus" hidden></p>
-          <div class="editor-footer"><p id="rules-help">A controlled language, not a free-form prompt. <a href="./language.html?v=049b4eaff903" target="_blank" rel="noopener noreferrer">Read the syntax ↗</a> · <a href="https://github.com/OthmaneBlial/Regex-For-Humans/blob/main/docs/COMPLEX-EXAMPLES.md" target="_blank" rel="noopener noreferrer">Complex examples ↗</a></p><span id="rule-count">0 rules</span></div>
+          <div class="rules-editor">
+            <textarea id="rules-input" spellcheck="false" autocomplete="off" autocapitalize="off" autocorrect="off" aria-invalid="false" aria-describedby="rules-help recipe-note diagnostic" placeholder="start &quot;ABC&quot;&#10;3 digits&#10;end"></textarea>
+            <div id="rules-syntax" class="syntax-viewport" aria-hidden="true" hidden></div>
+          </div>
+          <div class="rule-focus-slot"><p id="rule-focus" class="rule-focus" hidden></p></div>
+          <div class="editor-footer"><p id="rules-help">A controlled language, not a free-form prompt. <a href="./language.html?v=86e14234de32" target="_blank" rel="noopener noreferrer">Read the syntax ↗</a> · <a href="https://github.com/OthmaneBlial/Regex-For-Humans/blob/main/docs/COMPLEX-EXAMPLES.md" target="_blank" rel="noopener noreferrer">Complex examples ↗</a></p><span id="rule-count">0 rules</span></div>
           <fieldset class="flag-controls" aria-label="Regex options" aria-describedby="flags-help">
             <label class="flag-toggle"><input id="ignore-case" type="checkbox"><span class="toggle-track" aria-hidden="true"></span><span>Ignore case <code>i</code></span></label>
             <label class="flag-toggle"><input id="dot-all" type="checkbox"><span class="toggle-track" aria-hidden="true"></span><span>Dot matches newlines <code>s</code></span></label>
@@ -141,6 +167,8 @@
             <ul id="review-limitations" class="review-limitations" aria-label="Analysis limitations"></ul>
           </details>
           <div class="trace-heading"><h3>How it was built</h3><span>RULE → FRAGMENT</span></div>
+          <div class="explanation-controls"><label for="explanation-mode">Explanation level</label><select id="explanation-mode" aria-describedby="explanation-help"><option value="beginner">Beginner</option><option value="intermediate" selected>Intermediate</option><option value="expert">Expert</option></select></div>
+          <p id="explanation-help" class="explanation-help">Each rule maps to its generated fragment and compiler explanation.</p>
           <div id="trace-list" class="trace-list" aria-live="polite"><p class="empty-trace">Each rule will appear here with its generated fragment and meaning.</p></div>
         </section>
       </div>
@@ -159,6 +187,13 @@
         <div class="examples-heading"><div class="panel-heading"><span class="step-number">04</span><div><p class="kicker">THE PROOF 🧪</p><h2 id="examples-title">Check the edge cases</h2></div></div><div class="test-controls"><label for="match-mode">Match mode</label><select id="match-mode" aria-describedby="match-mode-help"><option value="full">Entire string</option><option value="search">Search anywhere</option></select><button id="add-example" class="secondary-button" type="button" disabled>+ Add example</button></div></div>
         <p class="examples-intro">Mark what should match. The workshop shows where the pattern agrees or surprises you. <span id="example-limits">Up to 100 examples; 2,048 UTF-16 code units per string. Longer input is kept but cannot be tested. Leave a field blank to test an empty string.</span></p>
         <p id="match-mode-help" class="examples-intro">Entire string requires a match covering the whole example. Search anywhere lists up to 100 nonoverlapping matches, including empty matches. Positions start at 0 and count UTF-16 code units; an emoji such as 😀 counts as two. Open a match to inspect its captures.</p>
+        <details id="test-fixtures" class="reverse-translator test-fixtures">
+          <summary>Test fixtures</summary>
+          <p class="capture-note">Keep rules, flags, examples and exact expectations in a versioned JSON file. Saving and restoring locally are manual; storage belongs to this browser and can be cleared.</p>
+          <div class="group-edit-actions"><button id="fixture-import" class="secondary-button" type="button">Import JSON</button><button id="fixture-export" class="secondary-button" type="button">Export tests</button><button id="fixture-save" class="secondary-button" type="button">Save locally</button><button id="fixture-restore" class="secondary-button" type="button">Restore saved tests</button></div>
+          <input id="fixture-file" type="file" accept=".json,application/json" hidden>
+          <p id="fixture-status" class="capture-note" role="status">No fixture loaded. Import limit: 4 MiB.</p>
+        </details>
         <div id="test-summary" class="test-summary" role="status">Choose a recipe to load example strings.</div>
         <div id="test-list" class="test-list"></div>
       </section>

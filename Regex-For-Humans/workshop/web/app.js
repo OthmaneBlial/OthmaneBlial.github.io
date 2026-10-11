@@ -6,15 +6,22 @@ import {
   exportRegex,
   regexToRules,
   toSVG,
-} from "../index.js?v=049b4eaff903";
-import { escapeControls, quoteText } from "../src/display.js?v=049b4eaff903";
-import { LIMITS, splitLines } from "../src/parser.js?v=049b4eaff903";
-import { parseRegexLiteral } from "../src/regex-literal.js?v=049b4eaff903";
-import { initializeLanguage, message, setAttribute, setText } from "./i18n.js?v=049b4eaff903";
-import { TestRunError, TestRunner } from "./test-runner.js?v=049b4eaff903";
+} from "../index.js?v=86e14234de32";
+import { escapeControls, quoteText } from "../src/display.js?v=86e14234de32";
+import { LIMITS, splitLines } from "../src/parser.js?v=86e14234de32";
+import { parseRegexLiteral } from "../src/regex-literal.js?v=86e14234de32";
+import { parseExpectation, readExpectation } from "./expectations.js?v=86e14234de32";
+import { explanationNotes } from "./explanation-notes.js?v=86e14234de32";
+import { explainMismatch, failureRequirements } from "./failure-reasons.js?v=86e14234de32";
+import { fixtureLimit, fixtureStorageKey, parseFixture } from "./fixtures.js?v=86e14234de32";
+import { initializeLanguage, message, setAttribute, setText } from "./i18n.js?v=86e14234de32";
+import { insertRule } from "./insert-rule.js?v=86e14234de32";
+import { categories, filterRecipes, levels } from "./library.js?v=86e14234de32";
+import { initializeSyntaxEditor } from "./syntax.js?v=86e14234de32";
+import { TestRunError, TestRunner } from "./test-runner.js?v=86e14234de32";
 
 /** @typedef {import("./worker-protocol.d.ts").TestCase} TestCase */
-/** @typedef {{id: string, title: string, note: string, rules: string, source: string, flags: string, matchMode: "full" | "search", positive: string[], negative: string[]}} ProductScenario */
+/** @typedef {import('./library.js?v=86e14234de32').ProductScenario} ProductScenario */
 /** @typedef {"success" | "neutral" | "error"} CompileState */
 /** @typedef {{line: number, column: number, sourceStart: number, sourceEnd: number}} RuleFocus */
 
@@ -36,8 +43,18 @@ const ui = {
   examples: requiredElement("example-list", HTMLElement),
   recipeCount: requiredElement("recipe-count", HTMLSpanElement),
   recipeNote: requiredElement("recipe-note", HTMLParagraphElement),
+  recipeFilters: requiredElement("recipe-filters", HTMLFormElement),
+  recipeSearch: requiredElement("recipe-search", HTMLInputElement),
+  recipeCategory: requiredElement("recipe-category", HTMLSelectElement),
+  recipeLevel: requiredElement("recipe-level", HTMLSelectElement),
+  recipeResults: requiredElement("recipe-results", HTMLSpanElement),
+  recipeClear: requiredElement("recipe-clear", HTMLButtonElement),
   rules: requiredElement("rules-input", HTMLTextAreaElement),
   ruleCount: requiredElement("rule-count", HTMLSpanElement),
+  builderForm: requiredElement("builder-form", HTMLFormElement),
+  builderKind: requiredElement("builder-kind", HTMLSelectElement),
+  builderInsert: requiredElement("builder-insert", HTMLButtonElement),
+  builderFeedback: requiredElement("builder-feedback", HTMLParagraphElement),
   ignoreCase: requiredElement("ignore-case", HTMLInputElement),
   dotAll: requiredElement("dot-all", HTMLInputElement),
   global: requiredElement("global-flag", HTMLInputElement),
@@ -65,6 +82,8 @@ const ui = {
   exportJSON: requiredElement("export-json", HTMLButtonElement),
   diagnostic: requiredElement("diagnostic", HTMLDivElement),
   trace: requiredElement("trace-list", HTMLDivElement),
+  explanationMode: requiredElement("explanation-mode", HTMLSelectElement),
+  explanationHelp: requiredElement("explanation-help", HTMLParagraphElement),
   review: requiredElement("pattern-review", HTMLDetailsElement),
   reviewCount: requiredElement("review-count", HTMLSpanElement),
   reviewStatus: requiredElement("review-status", HTMLParagraphElement),
@@ -90,9 +109,19 @@ const ui = {
   addExample: requiredElement("add-example", HTMLButtonElement),
   testSummary: requiredElement("test-summary", HTMLDivElement),
   testList: requiredElement("test-list", HTMLDivElement),
+  fixtureFile: requiredElement("fixture-file", HTMLInputElement),
+  fixtureImport: requiredElement("fixture-import", HTMLButtonElement),
+  fixtureExport: requiredElement("fixture-export", HTMLButtonElement),
+  fixtureSave: requiredElement("fixture-save", HTMLButtonElement),
+  fixtureRestore: requiredElement("fixture-restore", HTMLButtonElement),
+  fixtureStatus: requiredElement("fixture-status", HTMLParagraphElement),
 };
 
 initializeLanguage(document, ui.language);
+const updateSyntax = initializeSyntaxEditor(
+  ui.rules,
+  requiredElement("rules-syntax", HTMLDivElement),
+);
 setText(ui.output, message("Select a recipe or write a rule"));
 
 const flagInputs = {
@@ -106,9 +135,17 @@ const flagInputs = {
 
 /** @type {ProductScenario[]} */
 let scenarios = [];
+/** @type {string|null} */
+let selectedScenarioId = null;
 /** @type {TestCase[]} */
 let testCases = [];
 let nextTestId = 1;
+let fixtureRevision = 0;
+/** @type {Map<number, string>} */
+const expectationDrafts = new Map();
+/** @type {Map<number, string>} */
+const expectationErrors = new Map();
+const exactCaseText = new Set();
 /** @type {number | null} */
 let reverseErrorPosition = null;
 /** @type {ReturnType<typeof compile> | null} */
@@ -132,14 +169,14 @@ let hasEdits =
 let copyFeedbackTimer = 0;
 let copySequence = 0;
 const testRunner = new TestRunner(
-  () => new Worker(new URL("./match-worker.js?v=049b4eaff903", import.meta.url), { type: "module" }),
+  () => new Worker(new URL("./match-worker.js?v=86e14234de32", import.meta.url), { type: "module" }),
 );
 
 /**
  * @template {keyof HTMLElementTagNameMap} K
  * @param {K} tag
  * @param {string} [className=""]
- * @param {string | import('./i18n.js?v=049b4eaff903').Message} [text]
+ * @param {string | import('./i18n.js?v=86e14234de32').Message} [text]
  * @returns {HTMLElementTagNameMap[K]}
  */
 function make(tag, className = "", text) {
@@ -155,7 +192,7 @@ function setCompileState(label, state) {
   ui.compileState.dataset.state = state;
 }
 
-/** @param {string | import('./i18n.js?v=049b4eaff903').Message} text @param {boolean} [invalidRules=false] */
+/** @param {string | import('./i18n.js?v=86e14234de32').Message} text @param {boolean} [invalidRules=false] */
 function setDiagnostic(text, invalidRules = false) {
   ui.diagnostic.hidden = !text;
   setText(ui.diagnostic, text || "");
@@ -298,6 +335,15 @@ function selectText(field, start, end) {
 
 /** @param {ReturnType<typeof compile>["segments"] | null} segments */
 function renderTrace(segments) {
+  const mode = ui.explanationMode.value;
+  const help =
+    mode === "beginner"
+      ? "Read the meaning first; short notes explain regex terms. The compiler's rules and meanings stay in English."
+      : mode === "expert"
+        ? "Ranges refer to the generated regex, in UTF-16 units. Flags: {flags}. Engine export lists compatibility requirements; this is structure, not an execution trace."
+        : "Each rule maps to its generated fragment and compiler explanation.";
+  setText(ui.explanationHelp, message(help, { flags: compiled?.flags ?? "—" }));
+  ui.trace.dataset.mode = mode;
   ui.trace.replaceChildren();
   if (!segments?.length) {
     ui.trace.append(
@@ -309,7 +355,7 @@ function renderTrace(segments) {
     );
     return;
   }
-  for (const segment of segments) {
+  for (const [index, segment] of segments.entries()) {
     const button = make("button", "trace-item");
     button.type = "button";
     setAttribute(
@@ -330,6 +376,13 @@ function renderTrace(segments) {
       ),
     );
     detail.append(make("span", "trace-meaning", segment.explanation));
+    const descriptions = explanationNotes(segment, mode).map((note, noteIndex) => {
+      const text = make("span", "trace-note", message(note.key, note.values));
+      text.id = `explanation-note-${index}-${noteIndex}`;
+      detail.append(text);
+      return text.id;
+    });
+    if (descriptions.length) button.setAttribute("aria-describedby", descriptions.join(" "));
     button.append(detail);
     connectRuleButton(button, segment);
     ui.trace.append(button);
@@ -475,8 +528,8 @@ function highlightSourceRow() {
   const bottom = measure.scrollHeight - bottomPadding - ui.rules.scrollTop;
   measure.remove();
   ui.rules.dataset.highlight = String(visibleRule.line);
-  ui.rules.style.setProperty("--rule-highlight-top", `${top}px`);
-  ui.rules.style.setProperty("--rule-highlight-bottom", `${bottom}px`);
+  ui.rules.parentElement?.style.setProperty("--rule-highlight-top", `${top}px`);
+  ui.rules.parentElement?.style.setProperty("--rule-highlight-bottom", `${bottom}px`);
 }
 
 /** @param {RuleFocus|null} rule */
@@ -732,7 +785,7 @@ function renderGroupEditor() {
   }
 }
 
-/** @param {HTMLDivElement} row @param {string | import('./i18n.js?v=049b4eaff903').Message} text */
+/** @param {HTMLDivElement} row @param {string | import('./i18n.js?v=86e14234de32').Message} text */
 function setTestResult(row, text) {
   const result = row.querySelector(".test-result");
   if (result) setText(result, text);
@@ -898,7 +951,7 @@ function renderCaptureExplorer(row, result, captures, input) {
   explorer.hidden = false;
 }
 
-/** @param {HTMLDivElement} row @param {string} input @param {{start: number, end: number} | null | undefined} range @param {string | import('./i18n.js?v=049b4eaff903').Message} [label] */
+/** @param {HTMLDivElement} row @param {string} input @param {{start: number, end: number} | null | undefined} range @param {string | import('./i18n.js?v=86e14234de32').Message} [label] */
 function renderMatchPreview(row, input, range, label) {
   const preview = row.querySelector(".match-preview");
   if (!(preview instanceof HTMLSpanElement)) return;
@@ -942,9 +995,28 @@ function selectedMatchMode() {
 }
 
 async function updateTestResults() {
+  fixtureRevision++;
   const rows = [...ui.testList.querySelectorAll(".test-row")].filter(
     (row) => row instanceof HTMLDivElement,
   );
+  for (const row of rows) {
+    row.querySelector(".expectation-checks")?.replaceChildren();
+    const reason = row.querySelector(".failure-reason");
+    if (reason instanceof HTMLElement) {
+      reason.replaceChildren();
+      reason.hidden = true;
+    }
+  }
+  if (expectationErrors.size) {
+    testRunner.cancel();
+    rows.forEach((row, index) => {
+      row.dataset.result = expectationErrors.has(testCases[index].id) ? "invalid" : "pending";
+      setTestResult(row, message("Fix the expectation JSON to run the examples."));
+    });
+    setText(ui.testSummary, message("Fix the expectation JSON to run the examples."));
+    ui.testSummary.dataset.state = "error";
+    return;
+  }
   const tooLong = testCases.map(({ text }) => text.length > 2048);
   rows.forEach((row, index) => {
     const input = row.querySelector("textarea");
@@ -1007,11 +1079,17 @@ async function updateTestResults() {
     const captures = compiled.segments.flatMap((segment) =>
       segment.kind === "group" && segment.edge === "start" && segment.capturing ? [segment] : [],
     );
+    const required = failureRequirements(ui.rules.value, compiled.flags);
     const results = await testRunner.run({
       source: compiled.source,
       flags: compiled.flags,
       mode: selectedMatchMode(),
-      cases: testCases.map(({ id, text, expected }) => ({ id, text, expected })),
+      cases: testCases.map(({ id, text, expected, expect }) => ({
+        id,
+        text,
+        expected,
+        ...(expect ? { expect } : {}),
+      })),
       captureCount: captures.length,
     });
     const byId = new Map(results.map((result) => [result.id, result]));
@@ -1039,6 +1117,63 @@ async function updateTestResults() {
       );
       renderMatchPreview(row, testCases[index].text, evaluation.matchRange);
       renderCaptureExplorer(row, evaluation, captures, testCases[index].text);
+      const reason = explainMismatch(
+        required,
+        testCases[index].text,
+        testCases[index].expected,
+        evaluation,
+      );
+      const explanation = row.querySelector(".failure-reason");
+      if (reason && explanation instanceof HTMLElement) {
+        const values = { ...reason.values };
+        if (typeof values.literal === "string") values.literal = quoteText(values.literal);
+        setText(explanation, message(reason.key, values));
+        explanation.hidden = false;
+      }
+      const checks = row.querySelector(".expectation-checks");
+      if (checks) {
+        for (const [key, label] of [
+          ["spans", "Exact spans"],
+          ["captures", "Capture values"],
+          ["replacement", "Replacement result"],
+        ]) {
+          const pass =
+            evaluation.checks?.[
+              /** @type {keyof import('./worker-protocol.d.ts').ExpectationChecks} */ (key)
+            ];
+          if (pass !== undefined)
+            checks.append(
+              make(
+                "p",
+                "",
+                message(pass ? "✓ {check} agrees" : "! {check} differs", { check: message(label) }),
+              ),
+            );
+        }
+        if (evaluation.matchesTruncated)
+          checks.append(
+            make("p", "", message("More than 100 matches: exact match expectations cannot pass.")),
+          );
+        if (evaluation.replacement !== undefined) {
+          checks.append(
+            make(
+              "p",
+              "",
+              message("Actual replacement ({count} UTF-16 units):", {
+                count: evaluation.replacement.length,
+              }),
+            ),
+          );
+          const visible = evaluation.replacement.slice(0, 2048);
+          checks.append(
+            make(
+              "code",
+              "replacement-result",
+              quoteText(visible) + (visible.length < evaluation.replacement.length ? "…" : ""),
+            ),
+          );
+        }
+      }
     });
     const focusedRowIndex = rows.findIndex((row) => row.contains(document.activeElement));
     const focusedResult = focusedRowIndex < 0 ? null : byId.get(testCases[focusedRowIndex].id);
@@ -1071,6 +1206,7 @@ async function updateTestResults() {
 }
 
 function renderTests() {
+  fixtureRevision++;
   const views = new Map(
     [...ui.testList.querySelectorAll(".test-row")].map((row) => {
       const input = row.querySelector("textarea");
@@ -1085,6 +1221,8 @@ function renderTests() {
               top: input.scrollTop,
               left: input.scrollLeft,
               explorerOpen: row.querySelector(".capture-explorer")?.hasAttribute("open") ?? false,
+              expectationOpen:
+                row.querySelector(".expectation-editor")?.hasAttribute("open") ?? false,
             }
           : null,
       ];
@@ -1101,15 +1239,19 @@ function renderTests() {
     input.autocapitalize = "off";
     input.setAttribute("autocorrect", "off");
     input.value = sample.text;
-    sample.text = input.value;
+    if (!exactCaseText.has(sample.id)) sample.text = input.value;
     input.rows = sample.text.split("\n", 3).length;
     const view = views.get(`example-result-${sample.id}`);
     input.style.height = view?.height ?? "";
     if (view) input.setSelectionRange(view.start, view.end, view.direction);
     setAttribute(input, "placeholder", message("Empty string"));
     setAttribute(input, "aria-label", message("Example {index} string", { index: number }));
-    input.setAttribute("aria-describedby", `example-limits example-result-${sample.id}`);
+    input.setAttribute(
+      "aria-describedby",
+      `example-limits example-result-${sample.id} example-reason-${sample.id}`,
+    );
     input.addEventListener("input", () => {
+      exactCaseText.delete(sample.id);
       sample.text = input.value;
       input.rows = sample.text.split("\n", 3).length;
       updateTestResults();
@@ -1121,7 +1263,10 @@ function renderTests() {
       "aria-label",
       message("Expected match result for example {index}", { index: number }),
     );
-    expected.setAttribute("aria-describedby", `example-result-${sample.id}`);
+    expected.setAttribute(
+      "aria-describedby",
+      `example-result-${sample.id} example-reason-${sample.id}`,
+    );
     for (const [value, label] of [
       ["true", "Should match"],
       ["false", "Should not match"],
@@ -1142,11 +1287,18 @@ function renderTests() {
     preview.hidden = true;
     preview.setAttribute("aria-hidden", "true");
     const feedback = make("div", "test-feedback");
-    feedback.append(result, preview);
+    const reason = make("p", "failure-reason");
+    reason.id = `example-reason-${sample.id}`;
+    reason.hidden = true;
+    feedback.append(result, preview, reason);
     const remove = make("button", "remove-example", "×");
     remove.type = "button";
     setAttribute(remove, "aria-label", message("Remove example {index}", { index: number }));
     remove.addEventListener("click", () => {
+      hasEdits = true;
+      expectationDrafts.delete(sample.id);
+      expectationErrors.delete(sample.id);
+      exactCaseText.delete(sample.id);
       testCases = testCases.filter((item) => item.id !== sample.id);
       renderTests();
       updateTestResults();
@@ -1159,7 +1311,87 @@ function renderTests() {
     const explorer = make("details", "capture-explorer");
     explorer.hidden = true;
     explorer.open = view?.explorerOpen ?? false;
-    row.append(input, expected, feedback, remove, explorer);
+    const advanced = make("details", "expectation-editor");
+    advanced.open = view?.expectationOpen ?? sample.expect !== undefined;
+    advanced.append(make("summary", "", message("Exact expectations")));
+    const expectationId = `example-expectation-${sample.id}`;
+    const label = make("label", "", message("Expected details (JSON)"));
+    label.htmlFor = expectationId;
+    const details = make("input", "expectation-input");
+    details.id = expectationId;
+    details.type = "text";
+    details.spellcheck = false;
+    details.autocomplete = "off";
+    details.dir = "ltr";
+    details.value =
+      expectationDrafts.get(sample.id) ?? (sample.expect ? JSON.stringify(sample.expect) : "");
+    const help = make(
+      "p",
+      "capture-note",
+      message(
+        "Optional JSON: spans are [start,end] pairs; captures are arrays in group-number order for each match. Use null for absence and an empty string for participation. Limit: 8,192 UTF-16 units.",
+      ),
+    );
+    help.id = `${expectationId}-help`;
+    const schema = make(
+      "code",
+      "replacement-result",
+      '{"spans":[[0,1]],"captures":[["A","",null]],"replacement":{"template":"$1!","result":"A!"}}',
+    );
+    const replacementHelp = make(
+      "p",
+      "capture-note",
+      message(
+        "Replacement uses the original flags and JavaScript string replacement tokens. Search lists all matches even without g; replacement without g changes only the first match.",
+      ),
+    );
+    const error = make("p", "expectation-error");
+    error.id = `${expectationId}-error`;
+    error.textContent = expectationErrors.get(sample.id) ?? "";
+    details.setAttribute("aria-invalid", String(expectationErrors.has(sample.id)));
+    details.setAttribute("aria-describedby", `${help.id} ${error.id}`);
+    setAttribute(
+      details,
+      "aria-label",
+      message("Expected details for example {index}", { index: number }),
+    );
+    details.addEventListener("input", () => {
+      expectationDrafts.set(sample.id, details.value);
+      try {
+        const expect = parseExpectation(details.value);
+        if (expect === undefined) delete sample.expect;
+        else sample.expect = expect;
+        expectationErrors.delete(sample.id);
+        error.textContent = "";
+        details.setAttribute("aria-invalid", "false");
+      } catch (cause) {
+        const description = cause instanceof Error ? cause.message : String(cause);
+        expectationErrors.set(sample.id, description);
+        error.textContent = description;
+        details.setAttribute("aria-invalid", "true");
+      }
+      updateTestResults();
+    });
+    advanced.append(
+      label,
+      details,
+      help,
+      schema,
+      replacementHelp,
+      error,
+      make("div", "expectation-checks"),
+    );
+    if (input.value !== sample.text)
+      advanced.append(
+        make(
+          "p",
+          "capture-note",
+          message(
+            "Imported line endings are preserved for testing and export. Editing the example field converts them to LF.",
+          ),
+        ),
+      );
+    row.append(input, expected, feedback, remove, advanced, explorer);
     ui.testList.append(row);
     if (view) {
       input.scrollTop = view.top;
@@ -1168,7 +1400,65 @@ function renderTests() {
   }
 }
 
+function currentFlags() {
+  return (
+    Object.entries(flagInputs)
+      .filter(([, input]) => input.checked)
+      .map(([flag]) => flag)
+      .join("") + ui.unicodeMode.value
+  );
+}
+
+function currentFixtureText() {
+  if (expectationErrors.size) throw new Error("Fix the expectation JSON to run the examples.");
+  const fixture = {
+    format: "regex-for-humans-tests",
+    version: 1,
+    rules: ui.rules.value,
+    flags: currentFlags().split("").sort().join(""),
+    mode: selectedMatchMode(),
+    cases: testCases.map(({ text, expected, expect }) => ({
+      text,
+      expected,
+      ...(expect ? { expect } : {}),
+    })),
+  };
+  const text = `${JSON.stringify(fixture, null, 2)}\n`;
+  parseFixture(text);
+  return text;
+}
+
+/** @param {import('./fixtures.js?v=86e14234de32').TestFixture} fixture */
+function applyFixture(fixture) {
+  hasEdits = true;
+  ui.rules.value = fixture.rules;
+  for (const [flag, input] of Object.entries(flagInputs))
+    input.checked = fixture.flags.includes(flag);
+  ui.unicodeMode.value = fixture.flags.includes("v") ? "v" : "u";
+  ui.matchMode.value = fixture.mode;
+  expectationDrafts.clear();
+  expectationErrors.clear();
+  exactCaseText.clear();
+  testCases = fixture.cases.map((sample) => ({ id: nextTestId++, ...sample }));
+  for (const sample of testCases) exactCaseText.add(sample.id);
+  setScenarioSelection(null);
+  renderTests();
+  compileRules();
+}
+
+/** @param {unknown} error */
+function fixtureError(error) {
+  setText(
+    ui.fixtureStatus,
+    message("Fixture unavailable: {error}", {
+      error: error instanceof Error ? error.message : String(error),
+    }),
+  );
+  ui.fixtureStatus.dataset.state = "error";
+}
+
 function compileRules() {
+  ui.builderFeedback.textContent = "";
   diagramSVG = "";
   reviewResult = null;
   selectedRule = null;
@@ -1183,21 +1473,20 @@ function compileRules() {
   window.clearTimeout(copyFeedbackTimer);
   setText(ui.copy, message("Copy regex ↗"));
   const rules = ui.rules.value;
+  /** @type {CompileError|null} */
+  let ruleError = null;
   if (rules.length > LIMITS.sourceLength) setText(ui.ruleCount, message("Over limit"));
   else {
-    const ruleCount = splitLines(rules).filter((line) => line.trim()).length;
+    const ruleCount = splitLines(rules).filter(
+      (line) => line.trim() && !line.trim().startsWith("#"),
+    ).length;
     setText(
       ui.ruleCount,
       message(ruleCount === 1 ? "{count} rule" : "{count} rules", { count: ruleCount }),
     );
   }
   try {
-    const flags =
-      Object.entries(flagInputs)
-        .filter(([, input]) => input.checked)
-        .map(([flag]) => flag)
-        .join("") + ui.unicodeMode.value;
-    compiled = compile(rules, { flags });
+    compiled = compile(rules, { flags: currentFlags() });
     ui.output.textContent = `/${compiled.source}/${compiled.flags}`;
     setText(ui.flagsSummary, flagsDescription(compiled.flags));
     ui.copy.disabled = false;
@@ -1205,6 +1494,7 @@ function compileRules() {
     setDiagnostic("");
     renderTrace(compiled.segments);
   } catch (error) {
+    if (error instanceof CompileError && error.code !== "EMPTY_SOURCE") ruleError = error;
     compiled = null;
     ui.copy.disabled = true;
     if (error instanceof CompileError && error.code === "EMPTY_SOURCE") {
@@ -1238,6 +1528,7 @@ function compileRules() {
     }
     renderTrace(null);
   }
+  updateSyntax(rules, ruleError);
   renderGroupEditor();
   renderReview();
   renderDiagram();
@@ -1247,6 +1538,7 @@ function compileRules() {
 
 /** @param {string|null} id */
 function setScenarioSelection(id) {
+  selectedScenarioId = id;
   setText(ui.recipeNote, message(scenarios.find((scenario) => scenario.id === id)?.note ?? ""));
   ui.recipeNote.hidden = !ui.recipeNote.textContent;
   for (const button of ui.examples.querySelectorAll("button")) {
@@ -1256,6 +1548,9 @@ function setScenarioSelection(id) {
 
 /** @param {ProductScenario} scenario */
 function useScenario(scenario) {
+  expectationDrafts.clear();
+  expectationErrors.clear();
+  exactCaseText.clear();
   setScenarioSelection(scenario.id);
   ui.rules.value = scenario.rules;
   ui.rules.setSelectionRange(0, 0);
@@ -1264,7 +1559,12 @@ function useScenario(scenario) {
   ui.unicodeMode.value = "u";
   ui.matchMode.value = scenario.matchMode;
   testCases = [
-    ...scenario.positive.map((text) => ({ id: nextTestId++, text, expected: true })),
+    ...scenario.positive.map((text, index) => ({
+      id: nextTestId++,
+      text,
+      expected: true,
+      expect: readExpectation(scenario.expectations?.[index]),
+    })),
     ...scenario.negative.map((text) => ({ id: nextTestId++, text, expected: false })),
   ];
   const url = new URL(window.location.href);
@@ -1281,21 +1581,146 @@ function renderScenarioButtons() {
   ui.recipeCount.textContent = scenarios.length
     ? `01—${String(scenarios.length).padStart(2, "0")}`
     : "";
-  scenarios.forEach((scenario, index) => {
+  const visible = filterRecipes(
+    scenarios,
+    ui.recipeSearch.value,
+    ui.recipeCategory.value,
+    ui.recipeLevel.value,
+    ui.language.value,
+  );
+  setText(
+    ui.recipeResults,
+    message("{count} of {total} recipes", { count: visible.length, total: scenarios.length }),
+  );
+  ui.recipeClear.disabled =
+    !ui.recipeSearch.value && !ui.recipeCategory.value && !ui.recipeLevel.value;
+  visible.forEach((scenario) => {
     const button = make("button", "example-button");
     button.type = "button";
     button.dataset.scenario = scenario.id;
-    button.setAttribute("aria-current", "false");
-    button.append(make("span", "example-number", String(index + 1).padStart(2, "0")));
-    button.append(make("span", "example-title", message(scenario.title)));
+    button.setAttribute("aria-current", String(scenario.id === selectedScenarioId));
+    setAttribute(
+      button,
+      "aria-description",
+      message(levels.find(([id]) => id === scenario.level)?.[1] ?? ""),
+    );
+    button.append(
+      make("span", "example-number", String(scenarios.indexOf(scenario) + 1).padStart(2, "0")),
+    );
+    const title = make("span", "example-title", message(scenario.title));
+    const level = make(
+      "span",
+      "example-level",
+      message(levels.find(([id]) => id === scenario.level)?.[1] ?? ""),
+    );
+    level.setAttribute("aria-hidden", "true");
+    title.append(level);
+    button.append(title);
     button.append(make("span", "example-arrow", "↗"));
     button.addEventListener("click", () => useScenario(scenario));
     ui.examples.append(button);
   });
+  if (!visible.length)
+    ui.examples.append(make("p", "recipe-empty", message("No recipes match. Try fewer filters.")));
 }
 
+ui.recipeFilters.addEventListener("submit", (event) => event.preventDefault());
+ui.recipeSearch.addEventListener("input", renderScenarioButtons);
+ui.recipeCategory.addEventListener("change", renderScenarioButtons);
+ui.recipeLevel.addEventListener("change", renderScenarioButtons);
+ui.language.addEventListener("change", () => {
+  if (scenarios.length) renderScenarioButtons();
+});
+ui.recipeClear.addEventListener("click", () => {
+  ui.recipeSearch.value = "";
+  ui.recipeCategory.value = "";
+  ui.recipeLevel.value = "";
+  renderScenarioButtons();
+  ui.recipeSearch.focus();
+});
+
 document.addEventListener("input", (event) => {
-  if (event.target !== ui.language && event.target !== ui.theme) hasEdits = true;
+  if (
+    event.target !== ui.language &&
+    event.target !== ui.theme &&
+    event.target !== ui.explanationMode &&
+    event.target !== ui.builderKind &&
+    event.target !== ui.recipeSearch &&
+    event.target !== ui.recipeCategory &&
+    event.target !== ui.recipeLevel &&
+    event.target !== ui.fixtureFile
+  ) {
+    hasEdits = true;
+    fixtureRevision++;
+  }
+});
+ui.fixtureImport.addEventListener("click", () => ui.fixtureFile.click());
+ui.fixtureFile.addEventListener("change", async () => {
+  const file = ui.fixtureFile.files?.[0];
+  ui.fixtureFile.value = "";
+  if (!file) return;
+  const revision = ++fixtureRevision;
+  try {
+    if (file.size > fixtureLimit) throw new RangeError("Test fixture exceeds the 4 MiB limit.");
+    const fixture = parseFixture(await file.text());
+    if (revision !== fixtureRevision) {
+      setText(
+        ui.fixtureStatus,
+        message("Import cancelled because the workshop changed. Choose the file again."),
+      );
+      return;
+    }
+    applyFixture(fixture);
+    setText(
+      ui.fixtureStatus,
+      message("Imported {count} examples. Review the rules and test results.", {
+        count: fixture.cases.length,
+      }),
+    );
+    delete ui.fixtureStatus.dataset.state;
+  } catch (error) {
+    if (revision === fixtureRevision) fixtureError(error);
+  }
+});
+ui.fixtureExport.addEventListener("click", () => {
+  try {
+    downloadText(currentFixtureText(), "regex-tests.json", "application/json");
+    setText(ui.fixtureStatus, message("Test fixture download started."));
+    delete ui.fixtureStatus.dataset.state;
+  } catch (error) {
+    fixtureError(error);
+  }
+});
+ui.fixtureSave.addEventListener("click", () => {
+  try {
+    localStorage.setItem(fixtureStorageKey, currentFixtureText());
+    setText(
+      ui.fixtureStatus,
+      message("Tests saved in this browser. Export JSON for a durable copy."),
+    );
+    delete ui.fixtureStatus.dataset.state;
+  } catch (error) {
+    fixtureError(error);
+  }
+});
+ui.fixtureRestore.addEventListener("click", () => {
+  try {
+    const text = localStorage.getItem(fixtureStorageKey);
+    if (text === null) {
+      setText(ui.fixtureStatus, message("No saved test fixture in this browser."));
+      delete ui.fixtureStatus.dataset.state;
+      return;
+    }
+    const fixture = parseFixture(text);
+    applyFixture(fixture);
+    setText(
+      ui.fixtureStatus,
+      message("Restored {count} saved examples.", { count: fixture.cases.length }),
+    );
+    delete ui.fixtureStatus.dataset.state;
+  } catch (error) {
+    fixtureError(error);
+  }
 });
 ui.rules.addEventListener("input", () => {
   setScenarioSelection(scenarios.find(({ rules }) => rules === ui.rules.value)?.id ?? null);
@@ -1436,6 +1861,45 @@ ui.groupLocate.addEventListener("click", () => {
   const group = selectedGroup();
   if (group) selectLine(group.line);
 });
+ui.builderForm.addEventListener("submit", (event) => {
+  event.preventDefault();
+  try {
+    const added = insertRule(ui.rules.value, ui.rules.selectionStart, ui.builderKind.value, {
+      flags: currentFlags(),
+    });
+    ui.rules.value = added.rules;
+    hasEdits = true;
+    setScenarioSelection(null);
+    compileRules();
+    selectLine(added.line, added.column);
+    followSourceCursor();
+    setText(
+      ui.builderFeedback,
+      message("Rule inserted on line {line}. Edit the template in the rule field.", {
+        line: added.line,
+      }),
+    );
+    ui.builderFeedback.dataset.state = "success";
+  } catch (error) {
+    setText(
+      ui.builderFeedback,
+      message("Edit rejected. Original rules unchanged. {error}", {
+        error:
+          error instanceof CompileError
+            ? message("Line {line}, column {column}: {error}{hint}", {
+                line: error.line,
+                column: error.column,
+                error: escapeControls(error.message),
+                hint: error.hint ? ` ${error.hint}` : "",
+              })
+            : error instanceof Error
+              ? error.message
+              : String(error),
+      }),
+    );
+    ui.builderFeedback.dataset.state = "error";
+  }
+});
 ui.groupForm.addEventListener("submit", (event) => {
   event.preventDefault();
   const group = selectedGroup();
@@ -1555,6 +2019,14 @@ ui.reverseButton.addEventListener("click", () => {
   }
 });
 ui.reverseButton.disabled = false;
+ui.builderKind.disabled = false;
+ui.builderInsert.disabled = false;
+ui.explanationMode.addEventListener("change", () => {
+  const top = ui.trace.scrollTop;
+  renderTrace(compiled?.segments ?? null);
+  showRule(visibleRule);
+  ui.trace.scrollTop = top;
+});
 ui.matchMode.addEventListener("change", updateTestResults);
 ui.addExample.addEventListener("click", () => {
   hasEdits = true;
@@ -1641,7 +2113,7 @@ ui.copy.addEventListener("click", async () => {
 if (hasEdits) compileRules();
 
 try {
-  const response = await fetch(new URL("../test/fixtures/product-scenarios.json?v=049b4eaff903", import.meta.url));
+  const response = await fetch(new URL("../test/fixtures/product-scenarios.json?v=86e14234de32", import.meta.url));
   if (!response.ok) throw new Error(`HTTP ${response.status}`);
   const loaded = await response.json();
   if (!Array.isArray(loaded)) throw new Error("Invalid example recipe data");
@@ -1656,6 +2128,14 @@ try {
       !scenario.title.trim() ||
       typeof scenario.note !== "string" ||
       typeof scenario.rules !== "string" ||
+      !Array.isArray(scenario.categories) ||
+      !scenario.categories.length ||
+      scenario.categories.length > categories.length ||
+      new Set(scenario.categories).size !== scenario.categories.length ||
+      scenario.categories.some(
+        (/** @type {unknown} */ category) => !categories.some(([id]) => id === category),
+      ) ||
+      !levels.some(([id]) => id === scenario.level) ||
       !["full", "search"].includes(scenario.matchMode) ||
       !Array.isArray(scenario.positive) ||
       !Array.isArray(scenario.negative) ||
@@ -1667,9 +2147,30 @@ try {
       throw new Error("Invalid example recipe data");
     }
     compile(scenario.rules);
+    if (scenario.expectations !== undefined) {
+      if (
+        !Array.isArray(scenario.expectations) ||
+        scenario.expectations.length !== scenario.positive.length
+      )
+        throw new Error("Invalid example recipe data");
+      scenario.expectations = scenario.expectations.map((/** @type {unknown} */ value) =>
+        readExpectation(value),
+      );
+    }
     ids.add(scenario.id);
   }
   scenarios = loaded;
+  for (const picker of [ui.recipeCategory, ui.recipeLevel]) {
+    const values = picker === ui.recipeCategory ? categories : levels;
+    for (const [id, label] of values) {
+      const option = make("option", "", message(label));
+      option.value = id;
+      picker.append(option);
+    }
+  }
+  ui.recipeSearch.disabled = false;
+  ui.recipeCategory.disabled = false;
+  ui.recipeLevel.disabled = false;
   renderScenarioButtons();
   const requested = new URLSearchParams(window.location.search).get("example");
   const scenario = scenarios.find((item) => item.id === requested) ?? scenarios[0];
