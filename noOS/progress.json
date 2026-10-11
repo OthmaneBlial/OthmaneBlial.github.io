@@ -6,7 +6,7 @@
     {"name": "Interactive shell", "gates": {"parser and dispatch": true, "core commands": true, "invalid input": true, "line editing": true, "history": true}},
     {"name": "Memory management", "gates": {"E820 map": true, "frame allocator": true, "heap allocator": true, "tracked statistics": true, "paging": true}},
     {"name": "Hardware and diagnostics", "gates": {"PIT ticks": true, "tick-based delay": true, "CPU detection": true, "serial logging": true, "panic diagnostics": true}},
-    {"name": "Advanced kernel", "gates": {"read-only initrd": false, "persistent filesystem": false, "task switching and scheduling": false, "ring 3 and syscalls": false, "validated ELF32 loader": false}},
-    {"name": "Professional delivery", "gates": {"integration test suite": true, "GDB session": true, "GitHub Actions": true, "architecture and contributor docs": true, "verified public showcase": false}}
+    {"name": "Advanced kernel", "gates": {"read-only initrd": true, "persistent filesystem": false, "task switching and scheduling": false, "ring 3 and syscalls": false, "validated ELF32 loader": false}},
+    {"name": "Professional delivery", "gates": {"integration test suite": true, "GDB session": true, "GitHub Actions": true, "architecture and contributor docs": true, "verified public showcase": true}}
   ]
 }

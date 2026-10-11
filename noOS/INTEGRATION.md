@@ -3,7 +3,7 @@
 ## Files
 
 - `index.html`: product showcase, real runtime image, boot path, computed roadmap, and quick start.
-- `docs.html`: source-based field manual with boot architecture, E820, allocators, supervisor paging, all fourteen initial shell commands, PIT, CPUID, test scope, GDB, and current limits.
+- `docs.html`: source-based field manual with boot architecture, E820, allocators, supervisor paging, all eighteen current shell commands, the embedded read-only initrd, PIT, CPUID, test scope, GDB, and current limits.
 - `styles.css`: charcoal, cream, and cyan visual system; responsive layouts and keyboard focus styles.
 - `app.js`: strict 40-gate roadmap reader, safe text-only rendering, native details disclosures, and command copy actions.
 - `progress.json`: published copy of `docs/progress.json`, refreshed by the repository progress tool.
@@ -31,7 +31,7 @@ Checks completed before handoff:
 - Missing data and missing screenshot fallback states were exercised before the files were supplied. The authentic 720 × 400 QEMU screenshot now loads and was visually reviewed in the desktop and mobile layouts; its caption links to the full size image.
 - Internal page links and fragment targets resolve.
 - Local HTTP 200 verified for all twelve required resources: the two pages, JavaScript, CSS, favicon, progress JSON, three font files, authentic QEMU screenshot, robots, and sitemap.
-- Current documentation was checked against `kernel/main.asm`, shell command dispatch, physical/heap/paging source, PIT/CPU source, and memory/paging/hardware tests. It documents the 128 MiB management ceiling, low MiB reservation, heap and stack ranges, pinned paging structures, null guard, and real fault commands.
+- Current documentation was checked against `kernel/main.asm`, shell command dispatch, physical/heap/paging source, PIT/CPU source, read-only initrd source, and memory/paging/hardware/initrd tests. It documents the 128 MiB management ceiling, low MiB reservation, heap and stack ranges, pinned paging structures, null guard, and real fault commands.
 - The manual uses the available cross GDB command, `x86_64-elf-gdb`, and documents the actual loopback debug target and kernel entry hardware breakpoint. Runtime boot and the real GDB session were verified by the main agent; the showcase review did not repeat kernel tests.
 - The final local browser session reported no warning or error console entries. Temporary viewport overrides were reset.
 
@@ -39,7 +39,7 @@ Checks completed before handoff:
 
 1. Keep the authentic QEMU image at `site/screenshots/noos.png` synchronized with the running kernel; do not substitute a terminal mockup.
 2. Run the repository progress tool after final verified gates change, so the README and `site/progress.json` remain synchronized.
-3. Refresh the field manual when later filesystem, scheduling, user mode, or executable loading milestones are verified. The current manual accurately describes the completed initial hardware core and the advanced roadmap boundary.
+3. The current manual documents the verified read-only initrd, eighteen commands, and six corrupt metadata image fixtures. Refresh it when writable persistent filesystems, scheduling, user mode, or executable loading milestones are verified. Refresh the real QEMU capture when the boot screen changes; no binary or initrd sizes are hardcoded.
 4. Run the self-check again if the progress schema or site logic changes; repeat HTTP checks against the published site.
 5. Publish this complete directory with the GitHub Pages skill helper, preserving the canonical folder name `noOS` and unrelated project folders. Inspect the Pages repository's actual default branch.
 6. Verify `https://othmaneblial.github.io/noOS/`, `docs.html`, `progress.json`, font assets, and the authentic screenshot over HTTPS. Successful source push alone does not prove Pages propagation.

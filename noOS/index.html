@@ -28,7 +28,7 @@
         <p class="eyebrow"><span aria-hidden="true">[</span> AN OPERATING SYSTEM FROM ZERO <span aria-hidden="true">]</span></p>
         <h1 id="hero-title">Just<br><span>Assembly.</span></h1>
         <p class="tagline">No Linux. No Windows. No C.</p>
-        <p class="hero-description">A real x86 operating system built from its first boot sector to an interactive shell. VGA, keyboard interrupts, memory allocators, paging, and hardware ticks—all in NASM.</p>
+        <p class="hero-description">A real x86 operating system built from its first boot sector to an interactive shell. VGA, keyboard interrupts, memory allocators, paging, hardware ticks, and a read-only initrd—all in NASM.</p>
         <div class="actions"><a class="button primary" href="#quickstart">Boot noOS <span aria-hidden="true">↗</span></a><a class="text-link" href="./docs.html">Explore the architecture <span aria-hidden="true">→</span></a></div>
       </div>
       <div class="machine">
@@ -38,7 +38,7 @@
           <div class="screen-image"><img src="./screenshots/noos.png" alt="The real noOS operating system booted in QEMU, showing its Assembly kernel welcome screen and shell." width="720" height="400"><p class="screen-unavailable" hidden>The runtime capture is unavailable.<br>Boot noOS with the commands below.</p></div>
           <figcaption><a href="./screenshots/noos.png" aria-label="Open the full size real QEMU screenshot">REAL RUNTIME CAPTURE <span aria-hidden="true">↗</span></a><span>NO HOST OS INSIDE</span></figcaption>
         </figure>
-        <p class="machine-note">A real shell. Live memory, CPU, and uptime data.<br>NASM is the runtime language. QEMU is the test machine.</p>
+        <p class="machine-note">A real shell. Live diagnostics. Read-only files.<br>NASM is the runtime language. QEMU is the test machine.</p>
       </div>
     </section>
     <div class="spec-strip wrap" aria-label="Technical foundations">
@@ -66,7 +66,7 @@ cd noOS
 make
 make run</code></pre><div class="code-foot"><span aria-hidden="true">↳</span> <span><code>make test</code> checks the boot path in QEMU. <code>make debug</code> pauses it for GDB.</span></div></div>
     </section>
-    <section class="limits wrap" aria-label="Current scope"><span class="eyebrow">KNOW THE BOUNDARY</span><p>This is an experimental operating system for QEMU’s BIOS <code>pc</code> machine. Physical memory management currently covers the first 128 MiB. Physical hardware and UEFI are unvalidated; filesystem, process, and user mode work has its own roadmap gates.</p></section>
+    <section class="limits wrap" aria-label="Current scope"><span class="eyebrow">KNOW THE BOUNDARY</span><p>This is an experimental operating system for QEMU’s BIOS <code>pc</code> machine. Physical memory management currently covers the first 128 MiB. Physical hardware and UEFI are unvalidated; persistent filesystems, processes, and user mode remain roadmap work.</p></section>
   </main>
   <footer class="wrap"><a class="wordmark" href="./">no<span>OS</span><b aria-hidden="true">_</b></a><p>Built from zero. Verified one milestone at a time.</p><div><a href="https://github.com/OthmaneBlial/noOS/blob/main/LICENSE">MIT license</a><a href="https://github.com/OthmaneBlial/noOS">Source <span aria-hidden="true">↗</span></a></div></footer>
   <p id="copy-status" class="sr-only" role="status" aria-live="polite"></p>
