@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#111614">
+  <meta name="description" content="noOS is a real BIOS-booted x86 operating system written entirely in NASM Assembly. Explore its boot path, source, and verified roadmap.">
+  <meta property="og:title" content="noOS — Just Assembly.">
+  <meta property="og:description" content="No Linux. No Windows. No C. A real x86 operating system, from boot sector to kernel.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://othmaneblial.github.io/noOS/">
+  <link rel="canonical" href="https://othmaneblial.github.io/noOS/">
+  <link rel="icon" href="./favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="./styles.css">
+  <script src="./app.js" defer></script>
+  <title>noOS — Just Assembly.</title>
+</head>
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+  <div class="topline"><div class="wrap topline-inner"><span><i class="status-light" aria-hidden="true"></i> IN DEVELOPMENT</span><span>BIOS / x86 / NASM</span></div></div>
+  <header class="site-header wrap">
+    <a class="wordmark" href="./" aria-label="noOS home">no<span>OS</span><b aria-hidden="true">_</b></a>
+    <nav aria-label="Main navigation"><a href="./docs.html">Field manual</a><a href="#roadmap">Roadmap</a><a class="source-link" href="https://github.com/OthmaneBlial/noOS">GitHub <span aria-hidden="true">↗</span></a></nav>
+  </header>
+  <main id="main">
+    <section class="hero wrap" aria-labelledby="hero-title">
+      <div class="hero-copy">
+        <p class="eyebrow"><span aria-hidden="true">[</span> AN OPERATING SYSTEM FROM ZERO <span aria-hidden="true">]</span></p>
+        <h1 id="hero-title">Just<br><span>Assembly.</span></h1>
+        <p class="tagline">No Linux. No Windows. No C.</p>
+        <p class="hero-description">A real x86 operating system built from its first boot sector to an interactive shell. VGA, keyboard interrupts, memory allocators, paging, and hardware ticks—all in NASM.</p>
+        <div class="actions"><a class="button primary" href="#quickstart">Boot noOS <span aria-hidden="true">↗</span></a><a class="text-link" href="./docs.html">Explore the architecture <span aria-hidden="true">→</span></a></div>
+      </div>
+      <div class="machine">
+        <div class="machine-label"><span class="crosshair" aria-hidden="true">+</span><span>THE ACTUAL MACHINE</span><span>01 / x86</span></div>
+        <figure class="screen-frame">
+          <div class="screen-toolbar"><span><i aria-hidden="true"></i> noOS</span><span>QEMU · BIOS pc</span></div>
+          <div class="screen-image"><img src="./screenshots/noos.png" alt="The real noOS operating system booted in QEMU, showing its Assembly kernel welcome screen and shell." width="720" height="400"><p class="screen-unavailable" hidden>The runtime capture is unavailable.<br>Boot noOS with the commands below.</p></div>
+          <figcaption><a href="./screenshots/noos.png" aria-label="Open the full size real QEMU screenshot">REAL RUNTIME CAPTURE <span aria-hidden="true">↗</span></a><span>NO HOST OS INSIDE</span></figcaption>
+        </figure>
+        <p class="machine-note">A real shell. Live memory, CPU, and uptime data.<br>NASM is the runtime language. QEMU is the test machine.</p>
+      </div>
+    </section>
+    <div class="spec-strip wrap" aria-label="Technical foundations">
+      <div><strong>512<span>B</span></strong><span>FIRST BOOT SECTOR</span></div><div><strong>32<span>bit</span></strong><span>PROTECTED MODE</span></div><div><strong>40</strong><span>VERIFICATION GATES</span></div><div><strong>100<span>%</span></strong><span>ASSEMBLY RUNTIME</span></div>
+    </div>
+    <section class="boot-path wrap" aria-labelledby="boot-title">
+      <div class="section-heading"><p class="eyebrow">01 / THE BOOT PATH</p><h2 id="boot-title">From reset.<br>To your kernel.</h2><p>The BIOS hands over control. noOS takes it from there.</p></div>
+      <ol class="boot-steps">
+        <li><span class="step-index">01</span><div><h3>Boot sector</h3><p>The BIOS loads the 512-byte first stage at <code>0x7C00</code>. It preserves the boot drive and loads stage two.</p><a href="https://github.com/OthmaneBlial/noOS/blob/main/boot/stage1.asm">boot/stage1.asm <span aria-hidden="true">↗</span></a></div></li>
+        <li><span class="step-index">02</span><div><h3>Second stage</h3><p>Loads the kernel from disk, preserves the BIOS E820 memory map, checks A20, and installs a Global Descriptor Table.</p><a href="https://github.com/OthmaneBlial/noOS/blob/main/boot/stage2.asm">boot/stage2.asm <span aria-hidden="true">↗</span></a></div></li>
+        <li><span class="step-index">03</span><div><h3>Protected mode</h3><p>Sets the protected mode bit, performs a far jump, and establishes the kernel’s 32-bit environment.</p><a href="https://github.com/OthmaneBlial/noOS/blob/main/boot/gdt.asm">boot/gdt.asm <span aria-hidden="true">↗</span></a></div></li>
+        <li><span class="step-index">04</span><div><h3>Kernel entry</h3><p>Execution reaches <code>0x10000</code>. The kernel initializes its terminal, interrupts, memory, and timer, then starts the shell.</p><a href="https://github.com/OthmaneBlial/noOS/blob/main/kernel/entry.asm">kernel/entry.asm <span aria-hidden="true">↗</span></a></div></li>
+      </ol>
+    </section>
+    <section class="roadmap-section" id="roadmap" aria-labelledby="roadmap-title">
+      <div class="wrap roadmap-layout">
+        <div class="roadmap-intro"><p class="eyebrow">02 / BUILT IN THE OPEN</p><h2 id="roadmap-title">Proof before<br>percentage.</h2><p>Eight milestones. Forty equal gates. Progress increases when an implementation is verified.</p><div class="progress-reading"><strong data-progress-percentage aria-label="Verified roadmap percentage">—</strong><span>OF THE FULL ROADMAP</span></div><div class="progress-track" role="progressbar" aria-label="Verified roadmap" aria-valuemin="0" aria-valuemax="100"><span data-progress-fill></span></div><p class="progress-caption" data-progress-caption role="status">Loading verified gates…</p><a class="text-link" href="https://github.com/OthmaneBlial/noOS/blob/main/docs/roadmap.md">Read the engineering roadmap <span aria-hidden="true">↗</span></a></div>
+        <div class="milestones" data-milestones><p class="data-placeholder">Loading the roadmap…</p></div>
+      </div>
+    </section>
+    <section class="quickstart wrap" id="quickstart" aria-labelledby="quickstart-title">
+      <div class="section-heading"><p class="eyebrow">03 / RUN IT YOURSELF</p><h2 id="quickstart-title">Four commands.<br>A fresh boot.</h2><p>Install NASM, QEMU, GNU Make, and Python 3 on your host. Then build and boot the real disk image.</p><a class="text-link" href="./docs.html#development">Build, test, and debug <span aria-hidden="true">→</span></a></div>
+      <div class="command-panel"><div class="code-heading"><span>HOST TERMINAL</span><button type="button" data-copy="quickstart-code" aria-label="Copy quick start commands">Copy commands</button></div><pre><code id="quickstart-code">git clone https://github.com/OthmaneBlial/noOS.git
+cd noOS
+make
+make run</code></pre><div class="code-foot"><span aria-hidden="true">↳</span> <span><code>make test</code> checks the boot path in QEMU. <code>make debug</code> pauses it for GDB.</span></div></div>
+    </section>
+    <section class="limits wrap" aria-label="Current scope"><span class="eyebrow">KNOW THE BOUNDARY</span><p>This is an experimental operating system for QEMU’s BIOS <code>pc</code> machine. Physical memory management currently covers the first 128 MiB. Physical hardware and UEFI are unvalidated; filesystem, process, and user mode work has its own roadmap gates.</p></section>
+  </main>
+  <footer class="wrap"><a class="wordmark" href="./">no<span>OS</span><b aria-hidden="true">_</b></a><p>Built from zero. Verified one milestone at a time.</p><div><a href="https://github.com/OthmaneBlial/noOS/blob/main/LICENSE">MIT license</a><a href="https://github.com/OthmaneBlial/noOS">Source <span aria-hidden="true">↗</span></a></div></footer>
+  <p id="copy-status" class="sr-only" role="status" aria-live="polite"></p>
+</body>
+</html>
