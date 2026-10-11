@@ -2,6 +2,16 @@
 
 ## Unreleased
 
+## 0.1.0-dev.9 (11 October 2026)
+
+- Share a workshop snapshot through a validated, bounded URL fragment containing rules, flags, match mode, examples and exact capture/span/replacement expectations. Restore it before asynchronous recipes load, preserve newer edits on in-page navigation, offer explicit loading, and retain manual clipboard recovery and JSON export for larger suites. Localize controls/status in all four interface languages; keep matching in the existing isolated worker.
+
+- Explain failed examples when mandatory literal text occurs at the wrong absolute input edge. Derive bounded prefix/suffix requirements structurally through groups, alternatives and repetition, preserving Unicode pairs; retain conservative fallbacks for line anchors, case folding and variable consumption. Localize both reasons in all four workshop languages without changing native matching, expectation checks or worker limits.
+
+- Retain original ranges for invalid character-list items, class members, string-code-point items, range endpoints and Unicode property aliases. Preserve JSON-escaped spelling and existing start positions in parser and native-property diagnostics; keep successful AST locations and regex output unchanged. Empty property aliases and empty unquoted list items retain point diagnostics.
+
+- Give malformed JSON escapes, incomplete Unicode escapes, unescaped control characters and dangling backslashes precise source ranges. Split workshop highlighting inside quoted values so only the diagnosed range is underlined and selected, preserving surrounding text, Unicode pairs and existing start positions. Missing closing quotes retain point diagnostics at the end of input. This source extension follows the frozen dev.8 candidate.
+
 ## 0.1.0-dev.8 (11 October 2026)
 
 - Ignore duplicate rule-input events for the exact text already rendered. A native Chromium multiline paste could otherwise compile the same completed value hundreds of times, repeatedly replace the worker and delay its reply past the unchanged 1,200 ms deadline. Preserve pending native matching, real rule/example edits and flag changes; retain the aggregate output limits and existing recovery assertions.

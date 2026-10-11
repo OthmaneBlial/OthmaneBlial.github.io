@@ -4,25 +4,25 @@ import {
   PATH_SEGMENT_EXCLUDED,
   PATH_SEGMENT_SOURCE,
   UNICODE_STRING_PROPERTIES,
-} from "./ast.js?v=7460d283fba0";
-import { fail } from "./diagnostics.js?v=7460d283fba0";
-import { quoteText } from "./display.js?v=7460d283fba0";
-import { LIMITS } from "./limits.js?v=7460d283fba0";
+} from "./ast.js?v=4c4676a19bb3";
+import { fail } from "./diagnostics.js?v=4c4676a19bb3";
+import { quoteText } from "./display.js?v=4c4676a19bb3";
+import { LIMITS } from "./limits.js?v=4c4676a19bb3";
 
 export { LIMITS };
 
-/** @typedef {import('./ast.js?v=7460d283fba0').Location} Location */
-/** @typedef {import('./ast.js?v=7460d283fba0').Repetition} Repetition */
-/** @typedef {import('./ast.js?v=7460d283fba0').AtomNode} AtomNode */
-/** @typedef {import('./ast.js?v=7460d283fba0').ClassMember} ClassMember */
-/** @typedef {import('./ast.js?v=7460d283fba0').ClassAtomNode} ClassAtomNode */
-/** @typedef {import('./ast.js?v=7460d283fba0').GroupNode} GroupNode */
-/** @typedef {import('./ast.js?v=7460d283fba0').AlternationNode} AlternationNode */
-/** @typedef {import('./ast.js?v=7460d283fba0').AssertionNode} AssertionNode */
-/** @typedef {import('./ast.js?v=7460d283fba0').BoundaryNode} BoundaryNode */
-/** @typedef {import('./ast.js?v=7460d283fba0').BackreferenceNode} BackreferenceNode */
-/** @typedef {import('./ast.js?v=7460d283fba0').RuleNode} RuleNode */
-/** @typedef {import('./ast.js?v=7460d283fba0').ParsedRules} ParsedRules */
+/** @typedef {import('./ast.js?v=4c4676a19bb3').Location} Location */
+/** @typedef {import('./ast.js?v=4c4676a19bb3').Repetition} Repetition */
+/** @typedef {import('./ast.js?v=4c4676a19bb3').AtomNode} AtomNode */
+/** @typedef {import('./ast.js?v=4c4676a19bb3').ClassMember} ClassMember */
+/** @typedef {import('./ast.js?v=4c4676a19bb3').ClassAtomNode} ClassAtomNode */
+/** @typedef {import('./ast.js?v=4c4676a19bb3').GroupNode} GroupNode */
+/** @typedef {import('./ast.js?v=4c4676a19bb3').AlternationNode} AlternationNode */
+/** @typedef {import('./ast.js?v=4c4676a19bb3').AssertionNode} AssertionNode */
+/** @typedef {import('./ast.js?v=4c4676a19bb3').BoundaryNode} BoundaryNode */
+/** @typedef {import('./ast.js?v=4c4676a19bb3').BackreferenceNode} BackreferenceNode */
+/** @typedef {import('./ast.js?v=4c4676a19bb3').RuleNode} RuleNode */
+/** @typedef {import('./ast.js?v=4c4676a19bb3').ParsedRules} ParsedRules */
 
 /** @param {string} source @returns {string[]} */
 export function splitLines(source) {
@@ -136,20 +136,31 @@ function parseCount(count, location) {
 /** @param {string} text @param {Location} location @returns {{value: string, length: number}} */
 function readQuoted(text, location) {
   if (!text.startsWith('"')) fail("INVALID_QUOTE", "Expected a double-quoted value.", location);
-  /** @param {string} message @param {number} index @returns {never} */
-  const failAt = (message, index) =>
-    fail("INVALID_QUOTE", message, { line: location.line, column: location.column + index });
+  /** @param {string} message @param {number} index @param {number} [length] @returns {never} */
+  const failAt = (message, index, length = 0) =>
+    fail("INVALID_QUOTE", message, {
+      line: location.line,
+      column: location.column + index,
+      ...(length > 0 ? { endColumn: location.column + index + length } : {}),
+    });
   let escapeStart = -1;
   for (let index = 1; index < text.length; index += 1) {
     const character = text[index];
     if (escapeStart >= 0) {
       if (character === "u") {
         if (!/^[0-9a-f]{4}$/iu.test(text.slice(index + 1, index + 5))) {
-          failAt("Use four hexadecimal digits after \\u.", escapeStart);
+          const quote = text.indexOf('"', index + 1);
+          let end = Math.min(index + 5, quote < 0 ? text.length : quote);
+          if ((text.codePointAt(end - 1) ?? 0) > 0xffff) end += 1;
+          failAt("Use four hexadecimal digits after \\u.", escapeStart, end - escapeStart);
         }
         index += 4;
       } else if (!'"\\/bfnrt'.includes(character)) {
-        failAt("Invalid JSON escape.", escapeStart);
+        failAt(
+          "Invalid JSON escape.",
+          escapeStart,
+          1 + ((text.codePointAt(index) ?? 0) > 0xffff ? 2 : 1),
+        );
       }
       escapeStart = -1;
     } else if (character === "\\") {
@@ -161,10 +172,10 @@ function readQuoted(text, location) {
         failAt("Invalid quoted value.", index);
       }
     } else if (character.charCodeAt(0) < 0x20) {
-      failAt("Escape control characters inside quoted values.", index);
+      failAt("Escape control characters inside quoted values.", index, 1);
     }
   }
-  if (escapeStart >= 0) failAt("Incomplete JSON escape.", escapeStart);
+  if (escapeStart >= 0) failAt("Incomplete JSON escape.", escapeStart, 1);
   return failAt("Missing closing double quote.", text.length);
 }
 
@@ -201,10 +212,15 @@ function readCharacterList(text, location, rawLine, strings = false) {
       index = end;
     }
     if (!strings && [...value].length !== 1) {
+      const itemLength = text.slice(itemStart, index).trimEnd().length;
       fail(
         "INVALID_CHARACTER",
         "Each character-list item must be one Unicode code point.",
-        { line: location.line, column: location.column + itemStart },
+        {
+          line: location.line,
+          column: location.column + itemStart,
+          ...(itemLength > 0 ? { endColumn: location.column + itemStart + itemLength } : {}),
+        },
         QUOTE_STYLES.test(text.slice(itemStart)) ? QUOTE_HINT : undefined,
       );
     }
@@ -258,11 +274,10 @@ function readStringCodePoints(text, location, rawLine) {
     const pointLocation = { line: location.line, column: location.column + cursor };
     const quoted = readQuoted(rawLine.slice(pointLocation.column - 1), pointLocation);
     if ([...quoted.value].length !== 1)
-      fail(
-        "INVALID_STRING_SEQUENCE",
-        "Each sequence item must be one Unicode code point.",
-        pointLocation,
-      );
+      fail("INVALID_STRING_SEQUENCE", "Each sequence item must be one Unicode code point.", {
+        ...pointLocation,
+        endColumn: pointLocation.column + quoted.length,
+      });
     points.push(quoted.value);
     cursor += quoted.length;
     while (/\s/u.test(text[cursor] ?? "")) cursor += 1;
@@ -712,24 +727,23 @@ function parseItem(text, location, rawLine, inClass = false) {
         line: location.line,
         column: toLocation.column + to.length,
       });
-    /** @type {[string, Location][]} */
+    /** @type {[string, Location, number][]} */
     const endpoints = [
-      [from.value, fromLocation],
-      [to.value, toLocation],
+      [from.value, fromLocation, from.length],
+      [to.value, toLocation, to.length],
     ];
-    for (const [value, endpointLocation] of endpoints) {
+    for (const [value, endpointLocation, length] of endpoints) {
       if ([...value].length !== 1)
-        fail(
-          "INVALID_CHARACTER_RANGE",
-          "Each range endpoint must be one Unicode code point.",
-          endpointLocation,
-        );
+        fail("INVALID_CHARACTER_RANGE", "Each range endpoint must be one Unicode code point.", {
+          ...endpointLocation,
+          endColumn: endpointLocation.column + length,
+        });
     }
     if ((from.value.codePointAt(0) ?? 0) > (to.value.codePointAt(0) ?? 0))
       fail(
         "INVALID_CHARACTER_RANGE",
         "The upper endpoint cannot precede the lower Unicode code point.",
-        toLocation,
+        { ...toLocation, endColumn: toLocation.column + to.length },
       );
     return {
       kind: "atom",
@@ -778,7 +792,10 @@ function parseItem(text, location, rawLine, inClass = false) {
       fail(
         "INVALID_UNICODE_PROPERTY",
         "Use an ASCII Unicode property alias or a property=value pair, without spaces.",
-        propertyLocation,
+        {
+          ...propertyLocation,
+          ...(quoted.length > 2 ? { endColumn: quoteLocation.column + quoted.length - 1 } : {}),
+        },
         "Use `Letter`, `General_Category=Letter` or `Script_Extensions=Greek`; aliases are case-sensitive.",
       );
     return {
@@ -934,11 +951,15 @@ function readClassMembers(text, location, rawLine) {
         memberLocation,
       );
     const node = parseItem(memberText, memberLocation, rawLine, true);
+    const memberErrorLocation = {
+      ...memberLocation,
+      endColumn: memberLocation.column + memberText.length,
+    };
     if (node.kind !== "atom" || node.repetition)
       fail(
         "INVALID_CLASS_MEMBER",
         "Class members must be single characters, ranges, singular shorthands or Unicode properties, without repetition.",
-        memberLocation,
+        memberErrorLocation,
       );
     const base = { location: memberLocation, text: memberText };
     if (node.atomType === "literal" && [...node.value].length === 1)
@@ -960,7 +981,7 @@ function readClassMembers(text, location, rawLine) {
       fail(
         "INVALID_CLASS_MEMBER",
         'Use a one-code-point literal, `range "a" to "z"`, `digit`, `not digit`, `word`, `not word`, `space`, `not space` or a Unicode property.',
-        memberLocation,
+        memberErrorLocation,
       );
     if (cursor === text.length) break;
     const comma = cursor++;

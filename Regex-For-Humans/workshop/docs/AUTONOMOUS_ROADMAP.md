@@ -1,5 +1,25 @@
 # Autonomous implementation progress
 
+## dev.9 distribution preparation
+
+- Prepared: an isolated candidate based on `14b4e5c` pins dev.9 in the package, ten equivalent guides and homepage. It documents precise quoted/property/class ranges, absolute input-edge failure proofs and complete snapshot links. The 20 canonical code blocks stay identical; Arabic/Urdu preserve RTL prose and LTR technical content. Genuine current-version desktop/mobile captures show named captures and sharing controls; all three images were visually inspected.
+- Verification: 389 Node checks and the clean installed-package consumer pass in the first complete-command attempt. That attempt reveals a legacy keyboard-navigation test expecting one character for `\q`; the intended two-character range is now asserted explicitly, while point/EOF, focus and scrolling checks remain. Both focused desktop/mobile checks pass. The stopped attempt is not recorded as a complete release pass. The final uninterrupted command and exact retained-archive consumers remain pending.
+- Next: freeze the candidate, complete validation, promote and push it to main, publish its exact archive, and synchronize its tag/Release and the existing owner Pages folder. Verify registry/public bytes and update the Downloads Reddit draft. Preserve old archives and disabled source Actions. The original autonomous mission and independent human review gates remain open.
+
+## Shareable snapshot source milestone
+
+- Implemented: complete versioned fixtures can be shared as a bounded URL fragment, including rules, flags, mode, examples and exact native expectations. Loading precedes recipes; initial edits and in-page navigation retain the workspace until explicit replacement. Clipboard failure leaves a labeled manual-copy field, late replies preserve newer feedback, and larger suites retain JSON export. Controls and statuses use all four interface languages and reuse existing visual styles, schema validation and worker matching.
+- Verified: 389 Node tests pass on both supported runtimes, including all 128 flag combinations and encoding/schema/size trust boundaries. All 52 Chromium share/fixture checks pass; 51 Firefox/WebKit checks pass initially and the mouse-focus assumption is corrected with explicit keyboard activation that passes on all four configurations. All 24 existing regex-copy regressions pass. Four locales, both themes, exact captures/replacements, delayed initialization and links above 30,000 characters are covered. Final French 320px panels were visually inspected. See [the component receipt](TESTING.md).
+- Distribution: these are source additions after immutable public dev.8. No fixture backend, automatic storage, matching engine, dependency or deadline change is added. Links expose their content to recipients; the UI explains this. Source Actions stays disabled and independent human reviews remain open.
+- Next: prepare the next distribution milestone from verified source, update the ten equivalent guides and run the complete release gate before publishing a new immutable package and matching Pages runtime. Continue auditing the original mission afterward; this source milestone does not complete it.
+
+## Input-edge failure explanation source milestone
+
+- Implemented: native no-match results can explain a mandatory literal at the wrong absolute input edge. Typed-AST proofs compose groups, common alternative edges and minimum repetitions, preserve Unicode pairs and bound expansion. Line anchors, ignore-case matching and variable consumption retain truthful fallbacks. Both messages use all four interface languages and safe quoted text; native matching and worker limits are unchanged.
+- Verified: the original helper fails the new wrong-edge regression. All 385 Node checks pass on Node 25 and Node 22; six focused checks pass again on both after mixed-anchor review. The native-success corpus uses all 128 flag combinations. All 62 Chromium component checks pass; 59 Firefox/WebKit checks pass initially and the three deadline failures pass in an unchanged targeted rerun. Locale-separated accessibility matrices preserve every assertion, both themes and the original deadlines. See [the component verification receipt](TESTING.md).
+- Distribution: this source extension follows immutable public dev.8. Keep npm, the published Pages runtime and retained archives unchanged until the next verified release. Source Actions stays disabled and independent human reviews stay open.
+- Next: evaluate remaining workshop developer-experience requirements against the existing fixture import/export and clipboard flows before choosing the next small, verified milestone. The original autonomous mission remains active.
+
 ## Published dev.8 milestone
 
 - Shipped: npm `latest`/`preview` and the public GitHub prerelease select frozen source `9cc1416`. Retained, registry and GitHub archives have the same 367,873 bytes and SHA-256 `26037077091d064ae484c7120c8bdd6fc5240175976a1b309cfe2789e2eac922`; all 48 payload files match the tag, and the checksum asset agrees.

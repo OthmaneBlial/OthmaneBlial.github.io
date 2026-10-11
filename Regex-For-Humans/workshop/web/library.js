@@ -1,4 +1,4 @@
-import { translate } from "./i18n.js?v=7460d283fba0";
+import { translate } from "./i18n.js?v=4c4676a19bb3";
 
 /** @typedef {{id: string, title: string, note: string, rules: string, source: string, flags: string, matchMode: "full" | "search", categories: string[], level: string, positive: string[], negative: string[], expectations?: import('./worker-protocol.d.ts').ExpectedDetails[]}} ProductScenario */
 

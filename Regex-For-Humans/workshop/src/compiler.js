@@ -1,11 +1,11 @@
-import { classMayContainStrings } from "./ast.js?v=7460d283fba0";
-import { fail } from "./diagnostics.js?v=7460d283fba0";
-import { escapeControls, quoteText } from "./display.js?v=7460d283fba0";
-import { explainNode } from "./explain.js?v=7460d283fba0";
+import { classMayContainStrings } from "./ast.js?v=4c4676a19bb3";
+import { fail } from "./diagnostics.js?v=4c4676a19bb3";
+import { escapeControls, quoteText } from "./display.js?v=4c4676a19bb3";
+import { explainNode } from "./explain.js?v=4c4676a19bb3";
 
-/** @typedef {import('./ast.js?v=7460d283fba0').AtomNode} AtomNode */
-/** @typedef {import('./ast.js?v=7460d283fba0').Repetition} Repetition */
-/** @typedef {import('./ast.js?v=7460d283fba0').ParsedRules} ParsedRules */
+/** @typedef {import('./ast.js?v=4c4676a19bb3').AtomNode} AtomNode */
+/** @typedef {import('./ast.js?v=4c4676a19bb3').Repetition} Repetition */
+/** @typedef {import('./ast.js?v=4c4676a19bb3').ParsedRules} ParsedRules */
 
 const locationOfOptions = { line: 1, column: 1 };
 
@@ -40,7 +40,7 @@ function escapeClass(values, unicodeSets) {
   return values.map((character) => escapeCharacter(character, true, unicodeSets)).join("");
 }
 
-/** @param {import('./ast.js?v=7460d283fba0').ClassMember} member @param {boolean} unicodeSets @param {import('./ast.js?v=7460d283fba0').ClassSetOperation} [operation] @returns {string} */
+/** @param {import('./ast.js?v=4c4676a19bb3').ClassMember} member @param {boolean} unicodeSets @param {import('./ast.js?v=4c4676a19bb3').ClassSetOperation} [operation] @returns {string} */
 function classMemberSource(member, unicodeSets, operation = "union") {
   switch (member.kind) {
     case "literal":
@@ -68,14 +68,14 @@ function classMemberSource(member, unicodeSets, operation = "union") {
   }
 }
 
-/** @param {{members: import('./ast.js?v=7460d283fba0').ClassMember[], negative: boolean, operation?: import('./ast.js?v=7460d283fba0').ClassSetOperation}} set @param {boolean} unicodeSets @returns {string} */
+/** @param {{members: import('./ast.js?v=4c4676a19bb3').ClassMember[], negative: boolean, operation?: import('./ast.js?v=4c4676a19bb3').ClassSetOperation}} set @param {boolean} unicodeSets @returns {string} */
 function classSetSource(set, unicodeSets) {
   const operation = set.operation ?? "union";
   const separator = operation === "intersection" ? "&&" : operation === "subtraction" ? "--" : "";
   return `[${set.negative ? "^" : ""}${set.members.map((member) => classMemberSource(member, unicodeSets, operation)).join(separator)}]`;
 }
 
-/** @param {import('./ast.js?v=7460d283fba0').ClassMember[]} members @param {boolean} unicodeSets @param {number} start @param {import('./ast.js?v=7460d283fba0').ClassSetOperation} [operation] @returns {import('../index.d.ts').CharacterClassMember[]} */
+/** @param {import('./ast.js?v=4c4676a19bb3').ClassMember[]} members @param {boolean} unicodeSets @param {number} start @param {import('./ast.js?v=4c4676a19bb3').ClassSetOperation} [operation] @returns {import('../index.d.ts').CharacterClassMember[]} */
 function classMemberTraces(members, unicodeSets, start, operation = "union") {
   let cursor = start;
   return members.map((member, index) => {
@@ -202,7 +202,7 @@ export function compileAst(parsed, options = {}) {
   let checkedStringSets = false;
   let checkedSetOperations = false;
 
-  /** @param {import('./ast.js?v=7460d283fba0').Location} location */
+  /** @param {import('./ast.js?v=4c4676a19bb3').Location} location */
   function checkLookbehind(location) {
     if (checkedLookbehind) return;
     try {
@@ -218,21 +218,25 @@ export function compileAst(parsed, options = {}) {
     checkedLookbehind = true;
   }
 
-  /** @param {import('./ast.js?v=7460d283fba0').PropertyAtomNode|Extract<import('./ast.js?v=7460d283fba0').ClassMember, {kind: 'unicodeProperty'}>} property @param {import('./ast.js?v=7460d283fba0').Location} location */
+  /** @param {import('./ast.js?v=4c4676a19bb3').PropertyAtomNode|Extract<import('./ast.js?v=4c4676a19bb3').ClassMember, {kind: 'unicodeProperty'}>} property @param {import('./ast.js?v=4c4676a19bb3').Location} location */
   function checkProperty(property, location) {
+    const aliasLocation = {
+      ...property.propertyLocation,
+      endColumn: property.location.column + property.text.length - 1,
+    };
     if (property.propertyType === "string") {
       if (!unicodeSets)
         fail(
           "UNICODE_SETS_REQUIRED",
           "Unicode string properties require the v flag.",
-          property.propertyLocation,
+          aliasLocation,
           "Select v mode; the compiler cannot replace a string property with characters.",
         );
       if (property.negative)
         fail(
           "INVALID_STRING_COMPLEMENT",
           "Unicode string properties cannot be complemented.",
-          property.propertyLocation,
+          aliasLocation,
           "Use a positive string property or complement a character property instead.",
         );
       try {
@@ -241,7 +245,7 @@ export function compileAst(parsed, options = {}) {
         fail(
           "UNSUPPORTED_TARGET_FEATURE",
           `This JavaScript runtime does not support Unicode string property ${quoteText(property.value)}.`,
-          property.propertyLocation,
+          aliasLocation,
           "Use a runtime with native support for this string property.",
         );
       }
@@ -266,13 +270,13 @@ export function compileAst(parsed, options = {}) {
       fail(
         "INVALID_UNICODE_PROPERTY",
         `The Unicode property ${quoteText(property.value)} is not recognized by this JavaScript runtime.`,
-        property.propertyLocation,
+        aliasLocation,
         `Use a case-sensitive character property such as \`Letter\`, \`Script=Greek\` or \`Script_Extensions=Greek\` supported in ${unicodeMode} mode.`,
       );
     }
   }
 
-  /** @param {{members: import('./ast.js?v=7460d283fba0').ClassMember[], negative: boolean, operation?: import('./ast.js?v=7460d283fba0').ClassSetOperation, location: import('./ast.js?v=7460d283fba0').Location}} set */
+  /** @param {{members: import('./ast.js?v=4c4676a19bb3').ClassMember[], negative: boolean, operation?: import('./ast.js?v=4c4676a19bb3').ClassSetOperation, location: import('./ast.js?v=4c4676a19bb3').Location}} set */
   function checkClass(set) {
     if (set.operation) {
       if (!unicodeSets)
@@ -332,7 +336,7 @@ export function compileAst(parsed, options = {}) {
       );
   }
 
-  /** @param {import('./ast.js?v=7460d283fba0').RuleNode[]} nodes */
+  /** @param {import('./ast.js?v=4c4676a19bb3').RuleNode[]} nodes */
   function emit(nodes) {
     for (const [index, node] of nodes.entries()) {
       if (node.kind === "atom" && node.atomType === "unicodeProperty")

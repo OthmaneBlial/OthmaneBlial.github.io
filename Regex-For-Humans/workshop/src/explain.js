@@ -1,7 +1,7 @@
-import { classMayContainStrings, classMayMatchEmpty, PATH_SEGMENT_SOURCE } from "./ast.js?v=7460d283fba0";
-import { quoteText } from "./display.js?v=7460d283fba0";
+import { classMayContainStrings, classMayMatchEmpty, PATH_SEGMENT_SOURCE } from "./ast.js?v=4c4676a19bb3";
+import { quoteText } from "./display.js?v=4c4676a19bb3";
 
-/** @param {import('./ast.js?v=7460d283fba0').ClassMember} member @returns {string} */
+/** @param {import('./ast.js?v=4c4676a19bb3').ClassMember} member @returns {string} */
 function describeClassMember(member) {
   if (member.kind === "range")
     return `code points ${quoteText(member.from)} through ${quoteText(member.to)} (inclusive)`;
@@ -26,7 +26,7 @@ function describeClassMember(member) {
   return quoteText(member.value);
 }
 
-/** @param {import('./ast.js?v=7460d283fba0').Repetition|null} repetition @param {boolean} optional */
+/** @param {import('./ast.js?v=4c4676a19bb3').Repetition|null} repetition @param {boolean} optional */
 function repetitionText(repetition, optional) {
   if (!repetition) return "";
   switch (repetition.kind) {
@@ -46,7 +46,7 @@ function repetitionText(repetition, optional) {
   }
 }
 
-/** @param {import('./ast.js?v=7460d283fba0').RuleNode} node @param {string} flags @param {boolean} [hasFollowingRule] */
+/** @param {import('./ast.js?v=4c4676a19bb3').RuleNode} node @param {string} flags @param {boolean} [hasFollowingRule] */
 export function explainNode(node, flags, hasFollowingRule = false) {
   const meaning = describeNode(node, flags, hasFollowingRule);
   if (node.kind === "anchor" || !node.repetition?.lazy) return meaning;
@@ -59,7 +59,7 @@ export function explainNode(node, flags, hasFollowingRule = false) {
   );
 }
 
-/** @param {import('./ast.js?v=7460d283fba0').RuleNode} node @param {string} flags @param {boolean} hasFollowingRule */
+/** @param {import('./ast.js?v=4c4676a19bb3').RuleNode} node @param {string} flags @param {boolean} hasFollowingRule */
 function describeNode(node, flags, hasFollowingRule) {
   if (node.kind === "boundary")
     return `${node.negative ? "Require the same" : "Require different"} word/non-word status on either side of the current position, without consuming characters. Word characters are ASCII letters, digits and underscore; input edges are non-word.${flags.includes("i") ? " With i, Unicode characters folding to ASCII word characters also count." : ""} This is not natural-language word segmentation.`;

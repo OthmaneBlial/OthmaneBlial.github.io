@@ -1,4 +1,4 @@
-import { translations } from "./translations.js?v=7460d283fba0";
+import { translations } from "./translations.js?v=4c4676a19bb3";
 
 /** @typedef {() => string} Message */
 /** @typedef {Record<string, string | number | Message>} Values */
