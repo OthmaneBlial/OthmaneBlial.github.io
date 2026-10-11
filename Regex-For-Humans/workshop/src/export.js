@@ -1,11 +1,11 @@
-import { PATH_SEGMENT_EXCLUDED, PATH_SEGMENT_SOURCE } from "./ast.js?v=3509195d9193";
-import { compileAst } from "./compiler.js?v=3509195d9193";
-import { fail } from "./diagnostics.js?v=3509195d9193";
-import { LIMITS, parse } from "./parser.js?v=3509195d9193";
+import { PATH_SEGMENT_EXCLUDED, PATH_SEGMENT_SOURCE } from "./ast.js?v=f92ad2735a68";
+import { compileAst } from "./compiler.js?v=f92ad2735a68";
+import { fail } from "./diagnostics.js?v=f92ad2735a68";
+import { LIMITS, parse } from "./parser.js?v=f92ad2735a68";
 
 /** @typedef {import('../index.d.ts').ExportTarget} Target */
-/** @typedef {import('./ast.js?v=3509195d9193').RuleNode} Node */
-/** @typedef {import('./ast.js?v=3509195d9193').ClassMember} Member */
+/** @typedef {import('./ast.js?v=f92ad2735a68').RuleNode} Node */
+/** @typedef {import('./ast.js?v=f92ad2735a68').ClassMember} Member */
 /** @typedef {[number, number]} Interval */
 /** @typedef {{intervals: Interval[], strings: string[]}} Members */
 
@@ -148,7 +148,7 @@ function shorthand(value) {
   return /^\\[DWS]$/u.test(value) ? subtraction(SCALARS, ranges) : ranges;
 }
 
-/** @param {import('./ast.js?v=3509195d9193').Repetition|null} repetition @returns {[number, number]} */
+/** @param {import('./ast.js?v=f92ad2735a68').Repetition|null} repetition @returns {[number, number]} */
 function bounds(repetition) {
   if (!repetition) return [1, 1];
   if (repetition.kind === "exact") return [repetition.min, repetition.min];
@@ -157,7 +157,7 @@ function bounds(repetition) {
   return [repetition.kind === "oneOrMore" ? 1 : 0, Infinity];
 }
 
-/** @param {import('./ast.js?v=3509195d9193').Repetition|null} repetition */
+/** @param {import('./ast.js?v=f92ad2735a68').Repetition|null} repetition */
 function quantify(repetition) {
   if (!repetition) return "";
   const [lo, hi] = bounds(repetition);
@@ -309,12 +309,12 @@ export function exportRegex(rules, options = {}) {
     );
   }
 
-  /** @param {string} code @param {string} message @param {import('./ast.js?v=3509195d9193').Location} location @param {string} hint @returns {never} */
+  /** @param {string} code @param {string} message @param {import('./ast.js?v=f92ad2735a68').Location} location @param {string} hint @returns {never} */
   function unsupported(code, message, location, hint) {
     return fail(code, `${ENGINES[target]}: ${message}`, location, hint);
   }
 
-  /** @param {string} character @param {import('./ast.js?v=3509195d9193').Location} location */
+  /** @param {string} character @param {import('./ast.js?v=f92ad2735a68').Location} location */
   function scalar(character, location) {
     const cp = character.codePointAt(0);
     if (cp === undefined) throw new TypeError("An empty string is not a scalar.");
@@ -371,7 +371,7 @@ export function exportRegex(rules, options = {}) {
     return `(?:${branches.join("|")})`;
   }
 
-  /** @param {string} value @param {import('./ast.js?v=3509195d9193').Location} location */
+  /** @param {string} value @param {import('./ast.js?v=f92ad2735a68').Location} location */
   function literal(value, location) {
     return [...value]
       .map((c) => {
@@ -384,7 +384,7 @@ export function exportRegex(rules, options = {}) {
       .join("");
   }
 
-  /** @param {Member[]} members @param {import('./ast.js?v=3509195d9193').ClassSetOperation} operation @param {boolean} negative @returns {Members} */
+  /** @param {Member[]} members @param {import('./ast.js?v=f92ad2735a68').ClassSetOperation} operation @param {boolean} negative @returns {Members} */
   function setMembers(members, operation, negative) {
     const sets = members.map((member) => {
       if (member.kind === "set")
@@ -687,7 +687,7 @@ export function exportRegex(rules, options = {}) {
     return result;
   }
   const prefix = target === "java" || target === "csharp" ? "(?<![\\uD800-\\uDBFF])" : "";
-  /** @param {Node[]} nodes @returns {import('./ast.js?v=3509195d9193').BoundaryNode|undefined} */
+  /** @param {Node[]} nodes @returns {import('./ast.js?v=f92ad2735a68').BoundaryNode|undefined} */
   function nullableBoundary(nodes) {
     for (const node of nodes) {
       if (node.kind === "boundary" && node.negative) return node;

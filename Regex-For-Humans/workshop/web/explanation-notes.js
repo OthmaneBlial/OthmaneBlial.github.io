@@ -1,4 +1,4 @@
-import { quoteText } from "../src/display.js?v=3509195d9193";
+import { quoteText } from "../src/display.js?v=f92ad2735a68";
 
 /** @typedef {{key: string, values?: Record<string, string | number>}} Note */
 

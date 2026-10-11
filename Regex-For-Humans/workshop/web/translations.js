@@ -1,6 +1,77 @@
 // Each entry contains Simplified Chinese, Spanish and French; English is the key.
 /** @type {Record<string, [string, string, string]>} */
 export const translations = {
+  "Keep a draft in this browser": [
+    "在此浏览器中保留草稿",
+    "Conservar un borrador en este navegador",
+    "Conserver un brouillon dans ce navigateur",
+  ],
+  "Optional automatic recovery, including unfinished rules and expectation JSON. Stored only in this browser; turning it off removes the draft. Manual saved tests stay separate.":
+    [
+      "可选的自动恢复功能，包括未完成的规则和预期 JSON。仅保存在此浏览器中；关闭后删除草稿。手动保存的测试保持独立。",
+      "Recuperación automática opcional, incluidas reglas y expectativas JSON incompletas. Solo se guarda en este navegador; desactivarla elimina el borrador. Los tests guardados manualmente permanecen separados.",
+      "Récupération automatique facultative, y compris les règles et attentes JSON incomplètes. Stockage dans ce navigateur uniquement ; la désactiver supprime le brouillon. Les tests sauvegardés manuellement restent séparés.",
+    ],
+  "Draft saving is off.": [
+    "草稿保存已关闭。",
+    "El guardado de borradores está desactivado.",
+    "La sauvegarde du brouillon est désactivée.",
+  ],
+  "Draft changed in another tab. Saving paused; current work is unchanged.": [
+    "另一标签页已更改草稿。保存已暂停；当前工作保持不变。",
+    "Otra pestaña cambió el borrador. Guardado en pausa; el trabajo actual se conserva.",
+    "Un autre onglet a modifié le brouillon. Sauvegarde suspendue ; le travail actuel est conservé.",
+  ],
+  "Draft saved in this browser.": [
+    "草稿已保存在此浏览器中。",
+    "Borrador guardado en este navegador.",
+    "Brouillon sauvegardé dans ce navigateur.",
+  ],
+  "Draft not saved: {error}. Current work and the last saved draft are unchanged.": [
+    "草稿未保存：{error}。当前工作和上次保存的草稿保持不变。",
+    "Borrador no guardado: {error}. El trabajo actual y el último borrador guardado se conservan.",
+    "Brouillon non sauvegardé : {error}. Le travail actuel et le dernier brouillon sauvegardé sont conservés.",
+  ],
+  "Draft has unsaved changes.": [
+    "草稿有尚未保存的更改。",
+    "El borrador tiene cambios sin guardar.",
+    "Le brouillon contient des modifications non sauvegardées.",
+  ],
+  "Restored saved draft. Review the rules and examples.": [
+    "已恢复保存的草稿。请检查规则和示例。",
+    "Borrador restaurado. Revisa las reglas y los ejemplos.",
+    "Brouillon restauré. Vérifiez les règles et les exemples.",
+  ],
+  "Draft saving is enabled in this browser.": [
+    "此浏览器已启用草稿保存。",
+    "Guardado de borradores activado en este navegador.",
+    "La sauvegarde du brouillon est activée dans ce navigateur.",
+  ],
+  "Saved draft unavailable: {error}. Current work is unchanged.": [
+    "保存的草稿不可用：{error}。当前工作保持不变。",
+    "Borrador guardado no disponible: {error}. El trabajo actual se conserva.",
+    "Brouillon sauvegardé indisponible : {error}. Le travail actuel est conservé.",
+  ],
+  "Draft saving is off; the saved draft was removed.": [
+    "草稿保存已关闭；保存的草稿已删除。",
+    "Guardado de borradores desactivado; borrador guardado eliminado.",
+    "Sauvegarde désactivée ; le brouillon sauvegardé a été supprimé.",
+  ],
+  "Draft storage unavailable. The saved draft could not be read or removed.": [
+    "草稿存储不可用。无法读取或删除保存的草稿。",
+    "Almacenamiento de borradores no disponible. No se pudo leer ni eliminar el borrador guardado.",
+    "Stockage du brouillon indisponible. Impossible de lire ou de supprimer le brouillon sauvegardé.",
+  ],
+  "Draft exceeds the 4 MiB limit.": [
+    "草稿超过 4 MiB 限制。",
+    "El borrador supera el límite de 4 MiB.",
+    "Le brouillon dépasse la limite de 4 Mio.",
+  ],
+  "Invalid version 1 workshop draft.": [
+    "无效的版本 1 工作区草稿。",
+    "Borrador de taller de versión 1 inválido.",
+    "Brouillon d’atelier de version 1 invalide.",
+  ],
   "Explanation level": ["解释级别", "Nivel de explicación", "Niveau d’explication"],
   "Read the meaning first; short notes explain regex terms. The compiler's rules and meanings stay in English.":
     [
@@ -699,6 +770,50 @@ export const translations = {
   "Noncapturing group": ["非捕获组", "Grupo sin captura", "Groupe non capturant"],
   "Capture name": ["捕获组名称", "Nombre de la captura", "Nom de la capture"],
   "Apply group edit": ["应用分组修改", "Aplicar cambio al grupo", "Appliquer la modification"],
+  "Preview group edit": ["预览分组修改", "Vista previa del cambio", "Aperçu de la modification"],
+  "Compare the group edit": [
+    "比较分组修改",
+    "Comparar el cambio al grupo",
+    "Comparer la modification du groupe",
+  ],
+  "Preview keeps your current rules. Apply the edit to test its result.": [
+    "预览会保留当前规则。应用修改后可测试结果。",
+    "La vista previa conserva tus reglas actuales. Aplica el cambio para probar el resultado.",
+    "L’aperçu conserve vos règles actuelles. Appliquez la modification pour tester le résultat.",
+  ],
+  "Before the edit": ["修改前", "Antes del cambio", "Avant la modification"],
+  "After the edit": ["修改后", "Después del cambio", "Après la modification"],
+  "Rules before the edit": [
+    "修改前的规则",
+    "Reglas antes del cambio",
+    "Règles avant la modification",
+  ],
+  "Rules after the edit": [
+    "修改后的规则",
+    "Reglas después del cambio",
+    "Règles après la modification",
+  ],
+  "Regex before the edit": [
+    "修改前的正则",
+    "Regex antes del cambio",
+    "Regex avant la modification",
+  ],
+  "Regex after the edit": [
+    "修改后的正则",
+    "Regex después del cambio",
+    "Regex après la modification",
+  ],
+  "Close preview": ["关闭预览", "Cerrar vista previa", "Fermer l’aperçu"],
+  "No group changes to preview.": [
+    "没有可预览的分组修改。",
+    "No hay cambios al grupo que mostrar.",
+    "Aucune modification de groupe à prévisualiser.",
+  ],
+  "Preview ready. Original rules unchanged.": [
+    "预览已就绪。原规则未改变。",
+    "Vista previa lista. Las reglas originales no han cambiado.",
+    "Aperçu prêt. Les règles d’origine sont inchangées.",
+  ],
   "Go to group rule": ["定位分组规则", "Ir a la regla del grupo", "Aller à la règle du groupe"],
   "References to this group": [
     "对此分组的引用",

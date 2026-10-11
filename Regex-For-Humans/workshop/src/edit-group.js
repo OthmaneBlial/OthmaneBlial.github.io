@@ -1,11 +1,11 @@
-import { compileAst } from "./compiler.js?v=3509195d9193";
-import { fail } from "./diagnostics.js?v=3509195d9193";
-import { quoteText } from "./display.js?v=3509195d9193";
-import { LIMITS, parse, splitLines } from "./parser.js?v=3509195d9193";
+import { compileAst } from "./compiler.js?v=f92ad2735a68";
+import { fail } from "./diagnostics.js?v=f92ad2735a68";
+import { quoteText } from "./display.js?v=f92ad2735a68";
+import { LIMITS, parse, splitLines } from "./parser.js?v=f92ad2735a68";
 
 /** Change one group while preserving the targets of existing references.
  * @param {string} source
- * @param {import('./ast.js?v=3509195d9193').Location} location Opening-rule location from a group segment.
+ * @param {import('./ast.js?v=f92ad2735a68').Location} location Opening-rule location from a group segment.
  * @param {{capturing: boolean, name: string|null}} definition
  * @param {{flags?: string|undefined}} [options]
  * @returns {string} Validated editable rules; the input is never mutated.
@@ -31,11 +31,11 @@ export function editGroup(source, location, definition, options = {}) {
 
   const parsed = parse(source);
   compileAst(parsed, options);
-  /** @type {import('./ast.js?v=3509195d9193').GroupNode[]} */
+  /** @type {import('./ast.js?v=f92ad2735a68').GroupNode[]} */
   const groups = [];
-  /** @type {import('./ast.js?v=3509195d9193').BackreferenceNode[]} */
+  /** @type {import('./ast.js?v=f92ad2735a68').BackreferenceNode[]} */
   const references = [];
-  /** @param {import('./ast.js?v=3509195d9193').RuleNode[]} nodes */
+  /** @param {import('./ast.js?v=f92ad2735a68').RuleNode[]} nodes */
   function visit(nodes) {
     for (const node of nodes) {
       if (node.kind === "group") {

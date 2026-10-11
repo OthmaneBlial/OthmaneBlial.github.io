@@ -1,5 +1,26 @@
 # Autonomous implementation progress
 
+## Dev.11 distribution candidate
+
+- Prepared locally: package/lock metadata, all ten release guides, homepage links and changelog select dev.11 for optional drafts plus validated group comparisons. Source compiler/API/declarations remain unchanged; guides retain canonical code and RTL/LTR boundaries.
+- Verified: the complete verification stage passes 404 Node cases/four explicit skips, 706 Chrome, 464 Firefox/WebKit and 64 homepage checks with a zero-vulnerability audit. Node 22 passes its complete 408-case suite. All seven required native profiles pass 8,782 comparisons after restoring the retained PHP executable to the command's PATH. Four local live-workflow profiles pass; real dev.11 screenshots are refreshed. See [the candidate testing receipt](TESTING.md#dev11-candidate-verification-11-october-2026).
+- Pending: final copy/build/package checks, retained final archive and exact consumers, source/tag freeze, npm/GitHub publication and owner Pages/live proof. Preserve the prototype archive separately; public dev.10 remains untouched until the new evidence exists. Source Actions stays disabled, human reviews remain unchecked and the wider mission continues.
+
+## Optional group transformation preview source milestone
+
+- Implemented: optional before/after rules and regex comparisons reuse the validated group editor, including renamed/renumbered references and flags. Preview keeps current tests, fixture exports and saved drafts. Source/options/group-field changes clear stale output; direct application revalidates current inputs. Text-only rendering exposes controls, retains complete Unicode code points and uses the existing four languages and two themes.
+- Verified: full Node 25 suite passes 404 cases with four explicit scoped-native skips; 17 focused Node 22 cases pass. All 36 affected Chrome and 36 Firefox/WebKit checks pass after bounded line alignment, including group edits, draft preservation, workspace replacement, rejection recovery, keyboard navigation, translated labels, Axe and 320px overflow checks. See [testing](TESTING.md) and [the comparison contract](GROUP_PREVIEWS.md).
+- Boundary: comparisons align complete lines and mark the first-to-last difference in each changed run; they do not prove semantic equivalence or execute candidate matches. Apply the edit to run examples. This source-only workshop addition and draft recovery await a new complete distribution gate; frozen dev.10 remains unchanged. Independent human reviews remain open and source Actions stays disabled.
+- Next: prepare a verified immutable preview when this source increment is ready for distribution, then continue the remaining editor/compiler/export audit. Syntax autocomplete remains an actual unimplemented editor gap; a second accepted grammar is not a solution.
+
+## Optional draft recovery source milestone
+
+- Implemented: explicit opt-in recovery for rules, flags, match mode, example text, pasted regex and raw unfinished expectation JSON. Reuse existing fixture application and expectation validation, with a separate bounded draft key/schema. Keep manual saved suites separate; handle denied/quota/corrupt storage, lifecycle flushing, incoming/current-edit precedence and external-tab conflicts. Turning the option off removes its draft. Native matching, worker deadlines and compiler budgets stay unchanged.
+- Fixed: the new Firefox reload checks expose persisted option checkboxes being mistaken for pre-init edits and replacing the recovered text with empty fields. Native autocomplete settings resolve the loss while actual early user rules/options remain preserved.
+- Verified: full Node 25 has 400 passes/four explicit scoped-native skips; 12 changed/shared Node 22 checks pass. All 74 affected Chrome and 74 Firefox/WebKit checks pass, followed by 16/16 final draft checks covering early source/options and two existing Chrome startup checks. Four UI locales, native captures/spans, storage boundaries, keyboard/Axe/overflow and visually inspected French desktop/320px panels are covered. See [the source receipt](TESTING.md).
+- Guides and distribution: all ten READMEs describe this source-only addition, preserving canonical examples and Arabic/Urdu RTL prose with LTR code. Frozen npm/Pages dev.10 remains unchanged, source Actions stays disabled and independent human gates remain unchecked. A new preview requires its own full gate and immutable candidate.
+- Next: evaluate the remaining editor, transformation and compiler/export requirements against actual behavior; prioritize the next substantive gap. Keep verified changes on main and preserve the wider autonomous mission.
+
 ## Published dev.10 milestone
 
 - Shipped: npm `latest`/`preview` and the GitHub prerelease select frozen source `433e438`. The retained, registry and GitHub archives have identical bytes and SHA-256 `8efc5bcc3e202d0969f9f3cc8591a406d728cdcfec66821e2d637a0a05332cca`; all 49 payload files match the tag. Native scoped groups, cached-source protection and the group-wrapper depth correction are included.

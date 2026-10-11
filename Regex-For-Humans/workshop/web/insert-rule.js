@@ -1,7 +1,7 @@
-import { compileAst } from "../src/compiler.js?v=3509195d9193";
-import { CompileError } from "../src/diagnostics.js?v=3509195d9193";
-import { editGroup } from "../src/edit-group.js?v=3509195d9193";
-import { parse, splitLines } from "../src/parser.js?v=3509195d9193";
+import { compileAst } from "../src/compiler.js?v=f92ad2735a68";
+import { CompileError } from "../src/diagnostics.js?v=f92ad2735a68";
+import { editGroup } from "../src/edit-group.js?v=f92ad2735a68";
+import { parse, splitLines } from "../src/parser.js?v=f92ad2735a68";
 
 /** @type {Record<string, string[]>} */
 const templates = {
@@ -25,7 +25,7 @@ export function insertRule(source, caret, kind, options = {}) {
   if (!Number.isSafeInteger(caret) || caret < 0 || caret > source.length)
     throw new TypeError("The insertion cursor must be within the rules.");
   if (!Object.hasOwn(templates, kind)) throw new TypeError("Choose a supported rule type.");
-  /** @type {import('../src/ast.js?v=3509195d9193').ParsedRules|null} */
+  /** @type {import('../src/ast.js?v=f92ad2735a68').ParsedRules|null} */
   let parsed = null;
   try {
     parsed = parse(source);

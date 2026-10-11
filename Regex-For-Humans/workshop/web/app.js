@@ -6,28 +6,31 @@ import {
   exportRegex,
   regexToRules,
   toSVG,
-} from "../index.js?v=3509195d9193";
-import { escapeControls, quoteText } from "../src/display.js?v=3509195d9193";
-import { LIMITS, splitLines } from "../src/parser.js?v=3509195d9193";
-import { parseRegexLiteral } from "../src/regex-literal.js?v=3509195d9193";
-import { parseExpectation, readExpectation } from "./expectations.js?v=3509195d9193";
-import { explanationNotes } from "./explanation-notes.js?v=3509195d9193";
-import { explainMismatch, failureRequirements } from "./failure-reasons.js?v=3509195d9193";
+} from "../index.js?v=f92ad2735a68";
+import { escapeControls, quoteText } from "../src/display.js?v=f92ad2735a68";
+import { LIMITS, splitLines } from "../src/parser.js?v=f92ad2735a68";
+import { parseRegexLiteral } from "../src/regex-literal.js?v=f92ad2735a68";
+import { parseExpectation, readExpectation } from "./expectations.js?v=f92ad2735a68";
+import { explanationNotes } from "./explanation-notes.js?v=f92ad2735a68";
+import { explainMismatch, failureRequirements } from "./failure-reasons.js?v=f92ad2735a68";
 import {
   createFixtureLink,
+  draftStorageKey,
   fixtureLimit,
   fixtureStorageKey,
+  parseDraft,
   parseFixture,
   readFixtureLink,
-} from "./fixtures.js?v=3509195d9193";
-import { initializeLanguage, message, setAttribute, setText } from "./i18n.js?v=3509195d9193";
-import { insertRule } from "./insert-rule.js?v=3509195d9193";
-import { categories, filterRecipes, levels } from "./library.js?v=3509195d9193";
-import { initializeSyntaxEditor } from "./syntax.js?v=3509195d9193";
-import { TestRunError, TestRunner } from "./test-runner.js?v=3509195d9193";
+} from "./fixtures.js?v=f92ad2735a68";
+import { initializeLanguage, message, setAttribute, setText } from "./i18n.js?v=f92ad2735a68";
+import { insertRule } from "./insert-rule.js?v=f92ad2735a68";
+import { categories, filterRecipes, levels } from "./library.js?v=f92ad2735a68";
+import { initializeSyntaxEditor } from "./syntax.js?v=f92ad2735a68";
+import { TestRunError, TestRunner } from "./test-runner.js?v=f92ad2735a68";
+import { textChanges } from "./text-change.js?v=f92ad2735a68";
 
 /** @typedef {import("./worker-protocol.d.ts").TestCase} TestCase */
-/** @typedef {import('./library.js?v=3509195d9193').ProductScenario} ProductScenario */
+/** @typedef {import('./library.js?v=f92ad2735a68').ProductScenario} ProductScenario */
 /** @typedef {"success" | "neutral" | "error"} CompileState */
 /** @typedef {{line: number, column: number, sourceStart: number, sourceEnd: number}} RuleFocus */
 
@@ -107,6 +110,13 @@ const ui = {
   groupType: requiredElement("group-type", HTMLSelectElement),
   groupName: requiredElement("group-name", HTMLInputElement),
   groupApply: requiredElement("group-apply", HTMLButtonElement),
+  groupPreviewButton: requiredElement("group-preview-button", HTMLButtonElement),
+  groupPreview: requiredElement("group-preview", HTMLElement),
+  groupPreviewClose: requiredElement("group-preview-close", HTMLButtonElement),
+  groupBeforeRules: requiredElement("group-before-rules", HTMLElement),
+  groupAfterRules: requiredElement("group-after-rules", HTMLElement),
+  groupBeforeRegex: requiredElement("group-before-regex", HTMLElement),
+  groupAfterRegex: requiredElement("group-after-regex", HTMLElement),
   groupLocate: requiredElement("group-locate", HTMLButtonElement),
   groupInfo: requiredElement("group-info", HTMLParagraphElement),
   groupReferences: requiredElement("group-references", HTMLUListElement),
@@ -125,6 +135,8 @@ const ui = {
   fixtureLink: requiredElement("fixture-link", HTMLTextAreaElement),
   fixtureLinkOutput: requiredElement("fixture-link-output", HTMLDivElement),
   fixtureStatus: requiredElement("fixture-status", HTMLParagraphElement),
+  draftSave: requiredElement("draft-save", HTMLInputElement),
+  draftStatus: requiredElement("draft-status", HTMLParagraphElement),
 };
 
 initializeLanguage(document, ui.language);
@@ -152,6 +164,9 @@ let testCases = [];
 let nextTestId = 1;
 let fixtureRevision = 0;
 let shareSequence = 0;
+let draftTimer = 0;
+/** @type {string|null} */
+let savedDraftText = null;
 /** @type {Map<number, string>} */
 const expectationDrafts = new Map();
 /** @type {Map<number, string>} */
@@ -182,14 +197,14 @@ let hasEdits =
 let copyFeedbackTimer = 0;
 let copySequence = 0;
 const testRunner = new TestRunner(
-  () => new Worker(new URL("./match-worker.js?v=3509195d9193", import.meta.url), { type: "module" }),
+  () => new Worker(new URL("./match-worker.js?v=f92ad2735a68", import.meta.url), { type: "module" }),
 );
 
 /**
  * @template {keyof HTMLElementTagNameMap} K
  * @param {K} tag
  * @param {string} [className=""]
- * @param {string | import('./i18n.js?v=3509195d9193').Message} [text]
+ * @param {string | import('./i18n.js?v=f92ad2735a68').Message} [text]
  * @returns {HTMLElementTagNameMap[K]}
  */
 function make(tag, className = "", text) {
@@ -205,7 +220,7 @@ function setCompileState(label, state) {
   ui.compileState.dataset.state = state;
 }
 
-/** @param {string | import('./i18n.js?v=3509195d9193').Message} text @param {boolean} [invalidRules=false] */
+/** @param {string | import('./i18n.js?v=f92ad2735a68').Message} text @param {boolean} [invalidRules=false] */
 function setDiagnostic(text, invalidRules = false) {
   ui.diagnostic.hidden = !text;
   setText(ui.diagnostic, text || "");
@@ -709,6 +724,7 @@ function selectedGroup() {
 }
 
 function fillGroupFields() {
+  clearGroupPreview();
   const group = selectedGroup();
   if (!group) return;
   ui.groupType.value = !group.capturing ? "none" : group.name === null ? "numbered" : "named";
@@ -747,6 +763,7 @@ function fillGroupFields() {
 }
 
 function renderGroupEditor() {
+  clearGroupPreview();
   const previous = selectedGroup();
   const selected = ui.groupSelect.value;
   groupSegments =
@@ -754,7 +771,13 @@ function renderGroupEditor() {
       segment.kind === "group" && segment.edge === "start" ? [segment] : [],
     ) ?? [];
   ui.groupEditor.hidden = groupSegments.length === 0;
-  for (const field of [ui.groupSelect, ui.groupType, ui.groupApply, ui.groupLocate])
+  for (const field of [
+    ui.groupSelect,
+    ui.groupType,
+    ui.groupApply,
+    ui.groupPreviewButton,
+    ui.groupLocate,
+  ])
     field.disabled = groupSegments.length === 0;
   ui.groupSelect.replaceChildren();
   for (const group of groupSegments) {
@@ -800,7 +823,7 @@ function renderGroupEditor() {
   }
 }
 
-/** @param {HTMLDivElement} row @param {string | import('./i18n.js?v=3509195d9193').Message} text */
+/** @param {HTMLDivElement} row @param {string | import('./i18n.js?v=f92ad2735a68').Message} text */
 function setTestResult(row, text) {
   const result = row.querySelector(".test-result");
   if (result) setText(result, text);
@@ -966,7 +989,7 @@ function renderCaptureExplorer(row, result, captures, input) {
   explorer.hidden = false;
 }
 
-/** @param {HTMLDivElement} row @param {string} input @param {{start: number, end: number} | null | undefined} range @param {string | import('./i18n.js?v=3509195d9193').Message} [label] */
+/** @param {HTMLDivElement} row @param {string} input @param {{start: number, end: number} | null | undefined} range @param {string | import('./i18n.js?v=f92ad2735a68').Message} [label] */
 function renderMatchPreview(row, input, range, label) {
   const preview = row.querySelector(".match-preview");
   if (!(preview instanceof HTMLSpanElement)) return;
@@ -1011,6 +1034,7 @@ function selectedMatchMode() {
 
 async function updateTestResults() {
   fixtureRevision++;
+  scheduleDraft();
   if (!ui.fixtureLinkOutput.hidden) {
     ui.fixtureLinkOutput.hidden = true;
     ui.fixtureLink.value = "";
@@ -1333,7 +1357,8 @@ function renderTests() {
     explorer.hidden = true;
     explorer.open = view?.explorerOpen ?? false;
     const advanced = make("details", "expectation-editor");
-    advanced.open = view?.expectationOpen ?? sample.expect !== undefined;
+    advanced.open =
+      view?.expectationOpen ?? (sample.expect !== undefined || !!expectationDrafts.get(sample.id));
     advanced.append(make("summary", "", message("Exact expectations")));
     const expectationId = `example-expectation-${sample.id}`;
     const label = make("label", "", message("Expected details (JSON)"));
@@ -1377,20 +1402,9 @@ function renderTests() {
       message("Expected details for example {index}", { index: number }),
     );
     details.addEventListener("input", () => {
-      expectationDrafts.set(sample.id, details.value);
-      try {
-        const expect = parseExpectation(details.value);
-        if (expect === undefined) delete sample.expect;
-        else sample.expect = expect;
-        expectationErrors.delete(sample.id);
-        error.textContent = "";
-        details.setAttribute("aria-invalid", "false");
-      } catch (cause) {
-        const description = cause instanceof Error ? cause.message : String(cause);
-        expectationErrors.set(sample.id, description);
-        error.textContent = description;
-        details.setAttribute("aria-invalid", "true");
-      }
+      applyExpectationDraft(sample, details.value);
+      error.textContent = expectationErrors.get(sample.id) ?? "";
+      details.setAttribute("aria-invalid", String(expectationErrors.has(sample.id)));
       updateTestResults();
     });
     advanced.append(
@@ -1449,7 +1463,20 @@ function currentFixtureText() {
   return text;
 }
 
-/** @param {import('./fixtures.js?v=3509195d9193').TestFixture} fixture */
+/** @param {TestCase} sample @param {string} text */
+function applyExpectationDraft(sample, text) {
+  expectationDrafts.set(sample.id, text);
+  try {
+    const expect = parseExpectation(text);
+    if (expect === undefined) delete sample.expect;
+    else sample.expect = expect;
+    expectationErrors.delete(sample.id);
+  } catch (cause) {
+    expectationErrors.set(sample.id, cause instanceof Error ? cause.message : String(cause));
+  }
+}
+
+/** @param {import('./fixtures.js?v=f92ad2735a68').TestFixture|import('./fixtures.js?v=f92ad2735a68').WorkshopDraft} fixture */
 function applyFixture(fixture) {
   hasEdits = true;
   ui.rules.value = fixture.rules;
@@ -1460,11 +1487,106 @@ function applyFixture(fixture) {
   expectationDrafts.clear();
   expectationErrors.clear();
   exactCaseText.clear();
-  testCases = fixture.cases.map((sample) => ({ id: nextTestId++, ...sample }));
+  testCases = fixture.cases.map((item) => {
+    /** @type {TestCase} */
+    const sample = { id: nextTestId++, text: item.text, expected: item.expected };
+    if ("expectation" in item) applyExpectationDraft(sample, item.expectation);
+    else if (item.expect) sample.expect = item.expect;
+    return sample;
+  });
+  if (fixture.format === "regex-for-humans-draft") ui.reverseRegex.value = fixture.reverseRegex;
   for (const sample of testCases) exactCaseText.add(sample.id);
   setScenarioSelection(null);
   renderTests();
   compileRules();
+}
+
+function pauseDraft() {
+  window.clearTimeout(draftTimer);
+  draftTimer = 0;
+  ui.draftSave.checked = false;
+  setText(
+    ui.draftStatus,
+    message("Draft changed in another tab. Saving paused; current work is unchanged."),
+  );
+  ui.draftStatus.dataset.state = "error";
+}
+
+function saveDraft() {
+  window.clearTimeout(draftTimer);
+  draftTimer = 0;
+  if (!ui.draftSave.checked) return;
+  try {
+    if (localStorage.getItem(draftStorageKey) !== savedDraftText) {
+      pauseDraft();
+      return;
+    }
+    const text = JSON.stringify({
+      format: "regex-for-humans-draft",
+      version: 1,
+      rules: ui.rules.value,
+      flags: currentFlags().split("").sort().join(""),
+      mode: selectedMatchMode(),
+      reverseRegex: ui.reverseRegex.value,
+      example: new URLSearchParams(window.location.search).get("example"),
+      cases: testCases.map((sample) => ({
+        text: sample.text,
+        expected: sample.expected,
+        expectation:
+          expectationDrafts.get(sample.id) ?? (sample.expect ? JSON.stringify(sample.expect) : ""),
+      })),
+    });
+    parseDraft(text);
+    if (text !== savedDraftText) localStorage.setItem(draftStorageKey, text);
+    savedDraftText = text;
+    setText(ui.draftStatus, message("Draft saved in this browser."));
+    delete ui.draftStatus.dataset.state;
+  } catch (error) {
+    setText(
+      ui.draftStatus,
+      message("Draft not saved: {error}. Current work and the last saved draft are unchanged.", {
+        error: error instanceof Error ? message(error.message) : String(error),
+      }),
+    );
+    ui.draftStatus.dataset.state = "error";
+  }
+}
+
+function scheduleDraft() {
+  if (!ui.draftSave.checked) return;
+  window.clearTimeout(draftTimer);
+  draftTimer = window.setTimeout(saveDraft, 300);
+  if (ui.draftStatus.dataset.state !== "pending") {
+    setText(ui.draftStatus, message("Draft has unsaved changes."));
+    ui.draftStatus.dataset.state = "pending";
+  }
+}
+
+function initializeDraft() {
+  ui.draftSave.checked = false;
+  ui.draftSave.disabled = false;
+  try {
+    savedDraftText = localStorage.getItem(draftStorageKey);
+    if (savedDraftText === null) return;
+    const draft = parseDraft(savedDraftText);
+    const requested = new URLSearchParams(window.location.search).get("example");
+    const restore = !hasEdits && (!requested || requested === draft.example);
+    if (restore) {
+      applyFixture(draft);
+      setText(ui.draftStatus, message("Restored saved draft. Review the rules and examples."));
+      requiredElement("test-fixtures", HTMLDetailsElement).open = true;
+    } else setText(ui.draftStatus, message("Draft saving is enabled in this browser."));
+    ui.draftSave.checked = true;
+    if (!restore && hasEdits) scheduleDraft();
+  } catch (error) {
+    setText(
+      ui.draftStatus,
+      message("Saved draft unavailable: {error}. Current work is unchanged.", {
+        error: error instanceof Error ? message(error.message) : String(error),
+      }),
+    );
+    ui.draftStatus.dataset.state = "error";
+  }
 }
 
 function loadSharedFixture() {
@@ -1698,6 +1820,7 @@ document.addEventListener("input", (event) => {
     event.target !== ui.recipeSearch &&
     event.target !== ui.recipeCategory &&
     event.target !== ui.recipeLevel &&
+    event.target !== ui.draftSave &&
     event.target !== ui.fixtureFile
   ) {
     hasEdits = true;
@@ -1821,6 +1944,41 @@ ui.fixtureRestore.addEventListener("click", () => {
   } catch (error) {
     fixtureError(error);
   }
+});
+ui.draftSave.addEventListener("change", () => {
+  window.clearTimeout(draftTimer);
+  draftTimer = 0;
+  try {
+    if (ui.draftSave.checked) {
+      savedDraftText = localStorage.getItem(draftStorageKey);
+      saveDraft();
+    } else {
+      localStorage.removeItem(draftStorageKey);
+      savedDraftText = null;
+      setText(ui.draftStatus, message("Draft saving is off; the saved draft was removed."));
+      delete ui.draftStatus.dataset.state;
+    }
+  } catch {
+    setText(
+      ui.draftStatus,
+      message("Draft storage unavailable. The saved draft could not be read or removed."),
+    );
+    ui.draftStatus.dataset.state = "error";
+  }
+});
+window.addEventListener("pagehide", () => {
+  if (draftTimer) saveDraft();
+});
+document.addEventListener("visibilitychange", () => {
+  if (document.hidden && draftTimer) saveDraft();
+});
+window.addEventListener("storage", (event) => {
+  if (
+    ui.draftSave.checked &&
+    (event.key === draftStorageKey || event.key === null) &&
+    event.newValue !== savedDraftText
+  )
+    pauseDraft();
 });
 ui.rules.addEventListener("input", () => {
   // A multiline paste can repeat input events for the same completed value.
@@ -1955,9 +2113,20 @@ ui.output.addEventListener("mouseup", () => {
 });
 ui.groupSelect.addEventListener("change", fillGroupFields);
 ui.groupType.addEventListener("change", () => {
+  clearGroupPreview();
   ui.groupName.disabled = ui.groupType.value !== "named";
   ui.groupName.setAttribute("aria-invalid", "false");
   ui.groupFeedback.textContent = "";
+});
+ui.groupName.addEventListener("input", () => {
+  clearGroupPreview();
+  ui.groupName.setAttribute("aria-invalid", "false");
+  ui.groupFeedback.textContent = "";
+});
+ui.groupPreviewClose.addEventListener("click", () => {
+  clearGroupPreview();
+  ui.groupFeedback.textContent = "";
+  ui.groupPreviewButton.focus();
 });
 ui.groupLocate.addEventListener("click", () => {
   const group = selectedGroup();
@@ -2002,10 +2171,39 @@ ui.builderForm.addEventListener("submit", (event) => {
     ui.builderFeedback.dataset.state = "error";
   }
 });
-ui.groupForm.addEventListener("submit", (event) => {
-  event.preventDefault();
+function clearGroupPreview() {
+  ui.groupPreview.hidden = true;
+  ui.groupPreviewButton.setAttribute("aria-expanded", "false");
+  for (const output of [
+    ui.groupBeforeRules,
+    ui.groupAfterRules,
+    ui.groupBeforeRegex,
+    ui.groupAfterRegex,
+  ])
+    output.replaceChildren();
+}
+
+/** @param {HTMLElement} previous @param {HTMLElement} next @param {string} before @param {string} after */
+function renderGroupChange(previous, next, before, after) {
+  previous.replaceChildren();
+  next.replaceChildren();
+  for (const change of textChanges(before, after)) {
+    for (const [output, tag, text] of /** @type {const} */ ([
+      [previous, "del", change.before],
+      [next, "ins", change.after],
+    ])) {
+      output.append(document.createTextNode(change.prefix));
+      if (text) output.append(make(tag, "", text));
+      output.append(document.createTextNode(change.suffix));
+    }
+  }
+}
+
+/** @param {boolean} preview */
+function changeGroup(preview) {
   const group = selectedGroup();
   if (!compiled || !group) return;
+  clearGroupPreview();
   try {
     const rules = editGroup(
       ui.rules.value,
@@ -2016,6 +2214,26 @@ ui.groupForm.addEventListener("submit", (event) => {
       },
       { flags: compiled.flags },
     );
+    ui.groupName.setAttribute("aria-invalid", "false");
+    if (preview) {
+      if (rules === ui.rules.value) {
+        setText(ui.groupFeedback, message("No group changes to preview."));
+      } else {
+        const result = compile(rules, { flags: compiled.flags });
+        renderGroupChange(ui.groupBeforeRules, ui.groupAfterRules, ui.rules.value, rules);
+        renderGroupChange(
+          ui.groupBeforeRegex,
+          ui.groupAfterRegex,
+          `/${compiled.source}/${compiled.flags}`,
+          `/${result.source}/${result.flags}`,
+        );
+        ui.groupPreview.hidden = false;
+        ui.groupPreviewButton.setAttribute("aria-expanded", "true");
+        setText(ui.groupFeedback, message("Preview ready. Original rules unchanged."));
+      }
+      ui.groupFeedback.dataset.state = "success";
+      return;
+    }
     ui.rules.value = rules;
     hasEdits = true;
     setScenarioSelection(null);
@@ -2051,10 +2269,16 @@ ui.groupForm.addEventListener("submit", (event) => {
       ),
     );
   }
+}
+ui.groupPreviewButton.addEventListener("click", () => changeGroup(true));
+ui.groupForm.addEventListener("submit", (event) => {
+  event.preventDefault();
+  changeGroup(false);
 });
 for (const input of Object.values(flagInputs)) input.addEventListener("change", compileRules);
 ui.unicodeMode.addEventListener("change", compileRules);
 ui.reverseRegex.addEventListener("input", () => {
+  scheduleDraft();
   ui.reverseRegex.setAttribute("aria-invalid", "false");
   ui.reverseFeedback.hidden = true;
   ui.reverseFeedback.textContent = "";
@@ -2225,9 +2449,10 @@ try {
   requiredElement("test-fixtures", HTMLDetailsElement).open = true;
   if (hasEdits) compileRules();
 }
+initializeDraft();
 
 try {
-  const response = await fetch(new URL("../test/fixtures/product-scenarios.json?v=3509195d9193", import.meta.url));
+  const response = await fetch(new URL("../test/fixtures/product-scenarios.json?v=f92ad2735a68", import.meta.url));
   if (!response.ok) throw new Error(`HTTP ${response.status}`);
   const loaded = await response.json();
   if (!Array.isArray(loaded)) throw new Error("Invalid example recipe data");

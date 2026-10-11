@@ -4,25 +4,25 @@ import {
   PATH_SEGMENT_EXCLUDED,
   PATH_SEGMENT_SOURCE,
   UNICODE_STRING_PROPERTIES,
-} from "./ast.js?v=3509195d9193";
-import { fail } from "./diagnostics.js?v=3509195d9193";
-import { quoteText } from "./display.js?v=3509195d9193";
-import { LIMITS } from "./limits.js?v=3509195d9193";
+} from "./ast.js?v=f92ad2735a68";
+import { fail } from "./diagnostics.js?v=f92ad2735a68";
+import { quoteText } from "./display.js?v=f92ad2735a68";
+import { LIMITS } from "./limits.js?v=f92ad2735a68";
 
 export { LIMITS };
 
-/** @typedef {import('./ast.js?v=3509195d9193').Location} Location */
-/** @typedef {import('./ast.js?v=3509195d9193').Repetition} Repetition */
-/** @typedef {import('./ast.js?v=3509195d9193').AtomNode} AtomNode */
-/** @typedef {import('./ast.js?v=3509195d9193').ClassMember} ClassMember */
-/** @typedef {import('./ast.js?v=3509195d9193').ClassAtomNode} ClassAtomNode */
-/** @typedef {import('./ast.js?v=3509195d9193').GroupNode} GroupNode */
-/** @typedef {import('./ast.js?v=3509195d9193').AlternationNode} AlternationNode */
-/** @typedef {import('./ast.js?v=3509195d9193').AssertionNode} AssertionNode */
-/** @typedef {import('./ast.js?v=3509195d9193').BoundaryNode} BoundaryNode */
-/** @typedef {import('./ast.js?v=3509195d9193').BackreferenceNode} BackreferenceNode */
-/** @typedef {import('./ast.js?v=3509195d9193').RuleNode} RuleNode */
-/** @typedef {import('./ast.js?v=3509195d9193').ParsedRules} ParsedRules */
+/** @typedef {import('./ast.js?v=f92ad2735a68').Location} Location */
+/** @typedef {import('./ast.js?v=f92ad2735a68').Repetition} Repetition */
+/** @typedef {import('./ast.js?v=f92ad2735a68').AtomNode} AtomNode */
+/** @typedef {import('./ast.js?v=f92ad2735a68').ClassMember} ClassMember */
+/** @typedef {import('./ast.js?v=f92ad2735a68').ClassAtomNode} ClassAtomNode */
+/** @typedef {import('./ast.js?v=f92ad2735a68').GroupNode} GroupNode */
+/** @typedef {import('./ast.js?v=f92ad2735a68').AlternationNode} AlternationNode */
+/** @typedef {import('./ast.js?v=f92ad2735a68').AssertionNode} AssertionNode */
+/** @typedef {import('./ast.js?v=f92ad2735a68').BoundaryNode} BoundaryNode */
+/** @typedef {import('./ast.js?v=f92ad2735a68').BackreferenceNode} BackreferenceNode */
+/** @typedef {import('./ast.js?v=f92ad2735a68').RuleNode} RuleNode */
+/** @typedef {import('./ast.js?v=f92ad2735a68').ParsedRules} ParsedRules */
 
 /** @param {string} source @returns {string[]} */
 export function splitLines(source) {
