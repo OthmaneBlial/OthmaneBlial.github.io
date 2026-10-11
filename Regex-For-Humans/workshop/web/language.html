@@ -24,9 +24,9 @@
   <meta name="twitter:image:alt" content="A colorful Regex For Humans card showing clear English rules turning into an explained JavaScript regex.">
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self'; img-src 'self' data:; object-src 'none'; base-uri 'self'">
   <title>Language guide — Regex For Humans</title>
-  <link rel="icon" type="image/svg+xml" href="./favicon.svg?v=89d227d97b70">
-  <link rel="stylesheet" href="./styles.css?v=89d227d97b70">
-  <link rel="stylesheet" href="./language.css?v=89d227d97b70">
+  <link rel="icon" type="image/svg+xml" href="./favicon.svg?v=049b4eaff903">
+  <link rel="stylesheet" href="./styles.css?v=049b4eaff903">
+  <link rel="stylesheet" href="./language.css?v=049b4eaff903">
 </head>
 <body>
   <a class="skip-link" href="#main">Skip to syntax</a>
@@ -52,7 +52,7 @@
     </aside>
 
     <main id="main" class="main-content">
-      <header class="topbar"><span>THE WORKSHOP <span class="topbar-slash">/</span> LANGUAGE GUIDE</span><span class="build-label">DEV · 0.1.0-dev.5</span></header>
+      <header class="topbar"><span>THE WORKSHOP <span class="topbar-slash">/</span> LANGUAGE GUIDE</span><span class="build-label">DEV · 0.1.0-dev.6</span></header>
       <section class="hero guide-hero" aria-labelledby="page-title">
         <div class="hero-copy"><span class="eyebrow">A FINITE, REVIEWABLE VOCABULARY</span><h1 id="page-title">Say only<br><em>what it can mean.</em></h1><p>Use short rules. Errors show a line and column. Quoted text stays literal.</p></div>
         <div class="hero-symbol" aria-hidden="true">[<span>a</span>]</div>
@@ -114,6 +114,7 @@ end</code></pre><div><span>GENERATES</span><code>/^ABC\d{3}$/u</code><p><strong>
         <p>Numeric counts must be integers from 0 to 1,000, including the minimum in <code>at least</code>. In a range, the upper count must be at least the lower. <code>between 0 and 1 "-"</code> and <code>optional "-"</code> allow zero or one hyphen. A multi-character literal stays together: <code>between 2 and 4 "AB"</code> generates <code>(?:AB){2,4}</code>.</p>
         <p>Write counts with digits <code>0</code>–<code>9</code>; leading zeros are allowed. A sign, fraction, scientific notation or localized digit produces a count error. Every modifier needs an item: use <code>3 digits</code>, rather than <code>3</code> alone. <code>at least</code> also needs a minimum count. Incomplete modifiers report their position and offer a complete example, such as <code>at least 3 digits</code> or <code>zero or more digit</code>.</p>
         <p>The workshop’s Entire string mode requires a complete match. Search anywhere summarizes the first match and lists up to 100 nonoverlapping matches, including empty ones; empty matches advance by a Unicode code point. Open a match to inspect numbered or named captures and jump to their rules. Absent groups show “Not captured”, participating empty groups show an empty string, and repeated groups show their final capture. Positions start at 0 and count UTF-16 code units, with the end excluded: a match after <code>😀</code> starts at 2. Engines without native capture indices show values without guessed positions. Entire string also shows rejected partial or empty matches. These modes do not change the copied regex.</p>
+        <p><strong>Source checkout only:</strong> open <strong>Edit groups and references</strong> in the local workshop to rename a capture, change its type or jump to a reference. Numeric references retain their original targets after renumbering; converting a referenced capture to noncapturing is rejected while the original rules stay intact. In the capture explorer, <strong>Highlight</strong> marks native input ranges, including empty captures and lookaround captures outside the consumed match. Absent captures and unavailable indices have no guessed highlight. The shared <code>editGroup</code> API and these controls are not in npm <code>0.1.0-dev.5</code> or the hosted workshop yet.</p>
         <p>Ranges try the largest count first, then backtrack if the next rule needs it. Add <code>start</code> and <code>end</code> to validate the entire string; an unanchored range can find part of a longer string.</p>
         <p><code>zero or more one of: a, b</code> generates <code>[ab]*</code>: listed characters can repeat, including zero times. <code>zero or more none of: a, b</code> generates <code>[^ab]*</code>: it excludes those characters. The explanations keep membership and exclusion distinct, including after reverse translation.</p>
       </section>
@@ -142,6 +143,18 @@ end</code></pre></div>
         <p>The regex pattern and translated rules each have a 16,384 UTF-16 code-unit limit; translated rules also have a 200-line limit. Escaping and separate atoms can make the rules longer than the pattern. Output-limit errors explain this and point to column 1 for the whole regex. Syntax columns count the pattern between the slash delimiters.</p>
         <p>Code-point escapes accept leading zeros: <code>\u{00000041}</code> becomes <code>"A"</code>, and <code>\u{0001f600}</code> becomes <code>"😀"</code>. They work in literals, character lists and literal groups; the complete regex source still has a 16,384-code-unit limit.</p>
         <p>A fixed-width Unicode escape pair such as <code>\uD83D\uDE00</code> is one emoji atom, including inside a character class or before a repetition modifier. Separate surrogate atoms stay separate, including inside repeated group blocks. See the <a href="../docs/LANGUAGE.md">full language contract</a> for exact limits.</p>
+      </section>
+
+      <section id="structural-risk-review" class="panel guide-panel" aria-labelledby="review-title">
+        <h2 id="review-title">Review the pattern</h2>
+        <p>Open <strong>Review the pattern</strong> in this source build for heuristic notes on nested/adjacent variable repetitions, overlapping alternatives, broad wildcards, line anchors and large generated patterns. Hover connects the source rule, regex fragment, explanation and diagram without moving the caret. Select a note to return to its source line. Rule, flag, recipe and group edits refresh the review.</p>
+        <p>The shared <code>analyze(rules, { flags })</code> API returns flags, typed source-linked findings and explicit limitations. Unknown character witnesses are not treated as disjointness proofs. Analysis does not run matches or measure backtracking; <strong>no findings does not prove performance safety</strong>. Example matching continues in an isolated worker with a time limit. These additions are not yet in npm <code>0.1.0-dev.5</code> or the hosted workshop. See the <a href="../docs/LANGUAGE.md#structural-risk-review">analysis contract</a>.</p>
+      </section>
+
+      <section id="structural-diagrams" class="panel guide-panel" aria-labelledby="structure-title">
+        <h2 id="structure-title">Explore the structure</h2>
+        <p>In this source build, open <strong>Explore the pattern</strong> for an AST-driven railroad diagram: nested groups, ordered alternatives, repetition bounds and separate zero-width lookaround checks. Hover or focus a node or explanation to connect source rules and regex fragments without moving the source caret. Select a node with a click or Enter/Space to return to its rule. The source cursor and generated-regex selection also follow the structure.</p>
+        <p><strong>Actual size</strong> keeps labels readable with scrolling; <strong>Fit overview</strong> scales the whole map. <strong>Export SVG</strong> saves a standalone image with the current flags, also available from <code>toSVG(rules, { flags })</code>. Long labels retain full explanations in titles. This is structure, not a runtime backtracking trace. These additions are not in npm <code>0.1.0-dev.5</code> or the hosted workshop yet. Read the <a href="../docs/LANGUAGE.md#structural-diagrams">structural diagram contract</a>.</p>
       </section>
 
       <section id="flags" class="panel guide-panel" aria-labelledby="flags-title">

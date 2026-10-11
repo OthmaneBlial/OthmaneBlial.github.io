@@ -1,16 +1,57 @@
 # The Regex For Humans language
 
-Version 1 compiles fixed English rules into JavaScript `RegExp`. It does not guess from free-form text or examples. This guide describes the `0.1.0-dev.5` preview: groups, lazy repetition, lookaround, boundaries, Unicode properties/classes, native v sets and all eight JavaScript flags.
+Version 1 compiles fixed English rules into JavaScript `RegExp`. It does not guess from free-form text or examples. This guide describes the `0.1.0-dev.6` preview: groups, lazy repetition, lookaround, boundaries, Unicode properties/classes, native v sets and all eight JavaScript flags.
 
 Write one rule per line. `start` or `line start` can prefix the first rule. Keywords are case-insensitive; quoted text keeps its case. Leading and trailing spaces are ignored.
 
 Separate rules with LF, CRLF, CR, U+2028 or U+2029.
 
-Input and line anchors can be combined. Each retains its own meaning, including across groups and alternatives: `start` / `end` remain absolute while `line start` / `line end` use native multiline boundaries. Duplicate or misplaced anchors remain positioned errors. Mixed anchor modes are included in npm `0.1.0-dev.5`.
+Input and line anchors can be combined. Each retains its own meaning, including across groups and alternatives: `start` / `end` remain absolute while `line start` / `line end` use native multiline boundaries. Duplicate or misplaced anchors remain positioned errors. Mixed anchor modes are included in npm `0.1.0-dev.6`.
 
 ## 🏗️ Larger worked examples
 
 The [complex-examples guide](COMPLEX-EXAMPLES.md) combines these atoms into an access log, structured event, artifact manifest and multiline order. It includes complete regexes, every generated explanation, accepted/rejected inputs and capture/nested-group import examples.
+
+## Engine exports
+
+`exportRegex` and CLI `--target` are included in npm `0.1.0-dev.6`; the hosted workshop offers **Export to a programming language**. JavaScript and TypeScript generate code for the existing ECMAScript pattern. The other targets translate supported regex semantics through the validated AST before quoting the resulting pattern as source code. Quoting alone is not an engine conversion.
+
+From the repository root:
+
+```js
+import { exportRegex } from "./index.js";
+
+const result = exportRegex('capture "field" {\n3 digits\n}', { target: "python" });
+console.log(result.code);
+console.log(result.captures); // [{ index: 1, name: "field", targetName: "g1" }]
+console.log(result.requirements);
+```
+
+```sh
+node bin/regex-for-humans.js --target python rules.txt
+node bin/regex-for-humans.js --target=python --json rules.txt
+```
+
+The API accepts `ExportOptions` with `target` and the existing `flags`; the default target is `javascript`. `RegexExport` returns `target`, `engine`, target regex `source`, target-native `flags`, canonical ECMAScript `originalFlags`, quoted source `code`, `captures` and `requirements`. It does not return JavaScript source spans for the translated pattern. CLI text mode writes code to stdout and requirements/capture mapping to stderr; JSON mode returns the full object. `--target` cannot be combined with `--reverse` or `--explain`. Positioned `CompileError` diagnostics retain the original rules' line/column.
+
+| Target | Engine profile | Assertions and references |
+| --- | --- | --- |
+| `javascript`, `typescript` | Existing runtime's ECMAScript RegExp | Existing compiler semantics and all supported flags |
+| `python` | Python 3.14 `re` | Lookahead; fixed-width lookbehind; conditional handling of unset backward references |
+| `rust` | Rust `regex` 1.13 | No lookaround/backreferences; no portable line anchors |
+| `go` | Go 1.22 `regexp` | No lookaround/backreferences; no portable line anchors; nested counted repetition respects the native 1,000-count limit |
+| `java` | Java 17 `Pattern` | Lookahead; finite-width lookbehind with capture restrictions; backward references only when the capture must participate |
+| `csharp` | .NET 10 `Regex` | Lookahead; backward lookbehind; conditional handling of unset references; 1,200ms constructor match timeout |
+| `php` | PHP 8 / PCRE2 fixed-lookbehind profile | Generated profile only, **native runtime unverified**; lookahead, fixed-width top-level lookbehind alternatives and conditional unset references |
+| `ruby` | Ruby 2.6 `Regexp` | Lookahead; fixed-width top-level lookbehind alternatives; no captures in negative lookbehind; references require capture participation |
+
+Foreign targets require **well-formed Unicode input**: lone surrogate code units and malformed UTF-8 are outside their contract. The backend emits explicit ECMAScript ASCII digit/word sets, whitespace and line terminators, translates finite Unicode-set algebra, and handles scalar atoms in .NET's UTF-16 engine. `m`, `s`, `u` and `v` are lowered through the AST; the native flags field is empty except PHP's `u`. JavaScript `d`, `g`, `i` and `y` are rejected with `UNSUPPORTED_EXPORT_FLAGS`: native indices, stateful cursors and Unicode case folding are not silently approximated. Native Unicode character/string properties remain unsupported because the engines' Unicode editions and membership have not been proved equivalent.
+
+Every foreign capture uses an ASCII `gN` name, including originally unnamed captures; `captures` maps the original opening-order index/name to that target name. Read target captures by **mapped name**, treating inactive or missing names as absent. Rust can remove a `{0}` capture and renumber later groups. Original numeric indices identify the ECMAScript groups; they do not promise native numbering, match-array shape, UTF-16 indices or `lastIndex` behavior. The workshop shows the mapping and requirements; **Download export JSON** retains them alongside the code. The downloaded code constructs a pattern and does not run the workshop's examples in the selected engine. Example matching still uses the isolated JavaScript worker.
+
+Unsupported translations explain their reason rather than emit approximate matching. Important diagnostics include `EXPORT_LOOKAROUND`, `EXPORT_LINE_ANCHOR`, `EXPORT_BACKREFERENCE`, `EXPORT_UNSET_REFERENCE`, `EXPORT_LOOKBEHIND_REFERENCE`, `EXPORT_LOOKBEHIND_WIDTH`, `EXPORT_LOOKBEHIND_CAPTURE`, `EXPORT_CAPTURE_RESET`, `EXPORT_NULLABLE_REPETITION`, `EXPORT_UNICODE_PROPERTY`, `EXPORT_LONE_SURROGATE`, `EXPORT_ZERO_WIDTH_POSITION`, `EXPORT_REPETITION_LIMIT` and `EXPORT_OUTPUT_TOO_LARGE`. A nullable non-word-boundary pattern can expose a surrogate-interior zero-width position in the source engine; foreign scalar profiles reject that case. Variable repetition over a nullable composite and captures that can disappear in a later iteration also fail until their semantics can be preserved. Shared input, depth, repetition and output budgets still apply; target compilers impose their own resource limits.
+
+`npm run test:exports` compiles and runs generated snippets with installed native SDKs, checking full match spans and mapped capture values against the JavaScript source patterns. Unavailable SDKs are explicitly skipped. To require the six currently verified runtimes, use `npm run test:exports -- --require=python,rust,go,java,csharp,ruby`. This separate gate does not add native SDKs to the npm package or make them mandatory for ordinary `npm run verify`. See [the verified engine evidence](COMPATIBILITY.md#engine-export-evidence).
 
 ## Instructions
 
@@ -131,7 +172,7 @@ Captures are numbered by opening order, including named and nested captures; non
 
 Existing repetition modifiers apply to a whole block: `optional capture "suffix" {`, `2 group {`, `between 2 and 4 group {`, `zero or more group {`, `one or more group {`, and `at least 2 group {`. Anchors retain their first/last rule restrictions within each block; input and line anchors cannot be mixed across blocks. Nesting is limited to 64 levels in addition to the existing source and line budgets.
 
-The API keeps `{ source, flags, segments }`. Opening and closing braces produce `kind: "group"` segments with `edge`, `capturing`, `captureIndex`, `name`, and `repetition`. Each segment retains its original line, column, explanation and exact generated-source offsets. Consumers switching on `segments[].kind` should handle the added group variant. The CLI and workshop use this same compiler and trace. Groups, captures and their reverse translations are included in npm `0.1.0-dev.5` and the hosted workshop.
+The API keeps `{ source, flags, segments }`. Opening and closing braces produce `kind: "group"` segments with `edge`, `capturing`, `captureIndex`, `name`, and `repetition`. Each segment retains its original line, column, explanation and exact generated-source offsets. Consumers switching on `segments[].kind` should handle the added group variant. The CLI and workshop use this same compiler and trace. Groups, captures and their reverse translations are included in npm `0.1.0-dev.6` and the hosted workshop.
 
 <a name="capture-references-unreleased-on-main"></a>
 
@@ -154,6 +195,32 @@ This produces `^(?<word>[A-Za-z]+)\s\k<word>$` with `u`: `cat cat` matches and `
 Missing targets report `MISSING_CAPTURE_REFERENCE`; references before their target report `FORWARD_CAPTURE_REFERENCE`; references inside that target (including an enclosing capture) report `SELF_CAPTURE_REFERENCE`. Diagnostics point to the name or number. Forward and open/self references are valid in some JavaScript patterns and may match empty text; this language intentionally rejects them to make the dependency explicit. Duplicate names remain rejected. These are rule-language policies, not claims that JavaScript forbids those constructs.
 
 Reference trace segments have `kind: "backreference"`, `reference` (string or number), resolved `captureIndex`, `repetition` and the usual source offsets and explanation. Reverse translation imports backward references under this same policy; unsupported forward/open references point to their original regex escape.
+
+## Editing groups
+
+Available in npm `0.1.0-dev.6` and the hosted workshop. The local workshop's **Edit groups and references** panel lists groups in opening order, shows each capture number, links to its references and supports named, numbered and noncapturing forms.
+
+The shared API is `editGroup(source, location, { capturing, name }, options?) → string`. Use the opening `GroupSegment` (`edge: "start"`) from `compile` as the location; it includes any repetition modifier. Pass `capturing: true` with a valid unique Unicode identifier or `name: null` for a numbered capture. A noncapturing group requires `capturing: false, name: null`. Pass the same flags as the original compilation.
+
+Run this example from the source checkout's root:
+
+```js
+import { compile, editGroup } from "./index.js";
+
+const rules = 'capture "word" {\nletter\n}\nsame as capture "word"';
+const renamed = editGroup(
+  rules,
+  { line: 1, column: 1 },
+  { capturing: true, name: "label" },
+);
+console.log(compile(renamed).source); // (?<label>[A-Za-z])\k<label>
+```
+
+Renaming updates resolved named references. Changing a named capture to numbered changes its named references to the correct number. Adding or removing an unreferenced capture adjusts all existing numeric references to keep their original targets, including nested groups and captures in assertions or alternatives. Numeric references remain numeric when their capture receives a name. Other literals, indentation, line endings, trailing spaces and repetition modifiers are retained.
+
+Removing a referenced capture reports `REFERENCED_CAPTURE` at the first reference; remove or change those references first. An opening location without a group reports `UNKNOWN_GROUP`. Invalid argument shapes throw `TypeError`; invalid names, duplicates, flags and source budgets use the shared positioned diagnostics. The entire proposed document is parsed and compiled before returning a string, including the 16,384 UTF-16-unit source limit. Rejected edits return no partial document; the workshop keeps the original rules and valid regex.
+
+In the capture explorer, **Highlight** marks a capture's native UTF-16 input range. An empty capture shows a caret; absent captures and runtimes without native capture indices have no highlight button. Lookaround captures may be outside the consumed match. This is a view of native capture results, not an execution trace; matching remains in the bounded worker.
 
 ## Lookaround assertions
 
@@ -183,7 +250,7 @@ Blocks can contain groups, captures, alternatives, repetitions, anchors and othe
 
 JavaScript matches lookbehind contents backwards: in `/(?<=([ab]+)([bc]+))$/u` against `abc`, captures 1 and 2 are `a` and `bc`. Variable-length lookbehind is accepted when its contents belong to this language. Assertion atomicity and capture updates come from native JavaScript, following [ECMAScript assertion semantics](https://tc39.es/ecma262/2025/multipage/text-processing.html#sec-runtime-semantics-compileassertion); the explanation is structural, not an execution trace. Forward/open references remain rejected by source-order policy, even inside lookbehind where JavaScript can give them a different meaning. Duplicate names remain rejected.
 
-Compilation probes native lookbehind support before emitting the first behind assertion. An unsupported runtime reports `UNSUPPORTED_TARGET_FEATURE` at that opening rule, with a repair hint; it never approximates the assertion. Ahead assertions do not need that probe. The public trace adds `AssertionSegment` with `kind: "assertion"`, `edge: "start" | "end"`, `direction: "ahead" | "behind"`, `negative`, and the usual exact source offsets, original locations and explanations. Consumers switching on segment kinds should handle this variant. These four forms and their reverse translation are included in npm `0.1.0-dev.5`.
+Compilation probes native lookbehind support before emitting the first behind assertion. An unsupported runtime reports `UNSUPPORTED_TARGET_FEATURE` at that opening rule, with a repair hint; it never approximates the assertion. Ahead assertions do not need that probe. The public trace adds `AssertionSegment` with `kind: "assertion"`, `edge: "start" | "end"`, `direction: "ahead" | "behind"`, `negative`, and the usual exact source offsets, original locations and explanations. Consumers switching on segment kinds should handle this variant. These four forms and their reverse translation are included in npm `0.1.0-dev.6`.
 
 ## Repetition
 
@@ -240,11 +307,11 @@ Use a group choice for multiple rules, including a start/end pair. `start "cat"`
 
 Choices follow [ECMAScript disjunction semantics](https://tc39.es/ecma262/2025/multipage/text-processing.html#sec-runtime-semantics-compilesubpattern): earlier alternatives are tried first, including the following regex rules. A skipped branch has absent captures; repeating a choice can clear captures from an earlier iteration. References to those absent captures match empty text, following JavaScript. Capture names remain globally unique, even across mutually exclusive choices. No matching or backtracking is simulated by the explanation trace.
 
-Alternative trace segments use `kind: "alternation"`, `edge: "start" | "branch" | "end"`, `alternatives` and `repetition`, plus the existing source/location/explanation fields. Separator segments navigate to the next choice's rule. Consumers switching on `segments[].kind` should handle this variant. Ordered alternatives and their reverse translation are included in npm `0.1.0-dev.5` and the hosted workshop.
+Alternative trace segments use `kind: "alternation"`, `edge: "start" | "branch" | "end"`, `alternatives` and `repetition`, plus the existing source/location/explanation fields. Separator segments navigate to the next choice's rule. Consumers switching on `segments[].kind` should handle this variant. Ordered alternatives and their reverse translation are included in npm `0.1.0-dev.6` and the hosted workshop.
 
 ## Unicode properties
 
-Included in npm `0.1.0-dev.5`. A property rule consumes one Unicode code point selected by the target runtime:
+Included in npm `0.1.0-dev.6`. A property rule consumes one Unicode code point selected by the target runtime:
 
 | Rule | JavaScript source |
 | --- | --- |
@@ -278,7 +345,7 @@ Compilation probes native property support and reports `UNSUPPORTED_TARGET_FEATU
 
 ## Composable character classes
 
-Included in npm `0.1.0-dev.5`. A u-mode class unions its members and consumes one Unicode code point. Keep the existing `one of:` and `none of:` literal lists, or combine ranges, native shorthands and character properties:
+Included in npm `0.1.0-dev.6`. A u-mode class unions its members and consumes one Unicode code point. Keep the existing `one of:` and `none of:` literal lists, or combine ranges, native shorthands and character properties:
 
 ```text
 start
@@ -311,7 +378,7 @@ Reverse translation preserves native u/v-mode unions, ranges, shorthand/property
 
 ## Native Unicode string sets
 
-Included in npm `0.1.0-dev.5` and the workshop. Select `{ flags: "v" }`, CLI `--flags v` or the workshop's v mode. A finite list uses JSON-quoted strings; the original `one of:` list continues to require single code points:
+Included in npm `0.1.0-dev.6` and the workshop. Select `{ flags: "v" }`, CLI `--flags v` or the workshop's v mode. A finite list uses JSON-quoted strings; the original `one of:` list continues to require single code points:
 
 ```text
 capture "value" {
@@ -329,9 +396,26 @@ Reverse translation preserves `\q{…}` strings and native property aliases. Sep
 
 See the [ECMAScript string-property table](https://tc39.es/ecma262/multipage/text-processing.html#table-binary-unicode-properties-of-strings), [native structural string checks](https://tc39.es/ecma262/multipage/text-processing.html#sec-static-semantics-maycontainstrings) and [MDN's native string-set examples](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Regular_expressions/Character_class#v-mode_character_class).
 
+## Structural diagrams
+
+Available in npm `0.1.0-dev.6` and the hosted workshop. The public `toSVG(rules, options?)` API returns a standalone SVG string after the same parsing, validation and native feature checks as `compile`. `options.flags` follows the same defaults and conflicts.
+
+```js
+import { toSVG } from "regex-for-humans";
+
+const svg = toSVG('capture "part" {\n  either {\n    "ab"\n    "cd"\n  }\n}\noptional "/"', { flags: "u" });
+// Save svg as a UTF-8 .svg file, or display it as an SVG image.
+```
+
+In the local workshop, open **Explore the pattern**. Green rails connect sequences; top-to-bottom branches retain ordered alternatives; loops show repetition bounds and lazy/greedy preference. A zero-count body is faded with a bypass. Dashed assertion panels check their contents without consuming text; lookbehind checks point backwards. Anchors and boundaries are also zero-width. Unicode sets remain a single leaf because set intersection/subtraction and longest-first strings are not ordered regex alternatives.
+
+Hover or focus a diagram node or explanation row to highlight its readable rule and generated fragment. Enter/Space or a click returns to the source line. Moving the source cursor or selecting generated regex also follows the corresponding structure; nested set members map to their owning class. Hover leaves the source caret and scroll position unchanged. **Actual size** allows keyboard scrolling without shrinking labels; **Fit overview** is an explicit scaled view. **Export SVG** saves the current static structure and flags, excluding interactive selection state.
+
+The SVG has escaped XML text, visible controls and safe lone-surrogate display, with no scripts or external resources. Long labels are shortened in the image but retain their full shared explanation in a title. This is a structural aid, **not** a native execution trace, failure-path proof or backtracking debugger.
+
 ## Nested Unicode set operations
 
-Included in npm `0.1.0-dev.5`; native set operations require v mode. Open a block with `character set union {`, `character set intersection {` or `character set subtraction {`; close it with `}` on its own line. Each body line contributes one operand. Nest a block to combine different operations explicitly:
+Included in npm `0.1.0-dev.6`; native set operations require v mode. Open a block with `character set union {`, `character set intersection {` or `character set subtraction {`; close it with `}` on its own line. Each body line contributes one operand. Nest a block to combine different operations explicitly:
 
 ```text
 capture "consonant" {
@@ -355,6 +439,36 @@ Prefix a block with `not` to complement the complete set. Native structural stri
 
 `CharacterClassSegment.operation` identifies the root operation; nested `CharacterClassMember` values use `kind: "set"`, `operation`, `negative`, `members` and `endLocation`. Root and child spans preserve exact emitted source, including operator spacing and required range brackets. Explanations use the same typed tree. The reverse reader preserves operations through these blocks while retaining existing compact leaf normalization and original-regex diagnostic positions. Groups and set blocks share the 64-level depth budget and existing input/source limits. Invalid arity, operands, block forms, missing braces, modes, native capabilities and structural complements receive positioned errors.
 
+## Structural risk review
+
+The package exports `analyze(source, options?)`, using the same readable rules, `CompileOptions`, parser budgets, canonical flags, capability probes and compiler diagnostics as `compile`. Invalid rules throw `CompileError`; the function does not return partial findings for invalid input. It inspects the validated AST without running regex matches.
+
+```js
+import { analyze } from "regex-for-humans";
+
+const review = analyze('one or more group {\none or more "a"\n}', { flags: "u" });
+console.log(review.warnings[0].code); // NESTED_REPETITION
+console.log(review.limitations);
+```
+
+Available in npm `0.1.0-dev.6` and the hosted workshop.
+
+`AnalysisResult` contains canonical `flags`, a `warnings` array of `AnalysisFinding` and a `limitations` array. A finding has an `AnalysisCode`, `severity` (`warning` or `info`), `message`, `hint`, 1-based `line`/`column` and zero-based UTF-16 `sourceStart`/`sourceEnd` offsets into the generated regex source without delimiters. A group or alternative finding spans its full block; a large-source note spans the full generated pattern. No safety boolean, risk score or runtime trace is returned.
+
+| Code | Review prompt |
+| --- | --- |
+| `NESTED_REPETITION` | Repeated single-child groups contain variable repetition of the same unit. |
+| `ADJACENT_REPETITIONS` | Neighboring variable repetitions share a known unit or one-character witness. |
+| `OVERLAPPING_ALTERNATIVES` | Choices share literal prefixes or known one-character matches; repeated choices get warning severity. |
+| `UNBOUNDED_WILDCARD` | A wildcard has no finite repetition maximum. |
+| `DOT_ALL_WILDCARD` | A wildcard includes line breaks with `s`. |
+| `LINE_ANCHORS` | A line anchor can match beside a line break; absolute input anchors do not get this note. |
+| `LARGE_GENERATED_SOURCE` | Generated source exceeds a 32,768 UTF-16-unit review threshold, independent of compiler rejection limits. |
+
+The witness model keeps known members of literals, positive classes/ranges/unions/intersections, selected ASCII shorthands and ASCII case pairs. It does not enumerate Unicode property data. Negation and subtraction return unknown witnesses instead of an incorrect complement; unknown is never evidence of disjointness. Exact-unit identity can still identify repeated identical atoms. Literal-prefix checks are structural, not a language-equivalence or runtime-cost proof. More complex bodies, references, lookaround execution, Unicode case/property aliases and search restart costs are not fully modeled. Findings can be false positives; expensive patterns can be missed. **No findings is not a proof of performance safety.**
+
+In the local workshop, open **Review the pattern** to analyze on demand. Hover or focus connects notes to source rows, generated fragments, explanations and structural diagrams; choosing a note returns to its source line. Source, flags, recipe and group edits invalidate cached results. Invalid source clears old findings. Notes do not block compilation, copying or isolated example matching. The worker deadline remains necessary regardless of the analysis result; copied regexes need appropriate deployment-engine limits and testing.
+
 ## Anchors and flags
 
 The source compiler accepts all eight native JavaScript flags: `d` (indices), `g` (global), `i` (ignore case), `m` (multiline), `s` (dot-all), `u` (Unicode), `v` (Unicode sets) and `y` (sticky). It emits `u` by default unless `v` is selected, adds `m` for any line anchor and returns canonical `dgimsuvy` ordering. `u` and `v` are mutually exclusive. The CLI accepts `--flags FLAGS` or `--flags=FLAGS`; `--ignore-case` / `--dot-all` remain aliases for i/s. Flags require native runtime support and are never dropped or approximated.
@@ -365,7 +479,7 @@ With `m`, input `start` emits `^(?<![\s\S])` and input `end` emits `$(?![\s\S])`
 
 Native g/y regexes are stateful: repeated `.exec()` / `.test()` calls use and update `lastIndex`, and failure resets it to zero. Sticky y requires a match exactly at that cursor. The workshop starts each example at 0, resets both its matcher and whole-string fallback between examples, and uses internal g/d flags once for capture enumeration/indices. Search lists up to 100 matches; y stops at the first gap, and empty matches advance by one Unicode code point. Copied regexes retain the selected flags and native cursor behavior.
 
-Native v mode uses its own class escaping and case-folding/complement semantics. For example, `not unicode property "Lowercase_Letter"` with i/u can match `a`, while i/v cannot: native u folds after complementing and native v folds before. Outer class negation remains separate. Supported literals, ranges, shorthands and character properties work in either mode; finite strings and string properties require v. Nested v sets and intersection/subtraction remain explicit unsupported features.
+Native v mode uses its own class escaping and case-folding/complement semantics. For example, `not unicode property "Lowercase_Letter"` with i/u can match `a`, while i/v cannot: native u folds after complementing and native v folds before. Outer class negation remains separate. Supported literals, ranges, shorthands and character properties work in either mode; finite strings, string properties, nested sets and intersection/subtraction require v.
 
 Without `m`, JavaScript `^` and `$` match only the true start and end of input. For example, `start "A"` / `end` rejects `A` followed by a line break. With `m`, line anchors match line boundaries. Other regex engines may behave differently.
 

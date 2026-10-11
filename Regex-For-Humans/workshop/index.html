@@ -24,9 +24,10 @@
   <meta name="twitter:image:alt" content="A colorful Regex For Humans card showing clear English rules turning into an explained JavaScript regex.">
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; connect-src 'self'; object-src 'none'; base-uri 'self'">
   <title>Regex For Humans — Workshop</title>
-  <link rel="icon" type="image/svg+xml" href="./web/favicon.svg?v=89d227d97b70">
-  <link rel="stylesheet" href="./web/styles.css?v=89d227d97b70">
-  <script type="module" src="./web/app.js?v=89d227d97b70"></script>
+  <link rel="icon" type="image/svg+xml" href="./web/favicon.svg?v=049b4eaff903">
+  <link rel="stylesheet" href="./web/styles.css?v=049b4eaff903">
+  <script type="module" src="./web/theme.js?v=049b4eaff903"></script>
+  <script type="module" src="./web/app.js?v=049b4eaff903"></script>
 </head>
 <body>
   <a class="skip-link" href="#main">Skip to workshop</a>
@@ -51,8 +52,9 @@
     <main id="main" class="main-content" tabindex="-1">
       <header class="topbar">
         <span>THE WORKSHOP <span class="topbar-slash">/</span> REGEX FOR HUMANS</span>
-        <span class="build-label">DEV · 0.1.0-dev.5</span>
+        <div class="topbar-tools"><div class="topbar-setting"><label for="interface-language">Interface language</label><select id="interface-language" aria-describedby="interface-language-help" disabled><option value="en" lang="en">English</option><option value="zh-CN" lang="zh-CN">简体中文</option><option value="es" lang="es">Español</option><option value="fr" lang="fr">Français</option></select></div><div class="topbar-setting"><label for="interface-theme">Theme</label><select id="interface-theme" disabled><option value="system">System</option><option value="light">Light</option><option value="dark">Dark</option></select></div><span class="build-label">DEV · 0.1.0-dev.6</span></div>
       </header>
+      <p id="interface-language-help" class="interface-language-help">Interface labels are translated. Rules use controlled English; compiler explanations, diagram labels and exported technical requirements stay in English.</p>
 
       <section class="hero" aria-labelledby="page-title">
         <div class="hero-copy">
@@ -67,10 +69,11 @@
         <section class="panel editor-panel" aria-labelledby="rules-title">
           <div class="panel-heading"><span class="step-number">01</span><div><p class="kicker">THE INPUT ✍️</p><h2 id="rules-title">Write your rules</h2></div></div>
           <p id="recipe-note" class="recipe-note" hidden></p>
-          <noscript><p class="recipe-note">This workshop needs JavaScript to compile rules and test examples. <a href="./web/language.html?v=89d227d97b70">Read the syntax guide</a> without JavaScript.</p></noscript>
+          <noscript><p class="recipe-note">This workshop needs JavaScript to compile rules and test examples. <a href="./web/language.html?v=049b4eaff903">Read the syntax guide</a> without JavaScript.</p></noscript>
           <label for="rules-input" class="field-label">Write your rules</label>
           <textarea id="rules-input" spellcheck="false" autocomplete="off" autocapitalize="off" autocorrect="off" aria-invalid="false" aria-describedby="rules-help recipe-note diagnostic" placeholder="start &quot;ABC&quot;&#10;3 digits&#10;end"></textarea>
-          <div class="editor-footer"><p id="rules-help">A controlled language, not a free-form prompt. <a href="./web/language.html?v=89d227d97b70" target="_blank" rel="noopener noreferrer">Read the syntax ↗</a> · <a href="https://github.com/OthmaneBlial/Regex-For-Humans/blob/main/docs/COMPLEX-EXAMPLES.md" target="_blank" rel="noopener noreferrer">Complex examples ↗</a></p><span id="rule-count">0 rules</span></div>
+          <p id="rule-focus" class="rule-focus" hidden></p>
+          <div class="editor-footer"><p id="rules-help">A controlled language, not a free-form prompt. <a href="./web/language.html?v=049b4eaff903" target="_blank" rel="noopener noreferrer">Read the syntax ↗</a> · <a href="https://github.com/OthmaneBlial/Regex-For-Humans/blob/main/docs/COMPLEX-EXAMPLES.md" target="_blank" rel="noopener noreferrer">Complex examples ↗</a></p><span id="rule-count">0 rules</span></div>
           <fieldset class="flag-controls" aria-label="Regex options" aria-describedby="flags-help">
             <label class="flag-toggle"><input id="ignore-case" type="checkbox"><span class="toggle-track" aria-hidden="true"></span><span>Ignore case <code>i</code></span></label>
             <label class="flag-toggle"><input id="dot-all" type="checkbox"><span class="toggle-track" aria-hidden="true"></span><span>Dot matches newlines <code>s</code></span></label>
@@ -99,13 +102,61 @@
           <section class="pattern-box" aria-label="Generated JavaScript regex" tabindex="0"><code id="regex-output">Select a recipe or write a rule</code></section>
           <div class="result-actions"><span id="flags-summary">Unicode mode always on</span><button id="copy-button" class="copy-button" type="button" disabled>Copy regex <span aria-hidden="true">↗</span></button></div>
           <div id="diagnostic" class="diagnostic" role="alert" hidden></div>
+          <details id="language-export" class="group-editor language-export">
+            <summary>Export to a programming language</summary>
+            <div class="group-edit-form export-controls">
+              <label for="export-target">Target language</label>
+              <select id="export-target" aria-describedby="export-help export-status">
+                <option value="javascript">JavaScript</option><option value="typescript">TypeScript</option>
+                <option value="python">Python</option><option value="rust">Rust</option><option value="go">Go</option>
+                <option value="java">Java</option><option value="csharp">C#</option><option value="php">PHP — runtime unverified</option><option value="ruby">Ruby</option>
+              </select>
+            </div>
+            <p id="export-help">Code generation translates supported regex semantics through the shared compiler. Unsupported flags or constructs explain why export is unavailable. Example tests below still use JavaScript.</p>
+            <p id="export-status" role="status">Compile valid rules to export source code.</p>
+            <button id="export-error" class="secondary-button" type="button" aria-controls="rules-input" hidden>Go to export error</button>
+            <!-- biome-ignore lint/a11y/noNoninteractiveTabindex: Keyboard focus enables native scrolling of generated source code. -->
+            <section id="export-code-region" class="export-code-box" aria-label="Generated source code" tabindex="0" dir="ltr"><code id="export-code"></code></section>
+            <ul id="export-requirements" class="review-limitations" aria-label="Export requirements"></ul>
+            <ul id="export-captures" class="review-limitations" aria-label="Export capture mapping" dir="ltr"></ul>
+            <div class="group-edit-actions"><button id="export-download" class="secondary-button" type="button" disabled>Download code</button><button id="export-json" class="secondary-button" type="button" disabled>Download export JSON</button></div>
+          </details>
+          <details id="group-editor" class="group-editor" hidden>
+            <summary>Edit groups and references</summary>
+            <p id="group-edit-help">Rename a capture or change its type. Numbered references keep their original targets. A referenced capture cannot become noncapturing.</p>
+            <form id="group-edit-form" class="group-edit-form" aria-label="Edit a group">
+              <label for="group-select">Group to edit</label><select id="group-select" aria-describedby="group-edit-help" disabled></select>
+              <label for="group-type">Group type</label><select id="group-type" disabled><option value="named">Named capture</option><option value="numbered">Numbered capture</option><option value="none">Noncapturing group</option></select>
+              <label for="group-name">Capture name</label><input id="group-name" type="text" spellcheck="false" autocomplete="off" autocapitalize="off" autocorrect="off" aria-invalid="false" disabled>
+              <div class="group-edit-actions"><button id="group-apply" class="secondary-button" type="submit" disabled>Apply group edit</button><button id="group-locate" class="secondary-button" type="button" disabled>Go to group rule</button></div>
+            </form>
+            <p id="group-info"></p><ul id="group-references" class="group-edit-actions" aria-label="References to this group"></ul>
+            <p id="group-feedback" role="status"></p>
+          </details>
+          <details id="pattern-review" class="group-editor pattern-review">
+            <summary>Review the pattern <span id="review-count">Open to review</span></summary>
+            <p id="review-status" role="status">Compile valid rules to review the pattern.</p>
+            <div id="review-findings" class="review-findings"></div>
+            <p>Analysis inspects structure; it does not run matches or measure backtracking. Example matching still runs in an isolated worker with a time limit.</p>
+            <ul id="review-limitations" class="review-limitations" aria-label="Analysis limitations"></ul>
+          </details>
           <div class="trace-heading"><h3>How it was built</h3><span>RULE → FRAGMENT</span></div>
           <div id="trace-list" class="trace-list" aria-live="polite"><p class="empty-trace">Each rule will appear here with its generated fragment and meaning.</p></div>
         </section>
       </div>
 
+      <details id="structure-diagram" class="panel structure-diagram">
+        <summary><span class="step-number">03</span><span><span class="kicker">THE STRUCTURE ↝</span><strong>Explore the pattern</strong></span><span class="diagram-open-hint">OPEN THE MAP</span></summary>
+        <div class="diagram-body">
+          <div class="diagram-toolbar"><p>Hover to connect the views. Select a node, or press Enter/Space, to return to its rule.</p><label for="diagram-scale">Diagram view <select id="diagram-scale" aria-label="Diagram view" disabled><option value="actual">Actual size</option><option value="fit">Fit overview</option></select></label><button id="diagram-export" class="secondary-button" type="button" disabled>Export SVG ↗</button></div>
+          <!-- biome-ignore lint/a11y/noNoninteractiveTabindex: Keyboard focus enables native scrolling of a large diagram. -->
+          <section id="diagram-viewport" class="diagram-viewport" aria-label="Scrollable regex diagram" tabindex="0" data-scale="actual"></section>
+          <p id="diagram-message" class="diagram-message" role="status">Compile valid rules to explore their structure.</p>
+        </div>
+      </details>
+
       <section class="panel examples-panel" aria-labelledby="examples-title">
-        <div class="examples-heading"><div class="panel-heading"><span class="step-number">03</span><div><p class="kicker">THE PROOF 🧪</p><h2 id="examples-title">Check the edge cases</h2></div></div><div class="test-controls"><label for="match-mode">Match mode</label><select id="match-mode" aria-describedby="match-mode-help"><option value="full">Entire string</option><option value="search">Search anywhere</option></select><button id="add-example" class="secondary-button" type="button" disabled>+ Add example</button></div></div>
+        <div class="examples-heading"><div class="panel-heading"><span class="step-number">04</span><div><p class="kicker">THE PROOF 🧪</p><h2 id="examples-title">Check the edge cases</h2></div></div><div class="test-controls"><label for="match-mode">Match mode</label><select id="match-mode" aria-describedby="match-mode-help"><option value="full">Entire string</option><option value="search">Search anywhere</option></select><button id="add-example" class="secondary-button" type="button" disabled>+ Add example</button></div></div>
         <p class="examples-intro">Mark what should match. The workshop shows where the pattern agrees or surprises you. <span id="example-limits">Up to 100 examples; 2,048 UTF-16 code units per string. Longer input is kept but cannot be tested. Leave a field blank to test an empty string.</span></p>
         <p id="match-mode-help" class="examples-intro">Entire string requires a match covering the whole example. Search anywhere lists up to 100 nonoverlapping matches, including empty matches. Positions start at 0 and count UTF-16 code units; an emoji such as 😀 counts as two. Open a match to inspect its captures.</p>
         <div id="test-summary" class="test-summary" role="status">Choose a recipe to load example strings.</div>

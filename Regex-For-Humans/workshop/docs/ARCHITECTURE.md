@@ -2,7 +2,15 @@
 
 Regex For Humans is a dependency-free JavaScript ESM compiler with a CLI and a static browser workshop. The language is deliberately finite: each nonblank rule must match a documented instruction. There is no natural-language model, arbitrary regex passthrough or server-side compilation.
 
+## Structural review path
+
+Source-only `analyze` parses and compiles through the existing validated AST, then inspects structural repetition, literal-prefix relationships and conservative character witnesses. It uses the compiler's canonical flags and source spans; no alternate grammar or match engine is introduced. A positive witness is a known shared character, while an empty witness set means unknown. Negation/subtraction and incomplete Unicode case/property coverage never become disjointness or safety proofs.
+
+The typed result carries review notes and limitations, without running matches or measuring backtracking. The workshop computes it on demand, invalidates it on source/flag/recipe/group changes and shares source-navigation behavior with explanation buttons and diagrams. The match worker and deadline remain independent. See [the analysis contract](LANGUAGE.md#structural-risk-review).
+
 ## Compilation path
+
+The source-only `exportRegex` path parses once and validates with `compileAst` before target-specific emission in `src/export.js`. JavaScript/TypeScript reuse the exact native pattern; foreign backends translate scalar classes, finite sets, assertions, references and repetition with positioned compatibility checks. Capture identities are mapped to ASCII names; emitted regex syntax and language source-code quoting are separate operations. No second grammar, runtime dependency or foreign matcher is loaded by the package. The CLI and on-demand workshop panel call this same public API; changing rules/flags/groups/recipes invalidates exported code. Local code/JSON downloads use text blobs and contain no executed HTML. Native SDK execution exists only in the optional verification script. See [engine exports](LANGUAGE.md#engine-exports) for the supported profiles and input contract.
 
 ```text
 rules (string)
@@ -23,6 +31,8 @@ The browser imports the same `index.js` from the static build. `web/app.js` hand
 
 The internal `TestRunner.run(payload)` reports worker construction and message-send failures through rejected `WORKER_ERROR` promises. Starting a run cancels the previous one, including when the new worker cannot start; later attempts remain available. The controller assigns the request ID after copying payload fields so an extra caller-supplied `id` cannot interfere with reply routing. Example IDs inside `cases` are preserved separately.
 
+Frozen source, line, repetition and nesting budgets live in the dependency-free `src/limits.js`; the parser re-exports the same object for existing internal callers. The match worker imports this leaf directly, so cold matching does not fetch or evaluate the parser, AST or diagnostics. Request validation, the generated-source budget and the 1,200 ms deadline are unchanged. A browser recovery check blocks those compiler modules while verifying Unicode capture spans, rejection above the source budget and a fresh successful worker after rejection.
+
 The workshop counter uses the parser's shared source-length limit before splitting rules. Oversized input shows “Over limit” and remains editable. Source navigation splits at most the limit plus one UTF-16 code unit, retaining the first excess unit for the existing source-limit diagnostic. Valid counters and selections retain the compiler's logical-line semantics.
 
 Compiler option validation checks a maximum of eight unique native flag letters, rejects u/v combinations before emission, then probes native support. It avoids scanning arbitrarily long option strings and preserves canonical flag ordering.
@@ -40,6 +50,30 @@ The workshop requests capture exploration with an optional internal `captureCoun
 The parser uses a stack for brace-delimited groups, sharing existing atom parsing and repetition validation. Capture numbering is assigned in opening order; names are validated as Unicode JavaScript identifiers and duplicates are rejected globally. Each stack frame retains its enclosing sequence and anchor position state. The source and line budgets still apply, with an additional 64-level nesting budget. The emitter traverses this bounded tree and emits a flat, ordered trace of group openings, child rules and group closings. Existing flat-rule result shapes are preserved; the new group segment variant is declared in `index.d.ts`. The explanation, CLI JSON and workshop trace share those same nodes and numbering. Matching continues inside the terminable worker.
 
 References are resolved against the completed capture table after parsing. A reference carries its target token's location and the enclosing groups at that point; this distinguishes missing, forward and open/self targets. The language rejects forward/open references explicitly, while preserving native empty behavior for nonparticipating optional captures. Numeric references have a noncapturing emission boundary to prevent a following literal digit from extending the reference number. CLI, declarations, explanations and workshop compilation share the resolved metadata.
+
+## Workshop localization
+
+`web/translations.js` supplies Simplified Chinese, Spanish and French messages with English keys. `web/i18n.js` binds trusted initial UI text and explicit dynamic messages to text nodes, and accessible names to attributes. Language changes update those bindings in place without compiling, posting worker messages, rebuilding test inputs or resetting open panels. Weak maps let removed rows and their closures be collected. Substitution runs once and assigns text, never HTML; code, capture names, captured values and user inputs are not scanned for translations.
+
+The four-language selector updates the document language and remembers its choice in local storage when available; denied storage and unknown saved languages keep the workshop usable. Controlled English grammar remains independent of interface translation. Compiler explanations, diagnostic detail, exported engine requirements and diagram labels remain English and are called out beside the selector. This source feature is not yet in the hosted dev.5 workshop. Native-speaker and real screen-reader review remain separate gates.
+
+## Theme preference
+
+The dependency-free `web/theme.js` module loads before the compiler entry point and applies a validated local theme preference. The native selector follows the system color scheme by default, reacts to media changes in system mode, and remembers explicit light/dark choices when storage is available. Invalid saved values fall back to system mode; denied storage does not prevent selection or compilation. Its handler is attached before the selector is enabled.
+
+Theme changes update only the root data attribute and CSS palette. They do not rebuild nodes, compile rules or post worker requests; fields, selections, scrolling and open panels stay intact. Appearance choices during recipe loading are excluded from user rule edits, so initial examples still load. Theme labels use the existing four-language catalog. Semantic colors distinguish ordinary text, accent-button ink and persistent dark code/navigation surfaces; standalone SVG diagrams retain their own readable export palette.
+
+## Structural visualization
+
+`src/diagram.js` parses the same readable language and validates that AST through `compileAst` before layout. Compiler segments supply exact generated-source ranges and source locations. Containers draw nested sequences, source-ordered alternative paths and bounded repetition loops; assertions keep their check separate from the consuming rail, with lookbehind arrows pointing backwards. Character-class operands stay one semantic leaf, including string sets and nested operations. Quantifiers are not expanded into repeated nodes.
+
+The public `toSVG` result is a self-contained static image. Labels use shared explanations, XML escaping, visible control characters and escaped lone surrogates; it contains no script, external resource or foreign HTML. The workshop imports that generated XML, adds keyboard buttons to rule nodes and connects them to the existing source/trace/pattern views. Native textarea measurements highlight wrapped source rows without changing selection or scrolling on hover. SVG work happens on demand, and each source/flag change invalidates the old diagram. Export uses the static result, excluding interactive selection state. The diagram explains structure, not native engine execution or backtracking.
+
+## Group editing
+
+`src/edit-group.js` edits group definitions using the parser's resolved capture table and the same compiler. It validates the original document, traverses group/assertion/alternative nodes in opening order, computes retained capture numbers and patches only the selected header and affected reference tokens. Quote-aware line splitting preserves exact UTF-16 locations across supported line separators. A referenced capture cannot become noncapturing; all other proposals are parsed and compiled again before a string is returned. The source-only `editGroup` export and local workshop form share this behavior; no second grammar or matcher is introduced.
+
+Workshop capture highlighting reuses the native ranges already validated by the worker controller. It can show empty captures and lookaround values outside the consumed match, but never guesses spans for absent captures or runtimes without native indices. Matching retains the existing worker cancellation, result validation and deadline. These additions are not in the published dev.5 package/site.
 
 ## Unicode property atoms
 

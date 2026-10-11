@@ -1,12 +1,22 @@
-import { CompileError, compile, regexToRules } from "../index.js?v=89d227d97b70";
-import { escapeControls, quoteText } from "../src/display.js?v=89d227d97b70";
-import { LIMITS, splitLines } from "../src/parser.js?v=89d227d97b70";
-import { parseRegexLiteral } from "../src/regex-literal.js?v=89d227d97b70";
-import { TestRunError, TestRunner } from "./test-runner.js?v=89d227d97b70";
+import {
+  analyze,
+  CompileError,
+  compile,
+  editGroup,
+  exportRegex,
+  regexToRules,
+  toSVG,
+} from "../index.js?v=049b4eaff903";
+import { escapeControls, quoteText } from "../src/display.js?v=049b4eaff903";
+import { LIMITS, splitLines } from "../src/parser.js?v=049b4eaff903";
+import { parseRegexLiteral } from "../src/regex-literal.js?v=049b4eaff903";
+import { initializeLanguage, message, setAttribute, setText } from "./i18n.js?v=049b4eaff903";
+import { TestRunError, TestRunner } from "./test-runner.js?v=049b4eaff903";
 
 /** @typedef {import("./worker-protocol.d.ts").TestCase} TestCase */
 /** @typedef {{id: string, title: string, note: string, rules: string, source: string, flags: string, matchMode: "full" | "search", positive: string[], negative: string[]}} ProductScenario */
 /** @typedef {"success" | "neutral" | "error"} CompileState */
+/** @typedef {{line: number, column: number, sourceStart: number, sourceEnd: number}} RuleFocus */
 
 /**
  * @template {HTMLElement} E
@@ -21,6 +31,8 @@ function requiredElement(id, type) {
 }
 
 const ui = {
+  language: requiredElement("interface-language", HTMLSelectElement),
+  theme: requiredElement("interface-theme", HTMLSelectElement),
   examples: requiredElement("example-list", HTMLElement),
   recipeCount: requiredElement("recipe-count", HTMLSpanElement),
   recipeNote: requiredElement("recipe-note", HTMLParagraphElement),
@@ -41,13 +53,47 @@ const ui = {
   compileState: requiredElement("compile-state", HTMLSpanElement),
   flagsSummary: requiredElement("flags-summary", HTMLSpanElement),
   copy: requiredElement("copy-button", HTMLButtonElement),
+  exportPanel: requiredElement("language-export", HTMLDetailsElement),
+  exportTarget: requiredElement("export-target", HTMLSelectElement),
+  exportStatus: requiredElement("export-status", HTMLParagraphElement),
+  exportCode: requiredElement("export-code", HTMLElement),
+  exportViewport: requiredElement("export-code-region", HTMLElement),
+  exportRequirements: requiredElement("export-requirements", HTMLUListElement),
+  exportCaptures: requiredElement("export-captures", HTMLUListElement),
+  exportError: requiredElement("export-error", HTMLButtonElement),
+  exportDownload: requiredElement("export-download", HTMLButtonElement),
+  exportJSON: requiredElement("export-json", HTMLButtonElement),
   diagnostic: requiredElement("diagnostic", HTMLDivElement),
   trace: requiredElement("trace-list", HTMLDivElement),
+  review: requiredElement("pattern-review", HTMLDetailsElement),
+  reviewCount: requiredElement("review-count", HTMLSpanElement),
+  reviewStatus: requiredElement("review-status", HTMLParagraphElement),
+  reviewFindings: requiredElement("review-findings", HTMLDivElement),
+  reviewLimits: requiredElement("review-limitations", HTMLUListElement),
+  ruleFocus: requiredElement("rule-focus", HTMLParagraphElement),
+  diagram: requiredElement("structure-diagram", HTMLDetailsElement),
+  diagramViewport: requiredElement("diagram-viewport", HTMLElement),
+  diagramMessage: requiredElement("diagram-message", HTMLParagraphElement),
+  diagramScale: requiredElement("diagram-scale", HTMLSelectElement),
+  diagramExport: requiredElement("diagram-export", HTMLButtonElement),
+  groupEditor: requiredElement("group-editor", HTMLDetailsElement),
+  groupForm: requiredElement("group-edit-form", HTMLFormElement),
+  groupSelect: requiredElement("group-select", HTMLSelectElement),
+  groupType: requiredElement("group-type", HTMLSelectElement),
+  groupName: requiredElement("group-name", HTMLInputElement),
+  groupApply: requiredElement("group-apply", HTMLButtonElement),
+  groupLocate: requiredElement("group-locate", HTMLButtonElement),
+  groupInfo: requiredElement("group-info", HTMLParagraphElement),
+  groupReferences: requiredElement("group-references", HTMLUListElement),
+  groupFeedback: requiredElement("group-feedback", HTMLParagraphElement),
   matchMode: requiredElement("match-mode", HTMLSelectElement),
   addExample: requiredElement("add-example", HTMLButtonElement),
   testSummary: requiredElement("test-summary", HTMLDivElement),
   testList: requiredElement("test-list", HTMLDivElement),
 };
+
+initializeLanguage(document, ui.language);
+setText(ui.output, message("Select a recipe or write a rule"));
 
 const flagInputs = {
   d: ui.matchIndices,
@@ -67,6 +113,17 @@ let nextTestId = 1;
 let reverseErrorPosition = null;
 /** @type {ReturnType<typeof compile> | null} */
 let compiled = null;
+/** @type {ReturnType<typeof exportRegex> | null} */
+let exported = null;
+/** @type {import('../index.d.ts').GroupSegment[]} */
+let groupSegments = [];
+/** @type {RuleFocus|null} */
+let selectedRule = null;
+/** @type {RuleFocus|null} */
+let visibleRule = null;
+let diagramSVG = "";
+/** @type {import('../index.d.ts').AnalysisResult|null} */
+let reviewResult = null;
 let hasEdits =
   ui.rules.value !== "" ||
   Object.values(flagInputs).some((input) => input.checked) ||
@@ -75,34 +132,116 @@ let hasEdits =
 let copyFeedbackTimer = 0;
 let copySequence = 0;
 const testRunner = new TestRunner(
-  () => new Worker(new URL("./match-worker.js?v=89d227d97b70", import.meta.url), { type: "module" }),
+  () => new Worker(new URL("./match-worker.js?v=049b4eaff903", import.meta.url), { type: "module" }),
 );
 
 /**
  * @template {keyof HTMLElementTagNameMap} K
  * @param {K} tag
  * @param {string} [className=""]
- * @param {string} [text]
+ * @param {string | import('./i18n.js?v=049b4eaff903').Message} [text]
  * @returns {HTMLElementTagNameMap[K]}
  */
 function make(tag, className = "", text) {
   const node = document.createElement(tag);
   if (className) node.className = className;
-  if (text !== undefined) node.textContent = text;
+  if (text !== undefined) setText(node, text);
   return node;
 }
 
 /** @param {string} label @param {CompileState} state */
 function setCompileState(label, state) {
-  ui.compileState.textContent = label;
+  setText(ui.compileState, message(label));
   ui.compileState.dataset.state = state;
 }
 
-/** @param {string} message @param {boolean} [invalidRules=false] */
-function setDiagnostic(message, invalidRules = false) {
-  ui.diagnostic.hidden = !message;
-  ui.diagnostic.textContent = message || "";
+/** @param {string | import('./i18n.js?v=049b4eaff903').Message} text @param {boolean} [invalidRules=false] */
+function setDiagnostic(text, invalidRules = false) {
+  ui.diagnostic.hidden = !text;
+  setText(ui.diagnostic, text || "");
   ui.rules.setAttribute("aria-invalid", String(invalidRules));
+}
+
+function renderExport() {
+  exported = null;
+  ui.exportCode.textContent = "";
+  ui.exportRequirements.replaceChildren();
+  ui.exportCaptures.replaceChildren();
+  ui.exportDownload.disabled = true;
+  ui.exportJSON.disabled = true;
+  ui.exportError.hidden = true;
+  delete ui.exportStatus.dataset.state;
+  if (!compiled || !ui.exportPanel.open) {
+    setText(
+      ui.exportStatus,
+      message(
+        compiled
+          ? "Open this panel to generate source code for the selected language."
+          : "Compile valid rules to export source code.",
+      ),
+    );
+    return;
+  }
+  try {
+    exported = exportRegex(ui.rules.value, {
+      target: /** @type {import('../index.d.ts').ExportTarget} */ (ui.exportTarget.value),
+      flags: compiled.flags,
+    });
+    ui.exportCode.textContent = exported.code;
+    setText(
+      ui.exportStatus,
+      message("{engine}. Source code generated; this browser does not run the exported code.", {
+        engine: exported.engine,
+      }),
+    );
+    for (const requirement of exported.requirements)
+      ui.exportRequirements.append(make("li", "", requirement));
+    for (const capture of exported.captures) {
+      const name = capture.name === null ? message("unnamed") : quoteText(capture.name);
+      const target = capture.targetName === null ? `#${capture.index}` : capture.targetName;
+      ui.exportCaptures.append(
+        make(
+          "li",
+          "",
+          message("#{index} {name} → {target}", { index: capture.index, name, target }),
+        ),
+      );
+    }
+    ui.exportDownload.disabled = false;
+    ui.exportJSON.disabled = false;
+  } catch (error) {
+    ui.exportStatus.dataset.state = "error";
+    setText(
+      ui.exportStatus,
+      error instanceof CompileError
+        ? message("{code} — line {line}, column {column}: {error}{hint}", {
+            code: error.code,
+            line: error.line,
+            column: error.column,
+            error: error.message,
+            hint: error.hint ? `\n${error.hint}` : "",
+          })
+        : message("Export failed: {error}", {
+            error: error instanceof Error ? error.message : String(error),
+          }),
+    );
+    if (error instanceof CompileError) {
+      ui.exportError.hidden = false;
+      ui.exportError.onclick = () => selectLine(error.line, error.column);
+    }
+  }
+}
+
+/** @param {string} text @param {string} filename @param {string} type */
+function downloadText(text, filename, type) {
+  const url = URL.createObjectURL(new Blob([text], { type }));
+  const link = make("a");
+  link.href = url;
+  link.download = filename;
+  document.body.append(link);
+  link.click();
+  link.remove();
+  window.setTimeout(() => URL.revokeObjectURL(url), 1000);
 }
 
 /** @param {number} number @param {number} [column] */
@@ -165,7 +304,7 @@ function renderTrace(segments) {
       make(
         "p",
         "empty-trace",
-        "Each rule will appear here with its generated fragment and meaning.",
+        message("Each rule will appear here with its generated fragment and meaning."),
       ),
     );
     return;
@@ -173,9 +312,13 @@ function renderTrace(segments) {
   for (const segment of segments) {
     const button = make("button", "trace-item");
     button.type = "button";
-    button.setAttribute(
+    setAttribute(
+      button,
       "aria-label",
-      `Rule on line ${segment.line}: ${segment.explanation} Select source line.`,
+      message("Rule on line {line}: {explanation} Select source line.", {
+        line: segment.line,
+        explanation: segment.explanation,
+      }),
     );
     button.append(make("code", "trace-fragment", segment.source));
     const detail = make("span");
@@ -188,9 +331,293 @@ function renderTrace(segments) {
     );
     detail.append(make("span", "trace-meaning", segment.explanation));
     button.append(detail);
-    button.addEventListener("click", () => selectLine(segment.line));
+    connectRuleButton(button, segment);
     ui.trace.append(button);
   }
+}
+
+/** @param {HTMLButtonElement} button @param {RuleFocus} rule */
+function connectRuleButton(button, rule) {
+  Object.assign(button.dataset, {
+    line: String(rule.line),
+    column: String(rule.column),
+    sourceStart: String(rule.sourceStart),
+    sourceEnd: String(rule.sourceEnd),
+  });
+  button.addEventListener("pointerenter", () => showRule(rule));
+  button.addEventListener("pointerleave", () => showRule(selectedRule));
+  button.addEventListener("focus", () => showRule(rule));
+  button.addEventListener("blur", () => showRule(selectedRule));
+  button.addEventListener("click", () => {
+    selectedRule = rule;
+    selectLine(rule.line);
+    showRule(rule);
+  });
+}
+
+function renderReview() {
+  ui.reviewFindings.replaceChildren();
+  ui.reviewLimits.replaceChildren();
+  if (!compiled) {
+    setText(ui.reviewCount, message("Needs valid rules"));
+    setText(ui.reviewStatus, message("Compile valid rules to review the pattern."));
+    return;
+  }
+  if (!ui.review.open && !reviewResult) {
+    setText(ui.reviewCount, message("Open to review"));
+    setText(ui.reviewStatus, message("Open this panel for a structural review."));
+    return;
+  }
+  try {
+    reviewResult ??= analyze(ui.rules.value, { flags: compiled.flags });
+    const count = reviewResult.warnings.length;
+    setText(
+      ui.reviewCount,
+      message(
+        count ? (count === 1 ? "{count} review note" : "{count} review notes") : "No findings",
+        { count },
+      ),
+    );
+    setText(
+      ui.reviewStatus,
+      message(
+        count
+          ? "These are heuristic review notes, not measured runtime results. Select one to inspect its source rule."
+          : "No heuristic findings detected. This does not prove performance safety.",
+      ),
+    );
+    for (const finding of reviewResult.warnings) {
+      const button = make("button", "review-item");
+      button.type = "button";
+      button.dataset.code = finding.code;
+      button.dataset.severity = finding.severity;
+      setAttribute(
+        button,
+        "aria-label",
+        message("{severity} on line {line}: {error} Select source line.", {
+          severity: message(finding.severity === "warning" ? "Review" : "Information"),
+          line: finding.line,
+          error: finding.message,
+        }),
+      );
+      button.append(
+        make(
+          "span",
+          "review-label",
+          message("{severity} · LINE {line}", {
+            severity: message(finding.severity === "warning" ? "REVIEW" : "INFORMATION"),
+            line: finding.line,
+          }),
+        ),
+        make("span", "review-message", finding.message),
+        make("span", "review-hint", finding.hint),
+      );
+      connectRuleButton(button, finding);
+      ui.reviewFindings.append(button);
+    }
+    for (const limitation of reviewResult.limitations)
+      ui.reviewLimits.append(make("li", "", limitation));
+    showRule(visibleRule);
+  } catch (error) {
+    reviewResult = null;
+    ui.reviewFindings.replaceChildren();
+    setText(ui.reviewCount, message("Review unavailable"));
+    setText(
+      ui.reviewStatus,
+      message("Pattern review failed: {error} No performance conclusion is available.", {
+        error: error instanceof Error ? error.message : String(error),
+      }),
+    );
+  }
+}
+
+/** @param {Element} element @returns {RuleFocus} */
+function ruleFromElement(element) {
+  return {
+    line: Number(element.getAttribute("data-line")),
+    column: Number(element.getAttribute("data-column")),
+    sourceStart: Number(element.getAttribute("data-source-start")),
+    sourceEnd: Number(element.getAttribute("data-source-end")),
+  };
+}
+
+function highlightSourceRow() {
+  if (!visibleRule) {
+    delete ui.rules.dataset.highlight;
+    return;
+  }
+  const lines = splitLines(ui.rules.value);
+  const start = lines
+    .slice(0, visibleRule.line - 1)
+    .reduce((sum, line) => sum + line.length + 1, 0);
+  const end = start + (lines[visibleRule.line - 1]?.length ?? 0);
+  const style = getComputedStyle(ui.rules);
+  const measure = make("textarea");
+  measure.setAttribute("aria-hidden", "true");
+  Object.assign(measure.style, {
+    position: "fixed",
+    visibility: "hidden",
+    height: "0",
+    minHeight: "0",
+    overflow: "hidden",
+    border: "0",
+    width: `${ui.rules.clientWidth}px`,
+    padding: style.padding,
+    font: style.font,
+    tabSize: style.tabSize,
+  });
+  document.body.append(measure);
+  const lineHeight = Number.parseFloat(style.lineHeight);
+  const bottomPadding = Number.parseFloat(style.paddingBottom);
+  measure.value = `${ui.rules.value.slice(0, start)}\u200b`;
+  const top = measure.scrollHeight - bottomPadding - lineHeight - ui.rules.scrollTop;
+  measure.value = `${ui.rules.value.slice(0, end)}\u200b`;
+  const bottom = measure.scrollHeight - bottomPadding - ui.rules.scrollTop;
+  measure.remove();
+  ui.rules.dataset.highlight = String(visibleRule.line);
+  ui.rules.style.setProperty("--rule-highlight-top", `${top}px`);
+  ui.rules.style.setProperty("--rule-highlight-bottom", `${bottom}px`);
+}
+
+/** @param {RuleFocus|null} rule */
+function showRule(rule) {
+  visibleRule = rule;
+  ui.ruleFocus.hidden = !rule;
+  if (!compiled) return;
+  ui.output.replaceChildren(document.createTextNode("/"));
+  if (rule) {
+    ui.output.append(document.createTextNode(compiled.source.slice(0, rule.sourceStart)));
+    ui.output.append(
+      make("mark", "regex-focus", compiled.source.slice(rule.sourceStart, rule.sourceEnd)),
+    );
+    ui.output.append(document.createTextNode(compiled.source.slice(rule.sourceEnd)));
+    const line = splitLines(ui.rules.value)[rule.line - 1] ?? "";
+    setText(
+      ui.ruleFocus,
+      message("Line {line}: {text}", { line: rule.line, text: escapeControls(line).slice(0, 180) }),
+    );
+  } else ui.output.append(document.createTextNode(compiled.source));
+  ui.output.append(document.createTextNode(`/${compiled.flags}`));
+  for (const item of ui.trace.querySelectorAll("[data-source-start]")) {
+    const meta = ruleFromElement(item);
+    item.classList.toggle(
+      "is-related",
+      !!rule && meta.sourceStart >= rule.sourceStart && meta.sourceEnd <= rule.sourceEnd,
+    );
+  }
+  for (const item of ui.reviewFindings.querySelectorAll("[data-source-start]")) {
+    const meta = ruleFromElement(item);
+    item.classList.toggle(
+      "is-related",
+      !!rule &&
+        ((meta.sourceStart >= rule.sourceStart && meta.sourceEnd <= rule.sourceEnd) ||
+          (meta.sourceStart <= rule.sourceStart && meta.sourceEnd >= rule.sourceEnd)),
+    );
+  }
+  const nodes = [...ui.diagramViewport.querySelectorAll("g.diagram-rule")];
+  const related = rule
+    ? nodes
+        .filter((node) => {
+          const meta = ruleFromElement(node);
+          return meta.sourceStart <= rule.sourceStart && meta.sourceEnd >= rule.sourceEnd;
+        })
+        .sort((a, b) => {
+          const first = ruleFromElement(a),
+            second = ruleFromElement(b);
+          return first.sourceEnd - first.sourceStart - (second.sourceEnd - second.sourceStart);
+        })[0]
+    : null;
+  const key = related?.getAttribute("data-diagram-key");
+  for (const node of ui.diagramViewport.querySelectorAll("[data-diagram-key]")) {
+    node.classList.toggle("is-related", !!key && node.getAttribute("data-diagram-key") === key);
+  }
+  highlightSourceRow();
+}
+
+function renderDiagram() {
+  ui.diagramExport.disabled = !compiled;
+  ui.diagramScale.disabled = !compiled;
+  if (!compiled) {
+    ui.diagramViewport.replaceChildren();
+    setText(ui.diagramMessage, message("Compile valid rules to explore their structure."));
+    return;
+  }
+  if (!ui.diagram.open || diagramSVG) return;
+  try {
+    diagramSVG = toSVG(ui.rules.value, { flags: compiled.flags });
+    const parsed = new DOMParser().parseFromString(diagramSVG, "image/svg+xml");
+    const root = parsed.documentElement;
+    if (
+      root.localName !== "svg" ||
+      root.namespaceURI !== "http://www.w3.org/2000/svg" ||
+      parsed.querySelector("parsererror")
+    )
+      throw new Error("The structural SVG could not be read.");
+    const svg = document.importNode(root, true);
+    svg.setAttribute("role", "group");
+    setAttribute(svg, "aria-label", message("Interactive regex structure"));
+    for (const node of svg.querySelectorAll("g.diagram-rule")) {
+      const rule = ruleFromElement(node);
+      node.setAttribute("role", "button");
+      node.setAttribute("tabindex", "0");
+      setAttribute(
+        node,
+        "aria-label",
+        message("Line {line}: {text} Select source line.", {
+          line: rule.line,
+          text: node.querySelector("title")?.textContent ?? "",
+        }),
+      );
+    }
+    ui.diagramViewport.replaceChildren(svg);
+    setText(
+      ui.diagramMessage,
+      message(
+        "Follow the green rails. Choices run top to bottom; dashed checks consume no text. This is structure, not a runtime backtracking trace.",
+      ),
+    );
+    showRule(selectedRule);
+  } catch (error) {
+    diagramSVG = "";
+    ui.diagramExport.disabled = true;
+    ui.diagramMessage.textContent = error instanceof Error ? error.message : String(error);
+  }
+}
+
+function followSourceCursor() {
+  if (!compiled) return;
+  const before = splitLines(ui.rules.value.slice(0, ui.rules.selectionStart));
+  const line = before.length,
+    column = (before.at(-1)?.length ?? 0) + 1;
+  /** @type {RuleFocus[]} */
+  const candidates = [...compiled.segments];
+  /** @param {import('../index.d.ts').CharacterClassMember[]} members */
+  function addMembers(members) {
+    for (const member of members) {
+      candidates.push({ ...member, ...member.location });
+      if (member.kind === "set") {
+        candidates.push({ ...member, ...member.endLocation });
+        addMembers(member.members);
+      }
+    }
+  }
+  for (const segment of compiled.segments) {
+    if (segment.kind === "atom" && segment.atomType === "characterClass") {
+      if (segment.endLocation) candidates.push({ ...segment, ...segment.endLocation });
+      addMembers(segment.members);
+    }
+  }
+  const onLine = candidates
+    .filter((segment) => segment.line === line)
+    .sort((a, b) => b.column - a.column);
+  selectedRule = onLine.find((segment) => segment.column <= column) ?? onLine.at(-1) ?? null;
+  const scope =
+    selectedRule &&
+    ui.diagramViewport.querySelector(
+      `g.diagram-rule[data-line="${selectedRule.line}"][data-column="${selectedRule.column}"]`,
+    );
+  if (scope) selectedRule = ruleFromElement(scope);
+  showRule(selectedRule);
 }
 
 /** @param {string} flags */
@@ -206,13 +633,109 @@ function flagsDescription(flags) {
     v: "Unicode sets",
     y: "Sticky",
   };
-  return [...flags].map((flag) => `${flag} ${labels[flag]}`).join(" · ");
+  return () => [...flags].map((flag) => `${flag} ${message(labels[flag])()}`).join(" · ");
 }
 
-/** @param {HTMLDivElement} row @param {string} text */
+function selectedGroup() {
+  return groupSegments.find((group) => `${group.line}:${group.column}` === ui.groupSelect.value);
+}
+
+function fillGroupFields() {
+  const group = selectedGroup();
+  if (!group) return;
+  ui.groupType.value = !group.capturing ? "none" : group.name === null ? "numbered" : "named";
+  ui.groupName.value = group.name ?? "";
+  ui.groupName.disabled = ui.groupType.value !== "named";
+  ui.groupName.setAttribute("aria-invalid", "false");
+  ui.groupFeedback.textContent = "";
+  const references =
+    compiled?.segments.filter(
+      (segment) => segment.kind === "backreference" && segment.captureIndex === group.captureIndex,
+    ) ?? [];
+  setText(
+    ui.groupInfo,
+    message(
+      group.capturing
+        ? references.length === 1
+          ? "Capture #{index} · {count} reference."
+          : "Capture #{index} · {count} references."
+        : "Noncapturing group · no capture number or references.",
+      { index: group.captureIndex ?? 0, count: references.length },
+    ),
+  );
+  ui.groupReferences.replaceChildren();
+  for (const reference of references) {
+    const button = make(
+      "button",
+      "secondary-button",
+      message("Reference on line {line}", { line: reference.line }),
+    );
+    button.type = "button";
+    button.addEventListener("click", () => selectLine(reference.line));
+    const item = make("li");
+    item.append(button);
+    ui.groupReferences.append(item);
+  }
+}
+
+function renderGroupEditor() {
+  const previous = selectedGroup();
+  const selected = ui.groupSelect.value;
+  groupSegments =
+    compiled?.segments.flatMap((segment) =>
+      segment.kind === "group" && segment.edge === "start" ? [segment] : [],
+    ) ?? [];
+  ui.groupEditor.hidden = groupSegments.length === 0;
+  for (const field of [ui.groupSelect, ui.groupType, ui.groupApply, ui.groupLocate])
+    field.disabled = groupSegments.length === 0;
+  ui.groupSelect.replaceChildren();
+  for (const group of groupSegments) {
+    const option = make(
+      "option",
+      "",
+      message(
+        group.capturing
+          ? "Capture #{index}{name} · line {line}"
+          : "Noncapturing group · line {line}",
+        {
+          index: group.captureIndex ?? 0,
+          name: group.name === null ? "" : ` · ${quoteText(group.name)}`,
+          line: group.line,
+        },
+      ),
+    );
+    option.value = `${group.line}:${group.column}`;
+    ui.groupSelect.append(option);
+  }
+  if (groupSegments.some((group) => `${group.line}:${group.column}` === selected))
+    ui.groupSelect.value = selected;
+  const current = selectedGroup();
+  if (!current) {
+    ui.groupName.disabled = true;
+    ui.groupReferences.replaceChildren();
+    ui.groupFeedback.textContent = "";
+    return;
+  }
+  const pendingType = ui.groupType.value;
+  const pendingName = ui.groupName.value;
+  const unchanged =
+    previous?.line === current.line &&
+    previous.column === current.column &&
+    previous.capturing === current.capturing &&
+    previous.name === current.name &&
+    previous.captureIndex === current.captureIndex;
+  fillGroupFields();
+  if (unchanged) {
+    ui.groupType.value = pendingType;
+    ui.groupName.value = pendingName;
+    ui.groupName.disabled = pendingType !== "named";
+  }
+}
+
+/** @param {HTMLDivElement} row @param {string | import('./i18n.js?v=049b4eaff903').Message} text */
 function setTestResult(row, text) {
   const result = row.querySelector(".test-result");
-  if (result) result.textContent = text;
+  if (result) setText(result, text);
   const preview = row.querySelector(".match-preview");
   if (preview instanceof HTMLSpanElement) {
     preview.hidden = true;
@@ -225,8 +748,8 @@ function setTestResult(row, text) {
   }
 }
 
-/** @param {HTMLDivElement} row @param {import("./worker-protocol.d.ts").TestResult} result @param {import("../index.d.ts").GroupSegment[]} captures */
-function renderCaptureExplorer(row, result, captures) {
+/** @param {HTMLDivElement} row @param {import("./worker-protocol.d.ts").TestResult} result @param {import("../index.d.ts").GroupSegment[]} captures @param {string} input */
+function renderCaptureExplorer(row, result, captures, input) {
   const explorer = row.querySelector(".capture-explorer");
   if (
     !(explorer instanceof HTMLDetailsElement) ||
@@ -239,14 +762,19 @@ function renderCaptureExplorer(row, result, captures) {
     make(
       "summary",
       "",
-      `${count} match${count === 1 ? "" : "es"} · ${captures.length} capture${captures.length === 1 ? "" : "s"} per match`,
+      message(
+        `{matches} ${count === 1 ? "match" : "matches"} · {captures} ${captures.length === 1 ? "capture" : "captures"} per match`,
+        { matches: count, captures: captures.length },
+      ),
     ),
   );
   explorer.append(
     make(
       "p",
       "capture-note",
-      "Positions are zero-based UTF-16 spans; the end is excluded. Repeated groups show their final capture.",
+      message(
+        "Positions are zero-based UTF-16 spans; the end is excluded. Repeated groups show their final capture.",
+      ),
     ),
   );
   if (result.limitReached)
@@ -254,7 +782,7 @@ function renderCaptureExplorer(row, result, captures) {
       make(
         "p",
         "capture-note",
-        "The 100-match display limit was reached. Matching stops at this limit.",
+        message("The 100-match display limit was reached. Matching stops at this limit."),
       ),
     );
   if (captures.length && !result.indicesAvailable)
@@ -262,22 +790,32 @@ function renderCaptureExplorer(row, result, captures) {
       make(
         "p",
         "capture-note",
-        "This engine reports capture values without positions. No positions are inferred.",
+        message("This engine reports capture values without positions. No positions are inferred."),
       ),
     );
   for (const [index, match] of result.matches.entries()) {
     const item = make("details", "capture-match");
     item.append(
-      make("summary", "", `Match ${index + 1}: ${quoteText(match.value)} at ${match.range.start}`),
+      make(
+        "summary",
+        "",
+        message("Match {index}: {value} at {position}", {
+          index: index + 1,
+          value: quoteText(match.value),
+          position: match.range.start,
+        }),
+      ),
     );
     item.addEventListener("toggle", () => {
       if (!item.open || item.querySelector("table")) return;
       const table = make("table", "capture-table");
-      table.append(make("caption", "", `Captures for match ${index + 1}`));
+      table.append(
+        make("caption", "", message("Captures for match {index}", { index: index + 1 })),
+      );
       const head = make("thead");
       const heading = make("tr");
       for (const label of ["Group", "Value", "Span"]) {
-        const cell = make("th", "", label);
+        const cell = make("th", "", message(label));
         cell.scope = "col";
         heading.append(cell);
       }
@@ -298,30 +836,58 @@ function renderCaptureExplorer(row, result, captures) {
             `#${captureIndex}${segment.name === null ? "" : ` · ${segment.name}`}`,
           );
           button.type = "button";
-          button.setAttribute(
+          setAttribute(
+            button,
             "aria-label",
-            `Go to capture #${captureIndex}${segment.name === null ? "" : ` ${segment.name}`} rule`,
+            message("Go to capture #{index}{name} rule", {
+              index: captureIndex,
+              name: segment.name === null ? "" : ` ${segment.name}`,
+            }),
           );
           button.addEventListener("click", () => selectLine(segment.line));
           label.append(button);
-        } else label.textContent = "#0 · Full match";
+        } else setText(label, message("#0 · Full match"));
         const value =
           capture.value === null
-            ? "Not captured"
-            : `${quoteText(capture.value)}${capture.value === "" ? " (empty)" : ""}`;
-        tr.append(
-          label,
-          make("td", "capture-value", value),
+            ? message("Not captured")
+            : capture.value === ""
+              ? message("{value} (empty)", { value: quoteText(capture.value) })
+              : quoteText(capture.value);
+        const span = make("td");
+        span.append(
           make(
-            "td",
+            "span",
             "capture-span",
             capture.range
               ? `${capture.range.start}–${capture.range.end}`
               : capture.value === null
                 ? "—"
-                : "Unavailable",
+                : message("Unavailable"),
           ),
         );
+        if (capture.range) {
+          const range = capture.range;
+          const highlight = make("button", "capture-rule capture-highlight", message("Highlight"));
+          highlight.type = "button";
+          setAttribute(
+            highlight,
+            "aria-label",
+            message("Highlight capture #{capture} in match {match}", {
+              capture: captureIndex,
+              match: index + 1,
+            }),
+          );
+          highlight.addEventListener("click", () =>
+            renderMatchPreview(
+              row,
+              input,
+              range,
+              message("Capture #{index} in input: ", { index: captureIndex }),
+            ),
+          );
+          span.append(highlight);
+        }
+        tr.append(label, make("td", "capture-value", value), span);
         body.append(tr);
       }
       table.append(head, body);
@@ -332,11 +898,13 @@ function renderCaptureExplorer(row, result, captures) {
   explorer.hidden = false;
 }
 
-/** @param {HTMLDivElement} row @param {string} input @param {{start: number, end: number} | null | undefined} range */
-function renderMatchPreview(row, input, range) {
+/** @param {HTMLDivElement} row @param {string} input @param {{start: number, end: number} | null | undefined} range @param {string | import('./i18n.js?v=049b4eaff903').Message} [label] */
+function renderMatchPreview(row, input, range, label) {
   const preview = row.querySelector(".match-preview");
   if (!(preview instanceof HTMLSpanElement)) return;
-  if (!range || (range.start === 0 && range.end === input.length)) return;
+  preview.hidden = true;
+  preview.replaceChildren();
+  if (!range || (!label && range.start === 0 && range.end === input.length)) return;
 
   const characters = Array.from(input);
   const start = Array.from(input.slice(0, range.start)).length;
@@ -346,7 +914,7 @@ function renderMatchPreview(row, input, range) {
   const leftStart = Math.max(0, start - context);
   const rightEnd = Math.min(characters.length, end + context);
 
-  preview.append(make("span", "match-preview-label", "Match in input: "));
+  preview.append(make("span", "match-preview-label", label ?? message("Match in input: ")));
   if (leftStart > 0) preview.append(make("span", "match-context", "…"));
   preview.append(
     make("span", "match-context", escapeControls(characters.slice(leftStart, start).join(""))),
@@ -388,38 +956,52 @@ async function updateTestResults() {
       row.dataset.result = tooLong[index] ? "invalid" : "pending";
       setTestResult(
         row,
-        tooLong[index]
-          ? "Example too long. Limit: 2,048 UTF-16 code units."
-          : "Shorten the oversized examples to run this example.",
+        message(
+          tooLong[index]
+            ? "Example too long. Limit: 2,048 UTF-16 code units."
+            : "Shorten the oversized examples to run this example.",
+        ),
       );
     });
-    ui.testSummary.textContent = "Shorten examples to 2,048 UTF-16 code units or fewer.";
+    setText(ui.testSummary, message("Shorten examples to 2,048 UTF-16 code units or fewer."));
     ui.testSummary.dataset.state = "error";
     return;
   }
   if (!compiled || testCases.length === 0) {
     const invalidRules = ui.rules.getAttribute("aria-invalid") === "true";
-    const rulePrompt = invalidRules ? "Fix the rules" : "Write rules";
     testRunner.cancel();
     rows.forEach((row) => {
       row.dataset.result = "pending";
       setTestResult(
         row,
-        compiled ? "Add an example to check the pattern" : `${rulePrompt} to run this example`,
+        message(
+          compiled
+            ? "Add an example to check the pattern"
+            : invalidRules
+              ? "Fix the rules to run this example"
+              : "Write rules to run this example",
+        ),
       );
     });
-    ui.testSummary.textContent = compiled
-      ? "Add a positive or negative example to check the pattern."
-      : `${rulePrompt} to run the examples.`;
+    setText(
+      ui.testSummary,
+      message(
+        compiled
+          ? "Add a positive or negative example to check the pattern."
+          : invalidRules
+            ? "Fix the rules to run the examples."
+            : "Write rules to run the examples.",
+      ),
+    );
     ui.testSummary.dataset.state = !compiled && invalidRules ? "error" : "neutral";
     return;
   }
 
   rows.forEach((row) => {
     row.dataset.result = "pending";
-    setTestResult(row, "Checking…");
+    setTestResult(row, message("Checking…"));
   });
-  ui.testSummary.textContent = "Checking examples…";
+  setText(ui.testSummary, message("Checking examples…"));
   ui.testSummary.dataset.state = "neutral";
   try {
     const captures = compiled.segments.flatMap((segment) =>
@@ -439,24 +1021,51 @@ async function updateTestResults() {
       if (!evaluation) throw new Error(`No result was returned for example ${index + 1}.`);
       if (evaluation.pass) passed += 1;
       row.dataset.result = evaluation.pass ? "pass" : "fail";
-      setTestResult(row, `${evaluation.pass ? "✓" : "!"} ${evaluation.detail}`);
+      const range = evaluation.matchRange;
+      setTestResult(
+        row,
+        message(
+          range
+            ? evaluation.actual
+              ? "{symbol} Matched {value} at {position}"
+              : "{symbol} Found {value} at {position}, not the entire string"
+            : "{symbol} No match",
+          {
+            symbol: evaluation.pass ? "✓" : "!",
+            value: range ? quoteText(testCases[index].text.slice(range.start, range.end)) : "",
+            position: range?.start ?? 0,
+          },
+        ),
+      );
       renderMatchPreview(row, testCases[index].text, evaluation.matchRange);
-      renderCaptureExplorer(row, evaluation, captures);
+      renderCaptureExplorer(row, evaluation, captures, testCases[index].text);
     });
     const focusedRowIndex = rows.findIndex((row) => row.contains(document.activeElement));
     const focusedResult = focusedRowIndex < 0 ? null : byId.get(testCases[focusedRowIndex].id);
     const focusedFeedback = focusedResult
-      ? `. Example ${focusedRowIndex + 1} ${focusedResult.pass ? "matches" : "does not match"} the expected result.`
+      ? message(
+          focusedResult.pass
+            ? ". Example {index} matches the expected result."
+            : ". Example {index} does not match the expected result.",
+          { index: focusedRowIndex + 1 },
+        )
       : "";
-    ui.testSummary.textContent = `${passed} of ${testCases.length} examples behave as expected${focusedFeedback}`;
+    setText(
+      ui.testSummary,
+      message("{passed} of {total} examples behave as expected{feedback}", {
+        passed,
+        total: testCases.length,
+        feedback: focusedFeedback,
+      }),
+    );
     ui.testSummary.dataset.state = passed === testCases.length ? "success" : "error";
   } catch (error) {
     if (error instanceof TestRunError && error.code === "CANCELLED") return;
     rows.forEach((row) => {
       row.dataset.result = "pending";
-      setTestResult(row, "Testing stopped");
+      setTestResult(row, message("Testing stopped"));
     });
-    ui.testSummary.textContent = error instanceof Error ? error.message : String(error);
+    setText(ui.testSummary, message(error instanceof Error ? error.message : String(error)));
     ui.testSummary.dataset.state = "error";
   }
 }
@@ -497,8 +1106,8 @@ function renderTests() {
     const view = views.get(`example-result-${sample.id}`);
     input.style.height = view?.height ?? "";
     if (view) input.setSelectionRange(view.start, view.end, view.direction);
-    input.placeholder = "Empty string";
-    input.setAttribute("aria-label", `Example ${number} string`);
+    setAttribute(input, "placeholder", message("Empty string"));
+    setAttribute(input, "aria-label", message("Example {index} string", { index: number }));
     input.setAttribute("aria-describedby", `example-limits example-result-${sample.id}`);
     input.addEventListener("input", () => {
       sample.text = input.value;
@@ -507,13 +1116,17 @@ function renderTests() {
     });
 
     const expected = make("select");
-    expected.setAttribute("aria-label", `Expected match result for example ${number}`);
+    setAttribute(
+      expected,
+      "aria-label",
+      message("Expected match result for example {index}", { index: number }),
+    );
     expected.setAttribute("aria-describedby", `example-result-${sample.id}`);
     for (const [value, label] of [
       ["true", "Should match"],
       ["false", "Should not match"],
     ]) {
-      const option = make("option", "", label);
+      const option = make("option", "", message(label));
       option.value = value;
       expected.append(option);
     }
@@ -532,7 +1145,7 @@ function renderTests() {
     feedback.append(result, preview);
     const remove = make("button", "remove-example", "×");
     remove.type = "button";
-    remove.setAttribute("aria-label", `Remove example ${number}`);
+    setAttribute(remove, "aria-label", message("Remove example {index}", { index: number }));
     remove.addEventListener("click", () => {
       testCases = testCases.filter((item) => item.id !== sample.id);
       renderTests();
@@ -556,17 +1169,27 @@ function renderTests() {
 }
 
 function compileRules() {
+  diagramSVG = "";
+  reviewResult = null;
+  selectedRule = null;
+  visibleRule = null;
+  ui.ruleFocus.hidden = true;
+  delete ui.rules.dataset.highlight;
+  ui.diagramViewport.replaceChildren();
   if (ui.reverseFeedback.dataset.state === "success") {
     ui.reverseFeedback.hidden = true;
     ui.reverseFeedback.textContent = "";
   }
   window.clearTimeout(copyFeedbackTimer);
-  ui.copy.textContent = "Copy regex ↗";
+  setText(ui.copy, message("Copy regex ↗"));
   const rules = ui.rules.value;
-  if (rules.length > LIMITS.sourceLength) ui.ruleCount.textContent = "Over limit";
+  if (rules.length > LIMITS.sourceLength) setText(ui.ruleCount, message("Over limit"));
   else {
     const ruleCount = splitLines(rules).filter((line) => line.trim()).length;
-    ui.ruleCount.textContent = `${ruleCount} ${ruleCount === 1 ? "rule" : "rules"}`;
+    setText(
+      ui.ruleCount,
+      message(ruleCount === 1 ? "{count} rule" : "{count} rules", { count: ruleCount }),
+    );
   }
   try {
     const flags =
@@ -576,7 +1199,7 @@ function compileRules() {
         .join("") + ui.unicodeMode.value;
     compiled = compile(rules, { flags });
     ui.output.textContent = `/${compiled.source}/${compiled.flags}`;
-    ui.flagsSummary.textContent = flagsDescription(compiled.flags);
+    setText(ui.flagsSummary, flagsDescription(compiled.flags));
     ui.copy.disabled = false;
     setCompileState("Compiled", "success");
     setDiagnostic("");
@@ -585,22 +1208,29 @@ function compileRules() {
     compiled = null;
     ui.copy.disabled = true;
     if (error instanceof CompileError && error.code === "EMPTY_SOURCE") {
-      ui.output.textContent = "Select a recipe or write a rule";
-      ui.flagsSummary.textContent = "Unicode mode always on";
+      setText(ui.output, message("Select a recipe or write a rule"));
+      setText(ui.flagsSummary, message("Unicode mode always on"));
       setCompileState("Ready", "neutral");
       setDiagnostic("");
     } else {
-      ui.output.textContent = "No pattern generated";
-      ui.flagsSummary.textContent = "Fix the instruction shown below";
+      setText(ui.output, message("No pattern generated"));
+      setText(ui.flagsSummary, message("Fix the instruction shown below"));
       setCompileState("Needs a fix", "error");
       setDiagnostic(
         error instanceof CompileError
-          ? `Line ${error.line}, column ${error.column}: ${error.message}${error.hint ? `\n${error.hint}` : ""}`
-          : `Unexpected compiler error: ${error instanceof Error ? error.message : String(error)}`,
+          ? message("Line {line}, column {column}: {error}{hint}", {
+              line: error.line,
+              column: error.column,
+              error: error.message,
+              hint: error.hint ? `\n${error.hint}` : "",
+            })
+          : message("Unexpected compiler error: {error}", {
+              error: error instanceof Error ? error.message : String(error),
+            }),
         true,
       );
       if (error instanceof CompileError) {
-        const jump = make("button", "secondary-button", "Go to error");
+        const jump = make("button", "secondary-button", message("Go to error"));
         jump.type = "button";
         jump.addEventListener("click", () => selectLine(error.line, error.column));
         ui.diagnostic.append(jump);
@@ -608,12 +1238,16 @@ function compileRules() {
     }
     renderTrace(null);
   }
+  renderGroupEditor();
+  renderReview();
+  renderDiagram();
+  renderExport();
   updateTestResults();
 }
 
 /** @param {string|null} id */
 function setScenarioSelection(id) {
-  ui.recipeNote.textContent = scenarios.find((scenario) => scenario.id === id)?.note ?? "";
+  setText(ui.recipeNote, message(scenarios.find((scenario) => scenario.id === id)?.note ?? ""));
   ui.recipeNote.hidden = !ui.recipeNote.textContent;
   for (const button of ui.examples.querySelectorAll("button")) {
     button.setAttribute("aria-current", String(button.dataset.scenario === id));
@@ -653,19 +1287,204 @@ function renderScenarioButtons() {
     button.dataset.scenario = scenario.id;
     button.setAttribute("aria-current", "false");
     button.append(make("span", "example-number", String(index + 1).padStart(2, "0")));
-    button.append(make("span", "example-title", scenario.title));
+    button.append(make("span", "example-title", message(scenario.title)));
     button.append(make("span", "example-arrow", "↗"));
     button.addEventListener("click", () => useScenario(scenario));
     ui.examples.append(button);
   });
 }
 
-document.addEventListener("input", () => {
-  hasEdits = true;
+document.addEventListener("input", (event) => {
+  if (event.target !== ui.language && event.target !== ui.theme) hasEdits = true;
 });
 ui.rules.addEventListener("input", () => {
   setScenarioSelection(scenarios.find(({ rules }) => rules === ui.rules.value)?.id ?? null);
   compileRules();
+});
+ui.rules.addEventListener("keyup", followSourceCursor);
+ui.rules.addEventListener("mouseup", followSourceCursor);
+ui.rules.addEventListener("scroll", highlightSourceRow);
+new ResizeObserver(highlightSourceRow).observe(ui.rules);
+ui.diagram.addEventListener("toggle", renderDiagram);
+ui.review.addEventListener("toggle", renderReview);
+ui.diagramScale.addEventListener("change", () => {
+  ui.diagramViewport.dataset.scale = ui.diagramScale.value;
+});
+ui.diagramViewport.addEventListener("pointerover", (event) => {
+  const node = event.target instanceof Element ? event.target.closest("[data-diagram-key]") : null;
+  if (node) showRule(ruleFromElement(node));
+});
+ui.diagramViewport.addEventListener("pointerleave", () => showRule(selectedRule));
+ui.diagramViewport.addEventListener("focusin", (event) => {
+  if (event.target instanceof Element && event.target.matches("g.diagram-rule"))
+    showRule(ruleFromElement(event.target));
+});
+ui.diagramViewport.addEventListener("focusout", () => showRule(selectedRule));
+/** @param {Element} node */
+function selectDiagramRule(node) {
+  selectedRule = ruleFromElement(node);
+  selectLine(selectedRule.line);
+  showRule(selectedRule);
+}
+ui.diagramViewport.addEventListener("click", (event) => {
+  const node = event.target instanceof Element ? event.target.closest("[data-diagram-key]") : null;
+  if (node) selectDiagramRule(node);
+});
+ui.diagramViewport.addEventListener("keydown", (event) => {
+  if (
+    (event.key === "Enter" || event.key === " ") &&
+    event.target instanceof Element &&
+    event.target.matches("g.diagram-rule")
+  ) {
+    event.preventDefault();
+    selectDiagramRule(event.target);
+  }
+});
+ui.diagramExport.addEventListener("click", () => {
+  renderDiagram();
+  if (!compiled || !diagramSVG) return;
+  downloadText(diagramSVG, "regex-structure.svg", "image/svg+xml");
+  setText(
+    ui.diagramMessage,
+    message("SVG export started. The standalone file contains the current structure and flags."),
+  );
+});
+ui.exportPanel.addEventListener("toggle", renderExport);
+ui.exportTarget.addEventListener("change", renderExport);
+for (const viewport of [ui.output.parentElement, ui.exportViewport]) {
+  if (!viewport) continue;
+  viewport.addEventListener("keydown", (event) => {
+    if (
+      event.target !== viewport ||
+      event.altKey ||
+      event.ctrlKey ||
+      event.metaKey ||
+      event.shiftKey ||
+      (event.key !== "ArrowLeft" && event.key !== "ArrowRight") ||
+      viewport.scrollWidth <= viewport.clientWidth
+    )
+      return;
+    // Native keyboard scrolling varies across browser and mobile contexts.
+    event.preventDefault();
+    viewport.scrollBy({ left: event.key === "ArrowRight" ? 40 : -40, behavior: "instant" });
+  });
+}
+ui.exportDownload.addEventListener("click", () => {
+  if (!exported) return;
+  const filenames = {
+    javascript: "regex-export.js",
+    typescript: "regex-export.ts",
+    python: "regex_export.py",
+    rust: "regex-export.rs",
+    go: "regex-export.go",
+    java: "RegexExample.java",
+    csharp: "RegexExport.cs",
+    php: "regex-export.php",
+    ruby: "regex_export.rb",
+  };
+  downloadText(`${exported.code}\n`, filenames[exported.target], "text/plain;charset=utf-8");
+});
+ui.exportJSON.addEventListener("click", () => {
+  if (!exported) return;
+  downloadText(
+    `${JSON.stringify(exported, null, 2)}\n`,
+    `regex-export-${exported.target}.json`,
+    "application/json",
+  );
+});
+ui.output.addEventListener("mouseup", () => {
+  const selection = window.getSelection();
+  if (!compiled || !selection?.rangeCount || !ui.output.contains(selection.focusNode)) return;
+  const range = selection.getRangeAt(0);
+  if (!ui.output.contains(range.startContainer) || !ui.output.contains(range.endContainer)) return;
+  const before = document.createRange();
+  before.selectNodeContents(ui.output);
+  before.setEnd(range.startContainer, range.startOffset);
+  const start = before.toString().length;
+  before.setEnd(range.endContainer, range.endOffset);
+  const end = before.toString().length;
+  const offset = start - 1;
+  selectedRule =
+    compiled.segments
+      .filter((segment) => segment.sourceStart <= offset && segment.sourceEnd > offset)
+      .sort((a, b) => a.sourceEnd - a.sourceStart - (b.sourceEnd - b.sourceStart))[0] ?? null;
+  showRule(selectedRule);
+  const walker = document.createTreeWalker(ui.output, NodeFilter.SHOW_TEXT);
+  const restored = document.createRange();
+  let position = 0;
+  let node = walker.nextNode();
+  while (node) {
+    const length = node.textContent?.length ?? 0;
+    if (start >= position && start <= position + length) restored.setStart(node, start - position);
+    if (end >= position && end <= position + length) {
+      restored.setEnd(node, end - position);
+      break;
+    }
+    position += length;
+    node = walker.nextNode();
+  }
+  selection.removeAllRanges();
+  selection.addRange(restored);
+});
+ui.groupSelect.addEventListener("change", fillGroupFields);
+ui.groupType.addEventListener("change", () => {
+  ui.groupName.disabled = ui.groupType.value !== "named";
+  ui.groupName.setAttribute("aria-invalid", "false");
+  ui.groupFeedback.textContent = "";
+});
+ui.groupLocate.addEventListener("click", () => {
+  const group = selectedGroup();
+  if (group) selectLine(group.line);
+});
+ui.groupForm.addEventListener("submit", (event) => {
+  event.preventDefault();
+  const group = selectedGroup();
+  if (!compiled || !group) return;
+  try {
+    const rules = editGroup(
+      ui.rules.value,
+      group,
+      {
+        capturing: ui.groupType.value !== "none",
+        name: ui.groupType.value === "named" ? ui.groupName.value : null,
+      },
+      { flags: compiled.flags },
+    );
+    ui.rules.value = rules;
+    hasEdits = true;
+    setScenarioSelection(null);
+    compileRules();
+    setText(
+      ui.groupFeedback,
+      message("Group updated. References keep their original capture targets."),
+    );
+    ui.groupFeedback.dataset.state = "success";
+  } catch (error) {
+    setText(
+      ui.groupFeedback,
+      message("Edit rejected. Original rules unchanged. {error}", {
+        error:
+          error instanceof CompileError
+            ? message("Line {line}, column {column}: {error}{hint}", {
+                line: error.line,
+                column: error.column,
+                error: escapeControls(error.message),
+                hint: error.hint ? ` ${error.hint}` : "",
+              })
+            : error instanceof Error
+              ? error.message
+              : String(error),
+      }),
+    );
+    ui.groupFeedback.dataset.state = "error";
+    ui.groupName.setAttribute(
+      "aria-invalid",
+      String(
+        error instanceof CompileError &&
+          ["INVALID_CAPTURE_NAME", "DUPLICATE_CAPTURE_NAME"].includes(error.code),
+      ),
+    );
+  }
 });
 for (const input of Object.values(flagInputs)) input.addEventListener("change", compileRules);
 ui.unicodeMode.addEventListener("change", compileRules);
@@ -708,15 +1527,25 @@ ui.reverseButton.addEventListener("click", () => {
     ui.output.parentElement?.scrollTo({ left: 0, behavior: "instant" });
     ui.reverseRegex.setAttribute("aria-invalid", "false");
     ui.reverseFeedback.dataset.state = "success";
-    ui.reverseFeedback.textContent = "Translated. Review the rules and test your examples.";
+    setText(ui.reverseFeedback, message("Translated. Review the rules and test your examples."));
     ui.reverseFeedback.hidden = false;
     selectText(ui.rules, 0, 0);
   } catch (error) {
-    const location = error instanceof CompileError ? `Column ${error.column}: ` : "";
     const hint = error instanceof CompileError && error.hint ? ` ${error.hint}` : "";
     ui.reverseRegex.setAttribute("aria-invalid", "true");
     ui.reverseFeedback.dataset.state = "error";
-    ui.reverseFeedback.textContent = `${location}${error instanceof Error ? error.message : String(error)}${hint}`;
+    setText(
+      ui.reverseFeedback,
+      error instanceof CompileError
+        ? message("Column {column}: {error}{hint}", {
+            column: error.column,
+            error: error.message,
+            hint,
+          })
+        : error instanceof Error
+          ? error.message
+          : String(error),
+    );
     ui.reverseFeedback.hidden = false;
     if (error instanceof CompileError && error.code === "UNSUPPORTED_REGEX") {
       const input = ui.reverseRegex.value;
@@ -742,7 +1571,7 @@ ui.copy.addEventListener("click", async () => {
   const request = ++copySequence;
   const focused = document.activeElement;
   window.clearTimeout(copyFeedbackTimer);
-  ui.copy.textContent = "Copy regex ↗";
+  setText(ui.copy, message("Copy regex ↗"));
   setDiagnostic("");
   let requestTimer = 0;
   try {
@@ -760,7 +1589,7 @@ ui.copy.addEventListener("click", async () => {
     if (compiled !== result || request !== copySequence) return;
     if (document.activeElement !== focused) {
       setDiagnostic(
-        "Clipboard access was blocked. Select the pattern and press your copy shortcut.",
+        message("Clipboard access was blocked. Select the pattern and press your copy shortcut."),
       );
       return;
     }
@@ -787,11 +1616,13 @@ ui.copy.addEventListener("click", async () => {
         selection.removeAllRanges();
         selection.addRange(range);
         setDiagnostic(
-          "Clipboard access was blocked. The pattern is selected; press your keyboard copy shortcut.",
+          message(
+            "Clipboard access was blocked. The pattern is selected; press your keyboard copy shortcut.",
+          ),
         );
       } else {
         setDiagnostic(
-          "Clipboard access was blocked. Select the pattern and press your copy shortcut.",
+          message("Clipboard access was blocked. Select the pattern and press your copy shortcut."),
         );
       }
       return;
@@ -801,16 +1632,16 @@ ui.copy.addEventListener("click", async () => {
   }
   if (compiled !== result || request !== copySequence) return;
   setDiagnostic("");
-  ui.copy.textContent = "Copied ✓";
+  setText(ui.copy, message("Copied ✓"));
   copyFeedbackTimer = window.setTimeout(() => {
-    ui.copy.textContent = "Copy regex ↗";
+    setText(ui.copy, message("Copy regex ↗"));
   }, 1800);
 });
 
 if (hasEdits) compileRules();
 
 try {
-  const response = await fetch(new URL("../test/fixtures/product-scenarios.json?v=89d227d97b70", import.meta.url));
+  const response = await fetch(new URL("../test/fixtures/product-scenarios.json?v=049b4eaff903", import.meta.url));
   if (!response.ok) throw new Error(`HTTP ${response.status}`);
   const loaded = await response.json();
   if (!Array.isArray(loaded)) throw new Error("Invalid example recipe data");
@@ -848,9 +1679,11 @@ try {
   const notice = make(
     "p",
     "empty-trace",
-    `Example recipes could not load (${error instanceof Error ? error.message : String(error)}). You can still write rules manually.`,
+    message("Example recipes could not load ({error}). You can still write rules manually.", {
+      error: error instanceof Error ? error.message : String(error),
+    }),
   );
   notice.setAttribute("role", "status");
   ui.examples.replaceChildren(notice);
-  if (!hasEdits) ui.testSummary.textContent = "Write rules and add an example to test them.";
+  if (!hasEdits) setText(ui.testSummary, message("Write rules and add an example to test them."));
 }
