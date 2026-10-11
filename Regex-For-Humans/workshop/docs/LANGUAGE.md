@@ -1,6 +1,6 @@
 # The Regex For Humans language
 
-Version 1 compiles fixed English rules into JavaScript `RegExp`. It does not guess from free-form text or examples. This guide describes the `0.1.0-dev.9` preview: whole-line comments, groups, lazy repetition, lookaround, boundaries, Unicode properties/classes, native v sets and all eight JavaScript flags.
+Version 1 compiles fixed English rules into JavaScript `RegExp`. It does not guess from free-form text or examples. This guide describes the `0.1.0-dev.10` preview: whole-line comments, groups, lazy repetition, lookaround, boundaries, Unicode properties/classes, native v sets and all eight JavaScript flags.
 
 Write one rule per line. `start` or `line start` can prefix the first rule. Keywords are case-insensitive; quoted text keeps its case. Leading and trailing spaces are ignored.
 
@@ -174,9 +174,39 @@ This generates `^(?<date>(?<year>\d{4})-(?<month>\d{2})-(?<day>\d{2}))$` with `u
 
 Captures are numbered by opening order, including named and nested captures; noncapturing groups do not use an index. Names must be JavaScript identifiers (Unicode names such as `année` work) and must be unique throughout the document. Empty blocks match empty text. A participating empty capture returns `""`; an optional capture that does not participate returns `undefined`. Repeated captures follow native JavaScript final-iteration semantics; an inner capture absent from the last repetition can become `undefined`, even if it participated earlier.
 
-Existing repetition modifiers apply to a whole block: `optional capture "suffix" {`, `2 group {`, `between 2 and 4 group {`, `zero or more group {`, `one or more group {`, and `at least 2 group {`. Anchors retain their first/last rule restrictions within each block; input and line anchors cannot be mixed across blocks. Nesting is limited to 64 levels in addition to the existing source and line budgets.
+Existing repetition modifiers apply to a whole block: `optional capture "suffix" {`, `2 group {`, `between 2 and 4 group {`, `zero or more group {`, `one or more group {`, and `at least 2 group {`. Anchors retain their first/last rule restrictions within each block. Input and line anchors can be mixed while retaining their distinct meanings. Nesting is limited to 64 levels in addition to the existing source and line budgets.
 
 The API keeps `{ source, flags, segments }`. Opening and closing braces produce `kind: "group"` segments with `edge`, `capturing`, `captureIndex`, `name`, and `repetition`. Each segment retains its original line, column, explanation and exact generated-source offsets. Consumers switching on `segments[].kind` should handle the added group variant. The CLI and workshop use this same compiler and trace. Groups, captures and their reverse translations are included in npm `0.1.0-dev.8` and the hosted workshop.
+
+<a name="scoped-flags-unreleased"></a>
+
+## Scoped flags
+
+`group with flags "im-s" {` changes native `i`, `m` and `s` only inside its noncapturing block. Enabled flags go before `-`; disabled flags go after it. Flags must be lowercase, unique and present on only one side. Examples include `"i"`, `"ims"`, `"-i"`, `"im-s"` and `"i-"`. Global `d`, `g`, `u`, `v` and `y` remain unchanged and cannot appear in this clause. Invalid options report `INVALID_GROUP_FLAGS` over the original quoted token.
+
+```text
+start
+group with flags "i" {
+  "hello"
+}
+group with flags "-s" {
+  any character
+}
+"END"
+end
+```
+
+With the outer `s` option, this generates `^(?i:hello)(?-s:.)END$` with `su`. It accepts `HELLO!END`, rejects `HELLO\nEND`, and keeps the trailing `END` case sensitive. Nested scopes restore their enclosing options on exit; repetition applies to the entire block. Captures and references inside a scope retain native numbering, values and indices. Reference comparisons use options at the reference site.
+
+Explicit `start`/`end` rules always mean input boundaries; `line start`/`line end` always mean line boundaries, including inside a scope that disables `m`. Scoped line anchors do not enable global `m` outside their group. Groups, assertions and sets retain the shared 64-level budget; compiler-generated flat scalar wrappers retain their documented boundary normalization.
+
+Opening/closing `GroupSegment` values expose optional `modifiers` and effective `flags`; nested segments carry their effective flags. Ordinary segments retain their previous shape. Explanations, structural analysis, SVG diagrams and conservative failure proofs use local options. Converting an option group into a capture preserves its scope inside the capture and renumbers existing references; the added wrapper must fit the usual budgets. Captures can also be authored directly inside an option group.
+
+Native syntax alone is insufficient. An incompatible runtime reports `UNSUPPORTED_TARGET_FEATURE` at the opening group. Node 22.23.3 lacks the syntax; Node 25.9.0 and Node 26.11.1 show native word-boundary failures after their regex cache warms, so the runtime guard rejects this feature there. The Node guard uses the legacy word-boundary regression as a fingerprint, in addition to actual Unicode/cursor-mode probes. The affected shape is described in the [upstream V8 restoration fix](https://chromium.googlesource.com/v8/v8/+/d315af3d83cfe3bc1709f5b140db393db42790b3); correspondence to every observed warm failure is not proved. Compatible browser engines use the library's required `u`/`v` modes. These finite checks do not certify every engine version or pattern.
+
+JavaScript/TypeScript exports preserve local groups and include an explicit native scoped-behavior requirement. Foreign profiles report `EXPORT_SCOPED_FLAGS` until target-specific behavior is verified. The grammar follows [ECMAScript's native modifier groups](https://tc39.es/ecma262/2025/multipage/text-processing.html#sec-patterns); unsupported options are not rewritten into approximate character classes.
+
+In this candidate, `toRegExp({ source, flags })` also checks scoped behavior in the receiving runtime and the supplied Unicode mode. It reads each string field once and ignores unused explanation segments. The native constructor runs first, retaining its `SyntaxError` for invalid patterns, flags or unavailable syntax. Accepted syntax with unsupported behavior reports `UNSUPPORTED_TARGET_FEATURE` at the first modifier opener in the supplied native source; columns count UTF-16 units. Escaped modifier-like text and class members do not trigger this check, and ordinary cached patterns retain native acceptance without the rule-language limits. Firefox's defective legacy mode is rejected for legacy cached scopes, while its verified `u/v` modes remain usable.
 
 <a name="capture-references-unreleased-on-main"></a>
 
@@ -475,7 +505,7 @@ In the local workshop, open **Review the pattern** to analyze on demand. Hover o
 
 ## Anchors and flags
 
-The source compiler accepts all eight native JavaScript flags: `d` (indices), `g` (global), `i` (ignore case), `m` (multiline), `s` (dot-all), `u` (Unicode), `v` (Unicode sets) and `y` (sticky). It emits `u` by default unless `v` is selected, adds `m` for any line anchor and returns canonical `dgimsuvy` ordering. `u` and `v` are mutually exclusive. The CLI accepts `--flags FLAGS` or `--flags=FLAGS`; `--ignore-case` / `--dot-all` remain aliases for i/s. Flags require native runtime support and are never dropped or approximated.
+The source compiler accepts all eight native JavaScript flags: `d` (indices), `g` (global), `i` (ignore case), `m` (multiline), `s` (dot-all), `u` (Unicode), `v` (Unicode sets) and `y` (sticky). It emits `u` by default unless `v` is selected, adds `m` for unscoped line anchors and returns canonical `dgimsuvy` ordering. Local option groups keep their line-anchor behavior inside the scope. `u` and `v` are mutually exclusive. The CLI accepts `--flags FLAGS` or `--flags=FLAGS`; `--ignore-case` / `--dot-all` remain aliases for i/s. Flags require native runtime support and are never dropped or approximated.
 
 In the JavaScript API, `options.flags` must be a string of unique flag letters, in any order. Omitting it, passing `undefined` or using an empty string keeps the defaults. Duplicates, unknown letters, whitespace, u/v conflicts and non-string values such as `null` report `UNSUPPORTED_FLAGS` at 1:1. An unsupported runtime flag reports `UNSUPPORTED_TARGET_FEATURE` at 1:1. No dependencies or fallback engine are required.
 
@@ -510,6 +540,8 @@ Empty non-capturing groups such as `(?:)` translate to `0 any character`, genera
 The empty negative class `[^]` matches any Unicode code point, including line breaks, so it becomes `any character` with the returned `s` option enabled. When the same regex also contains ordinary `.` atoms, those rules become `none of: "\\n", "\\r", "\\u2028", "\\u2029"` so they still exclude JavaScript line terminators under `s`. The empty positive class `[]`, which matches nothing, remains unsupported.
 
 Unsupported syntax is rejected with a column diagnostic; it is never dropped or approximated. This includes forward/open references and engine-specific constructs such as atomic groups, possessive quantifiers, recursion and conditionals. The translator uses the documented u/v Unicode modes and native flag support; unsupported runtime capabilities fail explicitly. Nested groups, alternatives and assertions share the 64-level translated-block budget and the translated source/line budgets. Forward/open reference failures report `UNSUPPORTED_REGEX` at the original reference escape; they are not silently replaced by empty text.
+
+Compiler-generated scalar wrappers around repeated literals and numeric capture references can be imported at the 64-level rule-block limit. A reference-only noncapturing group becomes a `same as capture` rule with the group's repetition; the compiler retains numeric-reference boundaries beside literal digits. Parsing permits one extra flat scalar wrapper at the depth boundary, while deeper recursion and additional structural blocks remain rejected. Separate surrogate atoms retain their group blocks and depth checks.
 
 Top-level and grouped `|` alternatives translate to ordered `either` blocks, including alternatives inside captures. Sequence choices become noncapturing `group` blocks; empty choices become empty group blocks. For example, `/cat|dog|bird/u` becomes an `either` block with three quoted entries, while `/^a|b$/u` retains its separately anchored branches. Additional editable blocks can reach the translated-depth budget before the native group-depth budget; that error points into the original regex and names the translated limit. Escaped pipes such as `\|` and character-class pipes such as `[|]` stay literal matching data. Misplaced anchors retain their own anchor diagnostic.
 

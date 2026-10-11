@@ -1,11 +1,12 @@
-import { classMayContainStrings } from "./ast.js?v=4c4676a19bb3";
-import { fail } from "./diagnostics.js?v=4c4676a19bb3";
-import { escapeControls, quoteText } from "./display.js?v=4c4676a19bb3";
-import { explainNode } from "./explain.js?v=4c4676a19bb3";
+import { classMayContainStrings } from "./ast.js?v=3509195d9193";
+import { fail } from "./diagnostics.js?v=3509195d9193";
+import { escapeControls, quoteText } from "./display.js?v=3509195d9193";
+import { explainNode } from "./explain.js?v=3509195d9193";
+import { applyModifiers, supportsModifiers } from "./flags.js?v=3509195d9193";
 
-/** @typedef {import('./ast.js?v=4c4676a19bb3').AtomNode} AtomNode */
-/** @typedef {import('./ast.js?v=4c4676a19bb3').Repetition} Repetition */
-/** @typedef {import('./ast.js?v=4c4676a19bb3').ParsedRules} ParsedRules */
+/** @typedef {import('./ast.js?v=3509195d9193').AtomNode} AtomNode */
+/** @typedef {import('./ast.js?v=3509195d9193').Repetition} Repetition */
+/** @typedef {import('./ast.js?v=3509195d9193').ParsedRules} ParsedRules */
 
 const locationOfOptions = { line: 1, column: 1 };
 
@@ -40,7 +41,7 @@ function escapeClass(values, unicodeSets) {
   return values.map((character) => escapeCharacter(character, true, unicodeSets)).join("");
 }
 
-/** @param {import('./ast.js?v=4c4676a19bb3').ClassMember} member @param {boolean} unicodeSets @param {import('./ast.js?v=4c4676a19bb3').ClassSetOperation} [operation] @returns {string} */
+/** @param {import('./ast.js?v=3509195d9193').ClassMember} member @param {boolean} unicodeSets @param {import('./ast.js?v=3509195d9193').ClassSetOperation} [operation] @returns {string} */
 function classMemberSource(member, unicodeSets, operation = "union") {
   switch (member.kind) {
     case "literal":
@@ -68,14 +69,14 @@ function classMemberSource(member, unicodeSets, operation = "union") {
   }
 }
 
-/** @param {{members: import('./ast.js?v=4c4676a19bb3').ClassMember[], negative: boolean, operation?: import('./ast.js?v=4c4676a19bb3').ClassSetOperation}} set @param {boolean} unicodeSets @returns {string} */
+/** @param {{members: import('./ast.js?v=3509195d9193').ClassMember[], negative: boolean, operation?: import('./ast.js?v=3509195d9193').ClassSetOperation}} set @param {boolean} unicodeSets @returns {string} */
 function classSetSource(set, unicodeSets) {
   const operation = set.operation ?? "union";
   const separator = operation === "intersection" ? "&&" : operation === "subtraction" ? "--" : "";
   return `[${set.negative ? "^" : ""}${set.members.map((member) => classMemberSource(member, unicodeSets, operation)).join(separator)}]`;
 }
 
-/** @param {import('./ast.js?v=4c4676a19bb3').ClassMember[]} members @param {boolean} unicodeSets @param {number} start @param {import('./ast.js?v=4c4676a19bb3').ClassSetOperation} [operation] @returns {import('../index.d.ts').CharacterClassMember[]} */
+/** @param {import('./ast.js?v=3509195d9193').ClassMember[]} members @param {boolean} unicodeSets @param {number} start @param {import('./ast.js?v=3509195d9193').ClassSetOperation} [operation] @returns {import('../index.d.ts').CharacterClassMember[]} */
 function classMemberTraces(members, unicodeSets, start, operation = "union") {
   let cursor = start;
   return members.map((member, index) => {
@@ -180,7 +181,18 @@ export function compileAst(parsed, options = {}) {
   const requested = normalizeOptions(options);
   const selected = new Set(requested);
   if (!selected.has("v")) selected.add("u");
-  if (parsed.anchorMode === "line" || parsed.anchorMode === "mixed") selected.add("m");
+  /** @param {import('./ast.js?v=3509195d9193').RuleNode[]} nodes @returns {boolean} */
+  const hasUnscopedLineAnchor = (nodes) =>
+    nodes.some((node) =>
+      node.kind === "anchor"
+        ? node.mode === "line"
+        : node.kind === "group"
+          ? !node.modifiers && hasUnscopedLineAnchor(node.nodes)
+          : node.kind === "assertion"
+            ? hasUnscopedLineAnchor(node.nodes)
+            : node.kind === "alternation" && node.branches.some(hasUnscopedLineAnchor),
+    );
+  if (hasUnscopedLineAnchor(parsed.nodes)) selected.add("m");
   const flags = [..."dgimsuvy"].filter((flag) => selected.has(flag)).join("");
   const unicodeSets = selected.has("v");
   const unicodeMode = unicodeSets ? "v" : "u";
@@ -198,11 +210,12 @@ export function compileAst(parsed, options = {}) {
   /** @type {import('../index.d.ts').RegexSegment[]} */
   const segments = [];
   let checkedLookbehind = false;
+  let checkedModifiers = false;
   let checkedUnicodeProperties = false;
   let checkedStringSets = false;
   let checkedSetOperations = false;
 
-  /** @param {import('./ast.js?v=4c4676a19bb3').Location} location */
+  /** @param {import('./ast.js?v=3509195d9193').Location} location */
   function checkLookbehind(location) {
     if (checkedLookbehind) return;
     try {
@@ -218,7 +231,7 @@ export function compileAst(parsed, options = {}) {
     checkedLookbehind = true;
   }
 
-  /** @param {import('./ast.js?v=4c4676a19bb3').PropertyAtomNode|Extract<import('./ast.js?v=4c4676a19bb3').ClassMember, {kind: 'unicodeProperty'}>} property @param {import('./ast.js?v=4c4676a19bb3').Location} location */
+  /** @param {import('./ast.js?v=3509195d9193').PropertyAtomNode|Extract<import('./ast.js?v=3509195d9193').ClassMember, {kind: 'unicodeProperty'}>} property @param {import('./ast.js?v=3509195d9193').Location} location */
   function checkProperty(property, location) {
     const aliasLocation = {
       ...property.propertyLocation,
@@ -276,7 +289,7 @@ export function compileAst(parsed, options = {}) {
     }
   }
 
-  /** @param {{members: import('./ast.js?v=4c4676a19bb3').ClassMember[], negative: boolean, operation?: import('./ast.js?v=4c4676a19bb3').ClassSetOperation, location: import('./ast.js?v=4c4676a19bb3').Location}} set */
+  /** @param {{members: import('./ast.js?v=3509195d9193').ClassMember[], negative: boolean, operation?: import('./ast.js?v=3509195d9193').ClassSetOperation, location: import('./ast.js?v=3509195d9193').Location}} set */
   function checkClass(set) {
     if (set.operation) {
       if (!unicodeSets)
@@ -336,8 +349,9 @@ export function compileAst(parsed, options = {}) {
       );
   }
 
-  /** @param {import('./ast.js?v=4c4676a19bb3').RuleNode[]} nodes */
-  function emit(nodes) {
+  /** @param {import('./ast.js?v=3509195d9193').RuleNode[]} nodes @param {string} [effectiveFlags] @param {boolean} [scoped] */
+  function emit(nodes, effectiveFlags = flags, scoped = false) {
+    const firstSegment = segments.length;
     for (const [index, node] of nodes.entries()) {
       if (node.kind === "atom" && node.atomType === "unicodeProperty")
         checkProperty(node, node.location);
@@ -356,10 +370,10 @@ export function compileAst(parsed, options = {}) {
           sourceEnd: source.length,
           source: fragment,
           text: node.text,
-          explanation: explainNode(node, flags),
+          explanation: explainNode(node, effectiveFlags),
           ...node.location,
         });
-        emit(node.nodes);
+        emit(node.nodes, effectiveFlags, scoped);
         const endStart = source.length;
         source += ")";
         segments.push({
@@ -387,7 +401,7 @@ export function compileAst(parsed, options = {}) {
           sourceEnd: source.length,
           source: "(?:",
           text: node.text,
-          explanation: explainNode(node, flags),
+          explanation: explainNode(node, effectiveFlags),
           ...node.location,
         });
         for (const [branchIndex, branch] of node.branches.entries()) {
@@ -408,7 +422,7 @@ export function compileAst(parsed, options = {}) {
               ...first.location,
             });
           }
-          emit(branch);
+          emit(branch, effectiveFlags, scoped);
         }
         const endStart = source.length;
         const close = `)${repetitionSource(node.repetition)}`;
@@ -429,7 +443,31 @@ export function compileAst(parsed, options = {}) {
       }
       if (node.kind === "group") {
         const sourceStart = source.length;
-        const fragment = node.capturing ? (node.name === null ? "(" : `(?<${node.name}>`) : "(?:";
+        const innerFlags = node.modifiers
+          ? applyModifiers(effectiveFlags, node.modifiers)
+          : effectiveFlags;
+        if (node.modifiers && !checkedModifiers) {
+          try {
+            if (!supportsModifiers(flags))
+              throw new TypeError("Incompatible native group modifiers.");
+            new RegExp(`(?${node.modifiers}:)`, flags);
+            checkedModifiers = true;
+          } catch {
+            fail(
+              "UNSUPPORTED_TARGET_FEATURE",
+              "This JavaScript runtime does not support native scoped i/m/s flag groups correctly.",
+              node.location,
+              "Update to a runtime with verified native group modifier support; local matching options cannot be approximated.",
+            );
+          }
+        }
+        const fragment = node.capturing
+          ? node.name === null
+            ? "("
+            : `(?<${node.name}>`
+          : node.modifiers
+            ? `(?${node.modifiers}:`
+            : "(?:";
         source += fragment;
         const details = {
           kind: "group",
@@ -437,6 +475,7 @@ export function compileAst(parsed, options = {}) {
           name: node.name,
           captureIndex: node.captureIndex,
           repetition: node.repetition,
+          ...(node.modifiers ? { modifiers: node.modifiers, flags: innerFlags } : {}),
         };
         segments.push({
           ...details,
@@ -446,10 +485,10 @@ export function compileAst(parsed, options = {}) {
           sourceEnd: source.length,
           source: fragment,
           text: node.text,
-          explanation: explainNode(node, flags),
+          explanation: explainNode(node, innerFlags),
           ...node.location,
         });
-        emit(node.nodes);
+        emit(node.nodes, innerFlags, scoped || node.modifiers !== undefined);
         const endStart = source.length;
         const close = `)${repetitionSource(node.repetition)}`;
         source += close;
@@ -471,19 +510,21 @@ export function compileAst(parsed, options = {}) {
         node.kind === "anchor" &&
         node.mode === "input" &&
         node.edge === "start" &&
-        selected.has("m")
+        effectiveFlags.includes("m")
       )
         checkLookbehind(node.location);
       // Native edge guards keep absolute assertions out of surrogate pairs in some engines.
       const fragment =
         node.kind === "anchor"
-          ? node.mode === "input" && selected.has("m")
+          ? node.mode === "input" && effectiveFlags.includes("m")
             ? node.edge === "start"
               ? "^(?<![\\s\\S])"
               : "$(?![\\s\\S])"
-            : node.edge === "start"
-              ? "^"
-              : "$"
+            : node.mode === "line" && !effectiveFlags.includes("m")
+              ? `(?m:${node.edge === "start" ? "^" : "$"})`
+              : node.edge === "start"
+                ? "^"
+                : "$"
           : node.kind === "boundary"
             ? node.negative
               ? "\\B"
@@ -504,9 +545,12 @@ export function compileAst(parsed, options = {}) {
         sourceEnd: source.length,
         source: fragment,
         text: node.text,
-        explanation: explainNode(node, flags, index + 1 < nodes.length),
+        explanation: explainNode(node, effectiveFlags, index + 1 < nodes.length),
         line: node.location.line,
         column: node.location.column,
+        ...(node.kind === "anchor" && node.mode === "line" && !effectiveFlags.includes("m")
+          ? { flags: applyModifiers(effectiveFlags, "m") }
+          : {}),
         ...(node.kind === "backreference"
           ? {
               kind: "backreference",
@@ -557,6 +601,9 @@ export function compileAst(parsed, options = {}) {
                       }),
       });
     }
+    if (scoped)
+      for (let index = firstSegment; index < segments.length; index += 1)
+        segments[index].flags ??= effectiveFlags;
   }
   emit(parsed.nodes);
 

@@ -1,6 +1,8 @@
-import { compileAst } from "./src/compiler.js?v=4c4676a19bb3";
-import { parse } from "./src/parser.js?v=4c4676a19bb3";
-import { regexToRules } from "./src/regex-to-rules.js?v=4c4676a19bb3";
+import { compileAst } from "./src/compiler.js?v=3509195d9193";
+import { fail } from "./src/diagnostics.js?v=3509195d9193";
+import { modifierGroupStart, supportsModifiers } from "./src/flags.js?v=3509195d9193";
+import { parse } from "./src/parser.js?v=3509195d9193";
+import { regexToRules } from "./src/regex-to-rules.js?v=3509195d9193";
 
 /** Compile controlled-English rules into JavaScript regex source, flags and source mapping.
  * @param {string} source @param {{flags?: string | undefined}} [options]
@@ -25,12 +27,23 @@ export function toRegExp(result) {
   if (typeof source !== "string" || typeof flags !== "string") {
     throw new TypeError("Expected a compile result with source and flags.");
   }
-  return new RegExp(source, flags);
+  const regex = new RegExp(source, flags);
+  const groupStart = modifierGroupStart(source, regex.flags.includes("v"));
+  if (groupStart >= 0 && !supportsModifiers(regex.flags)) {
+    const lines = source.slice(0, groupStart).split(/\r\n|[\n\r\u2028\u2029]/u);
+    fail(
+      "UNSUPPORTED_TARGET_FEATURE",
+      "This JavaScript runtime does not support native scoped i/m/s flag groups correctly.",
+      { line: lines.length, column: (lines.at(-1) ?? "").length + 1 },
+      "Use a runtime with verified native scoped modifier support; cached source cannot bypass runtime compatibility.",
+    );
+  }
+  return regex;
 }
 
-export { analyze } from "./src/analyze.js?v=4c4676a19bb3";
-export { CompileError } from "./src/diagnostics.js?v=4c4676a19bb3";
-export { toSVG } from "./src/diagram.js?v=4c4676a19bb3";
-export { editGroup } from "./src/edit-group.js?v=4c4676a19bb3";
-export { exportRegex } from "./src/export.js?v=4c4676a19bb3";
+export { analyze } from "./src/analyze.js?v=3509195d9193";
+export { CompileError } from "./src/diagnostics.js?v=3509195d9193";
+export { toSVG } from "./src/diagram.js?v=3509195d9193";
+export { editGroup } from "./src/edit-group.js?v=3509195d9193";
+export { exportRegex } from "./src/export.js?v=3509195d9193";
 export { regexToRules };

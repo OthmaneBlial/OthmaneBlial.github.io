@@ -4,25 +4,25 @@ import {
   PATH_SEGMENT_EXCLUDED,
   PATH_SEGMENT_SOURCE,
   UNICODE_STRING_PROPERTIES,
-} from "./ast.js?v=4c4676a19bb3";
-import { fail } from "./diagnostics.js?v=4c4676a19bb3";
-import { quoteText } from "./display.js?v=4c4676a19bb3";
-import { LIMITS } from "./limits.js?v=4c4676a19bb3";
+} from "./ast.js?v=3509195d9193";
+import { fail } from "./diagnostics.js?v=3509195d9193";
+import { quoteText } from "./display.js?v=3509195d9193";
+import { LIMITS } from "./limits.js?v=3509195d9193";
 
 export { LIMITS };
 
-/** @typedef {import('./ast.js?v=4c4676a19bb3').Location} Location */
-/** @typedef {import('./ast.js?v=4c4676a19bb3').Repetition} Repetition */
-/** @typedef {import('./ast.js?v=4c4676a19bb3').AtomNode} AtomNode */
-/** @typedef {import('./ast.js?v=4c4676a19bb3').ClassMember} ClassMember */
-/** @typedef {import('./ast.js?v=4c4676a19bb3').ClassAtomNode} ClassAtomNode */
-/** @typedef {import('./ast.js?v=4c4676a19bb3').GroupNode} GroupNode */
-/** @typedef {import('./ast.js?v=4c4676a19bb3').AlternationNode} AlternationNode */
-/** @typedef {import('./ast.js?v=4c4676a19bb3').AssertionNode} AssertionNode */
-/** @typedef {import('./ast.js?v=4c4676a19bb3').BoundaryNode} BoundaryNode */
-/** @typedef {import('./ast.js?v=4c4676a19bb3').BackreferenceNode} BackreferenceNode */
-/** @typedef {import('./ast.js?v=4c4676a19bb3').RuleNode} RuleNode */
-/** @typedef {import('./ast.js?v=4c4676a19bb3').ParsedRules} ParsedRules */
+/** @typedef {import('./ast.js?v=3509195d9193').Location} Location */
+/** @typedef {import('./ast.js?v=3509195d9193').Repetition} Repetition */
+/** @typedef {import('./ast.js?v=3509195d9193').AtomNode} AtomNode */
+/** @typedef {import('./ast.js?v=3509195d9193').ClassMember} ClassMember */
+/** @typedef {import('./ast.js?v=3509195d9193').ClassAtomNode} ClassAtomNode */
+/** @typedef {import('./ast.js?v=3509195d9193').GroupNode} GroupNode */
+/** @typedef {import('./ast.js?v=3509195d9193').AlternationNode} AlternationNode */
+/** @typedef {import('./ast.js?v=3509195d9193').AssertionNode} AssertionNode */
+/** @typedef {import('./ast.js?v=3509195d9193').BoundaryNode} BoundaryNode */
+/** @typedef {import('./ast.js?v=3509195d9193').BackreferenceNode} BackreferenceNode */
+/** @typedef {import('./ast.js?v=3509195d9193').RuleNode} RuleNode */
+/** @typedef {import('./ast.js?v=3509195d9193').ParsedRules} ParsedRules */
 
 /** @param {string} source @returns {string[]} */
 export function splitLines(source) {
@@ -542,6 +542,7 @@ function parseItem(text, location, rawLine, inClass = false) {
     const capturing = group[1].toLowerCase() === "capture";
     let suffix = remaining.slice(group[0].length);
     let name = null;
+    let modifiers;
     const nameLocation = {
       line: location.line,
       column: location.column + offset + group[0].length,
@@ -556,6 +557,27 @@ function parseItem(text, location, rawLine, inClass = false) {
         });
       }
       suffix = suffix.slice(quoted.length).trim();
+    }
+    const flagPrefix = /^with flags\s+/iu.exec(suffix);
+    if (group[1].toLowerCase() === "group" && flagPrefix) {
+      const flagLocation = { ...nameLocation, column: nameLocation.column + flagPrefix[0].length };
+      const quoted = readQuoted(suffix.slice(flagPrefix[0].length), flagLocation);
+      modifiers = quoted.value;
+      const letters = modifiers.replace("-", "");
+      if (
+        !/^(?:[ims]+(?:-[ims]*)?|-[ims]+)$/u.test(modifiers) ||
+        new Set(letters).size !== letters.length
+      )
+        fail(
+          "INVALID_GROUP_FLAGS",
+          "Use unique local flags i, m and s, optionally disabling flags after `-`.",
+          {
+            ...flagLocation,
+            endColumn: flagLocation.column + quoted.length,
+          },
+          'For example, `group with flags "im-s" {`. A flag cannot be enabled and disabled together.',
+        );
+      suffix = suffix.slice(flagPrefix[0].length + quoted.length).trim();
     }
     if (suffix !== "{") {
       fail(
@@ -579,6 +601,7 @@ function parseItem(text, location, rawLine, inClass = false) {
       capturing,
       name,
       captureIndex: null,
+      ...(modifiers === undefined ? {} : { modifiers }),
       nodes: [],
       repetition,
       location,

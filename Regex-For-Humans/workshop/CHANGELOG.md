@@ -2,6 +2,14 @@
 
 ## Unreleased
 
+## 0.1.0-dev.10 (11 October 2026)
+
+- Apply the scoped-runtime guard to `toRegExp({ source, flags })` so cached native source cannot bypass compatibility checks on the receiving runtime. Read each field once, ignore unused segments, preserve native syntax errors and distinguish actual modifier groups from escaped text and nested v-mode classes. Unsupported behavior reports the opener's native-source line and UTF-16 column.
+
+- Add native `group with flags "im-s"` scopes with positioned validation, lexical options, backward imports and typed effective flags. Preserve input/line anchor intent, scope restoration, captures, reference-site folding and budgets. Carry local semantics into explanations, analysis, diagrams, failure proofs, group conversion and localized workshop notes; reject unsupported foreign profiles. Probe actual Unicode/cursor modes and guard the observed warmed Node/V8 defect instead of claiming syntax availability proves correct matching.
+
+- Reverse-translate compiler-generated wrappers around repeated literals and numeric capture references at the 64-level rule-block limit. Normalize reference-only noncapturing groups while preserving repetition, numeric-reference boundaries and original reference diagnostic positions. Keep structural groups and recursive parsing bounded.
+
 ## 0.1.0-dev.9 (11 October 2026)
 
 - Share a workshop snapshot through a validated, bounded URL fragment containing rules, flags, match mode, examples and exact capture/span/replacement expectations. Restore it before asynchronous recipes load, preserve newer edits on in-page navigation, offer explicit loading, and retain manual clipboard recovery and JSON export for larger suites. Localize controls/status in all four interface languages; keep matching in the existing isolated worker.

@@ -1,7 +1,8 @@
-import { PATH_SEGMENT_EXCLUDED } from "./ast.js?v=4c4676a19bb3";
-import { CompileError, fail } from "./diagnostics.js?v=4c4676a19bb3";
-import { quoteText } from "./display.js?v=4c4676a19bb3";
-import { LIMITS, parse } from "./parser.js?v=4c4676a19bb3";
+import { PATH_SEGMENT_EXCLUDED } from "./ast.js?v=3509195d9193";
+import { CompileError, fail } from "./diagnostics.js?v=3509195d9193";
+import { quoteText } from "./display.js?v=3509195d9193";
+import { applyModifiers } from "./flags.js?v=3509195d9193";
+import { LIMITS, parse } from "./parser.js?v=3509195d9193";
 
 const ESCAPED_ATOMS = new Map([
   ["d", "digit"],
@@ -39,7 +40,7 @@ const UNSUPPORTED_HINT =
   "Supported syntax includes literals, anchors, common character classes, greedy/lazy repetition, nested groups, captures, backward capture references, ordered alternatives, lookahead/lookbehind and d/g/i/m/s/u/v/y flags. Forward/open references are not supported.";
 const LINE_TERMINATORS = ["\n", "\r", "\u2028", "\u2029"];
 
-/** @typedef {{end: number, literal?: string, phrase?: string, strings?: {value: string, codePoints?: string[]}[], classSet?: {operation: import('./ast.js?v=4c4676a19bb3').ClassSetOperation, negative: boolean, members: SetOperandToken[], close: number}, empty?: boolean, allCharacters?: boolean, nativeDot?: boolean, category?: string, set?: {values: string[], negative: boolean}, group?: {capturing: boolean, name: string|null, atoms: PositionedAtom[], close: number}, assertion?: {direction: 'ahead'|'behind', negative: boolean, atoms: PositionedAtom[], close: number}, alternation?: {branches: {atoms: PositionedAtom[], index: number}[], close: number}}} AtomToken */
+/** @typedef {{end: number, index?: number, literal?: string, phrase?: string, strings?: {value: string, codePoints?: string[]}[], classSet?: {operation: import('./ast.js?v=3509195d9193').ClassSetOperation, negative: boolean, members: SetOperandToken[], close: number}, empty?: boolean, allCharacters?: boolean, nativeDot?: boolean, category?: string, set?: {values: string[], negative: boolean}, group?: {capturing: boolean, name: string|null, modifiers?: string, atoms: PositionedAtom[], close: number}, assertion?: {direction: 'ahead'|'behind', negative: boolean, atoms: PositionedAtom[], close: number}, alternation?: {branches: {atoms: PositionedAtom[], index: number}[], close: number}}} AtomToken */
 /** @typedef {AtomToken & {index: number}} SetOperandToken */
 /** @typedef {{end: number, kind: 'zeroOrMore'|'oneOrMore'|'optional'|'exact'|'range'|'atLeast'|null, min?: number, max?: number, lazy?: boolean}} QuantifierToken */
 /** @typedef {AtomToken & QuantifierToken & {index: number}} PositionedAtom */
@@ -201,7 +202,7 @@ function readUnicodeSet(source, start, depth) {
   let cursor = start + 1;
   const negative = source[cursor] === "^";
   if (negative) cursor += 1;
-  /** @type {import('./ast.js?v=4c4676a19bb3').ClassSetOperation} */
+  /** @type {import('./ast.js?v=3509195d9193').ClassSetOperation} */
   let operation = "union";
   /** @type {SetOperandToken[]} */
   const members = [];
@@ -387,7 +388,11 @@ function readCaptureName(source, start, end) {
 
 /** @param {string} source @param {number} start @param {boolean} multiline @param {number} depth @param {boolean} unicodeSets @returns {AtomToken} */
 function readGroup(source, start, multiline, depth, unicodeSets) {
-  if (depth >= LIMITS.groupDepth) {
+  // The compiler wraps repeated literals and numeric references without adding a rule block.
+  const scalarLimit =
+    depth === LIMITS.groupDepth &&
+    (source.startsWith("(?:", start) || source.startsWith("(?m:", start));
+  if (depth >= LIMITS.groupDepth && !scalarLimit) {
     fail("GROUP_DEPTH_LIMIT", `Groups cannot nest more than ${LIMITS.groupDepth} levels.`, {
       line: 1,
       column: start + 1,
@@ -413,9 +418,10 @@ function readGroup(source, start, multiline, depth, unicodeSets) {
       },
     };
   }
-  const capturing = !source.startsWith("(?:", start);
+  const modifier = /^\(\?((?:[ims]+(?:-[ims]*)?|-[ims]+)):/u.exec(source.slice(start));
+  const capturing = !modifier && !source.startsWith("(?:", start);
   let name = null;
-  let contentStart = start + (capturing ? 1 : 3);
+  let contentStart = start + (modifier ? modifier[0].length : capturing ? 1 : 3);
   if (source.startsWith("(?<", start)) {
     const close = source.indexOf(">", start + 3);
     if (close < 0) unsupported("The capture name is not closed.", start);
@@ -427,21 +433,50 @@ function readGroup(source, start, multiline, depth, unicodeSets) {
   const { atoms, end: close } = readDisjunction(
     source,
     contentStart,
-    multiline,
+    modifier ? applyModifiers(multiline ? "m" : "", modifier[1]).includes("m") : multiline,
     depth + 1,
     unicodeSets,
   );
   if (source[close] !== ")") unsupported("The group is not closed.", start);
   const end = close + 1;
+  if (modifier) {
+    if (scalarLimit) {
+      const atom = atoms[0];
+      if (
+        modifier[1] === "m" &&
+        atoms.length === 1 &&
+        atom.kind === null &&
+        (atom.phrase === "line start" || atom.phrase === "line end") &&
+        !/^[*+?{]/u.test(source[end] ?? "")
+      )
+        return { end, phrase: atom.phrase, index: atom.index };
+      fail("GROUP_DEPTH_LIMIT", `Groups cannot nest more than ${LIMITS.groupDepth} levels.`, {
+        line: 1,
+        column: start + 1,
+      });
+    }
+    return { end, group: { capturing: false, name: null, modifiers: modifier[1], atoms, close } };
+  }
   if (capturing) return { end, group: { capturing, name, atoms, close } };
   if (atoms.length === 0) return { end, phrase: "any character", empty: true };
-  if (atoms.length === 1 && atoms[0].alternation && atoms[0].kind === null)
-    return { end, alternation: { ...atoms[0].alternation, close } };
+  if (
+    atoms.length === 1 &&
+    atoms[0].kind === null &&
+    atoms[0].phrase?.startsWith("same as capture ")
+  )
+    return { end, phrase: atoms[0].phrase, index: atoms[0].index };
 
   // Keep the existing compact literal-group output when merging cannot join surrogate atoms.
   let value = "";
   for (const atom of atoms) {
     if (atom.literal === undefined || atom.kind !== null || joinsSurrogates(value, atom.literal)) {
+      if (scalarLimit)
+        fail("GROUP_DEPTH_LIMIT", `Groups cannot nest more than ${LIMITS.groupDepth} levels.`, {
+          line: 1,
+          column: start + 1,
+        });
+      if (atoms.length === 1 && atom.alternation && atom.kind === null)
+        return { end, alternation: { ...atom.alternation, close } };
       return { end, group: { capturing, name, atoms, close } };
     }
     value += atom.literal;
@@ -541,7 +576,7 @@ function readSequence(source, start, multiline, depth, unicodeSets) {
     if (quantifier.kind !== null && source[cursor] === "?")
       quantifier = { ...quantifier, lazy: true, end: ++cursor };
     if (atom.empty) quantifier = { ...quantifier, end: cursor, kind: "exact", min: 0 };
-    atoms.push({ ...atom, ...quantifier, index });
+    atoms.push({ ...atom, ...quantifier, index: atom.index ?? index });
   }
   return { atoms, end: cursor };
 }
@@ -635,12 +670,18 @@ export function regexToRules(regex) {
     }
   };
   collect(atoms);
-  const needsDotAll = allAtoms.some(
-    (atom) =>
-      atom.allCharacters &&
-      !(atom.kind === "exact" && atom.min === 0) &&
-      !(atom.kind === "range" && atom.min === 0 && atom.max === 0),
-  );
+  const hasModifiers = allAtoms.some((atom) => atom.group?.modifiers !== undefined);
+  if (hasModifiers)
+    for (const atom of allAtoms)
+      if (atom.allCharacters) atom.phrase = "character class: space, not space";
+  const needsDotAll =
+    !hasModifiers &&
+    allAtoms.some(
+      (atom) =>
+        atom.allCharacters &&
+        !(atom.kind === "exact" && atom.min === 0) &&
+        !(atom.kind === "range" && atom.min === 0 && atom.max === 0),
+    );
   const dotAll = originalDotAll || needsDotAll;
   const optionFlags = [..."dgimsvy"]
     .filter((flag) => (flag === "s" ? dotAll : nativeFlags.includes(flag)))
@@ -775,7 +816,9 @@ export function regexToRules(regex) {
           ? group.name === null
             ? "capture"
             : `capture ${quoteText(group.name)}`
-          : "group";
+          : group.modifiers
+            ? `group with flags ${quoteText(group.modifiers)}`
+            : "group";
         addRule(`${prefix ? `${prefix} ` : ""}${label} {`, atom.index);
         emit(group.atoms);
         addRule("}", group.close);

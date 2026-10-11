@@ -1,11 +1,11 @@
-import { compileAst } from "./compiler.js?v=4c4676a19bb3";
-import { fail } from "./diagnostics.js?v=4c4676a19bb3";
-import { quoteText } from "./display.js?v=4c4676a19bb3";
-import { LIMITS, parse, splitLines } from "./parser.js?v=4c4676a19bb3";
+import { compileAst } from "./compiler.js?v=3509195d9193";
+import { fail } from "./diagnostics.js?v=3509195d9193";
+import { quoteText } from "./display.js?v=3509195d9193";
+import { LIMITS, parse, splitLines } from "./parser.js?v=3509195d9193";
 
 /** Change one group while preserving the targets of existing references.
  * @param {string} source
- * @param {import('./ast.js?v=4c4676a19bb3').Location} location Opening-rule location from a group segment.
+ * @param {import('./ast.js?v=3509195d9193').Location} location Opening-rule location from a group segment.
  * @param {{capturing: boolean, name: string|null}} definition
  * @param {{flags?: string|undefined}} [options]
  * @returns {string} Validated editable rules; the input is never mutated.
@@ -31,11 +31,11 @@ export function editGroup(source, location, definition, options = {}) {
 
   const parsed = parse(source);
   compileAst(parsed, options);
-  /** @type {import('./ast.js?v=4c4676a19bb3').GroupNode[]} */
+  /** @type {import('./ast.js?v=3509195d9193').GroupNode[]} */
   const groups = [];
-  /** @type {import('./ast.js?v=4c4676a19bb3').BackreferenceNode[]} */
+  /** @type {import('./ast.js?v=3509195d9193').BackreferenceNode[]} */
   const references = [];
-  /** @param {import('./ast.js?v=4c4676a19bb3').RuleNode[]} nodes */
+  /** @param {import('./ast.js?v=3509195d9193').RuleNode[]} nodes */
   function visit(nodes) {
     for (const node of nodes) {
       if (node.kind === "group") {
@@ -92,13 +92,26 @@ export function editGroup(source, location, definition, options = {}) {
     start += line.length;
     start += source.slice(start, start + 2) === "\r\n" ? 2 : 1;
   }
-  const header = /(?:group|capture)(?:\s+"(?:[^"\\]|\\.)*")?\s*(?=\{$)/iu.exec(target.text);
+  const header =
+    /(?:group|capture)(?:\s+"(?:[^"\\]|\\.)*")?(?:\s+with flags\s+"(?:[^"\\]|\\.)*")?\s*(?=\{$)/iu.exec(
+      target.text,
+    );
   if (!header) throw new Error("A parsed group is missing its opening header.");
   const headerStart = offsets[location.line - 1] + location.column - 1 + header.index;
-  const text = definition.capturing
-    ? `capture${definition.name === null ? "" : ` ${quoteText(definition.name)}`} `
+  const separator = source.match(/\r\n|[\n\r\u2028\u2029]/u)?.[0] ?? "\n";
+  const indent = lines[location.line - 1].match(/^\s*/u)?.[0] ?? "";
+  const scopedHeader = target.modifiers
+    ? `group with flags ${quoteText(target.modifiers)} `
     : "group ";
+  // Native option groups are noncapturing; place the requested capture around the same scope.
+  const text = definition.capturing
+    ? `capture${definition.name === null ? "" : ` ${quoteText(definition.name)}`} ${target.modifiers ? `{${separator}${indent}${scopedHeader}` : ""}`
+    : scopedHeader;
   const patches = [{ start: headerStart, end: headerStart + header[0].length, text }];
+  if (target.modifiers && definition.capturing) {
+    const close = offsets[target.endLocation.line - 1] + target.endLocation.column;
+    patches.push({ start: close, end: close, text: `${separator}${indent}}` });
+  }
   for (const reference of references) {
     const index = indices.get(reference.captureIndex);
     if (index === undefined) throw new Error("A retained reference is missing its capture.");

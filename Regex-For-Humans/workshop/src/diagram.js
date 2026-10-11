@@ -1,10 +1,10 @@
-import { compileAst } from "./compiler.js?v=4c4676a19bb3";
-import { escapeControls } from "./display.js?v=4c4676a19bb3";
-import { explainNode } from "./explain.js?v=4c4676a19bb3";
-import { parse } from "./parser.js?v=4c4676a19bb3";
+import { compileAst } from "./compiler.js?v=3509195d9193";
+import { escapeControls } from "./display.js?v=3509195d9193";
+import { explainNode } from "./explain.js?v=3509195d9193";
+import { parse } from "./parser.js?v=3509195d9193";
 
-/** @typedef {import('./ast.js?v=4c4676a19bb3').RuleNode} RuleNode */
-/** @typedef {{kind: string, width: number, height: number, entry: number, label: string, node: RuleNode|null, children: Box[], body?: Box, id?: string, start?: number, end?: number}} Box */
+/** @typedef {import('./ast.js?v=3509195d9193').RuleNode} RuleNode */
+/** @typedef {{kind: string, width: number, height: number, entry: number, label: string, node: RuleNode|null, children: Box[], body?: Box, id?: string, start?: number, end?: number, flags?: string}} Box */
 const GAP = 28;
 const PAD = 20;
 
@@ -105,7 +105,7 @@ export function toSVG(source, options = {}) {
         : opening;
     if (!closing) throw new Error("A diagram block is missing its closing compiler segment.");
     const unit = node.kind === "anchor" ? node : { ...node, repetition: null };
-    const label = caption(explainNode(unit, compiled.flags));
+    const label = caption(explainNode(unit, opening.flags ?? compiled.flags));
     /** @type {Box} */
     let box = {
       kind: node.kind,
@@ -114,6 +114,7 @@ export function toSVG(source, options = {}) {
       entry: 24,
       label,
       node,
+      flags: opening.flags ?? compiled.flags,
       children: [],
       id: `rule-${nextId++}`,
       start: opening.sourceStart,
@@ -253,7 +254,7 @@ export function toSVG(source, options = {}) {
       return;
     }
     if (!box.node) throw new Error("A diagram node is missing its rule.");
-    const explanation = explainNode(box.node, compiled.flags);
+    const explanation = explainNode(box.node, box.flags ?? compiled.flags);
     if (box.kind === "group" || box.kind === "alternation" || box.kind === "assertion") {
       const style =
         box.kind === "assertion"

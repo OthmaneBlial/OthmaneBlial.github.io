@@ -6,28 +6,28 @@ import {
   exportRegex,
   regexToRules,
   toSVG,
-} from "../index.js?v=4c4676a19bb3";
-import { escapeControls, quoteText } from "../src/display.js?v=4c4676a19bb3";
-import { LIMITS, splitLines } from "../src/parser.js?v=4c4676a19bb3";
-import { parseRegexLiteral } from "../src/regex-literal.js?v=4c4676a19bb3";
-import { parseExpectation, readExpectation } from "./expectations.js?v=4c4676a19bb3";
-import { explanationNotes } from "./explanation-notes.js?v=4c4676a19bb3";
-import { explainMismatch, failureRequirements } from "./failure-reasons.js?v=4c4676a19bb3";
+} from "../index.js?v=3509195d9193";
+import { escapeControls, quoteText } from "../src/display.js?v=3509195d9193";
+import { LIMITS, splitLines } from "../src/parser.js?v=3509195d9193";
+import { parseRegexLiteral } from "../src/regex-literal.js?v=3509195d9193";
+import { parseExpectation, readExpectation } from "./expectations.js?v=3509195d9193";
+import { explanationNotes } from "./explanation-notes.js?v=3509195d9193";
+import { explainMismatch, failureRequirements } from "./failure-reasons.js?v=3509195d9193";
 import {
   createFixtureLink,
   fixtureLimit,
   fixtureStorageKey,
   parseFixture,
   readFixtureLink,
-} from "./fixtures.js?v=4c4676a19bb3";
-import { initializeLanguage, message, setAttribute, setText } from "./i18n.js?v=4c4676a19bb3";
-import { insertRule } from "./insert-rule.js?v=4c4676a19bb3";
-import { categories, filterRecipes, levels } from "./library.js?v=4c4676a19bb3";
-import { initializeSyntaxEditor } from "./syntax.js?v=4c4676a19bb3";
-import { TestRunError, TestRunner } from "./test-runner.js?v=4c4676a19bb3";
+} from "./fixtures.js?v=3509195d9193";
+import { initializeLanguage, message, setAttribute, setText } from "./i18n.js?v=3509195d9193";
+import { insertRule } from "./insert-rule.js?v=3509195d9193";
+import { categories, filterRecipes, levels } from "./library.js?v=3509195d9193";
+import { initializeSyntaxEditor } from "./syntax.js?v=3509195d9193";
+import { TestRunError, TestRunner } from "./test-runner.js?v=3509195d9193";
 
 /** @typedef {import("./worker-protocol.d.ts").TestCase} TestCase */
-/** @typedef {import('./library.js?v=4c4676a19bb3').ProductScenario} ProductScenario */
+/** @typedef {import('./library.js?v=3509195d9193').ProductScenario} ProductScenario */
 /** @typedef {"success" | "neutral" | "error"} CompileState */
 /** @typedef {{line: number, column: number, sourceStart: number, sourceEnd: number}} RuleFocus */
 
@@ -182,14 +182,14 @@ let hasEdits =
 let copyFeedbackTimer = 0;
 let copySequence = 0;
 const testRunner = new TestRunner(
-  () => new Worker(new URL("./match-worker.js?v=4c4676a19bb3", import.meta.url), { type: "module" }),
+  () => new Worker(new URL("./match-worker.js?v=3509195d9193", import.meta.url), { type: "module" }),
 );
 
 /**
  * @template {keyof HTMLElementTagNameMap} K
  * @param {K} tag
  * @param {string} [className=""]
- * @param {string | import('./i18n.js?v=4c4676a19bb3').Message} [text]
+ * @param {string | import('./i18n.js?v=3509195d9193').Message} [text]
  * @returns {HTMLElementTagNameMap[K]}
  */
 function make(tag, className = "", text) {
@@ -205,7 +205,7 @@ function setCompileState(label, state) {
   ui.compileState.dataset.state = state;
 }
 
-/** @param {string | import('./i18n.js?v=4c4676a19bb3').Message} text @param {boolean} [invalidRules=false] */
+/** @param {string | import('./i18n.js?v=3509195d9193').Message} text @param {boolean} [invalidRules=false] */
 function setDiagnostic(text, invalidRules = false) {
   ui.diagnostic.hidden = !text;
   setText(ui.diagnostic, text || "");
@@ -800,7 +800,7 @@ function renderGroupEditor() {
   }
 }
 
-/** @param {HTMLDivElement} row @param {string | import('./i18n.js?v=4c4676a19bb3').Message} text */
+/** @param {HTMLDivElement} row @param {string | import('./i18n.js?v=3509195d9193').Message} text */
 function setTestResult(row, text) {
   const result = row.querySelector(".test-result");
   if (result) setText(result, text);
@@ -966,7 +966,7 @@ function renderCaptureExplorer(row, result, captures, input) {
   explorer.hidden = false;
 }
 
-/** @param {HTMLDivElement} row @param {string} input @param {{start: number, end: number} | null | undefined} range @param {string | import('./i18n.js?v=4c4676a19bb3').Message} [label] */
+/** @param {HTMLDivElement} row @param {string} input @param {{start: number, end: number} | null | undefined} range @param {string | import('./i18n.js?v=3509195d9193').Message} [label] */
 function renderMatchPreview(row, input, range, label) {
   const preview = row.querySelector(".match-preview");
   if (!(preview instanceof HTMLSpanElement)) return;
@@ -1449,7 +1449,7 @@ function currentFixtureText() {
   return text;
 }
 
-/** @param {import('./fixtures.js?v=4c4676a19bb3').TestFixture} fixture */
+/** @param {import('./fixtures.js?v=3509195d9193').TestFixture} fixture */
 function applyFixture(fixture) {
   hasEdits = true;
   ui.rules.value = fixture.rules;
@@ -2227,7 +2227,7 @@ try {
 }
 
 try {
-  const response = await fetch(new URL("../test/fixtures/product-scenarios.json?v=4c4676a19bb3", import.meta.url));
+  const response = await fetch(new URL("../test/fixtures/product-scenarios.json?v=3509195d9193", import.meta.url));
   if (!response.ok) throw new Error(`HTTP ${response.status}`);
   const loaded = await response.json();
   if (!Array.isArray(loaded)) throw new Error("Invalid example recipe data");
