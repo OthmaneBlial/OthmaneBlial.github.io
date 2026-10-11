@@ -1,4 +1,4 @@
-import { LIMITS } from "../src/limits.js?v=f92ad2735a68";
+import { LIMITS } from "../src/limits.js?v=fbb1cf0ab4e2";
 
 /** @typedef {"text"|"keyword"|"string"|"capture"|"quantifier"|"assertion"|"alternation"|"comment"|"invalid"} TokenKind */
 /** @typedef {{start: number, end: number, kind: TokenKind}} SyntaxToken */

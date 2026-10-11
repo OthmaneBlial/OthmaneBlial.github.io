@@ -6,13 +6,13 @@ import {
   exportRegex,
   regexToRules,
   toSVG,
-} from "../index.js?v=f92ad2735a68";
-import { escapeControls, quoteText } from "../src/display.js?v=f92ad2735a68";
-import { LIMITS, splitLines } from "../src/parser.js?v=f92ad2735a68";
-import { parseRegexLiteral } from "../src/regex-literal.js?v=f92ad2735a68";
-import { parseExpectation, readExpectation } from "./expectations.js?v=f92ad2735a68";
-import { explanationNotes } from "./explanation-notes.js?v=f92ad2735a68";
-import { explainMismatch, failureRequirements } from "./failure-reasons.js?v=f92ad2735a68";
+} from "../index.js?v=fbb1cf0ab4e2";
+import { escapeControls, quoteText } from "../src/display.js?v=fbb1cf0ab4e2";
+import { LIMITS, splitLines } from "../src/parser.js?v=fbb1cf0ab4e2";
+import { parseRegexLiteral } from "../src/regex-literal.js?v=fbb1cf0ab4e2";
+import { parseExpectation, readExpectation } from "./expectations.js?v=fbb1cf0ab4e2";
+import { explanationNotes } from "./explanation-notes.js?v=fbb1cf0ab4e2";
+import { explainMismatch, failureRequirements } from "./failure-reasons.js?v=fbb1cf0ab4e2";
 import {
   createFixtureLink,
   draftStorageKey,
@@ -21,16 +21,18 @@ import {
   parseDraft,
   parseFixture,
   readFixtureLink,
-} from "./fixtures.js?v=f92ad2735a68";
-import { initializeLanguage, message, setAttribute, setText } from "./i18n.js?v=f92ad2735a68";
-import { insertRule } from "./insert-rule.js?v=f92ad2735a68";
-import { categories, filterRecipes, levels } from "./library.js?v=f92ad2735a68";
-import { initializeSyntaxEditor } from "./syntax.js?v=f92ad2735a68";
-import { TestRunError, TestRunner } from "./test-runner.js?v=f92ad2735a68";
-import { textChanges } from "./text-change.js?v=f92ad2735a68";
+} from "./fixtures.js?v=fbb1cf0ab4e2";
+import { initializeLanguage, message, setAttribute, setText } from "./i18n.js?v=fbb1cf0ab4e2";
+import { insertRule } from "./insert-rule.js?v=fbb1cf0ab4e2";
+import { categories, filterRecipes, levels } from "./library.js?v=fbb1cf0ab4e2";
+import { createMarkdownReport } from "./markdown-report.js?v=fbb1cf0ab4e2";
+import { ruleCompletions } from "./rule-completions.js?v=fbb1cf0ab4e2";
+import { initializeSyntaxEditor } from "./syntax.js?v=fbb1cf0ab4e2";
+import { TestRunError, TestRunner } from "./test-runner.js?v=fbb1cf0ab4e2";
+import { textChanges } from "./text-change.js?v=fbb1cf0ab4e2";
 
 /** @typedef {import("./worker-protocol.d.ts").TestCase} TestCase */
-/** @typedef {import('./library.js?v=f92ad2735a68').ProductScenario} ProductScenario */
+/** @typedef {import('./library.js?v=fbb1cf0ab4e2').ProductScenario} ProductScenario */
 /** @typedef {"success" | "neutral" | "error"} CompileState */
 /** @typedef {{line: number, column: number, sourceStart: number, sourceEnd: number}} RuleFocus */
 
@@ -60,6 +62,14 @@ const ui = {
   recipeClear: requiredElement("recipe-clear", HTMLButtonElement),
   rules: requiredElement("rules-input", HTMLTextAreaElement),
   ruleCount: requiredElement("rule-count", HTMLSpanElement),
+  completeRule: requiredElement("complete-rule", HTMLButtonElement),
+  completions: requiredElement("rule-completions", HTMLElement),
+  completionChoice: requiredElement("completion-choice", HTMLSelectElement),
+  completionPreview: requiredElement("completion-preview", HTMLElement),
+  completionPreviewField: requiredElement("completion-preview-field", HTMLParagraphElement),
+  completionStatus: requiredElement("completion-status", HTMLParagraphElement),
+  completionApply: requiredElement("completion-apply", HTMLButtonElement),
+  completionClose: requiredElement("completion-close", HTMLButtonElement),
   builderForm: requiredElement("builder-form", HTMLFormElement),
   builderKind: requiredElement("builder-kind", HTMLSelectElement),
   builderInsert: requiredElement("builder-insert", HTMLButtonElement),
@@ -128,6 +138,7 @@ const ui = {
   fixtureFile: requiredElement("fixture-file", HTMLInputElement),
   fixtureImport: requiredElement("fixture-import", HTMLButtonElement),
   fixtureExport: requiredElement("fixture-export", HTMLButtonElement),
+  fixtureMarkdown: requiredElement("fixture-markdown", HTMLButtonElement),
   fixtureSave: requiredElement("fixture-save", HTMLButtonElement),
   fixtureRestore: requiredElement("fixture-restore", HTMLButtonElement),
   fixtureShare: requiredElement("fixture-share", HTMLButtonElement),
@@ -197,14 +208,14 @@ let hasEdits =
 let copyFeedbackTimer = 0;
 let copySequence = 0;
 const testRunner = new TestRunner(
-  () => new Worker(new URL("./match-worker.js?v=f92ad2735a68", import.meta.url), { type: "module" }),
+  () => new Worker(new URL("./match-worker.js?v=fbb1cf0ab4e2", import.meta.url), { type: "module" }),
 );
 
 /**
  * @template {keyof HTMLElementTagNameMap} K
  * @param {K} tag
  * @param {string} [className=""]
- * @param {string | import('./i18n.js?v=f92ad2735a68').Message} [text]
+ * @param {string | import('./i18n.js?v=fbb1cf0ab4e2').Message} [text]
  * @returns {HTMLElementTagNameMap[K]}
  */
 function make(tag, className = "", text) {
@@ -220,7 +231,7 @@ function setCompileState(label, state) {
   ui.compileState.dataset.state = state;
 }
 
-/** @param {string | import('./i18n.js?v=f92ad2735a68').Message} text @param {boolean} [invalidRules=false] */
+/** @param {string | import('./i18n.js?v=fbb1cf0ab4e2').Message} text @param {boolean} [invalidRules=false] */
 function setDiagnostic(text, invalidRules = false) {
   ui.diagnostic.hidden = !text;
   setText(ui.diagnostic, text || "");
@@ -823,7 +834,7 @@ function renderGroupEditor() {
   }
 }
 
-/** @param {HTMLDivElement} row @param {string | import('./i18n.js?v=f92ad2735a68').Message} text */
+/** @param {HTMLDivElement} row @param {string | import('./i18n.js?v=fbb1cf0ab4e2').Message} text */
 function setTestResult(row, text) {
   const result = row.querySelector(".test-result");
   if (result) setText(result, text);
@@ -989,7 +1000,7 @@ function renderCaptureExplorer(row, result, captures, input) {
   explorer.hidden = false;
 }
 
-/** @param {HTMLDivElement} row @param {string} input @param {{start: number, end: number} | null | undefined} range @param {string | import('./i18n.js?v=f92ad2735a68').Message} [label] */
+/** @param {HTMLDivElement} row @param {string} input @param {{start: number, end: number} | null | undefined} range @param {string | import('./i18n.js?v=fbb1cf0ab4e2').Message} [label] */
 function renderMatchPreview(row, input, range, label) {
   const preview = row.querySelector(".match-preview");
   if (!(preview instanceof HTMLSpanElement)) return;
@@ -1476,7 +1487,7 @@ function applyExpectationDraft(sample, text) {
   }
 }
 
-/** @param {import('./fixtures.js?v=f92ad2735a68').TestFixture|import('./fixtures.js?v=f92ad2735a68').WorkshopDraft} fixture */
+/** @param {import('./fixtures.js?v=fbb1cf0ab4e2').TestFixture|import('./fixtures.js?v=fbb1cf0ab4e2').WorkshopDraft} fixture */
 function applyFixture(fixture) {
   hasEdits = true;
   ui.rules.value = fixture.rules;
@@ -1626,7 +1637,85 @@ function fixtureError(error) {
   ui.fixtureStatus.dataset.state = "error";
 }
 
+/** @type {{source: string, flags: string, start: number, end: number, choices: ReturnType<typeof ruleCompletions>} | null} */
+let completion = null;
+let composingRules = false;
+
+function closeCompletions(restoreFocus = false) {
+  ui.completions.hidden = true;
+  ui.completeRule.setAttribute("aria-expanded", "false");
+  ui.completionChoice.replaceChildren();
+  ui.completionPreview.replaceChildren();
+  ui.completionPreviewField.hidden = true;
+  completion = null;
+  if (restoreFocus) ui.rules.focus();
+}
+
+function showCompletionPreview() {
+  const choice = completion?.choices[ui.completionChoice.selectedIndex];
+  ui.completionPreviewField.hidden = !choice;
+  ui.completionPreview.textContent = choice?.text ?? "";
+}
+
+function showCompletions() {
+  closeCompletions();
+  const source = ui.rules.value;
+  const flags = currentFlags();
+  const start = ui.rules.selectionStart;
+  const end = ui.rules.selectionEnd;
+  const choices = composingRules || start !== end ? [] : ruleCompletions(source, start, { flags });
+  completion = { source, flags, start, end, choices };
+  for (const [index, choice] of choices.entries()) {
+    const option = document.createElement("option");
+    option.value = String(index);
+    option.textContent = choice.text;
+    ui.completionChoice.append(option);
+  }
+  ui.completionChoice.selectedIndex = choices.length ? 0 : -1;
+  showCompletionPreview();
+  ui.completionChoice.hidden = !choices.length;
+  ui.completionApply.disabled = !choices.length;
+  setText(
+    ui.completionStatus,
+    message(
+      choices.length
+        ? choices.length === 1
+          ? "1 validated suggestion."
+          : "{count} validated suggestions."
+        : "No validated suggestions. Use a single cursor outside quoted text and comments, and fix other rule errors first.",
+      { count: choices.length },
+    ),
+  );
+  ui.completions.hidden = false;
+  ui.completeRule.setAttribute("aria-expanded", "true");
+  (choices.length ? ui.completionChoice : ui.completionClose).focus();
+}
+
+function applyCompletion() {
+  const choice = completion?.choices[ui.completionChoice.selectedIndex];
+  if (
+    !completion ||
+    !choice ||
+    completion.source !== ui.rules.value ||
+    completion.flags !== currentFlags() ||
+    completion.start !== ui.rules.selectionStart ||
+    completion.end !== ui.rules.selectionEnd
+  ) {
+    closeCompletions(true);
+    return;
+  }
+  ui.rules.value = choice.rules;
+  ui.rules.setSelectionRange(choice.caret, choice.caret);
+  hasEdits = true;
+  fixtureRevision++;
+  setScenarioSelection(null);
+  compileRules();
+  ui.rules.focus();
+  followSourceCursor();
+}
+
 function compileRules() {
+  closeCompletions();
   ui.builderFeedback.textContent = "";
   diagramSVG = "";
   reviewResult = null;
@@ -1698,6 +1787,7 @@ function compileRules() {
     }
     renderTrace(null);
   }
+  ui.fixtureMarkdown.disabled = !compiled;
   updateSyntax(rules, ruleError);
   renderGroupEditor();
   renderReview();
@@ -1817,6 +1907,7 @@ document.addEventListener("input", (event) => {
     event.target !== ui.theme &&
     event.target !== ui.explanationMode &&
     event.target !== ui.builderKind &&
+    event.target !== ui.completionChoice &&
     event.target !== ui.recipeSearch &&
     event.target !== ui.recipeCategory &&
     event.target !== ui.recipeLevel &&
@@ -1867,6 +1958,19 @@ ui.fixtureExport.addEventListener("click", () => {
   try {
     downloadText(currentFixtureText(), "regex-tests.json", "application/json");
     setText(ui.fixtureStatus, message("Test fixture download started."));
+    delete ui.fixtureStatus.dataset.state;
+  } catch (error) {
+    fixtureError(error);
+  }
+});
+ui.fixtureMarkdown.addEventListener("click", () => {
+  try {
+    const report = createMarkdownReport(
+      currentFixtureText(),
+      document.querySelector(".build-label")?.textContent ?? "DEVELOPMENT BUILD",
+    );
+    downloadText(report, "regex-report.md", "text/markdown;charset=utf-8");
+    setText(ui.fixtureStatus, message("Markdown report download started."));
     delete ui.fixtureStatus.dataset.state;
   } catch (error) {
     fixtureError(error);
@@ -1987,6 +2091,40 @@ ui.rules.addEventListener("input", () => {
   compileRules();
 });
 ui.rules.addEventListener("keyup", followSourceCursor);
+ui.completeRule.addEventListener("click", showCompletions);
+ui.completionChoice.addEventListener("change", showCompletionPreview);
+ui.completionApply.addEventListener("click", applyCompletion);
+ui.completionClose.addEventListener("click", () => closeCompletions(true));
+ui.completions.addEventListener("keydown", (event) => {
+  if (event.key === "Escape") {
+    event.preventDefault();
+    closeCompletions(true);
+  } else if (event.key === "Enter" && event.target === ui.completionChoice) {
+    event.preventDefault();
+    applyCompletion();
+  }
+});
+ui.rules.addEventListener("compositionstart", () => {
+  composingRules = true;
+  closeCompletions();
+});
+ui.rules.addEventListener("compositionend", () => {
+  composingRules = false;
+});
+ui.rules.addEventListener("keydown", (event) => {
+  if (
+    event.ctrlKey &&
+    !event.metaKey &&
+    !event.altKey &&
+    event.code === "Space" &&
+    !event.isComposing &&
+    !composingRules
+  ) {
+    event.preventDefault();
+    showCompletions();
+  } else closeCompletions();
+});
+ui.completeRule.disabled = false;
 ui.rules.addEventListener("mouseup", followSourceCursor);
 ui.rules.addEventListener("scroll", highlightSourceRow);
 new ResizeObserver(highlightSourceRow).observe(ui.rules);
@@ -2452,7 +2590,7 @@ try {
 initializeDraft();
 
 try {
-  const response = await fetch(new URL("../test/fixtures/product-scenarios.json?v=f92ad2735a68", import.meta.url));
+  const response = await fetch(new URL("../test/fixtures/product-scenarios.json?v=fbb1cf0ab4e2", import.meta.url));
   if (!response.ok) throw new Error(`HTTP ${response.status}`);
   const loaded = await response.json();
   if (!Array.isArray(loaded)) throw new Error("Invalid example recipe data");

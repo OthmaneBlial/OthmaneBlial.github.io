@@ -1,8 +1,8 @@
-import { classMayContainStrings } from "../src/ast.js?v=f92ad2735a68";
-import { applyModifiers } from "../src/flags.js?v=f92ad2735a68";
-import { parse } from "../src/parser.js?v=f92ad2735a68";
+import { classMayContainStrings } from "../src/ast.js?v=fbb1cf0ab4e2";
+import { applyModifiers } from "../src/flags.js?v=fbb1cf0ab4e2";
+import { parse } from "../src/parser.js?v=fbb1cf0ab4e2";
 
-/** @typedef {import('../src/ast.js?v=f92ad2735a68').RuleNode} RuleNode */
+/** @typedef {import('../src/ast.js?v=fbb1cf0ab4e2').RuleNode} RuleNode */
 /** @typedef {{minimum: number, literals: string[], startLiteral?: string, endLiteral?: string}} Requirements */
 /** @typedef {{key: string, values?: Record<string, string | number>}} Reason */
 

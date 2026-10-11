@@ -1,12 +1,12 @@
-import { classMayContainStrings } from "./ast.js?v=f92ad2735a68";
-import { fail } from "./diagnostics.js?v=f92ad2735a68";
-import { escapeControls, quoteText } from "./display.js?v=f92ad2735a68";
-import { explainNode } from "./explain.js?v=f92ad2735a68";
-import { applyModifiers, supportsModifiers } from "./flags.js?v=f92ad2735a68";
+import { classMayContainStrings } from "./ast.js?v=fbb1cf0ab4e2";
+import { fail } from "./diagnostics.js?v=fbb1cf0ab4e2";
+import { escapeControls, quoteText } from "./display.js?v=fbb1cf0ab4e2";
+import { explainNode } from "./explain.js?v=fbb1cf0ab4e2";
+import { applyModifiers, supportsModifiers } from "./flags.js?v=fbb1cf0ab4e2";
 
-/** @typedef {import('./ast.js?v=f92ad2735a68').AtomNode} AtomNode */
-/** @typedef {import('./ast.js?v=f92ad2735a68').Repetition} Repetition */
-/** @typedef {import('./ast.js?v=f92ad2735a68').ParsedRules} ParsedRules */
+/** @typedef {import('./ast.js?v=fbb1cf0ab4e2').AtomNode} AtomNode */
+/** @typedef {import('./ast.js?v=fbb1cf0ab4e2').Repetition} Repetition */
+/** @typedef {import('./ast.js?v=fbb1cf0ab4e2').ParsedRules} ParsedRules */
 
 const locationOfOptions = { line: 1, column: 1 };
 
@@ -41,7 +41,7 @@ function escapeClass(values, unicodeSets) {
   return values.map((character) => escapeCharacter(character, true, unicodeSets)).join("");
 }
 
-/** @param {import('./ast.js?v=f92ad2735a68').ClassMember} member @param {boolean} unicodeSets @param {import('./ast.js?v=f92ad2735a68').ClassSetOperation} [operation] @returns {string} */
+/** @param {import('./ast.js?v=fbb1cf0ab4e2').ClassMember} member @param {boolean} unicodeSets @param {import('./ast.js?v=fbb1cf0ab4e2').ClassSetOperation} [operation] @returns {string} */
 function classMemberSource(member, unicodeSets, operation = "union") {
   switch (member.kind) {
     case "literal":
@@ -69,14 +69,14 @@ function classMemberSource(member, unicodeSets, operation = "union") {
   }
 }
 
-/** @param {{members: import('./ast.js?v=f92ad2735a68').ClassMember[], negative: boolean, operation?: import('./ast.js?v=f92ad2735a68').ClassSetOperation}} set @param {boolean} unicodeSets @returns {string} */
+/** @param {{members: import('./ast.js?v=fbb1cf0ab4e2').ClassMember[], negative: boolean, operation?: import('./ast.js?v=fbb1cf0ab4e2').ClassSetOperation}} set @param {boolean} unicodeSets @returns {string} */
 function classSetSource(set, unicodeSets) {
   const operation = set.operation ?? "union";
   const separator = operation === "intersection" ? "&&" : operation === "subtraction" ? "--" : "";
   return `[${set.negative ? "^" : ""}${set.members.map((member) => classMemberSource(member, unicodeSets, operation)).join(separator)}]`;
 }
 
-/** @param {import('./ast.js?v=f92ad2735a68').ClassMember[]} members @param {boolean} unicodeSets @param {number} start @param {import('./ast.js?v=f92ad2735a68').ClassSetOperation} [operation] @returns {import('../index.d.ts').CharacterClassMember[]} */
+/** @param {import('./ast.js?v=fbb1cf0ab4e2').ClassMember[]} members @param {boolean} unicodeSets @param {number} start @param {import('./ast.js?v=fbb1cf0ab4e2').ClassSetOperation} [operation] @returns {import('../index.d.ts').CharacterClassMember[]} */
 function classMemberTraces(members, unicodeSets, start, operation = "union") {
   let cursor = start;
   return members.map((member, index) => {
@@ -181,7 +181,7 @@ export function compileAst(parsed, options = {}) {
   const requested = normalizeOptions(options);
   const selected = new Set(requested);
   if (!selected.has("v")) selected.add("u");
-  /** @param {import('./ast.js?v=f92ad2735a68').RuleNode[]} nodes @returns {boolean} */
+  /** @param {import('./ast.js?v=fbb1cf0ab4e2').RuleNode[]} nodes @returns {boolean} */
   const hasUnscopedLineAnchor = (nodes) =>
     nodes.some((node) =>
       node.kind === "anchor"
@@ -215,7 +215,7 @@ export function compileAst(parsed, options = {}) {
   let checkedStringSets = false;
   let checkedSetOperations = false;
 
-  /** @param {import('./ast.js?v=f92ad2735a68').Location} location */
+  /** @param {import('./ast.js?v=fbb1cf0ab4e2').Location} location */
   function checkLookbehind(location) {
     if (checkedLookbehind) return;
     try {
@@ -231,7 +231,7 @@ export function compileAst(parsed, options = {}) {
     checkedLookbehind = true;
   }
 
-  /** @param {import('./ast.js?v=f92ad2735a68').PropertyAtomNode|Extract<import('./ast.js?v=f92ad2735a68').ClassMember, {kind: 'unicodeProperty'}>} property @param {import('./ast.js?v=f92ad2735a68').Location} location */
+  /** @param {import('./ast.js?v=fbb1cf0ab4e2').PropertyAtomNode|Extract<import('./ast.js?v=fbb1cf0ab4e2').ClassMember, {kind: 'unicodeProperty'}>} property @param {import('./ast.js?v=fbb1cf0ab4e2').Location} location */
   function checkProperty(property, location) {
     const aliasLocation = {
       ...property.propertyLocation,
@@ -289,7 +289,7 @@ export function compileAst(parsed, options = {}) {
     }
   }
 
-  /** @param {{members: import('./ast.js?v=f92ad2735a68').ClassMember[], negative: boolean, operation?: import('./ast.js?v=f92ad2735a68').ClassSetOperation, location: import('./ast.js?v=f92ad2735a68').Location}} set */
+  /** @param {{members: import('./ast.js?v=fbb1cf0ab4e2').ClassMember[], negative: boolean, operation?: import('./ast.js?v=fbb1cf0ab4e2').ClassSetOperation, location: import('./ast.js?v=fbb1cf0ab4e2').Location}} set */
   function checkClass(set) {
     if (set.operation) {
       if (!unicodeSets)
@@ -349,7 +349,7 @@ export function compileAst(parsed, options = {}) {
       );
   }
 
-  /** @param {import('./ast.js?v=f92ad2735a68').RuleNode[]} nodes @param {string} [effectiveFlags] @param {boolean} [scoped] */
+  /** @param {import('./ast.js?v=fbb1cf0ab4e2').RuleNode[]} nodes @param {string} [effectiveFlags] @param {boolean} [scoped] */
   function emit(nodes, effectiveFlags = flags, scoped = false) {
     const firstSegment = segments.length;
     for (const [index, node] of nodes.entries()) {

@@ -4,25 +4,25 @@ import {
   PATH_SEGMENT_EXCLUDED,
   PATH_SEGMENT_SOURCE,
   UNICODE_STRING_PROPERTIES,
-} from "./ast.js?v=f92ad2735a68";
-import { fail } from "./diagnostics.js?v=f92ad2735a68";
-import { quoteText } from "./display.js?v=f92ad2735a68";
-import { LIMITS } from "./limits.js?v=f92ad2735a68";
+} from "./ast.js?v=fbb1cf0ab4e2";
+import { fail } from "./diagnostics.js?v=fbb1cf0ab4e2";
+import { quoteText } from "./display.js?v=fbb1cf0ab4e2";
+import { LIMITS } from "./limits.js?v=fbb1cf0ab4e2";
 
 export { LIMITS };
 
-/** @typedef {import('./ast.js?v=f92ad2735a68').Location} Location */
-/** @typedef {import('./ast.js?v=f92ad2735a68').Repetition} Repetition */
-/** @typedef {import('./ast.js?v=f92ad2735a68').AtomNode} AtomNode */
-/** @typedef {import('./ast.js?v=f92ad2735a68').ClassMember} ClassMember */
-/** @typedef {import('./ast.js?v=f92ad2735a68').ClassAtomNode} ClassAtomNode */
-/** @typedef {import('./ast.js?v=f92ad2735a68').GroupNode} GroupNode */
-/** @typedef {import('./ast.js?v=f92ad2735a68').AlternationNode} AlternationNode */
-/** @typedef {import('./ast.js?v=f92ad2735a68').AssertionNode} AssertionNode */
-/** @typedef {import('./ast.js?v=f92ad2735a68').BoundaryNode} BoundaryNode */
-/** @typedef {import('./ast.js?v=f92ad2735a68').BackreferenceNode} BackreferenceNode */
-/** @typedef {import('./ast.js?v=f92ad2735a68').RuleNode} RuleNode */
-/** @typedef {import('./ast.js?v=f92ad2735a68').ParsedRules} ParsedRules */
+/** @typedef {import('./ast.js?v=fbb1cf0ab4e2').Location} Location */
+/** @typedef {import('./ast.js?v=fbb1cf0ab4e2').Repetition} Repetition */
+/** @typedef {import('./ast.js?v=fbb1cf0ab4e2').AtomNode} AtomNode */
+/** @typedef {import('./ast.js?v=fbb1cf0ab4e2').ClassMember} ClassMember */
+/** @typedef {import('./ast.js?v=fbb1cf0ab4e2').ClassAtomNode} ClassAtomNode */
+/** @typedef {import('./ast.js?v=fbb1cf0ab4e2').GroupNode} GroupNode */
+/** @typedef {import('./ast.js?v=fbb1cf0ab4e2').AlternationNode} AlternationNode */
+/** @typedef {import('./ast.js?v=fbb1cf0ab4e2').AssertionNode} AssertionNode */
+/** @typedef {import('./ast.js?v=fbb1cf0ab4e2').BoundaryNode} BoundaryNode */
+/** @typedef {import('./ast.js?v=fbb1cf0ab4e2').BackreferenceNode} BackreferenceNode */
+/** @typedef {import('./ast.js?v=fbb1cf0ab4e2').RuleNode} RuleNode */
+/** @typedef {import('./ast.js?v=fbb1cf0ab4e2').ParsedRules} ParsedRules */
 
 /** @param {string} source @returns {string[]} */
 export function splitLines(source) {
@@ -102,6 +102,11 @@ const SHORTHANDS = new Map([
   ["path segment character", PATH_SEGMENT_SOURCE],
   ["path segment characters", PATH_SEGMENT_SOURCE],
 ]);
+
+// Workshop suggestions use the parser's own vocabulary; acceptance still goes through parse.
+export const SHORTHAND_RULES = Object.freeze([...SHORTHANDS.keys()]);
+export const BACKREFERENCE_RULE = "same as capture";
+const BACKREFERENCE_PREFIX = new RegExp(`^${BACKREFERENCE_RULE}(?:\\s+|$)`, "iu");
 
 const START_ANCHOR = /^(line start|start)(?:,\s*|\s+|$)/i;
 const DUPLICATE_START_ANCHOR_MESSAGE = "Use only one start anchor.";
@@ -610,7 +615,7 @@ function parseItem(text, location, rawLine, inClass = false) {
     };
   }
 
-  const backreference = /^same as capture(?:\s+|$)/iu.exec(remaining);
+  const backreference = BACKREFERENCE_PREFIX.exec(remaining);
   if (backreference) {
     const suffix = remaining.slice(backreference[0].length);
     const referenceLocation = {
