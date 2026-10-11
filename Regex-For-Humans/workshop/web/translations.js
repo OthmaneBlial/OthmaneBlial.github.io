@@ -590,11 +590,6 @@ export const translations = {
     "Exporter vers un langage de programmation",
   ],
   "Target language": ["目标语言", "Lenguaje de destino", "Langage cible"],
-  "PHP — runtime unverified": [
-    "PHP — 运行时未经验证",
-    "PHP — ejecución sin verificar",
-    "PHP — exécution non vérifiée",
-  ],
   "Code generation translates supported regex semantics through the shared compiler. Unsupported flags or constructs explain why export is unavailable. Example tests below still use JavaScript.":
     [
       "代码生成通过共享编译器转换受支持的正则语义。不支持的标志或结构会说明导出不可用的原因。下方示例测试仍使用 JavaScript。",
@@ -1021,6 +1016,11 @@ export const translations = {
     "示例测试耗时过长，已停止。",
     "La prueba tardó demasiado y se detuvo.",
     "Le test a pris trop de temps et a été interrompu.",
+  ],
+  "Example output is too large. Use fewer examples, captures or matches.": [
+    "示例输出过大。请减少示例、捕获组或匹配数量。",
+    "La salida es demasiado grande. Usa menos ejemplos, capturas o coincidencias.",
+    "Les résultats sont trop volumineux. Réduisez le nombre d’exemples, de captures ou de correspondances.",
   ],
   "Empty string": ["空字符串", "Cadena vacía", "Chaîne vide"],
   "Example {index} string": [

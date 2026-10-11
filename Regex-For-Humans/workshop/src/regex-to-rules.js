@@ -1,7 +1,7 @@
-import { PATH_SEGMENT_EXCLUDED } from "./ast.js?v=86e14234de32";
-import { CompileError, fail } from "./diagnostics.js?v=86e14234de32";
-import { quoteText } from "./display.js?v=86e14234de32";
-import { LIMITS, parse } from "./parser.js?v=86e14234de32";
+import { PATH_SEGMENT_EXCLUDED } from "./ast.js?v=7460d283fba0";
+import { CompileError, fail } from "./diagnostics.js?v=7460d283fba0";
+import { quoteText } from "./display.js?v=7460d283fba0";
+import { LIMITS, parse } from "./parser.js?v=7460d283fba0";
 
 const ESCAPED_ATOMS = new Map([
   ["d", "digit"],
@@ -39,7 +39,7 @@ const UNSUPPORTED_HINT =
   "Supported syntax includes literals, anchors, common character classes, greedy/lazy repetition, nested groups, captures, backward capture references, ordered alternatives, lookahead/lookbehind and d/g/i/m/s/u/v/y flags. Forward/open references are not supported.";
 const LINE_TERMINATORS = ["\n", "\r", "\u2028", "\u2029"];
 
-/** @typedef {{end: number, literal?: string, phrase?: string, strings?: {value: string, codePoints?: string[]}[], classSet?: {operation: import('./ast.js?v=86e14234de32').ClassSetOperation, negative: boolean, members: SetOperandToken[], close: number}, empty?: boolean, allCharacters?: boolean, nativeDot?: boolean, category?: string, set?: {values: string[], negative: boolean}, group?: {capturing: boolean, name: string|null, atoms: PositionedAtom[], close: number}, assertion?: {direction: 'ahead'|'behind', negative: boolean, atoms: PositionedAtom[], close: number}, alternation?: {branches: {atoms: PositionedAtom[], index: number}[], close: number}}} AtomToken */
+/** @typedef {{end: number, literal?: string, phrase?: string, strings?: {value: string, codePoints?: string[]}[], classSet?: {operation: import('./ast.js?v=7460d283fba0').ClassSetOperation, negative: boolean, members: SetOperandToken[], close: number}, empty?: boolean, allCharacters?: boolean, nativeDot?: boolean, category?: string, set?: {values: string[], negative: boolean}, group?: {capturing: boolean, name: string|null, atoms: PositionedAtom[], close: number}, assertion?: {direction: 'ahead'|'behind', negative: boolean, atoms: PositionedAtom[], close: number}, alternation?: {branches: {atoms: PositionedAtom[], index: number}[], close: number}}} AtomToken */
 /** @typedef {AtomToken & {index: number}} SetOperandToken */
 /** @typedef {{end: number, kind: 'zeroOrMore'|'oneOrMore'|'optional'|'exact'|'range'|'atLeast'|null, min?: number, max?: number, lazy?: boolean}} QuantifierToken */
 /** @typedef {AtomToken & QuantifierToken & {index: number}} PositionedAtom */
@@ -201,7 +201,7 @@ function readUnicodeSet(source, start, depth) {
   let cursor = start + 1;
   const negative = source[cursor] === "^";
   if (negative) cursor += 1;
-  /** @type {import('./ast.js?v=86e14234de32').ClassSetOperation} */
+  /** @type {import('./ast.js?v=7460d283fba0').ClassSetOperation} */
   let operation = "union";
   /** @type {SetOperandToken[]} */
   const members = [];

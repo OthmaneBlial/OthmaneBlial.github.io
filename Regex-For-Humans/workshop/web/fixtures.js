@@ -1,4 +1,4 @@
-import { readExpectation } from "./expectations.js?v=86e14234de32";
+import { readExpectation } from "./expectations.js?v=7460d283fba0";
 
 /** @typedef {{format: 'regex-for-humans-tests', version: 1, rules: string, flags: string, mode: import('./worker-protocol.d.ts').MatchMode, cases: Array<Omit<import('./worker-protocol.d.ts').TestCase, 'id'>>}} TestFixture */
 

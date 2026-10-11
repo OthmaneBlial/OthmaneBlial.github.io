@@ -24,10 +24,10 @@
   <meta name="twitter:image:alt" content="A colorful Regex For Humans card showing clear English rules turning into an explained JavaScript regex.">
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; connect-src 'self'; object-src 'none'; base-uri 'self'">
   <title>Regex For Humans — Workshop</title>
-  <link rel="icon" type="image/svg+xml" href="./web/favicon.svg?v=86e14234de32">
-  <link rel="stylesheet" href="./web/styles.css?v=86e14234de32">
-  <script type="module" src="./web/theme.js?v=86e14234de32"></script>
-  <script type="module" src="./web/app.js?v=86e14234de32"></script>
+  <link rel="icon" type="image/svg+xml" href="./web/favicon.svg?v=7460d283fba0">
+  <link rel="stylesheet" href="./web/styles.css?v=7460d283fba0">
+  <script type="module" src="./web/theme.js?v=7460d283fba0"></script>
+  <script type="module" src="./web/app.js?v=7460d283fba0"></script>
 </head>
 <body>
   <a class="skip-link" href="#main">Skip to workshop</a>
@@ -61,7 +61,7 @@
     <main id="main" class="main-content" tabindex="-1">
       <header class="topbar">
         <span>THE WORKSHOP <span class="topbar-slash">/</span> REGEX FOR HUMANS</span>
-        <div class="topbar-tools"><div class="topbar-setting"><label for="interface-language">Interface language</label><select id="interface-language" aria-describedby="interface-language-help" disabled><option value="en" lang="en">English</option><option value="zh-CN" lang="zh-CN">简体中文</option><option value="es" lang="es">Español</option><option value="fr" lang="fr">Français</option></select></div><div class="topbar-setting"><label for="interface-theme">Theme</label><select id="interface-theme" disabled><option value="system">System</option><option value="light">Light</option><option value="dark">Dark</option></select></div><span class="build-label">DEV · 0.1.0-dev.7</span></div>
+        <div class="topbar-tools"><div class="topbar-setting"><label for="interface-language">Interface language</label><select id="interface-language" aria-describedby="interface-language-help" disabled><option value="en" lang="en">English</option><option value="zh-CN" lang="zh-CN">简体中文</option><option value="es" lang="es">Español</option><option value="fr" lang="fr">Français</option></select></div><div class="topbar-setting"><label for="interface-theme">Theme</label><select id="interface-theme" disabled><option value="system">System</option><option value="light">Light</option><option value="dark">Dark</option></select></div><span class="build-label">DEV · 0.1.0-dev.8</span></div>
       </header>
       <p id="interface-language-help" class="interface-language-help">Interface labels are translated. Rules use controlled English; compiler explanations, diagram labels and exported technical requirements stay in English.</p>
 
@@ -78,7 +78,7 @@
         <section class="panel editor-panel" aria-labelledby="rules-title">
           <div class="panel-heading"><span class="step-number">01</span><div><p class="kicker">THE INPUT ✍️</p><h2 id="rules-title">Write your rules</h2></div></div>
           <p id="recipe-note" class="recipe-note" hidden></p>
-          <noscript><p class="recipe-note">This workshop needs JavaScript to compile rules and test examples. <a href="./web/language.html?v=86e14234de32">Read the syntax guide</a> without JavaScript.</p></noscript>
+          <noscript><p class="recipe-note">This workshop needs JavaScript to compile rules and test examples. <a href="./web/language.html?v=7460d283fba0">Read the syntax guide</a> without JavaScript.</p></noscript>
           <details id="rule-builder" class="reverse-translator rule-builder">
             <summary>Build a rule</summary>
             <p id="builder-help" class="field-hint">Insert a template before the current line or selection, between the outer anchors. Edit it freely in the rule field.</p>
@@ -99,7 +99,7 @@
             <div id="rules-syntax" class="syntax-viewport" aria-hidden="true" hidden></div>
           </div>
           <div class="rule-focus-slot"><p id="rule-focus" class="rule-focus" hidden></p></div>
-          <div class="editor-footer"><p id="rules-help">A controlled language, not a free-form prompt. <a href="./web/language.html?v=86e14234de32" target="_blank" rel="noopener noreferrer">Read the syntax ↗</a> · <a href="https://github.com/OthmaneBlial/Regex-For-Humans/blob/main/docs/COMPLEX-EXAMPLES.md" target="_blank" rel="noopener noreferrer">Complex examples ↗</a></p><span id="rule-count">0 rules</span></div>
+          <div class="editor-footer"><p id="rules-help">A controlled language, not a free-form prompt. <a href="./web/language.html?v=7460d283fba0" target="_blank" rel="noopener noreferrer">Read the syntax ↗</a> · <a href="https://github.com/OthmaneBlial/Regex-For-Humans/blob/main/docs/COMPLEX-EXAMPLES.md" target="_blank" rel="noopener noreferrer">Complex examples ↗</a></p><span id="rule-count">0 rules</span></div>
           <fieldset class="flag-controls" aria-label="Regex options" aria-describedby="flags-help">
             <label class="flag-toggle"><input id="ignore-case" type="checkbox"><span class="toggle-track" aria-hidden="true"></span><span>Ignore case <code>i</code></span></label>
             <label class="flag-toggle"><input id="dot-all" type="checkbox"><span class="toggle-track" aria-hidden="true"></span><span>Dot matches newlines <code>s</code></span></label>
@@ -135,7 +135,7 @@
               <select id="export-target" aria-describedby="export-help export-status">
                 <option value="javascript">JavaScript</option><option value="typescript">TypeScript</option>
                 <option value="python">Python</option><option value="rust">Rust</option><option value="go">Go</option>
-                <option value="java">Java</option><option value="csharp">C#</option><option value="php">PHP — runtime unverified</option><option value="ruby">Ruby</option>
+                <option value="java">Java</option><option value="csharp">C#</option><option value="php">PHP / PCRE2</option><option value="ruby">Ruby</option>
               </select>
             </div>
             <p id="export-help">Code generation translates supported regex semantics through the shared compiler. Unsupported flags or constructs explain why export is unavailable. Example tests below still use JavaScript.</p>

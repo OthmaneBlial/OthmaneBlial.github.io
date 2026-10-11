@@ -6,22 +6,22 @@ import {
   exportRegex,
   regexToRules,
   toSVG,
-} from "../index.js?v=86e14234de32";
-import { escapeControls, quoteText } from "../src/display.js?v=86e14234de32";
-import { LIMITS, splitLines } from "../src/parser.js?v=86e14234de32";
-import { parseRegexLiteral } from "../src/regex-literal.js?v=86e14234de32";
-import { parseExpectation, readExpectation } from "./expectations.js?v=86e14234de32";
-import { explanationNotes } from "./explanation-notes.js?v=86e14234de32";
-import { explainMismatch, failureRequirements } from "./failure-reasons.js?v=86e14234de32";
-import { fixtureLimit, fixtureStorageKey, parseFixture } from "./fixtures.js?v=86e14234de32";
-import { initializeLanguage, message, setAttribute, setText } from "./i18n.js?v=86e14234de32";
-import { insertRule } from "./insert-rule.js?v=86e14234de32";
-import { categories, filterRecipes, levels } from "./library.js?v=86e14234de32";
-import { initializeSyntaxEditor } from "./syntax.js?v=86e14234de32";
-import { TestRunError, TestRunner } from "./test-runner.js?v=86e14234de32";
+} from "../index.js?v=7460d283fba0";
+import { escapeControls, quoteText } from "../src/display.js?v=7460d283fba0";
+import { LIMITS, splitLines } from "../src/parser.js?v=7460d283fba0";
+import { parseRegexLiteral } from "../src/regex-literal.js?v=7460d283fba0";
+import { parseExpectation, readExpectation } from "./expectations.js?v=7460d283fba0";
+import { explanationNotes } from "./explanation-notes.js?v=7460d283fba0";
+import { explainMismatch, failureRequirements } from "./failure-reasons.js?v=7460d283fba0";
+import { fixtureLimit, fixtureStorageKey, parseFixture } from "./fixtures.js?v=7460d283fba0";
+import { initializeLanguage, message, setAttribute, setText } from "./i18n.js?v=7460d283fba0";
+import { insertRule } from "./insert-rule.js?v=7460d283fba0";
+import { categories, filterRecipes, levels } from "./library.js?v=7460d283fba0";
+import { initializeSyntaxEditor } from "./syntax.js?v=7460d283fba0";
+import { TestRunError, TestRunner } from "./test-runner.js?v=7460d283fba0";
 
 /** @typedef {import("./worker-protocol.d.ts").TestCase} TestCase */
-/** @typedef {import('./library.js?v=86e14234de32').ProductScenario} ProductScenario */
+/** @typedef {import('./library.js?v=7460d283fba0').ProductScenario} ProductScenario */
 /** @typedef {"success" | "neutral" | "error"} CompileState */
 /** @typedef {{line: number, column: number, sourceStart: number, sourceEnd: number}} RuleFocus */
 
@@ -150,6 +150,8 @@ const exactCaseText = new Set();
 let reverseErrorPosition = null;
 /** @type {ReturnType<typeof compile> | null} */
 let compiled = null;
+/** @type {string | null} */
+let renderedRules = null;
 /** @type {ReturnType<typeof exportRegex> | null} */
 let exported = null;
 /** @type {import('../index.d.ts').GroupSegment[]} */
@@ -169,14 +171,14 @@ let hasEdits =
 let copyFeedbackTimer = 0;
 let copySequence = 0;
 const testRunner = new TestRunner(
-  () => new Worker(new URL("./match-worker.js?v=86e14234de32", import.meta.url), { type: "module" }),
+  () => new Worker(new URL("./match-worker.js?v=7460d283fba0", import.meta.url), { type: "module" }),
 );
 
 /**
  * @template {keyof HTMLElementTagNameMap} K
  * @param {K} tag
  * @param {string} [className=""]
- * @param {string | import('./i18n.js?v=86e14234de32').Message} [text]
+ * @param {string | import('./i18n.js?v=7460d283fba0').Message} [text]
  * @returns {HTMLElementTagNameMap[K]}
  */
 function make(tag, className = "", text) {
@@ -192,7 +194,7 @@ function setCompileState(label, state) {
   ui.compileState.dataset.state = state;
 }
 
-/** @param {string | import('./i18n.js?v=86e14234de32').Message} text @param {boolean} [invalidRules=false] */
+/** @param {string | import('./i18n.js?v=7460d283fba0').Message} text @param {boolean} [invalidRules=false] */
 function setDiagnostic(text, invalidRules = false) {
   ui.diagnostic.hidden = !text;
   setText(ui.diagnostic, text || "");
@@ -264,7 +266,7 @@ function renderExport() {
     );
     if (error instanceof CompileError) {
       ui.exportError.hidden = false;
-      ui.exportError.onclick = () => selectLine(error.line, error.column);
+      ui.exportError.onclick = () => selectLine(error.line, error.column, error.endColumn);
     }
   }
 }
@@ -281,14 +283,16 @@ function downloadText(text, filename, type) {
   window.setTimeout(() => URL.revokeObjectURL(url), 1000);
 }
 
-/** @param {number} number @param {number} [column] */
-function selectLine(number, column) {
+/** @param {number} number @param {number} [column] @param {number} [endColumn] */
+function selectLine(number, column, endColumn) {
   // Include the first excess code unit so source-limit errors can still select it.
   const lines = splitLines(ui.rules.value.slice(0, LIMITS.sourceLength + 1));
   const start = lines.slice(0, number - 1).reduce((sum, line) => sum + line.length + 1, 0);
   const end = start + (lines[number - 1]?.length ?? 0);
   const position = column === undefined ? start : Math.min(start + column - 1, end);
-  selectText(ui.rules, position, column === undefined ? end : Math.min(position + 1, end));
+  const selectionEnd =
+    column === undefined ? end : Math.min(start + (endColumn ?? column + 1) - 1, end);
+  selectText(ui.rules, position, selectionEnd);
 }
 
 /** @param {HTMLTextAreaElement} field @param {number} start @param {number} end */
@@ -785,7 +789,7 @@ function renderGroupEditor() {
   }
 }
 
-/** @param {HTMLDivElement} row @param {string | import('./i18n.js?v=86e14234de32').Message} text */
+/** @param {HTMLDivElement} row @param {string | import('./i18n.js?v=7460d283fba0').Message} text */
 function setTestResult(row, text) {
   const result = row.querySelector(".test-result");
   if (result) setText(result, text);
@@ -951,7 +955,7 @@ function renderCaptureExplorer(row, result, captures, input) {
   explorer.hidden = false;
 }
 
-/** @param {HTMLDivElement} row @param {string} input @param {{start: number, end: number} | null | undefined} range @param {string | import('./i18n.js?v=86e14234de32').Message} [label] */
+/** @param {HTMLDivElement} row @param {string} input @param {{start: number, end: number} | null | undefined} range @param {string | import('./i18n.js?v=7460d283fba0').Message} [label] */
 function renderMatchPreview(row, input, range, label) {
   const preview = row.querySelector(".match-preview");
   if (!(preview instanceof HTMLSpanElement)) return;
@@ -1428,7 +1432,7 @@ function currentFixtureText() {
   return text;
 }
 
-/** @param {import('./fixtures.js?v=86e14234de32').TestFixture} fixture */
+/** @param {import('./fixtures.js?v=7460d283fba0').TestFixture} fixture */
 function applyFixture(fixture) {
   hasEdits = true;
   ui.rules.value = fixture.rules;
@@ -1473,6 +1477,7 @@ function compileRules() {
   window.clearTimeout(copyFeedbackTimer);
   setText(ui.copy, message("Copy regex ↗"));
   const rules = ui.rules.value;
+  renderedRules = rules;
   /** @type {CompileError|null} */
   let ruleError = null;
   if (rules.length > LIMITS.sourceLength) setText(ui.ruleCount, message("Over limit"));
@@ -1522,7 +1527,7 @@ function compileRules() {
       if (error instanceof CompileError) {
         const jump = make("button", "secondary-button", message("Go to error"));
         jump.type = "button";
-        jump.addEventListener("click", () => selectLine(error.line, error.column));
+        jump.addEventListener("click", () => selectLine(error.line, error.column, error.endColumn));
         ui.diagnostic.append(jump);
       }
     }
@@ -1723,6 +1728,8 @@ ui.fixtureRestore.addEventListener("click", () => {
   }
 });
 ui.rules.addEventListener("input", () => {
+  // A multiline paste can repeat input events for the same completed value.
+  if (ui.rules.value === renderedRules) return;
   setScenarioSelection(scenarios.find(({ rules }) => rules === ui.rules.value)?.id ?? null);
   compileRules();
 });
@@ -2113,7 +2120,7 @@ ui.copy.addEventListener("click", async () => {
 if (hasEdits) compileRules();
 
 try {
-  const response = await fetch(new URL("../test/fixtures/product-scenarios.json?v=86e14234de32", import.meta.url));
+  const response = await fetch(new URL("../test/fixtures/product-scenarios.json?v=7460d283fba0", import.meta.url));
   if (!response.ok) throw new Error(`HTTP ${response.status}`);
   const loaded = await response.json();
   if (!Array.isArray(loaded)) throw new Error("Invalid example recipe data");
