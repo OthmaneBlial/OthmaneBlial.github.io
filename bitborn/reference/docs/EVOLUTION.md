@@ -6,56 +6,50 @@ executable instructions remain literal `.bits`; host tooling never assembles the
 
 ## Current execution record
 
-- Baseline: clean `main` at `8c0ae14`, matching `origin/main`.
-- Verified: `make test site-test`; 37 Python tests with one expected Linux-native
-  skip on macOS, 55 reviewed targets, existing browser-model and documentation checks.
-- Completed: journal actual model memory changes, removing per-step whole-RAM
-  copies/scans. `node tests/test_memory_changes.mjs` checks an independent oracle
-  across the full 2,825-step boot and all presets; Chrome CPU Lab interactions pass.
-- Pushed journal milestone: `94e6026`; exact-commit Linux CI and Pages deployment
-  passed. Completed next: exact Back/Forward, halt restoration and future forks;
-  Node round trips and Chrome/Firefox/WebKit controls pass.
-- Pushed Time Machine: `cebcd95`; exact-commit Linux CI passed.
-- Completed parser parity: 658 seeded cases agree on bytes and error lines,
-  covering Unicode line boundaries, non-ASCII comments and initial/embedded BOMs.
-- Pushed parser parity: `ada41c5`; exact-commit Linux CI passed.
-- Completed flags properties: independent bit-by-bit arithmetic oracle, seeded
-  16-bit cases and exhaustive 8-bit TEST masks, with preserved IF/DF and INC/DEC CF.
-- Pushed flags checks: `6e73fa0`. Completed conduct/security policies, enabled
-  private GitHub reporting and documented the contributor setup/source map.
-- Pushed contributor policies: `f0cef18`; its CI caught a stale generated source
-  map. Corrected in `e940885`, whose CI and Pages deployment passed. Added
-  introductions in eight languages with shared examples and an English-source
-  freshness manifest. All 40 Python tests (one macOS skip) and site checks pass;
-  detailed technical guides remain English.
-- Pushed introductions: `8d73fa5`; exact-commit CI and Pages passed. Completed
-  direct timeline selection, independent net-RAM/state oracles and keyboard
-  controls in Chrome/Firefox/WebKit, with a genuine Home/End restoration capture.
-- Pushed timeline: `634f036`; exact-commit CI and Pages passed. Completed eight
-  source-generated introduction routes with metadata and three-browser desktop,
-  320px, keyboard and Arabic RTL/LTR-code checks. Documentation copies are checked
-  byte-for-byte, including translations and their freshness manifest.
-- Pushed localized pages: `1628dda`; exact-commit CI/Pages passed. Anonymous live
-  English/Arabic pages, history module and progress match local bytes exactly.
-- Completed model benchmark: fixed reviewed boot, checked outputs, five warmups
-  and 25 trials, source/environment hashes and a dated local sample; CI retains
-  JSON without a timing threshold. Next: failed-write safety and opcode inspection.
-- Pushed benchmark: `771eed8`. Completed atomic packed-file replacement; injected
-  sync/rename failures preserve old/absent outputs, staging cleanup and link/mode
-  behavior are checked. Next: mode-aware opcode inspection and exact program export.
-- Atomic milestone `5fc5482` passed exact-commit CI and Pages. Completed explicit
-  16/32/64 instruction inspection, exact imm64, per-bit roles, literal fixtures,
-  independent disassembly goldens and three-browser context/bit changes. A wide
-  hex readout overflow was caught and fixed before publication.
-- Next: exact program export/import, binary/hex synchronization and ELF anatomy.
-- Inspection milestone `09f5f2c` passed exact-commit CI/Pages. Completed `.bits`/raw
-  export/import with exact downloaded bytes and preserved history in three browsers.
-  A deliberately delayed read reproduced stale-import overwrite; newer source
-  choices/drafts now cancel old reads and errors. Original self-modified bytes and
-  empty/513-byte rejection plus the 512-byte boundary are checked.
-- Next: binary/hex synchronization, ELF anatomy and a verified public release.
-- Risks: browser behavior is modeled, not native x86. Hardware, paging and general
-  interrupt support require separate native targets and evidence.
+Baseline: clean `main` at `8c0ae14`; 37 Python tests (one macOS native-Linux skip),
+55 reviewed targets and 86 public build artifacts. Native instruction bytes
+remain unchanged throughout these host/browser milestones.
+
+| Improvement | Pushed commit | Verification |
+| --- | --- | --- |
+| Changed-RAM journal | `94e6026` | Independent full-memory oracle, full boot and presets |
+| Exact Back/Forward and forks | `cebcd95` | Registers, flags, RAM, outputs, halt, A20 and self-modification round trips |
+| Browser/CLI parser parity | `ada41c5` | 658 seeded accepted/rejected sources and identical error lines |
+| Arithmetic properties | `6e73fa0` | 81,691 instructions; independent bitwise flags oracle |
+| Contributor policies/source map | `f0cef18`, `e940885` | First CI caught a stale copy; correction CI/Pages passed; private reporting enabled |
+| Eight maintained introductions | `8d73fa5` | Source hashes, identical code/commands and links |
+| Recorded timeline | `634f036` | Net-RAM/state oracles, keyboard and three browsers |
+| Localized website pages | `1628dda` | Arabic RTL/LTR code, metadata, keyboard and 320px checks in three browsers |
+| Reproducible model benchmark | `771eed8` | Source/environment/workload hashes, checked outputs and retained CI JSON |
+| Atomic packed-file output | `5fc5482` | Injected sync/rename failures, cleanup, links and modes |
+| Scoped 16/32/64 inspection | `09f5f2c` | Exact imm64, independent NDISASM goldens, three-browser context/bit changes |
+| Exact program download/import | `810182a` | Actual bytes, state/history preservation, 512-byte boundary and reproduced stale-read/error cancellation |
+
+All corrected milestones above passed exact-commit CI and Pages. The current
+46 Python tests pass locally with one expected macOS skip. Generated documents,
+literal sources and assets are checked byte-for-byte. Four browser GIFs carry
+actual frame/source hashes, including loaded HTML/CSS and literal fixtures.
+
+Public checkpoint `810182a`: CPU Lab, its module, playground, inspector, Arabic
+introduction and progress feed match anonymous HTTPS downloads exactly. Live
+Chrome repeats actual program downloads/imports and delayed-read checks. The
+shared Pages mirror `f812c119` changed only 60 paths under `bitborn/`; its deployment
+passed. Twenty relevant repository topics and the canonical homepage are verified.
+
+Binary/hex drafts are pushed in `c836b9e`: every byte value, 1,000 seeded round
+trips and three-browser draft/loading/state checks pass. Binary comments are
+retained until explicit hex loading. CLI binary syntax remains unchanged.
+
+Published v0.3 at `8bc0797d6f8ef97126e0fcba652ed25a20b07fe6` after exact-commit CI
+`38301698299`. Repeated preparation is byte-identical; all 14 public assets were
+anonymously downloaded and match staged bytes, all 13 checksums pass, and source/
+artifact provenance matches. All 55 native source files and seven BIOS images are
+identical to immutable v0.2. Staging rejects unknown files and aliases before writing.
+
+Next: ELF anatomy and a verified public release, then deeper native experiments.
+Risks: inspection supports a documented subset; execution remains the bounded
+16-bit model. Native-speaker review, hardware, paging and general interrupts
+require separate evidence. Detailed technical guides remain English.
 
 ## Prioritized ideas
 
@@ -70,7 +64,7 @@ is deeper research. Dependencies name earlier idea numbers or existing component
 | 03 | 0 | Seeded binary parser properties and Python/JS token-syntax parity | H | H | Existing parsers | Low | Complete |
 | 04 | 0 | Arithmetic flags fuzzing against independent signed/unsigned oracles | H | H | Existing model | Medium | Complete |
 | 05 | 1 | Opcode microscope with explicit 16/32/64-bit context and mode-specific fixtures | H | M | Intel references | Medium | Complete: scoped inspection; model execution stays 16-bit |
-| 06 | 1 | Synchronize binary and hexadecimal input without generating instructions | H | H | Existing parser | Low | Open |
+| 06 | 1 | Synchronize binary and hexadecimal input without generating instructions | H | H | Existing parser | Low | Complete: valid binary views and explicit hex loading |
 | 07 | 1 | Explain opcode, register, ModR/M and immediate fields bit by bit | H | H | 05 | Medium | Complete for documented MOV/XOR/prefix subset |
 | 08 | 1 | Export and re-import exact CPU Lab programs with cross-browser download proof | H | H | Existing builder export | Low | Complete |
 | 09 | 1 | Share bounded CPU Lab programs through validated URLs | H | M | 03,08 | Medium | Open |
@@ -115,7 +109,7 @@ is deeper research. Dependencies name earlier idea numbers or existing component
 | 48 | 0 | Verify every generated documentation/source copy, including translation and trace fixtures | H | H | Site build | Low | Complete |
 | 49 | 2 | Genuine Time Machine capture with source/frame provenance | H | H | 02,12 | Low | Complete |
 | 50 | 0 | Reproducible host-model benchmark; distinguish rendering, interpretation and native execution | H | M | 01,02 | Medium | Complete |
-| 51 | 0 | Release-provenance manifest tying reviewed source, packaged output and commit | H | H | Existing releases | Medium | Open |
+| 51 | 0 | Release-provenance manifest tying reviewed source, packaged output and commit | H | H | Existing releases | Medium | Complete: v0.3 public bytes, checksums and commit verified |
 | 52 | 0 | Clean-checkout reproduction and platform-specific validation documentation | H | H | CI | Low | Open |
 | 53 | 3 | Real VGA bitmap experiment with manually authored pixel/instruction bytes | H | M | BIOS target | High | Open |
 | 54 | 3 | Tiny text-mode game with deterministic input and genuine QEMU recording | H | M | Shell keyboard helpers | High | Open |
@@ -124,7 +118,7 @@ is deeper research. Dependencies name earlier idea numbers or existing component
 | 57 | 3 | Timer IRQ experiment with explicit PIC setup and deterministic QEMU assertions | H | M | 56 | High | Open |
 | 58 | 3 | Paging experiment with inspected page tables and deliberate page-fault evidence | H | L | 55,56 | High | Open |
 | 59 | 0 | QEMU runner resource/error-path checks and bounded process cleanup | H | H | Existing Guest harness | Medium | Open |
-| 60 | 2 | Accurate release/community draft showing actual new capabilities; no automatic posting | M | H | Verified release | Low | Open |
+| 60 | 2 | Accurate release/community draft showing actual new capabilities; no automatic posting | M | H | Verified release | Low | Complete: release published; community draft remains unposted |
 | 61 | 0 | Cancel delayed file imports/errors after a newer source choice or editor draft | H | H | CPU Lab import | Medium | Complete: race reproduced and checked in three browsers |
 
 Large tasks are divided into useful verified milestones. Native experiments only

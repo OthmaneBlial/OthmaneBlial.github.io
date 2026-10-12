@@ -59,7 +59,7 @@ not release requirements or advertised capabilities.
   assets match the prepared files and all checksums pass; the five boot images
   are byte-for-byte identical to v0.1.0.
 
-## v0.2 evolution — work in progress
+## v0.2 completed evolution
 
 - [x] Audit the v0.1.1 foundation: existing 20 Python tests and site checks pass.
 - [x] Fix the bounded simulator's `PUSH SP` behavior for 286+ real-mode x86.
@@ -119,6 +119,21 @@ The v0.2 milestone is published and verified. The following research remains ope
   protected-mode status; preserve the original boot image and its v0.1 greeting.
 
 ## Evolution session
+
+- [x] Prepare v0.3 version/notes and deterministic provenance tying the reviewed
+  source commit, target source files, payloads, packaged outputs and release assets.
+  Reject unexpected/aliased staging entries before writing.
+- [x] Publish [v0.3.0](https://github.com/OthmaneBlial/bitborn/releases/tag/v0.3.0)
+  at immutable commit `8bc0797d6f8ef97126e0fcba652ed25a20b07fe6`, after
+  [exact-commit CI](https://github.com/OthmaneBlial/bitborn/actions/runs/38301698299)
+  passed. All 14 public files were anonymously re-downloaded and match staged
+  bytes; all 13 checksum entries and commit/source/artifact provenance pass.
+  Seven BIOS images also match the immutable v0.2 downloads exactly.
+
+- [x] Synchronize valid binary drafts with a literal hexadecimal view; explicit
+  hex loading replaces notation/comments and resets the model. All byte values,
+  1,000 seeded round trips, Unicode boundaries, input limits and three-browser
+  draft/state behavior pass; CLI `.bits` syntax remains binary-only.
 
 - [x] Export/import exact loaded CPU Lab programs as literal `.bits` or raw `.bin`.
   Three browsers check actual downloads, unchanged execution/history, empty/513-byte

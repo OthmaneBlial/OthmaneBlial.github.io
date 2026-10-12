@@ -2,6 +2,17 @@
 
 ## Unreleased
 
+## 0.3.0 — 2026-10-12
+
+- Add a deterministic release-provenance manifest tying the exact source commit,
+  literal source files, reviewed payloads, packaged artifacts and release archives.
+  Native target instruction bytes and boot images remain unchanged from v0.2.0.
+
+- Add a literal hex draft to the CPU Lab, sharing binary parser boundaries and
+  limits. Valid binary edits update hex without changing loaded state or comments;
+  explicit hex loading replaces the binary draft and resets. Test all byte values,
+  1,000 seeded round trips and three-browser draft/state behavior.
+
 - Export/import exact loaded CPU Lab programs as `.bits` or raw `.bin`; preserve
   original bytes before self-modification and leave model execution/history intact.
   Reject invalid raw sizes and cancel stale asynchronous reads/errors after a newer
