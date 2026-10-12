@@ -118,6 +118,57 @@ The v0.2 milestone is published and verified. The following research remains ope
 - [x] Refresh the main documentation's example counts, latest-release links and
   protected-mode status; preserve the original boot image and its v0.1 greeting.
 
+## Evolution session
+
+- [x] Export/import exact loaded CPU Lab programs as literal `.bits` or raw `.bin`.
+  Three browsers check actual downloads, unchanged execution/history, empty/513-byte
+  rejection, the 512-byte boundary, original bytes before self-modification and
+  cancellation of delayed reads/errors after a newer preset or editor draft.
+
+- [x] Publish packed output atomically; injected sync/rename failures preserve
+  existing bytes, leave absent outputs absent and clean temporary files. Source
+  aliases, symlink destinations, hard-link isolation, permissions and non-files
+  are checked. Canonical instruction bytes and packaged targets are unchanged.
+
+- [x] Add a reproducible Node model benchmark: fixed reviewed boot workload,
+  semantic assertions, warmups/trials, environment and source hashes, measured
+  median/p95 and retained CI evidence. No native/DOM speed claim or timing gate.
+
+- [x] Replace whole-memory copies/scans during CPU Lab stepping with actual
+  write journals. An independent full-memory oracle checks every step of the
+  2,825-step boot, five presets, unchanged writes, stack/calls, A20 wrapping and
+  self-modification. Chrome memory, stack, flag and breakpoint interactions pass.
+- [x] Add exact Back/Forward model execution: recorded registers, flags, changed
+  RAM, outputs, UART and halt state restore without executing another instruction.
+  Stack/calls, output clearing, self-modification, A20, failures and the full boot
+  have independent round-trip checks. Chrome, Firefox and WebKit controls pass.
+- [x] Add direct recorded-timeline navigation with nearby instruction states,
+  native keyboard range controls and net register/RAM comparisons. Independent
+  state and full-memory oracles, 4,096-state bounds and three-browser checks pass.
+- [x] Check 81,691 modeled arithmetic/logical instructions against independent
+  ripple-carry and parity oracles; seed 16-bit ADD/SUB/CMP, preserve CF for every
+  INC/DEC register and exhaust all 8-bit TEST masks. IF/DF stay unchanged.
+- [x] Add explicit 16/32/64 context for scoped instruction inspection: MOV
+  immediates, register-direct XOR, 66/REX fields, legacy INC/DEC and selected bare
+  encodings. Exact imm64, independent NDISASM goldens and three-browser bit/context
+  changes are checked. Simulation remains the separately tested 16-bit subset.
+- [x] Align browser/CLI source parsing: accept only an initial UTF-8 BOM, use the
+  same Unicode whitespace and line boundaries, and keep exact comment scope.
+  658 seeded valid/invalid cases compare bytes and source-line diagnostics.
+- [x] Add introductory documentation in English, Simplified Chinese, Spanish,
+  French, Japanese, Portuguese, German and Arabic. Source-revision hashes, identical
+  literal code/quickstart blocks and local links are checked. Native-speaker review
+  remains welcome; detailed guides and interactive controls currently use English.
+- [x] Publish source-generated introductory routes for all eight languages, with
+  canonical/hreflang metadata and sitemap entries. Desktop/320px and keyboard
+  navigation pass in Chrome/Firefox/WebKit; Arabic prose stays RTL and code LTR.
+- [x] Add contributor conduct/security policies with usable reporting contacts;
+  verify GitHub private reporting is enabled. Document setup and a focused source
+  map, and check canonical policy/reference copies during website validation.
+
+The [working improvement backlog](docs/EVOLUTION.md) records prioritization,
+dependencies, risks and the current execution record. It is not a feature list.
+
 ## Further research
 
 - [ ] Paging or a bounded allocator with explicit memory-map evidence.

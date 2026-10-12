@@ -1,12 +1,14 @@
-import {hex, decode, createState, step, logicalIP, flagsWord, physicalAddress} from '../simulator.mjs';
-import {parseBits} from '../binary.mjs';
+import {hex, decode, createState, logicalIP, flagsWord, physicalAddress} from '../simulator.mjs';
+import {parseBits,formatBits} from '../binary.mjs';
 import {presets} from './presets.mjs';
+import {createHistory,recordStep,seek} from '../history.mjs';
 
 const $ = id => document.getElementById(id);
 const registers = ['AX','BX','CX','DX','SI','DI','BP','SP','CS','DS','ES','SS','IP','FLAGS'];
 const flags = [['CF','cf','Carry / unsigned overflow'],['PF','pf','Even parity in the low byte'],['AF','af','Carry or borrow across bit 3'],['ZF','zf','Zero result'],['SF','sf','Sign / highest result bit'],['IF','interrupts','Interrupt-enable flag; no interrupt delivery is modeled'],['DF','df','Direction of string pointer movement'],['OF','of','Signed overflow']];
 let bytes, state, previous = null, before = null, memoryChanges = [], memoryStart = 0x7C00;
 let running = false, timer = null, failed = false, stoppedAtBreakpoint = null, skipBreakpoint = null;
+let history, transition = 'execute', sourceRevision = 0;
 const breakpoints = new Set();
 const registerValue = (cpu, name) => name === 'IP' ? logicalIP(cpu) : name === 'FLAGS' ? flagsWord(cpu) : cpu[name];
 const location = (cpu, offset = cpu.ip) => `${hex(cpu.CS,4)}:${hex((cpu.loadAddress + offset - (cpu.CS << 4)) & 0xFFFF,4)}`;
@@ -21,6 +23,15 @@ function instructionAt(offset) {
 function setStatus(message, error = false) {
   $('status').textContent = message;
   $('status').classList.toggle('error', error);
+}
+
+function downloadProgram(binary) {
+  const filename=`bitborn-program.${binary?'bin':'bits'}`;
+  const url=URL.createObjectURL(new Blob([binary?bytes:formatBits(bytes)],{type:binary?'application/octet-stream':'text/plain;charset=utf-8'}));
+  const link=document.createElement('a');link.href=url;link.download=filename;
+  document.body.append(link);link.click();link.remove();
+  setTimeout(()=>URL.revokeObjectURL(url),1000);
+  $('download-status').textContent=`Download requested: ${filename}; ${bytes.length} loaded bytes. Execution state and history are unchanged.`;
 }
 
 function renderRegisters() {
@@ -81,6 +92,7 @@ function renderTrace() {
   const nextOffset = current ? physicalAddress(state.CS,(logicalIP(state) + current.size) & 65535) - state.loadAddress : -1;
   const next = current && !current.unsupported ? instructionAt(nextOffset) : null;
   $('previous-instruction').textContent = previous?.mnemonic ?? '—';
+  $('previous-label').textContent = transition === 'rewind' ? 'RESTORED / UNDONE' : transition === 'replay' ? 'RECORDED / REPLAYED' : 'PREVIOUS / EXECUTED';
   $('previous-address').textContent = previous ? `${previous.location} · ${previous.size} byte${previous.size === 1 ? '' : 's'}` : 'No instruction executed';
   $('current-instruction').textContent = state.halted ? 'HLT reached' : current?.mnemonic ?? 'Outside loaded program';
   $('current-address').textContent = current ? `${location(state)} · physical ${hex(physicalAddress(state.CS,logicalIP(state)),5)}` : 'Reset to restart';
@@ -93,8 +105,8 @@ function renderTrace() {
     return;
   }
   const expected = before.ip + previous.size;
-  const flow = state.ip === expected && before.CS === state.CS ? 'sequential' : 'control transfer';
-  $('pointer-change').textContent = `${previous.location} → ${location(state)} · ${flow}${state.halted ? ' · halted' : ''}`;
+  const flow = transition === 'rewind' ? 'rewind' : transition === 'replay' ? 'recorded replay' : state.ip === expected && before.CS === state.CS ? 'sequential' : 'control transfer';
+  $('pointer-change').textContent = `${location(before)} → ${location(state)} · ${flow}${state.halted ? ' · halted' : ''}`;
   const registerChanges = registers.filter(name => registerValue(state,name) !== registerValue(before,name)).map(name => `${name} ${hex(registerValue(before,name),4)} → ${hex(registerValue(state,name),4)}`);
   const flagChanges = flags.filter(([,key]) => state[key] !== before[key]).map(([name,key]) => `${name} ${before[key] == null ? '?' : Number(before[key])} → ${state[key] == null ? '?' : Number(state[key])}`);
   const memory = memoryChanges.map(change => `[${hex(change.offset,5)}] ${hex(change.before)} → ${hex(change.after)}`);
@@ -109,7 +121,7 @@ function renderMemory() {
     const cell = document.createElement('div'); cell.className = `stack-word${changedAddresses.has(lo) || changedAddresses.has(hi) ? ' changed' : ''}`;
     cell.dataset.stackAddress = hex(lo,5);
     const value = offset === 0xFFFF ? null : state.memory[lo] | (state.memory[hi] << 8);
-    cell.setAttribute('aria-label', `${word === 0 ? 'Top of stack. ' : ''}${hex(state.SS,4)}:${hex(offset,4)}: ${value === null ? 'word crosses the modeled segment limit' : `word ${hex(value,4)}; bytes ${hex(state.memory[lo])}, ${hex(state.memory[hi])}`}${changedAddresses.has(lo) || changedAddresses.has(hi) ? '; changed in the last step' : ''}`);
+    cell.setAttribute('aria-label', `${word === 0 ? 'Top of stack. ' : ''}${hex(state.SS,4)}:${hex(offset,4)}: ${value === null ? 'word crosses the modeled segment limit' : `word ${hex(value,4)}; bytes ${hex(state.memory[lo])}, ${hex(state.memory[hi])}`}${changedAddresses.has(lo) || changedAddresses.has(hi) ? '; changed since the previously displayed state' : ''}`);
     cell.innerHTML = `<span>${word === 0 ? '→ ' : '  '}${hex(offset,4)}</span><strong><span class="stack-byte${changedAddresses.has(lo) ? ' changed-bit' : ''}">${hex(state.memory[lo])}</span> <span class="stack-byte${changedAddresses.has(hi) ? ' changed-bit' : ''}">${value === null ? '—' : hex(state.memory[hi])}</span><em>${value === null ? 'limit' : hex(value,4)}</em></strong>`;
     stackRows.push(cell);
   }
@@ -121,11 +133,30 @@ function renderMemory() {
   for (let address = memoryStart; address < end; address++) {
     const cell = document.createElement('span'); cell.className = `memory-byte${address >= state.loadAddress && address < state.loadAddress + bytes.length ? ' program-byte' : ''}${instruction && address >= state.loadAddress + state.ip && address < state.loadAddress + state.ip + instruction.size ? ' current-byte' : ''}${changedAddresses.has(address) ? ' changed-bit' : ''}`;
     cell.dataset.address = hex(address,5); cell.textContent = hex(state.memory[address]);
-    cell.title = `Physical ${hex(address,5)}: ${hex(state.memory[address])}${changedAddresses.has(address) ? ' · changed in the last step' : ''}`;
+    cell.title = `Physical ${hex(address,5)}: ${hex(state.memory[address])}${changedAddresses.has(address) ? ' · changed since the previously displayed state' : ''}`;
     cell.setAttribute('aria-label',cell.title);
     memoryCells.push(cell);
   }
   $('memory').replaceChildren(...memoryCells); $('memory-range').textContent = `${hex(memoryStart,5)}–${hex(end-1,5)} / ${end-memoryStart} bytes`;
+}
+
+function renderTimeline() {
+  const total=history.frames.length, position=history.position;
+  $('timeline').max=String(total); $('timeline').value=String(position);
+  $('timeline').disabled=running || total===0;
+  const description=position ? `after ${history.frames[position-1].instruction.mnemonic}` : 'before the first instruction';
+  $('timeline').setAttribute('aria-valuetext',`Recorded state ${position} of ${total}, ${description}`);
+  $('timeline-value').textContent=`${position} / ${total} · ${description}`;
+  const start=Math.max(0,Math.min(position-4,total-8)), end=Math.min(total,start+8);
+  const rows=[];
+  for(let index=start;index<=end;index++) {
+    const row=document.createElement('li');
+    row.className=index===position ? 'selected' : index>position ? 'future' : '';
+    if(index===position)row.setAttribute('aria-current','step');
+    row.textContent=`${index} · ${index ? history.frames[index-1].instruction.mnemonic : 'Initial state'}`;
+    rows.push(row);
+  }
+  $('timeline-steps').replaceChildren(...rows);
 }
 
 function render() {
@@ -133,6 +164,9 @@ function render() {
   $('step-count').textContent = String(state.steps).padStart(4,'0');
   $('run-state').textContent = failed ? 'STOPPED' : state.halted ? 'HALTED' : running ? 'RUNNING' : before ? 'PAUSED' : 'READY';
   $('step').disabled = running || state.halted || failed; $('run').disabled = running || state.halted || failed; $('pause').disabled = !running;
+  $('back').disabled = running || history.position===0; $('forward').disabled = running || history.position===history.frames.length;
+  $('history-position').textContent = `${history.position} / ${history.frames.length} recorded`;
+  renderTimeline();
   document.querySelector('.control-panel').classList.toggle('is-running',running);
   $('byte-count').textContent = `${bytes.length} BYTES`; $('screen-output').textContent = state.output || '∅'; $('serial-output').textContent = state.serial || '∅';
 }
@@ -145,13 +179,13 @@ function pause(message) {
 
 function performStep() {
   if (state.halted || failed) return false;
-  before = {...state, memory:state.memory.slice()};
   const oldLocation = location(state), offset = state.ip;
   try {
-    const instruction = step(bytes,state);
+    const frame = recordStep(history,bytes), instruction=frame.instruction;
+    before=frame.before;
+    transition = 'execute';
     previous = {...instruction,offset,location:oldLocation};
-    memoryChanges = [];
-    for (let address=0; address<state.memory.length; address++) if (before.memory[address] !== state.memory[address]) memoryChanges.push({offset:address,before:before.memory[address],after:state.memory[address]});
+    memoryChanges = instruction.memoryChanges;
     stoppedAtBreakpoint = null;
     if (state.halted) pause(`HLT reached after ${state.steps} steps. Reset to restart.`);
     else {setStatus(`${instruction.mnemonic} executed. ${instruction.explanation}`); render();}
@@ -160,6 +194,25 @@ function performStep() {
     before = null; memoryChanges = []; failed = true;
     pause(); setStatus(error.message,true); return false;
   }
+}
+
+function travel(direction) {
+  travelTo(history.position+(direction==='rewind'?-1:1));
+}
+
+function travelTo(position) {
+  if (running) return;
+  if(position<0 || position>history.frames.length)return;
+  const restored=seek(history,position);
+  if (!restored) return;
+  const {frame,direction}=restored;
+  clearTimeout(timer);timer=null;failed=false;stoppedAtBreakpoint=null;skipBreakpoint=null;
+  transition=direction;
+  before=restored.before;
+  previous={...frame.instruction,offset:frame.before.ip,location:location(frame.before)};
+  memoryChanges=restored.memoryChanges;
+  setStatus(`${direction==='rewind'?'Rewound':'Replayed'} ${frame.instruction.mnemonic}. Restored recorded state ${history.position}; no new instruction was executed.`);
+  render();
 }
 
 function tick() {
@@ -181,10 +234,13 @@ function run() {
 function reset() {
   clearTimeout(timer); timer = null; running = false; failed = false; stoppedAtBreakpoint = null; skipBreakpoint = null;
   state = createState(bytes); state.SP = 0x7C00; previous = null; before = null; memoryChanges = [];
+  history=createHistory(state);transition='execute';
+  $('download-status').textContent='';
   setStatus('Deterministic initial state loaded: CS:IP 0000:7C00, SS:SP 0000:7C00. Ready to step.'); render();
 }
 
 function loadSource(source) {
+  sourceRevision++;
   try {
     const parsed = parseBits(source,512);
     bytes = parsed; breakpoints.clear(); memoryStart = 0x7C00; $('memory-address').value = '07C00';
@@ -205,6 +261,10 @@ $('preset').addEventListener('change', () => {
   $('binary-editor').value = preset.source; $('lesson').textContent = preset.lesson; loadSource(preset.source);
 });
 $('step').addEventListener('click',performStep); $('run').addEventListener('click',run); $('pause').addEventListener('click',() => pause(`Paused at ${location(state)}. Last state change is shown below.`)); $('reset').addEventListener('click',reset);
+$('back').addEventListener('click',()=>travel('rewind'));$('forward').addEventListener('click',()=>travel('replay'));
+$('timeline').addEventListener('input',()=>travelTo(Number($('timeline').value)));
+$('export-source').addEventListener('click',()=>downloadProgram(false));$('export-raw').addEventListener('click',()=>downloadProgram(true));
+$('binary-editor').addEventListener('input',()=>sourceRevision++);
 $('speed').addEventListener('input',() => {
   $('speed-label').textContent = `${$('speed').value} steps/s`;
   if (running) {clearTimeout(timer); timer=setTimeout(tick,1000 / Number($('speed').value));}
@@ -223,17 +283,32 @@ $('load-program').addEventListener('click',() => {
 });
 $('import-program').addEventListener('change',async event => {
   const file=event.target.files[0]; if (!file) return;
+  const request=++sourceRevision;
   try {
     if (file.size > 65536) throw new Error('Source files must be at most 64 KiB.');
-    const source=await file.text(); $('binary-editor').value=source;
+    const buffer=await file.arrayBuffer();let source;
+    if(request!==sourceRevision)return;
+    // Preserve the BOM so the shared parser validates it exactly once.
+    if(/\.bin$/i.test(file.name)) {
+      if(buffer.byteLength<1||buffer.byteLength>512)throw new Error('Raw programs require 1–512 bytes.');
+      source=formatBits(new Uint8Array(buffer));
+    } else {
+      try {source=new TextDecoder('utf-8',{fatal:true,ignoreBOM:true}).decode(buffer);}
+      catch {throw new Error('Source files must contain valid UTF-8 text.');}
+    }
+    $('binary-editor').value=source;
     if (loadSource(source)) {$('lesson').textContent='Imported literal binary program. Only the bounded supported instruction subset runs here.'; $('preset').selectedIndex=-1;}
-  } catch (error) {$('editor-status').classList.add('error'); $('editor-status').textContent=`${error.message} Current program and state kept.`;}
-  event.target.value='';
+  } catch (error) {
+    if(request!==sourceRevision)return;
+    $('editor-status').classList.add('error'); $('editor-status').textContent=`${error.message} Current program and state kept.`;
+  } finally {if(event.target.files[0]===file)event.target.value='';}
 });
 document.addEventListener('keydown',event => {
   if (event.altKey || event.ctrlKey || event.metaKey || event.repeat || event.target.closest('input,textarea,select,button,a,summary')) return;
   if (event.key.toLowerCase() === 's') {event.preventDefault(); if (!running) performStep();}
   else if (event.code === 'Space') {event.preventDefault(); if (running) pause(`Paused at ${location(state)}.`); else run();}
   else if (event.key.toLowerCase() === 'r') {event.preventDefault(); reset();}
+  else if (event.key.toLowerCase() === 'b') {event.preventDefault();travel('rewind');}
+  else if (event.key.toLowerCase() === 'f') {event.preventDefault();travel('replay');}
 });
 $('preset').value=presets[0].id; $('binary-editor').value=presets[0].source; $('lesson').textContent=presets[0].lesson; loadSource(presets[0].source);

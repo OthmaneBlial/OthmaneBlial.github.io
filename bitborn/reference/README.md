@@ -15,6 +15,13 @@
 [Documentation](https://othmaneblial.github.io/bitborn/docs.html) ·
 [Download the 512-byte image](https://othmaneblial.github.io/bitborn/downloads/boot.img)
 
+Introductions: [English](docs/i18n/en/README.md) · [简体中文](docs/i18n/zh-CN/README.md) ·
+[Español](docs/i18n/es/README.md) · [Français](docs/i18n/fr/README.md) ·
+[日本語](docs/i18n/ja/README.md) · [Português](docs/i18n/pt/README.md) ·
+[Deutsch](docs/i18n/de/README.md) · [العربية](docs/i18n/ar/README.md).
+These cover the same example, quickstart and boundaries; detailed guides remain in English.
+Read them as [localized website pages](https://othmaneblial.github.io/bitborn/intro/en/).
+
 What if you could build a real bootable computer program without writing a
 single instruction in a programming language?
 
@@ -74,6 +81,18 @@ for exact evidence and remaining gates.
 | Native shell and separately authored disk app | ✅ Nine commands, real RAM/register snapshots, checked disk load and repeated return in QEMU |
 | 32-bit protected mode and software interrupt | ✅ GDT, flat memory, IDT gate and IRETD verified in QEMU; native captures recorded |
 | Packaging and boundary correctness | ✅ Source aliases/collisions/corrupt derived files rejected; 16-bit IP wrap tested |
+| CPU Lab memory-change journal | ✅ Full-memory oracle and Chrome checks pass; whole-RAM copying/scanning removed from each step |
+| Binary Time Machine | ✅ Exact recorded-state Back/Forward, forks and halt restoration pass model and three-browser checks |
+| Recorded execution timeline | ✅ Select any recorded state; keyboard range controls and net RAM changes pass Chrome/Firefox/WebKit checks |
+| Browser/CLI literal source parity | ✅ Seeded cases check identical bytes/error lines, Unicode line boundaries and initial UTF-8 BOM handling |
+| Arithmetic flag properties | ✅ Independent ripple-carry oracle, seeded 16-bit arithmetic and exhaustive 8-bit TEST masks; IF/DF and INC/DEC carry preserved |
+| Contributor policies and source map | ✅ Conduct contact and private GitHub vulnerability reporting available; focused setup/check commands documented |
+| Introductions in eight languages | ✅ Shared literal example/quickstart and English-source freshness checks; detailed guides remain in English |
+| Localized `.io` introductions | ✅ Source-generated pages, language links/SEO metadata, mobile and keyboard checks; Arabic prose and LTR code verified in three browsers |
+| Reproducible model benchmark | ✅ Fixed reviewed workload, source/environment hashes and measured distributions; no native x86 speed claim |
+| Atomic packed-file output | ✅ Injected sync/rename failures preserve previous files and clean staging; source aliases and non-file outputs rejected |
+| Mode-aware instruction inspection | ✅ Explicit 16/32/64 context, 66/REX fields and exact imm64; independent disassembly goldens and three-browser checks; simulation remains 16-bit |
+| CPU Lab program downloads and imports | ✅ Exact loaded .bits/.bin bytes, 512-byte boundary, self-modification distinction and delayed-import protection pass three-browser checks |
 | [v0.2.0 release](https://github.com/OthmaneBlial/bitborn/releases/tag/v0.2.0) | ✅ Public; all 13 files re-downloaded anonymously, exact bytes and checksums verified |
 | Paging, exception/hardware interrupt handling and physical hardware | Future research; no working claim |
 
@@ -111,6 +130,10 @@ The host tools are Python. The browser explorer is JavaScript. The **target
 machine instructions** are authored directly in `.bits`. Packaging gallery
 payloads adds non-executable zero fill, BIOS signatures or ELF headers; it never
 generates an instruction. The main boot source already contains all 512 bytes.
+
+The [literal source format](docs/binary-format.md) is shared by the browser and
+CLI, including comment boundaries and an optional initial UTF-8 BOM. A seeded
+cross-language corpus checks exact accepted bytes and malformed-token line numbers.
 
 ## Inside one sector
 
@@ -174,6 +197,15 @@ Neither experiment supplies paging, general exception handling or a full OS.
 
 ## Explore and contribute
 
+The [instruction playground](https://othmaneblial.github.io/bitborn/playground/)
+inspects selected encodings in an explicit 16-, 32- or 64-bit context. The same
+`B8` fixture consumes two or four immediate bytes; `49` is DEC CX/ECX in legacy
+contexts and a REX prefix in 64-bit mode. Flip REX.B to change R8 to RAX, or REX.W
+to change operand width. Bit buttons explain their opcode/register/ModR/M/immediate
+roles, and 64-bit values stay exact with BigInt. This is
+[scoped inspection](docs/instruction-encoding/fixtures/README.md); execution remains
+the separately tested 16-bit model.
+
 Start with the [Boot Sector Builder](https://othmaneblial.github.io/bitborn/boot-builder/):
 all 512 bytes are editable, current decoding explains fields, and `.bits`/`.img`
 exports preserve your exact bytes. Change offset 176 from `01001000` to
@@ -182,6 +214,17 @@ exports preserve your exact bytes. Change offset 176 from `01001000` to
 The [CPU Lab](https://othmaneblial.github.io/bitborn/cpu-lab/) shows all modeled
 16-bit registers, flags, changed register bits, stack and memory. Step, run,
 pause, adjust speed, set breakpoints or inspect a bounded literal program.
+Back and Forward restore recorded registers, flags, memory, output and halt state
+without executing an instruction. New execution after rewinding replaces the
+abandoned future; Reset and loading a program clear history.
+Export the loaded program as `.bits` or raw `.bin`, then import either format.
+Exports preserve the original loaded bytes before self-modification and omit
+comments or pending editor edits. They leave execution and history unchanged;
+raw programs have no BIOS framing or ELF headers. A newer source choice or editor
+draft cancels an older asynchronous import.
+The recorded timeline selects any state with a slider or Arrow/Home/End keys.
+Changed bits and RAM compare the state you left with the selected state, including
+multiple recorded instructions; revisiting states consumes no new execution steps.
 The [20 challenges](https://othmaneblial.github.io/bitborn/challenges/) provide
 four difficulty levels, hints, semantic goals, share links and progress stored
 only in your browser. Every reviewed solution also runs in QEMU; success is
@@ -210,10 +253,17 @@ python3 -m http.server 8000 --directory site
 ```
 
 [Beginner tutorial](docs/tutorials/from-bits-to-boot.md) · [Contributing](CONTRIBUTING.md) ·
+[Code of conduct](CODE_OF_CONDUCT.md) · [Security reporting](SECURITY.md) ·
 [Reproducible showcase](SHOWCASE.md) · [Good first contributions](GOOD_FIRST_ISSUES.md) ·
 [Changelog](CHANGELOG.md) · [Roadmap](ROADMAP.md) ·
 [Latest release](https://github.com/OthmaneBlial/bitborn/releases/latest) ·
 [Dated public metrics](docs/metrics.md)
+
+The [evolution backlog](docs/EVOLUTION.md) records the next engineering,
+interactive, documentation and research tasks with dependencies and risk.
+Run `npm run benchmark` after `make site` for [reproducible host-model measurements](docs/benchmarks.md).
+The report separates interpretation, history recording and state restoration;
+it excludes DOM rendering and native CPU timing.
 
 ## What the tests establish
 

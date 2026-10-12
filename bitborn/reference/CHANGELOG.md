@@ -1,5 +1,59 @@
 # Changelog
 
+## Unreleased
+
+- Export/import exact loaded CPU Lab programs as `.bits` or raw `.bin`; preserve
+  original bytes before self-modification and leave model execution/history intact.
+  Reject invalid raw sizes and cancel stale asynchronous reads/errors after a newer
+  source choice or draft. Real downloads and round trips pass in three browsers.
+
+- Add explicit 16/32/64 decoding context to the existing bit playground: scoped
+  MOV/XOR/legacy INC/DEC inspection, 66/REX fields, exact imm64, per-bit roles,
+  literal `.bits` fixtures and independent disassembly goldens. Disable simulation
+  for unsupported contexts; add actual context/bit-change recording and mobile checks.
+
+- Stage and atomically replace `bitpack` outputs, preserving old files on injected
+  sync/rename failures and cleaning staging files. Keep output symlinks, isolate
+  other hard links, preserve existing basic modes, create private new files and
+  reject non-file destinations. Target bytes are unchanged.
+
+- Add a reproducible host-model benchmark for interpretation, history recording
+  and full rewind/replay, with environment/source/workload hashes, semantic checks,
+  retained CI JSON and an actual dated local sample. No native performance claim.
+
+- Render all eight maintained introductions as localized website pages with
+  language navigation, canonical/hreflang metadata, sitemap entries, escaped
+  literal code and Arabic RTL layout. Three-browser mobile/keyboard checks and
+  canonical documentation-copy checks run in CI.
+
+- Add a recorded execution timeline to the CPU Lab. Select any state without
+  executing instructions; show nearby recorded instructions and net register,
+  flag and RAM changes. Arrow/Home/End keyboard controls work in three browsers.
+
+- Add concise introductions in English, Simplified Chinese, Spanish, French,
+  Japanese, Portuguese, German and Arabic; preserve shared literal examples and
+  quickstart commands, with an English-source freshness manifest and link checks.
+
+- Add conduct and security policies, enable private GitHub vulnerability reporting,
+  route sensitive reports away from public issue forms and document a contributor
+  source map. Verify published root reference files match canonical documents.
+
+- Check arithmetic flags with an independent ripple-carry oracle, seeded ADD/SUB/CMP
+  cases, all INC/DEC registers and exhaustive 8-bit TEST masks. Preserve IF/DF;
+  represent undefined logical AF explicitly. These checks run in site CI.
+
+- Align browser and host source parsing for initial UTF-8 BOMs, Unicode whitespace
+  and comment-ending line boundaries; reject embedded BOMs consistently. Add
+  658 seeded round-trip/rejection and cross-language diagnostic cases.
+
+- Add exact recorded-state Back/Forward to the CPU Lab. Restore registers, flags,
+  changed RAM, screen/serial output, UART state, instruction pointer and halt state;
+  execution after a rewind replaces the old future. History uses scalar snapshots
+  and byte deltas, with no per-frame full-RAM copy.
+
+- Record exact changed model RAM bytes and consume that journal in the CPU Lab
+  instead of copying/scanning 1 MiB on every instruction. Target binaries are unchanged.
+
 ## 0.2.0 — 2026-10-12
 
 - Add an 813-byte native shell with nine exact commands, real memory experiments,

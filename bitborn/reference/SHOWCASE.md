@@ -4,6 +4,23 @@ These demonstrations are reproducible from the repository. Browser recordings
 show real interactions with the bounded JavaScript teaching model. QEMU captures
 show guest machine-code execution. Those are separate kinds of evidence.
 
+## Inspect the same bytes in three contexts
+
+![Actual browser context and bit changes; inspection only](assets/encoding-demo.gif)
+
+Open the [instruction playground](https://othmaneblial.github.io/bitborn/playground/).
+Choose the four-byte immediate fixture: 16-bit context reads MOV AX,42 and consumes
+three bytes; 32-/64-bit contexts read MOV EAX,42 and consume five. Choose the
+`49 B8` fixture in 64-bit mode to inspect R8 and the exact unsigned 64-bit value.
+Flip prefix B to select RAX, then W to select EAX and reduce the immediate width.
+Change context to see 40–4F interpreted as legacy INC/DEC instead of REX prefixes.
+
+This recording performs inspection only. The simulation button stays disabled
+for unsupported contexts. [Literal source and scope](docs/instruction-encoding/fixtures/README.md)
+and independent disassembly goldens back the explanations; these checks are
+separate from native execution. Capture provenance includes the loaded code,
+HTML, CSS, literal fixtures and frame hashes.
+
 ## 1. Boot a sector authored directly as bits
 
 ![Actual QEMU boot capture](assets/boot.gif)
@@ -77,6 +94,15 @@ bounded 16-bit teaching model. The literal preset sources live in
 - Select **Stack, CALL & RET**. Step the first MOV and PUSH. AX holds `1234`,
   SP moves from `7C00` to `7BFE`, and the memory inspector shows `34 12` at
   physical addresses `7BFE` and `7BFF`. Continue to observe POP, CALL and RET.
+- Use the recorded timeline: Home restores the initial state and previously
+  written stack bytes; End restores the recorded final state, including HLT.
+  Arrow keys move one recorded state. Back/Forward work one state at a time.
+  Register bits and RAM highlights compare the displayed states. Step after a
+  rewind discards the old future; restoring history does not execute instructions.
+- Export loaded `.bits` or raw `.bin`, then import it and run the same model program.
+  The downloads preserve original loaded bytes, before self-modification; comments
+  and pending editor drafts are omitted. Export does not change the recorded state.
+  Raw downloads have no BIOS framing or ELF headers and are not automatically bootable.
 - Select **Arithmetic & flags**. Step the first MOV and ADD. `FFFF + 1` wraps
   AX to zero and sets CF and ZF. The following INC preserves carry.
 - Select **Follow a branch**. Set a breakpoint before the loop body, run, then

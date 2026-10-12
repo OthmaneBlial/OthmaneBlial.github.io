@@ -1,6 +1,6 @@
 {
-  "kind": "Actual browser screenshots of bounded educational simulation; not native CPU or QEMU footage",
-  "browser": "155.0.8059.39",
+  "kind": "Actual browser screenshots of instruction inspection and bounded educational simulation; not native CPU or QEMU footage",
+  "browser": "156.0.8078.4",
   "viewport": {
     "width": 1280,
     "height": 960
@@ -9,18 +9,59 @@
   "alterations": "960px resize and GIF palette encoding only; each frame is an actual captured browser state. Step pacing is for explanation, not a benchmark.",
   "sourceSha256": {
     "boot/boot.bits": "230bbafbfa02abd62dc964efbad02db0431f0efa263216bba02146cd164262b8",
-    "site/simulator.mjs": "c172bf98a98b341f9134d9843992957fd3bed9bcd04cb52ba783d76a104da9b6",
-    "site/binary.mjs": "c69a35f7d3b2bfdc91cac78f9f691be0eeadcbe518ac7a4d7f266061b2d84051",
+    "site/styles.css": "f255737251dfa8c6c0d133b70367b09578a5f0ebaa01a6d044c3902c555f6a38",
+    "site/app.js": "5ee86e439e83cdb24a8b80935904917b12f3eb7da304950fbb677ba5ee8e30f3",
+    "site/encoding.mjs": "ab77b9f5981353da316806df7890b40aca12cc589a995b53724498ea153f9e8b",
+    "site/encoding-presets.mjs": "6714e7b8300776e32567cd564a9dd5a6d29004e315e9feb129382bfeff71077e",
+    "site/playground/index.html": "56c328199b27e5c0711d3b7b2ab6a893c9aad319a77eaec91470be4b6b599c68",
+    "docs/instruction-encoding/fixtures/mov32.bits": "52504d7b850f70f6ac262d1d07308878d686c80f485b347490c62f854b86c2cd",
+    "docs/instruction-encoding/fixtures/mov64.bits": "01bbd5025d57433cdaf764232ade240dad18fcf879a227f29e0e3b94ea3c3e6e",
+    "site/simulator.mjs": "0fdb791271021e5b16b3da27cb0d47283cc64e0f1c400be41c1b7535a7d62a98",
+    "site/binary.mjs": "3e05c9aee0dbe8023d9568b7bcc206f8be47e7a4da43fa1229bb9226f84a56d8",
+    "site/history.mjs": "45cbd1d494fe7b1f0867c1dc1978ebf2b1a0fce3599f1a704bff75dbe399e321",
+    "site/boot-builder/index.html": "12d26a44418d8f21eb2897de9e25084f079f80969fa7126a4b1810515247f742",
+    "site/boot-builder/builder.css": "2a5c2803c671e4fb33f55a200c16fc7d597127bf019a3c2b7b2f381417e51a4c",
+    "site/boot-builder/model.mjs": "92a78eb396054298a2c170cd2a2fb770e7201b0478b6678321c000a46f3108f3",
     "site/boot-builder/app.mjs": "13f9234f36f0b6c166dd3ab9f16750ba680c8e3e7045d6c9bbc7e5a275fd1cb4",
-    "site/cpu-lab/lab.mjs": "a55c25278ac9ce9d30c02db5d07a4f0fff69d9b7addb3e86506f6e896b54a98e",
+    "site/cpu-lab/index.html": "bfc5845df09756079b4b33d1187da9b261a1eb3772dbbb8c767ac966650c4d57",
+    "site/cpu-lab/lab.css": "ec283e3071f88d474c753755a4682ac1eb5785b84ece820b1751f95d3abd884b",
+    "site/cpu-lab/lab.mjs": "0cdc52135d1b55a6545012a18ef1e0939df99d9395e4efc5fa1b88558dd7ffba",
     "site/cpu-lab/presets.mjs": "4b0ed3df4b5ca8d9f53b8d407cd0761cdbd1cc047d169c66f15f99cf93624941",
+    "site/challenges/index.html": "8939e5722f8bb3e9016ceca1fc4e309272519b14759bced24e3fe36300f4aff5",
+    "site/challenges/challenges.css": "49eb44bbd41c5f154aa68bb7b7392b05e682766a714010d4cc15c98394362218",
     "site/challenges/challenges.mjs": "871be9c721a83d2066fe51b10f8df93c7e84de59ba04f52a18048d1cd1bdadba",
+    "site/challenges/catalog.json": "2b51f2b288973f94c35510887c9ae1b011ff12137895d1220d723682782604aa",
     "challenges/catalog.json": "81e9abfbf8fbe7c6c3709fe5bb483f87f4ee15bbba708dd96b59b948b2629b02"
   },
   "captures": [
     {
+      "file": "assets/encoding-demo.gif",
+      "sha256": "e815896c4ca98fdcd23a75917057e323708b7a925222d857c6d16b432d34c2b2",
+      "capturedFrames": 7,
+      "encodedFrames": 7,
+      "durationSeconds": 7,
+      "actions": [
+        "Inspected the literal B8 fixture in 16-bit context: three bytes consumed for MOV AX,42.",
+        "Selected explicit 32-bit context: the same B8 fixture consumes five bytes for MOV EAX,42; simulation is disabled.",
+        "Inspected the literal REX.W+B prefix, register opcode and eight immediate bytes in 64-bit mode.",
+        "Displayed exact unsigned imm64 without Number rounding; no instruction was executed.",
+        "Flipped REX.B: the destination changes from R8 to RAX, with the same exact immediate.",
+        "Cleared REX.W: the operand becomes 32-bit and consumes only four immediate bytes.",
+        "Changed context to 16-bit: the same initial 40 byte is INC AX rather than a REX prefix."
+      ],
+      "sourceFrameSha256": [
+        "dfa349532bd2ef276bac20e915b23b1643f7842d9104a7e2456c509da3d0ef69",
+        "d6fc5ce35e0e0c39eacc3ba43b5d135e98899649a813b38d03039d9cf44c962b",
+        "c08de5bda3393e435a8e69ab5bdbe82573126614b7d9406cd28c7dda9cd89e5e",
+        "c08de5bda3393e435a8e69ab5bdbe82573126614b7d9406cd28c7dda9cd89e5e",
+        "33773e1ccc23958f45a2639648432a89c010924e198d8ac9dcc66e46184cdaff",
+        "386b12440eadc68178c8a61a61fc9d49068b1a03516effd62253ed39396cbf84",
+        "1122c0cff49d89b12b803dbfa2e2779db2422bad01d1e7ac938cb2cab90e7eb7"
+      ]
+    },
+    {
       "file": "assets/boot-builder-demo.gif",
-      "sha256": "ba626910e23cb05b26a5643cca65a25c01d9ac88474994e668f012b2d0ecd205",
+      "sha256": "01b0e7dd27e373d579a1ffde27bbc4774e3be7cb87210abf6400d081b91a0415",
       "capturedFrames": 5,
       "encodedFrames": 5,
       "durationSeconds": 5,
@@ -32,19 +73,19 @@
         "Held the verified browser result for readability."
       ],
       "sourceFrameSha256": [
-        "046e75fea18b8d6da0aeabdc13769263c0f417b6e8fd557560d1f42b7083fee0",
-        "844530cebbe507e0e7078ad0ef16b640de14c71933d6e00ff620cba8ef87879b",
-        "f411dc13a9e1226fcfde8ca6d0df1cc5372d85bd37f6fb594cdc249df89f08c8",
-        "b901008a8cdad93432bcf62de467b4daf40e3d83223c7b6a9af1eaf1d9e22350",
-        "b901008a8cdad93432bcf62de467b4daf40e3d83223c7b6a9af1eaf1d9e22350"
+        "f06dadd433b76b2cadc57053fefdaf18e90165c1f45f5d89cd450cc88de797e4",
+        "e8c8e03ae09f078d85d58f12d073e4dbfac99f084c935a605a1d2b30384623dc",
+        "0148073333557de6084286537cd1d7d473545012b8891fa47763ece7cf3b5382",
+        "739879e22861b333b645707372a6522f3356ac468cff54750b62e64327e42d98",
+        "739879e22861b333b645707372a6522f3356ac468cff54750b62e64327e42d98"
       ]
     },
     {
       "file": "assets/cpu-lab-demo.gif",
-      "sha256": "0a46093fbe53d60dc6a8febda86a53a043181322a18b7ad21301627fd5ffbdd8",
-      "capturedFrames": 12,
-      "encodedFrames": 12,
-      "durationSeconds": 12,
+      "sha256": "0a69dd9d2f1284ed859458b02cb246290f0761642c31a86200c3468ff4ddd200",
+      "capturedFrames": 16,
+      "encodedFrames": 16,
+      "durationSeconds": 16,
       "actions": [
         "Loaded the literal stack/CALL/RET preset.",
         "Actual browser Step control 1; registers, flags and stack are model state.",
@@ -57,26 +98,34 @@
         "Actual browser Step control 6; registers, flags and stack are model state.",
         "Actual browser Step control 7; registers, flags and stack are model state.",
         "Actual browser Step control 8; registers, flags and stack are model state.",
+        "Selected initial recorded state with Home; registers and stack RAM restored without executing instructions.",
+        "Inspected previously written stack memory at 07BFE: undo restored 00.",
+        "Selected final recorded state with End; exact registers, RAM and HLT restored through recorded replay.",
+        "Downloaded the exact loaded raw program; export controls identify original loaded bytes and no BIOS/ELF framing.",
         "Arithmetic preset FFFF+1 wraps AX to zero and sets CF/ZF in the teaching model."
       ],
       "sourceFrameSha256": [
-        "f08a66f634c176e6424c780b218297f0c5224e6d2de87da72d2b67893b0161c8",
-        "dac8664473d989dcc800ecaa7adbc123dbbb5efec25b92e42df395f378022435",
-        "8011bc8665178d6fe8d4ed4947e886a53d1bdcbe6a063393fd38ade06a5e174f",
-        "272aea24b26b82de2d679e10ce41d5768e99eb98a732f7185785ec9d02fbfe4c",
-        "9ba0d8655c7155acddc036b5c3aaeebea4ba2bcfca6fd34c6f5f06fd7f05ec03",
-        "a0208f2a7a5386d77e03d7b35c6416f94714e574b3847a3d23860e877e3294ba",
-        "9ad17450d7eb24654f47f3551ea7841b05556feaed1f2d94e949ce218c060d02",
-        "33f5bed3074e1d2bdf1f50d77d8438e8fdb9923ad187770a031e68f576aa7062",
-        "a41253e12bdad239edb0487267399782a4f64e95b33b5439bedec834c98f6353",
-        "3226bca996c0480edc64ae9f00f974232feceffe45057e2b5af4bfeb9d134b79",
-        "5be7d1656a6cacabe557ec8e6687847bf06a976c4218f56833a5fdb1a881305d",
-        "0dbb753662d89724d168354506bc62df96484ace4c69c53d48baf780f5a681f5"
+        "b3263079145cff60da711e705474390e16b6041e00be024924af40f41595221f",
+        "439c55e3bb1eff359bad2eea108510ac7c95ef8f86d50a7cbd05439fefd308c6",
+        "9225a2e085be1e7c6dda56a61a69845cf77ec1f064f2d72a14aebe7db4623c9d",
+        "cb802622bfa15313299c565ad93b65761afa8261933d29601245ce636990ef9c",
+        "aa2f5233a18d5805c9775b2e4b224ff35e908bd915d891ee589ed97c0d5cfd81",
+        "f5d30c0c669b0ca7ffbfa8e5cc6224ee4a60f2b68dfd29986b66707dba618f1e",
+        "98d358566a59930821bc88dd0eeb0613a981b90e1d395503bfeb9356201f0605",
+        "0abcf894465e97acb731b898be7c1165dbd4c78d2172389305c0c15c0ea5335a",
+        "c0065c1d52a35a52a5fbc33dd4dbdf93731e1bb1d28e88bc94b83ec1e149cc33",
+        "4c35d9e5de53605f9d10ea5d1a28e5a6e5def31b664241b03eadf3f451069b8a",
+        "0d96c463a58d3dba3419e0c3de524d3fb643aa4cfcbaf9eeb92620f4cbb2b718",
+        "2efb5ff6eaec7f08bf8c1134b1f5a85495f80e51e84baa11222a6cd3cc56b28b",
+        "7feba18d1d97847d3b47614d817540c42234fb2989f9ba07af3178983756862f",
+        "650122f5788e33f09a1b88270b335d0c6737dfc2e94c61f01c187348090dc1e2",
+        "7a4d1e754a339e28c5a0bbc1ae1b9d7d5921eb83c90411f7537ac0c3f194eb6b",
+        "5a47dbc81ca66aab5fa56891bf5e505fc6b485b51cdf592f62c1497071c98af4"
       ]
     },
     {
       "file": "assets/challenges-demo.gif",
-      "sha256": "36f4de3939d7461f46ba79b7c0a25c3ef00f7fdf29eb6968192335f97bfe4656",
+      "sha256": "ee567a613e65c5515a6874bafed1fc0ebcc8569117e97410f20ba86ff1063e50",
       "capturedFrames": 7,
       "encodedFrames": 7,
       "durationSeconds": 7,
@@ -90,13 +139,13 @@
         "Held the solved challenge result and local progress count."
       ],
       "sourceFrameSha256": [
-        "6580e29cf6673f656e7e3b8e26345b0e38b1fcdb5663f932becab53a2e502474",
-        "08149c650cd8301e3a9f25ae2e19b27fdcb6e853939c51bf322cb78f653536f2",
-        "c972c3525e649fb6dd38d9a249989d8a998d9e6da74544f23936d10970c82966",
-        "71ea3d1e34f5e194f467141309d37b7473f1b8f5b9ccb1d500ff2b11df54d28c",
-        "e8085a4ce160d60901a6804ee44ee8870c530ba79eeeabbec80db65126f3d69a",
-        "cb060c8e8313e49a4a2f752284145eb1722d48d9bb3e51e3877fc1846f37a8b7",
-        "cb060c8e8313e49a4a2f752284145eb1722d48d9bb3e51e3877fc1846f37a8b7"
+        "981462d3516dbdab6ff390442f05b2f4f4a8f310217ae988186d2c0a275c2bd0",
+        "6c1b2499ccedb45fdb161276678a838c2a471ce7edc19eec5e582ae4617c38ec",
+        "8f957566948f8bffdd9763caeb9892c6cf04ab9126f439f468be63e601fda184",
+        "28be87c7638c81de30458801e94807caad47560819ee7076d74df609e1e70107",
+        "60bec909bb81ab4c0d413027ea31b95508c514ccf6f4a187c214b270841ee5e6",
+        "9ddc2e22d7cbd7d4336d7573ceb3f4ddd32154b68948771fedb7fb66c4588bd5",
+        "9ddc2e22d7cbd7d4336d7573ceb3f4ddd32154b68948771fedb7fb66c4588bd5"
       ]
     }
   ],
