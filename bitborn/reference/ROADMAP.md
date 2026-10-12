@@ -120,6 +120,14 @@ The v0.2 milestone is published and verified. The following research remains ope
 
 ## Evolution session
 
+- [x] Verify a handwritten 70-byte real-mode divide-fault probe in QEMU: actual
+  saved fault IP/frame, repaired divisors 1/2, restored stack and repeated faults
+  without repair. This does not complete protected-mode exception handling.
+
+- [x] Validate manifest types, canonical paths, packaging combinations and reviewed
+  references; reject symlink/hard-link output aliases. Check all source hashes,
+  sizes and derived packages before writing; invalid later targets preserve outputs.
+
 - [x] Add an ELF64 anatomy explorer with checksummed native examples, field/byte
   selection, exact entry-to-file mapping, segments and zero-fill classification.
   Six real artifacts, payload identity, 2,000 seeded mutations and three-browser
