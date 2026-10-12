@@ -1,5 +1,33 @@
 # Changelog
 
+## 0.2.0 — 2026-10-12
+
+- Add an 813-byte native shell with nine exact commands, real memory experiments,
+  handler-entry register/flag snapshots and checked loading of a returning
+  150-byte disk app. Preserve the original monitor.
+- Add a 568-byte 32-bit protected-mode/GDT/IDT software-interrupt experiment,
+  independent success/failure QEMU checks and authentic native capture provenance.
+
+- Add an editable 512-byte Boot Sector Builder with live byte fields, safe
+  unsupported-encoding handling and exact image/source downloads.
+- Add the Visual CPU Lab with full modeled 16-bit state, memory, stack, controls
+  and breakpoints; 20 four-level challenges with hints and local progress.
+- Add eight dedicated Pages routes and a source-generated roadmap feed.
+- Add an eight-byte Linux exit size comparison while preserving the original;
+  three genuine browser demo GIFs, contributor guides and issue forms.
+
+- Correct modern real-mode `PUSH SP` in the bounded browser model and verify
+  stack/flags/call/segmented-memory behavior with an independent QEMU probe.
+- Add modeled arithmetic flags, CS/logical IP, near calls/returns, direct memory,
+  string direction and memory-based instruction fetch for edited programs.
+- Add strict, bounded literal `.bits` parsing, exact formatting, image framing
+  validation and per-bit change descriptions shared by new browser instruments.
+- Restrict public downloads and release archives to reviewed manifest outputs;
+  browser test exports or other temporary images cannot enter published artifacts.
+- Reject in-place packing and source aliases, packaged-output collisions and
+  corrupted derived images/ELFs before publication. Honor 16-bit IP wrap in the
+  teaching model and CPU Lab sequential preview.
+
 ## 0.1.1 — 2026-10-12
 
 - Accept arbitrary `#` comment prose, including pipe separators, without changing

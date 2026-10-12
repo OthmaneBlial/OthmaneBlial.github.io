@@ -34,7 +34,7 @@ an idea below is not an advertised feature.
 - [x] Live website interactions repeated successfully in Chrome; deployed boot,
   monitor, disk-read, annotations, GIF and social image match local bytes exactly.
 - [x] Official [website](https://othmaneblial.github.io/bitborn/) and repository
-  homepage; all fifteen requested topics and a custom repository social preview.
+  homepage; twenty relevant topics and a custom repository social preview.
 - [x] Website/documentation/browser CI and clean-checkout reproduction proof:
   [ede398e verification](https://github.com/OthmaneBlial/bitborn/actions/runs/38212231354)
   and [successful deployment](https://github.com/OthmaneBlial/bitborn/actions/runs/38212311862).
@@ -59,11 +59,55 @@ not release requirements or advertised capabilities.
   assets match the prepared files and all checksums pass; the five boot images
   are byte-for-byte identical to v0.1.0.
 
-## Future experiments
+## v0.2 evolution — work in progress
 
-- [ ] Protected-mode transition and explicit GDT explanation.
-- [ ] Interrupt handling beyond BIOS services.
-- [ ] Basic memory management and executable loading.
+- [x] Audit the v0.1.1 foundation: existing 20 Python tests and site checks pass.
+- [x] Fix the bounded simulator's `PUSH SP` behavior for 286+ real-mode x86.
+  Independent real QEMU execution checks the saved SP, signed-overflow flags,
+  little-endian segmented memory and a near call/return.
+- [x] Extend the shared teaching model with CS, logical IP, arithmetic flags,
+  near calls/returns, direct memory, string direction and live instruction fetch.
+  Literal source parsing and exports have explicit input limits.
+- [x] Build the full editable 512-byte Boot Sector Builder. The downloaded image
+  and `.bits` match exactly; real QEMU prints the one-bit-edited lowercase greeting.
+- [x] Build the Visual CPU Lab with register bits, flags, stack and memory,
+  Step/Run/Pause/Reset, speed, pre-execution breakpoints and literal-source import.
+- [x] Build 20 binary challenges, five per difficulty level. All reviewed solutions
+  pass deterministic model and actual QEMU goals; all unchanged seeds fail.
+  Alternative answers, byte budgets, loops, malformed input and local-storage
+  failure are checked. Progress stays in the browser; no account or analytics.
+- [x] Build all eight dedicated routes plus a binary size lab; generated progress
+  reflects README at every build. Chrome checks desktop, tablet and 320px layouts.
+- [x] Add a 12→8-byte Linux exit comparison with independent encodings and sizes.
+  ELF sizes are 132→128; instructions increase 3→5. No speed claim is made.
+- [x] Capture actual browser GIFs with source/frame hashes and explicit model
+  labeling; add SHOWCASE, GOOD_FIRST_ISSUES and four contributor issue forms.
+- [x] Firefox 157 and WebKit 27.2 pass all routes, 320px layouts, real downloads,
+  CPU controls, memory, breakpoints, challenge edits/progress and the roadmap.
+  Firefox exposed a detached-download-anchor bug; connecting the anchor fixes
+  the actual image and source downloads, now covered by both engines.
+- [x] Expanded [Linux CI at 8dad62b](https://github.com/OthmaneBlial/bitborn/actions/runs/38221372210)
+  passes all six ELF programs, three browser engines, twenty challenge solutions
+  in QEMU and the actual downloaded image boot.
+- [x] [Pages deployment at 8dad62b](https://github.com/OthmaneBlial/bitborn/actions/runs/38221582708)
+  passed. Live builder interactions/downloads and public source/assets match.
+- [x] Add the native nine-command shell, handler-entry register snapshot, actual
+  memory read/write/dump and a separately handwritten disk app returning to the
+  prompt. Five QEMU tests cover disk failure, command/edit bounds and repeat runs.
+- [x] Add the 568-byte protected-mode target: GDT, CR0.PE, 32-bit flat segments,
+  memory write/read, IDT software interrupt gate, IRETD and controlled success/fail
+  halts. Three independent QEMU tests and genuine native recordings pass locally.
+- [x] Reject source aliases, output collisions and corrupted packaged artifacts;
+  fix logical-IP wrap and its CPU Lab preview. Regression tests cover each bug.
+- [ ] Verify the native additions in exact-commit Linux CI and public downloads.
+- [ ] Verify all new routes/assets/downloads live after automatic Pages deployment.
+- [ ] Publish a meaningful v0.2 release and independently verify its downloads.
+
+## Further research
+
+- [ ] Paging or a bounded allocator with explicit memory-map evidence.
+- [ ] General exception handlers and hardware interrupt delivery.
+- [ ] Physical-hardware calibration and broader boot compatibility.
 
 These experiments require separate bootable targets, byte explanations and actual
 execution tests before appearing as completed capabilities. No hardware, UEFI,

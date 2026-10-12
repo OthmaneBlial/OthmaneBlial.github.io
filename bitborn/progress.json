@@ -1,0 +1,85 @@
+{
+  "updated": "2026-10-12",
+  "milestones": [
+    {
+      "milestone": "512-byte handwritten boot program and four byte tools",
+      "progress": "\u2705 QEMU-tested, public"
+    },
+    {
+      "milestone": "Linux exit, arithmetic, text, loops and comparisons",
+      "progress": "\u2705 Native execution passed in Linux CI"
+    },
+    {
+      "milestone": "BIOS keyboard and direct VGA memory writes",
+      "progress": "\u2705 QEMU-tested"
+    },
+    {
+      "milestone": "Multi-sector loader and interactive monitor",
+      "progress": "\u2705 QEMU-tested: help, clear, about, reboot, peek"
+    },
+    {
+      "milestone": "Ten example guides and complete byte tables",
+      "progress": "\u2705 Documented, with actual execution checks"
+    },
+    {
+      "milestone": "Real boot screenshot/GIF and architecture tutorial",
+      "progress": "\u2705 Captured from QEMU and reproducible"
+    },
+    {
+      "milestone": "Interactive `.io` website and mobile browser checks",
+      "progress": "\u2705 Live; HTTPS assets and Chrome interactions verified"
+    },
+    {
+      "milestone": "Public v0.1.0 images, source and checksums",
+      "progress": "\u2705 Published; downloaded artifacts and checksums verified"
+    },
+    {
+      "milestone": "v0.1.1 host-tool patch",
+      "progress": "\u2705 Published; comment/failed-write checks and downloaded artifacts verified"
+    },
+    {
+      "milestone": "Shared CPU model: flags, calls, stack and segmented memory",
+      "progress": "\u2705 Locally verified; modern PUSH SP semantics checked in real QEMU"
+    },
+    {
+      "milestone": "Full editable 512-byte boot-sector builder",
+      "progress": "\u2705 Chrome-tested; exact downloaded image/source boot the one-bit edit in QEMU"
+    },
+    {
+      "milestone": "Visual CPU lab: registers, flags, stack, memory and breakpoints",
+      "progress": "\u2705 Five literal teaching programs and Chrome controls verified"
+    },
+    {
+      "milestone": "20 challenges across four levels",
+      "progress": "\u2705 All solutions pass model and QEMU goals; seeds fail; local progress and sharing tested"
+    },
+    {
+      "milestone": "Eight dedicated `.io` routes and a size-comparison lab",
+      "progress": "\u2705 Public; expanded Linux CI and live builder checks passed"
+    },
+    {
+      "milestone": "Original 12-byte exit versus 8-byte alternative",
+      "progress": "\u2705 Both return 42 in Linux CI; 132\u2192128-byte ELF sizes, no speed claim"
+    },
+    {
+      "milestone": "New browser GIFs, showcase and contributor issue forms",
+      "progress": "\u2705 Genuine captured states with provenance; contributor files checked"
+    },
+    {
+      "milestone": "Native shell and separately authored disk app",
+      "progress": "\u2705 Nine commands, real RAM/register snapshots, checked disk load and repeated return in QEMU"
+    },
+    {
+      "milestone": "32-bit protected mode and software interrupt",
+      "progress": "\u2705 GDT, flat memory, IDT gate and IRETD verified in QEMU; native captures recorded"
+    },
+    {
+      "milestone": "Packaging and boundary correctness",
+      "progress": "\u2705 Source aliases/collisions/corrupt derived files rejected; 16-bit IP wrap tested"
+    },
+    {
+      "milestone": "Paging, exception/hardware interrupt handling and physical hardware",
+      "progress": "Future research; no working claim"
+    }
+  ]
+}
