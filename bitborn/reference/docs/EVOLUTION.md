@@ -6,6 +6,26 @@ executable instructions remain literal `.bits`; host tooling never assembles the
 
 ## Current execution record
 
+v0.5 preparation (2026-10-13): the existing release attachment list stopped at
+nine primary BIOS images despite five newer native experiments. The next version
+explicitly packages all fourteen primary images and seventy-one evidence files,
+including actual registers, PIC state, paging structures, exception logs/stacks
+and game captures. Native capture records are checked for missing packaged file
+references. Notes retain precise proof boundaries. Public v0.4.0 is unchanged;
+source/tag CI, clean-archive reproduction and anonymous download checks remain
+required before declaring v0.5.0 published.
+Local preparation checks pass 113 Python tests (one expected macOS native-Linux
+skip), the complete site/model suite and unchanged capture-source hashes. These
+do not substitute for the upcoming exact-archive and Linux/source/tag gates.
+The first unpublished staging at `bd0034d` verifies all eighty-eight attachment
+checksums and exposes a documentation count error: the release manifest selects
+112 artifacts, including nested challenge outputs. Unreviewed root build files
+are excluded. Release notes now use the measured manifest count; that initial
+staging is retained separately and cannot be overwritten by the corrected source.
+The same manifest recheck corrects recent game/dispatch/optimization execution
+counts below. A release regression now checks the documented image, artifact,
+evidence, total-file and checksum counts against the actual packaging inputs.
+
 Release staging audit (2026-10-13): recognized filenames alone previously allowed
 the release packager to overwrite a completed staging directory after source
 changed without a version bump. Staging now checks the recorded version and source
@@ -49,7 +69,7 @@ QEMU frames from two boots have raw state/VGA/source/frame/image hashes; every
 decoded GIF pixel matches the cropped/enlarged native capture. No overlays,
 inferred frames, browser play or timing claims are introduced. Both model imports
 stop atomically at C6 after fourteen setup steps. Counts become 68 reviewed targets,
-114 derived artifacts, fourteen primary BIOS images and twenty-one gallery entries.
+112 manifest-reviewed artifacts, fourteen primary BIOS images and twenty-one gallery entries.
 The full native suite passes 110 tests with one expected macOS native-Linux skip;
 site/model/doc checks, Chrome routes and complete Firefox 157/WebKit 27.2 suites
 pass. Browser checks verify exact source/image/GIF/record bytes, 1440/320px layout
@@ -83,7 +103,7 @@ stack and source RAM; metadata and twenty assets are revalidated against their
 hashes and raw fields. No instruction trace, arbitrary recovery or isolation is
 claimed. The full 736-byte stage exceeds the model import limit; four prefixes
 stop atomically at LGDT after seven setup instructions. Counts become 67 reviewed
-targets, 112 artifacts, thirteen primary BIOS images and twenty gallery entries.
+targets, 110 manifest-reviewed artifacts, thirteen primary BIOS images and twenty gallery entries.
 The full native suite passes 106 tests with one expected macOS native-Linux skip;
 site/model/doc checks, Chrome routes and complete Firefox 157/WebKit 27.2 suites
 pass. Browser checks verify exact image/source/capture/guide bytes, 1440/320px
@@ -113,10 +133,11 @@ the immediate unchanged repeat passed in 0.27 seconds, and the full repeat
 passes without timeout or assertion changes. Publication remains pending.
 The refreshed seven GIFs contain 133 actual browser frames, with 23 challenge
 frames. All 79 source hashes, seven GIF hashes and 133 raw PNG hashes match.
-A direct package audit counts 66 reviewed targets and 110 derived artifacts,
-including twelve primary BIOS images, 26 challenge images and one shell control
-image. At `273096a`, the same audit yields 98 artifacts; the previous paging
-entry's 96 was an undercount. The six new sources add twelve packaged files.
+A committed-manifest recheck counts 66 reviewed targets and 108 packaged artifacts,
+including twelve primary BIOS images and 26 challenge images. At `273096a`,
+the same manifest check yields 96 artifacts, matching the paging entry below.
+The six new sources add twelve packaged files. Earlier root-build tallies
+incorrectly included files outside the public artifact manifest.
 
 Keyboard publication `97e90ad` passes CI `38370707697` and deployment
 `38371502894`. All six checked public progress/README/roadmap/changelog/guide
@@ -866,6 +887,7 @@ is deeper research. Dependencies name earlier idea numbers or existing component
 | 67 | 0 | Validate optional bitinspect annotation metadata and preserve structured errors before rendering | H | H | Existing host inspection | Medium | Complete: bounded JSON, typed non-overlapping ranges, literal-bit matches, terminal-safe labels and structured late-failure diagnostics; canonical targets remain valid |
 | 68 | 0 | Align executable quickstart dependencies across README, beginner guide and eight introductions | H | H | Native capture test | Low | Complete: NASM/FFmpeg install commands, localized host-tool roles, English source tracking and eight-page browser/link checks; native-speaker review remains separate |
 | 69 | 0 | Preserve recorded release staging when source advances without a version bump | H | H | Release provenance | Low | Complete: reject different revision/version before writes; isolated preservation regressions and all 31 frozen v0.4.0 staging files verified unchanged |
+| 70 | 1 | Publish the five newer native experiments as a verified v0.5 distribution | H | H | 68,69 and native proofs | Medium | In progress: explicit 14-image/71-evidence packaging, capture-reference regression and scoped notes; clean archive, main/tag CI, release downloads and live documentation gates remain |
 
 Large tasks are divided into useful verified milestones. Native experiments only
 become capabilities after literal source review and real QEMU checks; hardware
