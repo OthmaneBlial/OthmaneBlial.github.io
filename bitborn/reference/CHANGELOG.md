@@ -2,6 +2,15 @@
 
 ## Unreleased
 
+- Add a guided stack/call walkthrough beside the CPU lab's stack panel, with a
+  tested nine-state table, saved-word overwrite and full RAM/state rewind/replay.
+  Compare the independently loaded native call challenge without conflating its
+  return address or final QMP evidence with a modeled instruction trace.
+
+- Install NDISASM's package in both validation and Pages jobs for the independent
+  lesson disassembly checks. Document this development-only dependency and surface
+  subprocess launch errors directly; target packaging still parses literal bytes.
+
 - Add a hands-on byte-order lesson to `/learn/`, using a canonical six-byte
   fragment and the shared decoder. Link byte weights to a little-endian MOV
   immediate and an instruction-end-relative signed branch; support Reset and

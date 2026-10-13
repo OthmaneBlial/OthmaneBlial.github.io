@@ -17,6 +17,11 @@ Python 3.10+, Make and QEMU are needed for the native checks. Node.js 22+ is the
 CI baseline for browser tooling. On macOS, install QEMU with `brew install qemu`;
 on Ubuntu, use `sudo apt-get install python3 make qemu-system-x86`.
 
+The independent disassembly checks in `make site-test` also require `ndisasm`:
+install `nasm` with Homebrew on macOS or `sudo apt-get install nasm` on Ubuntu.
+This package supplies a read-only verification tool; the build never invokes an
+assembler to generate target instructions. Both CI and Pages install it explicitly.
+
 ```sh
 make test                 # build, reviewed artifacts, unit tests and headless QEMU
 make site-test            # rebuild website references; model, route and link checks
@@ -45,6 +50,7 @@ exact source revision, generated copies and every artifact hash across builds.
 | Mode/bit/address inspection | `site/encoding.mjs`, `docs/instruction-encoding/fixtures/` | `node tests/test_encoding.mjs` and `node tests/test_memory_encoding.mjs` |
 | [Linux syscall inspection](docs/instruction-encoding/linux-syscalls.md) | `site/encoding.mjs`, `tools/site_build.py`, canonical exit payloads | `node tests/test_linux_encoding.mjs` and `npm run test:cross-browser` |
 | [Progressive byte-order lesson](docs/tutorials/byte-order.md) | `docs/tutorials/byte-order.bits`, `site/learn/byte-order.mjs`, shared decoder | `node tests/test_byte_order.mjs`, `node tests/browser_routes.mjs` and `npm run test:cross-browser` |
+| [Guided stack/call lesson](docs/tutorials/stack-and-calls.md) | Existing `docs/cpu-lab/stack.bits`, stack/memory UI and history journal | `node tests/test_stack_lesson.mjs`, `node tests/browser_cpu_lab.mjs` and `npm run test:cross-browser` |
 | Shared memory addressing/execution | `site/address16.mjs`, `site/simulator.mjs` | `node tests/test_memory_mov.mjs` and `python3 -m unittest tests.test_memory_parity` |
 | Loaded-program links | `site/program-link.mjs`, `site/cpu-lab/lab.mjs` | `node tests/test_program_link.mjs` and `node tests/browser_cpu_lab.mjs` |
 | Mode-aware program differences | `site/bit-diff.mjs`, `site/bit-diff/` | `node tests/test_bit_diff.mjs` and `node tests/browser_bit_diff.mjs` |
