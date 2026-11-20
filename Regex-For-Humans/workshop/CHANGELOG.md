@@ -1,6 +1,48 @@
 # Changelog
 
-## Unreleased
+## 0.1.0-dev.13 (21 November 2026)
+
+- Emit a numbered reference as `\1` instead of `(?:\1)` when nothing that could be a digit follows it, as in `(\w+)\s\1`. The `(?:\1)` boundary stays where a digit may follow, because `\10` would be a different reference.
+
+- Show invisible characters as escapes in rules, regexes and explanations: zero-width spaces, byte-order marks, soft hyphens, no-break and other non-ASCII spaces, private-use and unassigned code points now read `\u200b`, `\ufeff`, `\u00ad`, `\u00a0`. Before, only controls and direction marks were escaped, so these were invisible in the output. Joiners stay as they are, so emoji sequences and Persian or Indic text still read normally. Matching is unchanged.
+
+- Rewrite the README to fit on a few screens: one example, reading a regex back, named captures, install, a vocabulary table (each row is compiled by the tests) and six recipes. The full recipe table and the CLI reference move to `docs/RECIPES.md` and `docs/CLI.md`. A new banner, social card and an animated reel of six recipes are drawn from real compiler output by `scripts/build-readme-art.js`. All nine translations follow.
+
+- Redesign the homepage as an interlinear gloss: each fragment of the compiled regex has its meaning, its groups and the characters it took printed underneath. Six examples cycle until the visitor interacts (never with reduced motion). Source Serif 4 and JetBrains Mono are self-hosted for the homepage and the workshop, which takes the same ink-and-blue palette.
+
+- Generate the regex a person would write. `optional` now emits `?` (not `{0,1}`), `at least 0`/`1` emit `*`/`+`, tab, newline and carriage return appear as `\t`, `\n` and `\r`, a plain `group { }` adds no parentheses, and a choice that is the only content of a capture or group reuses its parentheses: `^(?<month>0[1-9]|1[0-2])$` instead of `^(?<month>(?:(?:0[1-9])|(?:1[0-2])))$`. Matching is unchanged; a round-trip check over 45 common regexes and 3,000 strings each finds no difference. The workshop trace shows `—` for a rule that adds no regex of its own.
+
+- Add three recipes that validate values instead of shapes: IPv4 addresses with each number from 0 to 255, 24-hour times from `00:00` to `23:59`, and calendar dates with month 01–12 and day 01–31. The library now has 34 recipes.
+
+- Accept every HTTP token character in the header recipe's field name, so `X-B3-TraceId` and `X_Trace` match; it previously allowed only letters and hyphens.
+
+- Explain an existing regex on the homepage: paste `/source/flags` or a bare pattern to gloss it fragment by fragment, show it as rules, test text against it and open it in the workshop. A pattern without `u` or `v` is read with `u` when it stays valid, and the page says so; captures, groups and choices appear as brackets and `or`. The demo now tests text without `g`/`y` state.
+
+- Remove repeated homepage sections (feature cards, the three-step journey, trust badges and the closing call to action) and slogan headings; the hero now names both directions. Compact the workshop hero, drop the decorative `{3}` and `[a]` glyphs, give every workshop hint the same 13-pixel style and keep labels at 11 pixels or more.
+
+- Keep the workshop sidebar at its top on a normal load; a linked recipe still scrolls into view only when it is hidden.
+
+- Run local workshop and homepage browser checks on half the CPU cores (764 checks in about 11 minutes instead of about two hours) and split the CLI checks across four files (about 44 to 17 seconds). CI keeps one browser worker.
+
+- Open the homepage's architecture, compatibility, complex-example and language-guide links as rendered GitHub documents instead of raw Markdown text, and correct the scoped-flags anchor.
+
+- Raise the homepage copy buttons and the narrow-screen cheat sheet from 10 to 11 pixels for easier reading.
+
+- Keep the workshop's interface-language and theme labels at 11 pixels on narrow screens and darken the light rule-editor placeholder to 4.5:1 contrast.
+
+- Reveal a linked recipe (`?example=`) in the recipe sidebar or mobile carousel without scrolling the page.
+
+- Verify an existing package tarball without repacking, report its SHA-256 and retain new packs only after a successful clean consumer. Refuse overwriting a retained archive, including concurrent destination creation.
+
+- Complete earlier closed capture names inside quoted references, including JSON escape prefixes, surrogate pairs and missing closing quotes. Preserve command/count spelling and following text, validate each whole candidate, retain case-sensitive name binding and omit literal/declaration/property/flag contexts. Show the complete proposed document and keep native history, exact expectations, fixtures and drafts intact.
+
+- Retain existing exact/ranged/minimum/optional/sequence repetition and lazy prefixes when completing groups, captures, alternatives and native sets. Preserve prefix spelling, complete reference remapping and first-body cursor placement; deduplicate optional-group aliases and leave invalid counts, repeated assertions and nested set operands to shared parser/compiler rejection.
+
+- Complete all six positive/negated Unicode v union, intersection and subtraction block templates, with editable operands, full-document previews and localized mode guidance. Validate the replacement before enclosing arity so nested set operands and alternative branches can complete correctly. Retain capture-reference targets, logical separators, comments, caret positions, native history and opted-in drafts; reject unsupported modes and invalid whole proposals.
+
+- Correct CLI export guidance and native-verification reproduction instructions to agree with the recorded PHP/PCRE2 corpus evidence. Keep target-specific syntax/flag limits visible and require all seven SDKs when reproducing that gate.
+
+- Retain native rule-editor Undo/Redo across completions, builder templates, group/reference transformations, regex and fixture imports and recipe changes. Compile after each complete action; history edits refresh the regular syntax, diagnostics, matching and opted-in draft path. Suppress intermediate history notifications from other fields so recipe changes cannot retain orphaned expectation errors. Keep flags/examples current and fall back to editable text when native insertion is unavailable.
 
 ## 0.1.0-dev.12 (11 October 2026)
 

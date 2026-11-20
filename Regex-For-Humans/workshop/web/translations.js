@@ -4,6 +4,19 @@ export const translations = {
   "Complete a rule": ["补全规则", "Completar una regla", "Compléter une règle"],
   "Rule suggestions": ["规则建议", "Sugerencias de reglas", "Suggestions de règles"],
   "Suggested rule:": ["建议规则：", "Regla sugerida:", "Règle proposée :"],
+  "Proposed rules:": ["拟议规则：", "Reglas propuestas:", "Règles proposées :"],
+  "Choose Unicode v for set union, intersection and subtraction templates, including negated forms.":
+    [
+      "集合的并集、交集和差集模板及其取反形式需要 Unicode v。",
+      "Las plantillas de unión, intersección y diferencia, incluidas sus negaciones, requieren Unicode v.",
+      "Les modèles d’union, d’intersection et de soustraction, y compris leurs formes négatives, nécessitent Unicode v.",
+    ],
+  "Complete groups and assertions on standalone lines. Groups, captures, alternatives and sets also accept repetition modifiers. Review the whole document and updated references before applying.":
+    [
+      "在独立行补全分组和断言。分组、捕获、分支和集合也支持重复修饰符。应用前请检查整个文档及更新后的引用。",
+      "Completa grupos y aserciones en una línea independiente. Grupos, capturas, alternativas y conjuntos también admiten repetición. Revisa todo el documento y las referencias actualizadas antes de aplicar.",
+      "Complétez les groupes et assertions sur une ligne indépendante. Groupes, captures, alternatives et ensembles acceptent aussi la répétition. Vérifiez tout le document et les références mises à jour avant d’appliquer.",
+    ],
   "1 validated suggestion.": [
     "1 条已验证的建议。",
     "1 sugerencia validada.",
@@ -16,17 +29,17 @@ export const translations = {
     "{count} sugerencias validadas.",
     "{count} suggestions validées.",
   ],
-  "No validated suggestions. Use a single cursor outside quoted text and comments, and fix other rule errors first.":
+  "No validated suggestions. Use one cursor in a supported rule or quoted reference, outside comments, and fix other rule errors first.":
     [
-      "没有已验证的建议。请将单个光标置于引号文本和注释之外，并先修复其他规则错误。",
-      "No hay sugerencias validadas. Coloca un solo cursor fuera del texto entre comillas y los comentarios, y corrige primero los demás errores de reglas.",
-      "Aucune suggestion validée. Placez un seul curseur hors des textes entre guillemets et des commentaires, puis corrigez d’abord les autres erreurs de règles.",
+      "没有通过验证的建议。请在支持的规则或带引号的引用中使用单个光标，避开注释，并先修复其他规则错误。",
+      "No hay sugerencias validadas. Usa un solo cursor en una regla admitida o referencia entre comillas, fuera de comentarios, y corrige primero los demás errores.",
+      "Aucune suggestion validée. Placez un seul curseur dans une règle prise en charge ou une référence entre guillemets, hors des commentaires, puis corrigez les autres erreurs.",
     ],
-  "Complete a built-in character class or a reference to an earlier closed capture, including after a count. Suggestions use English syntax and must compile with the entire document. Ctrl + Space opens the list; Enter applies a choice; Escape closes it.":
+  "Complete built-in classes or references to earlier closed captures. Named references also complete inside quotes; counts stay in place. Suggestions use English syntax and must compile with the whole document. Ctrl + Space opens the list; Enter applies; Escape closes.":
     [
-      "补全内置字符类或先前已闭合捕获组的引用，也可用于计数之后。建议使用英语语法，且必须与整个文档一起编译成功。Ctrl + Space 打开列表；Enter 应用选择；Escape 关闭列表。",
-      "Completa una clase de caracteres integrada o una referencia a una captura anterior ya cerrada, incluso después de una cantidad. Las sugerencias usan sintaxis inglesa y deben compilar con todo el documento. Ctrl + Space abre la lista; Enter aplica una opción; Escape la cierra.",
-      "Complétez une classe de caractères intégrée ou une référence à une capture précédente déjà fermée, y compris après une quantité. Les suggestions utilisent la syntaxe anglaise et doivent compiler avec tout le document. Ctrl + Espace ouvre la liste ; Entrée applique un choix ; Échap la ferme.",
+      "补全内置字符类或先前已闭合捕获组的引用。命名引用也可在引号内补全，已有计数保持不变。建议使用英语语法，且须与整个文档一起编译成功。Ctrl + Space 打开列表；Enter 应用；Escape 关闭。",
+      "Completa clases integradas o referencias a capturas anteriores ya cerradas. Los nombres también se completan dentro de las comillas; se conservan las cantidades. Las sugerencias usan sintaxis inglesa y deben compilar con todo el documento. Ctrl + Space abre la lista; Enter aplica; Escape cierra.",
+      "Complétez les classes intégrées ou les références aux captures précédentes déjà fermées. Les noms se complètent aussi entre guillemets ; les quantités sont conservées. Les suggestions utilisent l’anglais et doivent compiler avec tout le document. Ctrl + Espace ouvre la liste ; Entrée applique ; Échap ferme.",
     ],
   "Keep a draft in this browser": [
     "在此浏览器中保留草稿",
@@ -670,19 +683,8 @@ export const translations = {
     "JavaScript RegExp · Anglais contrôlé · Sans compte",
   ],
   "THE WORKSHOP": ["工作台", "EL TALLER", "L’ATELIER"],
-  "A CLEARER WAY TO COMPILE PATTERNS": [
-    "更清晰地编译匹配模式",
-    "UNA FORMA MÁS CLARA DE COMPILAR PATRONES",
-    "UNE FAÇON PLUS CLAIRE DE COMPILER DES MOTIFS",
-  ],
   "Write the rule.": ["写下规则。", "Escribe la regla.", "Écrivez la règle."],
   "Read the regex.": ["读懂正则。", "Lee la regex.", "Lisez la regex."],
-  "Write clear rules. Inspect the regex. Test real examples.": [
-    "编写清晰的规则，查看正则表达式，测试实际示例。",
-    "Escribe reglas claras. Examina la regex. Prueba ejemplos reales.",
-    "Écrivez des règles claires. Examinez la regex. Testez de vrais exemples.",
-  ],
-  "THE INPUT ✍️": ["输入 ✍️", "LA ENTRADA ✍️", "L’ENTRÉE ✍️"],
   "Write your rules": ["编写规则", "Escribe tus reglas", "Écrivez vos règles"],
   "A controlled language, not a free-form prompt.": [
     "使用受控语言，而不是任意自然语言提示。",
@@ -740,7 +742,6 @@ export const translations = {
   ],
   "Translate to rules": ["转换为规则", "Traducir a reglas", "Traduire en règles"],
   "Go to regex error": ["定位正则错误", "Ir al error de la regex", "Aller à l’erreur de la regex"],
-  "THE OUTPUT 🔎": ["输出 🔎", "LA SALIDA 🔎", "LA SORTIE 🔎"],
   "Understand the pattern": ["理解匹配模式", "Entiende el patrón", "Comprenez le motif"],
   "Generated JavaScript regex": [
     "生成的 JavaScript 正则",
@@ -884,7 +885,6 @@ export const translations = {
     "Aquí verás cada regla con su fragmento generado y su significado.",
     "Chaque règle apparaîtra ici avec son fragment généré et sa signification.",
   ],
-  "THE STRUCTURE ↝": ["结构 ↝", "LA ESTRUCTURA ↝", "LA STRUCTURE ↝"],
   "Explore the pattern": ["探索匹配模式", "Explora el patrón", "Explorez le motif"],
   "OPEN THE MAP": ["打开结构图", "ABRIR EL MAPA", "OUVRIR LA CARTE"],
   "Hover to connect the views. Select a node, or press Enter/Space, to return to its rule.": [
@@ -906,7 +906,6 @@ export const translations = {
     "Compila reglas válidas para explorar su estructura.",
     "Compilez des règles valides pour explorer leur structure.",
   ],
-  "THE PROOF 🧪": ["验证 🧪", "LA PRUEBA 🧪", "LA VÉRIFICATION 🧪"],
   "Check the edge cases": [
     "检查边界情况",
     "Comprueba los casos límite",
@@ -1432,11 +1431,43 @@ export const translations = {
     "Extraer un campo de cabecera sencillo",
     "Extraire un champ d’en-tête simple",
   ],
-  "One ASCII letter/hyphen field name, colon, one space and a nonempty single-line value. A small header fragment, not the complete HTTP field grammar or a message parser.":
+  "Field name made of HTTP token characters (letters, digits and !#$%&'*+-.^_`|~), colon, one space and a nonempty single-line value. A header fragment, not a message parser.":
     [
-      "字段名由 ASCII 字母或连字符组成，后接冒号、一个空格和非空单行值。仅是标头片段，不是完整 HTTP 字段语法或消息解析器。",
-      "Nombre con letras ASCII o guiones, dos puntos, un espacio y valor no vacío en una línea. Es un fragmento, no la gramática completa de campos HTTP ni un analizador de mensajes.",
-      "Nom en lettres ASCII ou tirets, deux-points, un espace et valeur non vide sur une ligne. Fragment d’en-tête, sans grammaire HTTP complète ni analyse des messages.",
+      "字段名由 HTTP 令牌字符组成（字母、数字及 !#$%&'*+-.^_`|~），后接冒号、一个空格和非空单行值。仅是标头片段，不是消息解析器。",
+      "Nombre de campo con caracteres de token HTTP (letras, dígitos y !#$%&'*+-.^_`|~), dos puntos, un espacio y un valor no vacío en una línea. Es un fragmento de cabecera, no un analizador de mensajes.",
+      "Nom de champ en caractères de jeton HTTP (lettres, chiffres et !#$%&'*+-.^_`|~), deux-points, un espace et une valeur non vide sur une ligne. Fragment d’en-tête, pas un analyseur de messages.",
+    ],
+  "Validate a calendar date": [
+    "验证日历日期",
+    "Validar una fecha de calendario",
+    "Valider une date du calendrier",
+  ],
+  "YYYY-MM-DD with month 01–12 and day 01–31, captured as year, month and day. It does not know month lengths or leap years, so 2026-02-30 still matches.":
+    [
+      "YYYY-MM-DD，月份 01–12，日期 01–31，分别捕获为 year、month 和 day。不检查每月天数或闰年，因此 2026-02-30 仍会匹配。",
+      "AAAA-MM-DD con mes 01–12 y día 01–31, capturados como year, month y day. No conoce la duración de los meses ni los años bisiestos: 2026-02-30 también coincide.",
+      "AAAA-MM-JJ avec mois 01–12 et jour 01–31, capturés en year, month et day. Ne connaît ni la longueur des mois ni les années bissextiles : 2026-02-30 correspond encore.",
+    ],
+  "Validate a 24-hour time": [
+    "验证 24 小时制时间",
+    "Validar una hora de 24 horas",
+    "Valider une heure sur 24 heures",
+  ],
+  "HH:MM from 00:00 to 23:59. Rejects 24:00, single-digit hours and seconds.": [
+    "HH:MM，从 00:00 到 23:59。拒绝 24:00、一位数小时和秒。",
+    "HH:MM de 00:00 a 23:59. Rechaza 24:00, horas de una cifra y segundos.",
+    "HH:MM de 00:00 à 23:59. Refuse 24:00, les heures à un chiffre et les secondes.",
+  ],
+  "Validate an IPv4 address": [
+    "验证 IPv4 地址",
+    "Validar una dirección IPv4",
+    "Valider une adresse IPv4",
+  ],
+  "Four dot-separated numbers from 0 to 255, without leading zeros. Does not accept CIDR suffixes, ports or IPv6.":
+    [
+      "四个以点分隔的 0 到 255 之间的数字，不含前导零。不接受 CIDR 后缀、端口或 IPv6。",
+      "Cuatro números de 0 a 255 separados por puntos, sin ceros a la izquierda. No acepta sufijos CIDR, puertos ni IPv6.",
+      "Quatre nombres de 0 à 255 séparés par des points, sans zéros initiaux. N’accepte ni suffixe CIDR, ni port, ni IPv6.",
     ],
   "Match a Markdown heading fragment": [
     "匹配 Markdown 标题片段",

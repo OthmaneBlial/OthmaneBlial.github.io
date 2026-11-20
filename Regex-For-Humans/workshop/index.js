@@ -1,8 +1,8 @@
-import { compileAst } from "./src/compiler.js?v=fbb1cf0ab4e2";
-import { fail } from "./src/diagnostics.js?v=fbb1cf0ab4e2";
-import { modifierGroupStart, supportsModifiers } from "./src/flags.js?v=fbb1cf0ab4e2";
-import { parse } from "./src/parser.js?v=fbb1cf0ab4e2";
-import { regexToRules } from "./src/regex-to-rules.js?v=fbb1cf0ab4e2";
+import { compileAst } from "./src/compiler.js?v=19abb3a01efd";
+import { fail } from "./src/diagnostics.js?v=19abb3a01efd";
+import { modifierGroupStart, supportsModifiers } from "./src/flags.js?v=19abb3a01efd";
+import { parse } from "./src/parser.js?v=19abb3a01efd";
+import { regexToRules } from "./src/regex-to-rules.js?v=19abb3a01efd";
 
 /** Compile controlled-English rules into JavaScript regex source, flags and source mapping.
  * @param {string} source @param {{flags?: string | undefined}} [options]
@@ -41,9 +41,9 @@ export function toRegExp(result) {
   return regex;
 }
 
-export { analyze } from "./src/analyze.js?v=fbb1cf0ab4e2";
-export { CompileError } from "./src/diagnostics.js?v=fbb1cf0ab4e2";
-export { toSVG } from "./src/diagram.js?v=fbb1cf0ab4e2";
-export { editGroup } from "./src/edit-group.js?v=fbb1cf0ab4e2";
-export { exportRegex } from "./src/export.js?v=fbb1cf0ab4e2";
+export { analyze } from "./src/analyze.js?v=19abb3a01efd";
+export { CompileError } from "./src/diagnostics.js?v=19abb3a01efd";
+export { toSVG } from "./src/diagram.js?v=19abb3a01efd";
+export { editGroup } from "./src/edit-group.js?v=19abb3a01efd";
+export { exportRegex } from "./src/export.js?v=19abb3a01efd";
 export { regexToRules };

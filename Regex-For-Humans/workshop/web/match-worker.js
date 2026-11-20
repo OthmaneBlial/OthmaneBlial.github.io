@@ -1,8 +1,8 @@
-import { escapeControls, quoteText } from "../src/display.js?v=fbb1cf0ab4e2";
-import { LIMITS } from "../src/limits.js?v=fbb1cf0ab4e2";
-import { expectationChecks, readExpectation } from "./expectations.js?v=fbb1cf0ab4e2";
-import { OUTPUT_LIMIT_MESSAGE, OUTPUT_LIMITS, OutputBudget } from "./output-budget.js?v=fbb1cf0ab4e2";
-import { replaceBounded } from "./replacement.js?v=fbb1cf0ab4e2";
+import { escapeControls, quoteText } from "../src/display.js?v=19abb3a01efd";
+import { LIMITS } from "../src/limits.js?v=19abb3a01efd";
+import { expectationChecks, readExpectation } from "./expectations.js?v=19abb3a01efd";
+import { OUTPUT_LIMIT_MESSAGE, OUTPUT_LIMITS, OutputBudget } from "./output-budget.js?v=19abb3a01efd";
+import { replaceBounded } from "./replacement.js?v=19abb3a01efd";
 
 /** @typedef {import("./worker-protocol.d.ts").TestRequest} TestRequest */
 /** @typedef {import("./worker-protocol.d.ts").WorkerReply} WorkerReply */

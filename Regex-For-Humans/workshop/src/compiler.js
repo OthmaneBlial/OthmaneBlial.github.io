@@ -1,14 +1,22 @@
-import { classMayContainStrings } from "./ast.js?v=fbb1cf0ab4e2";
-import { fail } from "./diagnostics.js?v=fbb1cf0ab4e2";
-import { escapeControls, quoteText } from "./display.js?v=fbb1cf0ab4e2";
-import { explainNode } from "./explain.js?v=fbb1cf0ab4e2";
-import { applyModifiers, supportsModifiers } from "./flags.js?v=fbb1cf0ab4e2";
+import { classMayContainStrings } from "./ast.js?v=19abb3a01efd";
+import { fail } from "./diagnostics.js?v=19abb3a01efd";
+import { escapeControls, quoteText } from "./display.js?v=19abb3a01efd";
+import { explainNode } from "./explain.js?v=19abb3a01efd";
+import { applyModifiers, supportsModifiers } from "./flags.js?v=19abb3a01efd";
 
-/** @typedef {import('./ast.js?v=fbb1cf0ab4e2').AtomNode} AtomNode */
-/** @typedef {import('./ast.js?v=fbb1cf0ab4e2').Repetition} Repetition */
-/** @typedef {import('./ast.js?v=fbb1cf0ab4e2').ParsedRules} ParsedRules */
+/** @typedef {import('./ast.js?v=19abb3a01efd').AtomNode} AtomNode */
+/** @typedef {import('./ast.js?v=19abb3a01efd').Repetition} Repetition */
+/** @typedef {import('./ast.js?v=19abb3a01efd').ParsedRules} ParsedRules */
 
 const locationOfOptions = { line: 1, column: 1 };
+
+const CONTROL_ESCAPES = new Map([
+  [0x9, "\\t"],
+  [0xa, "\\n"],
+  [0xb, "\\v"],
+  [0xc, "\\f"],
+  [0xd, "\\r"],
+]);
 
 /** @param {string} character @param {boolean} inClass @param {boolean} [unicodeSets] */
 function escapeCharacter(character, inClass, unicodeSets = false) {
@@ -21,7 +29,7 @@ function escapeCharacter(character, inClass, unicodeSets = false) {
     codePoint === 0x2029 ||
     (codePoint >= 0xd800 && codePoint <= 0xdfff)
   ) {
-    return `\\u{${codePoint.toString(16)}}`;
+    return CONTROL_ESCAPES.get(codePoint) ?? `\\u{${codePoint.toString(16)}}`;
   }
   const special = inClass
     ? unicodeSets
@@ -41,7 +49,7 @@ function escapeClass(values, unicodeSets) {
   return values.map((character) => escapeCharacter(character, true, unicodeSets)).join("");
 }
 
-/** @param {import('./ast.js?v=fbb1cf0ab4e2').ClassMember} member @param {boolean} unicodeSets @param {import('./ast.js?v=fbb1cf0ab4e2').ClassSetOperation} [operation] @returns {string} */
+/** @param {import('./ast.js?v=19abb3a01efd').ClassMember} member @param {boolean} unicodeSets @param {import('./ast.js?v=19abb3a01efd').ClassSetOperation} [operation] @returns {string} */
 function classMemberSource(member, unicodeSets, operation = "union") {
   switch (member.kind) {
     case "literal":
@@ -69,14 +77,14 @@ function classMemberSource(member, unicodeSets, operation = "union") {
   }
 }
 
-/** @param {{members: import('./ast.js?v=fbb1cf0ab4e2').ClassMember[], negative: boolean, operation?: import('./ast.js?v=fbb1cf0ab4e2').ClassSetOperation}} set @param {boolean} unicodeSets @returns {string} */
+/** @param {{members: import('./ast.js?v=19abb3a01efd').ClassMember[], negative: boolean, operation?: import('./ast.js?v=19abb3a01efd').ClassSetOperation}} set @param {boolean} unicodeSets @returns {string} */
 function classSetSource(set, unicodeSets) {
   const operation = set.operation ?? "union";
   const separator = operation === "intersection" ? "&&" : operation === "subtraction" ? "--" : "";
   return `[${set.negative ? "^" : ""}${set.members.map((member) => classMemberSource(member, unicodeSets, operation)).join(separator)}]`;
 }
 
-/** @param {import('./ast.js?v=fbb1cf0ab4e2').ClassMember[]} members @param {boolean} unicodeSets @param {number} start @param {import('./ast.js?v=fbb1cf0ab4e2').ClassSetOperation} [operation] @returns {import('../index.d.ts').CharacterClassMember[]} */
+/** @param {import('./ast.js?v=19abb3a01efd').ClassMember[]} members @param {boolean} unicodeSets @param {number} start @param {import('./ast.js?v=19abb3a01efd').ClassSetOperation} [operation] @returns {import('../index.d.ts').CharacterClassMember[]} */
 function classMemberTraces(members, unicodeSets, start, operation = "union") {
   let cursor = start;
   return members.map((member, index) => {
@@ -115,10 +123,13 @@ function repetitionSource(repetition) {
       source = `{${repetition.min}}`;
       break;
     case "range":
-      source = `{${repetition.min},${repetition.max}}`;
+      source =
+        repetition.min === 0 && repetition.max === 1
+          ? "?"
+          : `{${repetition.min},${repetition.max}}`;
       break;
     case "atLeast":
-      source = `{${repetition.min},}`;
+      source = repetition.min === 0 ? "*" : repetition.min === 1 ? "+" : `{${repetition.min},}`;
       break;
     default:
       throw new TypeError("Unknown repetition kind.");
@@ -181,7 +192,7 @@ export function compileAst(parsed, options = {}) {
   const requested = normalizeOptions(options);
   const selected = new Set(requested);
   if (!selected.has("v")) selected.add("u");
-  /** @param {import('./ast.js?v=fbb1cf0ab4e2').RuleNode[]} nodes @returns {boolean} */
+  /** @param {import('./ast.js?v=19abb3a01efd').RuleNode[]} nodes @returns {boolean} */
   const hasUnscopedLineAnchor = (nodes) =>
     nodes.some((node) =>
       node.kind === "anchor"
@@ -215,7 +226,7 @@ export function compileAst(parsed, options = {}) {
   let checkedStringSets = false;
   let checkedSetOperations = false;
 
-  /** @param {import('./ast.js?v=fbb1cf0ab4e2').Location} location */
+  /** @param {import('./ast.js?v=19abb3a01efd').Location} location */
   function checkLookbehind(location) {
     if (checkedLookbehind) return;
     try {
@@ -231,7 +242,7 @@ export function compileAst(parsed, options = {}) {
     checkedLookbehind = true;
   }
 
-  /** @param {import('./ast.js?v=fbb1cf0ab4e2').PropertyAtomNode|Extract<import('./ast.js?v=fbb1cf0ab4e2').ClassMember, {kind: 'unicodeProperty'}>} property @param {import('./ast.js?v=fbb1cf0ab4e2').Location} location */
+  /** @param {import('./ast.js?v=19abb3a01efd').PropertyAtomNode|Extract<import('./ast.js?v=19abb3a01efd').ClassMember, {kind: 'unicodeProperty'}>} property @param {import('./ast.js?v=19abb3a01efd').Location} location */
   function checkProperty(property, location) {
     const aliasLocation = {
       ...property.propertyLocation,
@@ -289,7 +300,7 @@ export function compileAst(parsed, options = {}) {
     }
   }
 
-  /** @param {{members: import('./ast.js?v=fbb1cf0ab4e2').ClassMember[], negative: boolean, operation?: import('./ast.js?v=fbb1cf0ab4e2').ClassSetOperation, location: import('./ast.js?v=fbb1cf0ab4e2').Location}} set */
+  /** @param {{members: import('./ast.js?v=19abb3a01efd').ClassMember[], negative: boolean, operation?: import('./ast.js?v=19abb3a01efd').ClassSetOperation, location: import('./ast.js?v=19abb3a01efd').Location}} set */
   function checkClass(set) {
     if (set.operation) {
       if (!unicodeSets)
@@ -349,8 +360,31 @@ export function compileAst(parsed, options = {}) {
       );
   }
 
-  /** @param {import('./ast.js?v=fbb1cf0ab4e2').RuleNode[]} nodes @param {string} [effectiveFlags] @param {boolean} [scoped] */
-  function emit(nodes, effectiveFlags = flags, scoped = false) {
+  /**
+   * Whether the source after a numbered reference could start with a digit (`\\1` then `0`
+   * reads as `\\10`). Unknown followers, such as the end of a plain group, count as digits.
+   * @param {import('./ast.js?v=19abb3a01efd').RuleNode | undefined} node
+   * @returns {boolean}
+   */
+  function startsWithDigit(node) {
+    if (!node) return true;
+    if (node.kind === "atom") return /^\d/u.test(atomSource(node, unicodeSets));
+    if (node.kind === "group" && !node.capturing && !node.modifiers && !node.repetition)
+      return startsWithDigit(node.nodes[0]);
+    return false;
+  }
+
+  /**
+   * @param {import('./ast.js?v=19abb3a01efd').RuleNode[]} nodes @param {string} [effectiveFlags] @param {boolean} [scoped]
+   * @param {boolean} [enclosed] @param {boolean} [closed] Nothing that could be a digit follows the last node.
+   */
+  function emit(
+    nodes,
+    effectiveFlags = flags,
+    scoped = false,
+    enclosed = false,
+    closed = enclosed,
+  ) {
     const firstSegment = segments.length;
     for (const [index, node] of nodes.entries()) {
       if (node.kind === "atom" && node.atomType === "unicodeProperty")
@@ -373,7 +407,7 @@ export function compileAst(parsed, options = {}) {
           explanation: explainNode(node, effectiveFlags),
           ...node.location,
         });
-        emit(node.nodes, effectiveFlags, scoped);
+        emit(node.nodes, effectiveFlags, scoped, true);
         const endStart = source.length;
         source += ")";
         segments.push({
@@ -390,8 +424,10 @@ export function compileAst(parsed, options = {}) {
         continue;
       }
       if (node.kind === "alternation") {
+        // The only child of an enclosing group or lookaround reuses its parentheses.
+        const open = enclosed && nodes.length === 1 && !node.repetition ? "" : "(?:";
         const sourceStart = source.length;
-        source += "(?:";
+        source += open;
         segments.push({
           kind: "alternation",
           edge: "start",
@@ -399,7 +435,7 @@ export function compileAst(parsed, options = {}) {
           repetition: node.repetition,
           sourceStart,
           sourceEnd: source.length,
-          source: "(?:",
+          source: open,
           text: node.text,
           explanation: explainNode(node, effectiveFlags),
           ...node.location,
@@ -422,10 +458,10 @@ export function compileAst(parsed, options = {}) {
               ...first.location,
             });
           }
-          emit(branch, effectiveFlags, scoped);
+          emit(branch, effectiveFlags, scoped, false, true);
         }
         const endStart = source.length;
-        const close = `)${repetitionSource(node.repetition)}`;
+        const close = open ? `)${repetitionSource(node.repetition)}` : "";
         source += close;
         segments.push({
           kind: "alternation",
@@ -461,13 +497,16 @@ export function compileAst(parsed, options = {}) {
             );
           }
         }
+        // A plain group without repetition changes nothing in a sequence, so it needs no parentheses.
         const fragment = node.capturing
           ? node.name === null
             ? "("
             : `(?<${node.name}>`
           : node.modifiers
             ? `(?${node.modifiers}:`
-            : "(?:";
+            : node.repetition
+              ? "(?:"
+              : "";
         source += fragment;
         const details = {
           kind: "group",
@@ -488,9 +527,9 @@ export function compileAst(parsed, options = {}) {
           explanation: explainNode(node, innerFlags),
           ...node.location,
         });
-        emit(node.nodes, innerFlags, scoped || node.modifiers !== undefined);
+        emit(node.nodes, innerFlags, scoped || node.modifiers !== undefined, fragment !== "");
         const endStart = source.length;
-        const close = `)${repetitionSource(node.repetition)}`;
+        const close = fragment ? `)${repetitionSource(node.repetition)}` : "";
         source += close;
         segments.push({
           ...details,
@@ -505,7 +544,6 @@ export function compileAst(parsed, options = {}) {
         });
         continue;
       }
-      // A numeric reference needs a boundary so a following digit cannot change its number.
       if (
         node.kind === "anchor" &&
         node.mode === "input" &&
@@ -532,7 +570,10 @@ export function compileAst(parsed, options = {}) {
             : node.kind === "backreference"
               ? (typeof node.reference === "string"
                   ? `\\k<${node.reference}>`
-                  : `(?:\\${node.captureIndex})`) + repetitionSource(node.repetition)
+                  : node.repetition ||
+                      (index + 1 < nodes.length ? !startsWithDigit(nodes[index + 1]) : closed)
+                    ? `\\${node.captureIndex}`
+                    : `(?:\\${node.captureIndex})`) + repetitionSource(node.repetition)
               : atomSource(node, unicodeSets);
       const sourceStart = source.length;
       source += fragment;
@@ -605,7 +646,7 @@ export function compileAst(parsed, options = {}) {
       for (let index = firstSegment; index < segments.length; index += 1)
         segments[index].flags ??= effectiveFlags;
   }
-  emit(parsed.nodes);
+  emit(parsed.nodes, flags, false, false, true);
 
   try {
     new RegExp(source, flags);

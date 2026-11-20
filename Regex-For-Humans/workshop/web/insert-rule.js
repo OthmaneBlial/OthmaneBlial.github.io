@@ -1,17 +1,115 @@
-import { compileAst } from "../src/compiler.js?v=fbb1cf0ab4e2";
-import { CompileError } from "../src/diagnostics.js?v=fbb1cf0ab4e2";
-import { editGroup } from "../src/edit-group.js?v=fbb1cf0ab4e2";
-import { parse, splitLines } from "../src/parser.js?v=fbb1cf0ab4e2";
+import { compileAst } from "../src/compiler.js?v=19abb3a01efd";
+import { CompileError } from "../src/diagnostics.js?v=19abb3a01efd";
+import { editGroup } from "../src/edit-group.js?v=19abb3a01efd";
+import { parse, splitLines, validateSourceLength } from "../src/parser.js?v=19abb3a01efd";
 
 /** @type {Record<string, string[]>} */
 const templates = {
+  group: ["group {", "  digit", "}"],
   capture: ["group {", "  digit", "}"],
   optional: ["optional group {", '  "A"', "}"],
   alternative: ["either {", '  "A"', '  "B"', "}"],
   repetition: ["between 1 and 3 digits"],
   class: ['one of: "A", "B"'],
   assertion: ["followed by {", "  digit", "}"],
+  negativeAhead: ["not followed by {", "  digit", "}"],
+  behind: ["preceded by {", "  digit", "}"],
+  negativeBehind: ["not preceded by {", "  digit", "}"],
+  setUnion: ["character set union {", '  "A"', '  "B"', "}"],
+  negativeSetUnion: ["not character set union {", '  "A"', '  "B"', "}"],
+  setIntersection: [
+    "character set intersection {",
+    '  range "A" to "Z"',
+    '  one of: "A", "E", "I", "O", "U"',
+    "}",
+  ],
+  negativeSetIntersection: [
+    "not character set intersection {",
+    '  range "A" to "Z"',
+    '  one of: "A", "E", "I", "O", "U"',
+    "}",
+  ],
+  setSubtraction: [
+    "character set subtraction {",
+    '  range "A" to "Z"',
+    '  one of: "A", "E", "I", "O", "U"',
+    "}",
+  ],
+  negativeSetSubtraction: [
+    "not character set subtraction {",
+    '  range "A" to "Z"',
+    '  one of: "A", "E", "I", "O", "U"',
+    "}",
+  ],
 };
+
+/** Replace a partial block opener before validating the enclosing block's arity.
+ * @param {string} source
+ * @param {number} start
+ * @param {number} end
+ * @param {string} kind
+ * @param {{flags?: string}} [options]
+ * @param {string} [modifier] Existing single-line repetition prefix at the start of the replacement.
+ * @returns {{rules: string, caret: number, header: string}}
+ */
+export function completeBlock(source, start, end, kind, options = {}, modifier = "") {
+  if (typeof source !== "string") throw new TypeError("Rules must be a string.");
+  if (
+    !Number.isSafeInteger(start) ||
+    !Number.isSafeInteger(end) ||
+    start < 0 ||
+    end < start ||
+    end > source.length
+  )
+    throw new TypeError("The completion range must be within the rules.");
+  if (!Object.hasOwn(templates, kind) || templates[kind].length < 2)
+    throw new TypeError("Choose a supported block type.");
+  validateSourceLength(source);
+  if (
+    typeof modifier !== "string" ||
+    modifier.length > end - start ||
+    /[\r\n\u2028\u2029]/u.test(modifier) ||
+    !source.startsWith(modifier, start)
+  )
+    throw new TypeError("Keep the existing repetition prefix within the completion range.");
+  const before = source.slice(0, start);
+  const lines = splitLines(before);
+  const indent = lines.at(-1) ?? "";
+  if (!/^[\t ]*$/u.test(indent)) throw new TypeError("Complete a standalone rule prefix.");
+  const firstLineEnd = splitLines(source)[0].length;
+  const separator = source.startsWith("\r\n", firstLineEnd)
+    ? "\r\n"
+    : (source[firstLineEnd] ?? "\n");
+  const template = templates[kind];
+  const optional =
+    kind === "optional"
+      ? /^(optional)([\t ]+|$)/iu.exec(source.slice(start + modifier.length, end))
+      : null;
+  const opener = optional
+    ? `${optional[1]}${optional[2] || " "}${templates.group[0]}`
+    : template[0];
+  let rules =
+    before +
+    template.map((text, index) => (index ? indent + text : modifier + opener)).join(separator) +
+    separator +
+    indent +
+    source.slice(end).replace(/^[\t ]+/u, "");
+  if (kind === "capture") {
+    rules = editGroup(
+      rules,
+      { line: lines.length, column: indent.length + 1 },
+      { capturing: true, name: null },
+      options,
+    );
+  } else compileAst(parse(rules), options);
+  const header = splitLines(rules)[lines.length - 1];
+  const bodyIndent = template[1].length - template[1].trimStart().length;
+  return {
+    rules,
+    caret: start + header.length + separator.length + bodyIndent,
+    header: header.slice(indent.length),
+  };
+}
 
 /** Insert a validated template without changing existing reference targets.
  * @param {string} source
@@ -25,7 +123,7 @@ export function insertRule(source, caret, kind, options = {}) {
   if (!Number.isSafeInteger(caret) || caret < 0 || caret > source.length)
     throw new TypeError("The insertion cursor must be within the rules.");
   if (!Object.hasOwn(templates, kind)) throw new TypeError("Choose a supported rule type.");
-  /** @type {import('../src/ast.js?v=fbb1cf0ab4e2').ParsedRules|null} */
+  /** @type {import('../src/ast.js?v=19abb3a01efd').ParsedRules|null} */
   let parsed = null;
   try {
     parsed = parse(source);

@@ -1,6 +1,6 @@
-import { compile } from "../index.js?v=fbb1cf0ab4e2";
-import { escapeControls, quoteText } from "../src/display.js?v=fbb1cf0ab4e2";
-import { parseFixture } from "./fixtures.js?v=fbb1cf0ab4e2";
+import { compile } from "../index.js?v=19abb3a01efd";
+import { escapeControls, quoteText } from "../src/display.js?v=19abb3a01efd";
+import { parseFixture } from "./fixtures.js?v=19abb3a01efd";
 
 /** @param {string} text @param {string} language */
 function fenced(text, language) {

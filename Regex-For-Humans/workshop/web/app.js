@@ -6,13 +6,13 @@ import {
   exportRegex,
   regexToRules,
   toSVG,
-} from "../index.js?v=fbb1cf0ab4e2";
-import { escapeControls, quoteText } from "../src/display.js?v=fbb1cf0ab4e2";
-import { LIMITS, splitLines } from "../src/parser.js?v=fbb1cf0ab4e2";
-import { parseRegexLiteral } from "../src/regex-literal.js?v=fbb1cf0ab4e2";
-import { parseExpectation, readExpectation } from "./expectations.js?v=fbb1cf0ab4e2";
-import { explanationNotes } from "./explanation-notes.js?v=fbb1cf0ab4e2";
-import { explainMismatch, failureRequirements } from "./failure-reasons.js?v=fbb1cf0ab4e2";
+} from "../index.js?v=19abb3a01efd";
+import { escapeControls, quoteText } from "../src/display.js?v=19abb3a01efd";
+import { LIMITS, splitLines } from "../src/parser.js?v=19abb3a01efd";
+import { parseRegexLiteral } from "../src/regex-literal.js?v=19abb3a01efd";
+import { parseExpectation, readExpectation } from "./expectations.js?v=19abb3a01efd";
+import { explanationNotes } from "./explanation-notes.js?v=19abb3a01efd";
+import { explainMismatch, failureRequirements } from "./failure-reasons.js?v=19abb3a01efd";
 import {
   createFixtureLink,
   draftStorageKey,
@@ -21,18 +21,18 @@ import {
   parseDraft,
   parseFixture,
   readFixtureLink,
-} from "./fixtures.js?v=fbb1cf0ab4e2";
-import { initializeLanguage, message, setAttribute, setText } from "./i18n.js?v=fbb1cf0ab4e2";
-import { insertRule } from "./insert-rule.js?v=fbb1cf0ab4e2";
-import { categories, filterRecipes, levels } from "./library.js?v=fbb1cf0ab4e2";
-import { createMarkdownReport } from "./markdown-report.js?v=fbb1cf0ab4e2";
-import { ruleCompletions } from "./rule-completions.js?v=fbb1cf0ab4e2";
-import { initializeSyntaxEditor } from "./syntax.js?v=fbb1cf0ab4e2";
-import { TestRunError, TestRunner } from "./test-runner.js?v=fbb1cf0ab4e2";
-import { textChanges } from "./text-change.js?v=fbb1cf0ab4e2";
+} from "./fixtures.js?v=19abb3a01efd";
+import { initializeLanguage, message, setAttribute, setText } from "./i18n.js?v=19abb3a01efd";
+import { insertRule } from "./insert-rule.js?v=19abb3a01efd";
+import { categories, filterRecipes, levels } from "./library.js?v=19abb3a01efd";
+import { createMarkdownReport } from "./markdown-report.js?v=19abb3a01efd";
+import { ruleCompletions } from "./rule-completions.js?v=19abb3a01efd";
+import { initializeSyntaxEditor } from "./syntax.js?v=19abb3a01efd";
+import { TestRunError, TestRunner } from "./test-runner.js?v=19abb3a01efd";
+import { textChanges } from "./text-change.js?v=19abb3a01efd";
 
 /** @typedef {import("./worker-protocol.d.ts").TestCase} TestCase */
-/** @typedef {import('./library.js?v=fbb1cf0ab4e2').ProductScenario} ProductScenario */
+/** @typedef {import('./library.js?v=19abb3a01efd').ProductScenario} ProductScenario */
 /** @typedef {"success" | "neutral" | "error"} CompileState */
 /** @typedef {{line: number, column: number, sourceStart: number, sourceEnd: number}} RuleFocus */
 
@@ -189,6 +189,7 @@ let reverseErrorPosition = null;
 let compiled = null;
 /** @type {string | null} */
 let renderedRules = null;
+let replacingRules = false;
 /** @type {ReturnType<typeof exportRegex> | null} */
 let exported = null;
 /** @type {import('../index.d.ts').GroupSegment[]} */
@@ -208,14 +209,14 @@ let hasEdits =
 let copyFeedbackTimer = 0;
 let copySequence = 0;
 const testRunner = new TestRunner(
-  () => new Worker(new URL("./match-worker.js?v=fbb1cf0ab4e2", import.meta.url), { type: "module" }),
+  () => new Worker(new URL("./match-worker.js?v=19abb3a01efd", import.meta.url), { type: "module" }),
 );
 
 /**
  * @template {keyof HTMLElementTagNameMap} K
  * @param {K} tag
  * @param {string} [className=""]
- * @param {string | import('./i18n.js?v=fbb1cf0ab4e2').Message} [text]
+ * @param {string | import('./i18n.js?v=19abb3a01efd').Message} [text]
  * @returns {HTMLElementTagNameMap[K]}
  */
 function make(tag, className = "", text) {
@@ -225,13 +226,56 @@ function make(tag, className = "", text) {
   return node;
 }
 
+/** @param {string} rules */
+function replaceRules(rules) {
+  const value = rules.replace(/\r\n?/gu, "\n");
+  if (value === ui.rules.value) return;
+  if (renderedRules === null) {
+    ui.rules.value = value;
+    return;
+  }
+  const focused = document.activeElement;
+  const { selectionStart, selectionEnd, selectionDirection, scrollTop, scrollLeft } = ui.rules;
+  // Native history can replay the last edited field even after focus moves to the rules.
+  const ignoreInput = (/** @type {Event} */ event) => event.stopImmediatePropagation();
+  document.addEventListener("input", ignoreInput, true);
+  replacingRules = true;
+  try {
+    ui.rules.focus({ preventScroll: true });
+    try {
+      // WebKit keeps typing open across scripted selections; a native round trip closes it.
+      const closeTyping = () => {
+        if (document.queryCommandEnabled("undo") && document.execCommand("undo"))
+          document.execCommand("redo");
+      };
+      closeTyping();
+      ui.rules.select();
+      // Native editing retains the browser's Undo stack; assigning value clears it.
+      document.execCommand("insertText", false, value);
+      closeTyping();
+    } catch {
+      /* Fall back below when native editing is unavailable. */
+    }
+    // shortcut: fallback clears Undo, replace when a supported textarea history API is available.
+    if (ui.rules.value !== value) ui.rules.value = value;
+    ui.rules.setSelectionRange(selectionStart, selectionEnd, selectionDirection);
+    ui.rules.scrollTop = scrollTop;
+    ui.rules.scrollLeft = scrollLeft;
+    if (focused instanceof HTMLElement) focused.focus({ preventScroll: true });
+    if (focused !== ui.rules && document.activeElement === ui.rules) ui.rules.blur();
+  } finally {
+    document.removeEventListener("input", ignoreInput, true);
+    replacingRules = false;
+  }
+}
+
 /** @param {string} label @param {CompileState} state */
 function setCompileState(label, state) {
   setText(ui.compileState, message(label));
   ui.compileState.dataset.state = state;
 }
 
-/** @param {string | import('./i18n.js?v=fbb1cf0ab4e2').Message} text @param {boolean} [invalidRules=false] */
+/** @param {string | import('./i18n.js?v=19abb3a01efd').Message} text @param {boolean} [invalidRules=false] */
 function setDiagnostic(text, invalidRules = false) {
   ui.diagnostic.hidden = !text;
   setText(ui.diagnostic, text || "");
@@ -407,7 +451,8 @@ function renderTrace(segments) {
         explanation: segment.explanation,
       }),
     );
-    button.append(make("code", "trace-fragment", segment.source));
+    // A plain group or a lone alternative reuses its parent's parentheses and adds no regex.
+    button.append(make("code", "trace-fragment", segment.source || "—"));
     const detail = make("span");
     detail.append(
       make(
@@ -834,7 +879,7 @@ function renderGroupEditor() {
   }
 }
 
-/** @param {HTMLDivElement} row @param {string | import('./i18n.js?v=fbb1cf0ab4e2').Message} text */
+/** @param {HTMLDivElement} row @param {string | import('./i18n.js?v=19abb3a01efd').Message} text */
 function setTestResult(row, text) {
   const result = row.querySelector(".test-result");
   if (result) setText(result, text);
@@ -1000,7 +1045,7 @@ function renderCaptureExplorer(row, result, captures, input) {
   explorer.hidden = false;
 }
 
-/** @param {HTMLDivElement} row @param {string} input @param {{start: number, end: number} | null | undefined} range @param {string | import('./i18n.js?v=fbb1cf0ab4e2').Message} [label] */
+/** @param {HTMLDivElement} row @param {string} input @param {{start: number, end: number} | null | undefined} range @param {string | import('./i18n.js?v=19abb3a01efd').Message} [label] */
 function renderMatchPreview(row, input, range, label) {
   const preview = row.querySelector(".match-preview");
   if (!(preview instanceof HTMLSpanElement)) return;
@@ -1487,10 +1532,10 @@ function applyExpectationDraft(sample, text) {
   }
 }
 
-/** @param {import('./fixtures.js?v=fbb1cf0ab4e2').TestFixture|import('./fixtures.js?v=fbb1cf0ab4e2').WorkshopDraft} fixture */
+/** @param {import('./fixtures.js?v=19abb3a01efd').TestFixture|import('./fixtures.js?v=19abb3a01efd').WorkshopDraft} fixture */
 function applyFixture(fixture) {
   hasEdits = true;
-  ui.rules.value = fixture.rules;
+  replaceRules(fixture.rules);
   for (const [flag, input] of Object.entries(flagInputs))
     input.checked = fixture.flags.includes(flag);
   ui.unicodeMode.value = fixture.flags.includes("v") ? "v" : "u";
@@ -1654,7 +1699,9 @@ function closeCompletions(restoreFocus = false) {
 function showCompletionPreview() {
   const choice = completion?.choices[ui.completionChoice.selectedIndex];
   ui.completionPreviewField.hidden = !choice;
-  ui.completionPreview.textContent = choice?.text ?? "";
+  ui.completionPreview.textContent = choice?.preview ?? choice?.text ?? "";
+  const label = ui.completionPreviewField.querySelector("span");
+  if (label) setText(label, message(choice?.preview ? "Proposed rules:" : "Suggested rule:"));
 }
 
 function showCompletions() {
@@ -1682,7 +1729,7 @@ function showCompletions() {
         ? choices.length === 1
           ? "1 validated suggestion."
           : "{count} validated suggestions."
-        : "No validated suggestions. Use a single cursor outside quoted text and comments, and fix other rule errors first.",
+        : "No validated suggestions. Use one cursor in a supported rule or quoted reference, outside comments, and fix other rule errors first.",
       { count: choices.length },
     ),
   );
@@ -1704,7 +1751,7 @@ function applyCompletion() {
     closeCompletions(true);
     return;
   }
-  ui.rules.value = choice.rules;
+  replaceRules(choice.rules);
   ui.rules.setSelectionRange(choice.caret, choice.caret);
   hasEdits = true;
   fixtureRevision++;
@@ -1812,7 +1859,7 @@ function useScenario(scenario) {
   expectationErrors.clear();
   exactCaseText.clear();
   setScenarioSelection(scenario.id);
-  ui.rules.value = scenario.rules;
+  replaceRules(scenario.rules);
   ui.rules.setSelectionRange(0, 0);
   ui.rules.scrollTop = 0;
   for (const input of Object.values(flagInputs)) input.checked = false;
@@ -1902,6 +1949,7 @@ ui.recipeClear.addEventListener("click", () => {
 });
 
 document.addEventListener("input", (event) => {
+  if (replacingRules) return;
   if (
     event.target !== ui.language &&
     event.target !== ui.theme &&
@@ -2086,7 +2134,7 @@ window.addEventListener("storage", (event) => {
 });
 ui.rules.addEventListener("input", () => {
   // A multiline paste can repeat input events for the same completed value.
-  if (ui.rules.value === renderedRules) return;
+  if (replacingRules || ui.rules.value === renderedRules) return;
   setScenarioSelection(scenarios.find(({ rules }) => rules === ui.rules.value)?.id ?? null);
   compileRules();
 });
@@ -2276,7 +2324,7 @@ ui.builderForm.addEventListener("submit", (event) => {
     const added = insertRule(ui.rules.value, ui.rules.selectionStart, ui.builderKind.value, {
       flags: currentFlags(),
     });
-    ui.rules.value = added.rules;
+    replaceRules(added.rules);
     hasEdits = true;
     setScenarioSelection(null);
     compileRules();
@@ -2372,7 +2420,7 @@ function changeGroup(preview) {
       ui.groupFeedback.dataset.state = "success";
       return;
     }
-    ui.rules.value = rules;
+    replaceRules(rules);
     hasEdits = true;
     setScenarioSelection(null);
     compileRules();
@@ -2444,7 +2492,7 @@ ui.reverseButton.addEventListener("click", () => {
   reverseErrorPosition = null;
   try {
     const translated = regexToRules(parseRegexLiteral(ui.reverseRegex.value));
-    ui.rules.value = translated.rules;
+    replaceRules(translated.rules);
     for (const [flag, input] of Object.entries(flagInputs))
       input.checked = translated.flags.includes(flag);
     ui.unicodeMode.value = translated.flags.includes("v") ? "v" : "u";
@@ -2590,7 +2638,7 @@ try {
 initializeDraft();
 
 try {
-  const response = await fetch(new URL("../test/fixtures/product-scenarios.json?v=fbb1cf0ab4e2", import.meta.url));
+  const response = await fetch(new URL("../test/fixtures/product-scenarios.json?v=19abb3a01efd", import.meta.url));
   if (!response.ok) throw new Error(`HTTP ${response.status}`);
   const loaded = await response.json();
   if (!Array.isArray(loaded)) throw new Error("Invalid example recipe data");
@@ -2653,6 +2701,19 @@ try {
   const scenario = scenarios.find((item) => item.id === requested) ?? scenarios[0];
   if (!scenario) throw new Error("No example recipes are available.");
   if (!hasEdits) useScenario(scenario);
+  // A linked recipe may sit below the sidebar fold or past the mobile carousel edge.
+  const current = ui.examples.querySelector('[aria-current="true"]');
+  for (let box = current?.parentElement; current && box && box !== document.body; ) {
+    const item = current.getBoundingClientRect();
+    const view = box.getBoundingClientRect();
+    const { overflowX, overflowY } = getComputedStyle(box);
+    // Centre only an item that is not already fully visible, so the sidebar keeps its brand in view.
+    if (/auto|scroll/u.test(overflowX) && (item.left < view.left || item.right > view.right))
+      box.scrollLeft += item.left - view.left - (view.width - item.width) / 2;
+    if (/auto|scroll/u.test(overflowY) && (item.top < view.top || item.bottom > view.bottom))
+      box.scrollTop += item.top - view.top - (view.height - item.height) / 2;
+    box = box.parentElement;
+  }
 } catch (error) {
   const notice = make(
     "p",
